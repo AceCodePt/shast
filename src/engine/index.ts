@@ -34,6 +34,13 @@ import type {
 
 type AllowedTagSet = Set<string> | null;
 
+// A valid CSS class identifier: a letter/underscore/hyphen (or non-ASCII) start,
+// then letters/digits/hyphens/underscores (or non-ASCII). Unlike class
+// *existence* (which is dynamic and unsound to reject at runtime), an invalid
+// class *name* is always malformed regardless of state, so it is safe to throw.
+const CSS_CLASS_NAME =
+  /^-?[_a-zA-Z\u00A0-\uFFFF][_a-zA-Z0-9\u00A0-\uFFFF-]*$/;
+
 function intersectAllowed(
   inheritedAllowed: AllowedTagSet,
   list: readonly string[],
@@ -139,6 +146,14 @@ export function validateComponentNode(
           ) {
             throw new Error(
               `CSS Error: Child selector '${key}' references child '${childName}' which is not declared in the element's innerHTML`,
+            );
+          }
+        }
+        if (key.startsWith("&.")) {
+          const className = key.slice(2);
+          if (!CSS_CLASS_NAME.test(className)) {
+            throw new Error(
+              `CSS Error: Class selector '${key}' has an invalid class name '${className}'`,
             );
           }
         }
