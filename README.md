@@ -195,6 +195,37 @@ both levels. Widened types fail closed - they can't be embedded at all. See
 [docs/structural-coupling.md](docs/structural-coupling.md) for the verified
 guarantees and their test methodology.
 
+### Validity is resolved when context becomes known
+
+A reusable child does not need to know its parent when it is defined. Its
+literal structure is preserved, then checked again when a parent supplies the
+missing context:
+
+```ts
+const item = {
+  tag: "li",
+  innerHTML: "item",
+} as const;
+
+createComponent({
+  tag: "ul",
+  innerHTML: { item }, // valid: <ul> permits <li>
+});
+```
+
+The same child embedded under a parent that does not permit `<li>` is rejected
+at the parent call. This is not limited to direct children: the existing
+ancestral-inheritance rules already thread parent context through an entire
+prebuilt subtree. Unknown context is not guessed at; once composition makes it
+known, validity is narrowed there.
+
+This existing HTML behavior is also the foundation for planned structural CSS
+rules. For example, a standalone child may declare `flex: 1` without knowing
+its eventual parent. When composed under a known parent, shast can accept it
+under `display: flex` and reject it under a display mode where it cannot act as
+a flex item. That CSS relationship is not implemented yet; parent-driven
+revalidation is.
+
 The wall is only as good as its error messages, so diagnostic quality is
 treated as an interface, not an accident - error strings carry the path and
 the expectation, and regressions in message clarity are considered bugs.
