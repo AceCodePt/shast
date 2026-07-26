@@ -183,7 +183,7 @@ is checked against them **twice**:
 | Child tag allowed by parent (`ul` → only `li`)                             | ✓            | ✓                               |
 | Ancestral inheritance (`a > h1 > b` rejected because `a ∩ h1` forbids `b`) | ✓            | ✓                               |
 | Attribute exists and value matches its DSL type                            | ✓            | ✓                               |
-| CSS property value matches the syntax config                               | ✓            | see [Limitations](#limitations) |
+| CSS property value matches the syntax config                               | ✓            | ✓                               |
 | `> child` selector targets a real named child (at any nesting depth)       | ✓            | ✓                               |
 | `&.class` references a class declared on the context element - including classes computed via template literals (`` class: `${active} card` ``) | ✓            | ✓                               |
 | Custom property (`--x`) registered and value matches its `syntax`          | ✓            | ✓                               |
@@ -310,20 +310,13 @@ them would slow every DSL string down for a vanishingly rare case:
 
 ### Known gaps (runtime wall only - the type wall covers these today)
 
-- **CSS property *values* are not validated at runtime.** Selector structure
-  in `css` blocks *is* runtime-validated (`> child` keys against
-  `innerHTML`, `&.class` keys against the context element's `class`
-  attribute, at any nesting depth), but an invalid property value
-  (`color: "magenta"` when the syntax config says `'red' | 'blue'`) passes
-  runtime validation if the type layer is bypassed (`as any`, generated
-  code).
 - **Pseudo-class/element usage** in css blocks and pseudo-element
   declarations in the tag config are type-checked but not runtime-checked.
 
-Until these close, the runtime backstop covers *structure, attributes, and
-selector shape* but not yet *style values* - worth knowing if you rely on
-the runtime wall alone (e.g. validating untyped AI output without running
-`tsc`).
+CSS property values and custom properties (`--*`) are now validated at
+runtime inside `createComponent`. The remaining gap covers only
+pseudo-class/element usage — worth knowing if you rely on the runtime wall
+alone (e.g. validating untyped AI output without running `tsc`).
 
 ## Status
 
