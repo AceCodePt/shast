@@ -4,7 +4,7 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"description": "Semantic HTML abstract syntax tree with structurally coupled, scoped CSS — validated at compile time and runtime",
+	"description": "AI-first constrained UI format and validated server-side renderer with structurally coupled HTML and CSS",
 	"main": "src/index.ts",
 	"type": "module",
 	"scripts": {
