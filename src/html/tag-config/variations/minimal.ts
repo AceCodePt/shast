@@ -1,8 +1,10 @@
 import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
 import { htmlTagConfig } from "@/html/tag-config/index.ts";
+import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/minimal.ts";
 
-export default htmlTagConfig(SUPPORTED_KEYWORDS, {
+export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   a: {
+    display: "inline",
     attributes: {
       href: "string",
       target: "'_self' | '_blank' | undefined",
@@ -23,12 +25,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   br: {
+    display: "inline",
     attributes: {},
     innerHTML: [],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   button: {
+    display: "inline-block",
     attributes: {
       type: "'submit' | 'reset' | 'button' | undefined",
       disabled: "boolean | undefined",
@@ -38,6 +42,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   div: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -50,6 +55,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h1: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "a", "br", "img"],
     cssPseudoClass: [],
@@ -62,6 +68,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h2: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "a", "br", "img"],
     cssPseudoClass: [],
@@ -74,6 +81,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h3: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "a", "br", "img"],
     cssPseudoClass: [],
@@ -86,6 +94,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   img: {
+    display: "inline",
     attributes: {
       src: "string",
       alt: "string",
@@ -95,6 +104,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: [],
   },
   input: {
+    display: "inline-block",
     attributes: {
       type: "'text' | 'number' | 'password' | 'checkbox' | 'radio' | 'submit' | 'hidden'",
       value: "string | undefined",
@@ -105,6 +115,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::placeholder", "::file-selector-button"],
   },
   li: {
+    display: "list-item",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -118,6 +129,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   p: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "a", "br", "img"],
     cssPseudoClass: [],
@@ -130,12 +142,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   span: {
+    display: "inline",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   ul: {
+    display: "block",
     attributes: {},
     innerHTML: ["li"],
     cssPseudoClass: [],

@@ -39,21 +39,235 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "box-shadow": "<string>",
 
   // ── Layout ─────────────────────────────────────────────────────────────────
-  display:
-    "'block' | 'inline' | 'inline-block' | 'flex' | 'inline-flex' | 'grid' | 'inline-grid' | 'none' | 'contents' | 'flow-root' | 'table' | 'table-cell' | 'table-row' | 'table-caption' | 'list-item'",
-  position: "'static' | 'relative' | 'absolute' | 'fixed' | 'sticky'",
-  top: "<length-percentage>",
-  right: "<length-percentage>",
-  bottom: "<length-percentage>",
-  left: "<length-percentage>",
-  inset: "<length-percentage>",
-  "inset-block": "<length-percentage>",
-  "inset-block-start": "<length-percentage>",
-  "inset-block-end": "<length-percentage>",
-  "inset-inline": "<length-percentage>",
-  "inset-inline-start": "<length-percentage>",
-  "inset-inline-end": "<length-percentage>",
-  "z-index": "<integer>",
+  display: {
+    block: { self: {}, children: {} },
+    inline: { self: {}, children: {} },
+    "inline-block": { self: {}, children: {} },
+    none: { self: {}, children: {} },
+    contents: { self: {}, children: {} },
+    "flow-root": { self: {}, children: {} },
+    table: {
+      self: {
+        "table-layout": "'auto' | 'fixed'",
+        "border-collapse": "'collapse' | 'separate'",
+        "caption-side": "'top' | 'bottom' | 'inline-start' | 'inline-end'",
+      },
+      children: {},
+    },
+    "table-column": { self: {}, children: {} },
+    "table-cell": {
+      self: {
+        "vertical-align":
+          "'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom' | 'sub' | 'super' | <length-percentage>",
+      },
+      children: {},
+    },
+    "table-header-group": { self: {}, children: {} },
+    "table-row-group": { self: {}, children: {} },
+    "table-column-group": { self: {}, children: {} },
+    "table-row": { self: {}, children: {} },
+    "table-caption": { self: {}, children: {} },
+    "table-footer-group": { self: {}, children: {} },
+    "list-item": { self: {}, children: {} },
+
+    flex: {
+      self: {
+        "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'",
+        "flex-wrap": "'nowrap' | 'wrap' | 'wrap-reverse'",
+        gap: "<length-percentage>",
+        "row-gap": "<length-percentage>",
+        "column-gap": "<length-percentage>",
+        "justify-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'end' | 'stretch' | 'normal'",
+        "align-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
+        "align-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'normal'",
+      },
+      children: {
+        "align-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
+        order: "<integer>",
+        "flex-grow": "<number>",
+        "flex-shrink": "<number>",
+        "flex-basis": "<length-percentage> | <sizing-keyword>",
+        flex: "<string>",
+      },
+    },
+
+    "inline-flex": {
+      self: {
+        "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'",
+        "flex-wrap": "'nowrap' | 'wrap' | 'wrap-reverse'",
+        gap: "<length-percentage>",
+        "row-gap": "<length-percentage>",
+        "column-gap": "<length-percentage>",
+        "justify-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'end' | 'stretch' | 'normal'",
+        "align-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
+        "align-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'normal'",
+      },
+      children: {
+        "align-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
+        order: "<integer>",
+        "flex-grow": "<number>",
+        "flex-shrink": "<number>",
+        "flex-basis": "<length-percentage> | <sizing-keyword>",
+        flex: "<string>",
+      },
+    },
+
+    grid: {
+      self: {
+        gap: "<length-percentage>",
+        "row-gap": "<length-percentage>",
+        "column-gap": "<length-percentage>",
+        "justify-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'end' | 'stretch' | 'normal'",
+        "align-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
+        "justify-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'legacy' | 'normal'",
+        "grid-template-columns": "<track-size>",
+        "grid-template-rows": "<track-size>",
+        "grid-template-areas": "<string>",
+        "grid-auto-columns": "<track-size>",
+        "grid-auto-rows": "<track-size>",
+        "grid-auto-flow":
+          "'row' | 'column' | 'dense' | 'row dense' | 'column dense'",
+        "place-content": "<string>",
+        "place-items": "<string>",
+      },
+      children: {
+        "align-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
+        "justify-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
+        order: "<integer>",
+        "grid-column": "<string>",
+        "grid-column-start": "<integer>",
+        "grid-column-end": "<integer>",
+        "grid-row": "<string>",
+        "grid-row-start": "<integer>",
+        "grid-row-end": "<integer>",
+        "grid-area": "<custom-ident>",
+        "place-self": "<string>",
+      },
+    },
+
+    "inline-grid": {
+      self: {
+        gap: "<length-percentage>",
+        "row-gap": "<length-percentage>",
+        "column-gap": "<length-percentage>",
+        "justify-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'end' | 'stretch' | 'normal'",
+        "align-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
+        "justify-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'legacy' | 'normal'",
+        "grid-template-columns": "<track-size>",
+        "grid-template-rows": "<track-size>",
+        "grid-template-areas": "<string>",
+        "grid-auto-columns": "<track-size>",
+        "grid-auto-rows": "<track-size>",
+        "grid-auto-flow":
+          "'row' | 'column' | 'dense' | 'row dense' | 'column dense'",
+        "place-content": "<string>",
+        "place-items": "<string>",
+      },
+      children: {
+        "align-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
+        "justify-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
+        order: "<integer>",
+        "grid-column": "<string>",
+        "grid-column-start": "<integer>",
+        "grid-column-end": "<integer>",
+        "grid-row": "<string>",
+        "grid-row-start": "<integer>",
+        "grid-row-end": "<integer>",
+        "grid-area": "<custom-ident>",
+        "place-self": "<string>",
+      },
+    },
+  },
+  position: {
+    static: { self: {}, children: {} },
+    relative: {
+      self: {
+        top: "<length-percentage>",
+        right: "<length-percentage>",
+        bottom: "<length-percentage>",
+        left: "<length-percentage>",
+        inset: "<length-percentage>",
+        "inset-block": "<length-percentage>",
+        "inset-block-start": "<length-percentage>",
+        "inset-block-end": "<length-percentage>",
+        "inset-inline": "<length-percentage>",
+        "inset-inline-start": "<length-percentage>",
+        "inset-inline-end": "<length-percentage>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+    absolute: {
+      self: {
+        top: "<length-percentage>",
+        right: "<length-percentage>",
+        bottom: "<length-percentage>",
+        left: "<length-percentage>",
+        inset: "<length-percentage>",
+        "inset-block": "<length-percentage>",
+        "inset-block-start": "<length-percentage>",
+        "inset-block-end": "<length-percentage>",
+        "inset-inline": "<length-percentage>",
+        "inset-inline-start": "<length-percentage>",
+        "inset-inline-end": "<length-percentage>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+    fixed: {
+      self: {
+        top: "<length-percentage>",
+        right: "<length-percentage>",
+        bottom: "<length-percentage>",
+        left: "<length-percentage>",
+        inset: "<length-percentage>",
+        "inset-block": "<length-percentage>",
+        "inset-block-start": "<length-percentage>",
+        "inset-block-end": "<length-percentage>",
+        "inset-inline": "<length-percentage>",
+        "inset-inline-start": "<length-percentage>",
+        "inset-inline-end": "<length-percentage>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+    sticky: {
+      self: {
+        top: "<length-percentage>",
+        right: "<length-percentage>",
+        bottom: "<length-percentage>",
+        left: "<length-percentage>",
+        inset: "<length-percentage>",
+        "inset-block": "<length-percentage>",
+        "inset-block-start": "<length-percentage>",
+        "inset-block-end": "<length-percentage>",
+        "inset-inline": "<length-percentage>",
+        "inset-inline-start": "<length-percentage>",
+        "inset-inline-end": "<length-percentage>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+  },
+
   float: "'left' | 'right' | 'none' | 'inline-start' | 'inline-end'",
   clear: "'left' | 'right' | 'both' | 'none' | 'inline-start' | 'inline-end'",
 
@@ -69,53 +283,20 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "overscroll-behavior-block": "'auto' | 'contain' | 'none'",
   "overscroll-behavior-inline": "'auto' | 'contain' | 'none'",
 
-  perspective: "'none' | <length>",
-  "perspective-origin": "<position>",
+  perspective: {
+    none: { self: {}, children: {} },
+    "<length>": {
+      self: { "perspective-origin": "<position>" },
+      children: {},
+    },
+  },
 
   // ── Flexbox ────────────────────────────────────────────────────────────────
-  "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'",
-  "flex-wrap": "'nowrap' | 'wrap' | 'wrap-reverse'",
   "flex-flow": "<string>",
-  "justify-content":
-    "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'end' | 'stretch' | 'normal'",
-  "justify-items":
-    "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'legacy' | 'normal'",
-  "justify-self":
-    "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
-  "align-items":
-    "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
-  "align-content":
-    "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | 'normal'",
-  "align-self":
-    "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end' | 'normal'",
-  flex: "<string>",
-  "flex-grow": "<number>",
-  "flex-shrink": "<number>",
-  "flex-basis": "<length-percentage> | <sizing-keyword>",
-  order: "<integer>",
-  gap: "<length-percentage>",
-  "row-gap": "<length-percentage>",
-  "column-gap": "<length-percentage>",
 
   // ── Grid ───────────────────────────────────────────────────────────────────
-  "grid-template-columns": "<track-size>",
-  "grid-template-rows": "<track-size>",
-  "grid-template-areas": "<string>",
   "grid-template": "<string>",
-  "grid-auto-columns": "<track-size>",
-  "grid-auto-rows": "<track-size>",
-  "grid-auto-flow": "'row' | 'column' | 'dense' | 'row dense' | 'column dense'",
   grid: "<string>",
-  "grid-column": "<string>",
-  "grid-column-start": "<integer>",
-  "grid-column-end": "<integer>",
-  "grid-row": "<string>",
-  "grid-row-start": "<integer>",
-  "grid-row-end": "<integer>",
-  "grid-area": "<custom-ident>",
-  "place-content": "<string>",
-  "place-items": "<string>",
-  "place-self": "<string>",
 
   // ── Colors & Background ────────────────────────────────────────────────────
   color: "<color>",
@@ -233,8 +414,7 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "word-break": "'normal' | 'break-all' | 'keep-all' | 'break-word'",
   "overflow-wrap": "'normal' | 'break-word' | 'anywhere'",
   "line-break": "'auto' | 'loose' | 'normal' | 'strict' | 'anywhere'",
-  "vertical-align":
-    "'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom' | 'sub' | 'super' | <length-percentage>",
+
   hyphens: "'none' | 'manual' | 'auto'",
   "hanging-punctuation":
     "'none' | 'first' | 'last' | 'force-end' | 'allow-end'",
@@ -253,11 +433,8 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "list-style-image": "<image>",
 
   // ── Tables ─────────────────────────────────────────────────────────────────
-  "table-layout": "'auto' | 'fixed'",
-  "border-collapse": "'collapse' | 'separate'",
   "border-spacing": "<length>",
   "empty-cells": "'show' | 'hide'",
-  "caption-side": "'top' | 'bottom' | 'inline-start' | 'inline-end'",
 
   // ── Images & Media ─────────────────────────────────────────────────────────
   "object-fit": "'fill' | 'contain' | 'cover' | 'none' | 'scale-down'",
@@ -300,12 +477,19 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "-webkit-overflow-scrolling": "'auto' | 'touch'",
 
   // ── Transforms ────────────────────────────────────────────────────────────
-  transform: "<string>",
-  "transform-origin": "<position>",
-  "transform-style": "'flat' | 'preserve-3d'",
+  transform: {
+    "<string>": {
+      self: {
+        "transform-origin": "<position>",
+        "transform-style": "'flat' | 'preserve-3d'",
+        "perspective-origin": "<position>",
+        "backface-visibility": "'visible' | 'hidden'",
+      },
+      children: {},
+    },
+  },
   "transform-box":
     "'content-box' | 'border-box' | 'fill-box' | 'stroke-box' | 'view-box'",
-  "backface-visibility": "'visible' | 'hidden'",
   translate: "<length-percentage>",
   rotate: "<angle>",
   scale: "<number>",
@@ -363,8 +547,23 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   // ── Performance & Rendering ────────────────────────────────────────────────
   "will-change":
     "'auto' | 'scroll-position' | 'contents' | 'transform' | 'opacity'",
-  contain:
-    "'none' | 'strict' | 'content' | 'size' | 'layout' | 'style' | 'paint' | 'inline-size'",
+  contain: {
+    none: { self: {}, children: {} },
+    strict: { self: {}, children: {} },
+    content: { self: {}, children: {} },
+    size: {
+      self: {
+        "contain-intrinsic-size": "'none' | 'auto' | <length>",
+        "contain-intrinsic-width": "'none' | 'auto' | <length>",
+        "contain-intrinsic-height": "'none' | 'auto' | <length>",
+      },
+      children: {},
+    },
+    layout: { self: {}, children: {} },
+    style: { self: {}, children: {} },
+    paint: { self: {}, children: {} },
+    "inline-size": { self: {}, children: {} },
+  },
   "contain-intrinsic-size": "'none' | 'auto' | <length>",
   "contain-intrinsic-width": "'none' | 'auto' | <length>",
   "contain-intrinsic-height": "'none' | 'auto' | <length>",
@@ -375,9 +574,47 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   appearance: "'none' | 'auto'",
 
   // ── Multi-column ───────────────────────────────────────────────────────────
-  "column-count": "'auto' | <integer>",
-  "column-width": "'auto' | <length>",
-  columns: "<string>",
+  "column-count": {
+    auto: { self: {}, children: {} },
+    "<integer>": {
+      self: {
+        "column-rule": "<string>",
+        "column-rule-width": "<line-width>",
+        "column-rule-style": "<line-style>",
+        "column-rule-color": "<color>",
+        "column-fill": "'auto' | 'balance' | 'balance-all'",
+        "column-span": "'none' | 'all'",
+      },
+      children: {},
+    },
+  },
+  "column-width": {
+    auto: { self: {}, children: {} },
+    "<length>": {
+      self: {
+        "column-rule": "<string>",
+        "column-rule-width": "<line-width>",
+        "column-rule-style": "<line-style>",
+        "column-rule-color": "<color>",
+        "column-fill": "'auto' | 'balance' | 'balance-all'",
+        "column-span": "'none' | 'all'",
+      },
+      children: {},
+    },
+  },
+  columns: {
+    "<string>": {
+      self: {
+        "column-rule": "<string>",
+        "column-rule-width": "<line-width>",
+        "column-rule-style": "<line-style>",
+        "column-rule-color": "<color>",
+        "column-fill": "'auto' | 'balance' | 'balance-all'",
+        "column-span": "'none' | 'all'",
+      },
+      children: {},
+    },
+  },
   "column-rule": "<string>",
   "column-rule-width": "<line-width>",
   "column-rule-style": "<line-style>",

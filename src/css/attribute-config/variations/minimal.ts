@@ -10,22 +10,82 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, minimalCSSSyntax, {
   padding: "<length>",
 
   // ── Layout ─────────────────────────────────────────────────────────────────
-  display: "'block' | 'inline' | 'inline-block' | 'flex' | 'grid' | 'none'",
-  position: "'static' | 'relative' | 'absolute' | 'fixed' | 'sticky'",
-  top: "<length>",
-  right: "<length>",
-  bottom: "<length>",
-  left: "<length>",
-  "z-index": "<integer>",
+  display: {
+    block: { self: {}, children: {} },
+    inline: { self: {}, children: {} },
+    "inline-block": { self: {}, children: {} },
+    none: { self: {}, children: {} },
+    "list-item": { self: {}, children: {} },
+
+    flex: {
+      self: {
+        "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'",
+        "justify-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around'",
+        "align-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
+        gap: "<length>",
+      },
+      children: {},
+    },
+
+    grid: {
+      self: {
+        gap: "<length>",
+        "justify-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around'",
+        "align-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
+      },
+      children: {},
+    },
+  },
+  position: {
+    static: { self: {}, children: {} },
+    relative: {
+      self: {
+        top: "<length>",
+        right: "<length>",
+        bottom: "<length>",
+        left: "<length>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+    absolute: {
+      self: {
+        top: "<length>",
+        right: "<length>",
+        bottom: "<length>",
+        left: "<length>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+    fixed: {
+      self: {
+        top: "<length>",
+        right: "<length>",
+        bottom: "<length>",
+        left: "<length>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+    sticky: {
+      self: {
+        top: "<length>",
+        right: "<length>",
+        bottom: "<length>",
+        left: "<length>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+  },
   overflow: "'visible' | 'hidden' | 'scroll' | 'auto'",
 
   // ── Flexbox ────────────────────────────────────────────────────────────────
-  "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'",
-  "justify-content":
-    "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around'",
-  "align-items":
-    "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
-  gap: "<length>",
 
   // ── Colors & Background ────────────────────────────────────────────────────
   color: "<color>",

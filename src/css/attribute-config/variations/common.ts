@@ -3,7 +3,13 @@ import commonCSSSyntax from "@/css/syntax-config/variations/common.ts";
 import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
 
 export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
-  perspective: "'none' | <length>",
+  perspective: {
+    none: { self: {}, children: {} },
+    "<length>": {
+      self: { "perspective-origin": "<position>" },
+      children: {},
+    },
+  },
 
   // ── Box Model ──────────────────────────────────────────────────────────────
   width: "<length> | <percentage>",
@@ -29,76 +35,248 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
   "padding-block": "<length>",
   "padding-inline": "<length>",
 
-  // Keywords inlined — no MDN data type name exists for these
   "box-sizing": "'content-box' | 'border-box'",
-  "box-shadow": "<string>", // compound shorthand
+  "box-shadow": "<string>",
 
   // ── Layout ─────────────────────────────────────────────────────────────────
-  // display: MDN defines complex multi-keyword grammar; common values inlined
-  display:
-    "'block' | 'inline' | 'inline-block' | 'flex' | 'inline-flex' | 'grid' | 'inline-grid' | 'none' | 'contents' | 'table' | 'table-cell' | 'table-row'",
-  // position property keywords — not the MDN <position> spatial type
-  position: "'static' | 'relative' | 'absolute' | 'fixed' | 'sticky'",
-  top: "<length-percentage>",
-  right: "<length-percentage>",
-  bottom: "<length-percentage>",
-  left: "<length-percentage>",
-  inset: "<length-percentage>",
-  "inset-block": "<length-percentage>",
-  "inset-inline": "<length-percentage>",
-  "z-index": "<integer>",
+  display: {
+    block: { self: {}, children: {} },
+    inline: { self: {}, children: {} },
+    "inline-block": { self: {}, children: {} },
+    "list-item": { self: {}, children: {} },
+    none: { self: {}, children: {} },
+    contents: { self: {}, children: {} },
+    table: {
+      self: {
+        "table-layout": "'auto' | 'fixed'",
+        "border-collapse": "'collapse' | 'separate'",
+        "caption-side": "'top' | 'bottom'",
+      },
+      children: {},
+    },
+    "table-header-group": { self: {}, children: {} },
+    "table-cell": {
+      self: {
+        "vertical-align":
+          "'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom' | 'sub' | 'super' | <length-percentage>",
+      },
+      children: {},
+    },
+    "table-row": { self: {}, children: {} },
+    "table-row-group": { self: {}, children: {} },
+
+    flex: {
+      self: {
+        "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'",
+        "flex-wrap": "'nowrap' | 'wrap' | 'wrap-reverse'",
+        gap: "<length-percentage>",
+        "row-gap": "<length-percentage>",
+        "column-gap": "<length-percentage>",
+        "justify-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'end' | 'stretch'",
+        "align-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end'",
+        "align-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch'",
+      },
+      children: {
+        "align-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
+        order: "<integer>",
+        "flex-grow": "<number>",
+        "flex-shrink": "<number>",
+        "flex-basis": "<length-percentage>",
+        flex: "<string>",
+      },
+    },
+
+    "inline-flex": {
+      self: {
+        "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'",
+        "flex-wrap": "'nowrap' | 'wrap' | 'wrap-reverse'",
+        gap: "<length-percentage>",
+        "row-gap": "<length-percentage>",
+        "column-gap": "<length-percentage>",
+        "justify-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'end' | 'stretch'",
+        "align-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end'",
+        "align-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch'",
+      },
+      children: {
+        "align-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
+        order: "<integer>",
+        "flex-grow": "<number>",
+        "flex-shrink": "<number>",
+        "flex-basis": "<length-percentage>",
+        flex: "<string>",
+      },
+    },
+
+    grid: {
+      self: {
+        gap: "<length-percentage>",
+        "row-gap": "<length-percentage>",
+        "column-gap": "<length-percentage>",
+        "justify-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'end' | 'stretch'",
+        "align-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end'",
+        "justify-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end'",
+        "grid-template-columns": "<track-breadth>",
+        "grid-template-rows": "<track-breadth>",
+        "grid-template-areas": "<string>",
+        "grid-auto-columns": "<track-breadth>",
+        "grid-auto-rows": "<track-breadth>",
+        "grid-auto-flow":
+          "'row' | 'column' | 'dense' | 'row dense' | 'column dense'",
+        "place-content": "<string>",
+        "place-items": "<string>",
+      },
+      children: {
+        "align-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
+        "justify-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
+        order: "<integer>",
+        "grid-column": "<string>",
+        "grid-column-start": "<integer>",
+        "grid-column-end": "<integer>",
+        "grid-row": "<string>",
+        "grid-row-start": "<integer>",
+        "grid-row-end": "<integer>",
+        "grid-area": "<custom-ident>",
+        "place-self": "<string>",
+      },
+    },
+
+    "inline-grid": {
+      self: {
+        gap: "<length-percentage>",
+        "row-gap": "<length-percentage>",
+        "column-gap": "<length-percentage>",
+        "justify-content":
+          "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'end' | 'stretch'",
+        "align-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end'",
+        "justify-items":
+          "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end'",
+        "grid-template-columns": "<track-breadth>",
+        "grid-template-rows": "<track-breadth>",
+        "grid-template-areas": "<string>",
+        "grid-auto-columns": "<track-breadth>",
+        "grid-auto-rows": "<track-breadth>",
+        "grid-auto-flow":
+          "'row' | 'column' | 'dense' | 'row dense' | 'column dense'",
+        "place-content": "<string>",
+        "place-items": "<string>",
+      },
+      children: {
+        "align-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
+        "justify-self":
+          "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
+        order: "<integer>",
+        "grid-column": "<string>",
+        "grid-column-start": "<integer>",
+        "grid-column-end": "<integer>",
+        "grid-row": "<string>",
+        "grid-row-start": "<integer>",
+        "grid-row-end": "<integer>",
+        "grid-area": "<custom-ident>",
+        "place-self": "<string>",
+      },
+    },
+  },
+  position: {
+    static: { self: {}, children: {} },
+    relative: {
+      self: {
+        top: "<length-percentage>",
+        right: "<length-percentage>",
+        bottom: "<length-percentage>",
+        left: "<length-percentage>",
+        inset: "<length-percentage>",
+        "inset-block": "<length-percentage>",
+        "inset-inline": "<length-percentage>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+    absolute: {
+      self: {
+        top: "<length-percentage>",
+        right: "<length-percentage>",
+        bottom: "<length-percentage>",
+        left: "<length-percentage>",
+        inset: "<length-percentage>",
+        "inset-block": "<length-percentage>",
+        "inset-inline": "<length-percentage>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+    fixed: {
+      self: {
+        top: "<length-percentage>",
+        right: "<length-percentage>",
+        bottom: "<length-percentage>",
+        left: "<length-percentage>",
+        inset: "<length-percentage>",
+        "inset-block": "<length-percentage>",
+        "inset-inline": "<length-percentage>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+    sticky: {
+      self: {
+        top: "<length-percentage>",
+        right: "<length-percentage>",
+        bottom: "<length-percentage>",
+        left: "<length-percentage>",
+        inset: "<length-percentage>",
+        "inset-block": "<length-percentage>",
+        "inset-inline": "<length-percentage>",
+        "z-index": "<integer>",
+      },
+      children: {},
+    },
+  },
   float: "'left' | 'right' | 'none' | 'inline-start' | 'inline-end'",
   clear: "'left' | 'right' | 'both' | 'none' | 'inline-start' | 'inline-end'",
 
-  overflow: "'visible' | 'hidden' | 'scroll' | 'auto' | 'clip'",
-  "overflow-x": "'visible' | 'hidden' | 'scroll' | 'auto' | 'clip'",
-  "overflow-y": "'visible' | 'hidden' | 'scroll' | 'auto' | 'clip'",
-  "overflow-clip-margin": "<length>",
+  overflow: {
+    visible: { self: {}, children: {} },
+    hidden: { self: {}, children: {} },
+    scroll: { self: {}, children: {} },
+    auto: { self: {}, children: {} },
+    clip: { self: { "overflow-clip-margin": "<length>" }, children: {} },
+  },
+  "overflow-x": {
+    visible: { self: {}, children: {} },
+    hidden: { self: {}, children: {} },
+    scroll: { self: {}, children: {} },
+    auto: { self: {}, children: {} },
+    clip: { self: { "overflow-clip-margin": "<length>" }, children: {} },
+  },
+  "overflow-y": {
+    visible: { self: {}, children: {} },
+    hidden: { self: {}, children: {} },
+    scroll: { self: {}, children: {} },
+    auto: { self: {}, children: {} },
+    clip: { self: { "overflow-clip-margin": "<length>" }, children: {} },
+  },
 
   // ── Flexbox ────────────────────────────────────────────────────────────────
-  "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'",
-  "flex-wrap": "'nowrap' | 'wrap' | 'wrap-reverse'",
-  "flex-flow": "<string>", // shorthand
-  "justify-content":
-    "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'end' | 'stretch'",
-  "justify-items":
-    "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end'",
-  "justify-self":
-    "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
-  "align-items":
-    "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'start' | 'end'",
-  "align-content":
-    "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch'",
-  "align-self":
-    "'auto' | 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
-  flex: "<string>", // shorthand
-  "flex-grow": "<number>",
-  "flex-shrink": "<number>",
-  "flex-basis": "<length-percentage>",
-  order: "<integer>",
-  gap: "<length-percentage>",
-  "row-gap": "<length-percentage>",
-  "column-gap": "<length-percentage>",
+  "flex-flow": "<string>",
 
   // ── Grid ───────────────────────────────────────────────────────────────────
-  "grid-template-columns": "<track-breadth>",
-  "grid-template-rows": "<track-breadth>",
-  "grid-template-areas": "<string>",
-  "grid-template": "<string>", // shorthand
-  "grid-auto-columns": "<track-breadth>",
-  "grid-auto-rows": "<track-breadth>",
-  "grid-auto-flow": "'row' | 'column' | 'dense' | 'row dense' | 'column dense'",
-  grid: "<string>", // shorthand
-  "grid-column": "<string>",
-  "grid-column-start": "<integer>",
-  "grid-column-end": "<integer>",
-  "grid-row": "<string>",
-  "grid-row-start": "<integer>",
-  "grid-row-end": "<integer>",
-  "grid-area": "<custom-ident>",
-  "place-content": "<string>",
-  "place-items": "<string>",
-  "place-self": "<string>",
+  "grid-template": "<string>",
+  grid: "<string>",
 
   // ── Colors & Background ────────────────────────────────────────────────────
   color: "<color>",
@@ -112,7 +290,7 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
   "background-attachment": "'scroll' | 'fixed' | 'local'",
   "background-origin": "'border-box' | 'padding-box' | 'content-box'",
   "background-clip": "'border-box' | 'padding-box' | 'content-box' | 'text'",
-  background: "<string>", // shorthand
+  background: "<string>",
 
   // ── Border ─────────────────────────────────────────────────────────────────
   border: "<string>",
@@ -144,7 +322,7 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
   "font-variant": "'normal' | 'small-caps'",
   "font-stretch":
     "'normal' | 'condensed' | 'expanded' | 'ultra-condensed' | 'extra-condensed' | 'semi-condensed' | 'semi-expanded' | 'extra-expanded' | 'ultra-expanded' | <percentage>",
-  font: "<string>", // shorthand
+  font: "<string>",
   "line-height": "<number> | <length-percentage>",
   "letter-spacing": "'normal' | <length>",
   "word-spacing": "'normal' | <length>",
@@ -164,8 +342,7 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
     "'normal' | 'nowrap' | 'pre' | 'pre-wrap' | 'pre-line' | 'break-spaces'",
   "word-break": "'normal' | 'break-all' | 'keep-all' | 'break-word'",
   "overflow-wrap": "'normal' | 'break-word' | 'anywhere'",
-  "vertical-align":
-    "'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom' | 'sub' | 'super' | <length-percentage>",
+
   hyphens: "'none' | 'manual' | 'auto'",
   "-webkit-font-smoothing":
     "'auto' | 'none' | 'antialiased' | 'subpixel-antialiased'",
@@ -179,11 +356,8 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
   "list-style-image": "<image>",
 
   // ── Tables ─────────────────────────────────────────────────────────────────
-  "table-layout": "'auto' | 'fixed'",
-  "border-collapse": "'collapse' | 'separate'",
   "border-spacing": "<length>",
   "empty-cells": "'show' | 'hide'",
-  "caption-side": "'top' | 'bottom'",
 
   // ── Images & Media ─────────────────────────────────────────────────────────
   "object-fit": "'fill' | 'contain' | 'cover' | 'none' | 'scale-down'",
@@ -208,11 +382,16 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
   "-webkit-overflow-scrolling": "'auto' | 'touch'",
 
   // ── Transforms & Perspective ───────────────────────────────────────────────
-  transform: "<string>",
-  "transform-origin": "<position>",
-  "transform-style": "'flat' | 'preserve-3d'",
-  "perspective-origin": "<position>",
-  "backface-visibility": "'visible' | 'hidden'",
+  transform: {
+    "<string>": {
+      self: {
+        "transform-origin": "<position>",
+        "transform-style": "'flat' | 'preserve-3d'",
+        "backface-visibility": "'visible' | 'hidden'",
+      },
+      children: {},
+    },
+  },
   translate: "<length-percentage>",
   rotate: "<angle>",
   scale: "<number>",
@@ -262,12 +441,38 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
   appearance: "'none' | 'auto'",
 
   // ── Multi-column ───────────────────────────────────────────────────────────
-  "column-count": "'auto' | <integer>",
-  "column-width": "'auto' | <length>",
-  columns: "<string>",
-  "column-rule": "<string>",
-  "column-fill": "'auto' | 'balance' | 'balance-all'",
-  "column-span": "'none' | 'all'",
+  "column-count": {
+    auto: { self: {}, children: {} },
+    "<integer>": {
+      self: {
+        "column-rule": "<string>",
+        "column-fill": "'auto' | 'balance' | 'balance-all'",
+        "column-span": "'none' | 'all'",
+      },
+      children: {},
+    },
+  },
+  "column-width": {
+    auto: { self: {}, children: {} },
+    "<length>": {
+      self: {
+        "column-rule": "<string>",
+        "column-fill": "'auto' | 'balance' | 'balance-all'",
+        "column-span": "'none' | 'all'",
+      },
+      children: {},
+    },
+  },
+  columns: {
+    "<string>": {
+      self: {
+        "column-rule": "<string>",
+        "column-fill": "'auto' | 'balance' | 'balance-all'",
+        "column-span": "'none' | 'all'",
+      },
+      children: {},
+    },
+  },
 
   // ── Writing Modes & Internationalization ───────────────────────────────────
   "writing-mode": "'horizontal-tb' | 'vertical-rl' | 'vertical-lr'",

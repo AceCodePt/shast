@@ -1,3 +1,4 @@
+import type { BaseCSSAttributesComplexConfig } from "@/css/attribute-config/types.ts";
 import type { SupportedKeywordsConfig } from "@/dsl/index.ts";
 import type {
   BaseHTMLAttributesConfig,
@@ -6,6 +7,7 @@ import type {
 
 export interface BaseHTMLTagConfig {
   [tag: string]: {
+    display: string;
     attributes: BaseHTMLAttributesConfig;
     innerHTML: "*" | string[];
     cssPseudoClass: `:${string}${string}`[];
@@ -15,10 +17,12 @@ export interface BaseHTMLTagConfig {
 
 export type ValidateHTMLTagConfig<
   Keywords extends SupportedKeywordsConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   TagDefinition extends BaseHTMLTagConfig,
 > = keyof TagDefinition extends string
   ? {
       [Tag in keyof TagDefinition]: {
+        display: keyof CSSAttributesConfig["display"] & string;
         attributes: ValidateHTMLAttributesConfig<
           Keywords,
           TagDefinition[Tag]["attributes"]

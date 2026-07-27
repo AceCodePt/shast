@@ -1,8 +1,10 @@
 import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
 import { htmlTagConfig } from "@/html/tag-config/index.ts";
+import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/full.ts";
 
-export default htmlTagConfig(SUPPORTED_KEYWORDS, {
+export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   a: {
+    display: "inline",
     attributes: {
       href: "string",
       target: "'_self' | '_blank' | '_parent' | '_top' | undefined",
@@ -69,6 +71,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   abbr: {
+    display: "inline",
     attributes: {
       title: "string | undefined",
     },
@@ -125,6 +128,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   address: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -137,6 +141,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   b: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -191,6 +196,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   bdi: {
+    display: "inline",
     attributes: {
       dir: "'ltr' | 'rtl' | 'auto' | undefined",
     },
@@ -247,6 +253,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   bdo: {
+    display: "inline",
     attributes: {
       dir: "'ltr' | 'rtl'",
     },
@@ -303,6 +310,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   blockquote: {
+    display: "block",
     attributes: {
       cite: "string | undefined",
     },
@@ -317,12 +325,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   br: {
+    display: "inline",
     attributes: {},
     innerHTML: [],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   cite: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -377,6 +387,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   code: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -431,6 +442,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   data: {
+    display: "inline",
     attributes: {
       value: "string",
     },
@@ -487,6 +499,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   dfn: {
+    display: "inline",
     attributes: {
       title: "string | undefined",
     },
@@ -542,6 +555,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   em: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -596,6 +610,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   i: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -650,6 +665,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   kbd: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -704,6 +720,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   mark: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -758,6 +775,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   q: {
+    display: "inline",
     attributes: {
       cite: "string | undefined",
     },
@@ -814,12 +832,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   rp: {
+    display: "inline",
     attributes: {},
     innerHTML: ["#text"],
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   rt: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -874,6 +894,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   ruby: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -930,6 +951,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   s: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -984,6 +1006,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   samp: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1038,6 +1061,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   small: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1092,12 +1116,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   span: {
+    display: "inline",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   strong: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1152,6 +1178,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   sub: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1206,6 +1233,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   sup: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1260,6 +1288,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   time: {
+    display: "inline",
     attributes: {
       datetime: "string | undefined",
     },
@@ -1316,6 +1345,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   u: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1370,6 +1400,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   var: {
+    display: "inline",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1424,6 +1455,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   wbr: {
+    display: "inline",
     attributes: {},
     innerHTML: [],
     cssPseudoClass: [],
@@ -1431,6 +1463,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
   },
 
   h1: {
+    display: "block",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1491,6 +1524,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h2: {
+    display: "block",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1551,6 +1585,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h3: {
+    display: "block",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1611,6 +1646,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h4: {
+    display: "block",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1671,6 +1707,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h5: {
+    display: "block",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1731,6 +1768,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h6: {
+    display: "block",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1791,6 +1829,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   hgroup: {
+    display: "block",
     attributes: {},
     innerHTML: ["h1", "h2", "h3", "h4", "h5", "h6", "p"],
     cssPseudoClass: [],
@@ -1804,6 +1843,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
   },
 
   article: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -1816,6 +1856,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   aside: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -1828,6 +1869,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   details: {
+    display: "block",
     attributes: {
       open: "boolean | undefined",
     },
@@ -1843,6 +1885,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   dialog: {
+    display: "block",
     attributes: {
       open: "boolean | undefined",
     },
@@ -1858,6 +1901,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   div: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -1870,6 +1914,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   footer: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -1882,6 +1927,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   header: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -1894,6 +1940,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   main: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -1906,6 +1953,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   nav: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -1918,6 +1966,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   p: {
+    display: "block",
     attributes: {},
     innerHTML: [
       "#text",
@@ -1978,12 +2027,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   search: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   section: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -1996,6 +2047,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   summary: {
+    display: "list-item",
     attributes: {},
     innerHTML: [
       "#text",
@@ -2058,6 +2110,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
   },
 
   dd: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -2070,6 +2123,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   dl: {
+    display: "block",
     attributes: {},
     innerHTML: ["dt", "dd", "div"],
     cssPseudoClass: [],
@@ -2082,6 +2136,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   dt: {
+    display: "block",
     attributes: {},
     innerHTML: [
       "#text",
@@ -2142,6 +2197,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   li: {
+    display: "list-item",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -2155,12 +2211,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   menu: {
+    display: "block",
     attributes: {},
     innerHTML: ["li"],
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   ol: {
+    display: "block",
     attributes: {
       reversed: "boolean | undefined",
       start: "number | undefined",
@@ -2177,6 +2235,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   ul: {
+    display: "block",
     attributes: {},
     innerHTML: ["li"],
     cssPseudoClass: [],
@@ -2190,6 +2249,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
   },
 
   audio: {
+    display: "inline",
     attributes: {
       src: "string | undefined",
       controls: "boolean | undefined",
@@ -2211,6 +2271,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: [],
   },
   canvas: {
+    display: "inline",
     attributes: {
       width: "number | undefined",
       height: "number | undefined",
@@ -2220,6 +2281,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: [],
   },
   figcaption: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -2232,6 +2294,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   figure: {
+    display: "block",
     attributes: {},
     innerHTML: ["img", "video", "audio", "canvas", "picture", "figcaption"],
     cssPseudoClass: [],
@@ -2244,6 +2307,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   iframe: {
+    display: "inline",
     attributes: {
       src: "string | undefined",
       srcdoc: "string | undefined",
@@ -2262,6 +2326,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: [],
   },
   img: {
+    display: "inline",
     attributes: {
       src: "string",
       alt: "string",
@@ -2283,12 +2348,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: [],
   },
   picture: {
+    display: "inline",
     attributes: {},
     innerHTML: ["source", "img"],
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   source: {
+    display: "inline",
     attributes: {
       src: "string | undefined",
       srcset: "string | undefined",
@@ -2303,6 +2370,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: [],
   },
   track: {
+    display: "inline",
     attributes: {
       kind: "'subtitles' | 'captions' | 'descriptions' | 'chapters' | 'metadata' | undefined",
       src: "string",
@@ -2315,6 +2383,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: [],
   },
   video: {
+    display: "inline",
     attributes: {
       src: "string | undefined",
       controls: "boolean | undefined",
@@ -2342,6 +2411,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
   },
 
   button: {
+    display: "inline-block",
     attributes: {
       type: "'submit' | 'reset' | 'button' | undefined",
       disabled: "boolean | undefined",
@@ -2403,12 +2473,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   datalist: {
+    display: "inline",
     attributes: {},
     innerHTML: ["option"],
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   fieldset: {
+    display: "block",
     attributes: {
       disabled: "boolean | undefined",
       form: "string | undefined",
@@ -2425,6 +2497,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   form: {
+    display: "block",
     attributes: {
       action: "string | undefined",
       method: "'get' | 'post' | 'dialog'",
@@ -2447,6 +2520,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   input: {
+    display: "inline-block",
     attributes: {
       type: "'text' | 'number' | 'password' | 'checkbox' | 'radio' | 'submit' | 'button' | 'email' | 'hidden' | 'file' | 'date' | 'time' | 'datetime-local' | 'month' | 'week' | 'color' | 'range' | 'search' | 'tel' | 'url' | 'image' | 'reset'",
       value: "string | undefined",
@@ -2505,6 +2579,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::placeholder", "::file-selector-button"],
   },
   label: {
+    display: "inline",
     attributes: {
       for: "string | undefined",
       form: "string | undefined",
@@ -2561,6 +2636,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   legend: {
+    display: "block",
     attributes: {},
     innerHTML: [
       "#text",
@@ -2622,6 +2698,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   meter: {
+    display: "inline-block",
     attributes: {
       value: "number",
       min: "number | undefined",
@@ -2683,6 +2760,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   optgroup: {
+    display: "block",
     attributes: {
       label: "string",
       disabled: "boolean | undefined",
@@ -2692,6 +2770,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   option: {
+    display: "block",
     attributes: {
       value: "string | undefined",
       label: "string | undefined",
@@ -2703,6 +2782,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   output: {
+    display: "inline",
     attributes: {
       for: "string | undefined",
       form: "string | undefined",
@@ -2761,6 +2841,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   progress: {
+    display: "inline-block",
     attributes: {
       value: "number | undefined",
       max: "number | undefined",
@@ -2817,6 +2898,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   select: {
+    display: "inline-block",
     attributes: {
       name: "string | undefined",
       disabled: "boolean | undefined",
@@ -2839,6 +2921,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: [],
   },
   textarea: {
+    display: "inline-block",
     attributes: {
       name: "string | undefined",
       placeholder: "string | undefined",
@@ -2871,12 +2954,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
   },
 
   caption: {
+    display: "table-caption",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   col: {
+    display: "table-column",
     attributes: {
       span: "number | undefined",
     },
@@ -2885,6 +2970,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: [],
   },
   colgroup: {
+    display: "table-column-group",
     attributes: {
       span: "number | undefined",
     },
@@ -2893,6 +2979,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   table: {
+    display: "table",
     attributes: {},
     innerHTML: ["caption", "colgroup", "thead", "tbody", "tfoot", "tr"],
     cssPseudoClass: [],
@@ -2905,6 +2992,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   tbody: {
+    display: "table-row-group",
     attributes: {},
     innerHTML: ["tr"],
     cssPseudoClass: [],
@@ -2917,6 +3005,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   td: {
+    display: "table-cell",
     attributes: {
       colspan: "number | undefined",
       rowspan: "number | undefined",
@@ -2933,6 +3022,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   tfoot: {
+    display: "table-footer-group",
     attributes: {},
     innerHTML: ["tr"],
     cssPseudoClass: [],
@@ -2945,6 +3035,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   th: {
+    display: "table-cell",
     attributes: {
       colspan: "number | undefined",
       rowspan: "number | undefined",
@@ -2963,6 +3054,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   thead: {
+    display: "table-header-group",
     attributes: {},
     innerHTML: ["tr"],
     cssPseudoClass: [],
@@ -2975,6 +3067,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   tr: {
+    display: "table-row",
     attributes: {},
     innerHTML: ["th", "td"],
     cssPseudoClass: [],
@@ -2988,6 +3081,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
   },
 
   del: {
+    display: "inline",
     attributes: {
       cite: "string | undefined",
       datetime: "string | undefined",
@@ -2997,6 +3091,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   ins: {
+    display: "inline",
     attributes: {
       cite: "string | undefined",
       datetime: "string | undefined",
@@ -3006,6 +3101,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   pre: {
+    display: "block",
     attributes: {},
     innerHTML: [
       "#text",
@@ -3066,6 +3162,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   slot: {
+    display: "contents",
     attributes: {
       name: "string | undefined",
     },
@@ -3074,6 +3171,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection", "::slotted()"],
   },
   template: {
+    display: "none",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],

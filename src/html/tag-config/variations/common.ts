@@ -1,8 +1,10 @@
 import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
 import { htmlTagConfig } from "@/html/tag-config/index.ts";
+import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/common.ts";
 
-export default htmlTagConfig(SUPPORTED_KEYWORDS, {
+export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   a: {
+    display: "inline",
     attributes: {
       href: "string",
       target: "'_self' | '_blank' | '_parent' | '_top' | undefined",
@@ -30,6 +32,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   article: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -42,12 +45,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   br: {
+    display: "inline",
     attributes: {},
     innerHTML: [],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   button: {
+    display: "inline-block",
     attributes: {
       type: "'submit' | 'reset' | 'button' | undefined",
       disabled: "boolean | undefined",
@@ -60,6 +65,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   div: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -72,6 +78,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   footer: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -84,6 +91,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   form: {
+    display: "block",
     attributes: {
       action: "string | undefined",
       method: "'get' | 'post' | 'dialog'",
@@ -102,6 +110,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h1: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "a", "br", "img"],
     cssPseudoClass: [],
@@ -114,6 +123,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h2: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "a", "br", "img"],
     cssPseudoClass: [],
@@ -126,6 +136,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h3: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "a", "br", "img"],
     cssPseudoClass: [],
@@ -138,6 +149,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h4: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "a", "br", "img"],
     cssPseudoClass: [],
@@ -150,6 +162,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h5: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "a", "br", "img"],
     cssPseudoClass: [],
@@ -162,6 +175,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   h6: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "a", "br", "img"],
     cssPseudoClass: [],
@@ -174,6 +188,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   header: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -186,6 +201,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   img: {
+    display: "inline",
     attributes: {
       src: "string",
       alt: "string",
@@ -200,6 +216,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: [],
   },
   input: {
+    display: "inline-block",
     attributes: {
       type: "'text' | 'number' | 'password' | 'checkbox' | 'radio' | 'submit' | 'button' | 'email' | 'hidden'",
       value: "string | undefined",
@@ -231,6 +248,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::placeholder", "::file-selector-button"],
   },
   label: {
+    display: "inline",
     attributes: {
       for: "string | undefined",
       form: "string | undefined",
@@ -240,6 +258,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   li: {
+    display: "list-item",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -253,6 +272,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   main: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -265,6 +285,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   nav: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -277,6 +298,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   ol: {
+    display: "block",
     attributes: {},
     innerHTML: ["li"],
     cssPseudoClass: [],
@@ -289,6 +311,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   p: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "a", "img", "input", "br", "label"],
     cssPseudoClass: [],
@@ -301,6 +324,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   section: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -313,12 +337,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   span: {
+    display: "inline",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   table: {
+    display: "table",
     attributes: {},
     innerHTML: ["thead", "tbody", "tr"],
     cssPseudoClass: [],
@@ -331,6 +357,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   tbody: {
+    display: "table-row-group",
     attributes: {},
     innerHTML: ["tr"],
     cssPseudoClass: [],
@@ -343,6 +370,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   td: {
+    display: "table-cell",
     attributes: {
       colspan: "number | undefined",
       rowspan: "number | undefined",
@@ -359,6 +387,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   textarea: {
+    display: "inline-block",
     attributes: {
       name: "string | undefined",
       placeholder: "string | undefined",
@@ -382,6 +411,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     cssPseudoElement: ["::placeholder"],
   },
   th: {
+    display: "table-cell",
     attributes: {
       colspan: "number | undefined",
       rowspan: "number | undefined",
@@ -398,6 +428,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   thead: {
+    display: "table-header-group",
     attributes: {},
     innerHTML: ["tr"],
     cssPseudoClass: [],
@@ -410,6 +441,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   tr: {
+    display: "table-row",
     attributes: {},
     innerHTML: ["th", "td"],
     cssPseudoClass: [],
@@ -422,6 +454,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, {
     ],
   },
   ul: {
+    display: "block",
     attributes: {},
     innerHTML: ["li"],
     cssPseudoClass: [],
