@@ -1,5 +1,5 @@
 import type {
-  BaseCSSAttributesConfig,
+  BaseCSSAttributesComplexConfig,
   ValidateCSSAttributesConfig,
 } from "@/css/attribute-config/types.ts";
 import type {
@@ -38,8 +38,7 @@ type AllowedTagSet = Set<string> | null;
 // then letters/digits/hyphens/underscores (or non-ASCII). Unlike class
 // *existence* (which is dynamic and unsound to reject at runtime), an invalid
 // class *name* is always malformed regardless of state, so it is safe to throw.
-const CSS_CLASS_NAME =
-  /^-?[_a-zA-Z\u00A0-\uFFFF][_a-zA-Z0-9\u00A0-\uFFFF-]*$/;
+const CSS_CLASS_NAME = /^-?[_a-zA-Z\u00A0-\uFFFF][_a-zA-Z0-9\u00A0-\uFFFF-]*$/;
 
 function intersectAllowed(
   inheritedAllowed: AllowedTagSet,
@@ -56,7 +55,10 @@ export function validateComponentNode(
   keywords: SupportedKeywordsConfig,
   globalAttributes: BaseHTMLAttributesConfig,
   tagConfig: BaseHTMLTagConfig,
+  cssAttributesConfig: Record<string, any>,
+  cssPropertiesConfig: Record<string, any>,
   inheritedAllowed: AllowedTagSet,
+  mergedKeywords: Record<string, string>,
 ): void {
   if (node === null || typeof node !== "object" || Array.isArray(node)) {
     throw new Error(
@@ -135,7 +137,11 @@ export function validateComponentNode(
       block: Record<string, unknown>,
       contextInnerHTML: typeof innerHTML,
       contextClasses: string[],
+      cssAttrs: Record<string, any>,
+      cssProps: Record<string, any>,
     ): void => {
+      const complexValues: Record<string, string> = {};
+
       for (const key of Object.keys(block)) {
         if (key.startsWith("> ")) {
           const childName = key.slice(2);
@@ -238,11 +244,69 @@ export function validateComponentNode(
             value as Record<string, unknown>,
             nextContext,
             nextClasses,
+            cssAttrs,
+            cssProps,
           );
+        } else if (!key.startsWith("> ") && !key.startsWith("&.")) {
+          const attrDef = cssAttrs[key];
+          const propDef = cssProps[key];
+
+          if (typeof attrDef === "string") {
+            parseValueAgainstDSL(mergedKeywords, attrDef, value as any);
+          } else if (typeof attrDef === "object" && attrDef !== null) {
+            if (typeof value !== "string") {
+              throw new Error(
+                `CSS Error: Invalid value type for '${key}'. Expected a string`,
+              );
+            }
+            const valueKeys = Object.keys(attrDef);
+            let matchedKey: string | undefined;
+            if (value in attrDef) {
+              matchedKey = value;
+            } else {
+              for (const vk of valueKeys) {
+                if (vk.startsWith("<") && vk.endsWith(">")) {
+                  try {
+                    parseValueAgainstDSL(mergedKeywords, vk, value);
+                    matchedKey = vk;
+                    break;
+                  } catch {}
+                }
+              }
+            }
+            if (matchedKey === undefined) {
+              throw new Error(
+                `CSS Error: Invalid value '${String(value)}' for '${key}'. Expected one of: ${valueKeys.join(", ")}`,
+              );
+            }
+            complexValues[key] = matchedKey;
+          } else if (propDef !== undefined) {
+            if (typeof propDef === "object" && typeof propDef.syntax === "string") {
+              parseValueAgainstDSL(mergedKeywords, propDef.syntax, value as any);
+            }
+          } else {
+            let found = false;
+            for (const [attrName, valueKey] of Object.entries(complexValues)) {
+              const complexDef = cssAttrs[attrName];
+              if (complexDef && typeof complexDef === "object" && valueKey in complexDef) {
+                const valueDef = complexDef[valueKey];
+                if (valueDef && typeof valueDef === "object" && valueDef.self && key in valueDef.self) {
+                  parseValueAgainstDSL(mergedKeywords, valueDef.self[key], value as any);
+                  found = true;
+                  break;
+                }
+              }
+            }
+            if (!found) {
+              throw new Error(
+                `CSS Error: '${key}' is not a recognized CSS attribute or property`,
+              );
+            }
+          }
         }
       }
     };
-    validateCSS(css as Record<string, unknown>, innerHTML, classesOf(record));
+    validateCSS(css as Record<string, unknown>, innerHTML, classesOf(record), cssAttributesConfig, cssPropertiesConfig);
   }
 
   const innerHTMLConfig = tagDefinition.innerHTML;
@@ -323,7 +387,10 @@ export function validateComponentNode(
       keywords,
       globalAttributes,
       tagConfig,
+      cssAttributesConfig,
+      cssPropertiesConfig,
       forwardAllowed,
+      mergedKeywords,
     );
   };
 
@@ -337,29 +404,37 @@ export default function engine<
   const HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig,
   const HTMLTagConfig extends BaseHTMLTagConfig,
   const CSSSyntaxConfig extends BaseCSSSyntaxConfig,
-  const CSSAttributesConfig extends BaseCSSAttributesConfig,
+  const CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   const CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   const CSSPropertiesConfig extends BaseCSSPropertiesConfig,
->(config: {
-  supportedKeywords: SupportedKeywords;
-  htmlAttributesConfig: ValidateHTMLAttributesConfig<
-    SupportedKeywords,
-    HTMLGlobalAttributesConfig
-  >;
-  htmlTagConfig: ValidateHTMLTagConfig<SupportedKeywords, HTMLTagConfig>;
-  cssSyntaxConfig: ValidateCSSSyntaxConfig<SupportedKeywords, CSSSyntaxConfig>;
-  cssAttributesConfig: ValidateCSSAttributesConfig<
-    SupportedKeywords,
-    CSSSyntaxConfig,
-    CSSAttributesConfig
-  >;
-  cssPseudoClassConfig: CSSPseudoClassConfig;
-  cssPropertiesConfig: ValidateCSSPropertiesConfig<
-    SupportedKeywords,
-    CSSSyntaxConfig,
-    CSSPropertiesConfig
-  >;
-},
+>(
+  config: {
+    supportedKeywords: SupportedKeywords;
+    htmlAttributesConfig: ValidateHTMLAttributesConfig<
+      SupportedKeywords,
+      HTMLGlobalAttributesConfig
+    >;
+    htmlTagConfig: ValidateHTMLTagConfig<
+      SupportedKeywords,
+      CSSAttributesConfig,
+      HTMLTagConfig
+    >;
+    cssSyntaxConfig: ValidateCSSSyntaxConfig<
+      SupportedKeywords,
+      CSSSyntaxConfig
+    >;
+    cssAttributesConfig: ValidateCSSAttributesConfig<
+      SupportedKeywords,
+      CSSSyntaxConfig,
+      CSSAttributesConfig
+    >;
+    cssPseudoClassConfig: CSSPseudoClassConfig;
+    cssPropertiesConfig: ValidateCSSPropertiesConfig<
+      SupportedKeywords,
+      CSSSyntaxConfig,
+      CSSPropertiesConfig
+    >;
+  },
   options?: { skipValidation?: boolean },
 ) {
   const createComponent = <const T extends BaseComponentStructure>(
@@ -379,12 +454,20 @@ export default function engine<
     >,
   ) => {
     if (!options?.skipValidation) {
+      const mergedKeywords = Object.assign(
+        {},
+        config.cssSyntaxConfig,
+        config.supportedKeywords,
+      );
       validateComponentNode(
         componentStructure,
         config.supportedKeywords,
         config.htmlAttributesConfig,
         config.htmlTagConfig,
+        config.cssAttributesConfig,
+        config.cssPropertiesConfig,
         null,
+        mergedKeywords,
       );
     }
     return componentStructure as T;

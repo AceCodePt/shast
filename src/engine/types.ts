@@ -1,6 +1,6 @@
 import type {
-  BaseCSSAttributesConfig,
-  InferCSSAttributesConfig,
+  BaseCSSAttributeComplexValue,
+  BaseCSSAttributesComplexConfig,
 } from "@/css/attribute-config/types.ts";
 import type { BaseCSSPropertiesConfig } from "@/css/properties-config/types.ts";
 import type { BaseCSSPseudoClassConfig } from "@/css/pseudo-class-config/types.ts";
@@ -27,11 +27,11 @@ export type BaseComponentInnerHTMLStructure =
 export type BaseComponentStructure = {
   tag?: string;
   attributes?: Record<string, any>;
-  css?: Record<string, unknown>;
+  css?: Record<string, any>;
   innerHTML?: BaseComponentInnerHTMLStructure;
   // This is to make the stuff extra premissible so types won't
   // get screwed over
-  // [att: string]: unknown;
+  [att: string]: unknown;
 };
 
 type IsTagAllowText<
@@ -70,7 +70,7 @@ type ValidateComponentInnerHTMLItemStructure<
   HTMLInferedAttributesConfig extends Record<string, any>,
   HTMLTagConfig extends BaseHTMLTagConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
-  CSSAttributesConfig extends BaseCSSAttributesConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   AllowedTags extends keyof HTMLTagConfig | "#text",
@@ -105,7 +105,7 @@ type ValidateComponentInnerHTMLStructure<
   HTMLInferedAttributesConfig extends Record<string, any>,
   HTMLTagConfig extends BaseHTMLTagConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
-  CSSAttributesConfig extends BaseCSSAttributesConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   AllowedTags extends keyof HTMLTagConfig | "#text",
@@ -160,96 +160,147 @@ type SplitSpace<S extends string> = string extends S
         ? Trim<Head> | SplitSpace<Tail>
         : Trim<S>;
 
+type FilterOut<
+  Obj extends Record<string, any>,
+  K extends keyof Obj,
+  T,
+> = Obj[K] extends T ? K : never;
+
+// Union of keys whose value matches T
+type KeysMatching<Obj extends Record<string, any>, T> = {
+  [K in keyof Obj]: FilterOut<Obj, K, T>;
+}[keyof Obj];
+
+// A value key of a complex attribute is either a literal (`"flex"`) or a DSL
+// pattern (`"<length>"`). Turn it into the type a user may actually write.
+type ResolveComplexValue<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  V extends string,
+> = V extends `<${string}>` ? DSLInfer<Keywords & CSSSyntaxConfig, V> : V;
+
+// Every self prop unlocked by the complex attributes actually written on this
+// node. Each owner keeps its own props: the contributions are INTERSECTED, so
+// an unrelated owner can no longer widen another owner's prop to `string`.
+type DependentSelfProps<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  CSSValue extends Record<string, any>,
+  Owners extends keyof CSSAttributesConfig & keyof CSSValue = KeysMatching<
+    CSSAttributesConfig,
+    BaseCSSAttributeComplexValue
+  > &
+    keyof CSSValue,
+> = [Owners] extends [never]
+  ? {}
+  : UnionToIntersection<
+      {
+        [K1 in Owners]: {
+          [
+            V in keyof CSSAttributesConfig[K1] & string
+          ]: CSSValue[K1] extends ResolveComplexValue<
+            Keywords,
+            CSSSyntaxConfig,
+            V
+          >
+            ? CSSAttributesConfig[K1][V] extends BaseCSSAttributeComplexValue[string]
+              ? {
+                  [P in keyof CSSAttributesConfig[K1][V]["self"]]: DSLInfer<
+                    Keywords & CSSSyntaxConfig,
+                    CSSAttributesConfig[K1][V]["self"][P]
+                  >;
+                }
+              : {}
+            : {};
+        }[keyof CSSAttributesConfig[K1] & string];
+      }[Owners]
+    >;
+
 type ValidateComponentCSSStructure<
   Keywords extends SupportedKeywordsConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
-  CSSAttributesConfig extends BaseCSSAttributesConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   T extends BaseComponentStructure,
+  CSSValue extends Record<string, any> | undefined,
   IsInPseudoElement extends boolean,
-> = {
-  [K in keyof T["innerHTML"] as `> ${K & string}`]?: K extends string
-    ? T["innerHTML"][K] extends string[]
-      ? never
-      : T["innerHTML"][K] extends
-            | (string | Record<string, any>)[]
-            | Record<string, any>[]
-        ? ValidateComponentCSSStructure<
+> =
+  CSSValue extends Record<string, any>
+    ? {
+        [K in keyof T["innerHTML"] as `> ${K & string}`]?: K extends string
+          ? T["innerHTML"][K] extends string[]
+            ? never
+            : T["innerHTML"][K] extends
+                  (string | Record<string, any>)[] | Record<string, any>[]
+              ? ValidateComponentCSSStructure<
+                  Keywords,
+                  HTMLTagConfig,
+                  CSSSyntaxConfig,
+                  CSSAttributesConfig,
+                  CSSPseudoClassConfig,
+                  CSSPropertiesConfig,
+                  UnionToIntersection<
+                    Extract<T["innerHTML"][K][number], BaseComponentStructure>
+                  >,
+                  CSSValue[`> ${K & string}`],
+                  IsInPseudoElement
+                >
+              : T["innerHTML"][K] extends Record<string, any>
+                ? ValidateComponentCSSStructure<
+                    Keywords,
+                    HTMLTagConfig,
+                    CSSSyntaxConfig,
+                    CSSAttributesConfig,
+                    CSSPseudoClassConfig,
+                    CSSPropertiesConfig,
+                    T["innerHTML"][K],
+                    CSSValue[`> ${K & string}`],
+                    IsInPseudoElement
+                  >
+                : never
+          : T["innerHTML"][K];
+      } & {
+        [K in KeysMatching<CSSAttributesConfig, string>]?: DSLInfer<
+          CSSSyntaxConfig & Keywords,
+          CSSAttributesConfig[K] & string
+        >;
+      } & {
+        [
+          K in KeysMatching<CSSAttributesConfig, BaseCSSAttributeComplexValue>
+        ]?: ResolveComplexValue<
+          Keywords,
+          CSSSyntaxConfig,
+          keyof CSSAttributesConfig[K] & string
+        >;
+      } & Partial<
+          DependentSelfProps<
             Keywords,
-            HTMLTagConfig,
             CSSSyntaxConfig,
             CSSAttributesConfig,
-            CSSPseudoClassConfig,
-            CSSPropertiesConfig,
-            UnionToIntersection<
-              Extract<T["innerHTML"][K][number], BaseComponentStructure>
-            >,
-            IsInPseudoElement
+            CSSValue
           >
-        : T["innerHTML"][K] extends Record<string, any>
-          ? ValidateComponentCSSStructure<
-              Keywords,
-              HTMLTagConfig,
-              CSSSyntaxConfig,
-              CSSAttributesConfig,
-              CSSPseudoClassConfig,
-              CSSPropertiesConfig,
-              T["innerHTML"][K],
-              IsInPseudoElement
-            >
-          : never
-    : T["innerHTML"][K];
-} & Partial<
-  InferCSSAttributesConfig<Keywords, CSSSyntaxConfig, CSSAttributesConfig>
-> & {
-    [K in keyof CSSPropertiesConfig]?: K extends `--${string}`
-      ? CSSPropertiesConfig[K]["syntax"] extends string
-        ? DSLInfer<Keywords & CSSSyntaxConfig, CSSPropertiesConfig[K]["syntax"]>
-        : never
-      : CSSPropertiesConfig[K];
-  } & {
-    [K in
-      | CSSPseudoClassConfig[number]
-      | (T["tag"] extends string
-          ? HTMLTagConfig[T["tag"]]["cssPseudoClass"] extends any[]
-            ? HTMLTagConfig[T["tag"]]["cssPseudoClass"][number]
-            : never
-          : never)]?: ValidateComponentCSSStructure<
-      Keywords,
-      HTMLTagConfig,
-      CSSSyntaxConfig,
-      CSSAttributesConfig,
-      CSSPseudoClassConfig,
-      CSSPropertiesConfig,
-      T,
-      IsInPseudoElement
-    >;
-  } & (false extends IsInPseudoElement
-    ? {
-        [K in T["tag"] extends string
-          ? HTMLTagConfig[T["tag"]]["cssPseudoElement"] extends any[]
-            ? HTMLTagConfig[T["tag"]]["cssPseudoElement"][number]
-            : never
-          : never]?: ValidateComponentCSSStructure<
-          Keywords,
-          HTMLTagConfig,
-          CSSSyntaxConfig,
-          CSSAttributesConfig,
-          CSSPseudoClassConfig,
-          CSSPropertiesConfig,
-          T,
-          true
-        >;
-      }
-    : {}) &
-  ("class" extends keyof T["attributes"]
-    ? T["attributes"]["class"] extends string
-      ? {
-          [K in SplitSpace<
-            T["attributes"]["class"]
-          > as `&.${K}`]?: ValidateComponentCSSStructure<
+        > & {
+          [K in keyof CSSPropertiesConfig]?: K extends `--${string}`
+            ? CSSPropertiesConfig[K]["syntax"] extends string
+              ? DSLInfer<
+                  Keywords & CSSSyntaxConfig,
+                  CSSPropertiesConfig[K]["syntax"]
+                >
+              : never
+            : CSSPropertiesConfig[K];
+        } & {
+          [
+            K in
+              | CSSPseudoClassConfig[number]
+              | (T["tag"] extends string
+                  ? HTMLTagConfig[T["tag"]]["cssPseudoClass"] extends any[]
+                    ? HTMLTagConfig[T["tag"]]["cssPseudoClass"][number]
+                    : never
+                  : never)
+          ]?: ValidateComponentCSSStructure<
             Keywords,
             HTMLTagConfig,
             CSSSyntaxConfig,
@@ -257,18 +308,57 @@ type ValidateComponentCSSStructure<
             CSSPseudoClassConfig,
             CSSPropertiesConfig,
             T,
-            false
+            CSSValue[K],
+            IsInPseudoElement
           >;
-        }
-      : {}
-    : {});
+        } & (false extends IsInPseudoElement
+          ? {
+              [
+                K in T["tag"] extends string
+                  ? HTMLTagConfig[T["tag"]]["cssPseudoElement"] extends any[]
+                    ? HTMLTagConfig[T["tag"]]["cssPseudoElement"][number]
+                    : never
+                  : never
+              ]?: ValidateComponentCSSStructure<
+                Keywords,
+                HTMLTagConfig,
+                CSSSyntaxConfig,
+                CSSAttributesConfig,
+                CSSPseudoClassConfig,
+                CSSPropertiesConfig,
+                T,
+                CSSValue[K],
+                true
+              >;
+            }
+          : {}) &
+        ("class" extends keyof T["attributes"]
+          ? T["attributes"]["class"] extends string
+            ? {
+                [
+                  K in SplitSpace<T["attributes"]["class"]> as `&.${K}`
+                ]?: ValidateComponentCSSStructure<
+                  Keywords,
+                  HTMLTagConfig,
+                  CSSSyntaxConfig,
+                  CSSAttributesConfig,
+                  CSSPseudoClassConfig,
+                  CSSPropertiesConfig,
+                  T,
+                  CSSValue[`&.${K}`],
+                  false
+                >;
+              }
+            : {}
+          : {})
+    : {};
 
 export type ValidateComponentStructure<
   Keywords extends SupportedKeywordsConfig,
   HTMLInferedAttributesConfig extends Record<string, any>,
   HTMLTagConfig extends BaseHTMLTagConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
-  CSSAttributesConfig extends BaseCSSAttributesConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   AllowedTags extends keyof HTMLTagConfig,
@@ -280,16 +370,19 @@ export type ValidateComponentStructure<
         ? K extends "tag"
           ? T[K]
           : K extends "css"
-            ? ValidateComponentCSSStructure<
-                Keywords,
-                HTMLTagConfig,
-                CSSSyntaxConfig,
-                CSSAttributesConfig,
-                CSSPseudoClassConfig,
-                CSSPropertiesConfig,
-                T,
-                false
-              >
+            ? T["css"] extends Record<string, any>
+              ? ValidateComponentCSSStructure<
+                  Keywords,
+                  HTMLTagConfig,
+                  CSSSyntaxConfig,
+                  CSSAttributesConfig,
+                  CSSPseudoClassConfig,
+                  CSSPropertiesConfig,
+                  T,
+                  T["css"],
+                  false
+                >
+              : T["css"]
             : K extends "attributes"
               ? HTMLInferedAttributesConfig &
                   (HTMLTagConfig[T["tag"]]["attributes"] extends BaseHTMLAttributesConfig
