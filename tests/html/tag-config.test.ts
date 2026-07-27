@@ -2,8 +2,38 @@ import test, { describe } from "node:test";
 import assert from "node:assert";
 import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "@/dsl/index.ts";
 import { htmlTagConfig } from "@/html/tag-config/index.ts";
+import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/minimal.ts";
 import type { ValidateHTMLTagConfig } from "@/html/tag-config/types.ts";
 import { assertType, type Equal } from "../type-utils.ts";
+
+type CSSConfig = {
+  display: {
+    block: { self: {}; children: {} };
+    inline: { self: {}; children: {} };
+    "inline-block": { self: {}; children: {} };
+    "list-item": { self: {}; children: {} };
+    none: { self: {}; children: {} };
+    flex: {
+      self: {
+        "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'";
+        "justify-content": "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around'";
+        "align-items": "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'";
+        gap: "<length>";
+      };
+      children: {};
+    };
+    grid: {
+      self: {
+        gap: "<length>";
+        "justify-content": "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around'";
+        "align-items": "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'";
+      };
+      children: {};
+    };
+  };
+};
+
+type DisplayKey = keyof CSSConfig["display"] & string;
 
 describe("htmlTagConfig", () => {
   describe("Type Validation", () => {
@@ -12,8 +42,10 @@ describe("htmlTagConfig", () => {
         Equal<
           ValidateHTMLTagConfig<
             SupportedKeywords,
+            CSSConfig,
             {
               br: {
+                display: "block";
                 innerHTML: [];
                 attributes: {};
                 cssPseudoClass: [];
@@ -23,6 +55,7 @@ describe("htmlTagConfig", () => {
           >,
           {
             br: {
+              display: DisplayKey;
               attributes: {};
               innerHTML: "*" | ("#text" | "br")[];
               cssPseudoClass: `:${string}${string}`[];
@@ -38,8 +71,10 @@ describe("htmlTagConfig", () => {
         Equal<
           ValidateHTMLTagConfig<
             SupportedKeywords,
+            CSSConfig,
             {
               p: {
+                display: "block";
                 innerHTML: ["#text"];
                 attributes: {};
                 cssPseudoClass: [];
@@ -49,6 +84,7 @@ describe("htmlTagConfig", () => {
           >,
           {
             p: {
+              display: DisplayKey;
               attributes: {};
               innerHTML: "*" | ("#text" | "p")[];
               cssPseudoClass: `:${string}${string}`[];
@@ -64,8 +100,10 @@ describe("htmlTagConfig", () => {
         Equal<
           ValidateHTMLTagConfig<
             SupportedKeywords,
+            CSSConfig,
             {
               div: {
+                display: "block";
                 innerHTML: "*";
                 attributes: {};
                 cssPseudoClass: [];
@@ -75,6 +113,7 @@ describe("htmlTagConfig", () => {
           >,
           {
             div: {
+              display: DisplayKey;
               attributes: {};
               innerHTML: "*" | ("#text" | "div")[];
               cssPseudoClass: `:${string}${string}`[];
@@ -90,8 +129,10 @@ describe("htmlTagConfig", () => {
         Equal<
           ValidateHTMLTagConfig<
             SupportedKeywords,
+            CSSConfig,
             {
               a: {
+                display: "inline";
                 attributes: { href: "string | undefined" };
                 innerHTML: ["#text"];
                 cssPseudoClass: [];
@@ -101,6 +142,7 @@ describe("htmlTagConfig", () => {
           >,
           {
             a: {
+              display: DisplayKey;
               attributes: { href: "string | undefined" };
               innerHTML: "*" | ("#text" | "a")[];
               cssPseudoClass: `:${string}${string}`[];
@@ -116,14 +158,17 @@ describe("htmlTagConfig", () => {
         Equal<
           ValidateHTMLTagConfig<
             SupportedKeywords,
+            CSSConfig,
             {
               ul: {
+                display: "block";
                 innerHTML: ["li"];
                 attributes: {};
                 cssPseudoClass: [];
                 cssPseudoElement: [];
               };
               li: {
+                display: "list-item";
                 innerHTML: ["#text"];
                 attributes: {};
                 cssPseudoClass: [];
@@ -133,12 +178,14 @@ describe("htmlTagConfig", () => {
           >,
           {
             ul: {
+              display: DisplayKey;
               attributes: {};
               innerHTML: "*" | ("#text" | "ul" | "li")[];
               cssPseudoClass: `:${string}${string}`[];
               cssPseudoElement: `::${string}${string}`[];
             };
             li: {
+              display: DisplayKey;
               attributes: {};
               innerHTML: "*" | ("#text" | "ul" | "li")[];
               cssPseudoClass: `:${string}${string}`[];
@@ -154,14 +201,17 @@ describe("htmlTagConfig", () => {
         Equal<
           ValidateHTMLTagConfig<
             SupportedKeywords,
+            CSSConfig,
             {
               p: {
+                display: "block";
                 innerHTML: ["#text", "span"];
                 attributes: {};
                 cssPseudoClass: [];
                 cssPseudoElement: [];
               };
               span: {
+                display: "inline";
                 innerHTML: ["#text"];
                 attributes: {};
                 cssPseudoClass: [];
@@ -171,40 +221,16 @@ describe("htmlTagConfig", () => {
           >,
           {
             p: {
+              display: DisplayKey;
               attributes: {};
               innerHTML: "*" | ("#text" | "p" | "span")[];
               cssPseudoClass: `:${string}${string}`[];
               cssPseudoElement: `::${string}${string}`[];
             };
             span: {
+              display: DisplayKey;
               attributes: {};
               innerHTML: "*" | ("#text" | "p" | "span")[];
-              cssPseudoClass: `:${string}${string}`[];
-              cssPseudoElement: `::${string}${string}`[];
-            };
-          }
-        >
-      >();
-    });
-
-    test("tag with no attributes passes validation", () => {
-      assertType<
-        Equal<
-          ValidateHTMLTagConfig<
-            SupportedKeywords,
-            {
-              div: {
-                innerHTML: [];
-                attributes: {};
-                cssPseudoClass: [];
-                cssPseudoElement: [];
-              };
-            }
-          >,
-          {
-            div: {
-              innerHTML: "*" | ("#text" | "div")[];
-              attributes: {};
               cssPseudoClass: `:${string}${string}`[];
               cssPseudoElement: `::${string}${string}`[];
             };
@@ -218,21 +244,23 @@ describe("htmlTagConfig", () => {
     test("tag config type is preserved through inference", () => {
       type Config = {
         br: {
+          display: "block";
           innerHTML: [];
           attributes: {};
           cssPseudoClass: [];
           cssPseudoElement: [];
         };
       };
-      const _config = htmlTagConfig(SUPPORTED_KEYWORDS, {} as Config);
+      const _config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {} as Config);
       assertType<Equal<typeof _config, Config>>();
     });
   });
 
   describe("Runtime Validation", () => {
     test("accepts a tag with an empty innerHTML array", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         br: {
+          display: "inline",
           innerHTML: [],
           attributes: {},
           cssPseudoClass: [],
@@ -241,6 +269,7 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         br: {
+          display: "inline",
           innerHTML: [],
           attributes: {},
           cssPseudoClass: [],
@@ -250,8 +279,9 @@ describe("htmlTagConfig", () => {
     });
 
     test("accepts a tag with #text in innerHTML", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         p: {
+          display: "block",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -260,6 +290,7 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         p: {
+          display: "block",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -271,14 +302,16 @@ describe("htmlTagConfig", () => {
     test("accepts a * wildcard innerHTML (type-level only, runtime requires explicit tags)", () => {
       // The * wildcard is accepted at the type level but runtime iterates the string
       // as individual characters, so use explicit tag references instead
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         div: {
+          display: "block",
           innerHTML: ["span"],
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
+          display: "inline",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -287,12 +320,14 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         div: {
+          display: "block",
           innerHTML: ["span"],
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
+          display: "inline",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -302,14 +337,16 @@ describe("htmlTagConfig", () => {
     });
 
     test("accepts a tag referencing another known tag in innerHTML", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         ul: {
+          display: "block",
           innerHTML: ["li"],
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         li: {
+          display: "list-item",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -318,12 +355,14 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         ul: {
+          display: "block",
           innerHTML: ["li"],
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         li: {
+          display: "list-item",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -333,8 +372,9 @@ describe("htmlTagConfig", () => {
     });
 
     test("accepts tags with valid DSL string attributes", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         a: {
+          display: "inline",
           attributes: {
             href: "string | undefined",
             target: "string | undefined",
@@ -346,6 +386,7 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         a: {
+          display: "inline",
           attributes: {
             href: "string | undefined",
             target: "string | undefined",
@@ -358,14 +399,16 @@ describe("htmlTagConfig", () => {
     });
 
     test("accepts multiple tags with attributes and cross-references", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         ul: {
+          display: "block",
           attributes: { id: "string | undefined" },
           innerHTML: ["li"],
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         li: {
+          display: "list-item",
           attributes: { class: "string | undefined" },
           innerHTML: ["#text"],
           cssPseudoClass: [],
@@ -374,12 +417,14 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         ul: {
+          display: "block",
           attributes: { id: "string | undefined" },
           innerHTML: ["li"],
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         li: {
+          display: "list-item",
           attributes: { class: "string | undefined" },
           innerHTML: ["#text"],
           cssPseudoClass: [],
@@ -389,8 +434,9 @@ describe("htmlTagConfig", () => {
     });
 
     test("returns the same object reference", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         span: {
+          display: "inline",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -399,6 +445,7 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         span: {
+          display: "inline",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -408,8 +455,9 @@ describe("htmlTagConfig", () => {
     });
 
     test("accepts a tag with literal union attribute", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         bdo: {
+          display: "inline",
           attributes: { dir: "'ltr' | 'rtl' | 'auto' | undefined" },
           innerHTML: ["#text"],
           cssPseudoClass: [],
@@ -418,6 +466,7 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         bdo: {
+          display: "inline",
           attributes: { dir: "'ltr' | 'rtl' | 'auto' | undefined" },
           innerHTML: ["#text"],
           cssPseudoClass: [],
@@ -427,8 +476,9 @@ describe("htmlTagConfig", () => {
     });
 
     test("a tag can reference itself in innerHTML", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         div: {
+          display: "block",
           innerHTML: ["div"],
           attributes: {},
           cssPseudoClass: [],
@@ -437,6 +487,7 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         div: {
+          display: "block",
           innerHTML: ["div"],
           attributes: {},
           cssPseudoClass: [],
@@ -446,14 +497,16 @@ describe("htmlTagConfig", () => {
     });
 
     test("a tag can have both #text and another tag in innerHTML", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         p: {
+          display: "block",
           innerHTML: ["#text", "span"],
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
+          display: "inline",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -462,12 +515,14 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         p: {
+          display: "block",
           innerHTML: ["#text", "span"],
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
+          display: "inline",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -477,20 +532,23 @@ describe("htmlTagConfig", () => {
     });
 
     test("different tags can have different attribute sets", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         a: {
+          display: "inline",
           attributes: { href: "string", rel: "string | undefined" },
           innerHTML: ["#text"],
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         img: {
+          display: "inline",
           attributes: { src: "string", alt: "string" },
           innerHTML: [],
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         button: {
+          display: "inline-block",
           attributes: {
             disabled: "boolean | undefined",
             type: "'submit' | 'button' | undefined",
@@ -502,18 +560,21 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         a: {
+          display: "inline",
           attributes: { href: "string", rel: "string | undefined" },
           innerHTML: ["#text"],
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         img: {
+          display: "inline",
           attributes: { src: "string", alt: "string" },
           innerHTML: [],
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         button: {
+          display: "inline-block",
           attributes: {
             disabled: "boolean | undefined",
             type: "'submit' | 'button' | undefined",
@@ -529,8 +590,9 @@ describe("htmlTagConfig", () => {
   describe("Error handling", () => {
     test("throws when innerHTML references an unknown tag", () => {
       assert.throws(() =>
-        htmlTagConfig(SUPPORTED_KEYWORDS, {
+        htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           div: {
+            display: "block",
             // @ts-expect-error
             innerHTML: ["span"],
             attributes: {},
@@ -544,8 +606,9 @@ describe("htmlTagConfig", () => {
     test("throws for invalid DSL string in an attribute value", () => {
       assert.throws(
         () =>
-          htmlTagConfig(SUPPORTED_KEYWORDS, {
+          htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
             div: {
+              display: "block",
               // @ts-expect-error
               attributes: { id: "xyz" },
               innerHTML: [],
@@ -559,8 +622,9 @@ describe("htmlTagConfig", () => {
 
     test("throws when innerHTML references a tag that is only defined elsewhere", () => {
       assert.throws(() =>
-        htmlTagConfig(SUPPORTED_KEYWORDS, {
+        htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           p: {
+            display: "block",
             // @ts-expect-error - span is not defined in this config
             innerHTML: ["#text", "span"],
             attributes: {},
@@ -574,8 +638,9 @@ describe("htmlTagConfig", () => {
     test("throws for partially invalid union in attribute", () => {
       assert.throws(
         () =>
-          htmlTagConfig(SUPPORTED_KEYWORDS, {
+          htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
             div: {
+              display: "block",
               // @ts-expect-error
               attributes: { id: "string | xyz" },
               innerHTML: [],
@@ -590,13 +655,14 @@ describe("htmlTagConfig", () => {
 
   describe("Edge Cases", () => {
     test("empty tag config is accepted", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {});
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {});
       assert.deepStrictEqual(config, {});
     });
 
     test("single tag with empty innerHTML and no attributes", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         br: {
+          display: "block",
           innerHTML: [],
           attributes: {},
           cssPseudoClass: [],
@@ -605,6 +671,7 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         br: {
+          display: "block",
           innerHTML: [],
           attributes: {},
           cssPseudoClass: [],
@@ -614,14 +681,16 @@ describe("htmlTagConfig", () => {
     });
 
     test("object reference identity preserved for complex config", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         div: {
+          display: "block",
           innerHTML: ["span"],
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
+          display: "inline",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -630,12 +699,14 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         div: {
+          display: "block",
           innerHTML: ["span"],
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
+          display: "inline",
           innerHTML: ["#text"],
           attributes: {},
           cssPseudoClass: [],
@@ -645,8 +716,9 @@ describe("htmlTagConfig", () => {
     });
 
     test("tag can have attributes with template literal DSL", () => {
-      const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         div: {
+          display: "block",
           attributes: { style: "`${string}` | undefined" },
           innerHTML: [],
           cssPseudoClass: [],
@@ -655,6 +727,7 @@ describe("htmlTagConfig", () => {
       });
       assert.deepStrictEqual(config, {
         div: {
+          display: "block",
           attributes: { style: "`${string}` | undefined" },
           innerHTML: [],
           cssPseudoClass: [],
@@ -671,8 +744,10 @@ describe("htmlTagConfig", () => {
           Equal<
             ValidateHTMLTagConfig<
               SupportedKeywords,
+              CSSConfig,
               {
                 button: {
+                  display: "block";
                   innerHTML: ["#text"];
                   attributes: {};
                   cssPseudoClass: [":hover", ":focus"];
@@ -682,6 +757,7 @@ describe("htmlTagConfig", () => {
             >,
             {
               button: {
+                display: DisplayKey;
                 innerHTML: "*" | ("#text" | "button")[];
                 attributes: {};
                 cssPseudoClass: `:${string}${string}`[];
@@ -697,9 +773,11 @@ describe("htmlTagConfig", () => {
           Equal<
             ValidateHTMLTagConfig<
               SupportedKeywords,
+              CSSConfig,
               // @ts-expect-error
               {
                 button: {
+                  display: "block";
                   innerHTML: ["#text"];
                   attributes: {};
                   cssPseudoClass: ["hover"];
@@ -709,6 +787,7 @@ describe("htmlTagConfig", () => {
             >,
             {
               button: {
+                display: DisplayKey;
                 innerHTML: "*" | ("#text" | "button")[];
                 attributes: {};
                 cssPseudoClass: `:${string}${string}`[];
@@ -724,8 +803,10 @@ describe("htmlTagConfig", () => {
           Equal<
             ValidateHTMLTagConfig<
               SupportedKeywords,
+              CSSConfig,
               {
                 button: {
+                  display: "block";
                   innerHTML: ["#text"];
                   attributes: {};
                   cssPseudoClass: [];
@@ -735,6 +816,7 @@ describe("htmlTagConfig", () => {
             >,
             {
               button: {
+                display: DisplayKey;
                 innerHTML: "*" | ("#text" | "button")[];
                 attributes: {};
                 cssPseudoClass: `:${string}${string}`[];
@@ -748,8 +830,9 @@ describe("htmlTagConfig", () => {
 
     describe("Runtime Validation", () => {
       test("accepts empty pseudo-class list", () => {
-        const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+        const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           button: {
+            display: "inline-block",
             innerHTML: ["#text"],
             attributes: {},
             cssPseudoClass: [],
@@ -758,6 +841,7 @@ describe("htmlTagConfig", () => {
         });
         assert.deepStrictEqual(config, {
           button: {
+            display: "inline-block",
             innerHTML: ["#text"],
             attributes: {},
             cssPseudoClass: [],
@@ -767,8 +851,9 @@ describe("htmlTagConfig", () => {
       });
 
       test("preserves object reference", () => {
-        const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+        const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           button: {
+            display: "inline-block",
             innerHTML: ["#text"],
             attributes: {},
             cssPseudoClass: [":hover"],
@@ -779,8 +864,9 @@ describe("htmlTagConfig", () => {
       });
 
       test("accepts valid pseudo-class references", () => {
-        const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+        const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           button: {
+            display: "inline-block",
             innerHTML: ["#text"],
             attributes: {},
             cssPseudoClass: [":hover", ":focus"],
@@ -789,6 +875,7 @@ describe("htmlTagConfig", () => {
         });
         assert.deepStrictEqual(config, {
           button: {
+            display: "inline-block",
             innerHTML: ["#text"],
             attributes: {},
             cssPseudoClass: [":hover", ":focus"],
@@ -800,20 +887,23 @@ describe("htmlTagConfig", () => {
 
     describe("Edge Cases", () => {
       test("multiple tags with different pseudo-class lists", () => {
-        const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+        const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           button: {
+            display: "inline-block",
             innerHTML: ["#text"],
             attributes: {},
             cssPseudoClass: [":hover", ":focus"],
             cssPseudoElement: [],
           },
           div: {
+            display: "block",
             innerHTML: ["#text"],
             attributes: {},
             cssPseudoClass: [":active"],
             cssPseudoElement: [],
           },
           span: {
+            display: "inline",
             innerHTML: ["#text"],
             attributes: {},
             cssPseudoClass: [],
@@ -822,18 +912,21 @@ describe("htmlTagConfig", () => {
         });
         assert.deepStrictEqual(config, {
           button: {
+            display: "inline-block",
             innerHTML: ["#text"],
             attributes: {},
             cssPseudoClass: [":hover", ":focus"],
             cssPseudoElement: [],
           },
           div: {
+            display: "block",
             innerHTML: ["#text"],
             attributes: {},
             cssPseudoClass: [":active"],
             cssPseudoElement: [],
           },
           span: {
+            display: "inline",
             innerHTML: ["#text"],
             attributes: {},
             cssPseudoClass: [],
@@ -843,14 +936,16 @@ describe("htmlTagConfig", () => {
       });
 
       test("tag with cssPseudoClass: [] after one with non-empty list", () => {
-        const config = htmlTagConfig(SUPPORTED_KEYWORDS, {
+        const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           button: {
+            display: "inline-block",
             innerHTML: [],
             attributes: {},
             cssPseudoClass: [":hover"],
             cssPseudoElement: [],
           },
           span: {
+            display: "inline",
             innerHTML: [],
             attributes: {},
             cssPseudoClass: [],
@@ -859,12 +954,14 @@ describe("htmlTagConfig", () => {
         });
         assert.deepStrictEqual(config, {
           button: {
+            display: "inline-block",
             innerHTML: [],
             attributes: {},
             cssPseudoClass: [":hover"],
             cssPseudoElement: [],
           },
           span: {
+            display: "inline",
             innerHTML: [],
             attributes: {},
             cssPseudoClass: [],

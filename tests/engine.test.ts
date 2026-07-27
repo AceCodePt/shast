@@ -82,37 +82,57 @@ describe("engine", () => {
 
 const EMPTY_PSEUDO_CLASSES = [] as const;
 
+const MOCK_CSS_ATTR_CONFIG = cssAttributeConfig(SUPPORTED_KEYWORDS, cssSyntaxConfig(SUPPORTED_KEYWORDS, {}), {
+  display: {
+    block: { self: {}, children: {} },
+    inline: { self: {}, children: {} },
+    "inline-block": { self: {}, children: {} },
+    flex: { self: {}, children: {} },
+    grid: { self: {}, children: {} },
+    none: { self: {}, children: {} },
+    "list-item": { self: {}, children: {} },
+    contents: { self: {}, children: {} },
+    table: { self: {}, children: {} },
+    "table-cell": { self: {}, children: {} },
+  },
+} as const);
+
 const MOCK_SHARED_ATTRIBUTES = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
   id: "string | undefined",
   class: "string | undefined",
 });
 
-const MOCK_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, {
+const MOCK_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, MOCK_CSS_ATTR_CONFIG, {
   div: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   p: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text"],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   img: {
+    display: "inline",
     attributes: { src: "string", alt: "string" },
     innerHTML: [],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   ul: {
+    display: "block",
     attributes: {},
     innerHTML: ["li"],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   li: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "div"],
     cssPseudoClass: [],
@@ -120,44 +140,51 @@ const MOCK_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, {
   },
 });
 
-const MOCK_INHERIT_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, {
+const MOCK_INHERIT_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, MOCK_CSS_ATTR_CONFIG, {
   a: {
+    display: "inline",
     attributes: {},
     innerHTML: ["#text", "h1", "span", "ul", "div"],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   h1: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "span", "b"],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   span: {
+    display: "inline",
     attributes: {},
     innerHTML: ["#text", "b"],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   b: {
+    display: "inline",
     attributes: {},
     innerHTML: ["#text"],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   ul: {
+    display: "block",
     attributes: {},
     innerHTML: ["li"],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   li: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text", "div", "span", "b"],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   div: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
@@ -166,11 +193,6 @@ const MOCK_INHERIT_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, {
 });
 
 const MOCK_CSS_SYNTAX = cssSyntaxConfig(SUPPORTED_KEYWORDS, {});
-const MOCK_CSS_ATTRIBUTES = cssAttributeConfig(
-  SUPPORTED_KEYWORDS,
-  MOCK_CSS_SYNTAX,
-  {},
-);
 const MOCK_CSS_PROPERTIES = cssPropertiesConfig(
   SUPPORTED_KEYWORDS,
   MOCK_CSS_SYNTAX,
@@ -182,7 +204,7 @@ const { createComponent: createMockComponent } = engine({
   htmlAttributesConfig: MOCK_SHARED_ATTRIBUTES,
   htmlTagConfig: MOCK_TAG_CONFIG,
   cssSyntaxConfig: MOCK_CSS_SYNTAX,
-  cssAttributesConfig: MOCK_CSS_ATTRIBUTES,
+  cssAttributesConfig: MOCK_CSS_ATTR_CONFIG,
   cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
   cssPropertiesConfig: MOCK_CSS_PROPERTIES,
 });
@@ -192,7 +214,7 @@ const { createComponent: createInheritComponent } = engine({
   htmlAttributesConfig: MOCK_SHARED_ATTRIBUTES,
   htmlTagConfig: MOCK_INHERIT_CONFIG,
   cssSyntaxConfig: MOCK_CSS_SYNTAX,
-  cssAttributesConfig: MOCK_CSS_ATTRIBUTES,
+  cssAttributesConfig: MOCK_CSS_ATTR_CONFIG,
   cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
   cssPropertiesConfig: MOCK_CSS_PROPERTIES,
 });
@@ -735,8 +757,13 @@ describe("createComponent (engine)", () => {
       MOCK_CSS_SYNTAX,
       {
         color: "string",
-        display: "'block' | 'inline' | 'none'",
-      },
+        display: {
+          block: { self: {}, children: {} },
+          inline: { self: {}, children: {} },
+          "inline-block": { self: {}, children: {} },
+          none: { self: {}, children: {} },
+        },
+      } as const,
     );
     const PSEUDO_CSS_PROPERTIES = cssPropertiesConfig(
       SUPPORTED_KEYWORDS,
@@ -745,20 +772,23 @@ describe("createComponent (engine)", () => {
     );
     const GLOBAL_PSEUDO = [":active"] as const;
 
-    const PSEUDO_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, {
+    const PSEUDO_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, MOCK_CSS_ATTR_CONFIG, {
       button: {
+        display: "inline-block",
         attributes: {},
         innerHTML: ["#text"],
         cssPseudoClass: [":hover", ":focus"],
         cssPseudoElement: [],
       },
       span: {
+        display: "inline",
         attributes: {},
         innerHTML: ["#text"],
         cssPseudoClass: [],
         cssPseudoElement: [],
       },
       div: {
+        display: "block",
         attributes: {},
         innerHTML: "*",
         cssPseudoClass: [],
@@ -939,8 +969,13 @@ describe("createComponent (engine)", () => {
       MOCK_CSS_SYNTAX,
       {
         color: "string",
-        display: "'block' | 'inline' | 'none'",
-      },
+        display: {
+          block: { self: {}, children: {} },
+          inline: { self: {}, children: {} },
+          "inline-block": { self: {}, children: {} },
+          none: { self: {}, children: {} },
+        },
+      } as const,
     );
     const PE_CSS_PROPERTIES = cssPropertiesConfig(
       SUPPORTED_KEYWORDS,
@@ -948,20 +983,23 @@ describe("createComponent (engine)", () => {
       {},
     );
 
-    const PE_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, {
+    const PE_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, MOCK_CSS_ATTR_CONFIG, {
       field: {
+        display: "inline-block",
         attributes: {},
         innerHTML: ["#text"],
         cssPseudoClass: [":hover"],
         cssPseudoElement: ["::placeholder"],
       },
       box: {
+        display: "block",
         attributes: {},
         innerHTML: "*",
         cssPseudoClass: [],
         cssPseudoElement: ["::before", "::after"],
       },
       span: {
+        display: "inline",
         attributes: {},
         innerHTML: ["#text"],
         cssPseudoClass: [],
@@ -2084,8 +2122,13 @@ describe("createComponent (engine)", () => {
           MOCK_CSS_SYNTAX,
           {
             color: "string",
-            display: "'block' | 'inline' | 'none'",
-          },
+            display: {
+              block: { self: {}, children: {} },
+              inline: { self: {}, children: {} },
+              "inline-block": { self: {}, children: {} },
+              none: { self: {}, children: {} },
+            },
+          } as const,
         );
         const CLASS_CSS_PROPERTIES = cssPropertiesConfig(
           SUPPORTED_KEYWORDS,
@@ -2093,20 +2136,23 @@ describe("createComponent (engine)", () => {
           {},
         );
 
-        const CLASS_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, {
+        const CLASS_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, MOCK_CSS_ATTR_CONFIG, {
           button: {
+            display: "inline-block",
             attributes: {},
             innerHTML: ["#text"],
             cssPseudoClass: [":hover"],
             cssPseudoElement: [],
           },
           span: {
+            display: "inline",
             attributes: {},
             innerHTML: ["#text"],
             cssPseudoClass: [],
             cssPseudoElement: [],
           },
           div: {
+            display: "block",
             attributes: {},
             innerHTML: "*",
             cssPseudoClass: [],
@@ -2168,8 +2214,9 @@ describe("createComponent (engine)", () => {
         });
 
         test("accepts &.className with pseudo-class nesting", () => {
-          const CLASS_PSEUDO_TAG = htmlTagConfig(SUPPORTED_KEYWORDS, {
+          const CLASS_PSEUDO_TAG = htmlTagConfig(SUPPORTED_KEYWORDS, MOCK_CSS_ATTR_CONFIG, {
             button: {
+              display: "inline-block",
               attributes: {},
               innerHTML: ["#text"],
               cssPseudoClass: [":hover"],
@@ -2243,6 +2290,42 @@ describe("createComponent (engine)", () => {
           const { html } = renderBound(comp);
           assert.ok(html.includes('class="foo bar"'));
         });
+
+        test("rejects a class selector whose name has special characters", () => {
+          assert.throws(
+            () =>
+              createClassComponent({
+                tag: "button",
+                attributes: { class: "foo!bar" },
+                innerHTML: "Click",
+                css: {
+                  "&.foo!bar": { color: "red" },
+                },
+              }),
+            /CSS Error: Class selector '&.foo!bar' has an invalid class name 'foo!bar'/,
+          );
+        });
+
+        test("accepts class names with hyphens and underscores", () => {
+          const config = createClassComponent({
+            tag: "button",
+            attributes: { class: "foo-bar baz_qux" },
+            innerHTML: "Click",
+            css: {
+              "&.foo-bar": { color: "red" },
+              "&.baz_qux": { color: "blue" },
+            },
+          });
+          assert.deepStrictEqual(config, {
+            tag: "button",
+            attributes: { class: "foo-bar baz_qux" },
+            innerHTML: "Click",
+            css: {
+              "&.foo-bar": { color: "red" },
+              "&.baz_qux": { color: "blue" },
+            },
+          });
+        });
       });
 
       describe("Child Selector CSS Validation", () => {
@@ -2251,8 +2334,13 @@ describe("createComponent (engine)", () => {
           MOCK_CSS_SYNTAX,
           {
             color: "string",
-            display: "'block' | 'inline' | 'none'",
-          },
+            display: {
+              block: { self: {}, children: {} },
+              inline: { self: {}, children: {} },
+              "inline-block": { self: {}, children: {} },
+              none: { self: {}, children: {} },
+            },
+          } as const,
         );
         const CHILD_CSS_PROPERTIES = cssPropertiesConfig(
           SUPPORTED_KEYWORDS,
@@ -2260,14 +2348,16 @@ describe("createComponent (engine)", () => {
           {},
         );
 
-        const CHILD_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, {
+        const CHILD_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, MOCK_CSS_ATTR_CONFIG, {
           div: {
+            display: "block",
             attributes: {},
             innerHTML: "*",
             cssPseudoClass: [":hover"],
             cssPseudoElement: [],
           },
           span: {
+            display: "inline",
             attributes: {},
             innerHTML: ["#text"],
             cssPseudoClass: [],
@@ -2522,8 +2612,11 @@ describe("createComponent (engine)", () => {
       {
         width: "string",
         color: "string",
-        display: "string",
-      },
+        display: {
+          block: { self: {}, children: {} },
+          inline: { self: {}, children: {} },
+        },
+      } as const,
     );
     const PROD_CSS_PROPERTIES = cssPropertiesConfig(
       SUPPORTED_KEYWORDS,
@@ -2531,14 +2624,16 @@ describe("createComponent (engine)", () => {
       {},
     );
 
-    const PROD_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, {
+    const PROD_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, MOCK_CSS_ATTR_CONFIG, {
       div: {
+        display: "block",
         attributes: {},
         innerHTML: "*",
         cssPseudoClass: [],
         cssPseudoElement: [],
       },
       span: {
+        display: "inline",
         attributes: {},
         innerHTML: ["#text"],
         cssPseudoClass: [],
@@ -2638,5 +2733,155 @@ describe("createComponent (engine)", () => {
       assert.ok(css.includes("[cid-level2]"));
       assert.ok(css.includes("[cid-level3]"));
     });
+  });
+});
+
+// -----------------------------------------------------------------------
+// Runtime CSS attribute validation
+// -----------------------------------------------------------------------
+describe("runtime CSS attribute validation", () => {
+  const CSS_ATTRS = cssAttributeConfig(SUPPORTED_KEYWORDS, MOCK_CSS_SYNTAX, {
+    color: "string",
+    display: {
+      block: { self: {}, children: {} },
+      flex: {
+        self: { "flex-direction": "'row' | 'column'" },
+        children: {},
+      },
+    },
+  } as const);
+
+  const CSS_PROPS = cssPropertiesConfig(SUPPORTED_KEYWORDS, MOCK_CSS_SYNTAX, {});
+
+  const TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRS, {
+    div: {
+      display: "block",
+      attributes: {},
+      innerHTML: ["#text"],
+      cssPseudoClass: [],
+      cssPseudoElement: [],
+    },
+  });
+
+  const { createComponent } = engine({
+    supportedKeywords: SUPPORTED_KEYWORDS,
+    htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {}),
+    htmlTagConfig: TAG_CONFIG,
+    cssSyntaxConfig: MOCK_CSS_SYNTAX,
+    cssAttributesConfig: CSS_ATTRS,
+    cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
+    cssPropertiesConfig: CSS_PROPS,
+  });
+
+  test("accepts a valid simple CSS attribute value", () => {
+    assert.doesNotThrow(() =>
+      createComponent({ tag: "div", innerHTML: "x", css: { color: "red" } }),
+    );
+  });
+
+  test("accepts a valid complex CSS attribute value", () => {
+    assert.doesNotThrow(() =>
+      createComponent({ tag: "div", innerHTML: "x", css: { display: "flex" } }),
+    );
+  });
+
+  test("rejects an unknown CSS attribute at runtime", () => {
+    assert.throws(
+      () =>
+        createComponent({ tag: "div", innerHTML: "x", css: { unknownProp: "x" } as any }),
+      /not a recognized CSS attribute or property/,
+    );
+  });
+
+  test("rejects an invalid value type for a simple CSS attribute at runtime", () => {
+    assert.throws(
+      () =>
+        createComponent({ tag: "div", innerHTML: "x", css: { color: 42 } as any }),
+      /does not match DSL/,
+    );
+  });
+
+  test("rejects an invalid value key for a complex CSS attribute", () => {
+    assert.throws(
+      () =>
+        createComponent({ tag: "div", innerHTML: "x", css: { display: "grid" } as any }),
+      /Invalid value 'grid' for 'display'/,
+    );
+  });
+
+  test("rejects a dependent self-prop without its parent attribute value at runtime", () => {
+    assert.throws(
+      () =>
+        createComponent({ tag: "div", innerHTML: "x", css: { "flex-direction": "row" } as any }),
+      /not a recognized CSS attribute or property/,
+    );
+  });
+
+  test("accepts a dependent self-prop unlocked by the parent complex value", () => {
+    assert.doesNotThrow(() =>
+      createComponent({
+        tag: "div",
+        innerHTML: "x",
+        css: { display: "flex", "flex-direction": "row" },
+      }),
+    );
+  });
+
+  test("rejects a dependent self-prop with an invalid value type at runtime", () => {
+    assert.throws(
+      () =>
+        createComponent({
+          tag: "div",
+          innerHTML: "x",
+          css: { display: "flex", "flex-direction": 42 } as any,
+        }),
+      /does not match DSL/,
+    );
+  });
+
+  test("accepts a CSS custom property with a valid value", () => {
+    const CSS_PROPS_WITH_VAR = cssPropertiesConfig(
+      SUPPORTED_KEYWORDS,
+      MOCK_CSS_SYNTAX,
+      { "--my-var": { syntax: "string", inherits: false, "initial-value": "hello" } } as any,
+    );
+
+    const { createComponent: createWithVar } = engine({
+      supportedKeywords: SUPPORTED_KEYWORDS,
+      htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {}),
+      htmlTagConfig: TAG_CONFIG,
+      cssSyntaxConfig: MOCK_CSS_SYNTAX,
+      cssAttributesConfig: CSS_ATTRS,
+      cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
+      cssPropertiesConfig: CSS_PROPS_WITH_VAR,
+    });
+
+    assert.doesNotThrow(() =>
+      createWithVar({ tag: "div", innerHTML: "x", css: { "--my-var": "world" } }),
+    );
+  });
+
+  test("rejects a CSS custom property with an invalid value type at runtime", () => {
+    const CSS_PROPS_WITH_VAR = cssPropertiesConfig(
+      SUPPORTED_KEYWORDS,
+      MOCK_CSS_SYNTAX,
+      { "--my-var": { syntax: "string", inherits: false, "initial-value": "hello" } } as any,
+    );
+
+    const { createComponent: createWithVar } = engine({
+      supportedKeywords: SUPPORTED_KEYWORDS,
+      htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {}),
+      htmlTagConfig: TAG_CONFIG,
+      cssSyntaxConfig: MOCK_CSS_SYNTAX,
+      cssAttributesConfig: CSS_ATTRS,
+      cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
+      cssPropertiesConfig: CSS_PROPS_WITH_VAR,
+    });
+
+    assert.throws(
+      () =>
+        createWithVar({ tag: "div", innerHTML: "x", css: { "--my-var": 42 } as any }),
+      /does not match DSL/,
+    );
   });
 });

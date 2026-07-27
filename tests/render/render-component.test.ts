@@ -6,30 +6,35 @@ import type { BaseComponentStructure } from "@/engine/types.ts";
 
 const tagConfig: BaseHTMLTagConfig = {
   a: {
+    display: "inline",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [":hover"],
     cssPseudoElement: [],
   },
   div: {
+    display: "block",
     attributes: {},
     innerHTML: "*",
     cssPseudoElement: ["::before"],
     cssPseudoClass: [],
   },
   span: {
+    display: "inline",
     attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   h1: {
+    display: "block",
     attributes: {},
     innerHTML: ["#text"],
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
   img: {
+    display: "inline",
     attributes: {},
     innerHTML: [],
     cssPseudoClass: [],
@@ -180,10 +185,7 @@ describe("renderComponent", () => {
           second: { tag: "span", innerHTML: "2" },
         },
       });
-      assert.strictEqual(
-        html,
-        `<div><span>1</span><span>2</span></div>`,
-      );
+      assert.strictEqual(html, `<div><span>1</span><span>2</span></div>`);
     });
   });
 
@@ -379,10 +381,7 @@ describe("renderComponent", () => {
           },
         },
       });
-      assert.strictEqual(
-        html,
-        `<div><div><span>deep</span></div></div>`,
-      );
+      assert.strictEqual(html, `<div><div><span>deep</span></div></div>`);
     });
 
     test("class selectors render as &,className", () => {
@@ -393,13 +392,9 @@ describe("renderComponent", () => {
       const scope = hashScope(html, "div");
       assert.strictEqual(
         css,
-        [
-          `[${scope}] {`,
-          `  &.active {`,
-          `    color: red;`,
-          `  }`,
-          `}`,
-        ].join("\n"),
+        [`[${scope}] {`, `  &.active {`, `    color: red;`, `  }`, `}`].join(
+          "\n",
+        ),
       );
     });
 
