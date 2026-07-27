@@ -342,6 +342,14 @@ them would slow every DSL string down for a vanishingly rare case:
   tracking escape depth across quote contexts at the type level costs far
   more than the edge case is worth.
 
+- **CSS class name syntax is not validated at the type level.** The type
+  system checks *existence* (`&.foo` must reference a class on the element)
+  but not *well-formedness* — a class like `&.123` or `&.foo!bar` passes
+  the type wall even though it is an invalid CSS identifier. The runtime
+  wall catches these; adding character-level validation at the type level
+  would require recursion across every class name for a mistake the runtime
+  already catches.
+
 ### Known gaps (runtime wall only - the type wall covers these today)
 
 - **Pseudo-class/element usage** in css blocks and pseudo-element
