@@ -45,7 +45,7 @@ describe("engine", () => {
     const component = createComponent({
       tag: "div",
       innerHTML: { title: { tag: "h1", innerHTML: "hello" } },
-      css: { width: "100%", "> title": { color: "inherit" } },
+      css: { display: "block", width: "100%", "> title": { color: "inherit" } },
     });
 
     // Bound call (node only) must equal the unbound call with explicit config.
@@ -1320,6 +1320,7 @@ describe("createComponent (engine)", () => {
             ],
           },
           css: {
+            display: "block",
             width: "100px",
             "> items": {
               "> inner2": {},
@@ -1713,6 +1714,7 @@ describe("createComponent (engine)", () => {
             ],
           },
           css: {
+            display: "block",
             width: "100px",
             "> items": {
               "> inner2": { color: "inherit" },
@@ -2690,7 +2692,7 @@ describe("createComponent (engine)", () => {
       const comp = createProdComponent({
         tag: "div",
         innerHTML: { title: { tag: "span", innerHTML: "hello" } },
-        css: { width: "100%", "> title": { color: "inherit" } },
+      css: { display: "block", width: "100%", "> title": { color: "inherit" } },
       });
       const { html, css } = renderProd(comp);
       assert.match(html, /^<div cid-[a-z0-9]+>/);

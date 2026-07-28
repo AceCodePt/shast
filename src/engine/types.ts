@@ -217,6 +217,60 @@ type DependentSelfProps<
       }[Owners]
     >;
 
+type DependentChildrenProps<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  CSSParent extends Record<string, any>,
+> = [keyof CSSParent] extends [never]
+  ? {}
+  : UnionToIntersection<
+      | {
+          [
+            K1 in KeysMatching<
+              CSSAttributesConfig,
+              BaseCSSAttributeComplexValue
+            > &
+              keyof CSSParent
+          ]: {
+            [
+              V in keyof CSSAttributesConfig[K1] & string
+            ]: CSSParent[K1] extends ResolveComplexValue<
+              Keywords,
+              CSSSyntaxConfig,
+              V
+            >
+              ? CSSAttributesConfig[K1][V] extends BaseCSSAttributeComplexValue[string]
+                ? {
+                    [
+                      P in keyof CSSAttributesConfig[K1][V]["children"]
+                    ]?: DSLInfer<
+                      Keywords & CSSSyntaxConfig,
+                      CSSAttributesConfig[K1][V]["children"][P]
+                    >;
+                  }
+                : {}
+              : {};
+          }[keyof CSSAttributesConfig[K1] & string];
+        }[KeysMatching<CSSAttributesConfig, BaseCSSAttributeComplexValue> &
+          keyof CSSParent]
+      | {}
+    >;
+
+type CSSNonSelfConfig<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+> = {
+  [
+    K in KeysMatching<CSSAttributesConfig, BaseCSSAttributeComplexValue>
+  ]?: ResolveComplexValue<
+    Keywords,
+    CSSSyntaxConfig,
+    keyof CSSAttributesConfig[K] & string
+  >;
+};
+
 type ValidateComponentCSSStructure<
   Keywords extends SupportedKeywordsConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
@@ -227,8 +281,14 @@ type ValidateComponentCSSStructure<
   T extends BaseComponentStructure,
   CSSValue extends Record<string, any> | undefined,
   IsInPseudoElement extends boolean,
-> =
-  CSSValue extends Record<string, any>
+  CSSParent extends Record<string, any> = CSSNonSelfConfig<
+    Keywords,
+    CSSSyntaxConfig,
+    CSSAttributesConfig
+  >,
+> = [CSSValue] extends [never]
+  ? {}
+  : CSSValue extends Record<string, any>
     ? {
         [K in keyof T["innerHTML"] as `> ${K & string}`]?: K extends string
           ? T["innerHTML"][K] extends string[]
@@ -246,7 +306,8 @@ type ValidateComponentCSSStructure<
                     Extract<T["innerHTML"][K][number], BaseComponentStructure>
                   >,
                   CSSValue[`> ${K & string}`],
-                  IsInPseudoElement
+                  IsInPseudoElement,
+                  CSSValue
                 >
               : T["innerHTML"][K] extends Record<string, any>
                 ? ValidateComponentCSSStructure<
@@ -258,7 +319,8 @@ type ValidateComponentCSSStructure<
                     CSSPropertiesConfig,
                     T["innerHTML"][K],
                     CSSValue[`> ${K & string}`],
-                    IsInPseudoElement
+                    IsInPseudoElement,
+                    CSSValue
                   >
                 : never
           : T["innerHTML"][K];
@@ -267,22 +329,21 @@ type ValidateComponentCSSStructure<
           CSSSyntaxConfig & Keywords,
           CSSAttributesConfig[K] & string
         >;
-      } & {
-        [
-          K in KeysMatching<CSSAttributesConfig, BaseCSSAttributeComplexValue>
-        ]?: ResolveComplexValue<
+      } & CSSNonSelfConfig<Keywords, CSSSyntaxConfig, CSSAttributesConfig> &
+        DependentChildrenProps<
           Keywords,
           CSSSyntaxConfig,
-          keyof CSSAttributesConfig[K] & string
-        >;
-      } & Partial<
-          DependentSelfProps<
-            Keywords,
-            CSSSyntaxConfig,
-            CSSAttributesConfig,
-            CSSValue
-          >
+          CSSAttributesConfig,
+          CSSParent
+        > &
+        DependentSelfProps<
+          Keywords,
+          CSSSyntaxConfig,
+          CSSAttributesConfig,
+          CSSValue
         > & {
+          [K in keyof CSSParent]?: {};
+        } & {
           [K in keyof CSSPropertiesConfig]?: K extends `--${string}`
             ? CSSPropertiesConfig[K]["syntax"] extends string
               ? DSLInfer<
@@ -309,7 +370,8 @@ type ValidateComponentCSSStructure<
             CSSPropertiesConfig,
             T,
             CSSValue[K],
-            IsInPseudoElement
+            IsInPseudoElement,
+            CSSParent
           >;
         } & (false extends IsInPseudoElement
           ? {
@@ -328,7 +390,8 @@ type ValidateComponentCSSStructure<
                 CSSPropertiesConfig,
                 T,
                 CSSValue[K],
-                true
+                true,
+                CSSValue
               >;
             }
           : {}) &
@@ -346,7 +409,8 @@ type ValidateComponentCSSStructure<
                   CSSPropertiesConfig,
                   T,
                   CSSValue[`&.${K}`],
-                  false
+                  false,
+                  CSSParent
                 >;
               }
             : {}
