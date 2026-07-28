@@ -206,7 +206,7 @@ type DependentSelfProps<
           >
             ? CSSAttributesConfig[K1][V] extends BaseCSSAttributeComplexValue[string]
               ? {
-                  [P in keyof CSSAttributesConfig[K1][V]["self"]]: DSLInfer<
+                  [P in keyof CSSAttributesConfig[K1][V]["self"]]?: DSLInfer<
                     Keywords & CSSSyntaxConfig,
                     CSSAttributesConfig[K1][V]["self"][P]
                   >;
