@@ -698,19 +698,19 @@
   - [ ] Runtime Validation
   - [ ] Test
 
-- [ ] **Tier A — same-node rules** (intra-block conditional, no threading)
-  - [ ] `z-index` requires a stacking context (`position` ≠ static, or opacity/transform/filter)
+- [x] **Tier A — same-node rules** (intra-block conditional, no threading)
+  - [x] `z-index` requires a stacking context (`position` ≠ static, or opacity/transform/filter)
   - [ ] Inline elements reject `width` / `height` / `margin-top` / `margin-bottom`
   - [ ] Box-model overflow (percentage `width` + padding/border + `box-sizing: content-box`)
   - [ ] `vertical-align` valid only on inline / inline-block / table-cell
   - [ ] Non-animatable `transition` / `animation` property
   - [ ] `text-align` context (block containers)
   - [ ] Float container collapse (only floated children, no clearfix / BFC)
+  - [x] Container-only props require own flex/grid display (`gap` / `justify-content` / `align-items`)
 
 - [ ] **Tier B — one-level parent → child threading**
-  - [ ] Flex/grid item props require flex/grid parent (`flex` / `order` / `align-self` / `grid-column` / `grid-row`)
+  - [x] Flex/grid item props require flex/grid parent (`flex` / `order` / `align-self` / `grid-column` / `grid-row`)
   - [ ] `grid-area` name validated against parent's `grid-template-areas`
-  - [ ] Container-only props require own flex/grid display (`gap` / `justify-content` / `align-items`)
 
 - [ ] **Tier C — ancestor-chain boolean threading**
   - [ ] `position: absolute` needs a positioned ancestor
