@@ -1204,6 +1204,24 @@ describe("createComponent (engine)", () => {
         },
       });
     });
+
+    test("rejects a class selector inside a pseudo-element", () => {
+      assert.throws(
+        () =>
+          createPEComponent({
+            tag: "field",
+            attributes: { class: "active" },
+            innerHTML: "x",
+            css: {
+              "::placeholder": {
+                // @ts-expect-error
+                "&.active": { color: "gray" },
+              },
+            },
+          }),
+        /CSS Error: Class selector '&.active' is not allowed inside a pseudo-element block/,
+      );
+    });
   });
 
   describe("Array innerHTML Children", () => {

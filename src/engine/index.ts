@@ -139,6 +139,7 @@ export function validateComponentNode(
       contextClasses: string[],
       cssAttrs: Record<string, any>,
       cssProps: Record<string, any>,
+      inPseudoElement?: boolean,
     ): void => {
       const complexValues: Record<string, string> = {};
 
@@ -156,6 +157,11 @@ export function validateComponentNode(
           }
         }
         if (key.startsWith("&.")) {
+          if (inPseudoElement) {
+            throw new Error(
+              `CSS Error: Class selector '${key}' is not allowed inside a pseudo-element block`,
+            );
+          }
           const className = key.slice(2);
           if (!CSS_CLASS_NAME.test(className)) {
             throw new Error(
@@ -240,12 +246,14 @@ export function validateComponentNode(
               }
             }
           }
+          const nextInPseudoElement = key.startsWith("::") || !!inPseudoElement;
           validateCSS(
             value as Record<string, unknown>,
             nextContext,
             nextClasses,
             cssAttrs,
             cssProps,
+            nextInPseudoElement,
           );
         } else if (!key.startsWith("> ") && !key.startsWith("&.")) {
           const attrDef = cssAttrs[key];

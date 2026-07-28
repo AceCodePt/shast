@@ -393,27 +393,26 @@ type ValidateComponentCSSStructure<
                 true,
                 CSSValue
               >;
-            }
-          : {}) &
-        ("class" extends keyof T["attributes"]
-          ? T["attributes"]["class"] extends string
-            ? {
-                [
-                  K in SplitSpace<T["attributes"]["class"]> as `&.${K}`
-                ]?: ValidateComponentCSSStructure<
-                  Keywords,
-                  HTMLTagConfig,
-                  CSSSyntaxConfig,
-                  CSSAttributesConfig,
-                  CSSPseudoClassConfig,
-                  CSSPropertiesConfig,
-                  T,
-                  CSSValue[`&.${K}`],
-                  false,
-                  CSSParent
-                >;
-              }
-            : {}
+            } & ("class" extends keyof T["attributes"]
+              ? T["attributes"]["class"] extends string
+                ? {
+                    [
+                      K in SplitSpace<T["attributes"]["class"]> as `&.${K}`
+                    ]?: ValidateComponentCSSStructure<
+                      Keywords,
+                      HTMLTagConfig,
+                      CSSSyntaxConfig,
+                      CSSAttributesConfig,
+                      CSSPseudoClassConfig,
+                      CSSPropertiesConfig,
+                      T,
+                      CSSValue[`&.${K}`],
+                      false,
+                      CSSParent
+                    >;
+                  }
+                : {}
+              : {})
           : {})
     : {};
 
