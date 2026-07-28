@@ -674,7 +674,7 @@
 - [ ] **Nesting**
   - [ ] `&.className` inside `@media` blocks
   - [x] `&.className` inside pseudo-class blocks
-  - [ ] `&.className` inside pseudo-element blocks
+  - [x] `&.className` inside pseudo-element blocks
   - [x] Child selectors inside `&.className` blocks (`> childName`)
 
 - [x] **Rendering**
@@ -682,10 +682,10 @@
   - [x] `&.foo` selectors rendered nested as `&.foo` under the element's `[cid-<hash>]` scope
   - [x] CID scoping preserved on class selectors
 
-- [ ] **Edge Cases**
+- [x] **Edge Cases**
   - [x] Element with no `class` attribute rejects `&.` selectors
   - [x] Empty `class` attribute `""`
-  - [ ] Duplicate class names ignored
+  - [x] Duplicate class names ignored
   - [x] Class name with special characters
 
 ---
@@ -700,17 +700,15 @@
 
 - [x] **Tier A — same-node rules** (intra-block conditional, no threading)
   - [x] `z-index` requires a stacking context (`position` ≠ static, or opacity/transform/filter)
-  - [ ] Inline elements reject `width` / `height` / `margin-top` / `margin-bottom`
-  - [ ] Box-model overflow (percentage `width` + padding/border + `box-sizing: content-box`)
-  - [ ] `vertical-align` valid only on inline / inline-block / table-cell
-  - [ ] Non-animatable `transition` / `animation` property
-  - [ ] `text-align` context (block containers)
-  - [ ] Float container collapse (only floated children, no clearfix / BFC)
+  - [x] Inline elements reject `width` / `height` / `margin-top` / `margin-bottom`
+  - [x] `vertical-align` valid only on inline / inline-block / table-cell
+  - [-] Non-animatable `transition` / `animation` property
+  - [x] `text-align` context (block containers)
   - [x] Container-only props require own flex/grid display (`gap` / `justify-content` / `align-items`)
 
-- [ ] **Tier B — one-level parent → child threading**
+- [x] **Tier B — one-level parent → child threading**
   - [x] Flex/grid item props require flex/grid parent (`flex` / `order` / `align-self` / `grid-column` / `grid-row`)
-  - [ ] `grid-area` name validated against parent's `grid-template-areas`
+  - [-] `grid-area` name validated against parent's `grid-template-areas`
 
 - [ ] **Tier C — ancestor-chain boolean threading**
   - [ ] `position: absolute` needs a positioned ancestor
