@@ -4,38 +4,74 @@ import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
 
 export default cssAttributeConfig(SUPPORTED_KEYWORDS, minimalCSSSyntax, {
   // ── Box Model ──────────────────────────────────────────────────────────────
-  width: "<length>",
-  height: "<length>",
   margin: "<length>",
   padding: "<length>",
 
   // ── Layout ─────────────────────────────────────────────────────────────────
   display: {
-    block: { self: {}, children: {} },
-    inline: { self: {}, children: {} },
-    "inline-block": { self: {}, children: {} },
-    none: { self: {}, children: {} },
-    "list-item": { self: {}, children: {} },
+    block: {
+      self: {
+        width: "<length>",
+        height: "<length>",
+        "text-align": "'left' | 'right' | 'center' | 'justify'",
+      },
+      children: {},
+    },
+    inline: {
+      self: { "vertical-align": "'baseline' | 'top' | 'middle' | 'bottom'" },
+      children: {},
+    },
+    "inline-block": {
+      self: {
+        width: "<length>",
+        height: "<length>",
+        "vertical-align": "'baseline' | 'top' | 'middle' | 'bottom'",
+        "text-align": "'left' | 'right' | 'center' | 'justify'",
+      },
+      children: {},
+    },
+    none: {
+      self: {
+        width: "<length>",
+        height: "<length>",
+        "text-align": "'left' | 'right' | 'center' | 'justify'",
+      },
+      children: {},
+    },
+    "list-item": {
+      self: {
+        width: "<length>",
+        height: "<length>",
+        "text-align": "'left' | 'right' | 'center' | 'justify'",
+      },
+      children: {},
+    },
 
     flex: {
       self: {
+        width: "<length>",
+        height: "<length>",
         "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'",
         "justify-content":
           "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around'",
         "align-items":
           "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
         gap: "<length>",
+        "text-align": "'left' | 'right' | 'center' | 'justify'",
       },
       children: {},
     },
 
     grid: {
       self: {
+        width: "<length>",
+        height: "<length>",
         gap: "<length>",
         "justify-content":
           "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around'",
         "align-items":
           "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'",
+        "text-align": "'left' | 'right' | 'center' | 'justify'",
       },
       children: {},
     },
@@ -101,7 +137,6 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, minimalCSSSyntax, {
   "font-size": "<length>",
   "font-weight": "<font-weight>",
   "line-height": "<number>",
-  "text-align": "'left' | 'right' | 'center' | 'justify'",
   "text-transform": "'none' | 'uppercase' | 'lowercase' | 'capitalize'",
 
   // ── Visibility & Interaction ───────────────────────────────────────────────

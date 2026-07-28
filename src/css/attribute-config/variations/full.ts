@@ -4,17 +4,13 @@ import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
 
 export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   // ── Box Model ──────────────────────────────────────────────────────────────
-  width: "<length-percentage> | <sizing-keyword>",
   "min-width": "<length-percentage> | <sizing-keyword>",
   "max-width": "<length-percentage> | <sizing-keyword>",
-  height: "<length-percentage> | <sizing-keyword>",
   "min-height": "<length-percentage> | <sizing-keyword>",
   "max-height": "<length-percentage> | <sizing-keyword>",
 
   margin: "<length-percentage>",
-  "margin-top": "<length-percentage>",
   "margin-right": "<length-percentage>",
-  "margin-bottom": "<length-percentage>",
   "margin-left": "<length-percentage>",
   "margin-block": "<length-percentage>",
   "margin-block-start": "<length-percentage>",
@@ -40,38 +36,228 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
 
   // ── Layout ─────────────────────────────────────────────────────────────────
   display: {
-    block: { self: {}, children: {} },
-    inline: { self: {}, children: {} },
-    "inline-block": { self: {}, children: {} },
-    none: { self: {}, children: {} },
-    contents: { self: {}, children: {} },
-    "flow-root": { self: {}, children: {} },
-    table: {
+    block: {
       self: {
-        "table-layout": "'auto' | 'fixed'",
-        "border-collapse": "'collapse' | 'separate'",
-        "caption-side": "'top' | 'bottom' | 'inline-start' | 'inline-end'",
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
       },
       children: {},
     },
-    "table-column": { self: {}, children: {} },
-    "table-cell": {
+    inline: {
       self: {
         "vertical-align":
           "'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom' | 'sub' | 'super' | <length-percentage>",
       },
       children: {},
     },
-    "table-header-group": { self: {}, children: {} },
-    "table-row-group": { self: {}, children: {} },
-    "table-column-group": { self: {}, children: {} },
-    "table-row": { self: {}, children: {} },
-    "table-caption": { self: {}, children: {} },
-    "table-footer-group": { self: {}, children: {} },
-    "list-item": { self: {}, children: {} },
+    "inline-block": {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+        "vertical-align":
+          "'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom' | 'sub' | 'super' | <length-percentage>",
+      },
+      children: {},
+    },
+    none: {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+      },
+      children: {},
+    },
+    contents: {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+      },
+      children: {},
+    },
+    "flow-root": {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+      },
+      children: {},
+    },
+    table: {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+        "border-spacing": "<length>",
+        "table-layout": "'auto' | 'fixed'",
+        "border-collapse": "'collapse' | 'separate'",
+        "caption-side": "'top' | 'bottom' | 'inline-start' | 'inline-end'",
+      },
+      children: {},
+    },
+    "table-column": {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+      },
+      children: {},
+    },
+    "table-cell": {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+        "empty-cells": "'show' | 'hide'",
+        "vertical-align":
+          "'baseline' | 'top' | 'middle' | 'bottom' | 'text-top' | 'text-bottom' | 'sub' | 'super' | <length-percentage>",
+      },
+      children: {},
+    },
+    "table-header-group": {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+      },
+      children: {},
+    },
+    "table-row-group": {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+      },
+      children: {},
+    },
+    "table-column-group": {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+      },
+      children: {},
+    },
+    "table-row": {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+      },
+      children: {},
+    },
+    "table-caption": {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+      },
+      children: {},
+    },
+    "table-footer-group": {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+      },
+      children: {},
+    },
+    "list-item": {
+      self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
+      },
+      children: {},
+    },
 
     flex: {
       self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
         "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'",
         "flex-wrap": "'nowrap' | 'wrap' | 'wrap-reverse'",
         gap: "<length-percentage>",
@@ -97,6 +283,14 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
 
     "inline-flex": {
       self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
         "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'",
         "flex-wrap": "'nowrap' | 'wrap' | 'wrap-reverse'",
         gap: "<length-percentage>",
@@ -122,6 +316,14 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
 
     grid: {
       self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
         gap: "<length-percentage>",
         "row-gap": "<length-percentage>",
         "column-gap": "<length-percentage>",
@@ -160,6 +362,14 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
 
     "inline-grid": {
       self: {
+        width: "<length-percentage> | <sizing-keyword>",
+        height: "<length-percentage> | <sizing-keyword>",
+        "margin-top": "<length-percentage>",
+        "margin-bottom": "<length-percentage>",
+        "text-align": "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
+        "text-indent": "<length-percentage>",
+        "text-overflow": "'clip' | 'ellipsis'",
+        resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
         gap: "<length-percentage>",
         "row-gap": "<length-percentage>",
         "column-gap": "<length-percentage>",
@@ -300,7 +510,12 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
 
   // ── Colors & Background ────────────────────────────────────────────────────
   color: "<color>",
-  opacity: "<alpha-value>",
+  opacity: {
+    "<alpha-value>": {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+  },
   "color-scheme":
     "'normal' | 'light' | 'dark' | 'light dark' | 'only light' | 'only dark'",
   "forced-color-adjust": "'auto' | 'none'",
@@ -385,8 +600,6 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "line-height": "<number> | <length-percentage>",
   "letter-spacing": "'normal' | <length>",
   "word-spacing": "'normal' | <length>",
-  "text-align":
-    "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'match-parent'",
   "text-align-last":
     "'left' | 'right' | 'center' | 'justify' | 'start' | 'end' | 'auto'",
   "text-decoration": "<string>",
@@ -401,8 +614,7 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
     "'auto' | 'from-font' | 'under' | 'left' | 'right'",
   "text-transform":
     "'none' | 'uppercase' | 'lowercase' | 'capitalize' | 'full-width' | 'full-size-kana'",
-  "text-indent": "<length-percentage>",
-  "text-overflow": "'clip' | 'ellipsis'",
+
   "text-shadow": "<string>",
   "text-wrap": "'wrap' | 'nowrap' | 'balance' | 'pretty' | 'stable'",
   "text-wrap-mode": "'wrap' | 'nowrap'",
@@ -433,9 +645,6 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "list-style-image": "<image>",
 
   // ── Tables ─────────────────────────────────────────────────────────────────
-  "border-spacing": "<length>",
-  "empty-cells": "'show' | 'hide'",
-
   // ── Images & Media ─────────────────────────────────────────────────────────
   "object-fit": "'fill' | 'contain' | 'cover' | 'none' | 'scale-down'",
   "object-position": "<position>",
@@ -452,8 +661,6 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
     "'auto' | 'none' | 'pan-x' | 'pan-y' | 'pan-left' | 'pan-right' | 'pan-up' | 'pan-down' | 'pinch-zoom' | 'manipulation'",
   cursor:
     "'auto' | 'default' | 'pointer' | 'move' | 'text' | 'wait' | 'help' | 'not-allowed' | 'grab' | 'grabbing' | 'crosshair' | 'zoom-in' | 'zoom-out' | 'none' | 'progress' | 'cell' | 'copy' | 'alias' | 'context-menu' | 'col-resize' | 'row-resize' | 'n-resize' | 's-resize' | 'e-resize' | 'w-resize' | 'ne-resize' | 'nw-resize' | 'se-resize' | 'sw-resize' | 'ew-resize' | 'ns-resize' | 'nesw-resize' | 'nwse-resize' | 'all-scroll' | 'no-drop' | 'vertical-text'",
-  resize: "'none' | 'both' | 'horizontal' | 'vertical' | 'block' | 'inline'",
-
   // ── Scroll ─────────────────────────────────────────────────────────────────
   "scroll-behavior": "'auto' | 'smooth'",
   "scroll-snap-type":
@@ -484,6 +691,7 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
         "transform-style": "'flat' | 'preserve-3d'",
         "perspective-origin": "<position>",
         "backface-visibility": "'visible' | 'hidden'",
+        "z-index": "<integer>",
       },
       children: {},
     },
@@ -517,10 +725,89 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "animation-timeline": "'none' | 'auto' | <custom-ident>",
 
   // ── Filters & Blending ─────────────────────────────────────────────────────
-  filter: "<string>",
-  "backdrop-filter": "<string>",
-  "mix-blend-mode":
-    "'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'color-dodge' | 'color-burn' | 'hard-light' | 'soft-light' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity' | 'plus-darker' | 'plus-lighter'",
+  filter: {
+    "<string>": {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+  },
+  "backdrop-filter": {
+    "<string>": {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+  },
+  "mix-blend-mode": {
+    normal: { self: {}, children: {} },
+    multiply: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    screen: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    overlay: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    darken: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    lighten: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    "color-dodge": {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    "color-burn": {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    "hard-light": {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    "soft-light": {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    difference: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    exclusion: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    hue: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    saturation: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    color: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    luminosity: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    "plus-darker": {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+    "plus-lighter": {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+  },
   "background-blend-mode":
     "'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'color-dodge' | 'color-burn' | 'hard-light' | 'soft-light' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity'",
   "clip-path": "'none' | <basic-shape>",
@@ -570,7 +857,13 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "container-type": "'normal' | 'size' | 'inline-size'",
   "container-name": "'none' | <custom-ident>",
   container: "<string>",
-  isolation: "'auto' | 'isolate'",
+  isolation: {
+    auto: { self: {}, children: {} },
+    isolate: {
+      self: { "z-index": "<integer>" },
+      children: {},
+    },
+  },
   appearance: "'none' | 'auto'",
 
   // ── Multi-column ───────────────────────────────────────────────────────────
