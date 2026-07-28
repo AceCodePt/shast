@@ -437,14 +437,21 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
     },
   },
   "background-color": "<color>",
-  "background-image": "<image>",
-  "background-position": "<position>",
-  "background-repeat":
-    "'repeat' | 'repeat-x' | 'repeat-y' | 'no-repeat' | 'space' | 'round'",
-  "background-size": "'auto' | 'cover' | 'contain' | <length-percentage>",
-  "background-attachment": "'scroll' | 'fixed' | 'local'",
-  "background-origin": "'border-box' | 'padding-box' | 'content-box'",
-  "background-clip": "'border-box' | 'padding-box' | 'content-box' | 'text'",
+  "background-image": {
+    none: { self: {}, children: {} },
+    "<image>": {
+      self: {
+        "background-position": "<position>",
+        "background-repeat":
+          "'repeat' | 'repeat-x' | 'repeat-y' | 'no-repeat' | 'space' | 'round'",
+        "background-size": "'auto' | 'cover' | 'contain' | <length-percentage>",
+        "background-attachment": "'scroll' | 'fixed' | 'local'",
+        "background-origin": "'border-box' | 'padding-box' | 'content-box'",
+        "background-clip": "'border-box' | 'padding-box' | 'content-box' | 'text'",
+      },
+      children: {},
+    },
+  },
   background: "<string>",
 
   // ── Border ─────────────────────────────────────────────────────────────────

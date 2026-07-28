@@ -522,16 +522,23 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "accent-color": "'auto' | <color>",
   "caret-color": "'auto' | <color>",
   "background-color": "<color>",
-  "background-image": "<image>",
-  "background-position": "<position>",
-  "background-position-x": "<position>",
-  "background-position-y": "<position>",
-  "background-repeat":
-    "'repeat' | 'repeat-x' | 'repeat-y' | 'no-repeat' | 'space' | 'round'",
-  "background-size": "'auto' | 'cover' | 'contain' | <length-percentage>",
-  "background-attachment": "'scroll' | 'fixed' | 'local'",
-  "background-origin": "'border-box' | 'padding-box' | 'content-box'",
-  "background-clip": "'border-box' | 'padding-box' | 'content-box' | 'text'",
+  "background-image": {
+    none: { self: {}, children: {} },
+    "<image>": {
+      self: {
+        "background-position": "<position>",
+        "background-position-x": "<position>",
+        "background-position-y": "<position>",
+        "background-repeat":
+          "'repeat' | 'repeat-x' | 'repeat-y' | 'no-repeat' | 'space' | 'round'",
+        "background-size": "'auto' | 'cover' | 'contain' | <length-percentage>",
+        "background-attachment": "'scroll' | 'fixed' | 'local'",
+        "background-origin": "'border-box' | 'padding-box' | 'content-box'",
+        "background-clip": "'border-box' | 'padding-box' | 'content-box' | 'text'",
+      },
+      children: {},
+    },
+  },
   background: "<string>",
 
   // ── Border ─────────────────────────────────────────────────────────────────
@@ -812,17 +819,24 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
     "'normal' | 'multiply' | 'screen' | 'overlay' | 'darken' | 'lighten' | 'color-dodge' | 'color-burn' | 'hard-light' | 'soft-light' | 'difference' | 'exclusion' | 'hue' | 'saturation' | 'color' | 'luminosity'",
   "clip-path": "'none' | <basic-shape>",
   mask: "<string>",
-  "mask-image": "<image>",
-  "mask-mode": "'alpha' | 'luminance' | 'match-source'",
-  "mask-repeat":
-    "'repeat' | 'repeat-x' | 'repeat-y' | 'no-repeat' | 'space' | 'round'",
-  "mask-position": "<position>",
-  "mask-size": "'auto' | 'cover' | 'contain' | <length-percentage>",
-  "mask-origin":
-    "'border-box' | 'padding-box' | 'content-box' | 'fill-box' | 'stroke-box' | 'view-box'",
-  "mask-clip":
-    "'border-box' | 'padding-box' | 'content-box' | 'fill-box' | 'stroke-box' | 'view-box' | 'no-clip'",
-  "mask-composite": "'add' | 'subtract' | 'intersect' | 'exclude'",
+  "mask-image": {
+    none: { self: {}, children: {} },
+    "<image>": {
+      self: {
+        "mask-mode": "'alpha' | 'luminance' | 'match-source'",
+        "mask-repeat":
+          "'repeat' | 'repeat-x' | 'repeat-y' | 'no-repeat' | 'space' | 'round'",
+        "mask-position": "<position>",
+        "mask-size": "'auto' | 'cover' | 'contain' | <length-percentage>",
+        "mask-origin":
+          "'border-box' | 'padding-box' | 'content-box' | 'fill-box' | 'stroke-box' | 'view-box'",
+        "mask-clip":
+          "'border-box' | 'padding-box' | 'content-box' | 'fill-box' | 'stroke-box' | 'view-box' | 'no-clip'",
+        "mask-composite": "'add' | 'subtract' | 'intersect' | 'exclude'",
+      },
+      children: {},
+    },
+  },
 
   // ── Generated Content ──────────────────────────────────────────────────────
   content: "'normal' | 'none' | <string> | <url> | <custom-ident>",
@@ -854,8 +868,17 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "contain-intrinsic-size": "'none' | 'auto' | <length>",
   "contain-intrinsic-width": "'none' | 'auto' | <length>",
   "contain-intrinsic-height": "'none' | 'auto' | <length>",
-  "container-type": "'normal' | 'size' | 'inline-size'",
-  "container-name": "'none' | <custom-ident>",
+  "container-type": {
+    normal: { self: {}, children: {} },
+    size: {
+      self: { "container-name": "'none' | <custom-ident>" },
+      children: {},
+    },
+    "inline-size": {
+      self: { "container-name": "'none' | <custom-ident>" },
+      children: {},
+    },
+  },
   container: "<string>",
   isolation: {
     auto: { self: {}, children: {} },
