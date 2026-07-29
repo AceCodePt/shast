@@ -340,7 +340,12 @@ type ValidateComponentCSSStructure<
           Keywords,
           CSSSyntaxConfig,
           CSSAttributesConfig,
-          CSSValue
+          "display" extends keyof CSSValue
+            ? CSSValue
+            : CSSValue &
+                (T["tag"] extends keyof HTMLTagConfig
+                  ? { display: HTMLTagConfig[T["tag"]]["display"] }
+                  : {})
         > & {
           [K in keyof CSSParent]?: {};
         } & {

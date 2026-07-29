@@ -460,8 +460,8 @@
 - [x] **Extend `BaseHTMLTagConfig` with optional `cssPseudoElement` field**
   - [x] Type Validation
   - [x] Type Inference
-  - [ ] Runtime Validation
-  - [ ] Test
+  - [x] Runtime Validation
+  - [x] Test
 
 - [x] **Declaration rules**
   - [x] Accepts `::` prefixed pseudo-element strings in tag config
