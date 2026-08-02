@@ -27,7 +27,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   "<line-style>":
     "'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset'",
 
-  "<line-width>": "'thin' | 'medium' | 'thick'",
+  "<line-width>": "<length> | 'thin' | 'medium' | 'thick'",
 
   "<font-weight>":
     "'normal' | 'bold' | 'bolder' | 'lighter' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'",
