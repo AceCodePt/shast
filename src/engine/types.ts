@@ -224,11 +224,27 @@ type GateTable<
 // The `[...]` wrapper keeps the check NON-distributive on purpose: a gate whose
 // value is still the open union (the parent-side default, where nothing has
 // been written yet) must unlock nothing, exactly as before.
-type GateLookup<Row, Written> = [Written] extends [keyof Row]
-  ? Row[Extract<Written, keyof Row>] extends infer Bag
-    ? { [P in keyof Bag]: Bag[P] }
-    : {}
-  : {};
+//
+// The `[Written] extends [never]` guard comes FIRST and is load-bearing.
+// `never` extends everything, so without it a `never` gate value takes the
+// lookup branch and produces `Row[never]` -> `never` -> a mapped type over
+// `keyof never` (i.e. `PropertyKey`), which collapses the entire surrounding
+// intersection to `never` and makes every property in that scope unwritable.
+//
+// A gate value legitimately becomes `never` when a `> child` selector targets
+// an array of children whose element types do not unify: the validator feeds
+// the recursion `UnionToIntersection<...>` of the element types, and TypeScript
+// reduces an intersection to `never` as soon as a unit-type discriminant
+// disagrees -- `{ innerHTML: "a" } & { innerHTML: "b" }` is `never`. The node
+// type is then `never`, `T["tag"]` is `never`, and the defaulted `display` is
+// `never`. Nothing is known about that node, so nothing should be unlocked.
+type GateLookup<Row, Written> = [Written] extends [never]
+  ? {}
+  : [Written] extends [keyof Row]
+    ? Row[Extract<Written, keyof Row>] extends infer Bag
+      ? { [P in keyof Bag]: Bag[P] }
+      : {}
+    : {};
 
 // ---------------------------------------------------------------------------
 // Locked props.
