@@ -89,7 +89,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
     "'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset'",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/line-width
-  "<line-width>": "'thin' | 'medium' | 'thick'",
+  "<line-width>": "<length> | 'thin' | 'medium' | 'thick'",
 
   // ── Grid / layout types ────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/flex_value

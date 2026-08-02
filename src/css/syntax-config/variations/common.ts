@@ -76,8 +76,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
 
   // ── MDN line-width type ────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/line-width
-  // Note: <length> cross-reference dropped — cannot express in DSL
-  "<line-width>": "'thin' | 'medium' | 'thick'",
+  "<line-width>": "<length> | 'thin' | 'medium' | 'thick'",
 
   // ── MDN basic-shape type ───────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape
