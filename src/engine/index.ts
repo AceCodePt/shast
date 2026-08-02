@@ -133,15 +133,162 @@ export function validateComponentNode(
         ? classValue.split(/\s+/)
         : [];
     };
+
+    // A complex CSS attribute (`display`, `position`, ...) is a *gate*: the
+    // value the author writes unlocks further props on the node itself (`self`)
+    // and on its direct children (`children`). These helpers mirror the
+    // type-level gate tables in `engine/types.ts` so the two walls agree.
+    const isGate = (def: unknown): def is Record<string, any> =>
+      def !== null && typeof def === "object" && !Array.isArray(def);
+
+    const gateNames = (cssAttrs: Record<string, any>): string[] =>
+      Object.keys(cssAttrs).filter((key) => isGate(cssAttrs[key]));
+
+    // Resolve the value a gate was written with to its key: a literal
+    // (`"flex"`) or a DSL pattern key (`"<length>"`).
+    const resolveGateValue = (
+      cssAttrs: Record<string, any>,
+      gate: string,
+      writtenValue: unknown,
+    ): string => {
+      const gateDef = cssAttrs[gate];
+      if (typeof writtenValue !== "string") {
+        throw new Error(
+          `CSS Error: Invalid value type for '${gate}'. Expected a string`,
+        );
+      }
+      if (writtenValue in gateDef) return writtenValue;
+      for (const valueKey of Object.keys(gateDef)) {
+        if (valueKey.startsWith("<") && valueKey.endsWith(">")) {
+          try {
+            parseValueAgainstDSL(mergedKeywords, valueKey, writtenValue);
+            return valueKey;
+          } catch {}
+        }
+      }
+      throw new Error(
+        `CSS Error: Invalid value '${String(writtenValue)}' for '${gate}'. Expected one of: ${Object.keys(gateDef).join(", ")}`,
+      );
+    };
+
+    // The values of `gate` that unlock `prop` in `slot`.
+    const valuesUnlocking = (
+      cssAttrs: Record<string, any>,
+      gate: string,
+      prop: string,
+      slot: "self" | "children",
+    ): string[] => {
+      const gateDef = cssAttrs[gate];
+      if (!isGate(gateDef)) return [];
+      const values: string[] = [];
+      for (const valueKey of Object.keys(gateDef)) {
+        const bag = gateDef[valueKey]?.[slot];
+        if (isGate(bag) && prop in bag) {
+          values.push(valueKey);
+        }
+      }
+      return values;
+    };
+
+    // One clause per gate that can unlock `prop`, matching the type-level
+    // `UnlockedBy`: `display: flex | inline-flex` (self) or
+    // `display: flex | inline-flex on the parent` (children).
+    const unlockedByClauses = (
+      cssAttrs: Record<string, any>,
+      prop: string,
+    ): string[] => {
+      const clauses: string[] = [];
+      for (const gate of gateNames(cssAttrs)) {
+        const selfValues = valuesUnlocking(cssAttrs, gate, prop, "self");
+        if (selfValues.length > 0) {
+          clauses.push(`${gate}: ${selfValues.join(" | ")}`);
+        }
+        const childrenValues = valuesUnlocking(cssAttrs, gate, prop, "children");
+        if (childrenValues.length > 0) {
+          clauses.push(`${gate}: ${childrenValues.join(" | ")} on the parent`);
+        }
+      }
+      return clauses;
+    };
+
+    // `'gap' requires display: flex | grid | inline-flex | inline-grid`, or
+    // `null` when no gate can unlock `prop` (i.e. it is truly unknown).
+    const lockedMessageFor = (
+      cssAttrs: Record<string, any>,
+      prop: string,
+    ): string | null => {
+      const clauses = unlockedByClauses(cssAttrs, prop);
+      return clauses.length > 0
+        ? `'${prop}' requires ${clauses.join(", or ")}`
+        : null;
+    };
+
+    // The DSL for `prop` under the gate values in `gates` for `slot`, if the
+    // written gate value unlocks it.
+    const slotDSL = (
+      cssAttrs: Record<string, any>,
+      gates: Record<string, string>,
+      prop: string,
+      slot: "self" | "children",
+    ): string | undefined => {
+      for (const gate of Object.keys(gates)) {
+        const matchedValue = gates[gate];
+        if (matchedValue === undefined) continue;
+        const bag = cssAttrs[gate]?.[matchedValue]?.[slot];
+        if (isGate(bag) && prop in bag) {
+          return bag[prop];
+        }
+      }
+      return undefined;
+    };
+
+    // The distinct tags in an array of children; used to seed the implicit
+    // `display` inside a `> child` block that targets an array. When the
+    // children disagree, no single default display applies.
+    const tagsOf = (children: unknown[]): string[] => {
+      const tags = new Set<string>();
+      for (const child of children) {
+        if (
+          child !== null &&
+          typeof child === "object" &&
+          !Array.isArray(child)
+        ) {
+          const childTag = (child as BaseComponentStructure).tag;
+          if (typeof childTag === "string") tags.add(childTag);
+        }
+      }
+      return [...tags];
+    };
+
     const validateCSS = (
       block: Record<string, unknown>,
       contextInnerHTML: typeof innerHTML,
       contextClasses: string[],
       cssAttrs: Record<string, any>,
       cssProps: Record<string, any>,
+      nodeTag: string | undefined,
+      parentGates: Record<string, string>,
       inPseudoElement?: boolean,
     ): void => {
-      const complexValues: Record<string, string> = {};
+      // Gates the author wrote in this scope, in any order, plus the tag's
+      // default `display` when they did not write one (implicit display).
+      const explicitGates: Record<string, string> = {};
+      const selfGates: Record<string, string> = {};
+
+      for (const key of Object.keys(block)) {
+        if (key.startsWith("> ") || key.startsWith("&.")) continue;
+        if (isGate(cssAttrs[key])) {
+          explicitGates[key] = resolveGateValue(cssAttrs, key, block[key]);
+        }
+      }
+      const defaultDisplay =
+        nodeTag !== undefined && tagConfig[nodeTag] !== undefined
+          ? tagConfig[nodeTag].display
+          : undefined;
+      if (defaultDisplay !== undefined && isGate(cssAttrs["display"])) {
+        selfGates["display"] = defaultDisplay;
+      }
+      Object.assign(selfGates, explicitGates);
 
       for (const key of Object.keys(block)) {
         if (key.startsWith("> ")) {
@@ -177,6 +324,7 @@ export function validateComponentNode(
         ) {
           let nextContext = contextInnerHTML;
           let nextClasses = contextClasses;
+          let nextTag = nodeTag;
           if (key.startsWith("> ")) {
             const childName = key.slice(2);
             if (
@@ -228,6 +376,8 @@ export function validateComponentNode(
                     ? (merged as typeof innerHTML)
                     : undefined;
                 nextClasses = [...mergedClasses];
+                const tags = tagsOf(rawChild);
+                nextTag = tags.length === 1 ? tags[0] : undefined;
               } else if (
                 rawChild &&
                 typeof rawChild === "object" &&
@@ -240,9 +390,11 @@ export function validateComponentNode(
                       ] as typeof innerHTML)
                     : undefined;
                 nextClasses = classesOf(rawChild);
+                nextTag = (rawChild as BaseComponentStructure).tag;
               } else {
                 nextContext = undefined;
                 nextClasses = [];
+                nextTag = undefined;
               }
             }
           }
@@ -253,6 +405,11 @@ export function validateComponentNode(
             nextClasses,
             cssAttrs,
             cssProps,
+            nextTag,
+            // `> child` blocks inherit this scope's EXPLICIT gates for the
+            // children slot; pseudo-class / class / pseudo-element blocks pass
+            // the parent gates through unchanged.
+            key.startsWith("> ") ? explicitGates : parentGates,
             nextInPseudoElement,
           );
         } else if (!key.startsWith("> ") && !key.startsWith("&.")) {
@@ -261,60 +418,46 @@ export function validateComponentNode(
 
           if (typeof attrDef === "string") {
             parseValueAgainstDSL(mergedKeywords, attrDef, value as any);
-          } else if (typeof attrDef === "object" && attrDef !== null) {
-            if (typeof value !== "string") {
-              throw new Error(
-                `CSS Error: Invalid value type for '${key}'. Expected a string`,
-              );
-            }
-            const valueKeys = Object.keys(attrDef);
-            let matchedKey: string | undefined;
-            if (value in attrDef) {
-              matchedKey = value;
-            } else {
-              for (const vk of valueKeys) {
-                if (vk.startsWith("<") && vk.endsWith(">")) {
-                  try {
-                    parseValueAgainstDSL(mergedKeywords, vk, value);
-                    matchedKey = vk;
-                    break;
-                  } catch {}
-                }
-              }
-            }
-            if (matchedKey === undefined) {
-              throw new Error(
-                `CSS Error: Invalid value '${String(value)}' for '${key}'. Expected one of: ${valueKeys.join(", ")}`,
-              );
-            }
-            complexValues[key] = matchedKey;
-          } else if (propDef !== undefined) {
+            continue;
+          }
+          if (isGate(attrDef)) {
+            continue; // gate already resolved (and validated) in the pre-pass
+          }
+          if (propDef !== undefined) {
             if (typeof propDef === "object" && typeof propDef.syntax === "string") {
               parseValueAgainstDSL(mergedKeywords, propDef.syntax, value as any);
             }
-          } else {
-            let found = false;
-            for (const [attrName, valueKey] of Object.entries(complexValues)) {
-              const complexDef = cssAttrs[attrName];
-              if (complexDef && typeof complexDef === "object" && valueKey in complexDef) {
-                const valueDef = complexDef[valueKey];
-                if (valueDef && typeof valueDef === "object" && valueDef.self && key in valueDef.self) {
-                  parseValueAgainstDSL(mergedKeywords, valueDef.self[key], value as any);
-                  found = true;
-                  break;
-                }
-              }
-            }
-            if (!found) {
-              throw new Error(
-                `CSS Error: '${key}' is not a recognized CSS attribute or property`,
-              );
-            }
+            continue;
           }
+          const selfDSL = slotDSL(cssAttrs, selfGates, key, "self");
+          if (selfDSL !== undefined) {
+            parseValueAgainstDSL(mergedKeywords, selfDSL, value as any);
+            continue;
+          }
+          const childrenDSL = slotDSL(cssAttrs, parentGates, key, "children");
+          if (childrenDSL !== undefined) {
+            parseValueAgainstDSL(mergedKeywords, childrenDSL, value as any);
+            continue;
+          }
+          const locked = lockedMessageFor(cssAttrs, key);
+          if (locked !== null) {
+            throw new Error(`CSS Error: ${locked}`);
+          }
+          throw new Error(
+            `CSS Error: '${key}' is not a recognized CSS attribute or property`,
+          );
         }
       }
     };
-    validateCSS(css as Record<string, unknown>, innerHTML, classesOf(record), cssAttributesConfig, cssPropertiesConfig);
+    validateCSS(
+      css as Record<string, unknown>,
+      innerHTML,
+      classesOf(record),
+      cssAttributesConfig,
+      cssPropertiesConfig,
+      tag,
+      {},
+    );
   }
 
   const innerHTMLConfig = tagDefinition.innerHTML;

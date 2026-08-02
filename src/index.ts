@@ -39,25 +39,35 @@ const { createComponent, renderComponent } = engine({
   cssPropertiesConfig: CSS_GLOBAL_PROPERTIES,
 });
 
-//@ts-ignore
-const card = (num: number) => {
-  const active = num > 1 ? "active" : "";
-  return createComponent({
-    tag: "li",
-    attributes: { dir: "auto", class: `${active}` },
-    innerHTML: {
-      link: {
-        tag: "input",
-        attributes: { type: "number" },
+const card = createComponent({
+  tag: "div",
+  attributes: { dir: "auto" },
+  innerHTML: {
+    someImage: {
+      tag: "a",
+      attributes: {
+        href: "",
       },
+      css: {},
     },
     css: {
       "--_a": "10%",
       width: "10px",
       "::after": { display: "flex" },
     },
-  });
-};
+    asdf: {
+      tag: "div",
+    },
+  },
+  css: {
+    width: "100px",
+    "> content": {
+      display: "flex",
+      gap: "5px",
+      "> title": {},
+    },
+  },
+});
 
 const list = createComponent({
   tag: "ul",
@@ -79,11 +89,22 @@ const list = createComponent({
     },
   },
   css: {
-    "--_a": "1%",
-    display: "block",
-    width: "100%",
-    perspective: "10px",
-    "perspective-origin": "top",
+    display: "flex",
+    width: "100px",
+    "align-content": "flex-start",
+    "--_a": "100%",
+    ":hover": {
+      display: "flex",
+      "align-items": "end",
+    },
+    "::before": {},
+    ":visited": {},
+    "> content": {
+      "> title": {
+        color: "hsl(1 1% 1%)",
+      },
+      "> subtitle": {},
+    },
   },
 });
 

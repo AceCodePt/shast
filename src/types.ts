@@ -65,3 +65,26 @@ export type UnionToIntersection<U> = (
 ) extends (k: infer I extends U) => void
   ? I
   : never;
+
+export type LastOf<U> =
+  UnionToIntersection<U extends any ? () => U : never> extends () => infer R
+    ? R
+    : never;
+
+export type UnionToTuple<U, L = LastOf<U>> = [U] extends [never]
+  ? []
+  : [...UnionToTuple<Exclude<U, L>>, L];
+
+export type JoinTuple<
+  A extends readonly string[],
+  Sep extends string,
+> = A extends readonly [infer H extends string, ...infer R extends string[]]
+  ? R extends readonly []
+    ? H
+    : `${H}${Sep}${JoinTuple<R, Sep>}`
+  : "";
+
+export type JoinUnion<U extends string, Sep extends string = " | "> =
+  UnionToTuple<U> extends infer A extends readonly string[]
+    ? JoinTuple<A, Sep>
+    : "";
