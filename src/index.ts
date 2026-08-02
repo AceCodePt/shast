@@ -41,13 +41,14 @@ const { createComponent, renderComponent } = engine({
 
 const card = createComponent({
   tag: "div",
+  attributes: { dir: "auto" },
   innerHTML: {
     someImage: {
-      tag: "img",
+      tag: "a",
       attributes: {
-        alt: "",
-        src: "",
+        href: "",
       },
+      css: {},
     },
     content: {
       tag: "div",
@@ -69,6 +70,8 @@ const card = createComponent({
   css: {
     width: "100px",
     "> content": {
+      display: "flex",
+      gap: "5px",
       "> title": {},
     },
   },
@@ -99,10 +102,12 @@ createComponent({
     },
   },
   css: {
+    display: "flex",
     width: "100px",
     "align-content": "flex-start",
     "--_a": "100%",
     ":hover": {
+      display: "flex",
       "align-items": "end",
     },
     "::before": {},

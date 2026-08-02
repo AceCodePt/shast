@@ -12,6 +12,7 @@ import type {
 } from "@/html/attribute-config/types.ts";
 import type { BaseHTMLTagConfig } from "@/html/tag-config/types.ts";
 import type {
+  JoinUnion,
   MakeUndefinedOptional,
   Trim,
   UnionToIntersection,
@@ -212,9 +213,14 @@ type GateTable<
   Slot extends "self" | "children",
 > = {
   [K in GateKeys<CSSAttributesConfig>]: {
-    [V in keyof CSSAttributesConfig[K] &
-      string as ResolveComplexValue<Keywords, CSSSyntaxConfig, V> &
-      PropertyKey]: CSSAttributesConfig[K][V] extends BaseCSSAttributeComplexValue[string]
+    [
+      V in keyof CSSAttributesConfig[K] & string as ResolveComplexValue<
+        Keywords,
+        CSSSyntaxConfig,
+        V
+      > &
+        PropertyKey
+    ]: CSSAttributesConfig[K][V] extends BaseCSSAttributeComplexValue[string]
       ? InferPropBag<Keywords, CSSSyntaxConfig, CSSAttributesConfig[K][V][Slot]>
       : {};
   };
@@ -313,28 +319,6 @@ type GateAllKeys<
 // tuple. Both helpers below are applied only to registry-derived unions, so
 // the O(n^2) `UnionToTuple` runs once per (gate, prop) pair for the whole
 // program rather than per node.
-type LastOf<U> =
-  UnionToIntersection<U extends any ? () => U : never> extends () => infer R
-    ? R
-    : never;
-
-type UnionToTuple<U, L = LastOf<U>> = [U] extends [never]
-  ? []
-  : [...UnionToTuple<Exclude<U, L>>, L];
-
-type JoinTuple<
-  A extends readonly string[],
-  Sep extends string,
-> = A extends readonly [infer H extends string, ...infer R extends string[]]
-  ? R extends readonly []
-    ? H
-    : `${H}${Sep}${JoinTuple<R, Sep>}`
-  : "";
-
-type JoinUnion<U extends string, Sep extends string = " | "> =
-  UnionToTuple<U> extends infer A extends readonly string[]
-    ? JoinTuple<A, Sep>
-    : "";
 
 // The values of gate `G` that unlock prop `P` in `Slot`.
 type ValuesUnlocking<
@@ -355,10 +339,7 @@ type ValuesUnlocking<
 
 // Registry-only: for prop `P`, one clause per gate that can unlock it, with
 // that gate's qualifying values joined into a single string.
-type UnlockedBy<
-  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
-  P,
-> =
+type UnlockedBy<CSSAttributesConfig extends BaseCSSAttributesComplexConfig, P> =
   | {
       [G in GateKeys<CSSAttributesConfig>]: [
         ValuesUnlocking<CSSAttributesConfig, G, P, "self">,
@@ -436,10 +417,10 @@ type DependentProps<
 > = [Owners] extends [never]
   ? {}
   : UnionToIntersection<
-        {
-          [K in Owners]: GateLookup<Table[K], Source[K]>;
-        }[Owners]
-      >;
+      {
+        [K in Owners]: GateLookup<Table[K], Source[K]>;
+      }[Owners]
+    >;
 
 type DependentSelfProps<
   Keywords extends SupportedKeywordsConfig,
@@ -583,8 +564,7 @@ type ValidateComponentCSSStructure<
           CSSSyntaxConfig,
           CSSAttributesConfig,
           WithDefaultDisplay<HTMLTagConfig, T, CSSValue>
-        > &
-        {
+        > & {
           // NOTE: written inline rather than through the `LockedProps` alias on
           // purpose. A type alias applied to type arguments keeps its
           // aliasSymbol, so TypeScript prints it as `LockedProps<{...registry
@@ -592,23 +572,25 @@ type ValidateComponentCSSStructure<
           // doubles the size of the very message we are trying to shrink.
           // Inlined, it resolves to `{}` in the common case and prints as
           // nothing.
-          [P in Exclude<
-            Extract<keyof CSSValue, AllLockableKeys<CSSAttributesConfig>>,
-            | keyof DependentSelfProps<
-                Keywords,
-                CSSSyntaxConfig,
-                CSSAttributesConfig,
-                WithDefaultDisplay<HTMLTagConfig, T, CSSValue>
-              >
-            | keyof DependentChildrenProps<
-                Keywords,
-                CSSSyntaxConfig,
-                CSSAttributesConfig,
-                CSSParent
-              >
-            | KeysMatching<CSSAttributesConfig, string>
-          > &
-            string]?: LockedMessage<CSSAttributesConfig, P> & Locked;
+          [
+            P in Exclude<
+              Extract<keyof CSSValue, AllLockableKeys<CSSAttributesConfig>>,
+              | keyof DependentSelfProps<
+                  Keywords,
+                  CSSSyntaxConfig,
+                  CSSAttributesConfig,
+                  WithDefaultDisplay<HTMLTagConfig, T, CSSValue>
+                >
+              | keyof DependentChildrenProps<
+                  Keywords,
+                  CSSSyntaxConfig,
+                  CSSAttributesConfig,
+                  CSSParent
+                >
+              | KeysMatching<CSSAttributesConfig, string>
+            > &
+              string
+          ]?: LockedMessage<CSSAttributesConfig, P> & Locked;
         } & {
           [K in keyof CSSParent]?: {};
         } & {
