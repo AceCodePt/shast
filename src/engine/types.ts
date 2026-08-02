@@ -179,83 +179,106 @@ type ResolveComplexValue<
   V extends string,
 > = V extends `<${string}>` ? DSLInfer<Keywords & CSSSyntaxConfig, V> : V;
 
-// Every self prop unlocked by the complex attributes actually written on this
-// node. Each owner keeps its own props: the contributions are INTERSECTED, so
-// an unrelated owner can no longer widen another owner's prop to `string`.
+// ---------------------------------------------------------------------------
+// Gate tables.
+//
+// A "gate" is a complex attribute (`display`, `position`, ...): the value the
+// user writes unlocks further props on the node itself (`self`) and on its
+// direct children (`children`).
+//
+// These two tables are parameterised ONLY by the registry, never by the node
+// being checked, so TypeScript instantiates them once for the whole program
+// and every node afterwards is a cache hit + one indexed access.
+// ---------------------------------------------------------------------------
+
+type GateKeys<CSSAttributesConfig extends BaseCSSAttributesComplexConfig> =
+  KeysMatching<CSSAttributesConfig, BaseCSSAttributeComplexValue>;
+
+type InferPropBag<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  Bag extends Record<string, string>,
+> = {
+  [P in keyof Bag]?: DSLInfer<Keywords & CSSSyntaxConfig, Bag[P]>;
+};
+
+// `{ display: { flex: {...}, block: {...} }, perspective: { `${number}px`: {...} } }`
+// Value keys written as DSL tokens (`"<length>"`) are resolved through the key
+// remap, so a token becomes a *pattern* key that a concrete literal matches.
+type GateTable<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  Slot extends "self" | "children",
+> = {
+  [K in GateKeys<CSSAttributesConfig>]: {
+    [V in keyof CSSAttributesConfig[K] &
+      string as ResolveComplexValue<Keywords, CSSSyntaxConfig, V> &
+      PropertyKey]: CSSAttributesConfig[K][V] extends BaseCSSAttributeComplexValue[string]
+      ? InferPropBag<Keywords, CSSSyntaxConfig, CSSAttributesConfig[K][V][Slot]>
+      : {};
+  };
+};
+
+// One row lookup: `Written` is what the user actually wrote for that gate.
+// The `[...]` wrapper keeps the check NON-distributive on purpose: a gate whose
+// value is still the open union (the parent-side default, where nothing has
+// been written yet) must unlock nothing, exactly as before.
+type GateLookup<Row, Written> = [Written] extends [keyof Row]
+  ? Row[Extract<Written, keyof Row>] extends infer Bag
+    ? { [P in keyof Bag]: Bag[P] }
+    : {}
+  : {};
+
+// Every prop unlocked by the gates actually written in `Source`. Each owner
+// keeps its own props: the contributions are INTERSECTED, so an unrelated
+// owner can no longer widen another owner's prop to `string`.
+type DependentProps<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  Slot extends "self" | "children",
+  Source extends Record<string, any>,
+  Table extends Record<string, any> = GateTable<
+    Keywords,
+    CSSSyntaxConfig,
+    CSSAttributesConfig,
+    Slot
+  >,
+  Owners extends string = GateKeys<CSSAttributesConfig> & keyof Source & string,
+> = [Owners] extends [never]
+  ? {}
+  : UnionToIntersection<
+      {
+        [K in Owners]: GateLookup<Table[K], Source[K]>;
+      }[Owners]
+    >;
+
 type DependentSelfProps<
   Keywords extends SupportedKeywordsConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSValue extends Record<string, any>,
-  Owners extends keyof CSSAttributesConfig & keyof CSSValue = KeysMatching<
-    CSSAttributesConfig,
-    BaseCSSAttributeComplexValue
-  > &
-    keyof CSSValue,
-> = [Owners] extends [never]
-  ? {}
-  : UnionToIntersection<
-      {
-        [K1 in Owners]: {
-          [
-            V in keyof CSSAttributesConfig[K1] & string
-          ]: CSSValue[K1] extends ResolveComplexValue<
-            Keywords,
-            CSSSyntaxConfig,
-            V
-          >
-            ? CSSAttributesConfig[K1][V] extends BaseCSSAttributeComplexValue[string]
-              ? {
-                  [P in keyof CSSAttributesConfig[K1][V]["self"]]?: DSLInfer<
-                    Keywords & CSSSyntaxConfig,
-                    CSSAttributesConfig[K1][V]["self"][P]
-                  >;
-                }
-              : {}
-            : {};
-        }[keyof CSSAttributesConfig[K1] & string];
-      }[Owners]
-    >;
+> = DependentProps<
+  Keywords,
+  CSSSyntaxConfig,
+  CSSAttributesConfig,
+  "self",
+  CSSValue
+>;
 
 type DependentChildrenProps<
   Keywords extends SupportedKeywordsConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSParent extends Record<string, any>,
-> = [keyof CSSParent] extends [never]
-  ? {}
-  : UnionToIntersection<
-      | {
-          [
-            K1 in KeysMatching<
-              CSSAttributesConfig,
-              BaseCSSAttributeComplexValue
-            > &
-              keyof CSSParent
-          ]: {
-            [
-              V in keyof CSSAttributesConfig[K1] & string
-            ]: CSSParent[K1] extends ResolveComplexValue<
-              Keywords,
-              CSSSyntaxConfig,
-              V
-            >
-              ? CSSAttributesConfig[K1][V] extends BaseCSSAttributeComplexValue[string]
-                ? {
-                    [
-                      P in keyof CSSAttributesConfig[K1][V]["children"]
-                    ]?: DSLInfer<
-                      Keywords & CSSSyntaxConfig,
-                      CSSAttributesConfig[K1][V]["children"][P]
-                    >;
-                  }
-                : {}
-              : {};
-          }[keyof CSSAttributesConfig[K1] & string];
-        }[KeysMatching<CSSAttributesConfig, BaseCSSAttributeComplexValue> &
-          keyof CSSParent]
-      | {}
-    >;
+> = DependentProps<
+  Keywords,
+  CSSSyntaxConfig,
+  CSSAttributesConfig,
+  "children",
+  CSSParent
+>;
 
 type CSSNonSelfConfig<
   Keywords extends SupportedKeywordsConfig,
