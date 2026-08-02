@@ -179,83 +179,298 @@ type ResolveComplexValue<
   V extends string,
 > = V extends `<${string}>` ? DSLInfer<Keywords & CSSSyntaxConfig, V> : V;
 
-// Every self prop unlocked by the complex attributes actually written on this
-// node. Each owner keeps its own props: the contributions are INTERSECTED, so
-// an unrelated owner can no longer widen another owner's prop to `string`.
+// ---------------------------------------------------------------------------
+// Gate tables.
+//
+// A "gate" is a complex attribute (`display`, `position`, ...): the value the
+// user writes unlocks further props on the node itself (`self`) and on its
+// direct children (`children`).
+//
+// These two tables are parameterised ONLY by the registry, never by the node
+// being checked, so TypeScript instantiates them once for the whole program
+// and every node afterwards is a cache hit + one indexed access.
+// ---------------------------------------------------------------------------
+
+type GateKeys<CSSAttributesConfig extends BaseCSSAttributesComplexConfig> =
+  KeysMatching<CSSAttributesConfig, BaseCSSAttributeComplexValue>;
+
+type InferPropBag<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  Bag extends Record<string, string>,
+> = {
+  [P in keyof Bag]?: DSLInfer<Keywords & CSSSyntaxConfig, Bag[P]>;
+};
+
+// `{ display: { flex: {...}, block: {...} }, perspective: { `${number}px`: {...} } }`
+// Value keys written as DSL tokens (`"<length>"`) are resolved through the key
+// remap, so a token becomes a *pattern* key that a concrete literal matches.
+type GateTable<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  Slot extends "self" | "children",
+> = {
+  [K in GateKeys<CSSAttributesConfig>]: {
+    [V in keyof CSSAttributesConfig[K] &
+      string as ResolveComplexValue<Keywords, CSSSyntaxConfig, V> &
+      PropertyKey]: CSSAttributesConfig[K][V] extends BaseCSSAttributeComplexValue[string]
+      ? InferPropBag<Keywords, CSSSyntaxConfig, CSSAttributesConfig[K][V][Slot]>
+      : {};
+  };
+};
+
+// One row lookup: `Written` is what the user actually wrote for that gate.
+// The `[...]` wrapper keeps the check NON-distributive on purpose: a gate whose
+// value is still the open union (the parent-side default, where nothing has
+// been written yet) must unlock nothing, exactly as before.
+type GateLookup<Row, Written> = [Written] extends [keyof Row]
+  ? Row[Extract<Written, keyof Row>] extends infer Bag
+    ? { [P in keyof Bag]: Bag[P] }
+    : {}
+  : {};
+
+// ---------------------------------------------------------------------------
+// Locked props.
+//
+// A gate variant is a discriminated-union member in spirit: picking
+// `display: "flex"` should both grant `gap` AND state, in the type, that
+// `gap` is unavailable under `display: "block"`.
+//
+// Materialising that as an actual union across all gates is not viable -- the
+// gates are independent, so the union is their cross product and TypeScript
+// distributes it eagerly (TS2590 at 7 gates; the registry has 16). See the
+// note at the bottom of this block.
+//
+// Instead the "denied" half of each variant is kept as a registry-only
+// constant: every gate-lockable prop maps to an opaque message type naming the
+// values that would unlock it. Intersecting that in costs one mapped type over
+// the props of the gates that were actually written, and turns
+//
+//   Object literal may only specify known properties, and 'gap' does not
+//   exist in type '<3000 characters of registry>'
+//
+// into
+//
+//   Type '"1px"' is not assignable to type
+//   "'gap' requires display: flex | ... | display: inline-grid".
+// ---------------------------------------------------------------------------
+
+// Nominal marker intersected into every diagnostic type below. Without it the
+// message is an ordinary string literal, so
+//   gap: "'gap' requires display: flex"
+// would type-check. `Locked` carries a `unique symbol` key, so no string
+// literal -- and no value the author can write -- satisfies it.
+declare const LOCKED: unique symbol;
+export interface Locked {
+  readonly [LOCKED]: true;
+}
+
+// `CSSAttributesConfig[G][V]["self" | "children"]`, safely.
+type SlotOf<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  G extends keyof CSSAttributesConfig,
+  V extends keyof CSSAttributesConfig[G],
+  Slot extends "self" | "children",
+> = CSSAttributesConfig[G][V] extends BaseCSSAttributeComplexValue[string]
+  ? CSSAttributesConfig[G][V][Slot]
+  : {};
+
+// Every prop any value of gate `G` can unlock.
+type GateAllKeys<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  G extends keyof CSSAttributesConfig,
+  Slot extends "self" | "children",
+> = {
+  [V in keyof CSSAttributesConfig[G]]: keyof SlotOf<
+    CSSAttributesConfig,
+    G,
+    V,
+    Slot
+  >;
+}[keyof CSSAttributesConfig[G]];
+
+// --- union -> single string -------------------------------------------------
+// A template literal distributes over a union, so `${G}: ${V}` across every
+// value of every gate yields the cross product as a union of messages. To get
+// ONE message the values have to be joined, and joining needs an ordered
+// tuple. Both helpers below are applied only to registry-derived unions, so
+// the O(n^2) `UnionToTuple` runs once per (gate, prop) pair for the whole
+// program rather than per node.
+type LastOf<U> =
+  UnionToIntersection<U extends any ? () => U : never> extends () => infer R
+    ? R
+    : never;
+
+type UnionToTuple<U, L = LastOf<U>> = [U] extends [never]
+  ? []
+  : [...UnionToTuple<Exclude<U, L>>, L];
+
+type JoinTuple<
+  A extends readonly string[],
+  Sep extends string,
+> = A extends readonly [infer H extends string, ...infer R extends string[]]
+  ? R extends readonly []
+    ? H
+    : `${H}${Sep}${JoinTuple<R, Sep>}`
+  : "";
+
+type JoinUnion<U extends string, Sep extends string = " | "> =
+  UnionToTuple<U> extends infer A extends readonly string[]
+    ? JoinTuple<A, Sep>
+    : "";
+
+// The values of gate `G` that unlock prop `P` in `Slot`.
+type ValuesUnlocking<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  G extends keyof CSSAttributesConfig,
+  P,
+  Slot extends "self" | "children",
+> = {
+  [V in keyof CSSAttributesConfig[G] & string]: P extends keyof SlotOf<
+    CSSAttributesConfig,
+    G,
+    V,
+    Slot
+  >
+    ? V
+    : never;
+}[keyof CSSAttributesConfig[G] & string];
+
+// Registry-only: for prop `P`, one clause per gate that can unlock it, with
+// that gate's qualifying values joined into a single string.
+type UnlockedBy<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  P,
+> =
+  | {
+      [G in GateKeys<CSSAttributesConfig>]: [
+        ValuesUnlocking<CSSAttributesConfig, G, P, "self">,
+      ] extends [never]
+        ? never
+        : `${G & string}: ${JoinUnion<ValuesUnlocking<CSSAttributesConfig, G, P, "self">>}`;
+    }[GateKeys<CSSAttributesConfig>]
+  | {
+      [G in GateKeys<CSSAttributesConfig>]: [
+        ValuesUnlocking<CSSAttributesConfig, G, P, "children">,
+      ] extends [never]
+        ? never
+        : `${G & string}: ${JoinUnion<ValuesUnlocking<CSSAttributesConfig, G, P, "children">>} on the parent`;
+    }[GateKeys<CSSAttributesConfig>];
+
+// One clause per gate, joined again so the whole diagnostic is a single string
+// literal rather than a union TypeScript has to print member by member.
+type LockedMessage<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  P extends string,
+> = `'${P}' requires ${JoinUnion<UnlockedBy<CSSAttributesConfig, P>, ", or ">}`;
+
+// NOTE: there is deliberately no branded "unknown property" check here.
+// An earlier revision added one (mapping every key the registry does not know
+// onto a `'x' is not a property in this registry` message) so that typos would
+// stop producing TypeScript's stock TS2353 dump. It was removed because it lost
+// on every axis that was measured:
+//
+//   * cost: 6-11% extra type instantiations and 17-25% extra check time, the
+//     single largest contributor to this validator being slower than the naive
+//     one -- while changing no accept/reject decision anywhere in the suite.
+//   * message quality: it produced a WORSE diagnostic than the built-in. TS2353
+//     already says "'foo' does not exist in type ...", whereas the branded
+//     version reported the assignability failure of a synthetic string.
+//   * the giant registry dump it was meant to suppress is an artifact of
+//     `noErrorTruncation: true` in tsconfig.json, not of TS2353. With the flag
+//     at its default the stock message is ~430 chars.
+//
+// The locked-property check below is a different story and does earn its cost:
+// TS2353 can only say a prop "does not exist", it cannot say *why*, and "'gap'
+// requires display: flex | grid | inline-flex | inline-grid" is information
+// TypeScript has no way to produce on its own.
+
+// Every prop any gate can unlock, on this element or through its parent.
+// Registry-only, so it is instantiated once for the whole program.
+type AllLockableKeys<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+> = {
+  [G in GateKeys<CSSAttributesConfig>]:
+    | GateAllKeys<CSSAttributesConfig, G, "self">
+    | GateAllKeys<CSSAttributesConfig, G, "children">;
+}[GateKeys<CSSAttributesConfig>];
+
+// The denied half of the gate variants is applied inline in
+// `ValidateComponentCSSStructure` -- see the note there for why it is not a
+// named alias. It maps the props the author actually wrote, minus everything
+// the written gates unlocked, onto `LockedMessage`.
+
+// Every prop unlocked by the gates actually written in `Source`. Each owner
+// keeps its own props: the contributions are INTERSECTED, so an unrelated
+// owner can no longer widen another owner's prop to `string`.
+type DependentProps<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  Slot extends "self" | "children",
+  Source extends Record<string, any>,
+  Table extends Record<string, any> = GateTable<
+    Keywords,
+    CSSSyntaxConfig,
+    CSSAttributesConfig,
+    Slot
+  >,
+  Owners extends string = GateKeys<CSSAttributesConfig> & keyof Source & string,
+> = [Owners] extends [never]
+  ? {}
+  : UnionToIntersection<
+        {
+          [K in Owners]: GateLookup<Table[K], Source[K]>;
+        }[Owners]
+      >;
+
 type DependentSelfProps<
   Keywords extends SupportedKeywordsConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSValue extends Record<string, any>,
-  Owners extends keyof CSSAttributesConfig & keyof CSSValue = KeysMatching<
-    CSSAttributesConfig,
-    BaseCSSAttributeComplexValue
-  > &
-    keyof CSSValue,
-> = [Owners] extends [never]
-  ? {}
-  : UnionToIntersection<
-      {
-        [K1 in Owners]: {
-          [
-            V in keyof CSSAttributesConfig[K1] & string
-          ]: CSSValue[K1] extends ResolveComplexValue<
-            Keywords,
-            CSSSyntaxConfig,
-            V
-          >
-            ? CSSAttributesConfig[K1][V] extends BaseCSSAttributeComplexValue[string]
-              ? {
-                  [P in keyof CSSAttributesConfig[K1][V]["self"]]?: DSLInfer<
-                    Keywords & CSSSyntaxConfig,
-                    CSSAttributesConfig[K1][V]["self"][P]
-                  >;
-                }
-              : {}
-            : {};
-        }[keyof CSSAttributesConfig[K1] & string];
-      }[Owners]
-    >;
+> = DependentProps<
+  Keywords,
+  CSSSyntaxConfig,
+  CSSAttributesConfig,
+  "self",
+  CSSValue
+>;
+
+// The author's CSS, with `display` filled in from the tag's default when they
+// did not write it themselves.
+//
+// This must be a single named alias rather than two copies of the same
+// conditional. `DependentSelfProps` is instantiated with this exact type twice
+// -- once as a member of the result intersection and once inside the locked-prop
+// exclusion -- and TypeScript caches instantiations by type IDENTITY, not by
+// syntactic shape. Two separate (but identical) conditional expressions produce
+// two different type objects, so the whole gate resolution used to be computed
+// from scratch the second time.
+type WithDefaultDisplay<
+  HTMLTagConfig extends BaseHTMLTagConfig,
+  T extends BaseComponentStructure,
+  CSSValue extends Record<string, any>,
+> = "display" extends keyof CSSValue
+  ? CSSValue
+  : CSSValue &
+      (T["tag"] extends keyof HTMLTagConfig
+        ? { display: HTMLTagConfig[T["tag"]]["display"] }
+        : {});
 
 type DependentChildrenProps<
   Keywords extends SupportedKeywordsConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSParent extends Record<string, any>,
-> = [keyof CSSParent] extends [never]
-  ? {}
-  : UnionToIntersection<
-      | {
-          [
-            K1 in KeysMatching<
-              CSSAttributesConfig,
-              BaseCSSAttributeComplexValue
-            > &
-              keyof CSSParent
-          ]: {
-            [
-              V in keyof CSSAttributesConfig[K1] & string
-            ]: CSSParent[K1] extends ResolveComplexValue<
-              Keywords,
-              CSSSyntaxConfig,
-              V
-            >
-              ? CSSAttributesConfig[K1][V] extends BaseCSSAttributeComplexValue[string]
-                ? {
-                    [
-                      P in keyof CSSAttributesConfig[K1][V]["children"]
-                    ]?: DSLInfer<
-                      Keywords & CSSSyntaxConfig,
-                      CSSAttributesConfig[K1][V]["children"][P]
-                    >;
-                  }
-                : {}
-              : {};
-          }[keyof CSSAttributesConfig[K1] & string];
-        }[KeysMatching<CSSAttributesConfig, BaseCSSAttributeComplexValue> &
-          keyof CSSParent]
-      | {}
-    >;
+> = DependentProps<
+  Keywords,
+  CSSSyntaxConfig,
+  CSSAttributesConfig,
+  "children",
+  CSSParent
+>;
 
 type CSSNonSelfConfig<
   Keywords extends SupportedKeywordsConfig,
@@ -325,6 +540,17 @@ type ValidateComponentCSSStructure<
                 : never
           : T["innerHTML"][K];
       } & {
+        // This member, `CSSNonSelfConfig` below, and the custom-property member
+        // further down are all registry-only and have disjoint key sets, so they
+        // can be folded into a single mapped type with a value-side conditional
+        // (9 intersection members -> 7). That was tried and REVERTED: it cost
+        // +1,272 instantiations on plain-200, +274 on pseudo-200 and +6,434 on
+        // the error path, for a check time that was a wash in an interleaved
+        // A/B (0.234s vs 0.238s plain, 0.446s vs 0.448s pseudo). Dispatching on
+        // the value side per key over ~130 keys costs more than the two
+        // intersection members it removes -- the same reason the
+        // cheap-shape-test-first `as` remap was reverted earlier. Keep them
+        // separate: each is a trivial mapped type cached once for the program.
         [K in KeysMatching<CSSAttributesConfig, string>]?: DSLInfer<
           CSSSyntaxConfig & Keywords,
           CSSAttributesConfig[K] & string
@@ -340,13 +566,34 @@ type ValidateComponentCSSStructure<
           Keywords,
           CSSSyntaxConfig,
           CSSAttributesConfig,
-          "display" extends keyof CSSValue
-            ? CSSValue
-            : CSSValue &
-                (T["tag"] extends keyof HTMLTagConfig
-                  ? { display: HTMLTagConfig[T["tag"]]["display"] }
-                  : {})
-        > & {
+          WithDefaultDisplay<HTMLTagConfig, T, CSSValue>
+        > &
+        {
+          // NOTE: written inline rather than through the `LockedProps` alias on
+          // purpose. A type alias applied to type arguments keeps its
+          // aliasSymbol, so TypeScript prints it as `LockedProps<{...registry
+          // ...}, ...>` inside any TS2353 "unknown property" dump -- which
+          // doubles the size of the very message we are trying to shrink.
+          // Inlined, it resolves to `{}` in the common case and prints as
+          // nothing.
+          [P in Exclude<
+            Extract<keyof CSSValue, AllLockableKeys<CSSAttributesConfig>>,
+            | keyof DependentSelfProps<
+                Keywords,
+                CSSSyntaxConfig,
+                CSSAttributesConfig,
+                WithDefaultDisplay<HTMLTagConfig, T, CSSValue>
+              >
+            | keyof DependentChildrenProps<
+                Keywords,
+                CSSSyntaxConfig,
+                CSSAttributesConfig,
+                CSSParent
+              >
+            | KeysMatching<CSSAttributesConfig, string>
+          > &
+            string]?: LockedMessage<CSSAttributesConfig, P> & Locked;
+        } & {
           [K in keyof CSSParent]?: {};
         } & {
           [K in keyof CSSPropertiesConfig]?: K extends `--${string}`
