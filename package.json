@@ -10,7 +10,21 @@
 	"scripts": {
 		"test": "tsc --noEmit && node --import=tsx/esm --test",
 		"test:watch": "node --import=tsx/esm --test --watch",
+		"test:conformance": "CONFORMANCE=1 node --import=tsx/esm --test tests/text-renderer/conformance.test.ts",
+		"tr:grid": "npx tsx text-renderer/example.ts",
+		"tr:compare": "npx tsx text-renderer/compare.ts",
+		"tr:html": "npx tsx text-renderer/emit-html.ts",
 		"diag:v1": "tsc --singleThreaded --project tsconfig.v1.json --extendedDiagnostics",
+		"diag:v2": "tsc --singleThreaded --project tsconfig.v2.json --extendedDiagnostics",
+		"diag:v3": "tsc --singleThreaded --project tsconfig.v3.json --extendedDiagnostics",
+		"diag:v4": "tsc --singleThreaded --project tsconfig.v4.json --extendedDiagnostics",
+		"diff": "pnpm diag:v1 > /tmp/diag-v1.txt 2>&1; pnpm diag:v2 > /tmp/diag-v2.txt 2>&1; diff /tmp/diag-v1.txt /tmp/diag-v2.txt || true",
+		"cmp:gen": "node cmp/gen.mjs",
+		"cmp:conf": "./cmp/conf.sh",
+		"cmp:perf": "./cmp/perf.sh",
+		"cmp:diag": "./cmp/diag.sh",
+		"cmp:ac": "node cmp/ac.mjs",
+		"bench:ac": "npx tsx scripts/autocomplete-bench.ts"
 	},
 	"keywords": [
 		"html",
