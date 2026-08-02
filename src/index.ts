@@ -14,7 +14,7 @@ export const CSS_GLOBAL_PROPERTIES = cssPropertiesConfig(
     "--a": {
       syntax: "<alpha-value>",
       inherits: true,
-      "initial-value": "1%",
+      "initial-value": "1",
     },
     "--_a": {
       syntax: "<percentage>",
@@ -50,18 +50,10 @@ const card = createComponent({
       },
       css: {},
     },
-    content: {
-      tag: "div",
-      innerHTML: {
-        title: {
-          tag: "h1",
-          innerHTML: "someTitle",
-        },
-        subtitle: {
-          tag: "h3",
-          innerHTML: "subtitle",
-        },
-      },
+    css: {
+      "--_a": "10%",
+      width: "10px",
+      "::after": { display: "flex" },
     },
     asdf: {
       tag: "div",
@@ -77,26 +69,21 @@ const card = createComponent({
   },
 });
 
-console.log(renderComponent(card));
-
-createComponent({
-  tag: "a",
-  attributes: { dir: "ltr", href: "" },
+const list = createComponent({
+  tag: "ul",
   innerHTML: {
-    image: {
-      tag: "img",
-      attributes: { alt: "", src: "" },
-    },
-    content: {
-      tag: "div",
+    item: {
+      tag: "li",
       innerHTML: {
-        title: {
-          tag: "h1",
-          innerHTML: "My awesome product",
-        },
-        subtitle: {
-          tag: "h1",
-          innerHTML: "Small description about production",
+        image: { tag: "img", attributes: { alt: "", src: "" } },
+        text: {
+          tag: "button",
+          innerHTML: {
+            demo: {
+              tag: "span",
+              innerHTML: "",
+            },
+          },
         },
       },
     },
@@ -121,9 +108,7 @@ createComponent({
   },
 });
 
-// console.log(
-//   renderComponent(
-//     HTML_TAG_DEFINITIONS,
-//     CARD_COMPONENT("", "title", "description"),
-//   ),
-// );
+const renderd = renderComponent(list);
+console.log(renderd.html.replaceAll(">", ">\n"), renderd.css);
+
+export default createComponent;
