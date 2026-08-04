@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is a grid with two columns: `200px` (left) and `300px` (right), plus a `gap` of `20px` between them. So the left edge of `root>right` starts after the first column’s width and the gap: `200 + 20 = 220` CSS pixels. This also matches the provided `getBoundingClientRect()` for `root>right` (`x=220`).\n\nANSWER: 220\n",
+  "ms": 9302
+}

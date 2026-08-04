@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The evidence shows that `root>mid>leaf` has a computed padding of `2px` which does not change even when the node is hovered, despite a `:hover { padding: 40px }` rule being present in its own CSS block. This indicates that the `2px` padding is being enforced by a rule with higher specificity or an `!important` flag located in an ancestor's CSS block. Since the `mid` node has `0px` padding but the `leaf` node (a child `div`) has `2px`, the overriding rule most likely uses a selector like `div` or `> div` within the `root>mid` block; such a rule would target the `leaf` but not the `mid` node itself, whereas a similar rule in the `root` block would typically affect `mid` as well.\n\nANSWER: root>mid\n",
+  "ms": 123190
+}

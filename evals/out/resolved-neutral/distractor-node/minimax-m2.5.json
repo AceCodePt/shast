@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>cover` div occupies y=0 to y=19, with an opaque black background. The `root>second` paragraph is located at y=19.19 to y=38.38, which does not overlap with the cover's box. Therefore, nothing paints over the second paragraph's text.\n\nANSWER: YES\n",
+  "ms": 6772
+}

@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendering shows the text \"Panel\" flush against the top-left corner of the viewport, meaning the 32px padding is not being applied. Since adding the padding directly to the `root>body>panel` CSS block had no effect, the property is being overridden (shadowed) by a more specific or later style rule. This conflicting rule is likely located in the parent node's CSS block, so you must edit that node to remove or modify the override.\n\nANSWER: root>body\n",
+  "ms": 20019
+}

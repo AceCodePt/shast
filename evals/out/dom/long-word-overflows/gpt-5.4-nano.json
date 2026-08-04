@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>cell`’s box is only 120px wide (`getBoundingClientRect: width=120px`). The URL text is very long, and the `root>cell` height stays at about one line (`height=19.1875`), which suggests it did not wrap to fit the 120px width. Since `overflow` is `visible`, the text can extend beyond the 120px box instead of being clipped.  \n\nANSWER: NO\n",
+  "ms": 7660
+}

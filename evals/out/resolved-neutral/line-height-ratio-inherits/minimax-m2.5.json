@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The unitless `line-height: 2` on `root` is inherited by `root>big`. When a unitless line-height is inherited, it applies the multiplier against the *child's* own font-size, not the parent's. So `big`'s line-height = 2 × 32px = 64px.\n\nANSWER: 64\n",
+  "ms": 8045
+}

@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering data:\n\n1. The `root>lede` paragraph is positioned at `y=0` with height `54.375px` and has `position: static` with `z-index: auto`.\n\n2. The `root>banner` div is `position: absolute` at the same location (`x=0, y=0`), has height `70px`, and critically has `z-index: 5`.\n\n3. Since the banner has a higher z-index and is absolutely positioned over the same area, it will render on top of the lede paragraph, completely covering it (70px > 54.375px).\n\n4. Additionally, the text itself shows \"targ…\" with an ellipsis in the source representation, suggesting the sentence is already truncated.\n\nThe banner overlays and obscures the lede text, making it unreadable.\n\nANSWER: NO\n",
+  "ms": 19158
+}

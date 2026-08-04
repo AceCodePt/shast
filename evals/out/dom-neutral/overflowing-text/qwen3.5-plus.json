@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data:\n\n`root>card` has a height of 48px with 8px padding on top and bottom, plus 1px border on top and bottom. This leaves a content box height of: 48 - 16 (padding) - 2 (borders) = **30px** for content.\n\nThe text \"Payment failed because the card on file expired last month.\" is 62 characters. With a 16px font-size and 180px width (162px content width after padding/borders), the text would wrap to approximately 3-4 lines. At 19.2px line-height, 3-4 lines need **57.6-76.8px** of vertical space.\n\nSince 57.6-76.8px > 30px available content height, the text cannot fit within the border box.\n\nANSWER: NO\n",
+  "ms": 17215
+}

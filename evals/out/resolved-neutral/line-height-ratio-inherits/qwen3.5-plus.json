@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered bounding box data provided:\n\n`root>big` has `@ x=0 y=32 width=600 height=64`, which directly shows its rendered height.\n\nThe reasoning: `root` sets `line-height: 2` (a unitless multiplier), which is inherited by `root>big`. When `root>big` declares `font-size: 32px`, the line-height computes to 32px × 2 = 64px. This matches the actual rendered height shown in the bounding box.\n\nANSWER: 64\n",
+  "ms": 14584
+}

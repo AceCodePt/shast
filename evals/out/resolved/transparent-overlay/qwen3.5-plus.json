@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report for `root>lede`:\n\n1. The text \"The quarterly results are in and every region beat its targ…\" (72 chars) is wrapped onto 2 lines\n2. The `root>banner` div (absolute, z-index 5) does paint over 100% of the `root>lede` box\n3. **However**, the report explicitly states the banner \"has no background, so what is behind it still shows through\"\n4. The report confirms: \"this node's 2 text line(s) stay fully visible\"\n\nSince the covering element has no background, the text remains fully visible to the reader.\n\nANSWER: YES\n",
+  "ms": 17072
+}

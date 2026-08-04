@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "In the rendering, `root>main` has a white background (`background-color: #ffffff` from the root), and `root>main>r21` is a div with `color: #ffffff`. White text on a white background means the text would be effectively unreadable (at least for normal contrast). While the sidebar may cover part of the `main` section, `r21` itself sits to the right (`x=244`)—the primary issue is the white-on-white coloring.\n\nANSWER: NO\n",
+  "ms": 12292
+}

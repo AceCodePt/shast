@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>alpha` occupies y=20–60, and `root>beta` occupies y=64–104, so those two are separated only by a small gap (around 4px). `root>gamma` occupies y=200–240, which is far below both `alpha` and `beta`, with a much larger empty space between it and the others. Therefore `root>gamma` is visually separated.\n\nANSWER: root>gamma\n",
+  "ms": 9904
+}

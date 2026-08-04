@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the y-coordinates of the three siblings:\n\n- `root>alpha`: y=20\n- `root>beta`: y=64\n- `root>gamma`: y=200\n\nThe vertical gap between alpha and beta is 64 - 20 - 40 = 4px (since alpha has height 40px).\n\nThe vertical gap between beta and gamma is 200 - 64 - 40 = 96px (since beta has height 40px).\n\n`root>gamma` is visually separated from the other two because there is a much larger gap (96px) between it and beta, whereas alpha and beta are only 4px apart. This creates a visual grouping of alpha and beta together, with gamma distinctly separated below them.\n\nANSWER: root>gamma\n",
+  "ms": 7148
+}

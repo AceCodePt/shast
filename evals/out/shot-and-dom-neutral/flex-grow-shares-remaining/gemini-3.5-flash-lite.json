@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The flex container `root` has a total width of 600px. With `root>a` having `flex: 1` (1 share) and `root>b` having `flex: 2` (2 shares) and a base size of 0%, the available space is distributed in a 1:2 ratio. Consequently, `root>b` receives two-thirds of the 600px width, resulting in 400px as confirmed by its bounding client rectangle.\n\nANSWER: 400\n",
+  "ms": 8062
+}

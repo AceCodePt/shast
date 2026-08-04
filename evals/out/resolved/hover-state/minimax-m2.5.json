@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report lists the default styling of `root>cta` as `background-color: #3355ff`, while `#0022cc` only applies under the `:hover` state. Since the pointer is elsewhere, the hover state does not apply, so the default background is used.\n\nANSWER: #3355ff\n",
+  "ms": 6574
+}

@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The text \"Short label\" in `root>row` is located at the top-left area of the page (with its bounding box extending from x=0 to 600 and y=0 to 120, but the text itself rendered near y=4), whereas `root>chip` is positioned on the right side at x=400 to 560 and y=60 to 100. Although the chip overlaps the paragraph's bounding box, it does not cover or obscure any of the text content \"Short label\".\n\nANSWER: NO\n",
+  "ms": 7913
+}

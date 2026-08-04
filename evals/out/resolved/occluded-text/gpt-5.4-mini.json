@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>lede` text wraps onto 2 lines, and both lines are completely hidden by the opaque `root>banner` that paints over the full box. Since every part of the sentence is covered, a reader cannot read the whole sentence in the browser.\n\nANSWER: NO\n",
+  "ms": 10527
+}

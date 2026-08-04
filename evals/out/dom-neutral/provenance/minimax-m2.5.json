@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The panel renders with `border-radius: 12px`, while its ancestors (`root` and `root>body`) both have `border-radius: 0px`. Since the rounded corners are not inherited from a parent (those render square), the `border-radius: 12px` declaration must come from the panel's own CSS block.\n\nANSWER: root>body>panel\n",
+  "ms": 7257
+}

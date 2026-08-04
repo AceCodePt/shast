@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly lists the resolved styles for the `root>cta` element, specifying a `background-color` of `#3355ff`. While a `:hover` state is defined with the color `#0022cc`, this only applies when the pointer is over the element. Since the page is at its initial paint and the pointer is elsewhere, the default resolved color is used.\n\nANSWER: #3355ff\n",
+  "ms": 11908
+}

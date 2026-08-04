@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at `root>main>r21`:\n- Its text color is `#ffffff` (white)\n- The root container's background is `#ffffff` (white), and `main` does not set its own background, so it inherits the white background\n- White text on a white background is invisible to the viewer\n\nThe row is within the viewport (y=588 < 800), so it's not a below-fold issue — the problem is the white-on-white color.\n\nANSWER: NO\n",
+  "ms": 16003
+}

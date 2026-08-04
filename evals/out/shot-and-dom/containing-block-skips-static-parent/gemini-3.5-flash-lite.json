@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "According to the browser's `getBoundingClientRect()` data provided for `root>plain>pin`, its bounding rectangle has x=10 and y=10 relative to the viewport. Since `root>plain` has `position: static`, the absolute positioning of `pin` references `root`, placing its top-left corner at those exact coordinates.\n\nANSWER: 10,10\n",
+  "ms": 6006
+}

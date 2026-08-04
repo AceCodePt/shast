@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided information:\n\nThe `root>inner` element has `position: fixed` with `top: 15px` and `left: 25px`. The key insight is that `position: fixed` positions elements relative to the **viewport**, not relative to any parent element, regardless of whether the parent has `position: relative` or padding.\n\nThe `top: 15px` means 15px down from the top of the viewport, and `left: 25px` means 25px from the left edge of the viewport. The parent's `position: relative` and `40px padding` do not affect the positioning of a fixed element.\n\nThe rendered box information confirms this: `root>inner` is shown at `x=25 y=15`, which matches exactly the `left: 25px` and `top: 15px` values.\n\nANSWER: 25,15\n",
+  "ms": 7298
+}

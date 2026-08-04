@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided data, `root>gone` has `display: none`, which means it is removed from the document flow and occupies no space. This is confirmed by its `getBoundingClientRect` showing a width and height of 0. Furthermore, the coordinates show that `root>first` occupies the vertical space from y=0 to y=40, and `root>third` begins immediately at y=40, leaving no gap between them.\n\nANSWER: NO\n",
+  "ms": 10495
+}

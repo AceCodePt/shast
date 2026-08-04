@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The text in `root>main>r09` (\"09. Currency hedging\") is not readable by a viewer. Although the node tree indicates the text exists in the source, the `root>banner` element is positioned at the exact same coordinates (y=276, x=244) with a higher `z-index` (5), placing it on top of the text. The provided screenshot shows a solid, dark horizontal band at this location that completely obscures the content of the ninth row, making the text invisible to the viewer.\n\nANSWER: NO\n",
+  "ms": 35085
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>main>r21` is rendered in white text (`color: #ffffff`) and the main area has a white background, so the text blends into the page. It is not covered by the sidebar at `x=244`, so there is no contrasting overlay making it readable.\n\nANSWER: NO\n",
+  "ms": 7886
+}

@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "8,8",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, the word \"pinned\" appears at the very top-left corner of the viewport. Since `root>plain` is not positioned, it doesn't create a new containing block, so `root>plain>pin` renders in the normal document flow starting from the top-left of the viewport. The text appears to have a small offset from the absolute corner, consistent with default browser margins (typically 8px).\n\nANSWER: 8,8\n",
+  "ms": 15669
+}

@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The report states that `root>card`'s text content is **76.75px tall**, while its border box is only **48px tall** (and its content box is just 30px tall after subtracting the 1px borders and 8px padding). Since 76.75px > 48px, the text overflows the border box, and the report explicitly notes the overflow is painted outside the box rather than being clipped.\n\nANSWER: NO\n",
+  "ms": 17118
+}

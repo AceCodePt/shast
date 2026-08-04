@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot and the node tree information:\n\nThe node tree shows that `root>cell` is a div containing the text \"https://example.com/a/very/long/path/that/never/breaks\". According to the question, this element has a 120px-wide box constraint.\n\nFrom the screenshot, I can see the URL text is displayed on a single line at the top of the viewport. The text appears to extend well beyond 120 pixels in width - the full URL \"https://example.com/a/very/long/path/that/never/breaks\" is quite long and clearly takes up much more horizontal space than 120px would allow.\n\nSince the URL text visibly overflows beyond what a 120px-wide box could contain, the content does not stay inside the constrained box.\n\nANSWER: NO\n",
+  "ms": 6666
+}

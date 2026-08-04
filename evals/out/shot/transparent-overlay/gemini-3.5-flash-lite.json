@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The sentence in `root>lede` wraps across two lines (\"The quarterly results are in and every region beat its\" and \"target this time.\"), making the entire sentence fully visible and readable in the browser.\n\nANSWER: YES\n",
+  "ms": 9185
+}

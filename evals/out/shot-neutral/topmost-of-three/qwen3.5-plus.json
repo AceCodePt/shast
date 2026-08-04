@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>front",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the node tree, the three divs are listed in DOM order: back, middle, then front. In CSS painting order, later siblings in the DOM are painted on top of earlier siblings when they overlap (assuming no z-index manipulation).\n\nThe screenshot confirms this stacking - we see the frontmost dark rectangle visually covering portions of the other two rectangles behind it.\n\nAt point 120,120, which falls within the overlapping region of all three boxes, the viewer sees the element that was painted last (on top).\n\nANSWER: root>front\n",
+  "ms": 12766
+}

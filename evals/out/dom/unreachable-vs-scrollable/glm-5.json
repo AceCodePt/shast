@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Reasoning: The viewport is 500×300. `root>lower` (y=700, 400×40) sits below the initial view, but the root document is 900px tall, so scrolling vertically down to ~y=600 puts the lower div fully inside the viewport. `root>sideways` is 900px wide while the viewport is only 500px wide; even though horizontal scrolling can reveal parts of it, an element wider than the viewport can never be brought *fully* into view at once. Thus the sideways node is the one ordinary scrolling cannot fully reveal.\n\nANSWER: root>sideways\n",
+  "ms": 89224
+}

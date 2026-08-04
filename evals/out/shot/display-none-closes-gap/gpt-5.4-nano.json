@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Because `root>gone` has `display: none`, it is not rendered and does not take up any space in the layout. So any vertical gap that appears between `root>first` and `root>third` cannot be attributed to `root>gone` “where it would have been.” With the given information, there is not evidence that a specific 40px gap is created by `root>gone`.\n\nANSWER: NO\n",
+  "ms": 16995
+}

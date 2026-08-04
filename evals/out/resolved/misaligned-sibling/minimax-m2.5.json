@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The first, second, and fourth rows all have x=24, sharing the same left edge. The third row has x=40, which is 16 pixels further to the right than the others.\n\nANSWER: root>third\n",
+  "ms": 6045
+}

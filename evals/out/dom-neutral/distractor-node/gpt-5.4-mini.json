@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The `cover` element only spans from `y=0` to `y=19px`, while `root>second` starts at `y=19.1875px`, so it sits just below the black overlay. Since its bounding box is not covered, the text in `root>second` should be readable.\n\nANSWER: YES\n",
+  "ms": 7363
+}

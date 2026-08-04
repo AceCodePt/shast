@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "30,30",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>plain>pin` is `position: absolute`, so it skips the non-positioned `root>plain` and uses the nearest positioned ancestor, `root`, as its containing block. The `top: 10px` and `left: 10px` offsets are measured from `root`'s padding box, and `root` has `padding: 20px`, so the padding edge starts at `(20,20)`. Adding the offsets gives `(30,30)`.\n\nANSWER: 30,30\n",
+  "ms": 9313
+}

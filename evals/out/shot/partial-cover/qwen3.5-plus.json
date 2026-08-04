@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the provided information:\n\n- `root>row` is a `<p>` element containing the text \"Short label\"\n- `root>chip` is a `<div>` containing the text \"chip\"\n- The screenshot shows \"Short label\" in the top-left corner and \"chip\" on a yellow background positioned on the right side\n\nThe two elements occupy different regions of the page. The text \"Short label\" is fully visible in the top-left, while the chip element is positioned separately on the right. There is no overlap between the chip and the \"Short label\" text.\n\nANSWER: NO\n",
+  "ms": 12223
+}

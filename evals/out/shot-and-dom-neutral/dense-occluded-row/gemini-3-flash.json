@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The node `root>main>r09` is located at `x=244, y=276` with a width of 1012px and a height of 26px. However, the node `root>banner` is also located at `x=244, y=276` with a width of 700px and a height of 26px, and it has a higher `z-index` of 5 and a solid red background (`rgb(204, 34, 34)`). This red banner completely occludes the first 700 pixels of the row where the text \"09. Currency hedging\" would appear, as confirmed by the solid red bar visible in the provided screenshot.\n\nANSWER: NO\n",
+  "ms": 11849
+}

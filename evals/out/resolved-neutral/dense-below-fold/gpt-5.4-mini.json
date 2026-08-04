@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>main>r36` is at `y=978` with `height=26`, while the viewport is only `800px` tall, so it starts below the fold. The page first shows content only up to around `y=800`, so that row is not visible until you scroll.\n\nANSWER: NO\n",
+  "ms": 7774
+}

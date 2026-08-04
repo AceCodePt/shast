@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The black `root>cover` div is only `19px` tall and sits at `y=0`, so it covers the first paragraph but not the second one, which starts at `y=19.1875`. The screenshot also shows “Second paragraph here” visible at the top left.\n\nANSWER: YES\n",
+  "ms": 8591
+}

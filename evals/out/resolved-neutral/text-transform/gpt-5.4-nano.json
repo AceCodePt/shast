@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendered page shows that the `root` element applies `text-transform: uppercase`, meaning any title text is displayed in uppercase regardless of how it was originally written. The `root>title` node contains the written text `\"Annual review\"`, but Chromium reports the rendered string as `\"ANNUAL REVIEW\"`. Therefore, the viewer sees the uppercase version including the space.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 11236
+}

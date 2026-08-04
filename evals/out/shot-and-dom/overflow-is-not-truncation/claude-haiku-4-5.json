@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided data:\n\nThe `root>card` div has:\n- Height: 48px\n- Padding: 8px on all sides\n- Overflow: visible\n- Line-height: 19.2px\n\nThe text \"Payment failed because the card on file expired last month.\" is displayed within this div. With 8px padding on top and bottom, the available content height is 48px - 16px = 32px, which fits only one line (line-height is 19.2px).\n\nHowever, the screenshot clearly shows the text wrapping to multiple lines, with the last line (\"last month.\") extending below the 48px boundary of the card div.\n\nThe key detail is that `overflow: visible` means content that exceeds the box boundaries is still rendered and visible on the page. The browser's rendering shows the text is painted beyond the card's bounding box, and it's legible in the screenshot.\n\nANSWER: YES\n",
+  "ms": 7570
+}

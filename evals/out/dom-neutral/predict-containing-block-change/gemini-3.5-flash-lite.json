@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "60,60",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Adding `position: relative` to `root>plain` makes it the nearest positioned ancestor and containing block for the absolute-positioned `root>plain>pin`. An absolute element's containing block origin corresponds to the inner edge of its ancestor's padding box, which for `root>plain` is at `x = 20 + 30 = 50` and `y = 20 + 30 = 50`. Adding the pin's `left: 10px` and `top: 10px` offsets places its top-left corner at x=60, y=60.\n\nANSWER: 60,60\n",
+  "ms": 13940
+}

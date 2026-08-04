@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The authoritative node-tree evidence for `root>lede` shows the paragraph text ending with an ellipsis: `The quarterly results are in and every region beat its targ…` rather than the complete sentence. Since the provided “evidence below” is what is actually on screen, it indicates the full sentence isn’t fully present/readable from that element.  \n\nANSWER: NO\n",
+  "ms": 11476
+}

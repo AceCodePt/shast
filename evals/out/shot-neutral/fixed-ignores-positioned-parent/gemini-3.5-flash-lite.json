@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "An element with `position: fixed` is positioned relative to the viewport (the initial containing block) rather than any positioned ancestor, as `position: relative` does not create a containing block for fixed-position elements. With `top: 15px; left: 25px`, the fixed element is placed 25 pixels from the left edge and 15 pixels from the top edge of the viewport.\n\nANSWER: 25,15\n",
+  "ms": 8045
+}

@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "19",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The hover comparison shows that for `root>mid>leaf`, the computed `padding` stays the same in both the non-hover and hover states: `padding: 2px 2px 2px 2px`. The bounding box also remains unchanged, reinforcing that no padding change occurs on `:hover`. Therefore, while hovering, it renders with 2px padding on all sides.\n\nANSWER: 19\n",
+  "ms": 6323
+}

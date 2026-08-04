@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport dimensions are 1280x800 pixels. The element `root>main>r17` has a `getBoundingClientRect` with a `y` coordinate of 484 and a height of 26, meaning it occupies the vertical space from 484 to 510 pixels. Since 510 is less than the viewport height of 800, the element is entirely within the vertical bounds of the screen upon loading. Furthermore, its horizontal position (x=244 to x=1256) is within the viewport width of 1280, and its opacity and display properties indicate it is rendered normally.\n\nANSWER: YES\n",
+  "ms": 10469
+}

@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` starts at `x=0`. Its first child is `100px` wide, and the flex `gap` between children is `10px`, so the left edge of the second child is at `0 + 100 + 10 = 110px`. This matches the provided `getBoundingClientRect()` for `root>second` (`x=110`).  \nANSWER: 110\n",
+  "ms": 8693
+}

@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 500x300 pixels, meaning the visible area extends from y=0 to y=300. The `root>footer` element has a `getBoundingClientRect` with y=700, placing it 700 pixels from the top. Since 700 > 300, the footer is positioned well below the initially visible area.\n\nANSWER: NO\n",
+  "ms": 12881
+}

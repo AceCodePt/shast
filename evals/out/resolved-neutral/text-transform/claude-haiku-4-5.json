@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe `root>title` div contains the text \"ANNUAL REVIEW\" (written as \"Annual review\" in the source). The CSS property `text-transform: uppercase` is applied to the root div, which affects all its children including `root>title`.\n\nThe `text-transform: uppercase` property transforms all text to uppercase letters for display purposes. Therefore, even though the source text is written as \"Annual review\", the viewer sees it rendered in all uppercase due to the CSS transformation.\n\nThe viewport information confirms this is what's actually rendered in Chromium - the text-transform property is a visual CSS rule that affects how text is displayed to the viewer.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7282
+}

@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "30px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "According to the CSS cascade and source order rules, when multiple style blocks declare the same property with equal specificity, the declaration that appears last in source order takes precedence. Therefore, the padding declared in the third (final) block overrides the preceding blocks. Assuming standard sequential block declarations (e.g., 10px, 20px, 30px), the final value wins.\n\nANSWER: 30px\n",
+  "ms": 16979
+}

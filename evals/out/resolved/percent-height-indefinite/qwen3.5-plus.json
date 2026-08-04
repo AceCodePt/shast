@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the measurements in the report:\n\n- `root>outer>filler` has **height=60** px\n- `root>outer>tall` has **height=19.19** px\n\nEven though `root>outer>tall` declares `height: 100%`, its actual rendered height is 19.19px, which is significantly less than its sibling's 60px. The percentage height resolved to a smaller value, likely because the parent's height is constrained by its content rather than an explicit value.\n\nANSWER: NO\n",
+  "ms": 12753
+}

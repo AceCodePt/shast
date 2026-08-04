@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>second` paragraph’s box is measured at `x=0`, `y=19.19`, with height `19.19`. The only covering element shown is `root>cover`, an absolutely positioned `div` with `height: 19px` placed at `y=0`, so it only covers content up to about `y=19`. Since `root>second` starts at `y=19.19` (just below the covered region), there is no indication that its text box is covered or hidden.  \n\nANSWER: YES\n",
+  "ms": 6954
+}

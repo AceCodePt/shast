@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The hover rule `:hover { padding: 40px }` is present on `root>mid>leaf`, but it’s not taking effect. The evidence says entering `:hover` does not change padding because `root` declares `padding: 2px` in its `\"> mid > leaf\"` block, and that declaration outranks the hover rule. So you must change the CSS block on the node that currently wins: `root`.\n\nANSWER: root\n",
+  "ms": 9178
+}

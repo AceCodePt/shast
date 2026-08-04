@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`line-height: 2` is unitless, so it inherits as a multiplier, not as `32px`. `root>big` gets `font-size: 32px`, so its used line-height becomes `2 × 32px = 64px`, which matches the rendered height.\n\nANSWER: 64\n",
+  "ms": 13433
+}

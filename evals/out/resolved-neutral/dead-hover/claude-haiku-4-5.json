@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the information provided, the answer is clearly stated in the \"dead-state\" annotation:\n\nThe `:hover` pseudo-class sets `padding: 40px`, but this is overridden by the `padding: 2px` declared in the `root` selector's `> mid > leaf` block. The annotation explicitly states: \"entering `:hover` does not change padding.\"\n\nThis is a CSS specificity issue. Both selectors have the same specificity (element selectors), but the `root > mid > leaf` rule is declared later in the cascade and therefore takes precedence. When you hover over the element, the `:hover` state doesn't increase specificity enough to override the non-pseudo-class rule, so the padding remains at 2px.\n\nANSWER: NO\n",
+  "ms": 9109
+}

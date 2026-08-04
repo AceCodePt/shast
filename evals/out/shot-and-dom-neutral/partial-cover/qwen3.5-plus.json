@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding boxes and positioning:\n\n- `root>row` (the `<p>` element) spans x=0 to x=600, y=0 to y=120, with text \"Short label\"\n- `root>chip` (the absolutely positioned `<div>`) spans x=400 to x=560, y=60 to y=100\n\nWhile `root>chip` does overlap with `root>row`'s bounding box, the text \"Short label\" is only 11 characters. At 16px font size, this text would render starting from the left edge and extend approximately 80-100px to the right. The chip begins at x=400, which is far beyond where the \"Short label\" text would end.\n\nThe screenshot description also confirms this: \"Short label\" appears in the top-left area, while the chip with its yellow background appears on the right side.\n\nANSWER: NO\n",
+  "ms": 22193
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report for `root>main>r09` indicates that while the `root>banner` element paints over 69% of the box, the banner has no background color, which allows the content behind it to remain visible. Furthermore, the report explicitly states that \"this node's 1 text line(s) stay fully visible,\" confirming the text is not obscured.\n\nANSWER: YES\n",
+  "ms": 9879
+}

@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe `root>floaty` element has `position: absolute` with no explicit `top`, `right`, `bottom`, or `left` properties declared. According to the `getBoundingClientRect()` data, `root>floaty` is positioned at `x=0 y=50`.\n\nWhen an absolutely positioned element doesn't have explicit positioning properties, it uses the \"auto\" value for those properties. This causes the element to be positioned according to the normal flow that would have occurred if it were statically positioned. Since `root>floaty` comes after `root>spacer` in the DOM, and `root>spacer` occupies the space from `y=0` to `y=50` (height of 50px), the absolutely positioned `root>floaty` element defaults to rendering at `y=50` where the normal flow would have placed it.\n\nANSWER: 50\n",
+  "ms": 15202
+}

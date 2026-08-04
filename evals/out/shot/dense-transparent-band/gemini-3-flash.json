@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows a layout with a header, a sidebar, and a main content area containing a numbered list. A dark, semi-transparent overlay (the `root>banner` div) covers the top portion of the sidebar and the main content area. By observing the list, we can see that this overlay obscures the first eight items (`01. Ledger reconciliation` through `08. Deferred costs`), making them difficult to read against the dark background. However, the ninth item, `root>main>r09` (\"09. Currency hedging\"), is located directly below the bottom edge of this overlay. It is rendered with black text on the clear white background of the main section, providing high contrast and making it perfectly legible to a viewer.\n\nANSWER: YES\n",
+  "ms": 35253
+}

@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, the URL text `https://example.com/a/very/long/path/that/never/breaks` renders as a single continuous line that spans nearly the full 600px viewport width. There is no visible line break, truncation, or wrapping that would indicate the text is being constrained to a 120px container. The text clearly extends far beyond what a 120px width would allow.\n\nANSWER: NO\n",
+  "ms": 11238
+}

@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the information provided:\n- `root>rail` has a width of 240px.\n- `root>panel` has a width of 600px.\n- Dividing the width of the panel (600) by the width of the rail (240) results in 2.5.\n\nANSWER: 2.5\n",
+  "ms": 8013
+}

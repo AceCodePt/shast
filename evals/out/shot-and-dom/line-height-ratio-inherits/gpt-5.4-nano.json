@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` sets `line-height: 2` and `font-size: 16px`, so the effective line-height becomes `2 × 32px = 64px` when `root>big` overrides `font-size` to `32px` (while inheriting the line-height multiplier). The Chromium evidence confirms this: `root>big` has `getComputedStyle` line-height of `64px` and `getBoundingClientRect` height of `64px`.  \n\nANSWER: 64\n",
+  "ms": 10331
+}

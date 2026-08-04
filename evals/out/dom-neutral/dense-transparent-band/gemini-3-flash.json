@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>main>r09` is \"09. Currency hedging\". Based on the provided data, a viewer can read this text for the following reasons:\n\n1.  **Visibility within Viewport**: The element `root>main>r09` is located at `x=244, y=276` with a width of `1012` and a height of `26`. Since the viewport is `1280x800`, the element is fully within the visible area.\n2.  **Color and Contrast**: The text color is black (`rgb(0, 0, 0)`) and it is rendered over a white background (provided by the `root` element's `background-color: rgb(255, 255, 255)`), ensuring clear legibility.\n3.  **No Obstructing Overlays**: Although the element `root>banner` is positioned at the exact same coordinates (`x=244, y=276`) and has a higher `z-index` (`5`), its `background-color` is listed as `rgba(0, 0, 0, 0)`, which is fully transparent. Furthermore, the banner contains no text content and has no borders or padding that would obscure the text underneath.\n4.  **Display Properties**: Both the target element and its parents have `opacity: 1`, `display: block` (or `section`), and `overflow: visible`, meaning the content is not hidden, clipped, or faded out.\n\nANSWER: YES\n",
+  "ms": 85142
+}

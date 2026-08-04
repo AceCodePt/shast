@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, I can see three text elements arranged vertically:\n- \"alpha\" at the top\n- \"beta\" just below it with a small gap\n- \"gamma\" at the bottom with a noticeably larger gap separating it from \"beta\"\n\nThe visual spacing shows that \"alpha\" and \"beta\" are positioned relatively close together, while \"gamma\" has significantly more white space between it and the other two elements. This makes gamma the one that is visually separated from the pair of alpha and beta.\n\nANSWER: root>gamma\n",
+  "ms": 13614
+}

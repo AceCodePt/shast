@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` starts at `x=0`. The first grid column is `200px`, then there is a `20px` gap, so `root>right` begins after `200 + 20 = 220px`.\n\nANSWER: 220\n",
+  "ms": 6348
+}

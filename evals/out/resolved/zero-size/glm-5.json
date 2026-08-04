@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. Although `root>ghost` is a 0x0 box, its overflow is visible, so its content (86.41x38.38px of text) is painted outside the box rather than being clipped. The report's `collides` annotation confirms the ghost's glyphs are actually drawn on the page — they land on the same pixels as `root>visible`'s \"Everything is fine\" text, which is why they collide.\n\nANSWER: YES\n",
+  "ms": 15212
+}

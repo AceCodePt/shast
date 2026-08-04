@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>mid>leaf",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "In CSS nesting, a selector like `:hover` inside a block resolves to a descendant hover (`& :hover`) rather than self-hover, matching no element since `root>mid>leaf` has no element children. To target the element itself, the rule inside its css block must use `&:hover`. Therefore, you need to edit the css block of `root>mid>leaf`.\n\nANSWER: root>mid>leaf\n",
+  "ms": 13854
+}

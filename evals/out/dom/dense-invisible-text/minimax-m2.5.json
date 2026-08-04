@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The text in `root>main>r21` (\"21. Treasury positions\") is rendered with `color: rgb(255, 255, 255)` (white), while the element has a transparent background. Since it sits within `root>main` (also transparent) over the root `div`'s white background `rgb(255, 255, 255)`, the white text is effectively displayed on a white surface. There is no contrasting background anywhere along that region (the sidebar ends at x=220, well before the element's x=244), so the text is invisible to a viewer.\n\nANSWER: NO\n",
+  "ms": 7951
+}

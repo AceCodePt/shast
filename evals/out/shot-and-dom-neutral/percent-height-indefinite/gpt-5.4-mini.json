@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The rendered `getBoundingClientRect()` shows `root>outer>filler` at `60px` tall and `root>outer>tall` at about `19.19px` tall. So despite `height: 100%`, `tall` is not taller than its sibling here.\n\nANSWER: NO\n",
+  "ms": 10446
+}

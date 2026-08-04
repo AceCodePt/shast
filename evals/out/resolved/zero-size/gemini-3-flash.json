@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report states that although the content box of `root>ghost` is 0x0, the content itself is 86.41x38.38px and is \"painted outside the box rather than cut off\" because the \"overflow is visible.\" Furthermore, the collision warning confirms that this node \"draws its text on the same pixels\" as another element, explicitly indicating that the text is rendered on the page.\n\nANSWER: YES\n",
+  "ms": 12286
+}

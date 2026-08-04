@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the browser rendering data:\n\nThe viewport is 500x300 pixels, meaning the viewer initially sees the area from y=0 to y=300 when the page first loads.\n\nThe `root>footer` element has a `getBoundingClientRect` showing y=700 and height=60, which means it spans from y=700 to y=760 on the page.\n\nSince the footer is positioned at y=700, which is well below the viewport's visible area (y=0 to y=300), the footer is not visible when the page first loads without scrolling.\n\nANSWER: NO\n",
+  "ms": 7083
+}

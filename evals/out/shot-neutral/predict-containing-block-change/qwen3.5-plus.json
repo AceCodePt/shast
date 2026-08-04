@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence:\n\n1. The screenshot shows \"pinned\" rendered at the top-left corner of the viewport (0,0)\n2. The DOM is: `root` → `plain` → `pin` (containing \"pinned\")\n3. For `pin` to appear at (0,0) while being a child of `plain`, it likely has `position: absolute` with `top: 0; left: 0`\n4. Currently, `plain` has `position: static` (default), so `pin`'s containing block is the viewport/initial containing block\n5. Adding `position: relative` to `plain` makes IT the containing block for `pin`\n6. Since `plain` itself renders at the top-left of the viewport (as a normal flow div with no offset), and `pin` is positioned at (0,0) within `plain`'s coordinate system, the rendered position stays the same\n\nANSWER: 0,0\n",
+  "ms": 20552
+}

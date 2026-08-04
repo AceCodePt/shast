@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided for `root>main>r09` (\"09. Currency hedging\"):\n\nThe box is located at x=244, y=276 with width=1012 and height=26. The coverage note states: \"covered: root>banner <div> (absolute, z-index 5) paints later than this node over 69% of the box, but has no background, so what is behind it still shows through\" and crucially adds \"this node's 1 text line(s) stay fully visible\".\n\nEven though the banner element covers 69% of the box area, the banner has no background (it's transparent), so the text underneath remains visible. The explicit note confirms that the text line stays fully visible despite the coverage.\n\nANSWER: YES\n",
+  "ms": 8525
+}

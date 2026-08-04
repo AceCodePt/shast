@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding boxes and viewport:\n\n**Viewport:** 500×300\n\n**root>lower:** Positioned at y=700 with height=40 (spans y=700–740). The root container is 900px tall, so vertical scrolling can bring this element into view.\n\n**root>sideways:** Positioned at y=40 with **width=900px**. The viewport is only 500px wide, so this element extends 400px beyond the right edge. Ordinary scrolling on web pages is vertical—horizontal scrolling is not \"ordinary.\"\n\nThe screenshot confirms this: the text \"runs off sideways\" is visibly cut off at the edge. Vertical scrolling cannot bring the overflowed horizontal portion into view.\n\nANSWER: root>sideways\n",
+  "ms": 32339
+}

@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>low` has `position: absolute` with `z-index: 1`, which makes it establish a stacking context. Its child `root>low>inner` (z-index: 999) is confined within that stacking context — the 999 only ranks it against siblings *inside* `root>low`, not against elements outside.\n\nAt the `root` level, we compare the two siblings: `root>low` (z-index: 1) and `root>high` (z-index: 2). Since 2 > 1, `root>high` and all its contents are painted above `root>low` and everything inside it, regardless of the inner element's z-index: 999.\n\nANSWER: root>high\n",
+  "ms": 15748
+}

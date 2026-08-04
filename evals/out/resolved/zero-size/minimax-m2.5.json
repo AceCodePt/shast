@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The box has zero size, but the report explicitly states that overflow is visible and the content (86.41x38.38px) is painted outside the box. Since `root>visible` also collides with it on the same pixels, the words must be rendered somewhere on the page despite the 0x0 dimensions.\n\nANSWER: YES\n",
+  "ms": 9282
+}

@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text \"Still readable\" in `root>line` sits at y=0–~19px. `root>glass` (y=0–100, z-index 1) does paint over it, but its background is fully transparent (`rgba(0,0,0,0)`), so nothing is obscured. `root>panel` (y=40–100, z-index 2) has an opaque dark background but starts at y=40, well below the text's bottom edge, so it never covers the text. The authoritative node tree also confirms the text reads \"Still readable.\"\n\nANSWER: YES\n",
+  "ms": 24664
+}

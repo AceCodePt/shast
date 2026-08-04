@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the layout information provided:\n\n**Viewport dimensions:** 500x300 CSS px\n\n**root>lower:** \n- Position: y=700, height=40\n- Extends from y=700 to y=740\n- This is below the initial viewport (0-300), so scrolling down can bring it into view\n\n**root>sideways:**\n- Position: x=0, width=900, height=40\n- Extends from x=0 to x=900 horizontally\n- The viewport is only 500px wide\n- While the element starts at x=0 (in view), it extends to x=900, running 400px beyond the right edge of the viewport\n- Ordinary scrolling is vertical (up/down), not horizontal\n\nThe key insight is that `root>lower` sits below the viewport and can be brought fully into view by scrolling vertically downward. However, `root>sideways` runs off the right side of the viewport horizontally. Since \"ordinary scrolling\" refers to vertical scrolling in the context of a 500px-wide viewport, you cannot scroll horizontally to bring the overflow into view through normal scrolling behavior.\n\nANSWER: root>sideways\n",
+  "ms": 7792
+}

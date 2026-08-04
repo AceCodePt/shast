@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>cell` only has a 120px-wide box, and the URL is a long unbroken string, so it cannot fit within that width. Since `overflow` is `visible`, the text would render outside the box rather than staying contained.\n\nANSWER: NO\n",
+  "ms": 7132
+}

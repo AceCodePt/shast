@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the browser's `getBoundingClientRect()` data provided for `root>b`, the width is explicitly given as **400 CSS pixels**.\n\nThis matches the expected flexbox calculation: with `flex: 1 1 0%` on A and `flex: 2 1 0%` on B, the 600px container is divided proportionally by flex-grow values (1+2=3 total shares). Element B gets 2/3 of the space: 600 × (2/3) = 400px.\n\nANSWER: 400\n",
+  "ms": 15160
+}

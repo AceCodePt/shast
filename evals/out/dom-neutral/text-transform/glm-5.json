@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text in `root>title` is \"Annual review\", but the computed style for `root` shows `text-transform: uppercase`, which is inherited by `root>title`. CSS `text-transform` affects how the text is actually rendered on screen, not the underlying source. So while the source says \"Annual review\", the viewer sees it uppercased.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 11663
+}

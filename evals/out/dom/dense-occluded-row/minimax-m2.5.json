@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>banner` div is absolutely positioned at exactly the same coordinates as `root>main>r09` (x=244, y=276) with the same height (26px), and it has an opaque red background (rgb(204, 34, 34)) with z-index 5. The banner covers the left 700px of r09's 1012px width, which is where the text \"09. Currency hedging\" begins. Since the banner sits on top with a solid background, it obscures the start of r09's text.\n\nANSWER: NO\n",
+  "ms": 9774
+}

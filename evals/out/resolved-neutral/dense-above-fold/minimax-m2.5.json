@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "r17 is positioned at y=484 with height=26, so its bottom edge is at y=510. The viewport height is 800, meaning anything with a bottom edge at y≤800 is visible without scrolling. At y=510, r17 is well within the visible area (it's marked \"below-fold\" only starting at r30, y=822). Although the sidebar covers x=0–220 with an opaque background, r17 sits at x=244, which is to the right of the sidebar, so its text is not obscured.\n\nANSWER: YES\n",
+  "ms": 7596
+}

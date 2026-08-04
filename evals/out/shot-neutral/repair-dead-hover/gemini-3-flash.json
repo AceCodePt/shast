@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The identical screenshots indicate that the `:hover` style on `root>mid>leaf` is not being triggered, a condition known as a \"dead hover.\" This typically occurs when a parent element has the CSS property `pointer-events: none` applied to it, which prevents all mouse interactions (including hovers) from reaching its child elements. Since the `:hover` rule is already correctly defined in `root>mid>leaf`'s own CSS block but is failing to execute, the obstruction exists at a higher level in the DOM tree, specifically in the parent node `root>mid`. Editing the `root>mid` block to remove or override the property that disables pointer events will allow the hover state to reach the leaf.\n\nANSWER: root>mid\n",
+  "ms": 27469
+}

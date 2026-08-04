@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the left edge positions (the `x` values) for each row:\n\n- root>first: x=24\n- root>second: x=24\n- root>third: x=40\n- root>fourth: x=24\n\nThree rows (first, second, and fourth) have their left edge at x=24, while the third row has its left edge at x=40. The third row is shifted 16 pixels to the right compared to the others, making it the one out of alignment.\n\nANSWER: root>third\n",
+  "ms": 7000
+}

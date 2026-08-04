@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The node `root>main>r09` contains the text \"09. Currency hedging\" and is positioned at `x=244 y=276` with dimensions `1012x26`. However, there is a `root>banner` element with `position: absolute`, `z-index: 5`, and a red background color (`rgb(204, 34, 34)`) that occupies the exact same position (`x=244 y=276`, height `26px`). Since the banner has a higher z-index and sits on top of r09, it visually occludes the text with a red bar, as confirmed by the screenshot showing a red horizontal stripe at that location.\n\nANSWER: NO\n",
+  "ms": 20488
+}

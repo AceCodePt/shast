@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the layout information:\n\n- `root>second` (the second paragraph) is positioned at **y=19.19** with height 19.19px, so it occupies the vertical space from y=19.19 to y=38.38\n- `root>cover` (the covering div) is positioned at **y=0** with height 19px, so it occupies the vertical space from y=0 to y=19\n\nThe covering div ends at y=19, while the second paragraph starts at y=19.19. There is no overlap between them — the cover div only overlaps with `root>first` (which is at y=0 to y=19.19), which is why `root>first` is marked as \"covered\" but `root>second` is not.\n\nANSWER: YES\n",
+  "ms": 15584
+}

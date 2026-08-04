@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "26",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "With `position: absolute` and no `top/right/bottom/left` specified, the browser uses the element’s *static position* (where it would have been laid out in normal document flow) to determine where it should render. Here, `floaty` would be a block after `spacer`, so its top edge aligns immediately after the rendered height of `spacer`. From the screenshot at 600×400, `spacer` starts at the default body offset (~8px) and occupies one line (~18px), so `floaty`’s top edge renders at `8 + 18 = 26` CSS pixels.\n\nANSWER: 26\n",
+  "ms": 20112
+}

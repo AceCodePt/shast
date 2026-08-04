@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values for each box:\n\n- **root>back**: z-index: 1\n- **root>middle**: z-index: 3\n- **root>front**: z-index: 2\n\nAll three boxes cover the point (120, 120) based on their bounding rectangles. In CSS stacking context, the element with the highest z-index appears on top. Since `root>middle` has z-index 3 (the highest), it will be the visible box at that point.\n\nANSWER: root>middle\n",
+  "ms": 14304
+}

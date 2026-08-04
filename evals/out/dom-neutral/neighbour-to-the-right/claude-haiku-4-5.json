@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles for each node:\n\n- `root>leftBottom` is positioned at x=0, y=120 with width=300 and height=80\n- `root>rightBottom` is positioned at x=340, y=120 with width=300 and height=80\n\nBoth nodes share the same y-coordinate (120) and height (80), meaning they're on the same row. The `root>rightBottom` node is positioned to the right of `root>leftBottom` (x=340 is further right than x=0).\n\nANSWER: root>rightBottom\n",
+  "ms": 11043
+}

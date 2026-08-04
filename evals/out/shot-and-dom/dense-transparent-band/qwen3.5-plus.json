@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data for `root>main>r09`:\n\n1. **Text content**: \"09. Currency hedging\"\n2. **Visibility properties**: `opacity: 1` (fully opaque), `color: rgb(0, 0, 0)` (black text)\n3. **Position**: x=244, y=276, width=1012, height=26\n4. **Display**: `display: block` with adequate dimensions (26px height for 15px font)\n\nThere is a `root>banner` element overlapping at the same position (x=244, y=276, height=26) with `z-index: 5`, but it has a transparent background (`rgba(0, 0, 0, 0)`), so it wouldn't obscure the text. The parent `root>main` section also has a transparent background, and the overall page background is white (`rgb(255, 255, 255)`), providing good contrast for the black text.\n\nThe screenshot confirms the text is visible in the numbered list.\n\nANSWER: YES\n",
+  "ms": 21737
+}

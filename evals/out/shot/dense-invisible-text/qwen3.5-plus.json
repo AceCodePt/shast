@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the provided information:\n\n1. The DOM tree shows `root>main>r21` contains the text `\"21. Treasury positions\"`\n2. However, examining the screenshot, the visible items are 01-20, then it skips directly to 22-28\n3. Item 21 is conspicuously absent from the rendered screenshot - there's a gap between item 20 (\"Covenant testing\") and item 22 (\"Audit findings\")\n\nSince the text exists in the DOM but does not appear in the screenshot of the rendered page, the text in `root>main>r21` is not visible to a viewer. This is consistent with the test case name \"dense-invisible-text\" - the text is present in the source but not visually rendered (likely due to CSS making it invisible).\n\nANSWER: NO\n",
+  "ms": 16281
+}

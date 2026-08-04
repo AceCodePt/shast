@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `line-height: 2` on `root` is a unitless multiplier, so it computes to `2 × 16px = 32px` for `root` itself. Unitless `line-height` is inherited as a multiplier rather than a length, so `root>big` computes its own line-height as `2 × 32px = 64px`. With one line of text at that size and no other height-affecting properties, the box renders at 64px tall, as confirmed by `getBoundingClientRect`.\n\nANSWER: 64\n",
+  "ms": 7742
+}

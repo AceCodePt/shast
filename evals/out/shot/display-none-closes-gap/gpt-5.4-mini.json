@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The screenshot shows `first` immediately followed by `third` with only normal line spacing between them, and `display: none` removes `root>gone` from layout entirely. So it does not reserve a 40px slot.\n\nANSWER: NO\n",
+  "ms": 14862
+}

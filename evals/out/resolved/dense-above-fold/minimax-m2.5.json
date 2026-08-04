@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 800px, and `root>main>r17` is positioned at y=484 with height=26, meaning it occupies y=484–510. This is entirely within the initial 800px viewport, so it is visible on first load without scrolling.\n\nANSWER: YES\n",
+  "ms": 7885
+}

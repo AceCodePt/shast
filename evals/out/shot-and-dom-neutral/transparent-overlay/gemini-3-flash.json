@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text of the `root>lede` element is fully visible and legible in the rendered screenshot. Although the `root>banner` element is positioned directly over the `root>lede` area (both starting at `y=0`) and has a higher `z-index` (5), its `background-color` is `rgba(0, 0, 0, 0)`, making it completely transparent. Since the banner contains no opaque content or background, the black text of the lede paragraph shows through clearly against the page background.\n\nANSWER: YES\n",
+  "ms": 21637
+}

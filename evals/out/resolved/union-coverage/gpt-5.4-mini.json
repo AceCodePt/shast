@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The report says the text line is completely hidden, and both opaque covering boxes overlap it so that every text line is covered. Even though neither box individually spans the whole line, together they block the entire text from view.\n\nANSWER: NO\n",
+  "ms": 11321
+}

@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The layout and coverage information explicitly states that `root>banner` (an absolute-positioned element with an opaque background) paints over 100% of the box for `root>lede`. Furthermore, both text lines of `root>lede` are marked as completely hidden by this banner. Therefore, a user cannot read the sentence.\n\nANSWER: NO\n",
+  "ms": 9202
+}

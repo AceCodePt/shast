@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "**No.** The `root>banner` div is absolutely positioned at `top:0` with `height:70px`, `z-index:5`, and an opaque dark background (`rgb(34,34,34)`). The `root>lede` paragraph sits at `y=0`–`54.375` with `position:static` and `z-index:auto`. Because the banner is both higher in the stacking order and fully covers the lede's vertical extent (0–54.375 is within 0–70), the opaque banner completely obscures the lede text.\n\nANSWER: NO\n",
+  "ms": 35428
+}

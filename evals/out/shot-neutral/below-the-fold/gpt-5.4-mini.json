@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The screenshot of the 500x300 viewport shows only `masthead`; `footer note` is not visible in the initial rendered area, so `root>footer` is below the fold before scrolling.\n\nANSWER: NO\n",
+  "ms": 7471
+}

@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source HTML shows the text as \"Annual review\" (mixed case), but the screenshot clearly displays \"ANNUAL REVIEW\" (all uppercase). The page path includes \"text-transform\", indicating CSS `text-transform: uppercase` is applied, which visually transforms the text without changing the source. The viewer sees the rendered result, not the source.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 10953
+}

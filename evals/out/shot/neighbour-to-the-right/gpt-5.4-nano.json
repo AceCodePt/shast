@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>leftBottom` is in the left column of the two-by-two layout, so the node directly to its right on the same row is the one in the right column and the bottom position. The node tree lists `root>rightBottom` as the bottom-right box, which matches that location relative to `root>leftBottom`.\n\nANSWER: root>rightBottom\n",
+  "ms": 7283
+}

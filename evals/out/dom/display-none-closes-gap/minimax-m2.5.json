@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "root>third sits at y=40, which is exactly where root>first ends (y=0, height=40). A `display: none` element is removed from layout entirely, so root>third simply flows up to occupy the position root>gone would have taken — there is no visible gap.\n\nANSWER: NO\n",
+  "ms": 15163
+}

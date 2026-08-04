@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\n- The viewport is 600px wide\n- `root` is a flex container with `display: flex`\n- `root>a` has `flex: 1`\n- `root>b` has `flex: 2`\n\nThe `flex` property is shorthand for `flex-grow`, `flex-shrink`, and `flex-basis`. When using just a number like `flex: 1` and `flex: 2`, these represent the flex-grow values, and the elements share the available space proportionally.\n\nThe total flex-grow is 1 + 2 = 3. Since `root>b` has a flex-grow of 2, it gets 2/3 of the total width.\n\nCalculation: 600px × (2/3) = 400px\n\nANSWER: 400\n",
+  "ms": 7000
+}

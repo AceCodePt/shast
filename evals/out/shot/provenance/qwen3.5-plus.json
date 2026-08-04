@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, the \"Panel\" section has visibly rounded corners (border-radius applied). The DOM tree shows this is the `root>body>panel` node (a section element).\n\nSince `border-radius` is a non-inherited CSS property, it must be declared directly on the element that displays it. The rounded corners are on the panel element itself, not on its parent containers.\n\nANSWER: root>body>panel\n",
+  "ms": 14175
+}

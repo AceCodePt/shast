@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "`#3355ff",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "When the page is first painted and the pointer is elsewhere, `root>cta` is not hovered, so it uses its normal background color, not the `:hover` color.\n\nANSWER: `#3355ff`\n",
+  "ms": 9488
+}

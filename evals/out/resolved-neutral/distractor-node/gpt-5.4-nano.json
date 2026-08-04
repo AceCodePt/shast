@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>cover` is an absolutely positioned `div` with an opaque black background covering the box from `y=0px` to `y=19px` (height `19px`). `root>second` starts at `y=19.19px` with height `19.19px`, which begins just below the covered region. Since the cover ends before the second paragraph’s text area begins, it is not reported as covered/hidden.\n\nANSWER: YES\n",
+  "ms": 7870
+}

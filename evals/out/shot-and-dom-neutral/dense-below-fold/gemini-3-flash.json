@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 1280x800, meaning only elements with a vertical position (y-coordinate) less than 800 pixels are visible without scrolling. The `getBoundingClientRect` for `root>main>r36` shows a `y` coordinate of 978, which places it 178 pixels below the bottom edge of the initial viewport.\n\nANSWER: NO\n",
+  "ms": 11012
+}

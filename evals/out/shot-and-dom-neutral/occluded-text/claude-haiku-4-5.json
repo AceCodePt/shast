@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>lede` element is a `<p>` tag containing the text \"The quarterly results are in and every region beat its targ…\" (72 chars). According to the bounding client rect data, this element:\n- Is positioned at y=0 with height=54.375px\n- Has a width of 600px (full viewport width)\n- Is a static position element\n\nThe `root>banner` div is positioned absolutely at y=0 with height=70px, z-index=5, and a dark background (rgb(34, 34, 34)). This banner overlaps the top portion of the viewport.\n\nSince the banner's z-index is 5 (higher than the default z-index of auto for the lede paragraph), the banner will be rendered on top of the lede paragraph. The banner is 70px tall and positioned at the top, which means it will occlude the first ~70px of the lede text that starts at y=0. The screenshot confirms this - the top portion of the text is hidden behind the dark banner.\n\nTherefore, a person reading this page cannot read the whole sentence in `root>lede` because it is partially occluded by the banner element.\n\nANSWER: NO\n",
+  "ms": 9839
+}

@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "200",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "For an absolutely positioned element, if `top`/`left` (or the corresponding insets) are not specified (i.e., they remain `auto`), it is placed at its *static position*—the position it would have had in normal document flow—then taken out of flow. Here, `root>floaty` comes after `root>spacer`, so its top edge renders directly below the spacer’s rendered height. From the screenshot, that top edge is at about **200 CSS px** from the top.\n\nANSWER: 200\n",
+  "ms": 15751
+}

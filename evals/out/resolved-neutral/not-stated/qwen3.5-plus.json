@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report provides layout information (position, dimensions), font-size (16px inherited), and padding (8px) for the `root>label` element. However, there is no mention of any `color` or text colour property anywhere in the provided rendering data.\n\nANSWER: NOT STATED\n",
+  "ms": 10723
+}

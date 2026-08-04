@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>main>r36` is positioned at `y=978`, while the viewport is only `800px` tall, so it starts below the visible fold on initial load. The screenshot also shows only items through the high 20s, confirming `r36` is offscreen until scrolling.\n\nANSWER: NO\n",
+  "ms": 8925
+}

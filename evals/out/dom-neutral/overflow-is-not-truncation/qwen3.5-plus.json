@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data:\n\n1. **Card dimensions**: `root>card` has height=48px and extends from y=0 to y=48\n2. **Text content**: \"Payment failed because the card on file expired last month.\" (62 characters)\n3. **Line metrics**: font-size=16px, line-height=19.2px\n4. **Content width**: 180px width - 16px padding = 164px for text\n\nAt ~164px content width with 16px font, roughly 10-12 characters fit per line. The 62-character message would wrap to approximately 5-6 lines. With 19.2px line-height, the 5th line would start around y=76.8px, well beyond the card's bottom edge at y=48.\n\n**However**, the critical property is `overflow: visible` on the card element. This means content is NOT clipped when it exceeds the element's box — it paints outside the boundaries and remains visible to the user.\n\nANSWER: YES\n",
+  "ms": 20391
+}

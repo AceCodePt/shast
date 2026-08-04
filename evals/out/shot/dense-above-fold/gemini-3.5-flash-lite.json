@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided screenshot and node tree, `root>main>r17` (\"17. Inventory valuation\") appears near the middle of the viewport and is clearly visible when the page first loads without requiring any scrolling.\n\nANSWER: YES\n",
+  "ms": 7576
+}

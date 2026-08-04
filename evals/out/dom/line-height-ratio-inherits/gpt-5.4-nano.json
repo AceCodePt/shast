@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` sets `font-size: 16px` with `line-height: 2`, so its computed `line-height` becomes `32px` (and that matches the rendered height for `root>small`). For `root>big`, it overrides `font-size` to `32px` and inherits `line-height: 2`, so the computed `line-height` becomes `32px * 2 = 64px`. The browser-reported `getBoundingClientRect()` for `root>big` also shows `height=64`.\n\nANSWER: 64\n",
+  "ms": 12460
+}

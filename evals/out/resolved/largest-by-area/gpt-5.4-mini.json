@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "`root>square",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>square` covers the largest area.\n\nAreas:\n- `root>wide`: `600 * 60 = 36,000`\n- `root>tall`: `120 * 300 = 36,000`\n- `root>square`: `220 * 220 = 48,400`\n\nSo the largest is the square box.\n\nANSWER: `root>square`\n",
+  "ms": 7402
+}

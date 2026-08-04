@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the `getBoundingClientRect()` data provided:\n\n- `root>first` is positioned at y=0 with height=40, so it occupies y=0 to y=40\n- `root>third` is positioned at y=40 with height=40, so it occupies y=40 to y=80\n- `root>gone` has `display: none`, so it takes up no space in the layout (getBoundingClientRect shows width=0 height=0)\n\nSince `root>third` starts immediately at y=40 (where `root>first` ends), there is no gap between them. The `display: none` element is completely removed from the document flow, so no space is reserved for it. The third element closes the gap that would have existed if the middle element were visible.\n\nANSWER: NO\n",
+  "ms": 8354
+}

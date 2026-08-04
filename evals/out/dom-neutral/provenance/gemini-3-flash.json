@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The `border-radius` property is not inherited from parent nodes in CSS. According to the provided browser data, the `root` and `root>body` nodes both have a computed `border-radius` of `0px`, whereas `root>body>panel` has a value of `12px`. Therefore, the declaration must be contained within the CSS block applied to the panel itself.\n\nANSWER: root>body>panel\n",
+  "ms": 10820
+}

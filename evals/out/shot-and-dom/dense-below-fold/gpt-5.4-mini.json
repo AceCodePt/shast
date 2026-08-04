@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>main>r36` has a bounding box at `y=978` with height `26`, while the viewport is only `800px` tall, so it starts well below the initial fold. The screenshot also shows only the earlier items, confirming `r36` is not visible on first load.\n\nANSWER: NO\n",
+  "ms": 8564
+}

@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding client rectangle data provided:\n\nThe `root>floaty` element has `getBoundingClientRect: x=0 y=50 width=90 height=20`. This directly tells us the rendered position of the element on screen.\n\nThe `y=50` value from `getBoundingClientRect()` represents the y-coordinate of the top edge of the element in viewport coordinates. This is the authoritative source for where the element actually renders, regardless of the CSS position property or lack of explicit positioning values.\n\nWhen an absolutely positioned element doesn't declare `top`, `right`, `bottom`, or `left`, it uses its static position as a reference point. The static position would be where the element would have rendered in normal flow. Since the parent `root` is `position: relative` with height 50px, and the `floaty` element follows the `spacer` element in the DOM (which also has height 50px), the static position places it at y=50.\n\nANSWER: 50\n",
+  "ms": 6871
+}

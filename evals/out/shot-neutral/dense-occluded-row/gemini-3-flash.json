@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "In the screenshot, a solid red bar is rendered between \"08. Deferred costs\" and \"10. Accrual adjustments.\" This bar completely covers the space where \"09. Currency hedging\" (identified as `root>main>r09` in the node tree) would normally appear, making the text entirely invisible to the viewer.\n\nANSWER: NO\n",
+  "ms": 11193
+}

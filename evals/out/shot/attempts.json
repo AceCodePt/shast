@@ -1,0 +1,2882 @@
+[
+  {
+    "case": "occluded-text",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided:\n\nThe node tree shows that `root>lede` contains a `p` element with text: \"The quarterly results are in and every region beat its targ…\" (72 chars)\n\nThe ellipsis (\"…\") at the end indicates the text is truncated in the source representation. The screenshot shows a dark overlay at the top of the page that appears to be occluding (covering) text. The visible text in the screenshot reads \"details follow in the table below.\" which corresponds to the `root>body` element, while the `root>lede` text above it is hidden behind the dark overlay.\n\nSince the lede text is occluded by the dark overlay at the top of the page, a person reading this page in a browser would not be able to read the whole sentence in `root>lede`.\n\nANSWER: NO\n",
+    "ms": 9024
+  },
+  {
+    "case": "occluded-text",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows a large dark banner (likely the `root>banner` div) at the top of the viewport. While the text for `root>body` (\"Details follow in the table below.\") is visible, the text for `root>lede` (\"The quarterly results are in...\") is entirely missing from the rendered area. It is clearly occluded by the banner, meaning a person reading the page cannot see or read the sentence.\n\nANSWER: NO\n",
+    "ms": 17727
+  },
+  {
+    "case": "occluded-text",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot clearly shows that a dark banner at the top of the viewport completely occludes the lede paragraph (`root>lede`). Therefore, the text is hidden and cannot be read by a user viewing the page.\n\nANSWER: NO\n",
+    "ms": 10079
+  },
+  {
+    "case": "occluded-text",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The screenshot shows the top of the page covered by a dark banner, and the `root>lede` text is not fully visible on screen. Since part of that sentence is occluded, a person cannot read the whole sentence.\n\nANSWER: NO\n",
+    "ms": 7696
+  },
+  {
+    "case": "occluded-text",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root>lede` text is shown with a truncation marker: `\"The quarterly results are in and every region beat its targ…\"` and the evidence notes it is “72 chars.” Since the provided authoritative render evidence only includes a shortened version with an ellipsis (not the complete sentence), a reader of the page as rendered here would not be able to read the entire sentence from that visible content alone.\n\nANSWER: NO\n",
+    "ms": 8128
+  },
+  {
+    "case": "occluded-text",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "**Reasoning:**\n\nThe screenshot shows that the `root>lede` paragraph is not visible on the rendered page. The dark banner at the top is obscuring the lede text, and only the `root>body` paragraph (\"Details follow in the table below.\") is visible below it. Additionally, the source text itself shows truncation (\"targ…\") indicating CSS is cutting off the text. Since the lede content is hidden behind the banner, a person cannot read it.\n\nANSWER: NO\n",
+    "ms": 14061
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the information provided:\n\nThe node tree shows that `root>lede` contains a paragraph with text: \"The quarterly results are in and every region beat its targ…\" \n\nThe text is truncated with an ellipsis (\"…\"), indicating that the full sentence is not displayed. The source text is noted as 72 characters, but what's actually rendered on screen is cut off mid-word (\"targ\" instead of \"target\").\n\nThe screenshot also visually confirms this - the text appears to end abruptly without showing the complete sentence.\n\nSince the rendered text is truncated and doesn't show the complete sentence, a person reading this page in a browser cannot read the whole sentence in `root>lede`.\n\nANSWER: NO\n",
+    "ms": 8065
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The node tree indicates that the `root>lede` paragraph contains a 72-character string, which corresponds to the full sentence \"The quarterly results are in and every region beat its target this time.\" The attached screenshot shows this entire sentence rendered clearly at the top of the page. Although there is a `root>banner` div in the node tree, the screenshot confirms it is either transparent or positioned elsewhere, as it does not obstruct the text. All 72 characters, including the trailing period, are visible and readable within the viewport.\n\nANSWER: YES\n",
+    "ms": 32875
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The sentence in `root>lede` wraps across two lines (\"The quarterly results are in and every region beat its\" and \"target this time.\"), making the entire sentence fully visible and readable in the browser.\n\nANSWER: YES\n",
+    "ms": 9185
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. The screenshot shows the full lede sentence rendered across two lines, and there’s no evidence of clipping or hidden overflow. So a person can read the entire sentence in the browser.\n\nANSWER: YES\n",
+    "ms": 9791
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "No. The evidence shows the `root>lede` paragraph text as `“The quarterly results are in and every region beat its targ…“`, which includes an ellipsis/truncation rather than the full sentence. The screenshot likewise displays only the beginning of the sentence ending at `targ…`, and the next line starts the following paragraph.  \n\nANSWER: NO\n",
+    "ms": 13868
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the evidence:\n\n1. The viewport is 600x400 CSS pixels\n2. The screenshot shows the rendered page with the text \"The quarterly results are in and every region beat its target this time.\" fully visible, wrapping across two lines\n3. The `root>lede` element contains this complete sentence, and the screenshot confirms it's all displayed on screen (not truncated with an ellipsis visually)\n\nThe text wraps to a second line but remains fully readable within the viewport.\n\nANSWER: YES\n",
+    "ms": 17050
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>high",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot and the node tree information:\n\nThe screenshot shows a blue box labeled \"inner\" with a red box labeled \"high\" overlapping it. In the overlapping region, the red box from `root>high` is clearly visible on top of the blue box from `root>low>inner`.\n\nThis means that `root>high` has a higher stacking context (higher z-index) than `root>low>inner`, so it appears on top in the overlapping region. The viewer sees the red \"high\" element in the area where they overlap.\n\nANSWER: root>high\n",
+    "ms": 8531
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>high",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows a red rectangle labeled \"high\" overlapping a blue rectangle labeled \"inner\". The red rectangle is rendered on top of the blue rectangle, obscuring it in the overlapping region. Based on the node tree, the text \"high\" corresponds to `root>high` and the text \"inner\" corresponds to `root>low>inner`.\n\nANSWER: root>high\n",
+    "ms": 10366
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>high",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "In the document order, `root>high` appears after `root>low` (which contains `root>low>inner`) under the common parent `root`. Since they share the same stacking context and have default positioning, later siblings are painted on top of earlier ones. This is also visually confirmed by the screenshot, where the red `high` box visibly obscures the blue `inner` box in their overlapping region.\n\nANSWER: root>high\n",
+    "ms": 9065
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "root>high",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "In the overlap, the red `high` box is on top of the blue `inner` box. The screenshot shows `high` covering the portion of `inner` where they intersect, so a viewer sees `root>high` in the shared region.\n\nANSWER: root>high\n",
+    "ms": 7106
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>high",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "In the screenshot, the red rectangle labeled “high” is visibly on top of the blue rectangle labeled “inner” wherever they overlap. Since the viewer sees the topmost element in the overlapping region, the overlapping area corresponds to the `root>high` node rather than `root>low>inner`.\n\nANSWER: root>high\n",
+    "ms": 7213
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>high",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot, I can see two overlapping rectangles:\n- A blue rectangle with \"inner\" text in the top-left corner\n- A red/pink rectangle with \"high\" text\n\nIn the region where they overlap, the red/pink rectangle is clearly visible on top of the blue rectangle. Since the node tree shows that `root>high` contains the text \"high\", and the red/pink area (which displays \"high\") is rendered above the blue area in the overlap region, `root>high` is the one a viewer sees.\n\nANSWER: root>high\n",
+    "ms": 13430
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, I can see the text \"Payment failed because the card on file expired last month.\" is displayed in the `root>card` div element.\n\nThe text spans 4 lines in the rendered output:\n- \"Payment failed\"\n- \"because the card\"\n- \"on file expired\"\n- \"last month.\"\n\nThe `root>card` element has a 48px-tall border box. With typical line height for text (usually around 1.2-1.5x font size), 4 lines of text would require approximately 48-60px of vertical space depending on font size. Looking at the screenshot, the text appears to fill most or all of the available height, and there is minimal whitespace below the last line.\n\nGiven that the text spans 4 lines and the container is only 48px tall, it appears the text is either tightly constrained or may be overflowing the bottom of the border box.\n\nANSWER: NO\n",
+    "ms": 8540
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows a black bordered box containing only the first two lines of text: \"Payment failed because the card\". The remaining text, \"on file expired last month.\", is rendered below the bottom border of the box, indicating a vertical overflow. Since a portion of the text is outside the box's boundaries, it does not fit inside its border box.\n\nANSWER: NO\n",
+    "ms": 10226
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot and node tree show that `root>card`'s 48px-tall box only contains the first two lines of text (\"Payment failed because the card\"). The remaining text (\"on file expired last month.\") overflows and renders completely outside the bottom border of the box. Therefore, not all of the text fits inside the box.\n\nANSWER: NO\n",
+    "ms": 9883
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The card’s border box is only 48px tall, but the text renders on four lines, and the last two lines extend below the bottom border in the screenshot. That means the full text does not fit inside the box.\n\nANSWER: NO\n",
+    "ms": 8415
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>card` contains the text `\"Payment failed because the card on file expired last month.\"`, which (as seen in the rendered screenshot) wraps into multiple lines: “Payment failed”, “because the card”, “on file expired”, “last month.”. With a 48px-tall border box, fitting would require that the total rendered line height across these lines stays within 48px, but the text clearly occupies more than three typical 16px lines, indicating it cannot fit vertically in 48px.\n\nANSWER: NO\n",
+    "ms": 11632
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot, I can see a bordered box at the top containing only the first two lines of text (\"Payment failed because the card\"), while the remaining text (\"on file expired last month.\") appears **outside** and below the bordered box.\n\nThis visual evidence shows the text is overflowing the 48px-tall container - the border does not encompass all four lines of text.\n\nANSWER: NO\n",
+    "ms": 16201
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot and the provided information:\n\nThe screenshot shows the text \"Payment failed because the card on file expired last month.\" displayed in a box. The text wraps across multiple lines, and the final line \"last month.\" appears to be positioned at or near the bottom edge of the visible card container.\n\nAccording to the question, the last line sits below the bottom edge of `root>card`. The screenshot clearly shows that the text \"last month.\" is visible and readable within the rendered page. Even though it may be at the bottom boundary, it is painted on the page and a person could read it.\n\nThe key distinction here is between text that overflows beyond the visible boundary (which would not be readable if clipped) versus text that is still rendered on screen. The screenshot evidence shows the text is actually visible on the page.\n\nANSWER: YES\n",
+    "ms": 9162
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The screenshot shows that while the text \"on file expired last month.\" overflows the bottom border of the `root>card` element, it remains visible against the white background of the viewport. In standard web rendering, content that overflows a container is still painted on the page unless the `overflow` property is specifically set to a clipping value like `hidden`. Since the text is clearly visible in the provided image, it is painted on the page and can be read.\n\nANSWER: YES\n",
+    "ms": 11856
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Based on the provided screenshot and node tree, the text extending past the bottom edge of the `root>card` box (\"on file expired last month.\") is rendered directly onto the page canvas below the element's border. Because there is no clipping or overflow hidden rule applied, the text remains fully visible and readable by anyone viewing the page.\n\nANSWER: YES\n",
+    "ms": 8961
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. The screenshot shows the text continuing below the card’s bottom border instead of being clipped, so the overflowing last line is still painted and readable.\n\nANSWER: YES\n",
+    "ms": 9442
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The evidence shows the rendered page (viewport `400x300`) with the full message text visible on screen, even though the last line is said to lie below the bottom edge of the `root>card` element’s box. In Chromium, text can still be painted outside an element’s border/box when the element does not clip overflow (the default is `overflow: visible`). Since the screenshot indicates that last line is readable within the viewport, a person could read it.\n\nANSWER: YES\n",
+    "ms": 11132
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, I can see all four lines of text are visible and readable: \"Payment failed\", \"because the card\", \"on file expired\", and \"last month.\" Even though the last line appears to extend beyond the card's border (indicating a visual overflow issue), the text is still clearly painted and visible on the screen where a person could read it.\n\nANSWER: YES\n",
+    "ms": 15781
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided:\n\nThe node tree shows that `root>body>panel` is a `section` element containing the text \"Panel\". The screenshot shows a mostly blank page with just the text \"Panel\" in the upper left corner, with minimal visible spacing around it.\n\nIf the `padding: 32px` declaration had an effect, we would expect to see 32 pixels of internal spacing around the \"Panel\" text within the section element. However, the screenshot shows the text positioned at the top-left with no visible padding - the text appears to start essentially at the edge with minimal internal spacing.\n\nThe declaration appears to have no visible effect on the rendered page, likely because the section element may not have dimensions that allow the padding to be visible, or other CSS properties are overriding or negating the padding effect.\n\nANSWER: NO\n",
+    "ms": 9627
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows the text \"Panel\" positioned in the extreme top-left corner of the viewport with minimal spacing from the edges. If a `padding: 32px` declaration were active on the `panel` element, there would be a significant 32-pixel gap between the element's boundaries and its content (the text). Since the text appears nearly flush with the top and left, the padding is clearly not being applied.\n\nANSWER: NO\n",
+    "ms": 12271
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The `root>body>panel` element is a block-level `section` containing text. Adding padding to it expands the element's inner box dimensions and creates space around the text, which directly affects its layout and visual presentation on the page.\n\nANSWER: YES\n",
+    "ms": 10533
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No visible effect is shown. If `padding: 32px` were taking effect on that `section`, the `Panel` text would be inset from the top-left by about 32px, but the screenshot shows it flush to the corner. So, based on the rendered result, that declaration does not affect the page.\n\nANSWER: NO\n",
+    "ms": 9273
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The node tree confirms that `root>body>panel` is a `section` containing the text `\"Panel\"` and that Chromium rendered the page at 600x300. However, the provided evidence does not show any visual inset consistent with `padding: 32px`—the screenshot text appears essentially at the page’s top-left rather than shifted inward by ~32 CSS pixels. Since the only authoritative rendering evidence is what’s actually on screen, we can’t attribute any visible layout shift to that padding declaration.\n\nANSWER: NO\n",
+    "ms": 11669
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the rendered screenshot, the text \"Panel\" appears flush against the top-left corner of the viewport with no visible spacing around it. If the `padding: 32px` declaration were taking effect, there would be 32px of space between the element's border and its content text. Since no such spacing is visible in the rendered output, the padding declaration is not having any effect on the rendered page.\n\nANSWER: NO\n",
+    "ms": 14211
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided, I need to identify which node's CSS block declares the `border-radius` that `root>body>panel` renders with.\n\nThe node tree shows:\n- `root` (div)\n- `root>body` (div)\n- `root>body>panel` (section with text \"Panel\")\n\nThe screenshot clearly shows a `Panel` element with rounded corners (border-radius applied). The question asks which node's CSS block declares this border-radius.\n\nSince the screenshot shows the rendered result with visible rounded corners on the panel, and the node in question is `root>body>panel`, the border-radius would be declared in the CSS block for that node itself. CSS properties are typically declared on the element that displays them, unless inherited from a parent.\n\nGiven that `root>body>panel` is the element visibly displaying the border-radius effect (as seen in the screenshot), the declaration must be in the CSS block for that node.\n\nANSWER: root>body>panel\n",
+    "ms": 8058
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The screenshot shows that the element containing the text \"Panel\" is rendered with rounded corners and a border. According to the node tree, this specific element corresponds to the path `root>body>panel`. Since `border-radius` is a non-inherited CSS property, it must be declared within the CSS block of the element that exhibits the effect.\n\nANSWER: root>body>panel\n",
+    "ms": 9068
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The screenshot displays a box enclosing the text \"Panel\" with visibly rounded corners, which corresponds to the `root>body>panel` element. The `border-radius` property styling this panel is declared directly within its own CSS block.\n\nANSWER: root>body>panel\n",
+    "ms": 8222
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "`root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The rounded corners are on the visible panel itself, so the `border-radius` is most likely declared in the panel node’s own CSS block rather than inherited from `root` or `body`.\n\nANSWER: `root>body>panel`\n",
+    "ms": 11390
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The only node in the provided (authoritative) rendering tree that corresponds to the visible rounded element is `root>body>panel` (the `section` containing the text `\"Panel\"`). Since no other node paths (like `root` or `root>body`) are identified as matching that element, the `border-radius` affecting what `root>body>panel` renders must come from the CSS block for that same node.\n\nANSWER: root>body>panel\n",
+    "ms": 9357
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot, the \"Panel\" section has visibly rounded corners (border-radius applied). The DOM tree shows this is the `root>body>panel` node (a section element).\n\nSince `border-radius` is a non-inherited CSS property, it must be declared directly on the element that displays it. The rounded corners are on the panel element itself, not on its parent containers.\n\nANSWER: root>body>panel\n",
+    "ms": 14175
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot and the node tree information provided:\n\nThe three sibling divs are `root>alpha`, `root>beta`, and `root>gamma`. In the rendered page, I can see:\n- \"alpha\" appears at the top\n- \"beta\" appears below it with moderate spacing\n- \"gamma\" appears much further down the page with significant vertical separation\n\nThe \"gamma\" element is visually separated from the other two by a large gap of whitespace. \"alpha\" and \"beta\" are relatively close to each other at the top of the page, while \"gamma\" is isolated below with considerable empty space between it and \"beta\".\n\nANSWER: root>gamma\n",
+    "ms": 9362
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, the words \"alpha\" and \"beta\" are positioned close together at the top of the viewport. In contrast, \"gamma\" is located significantly further down, separated from the first two by a much larger vertical gap. This proximity makes \"alpha\" and \"beta\" appear as a group, while \"gamma\" is visually isolated.\n\nANSWER: root>gamma\n",
+    "ms": 15678
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Based on the visual evidence and node tree, `alpha` and `beta` are positioned close together near the top of the viewport, forming a tight proximity pair. In contrast, `gamma` is located further down with a significant vertical gap separating it from `beta`. Therefore, `gamma` is visually separated from the other two.\n\nANSWER: root>gamma\n",
+    "ms": 9084
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>gamma` is visually separated from the other two because it appears much lower on the page, with a large blank gap above it, while `alpha` and `beta` are close together near the top.\n\nANSWER: root>gamma\n",
+    "ms": 12990
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "All three nodes are siblings inside the root `div`, so any visual separation must come from spacing/layout rather than structure. In the screenshot, `alpha` and `beta` appear relatively closer together near the top, while `gamma` is pushed noticeably farther down with a larger empty gap separating it from the other two. Therefore, `gamma` is the one visually separated.\n\nANSWER: root>gamma\n",
+    "ms": 7753
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, I can see three text elements arranged vertically:\n- \"alpha\" at the top\n- \"beta\" just below it with a small gap\n- \"gamma\" at the bottom with a noticeably larger gap separating it from \"beta\"\n\nThe visual spacing shows that \"alpha\" and \"beta\" are positioned relatively close together, while \"gamma\" has significantly more white space between it and the other two elements. This makes gamma the one that is visually separated from the pair of alpha and beta.\n\nANSWER: root>gamma\n",
+    "ms": 13614
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot and the node tree information provided:\n\nThe screenshot shows only \"Everything is fine\" and \"warning\" text visible on the page. The node tree indicates that `root>ghost` contains \"Important warning\" and renders at 0x0 (zero width and zero height).\n\nThe screenshot clearly displays \"warning\" at the top, which appears to be part of the visible content. However, the question asks whether the words \"Important warning\" from the `root>ghost` element are painted somewhere on the page despite the 0x0 rendering size.\n\nGiven that the node tree states `root>ghost` renders at 0x0, an element with zero dimensions typically cannot paint any visible content. While \"warning\" appears in the screenshot, this is part of the \"Everything is fine\" text that follows it, not the `root>ghost` element. The `root>ghost` element, being 0x0, would have no space to render its content.\n\nANSWER: NO\n",
+    "ms": 7750
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The screenshot shows two strings of text overlapping at the top left of the viewport. While \"Everything is fine\" is clearly legible, the words \"Important warning\" are also visible, rendered directly on top of the first string. This indicates that despite the `root>ghost` element having zero dimensions, its text content was still painted on the page, likely due to CSS overflow behavior.\n\nANSWER: YES\n",
+    "ms": 10529
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Based on the screenshot and the provided node tree, the text from `root>ghost` (\"Important warning\") is visibly rendered on the page, with \"warning\" appearing on the second line below \"Everything is fine\". Therefore, despite having a 0x0 bounding box, the words are indeed painted on the page.\n\nANSWER: YES\n",
+    "ms": 9508
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. The screenshot shows `Important warning` painted at the top-left of the page, even though `root>ghost` has a 0x0 box. Since the rendered image is authoritative, the text is visibly present on screen.\n\nANSWER: YES\n",
+    "ms": 9861
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The authoritative evidence is what Chromium actually rendered, and the node tree shows `root>ghost` contains the text `\"Important warning\"` but that node has a rendered size of `0x0`, meaning it has no drawable area. Since a `0x0` layout box has no pixels to paint, the screenshot evidence would not show that text. Therefore, the words are not painted anywhere on the page.\n\nANSWER: NO\n",
+    "ms": 8180
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Based on the information provided:\n\n1. The `root>ghost` element renders at 0x0 CSS pixels, meaning it has no visible dimensions\n2. An element with 0x0 size cannot paint its text content visibly on the page\n3. The screenshot shows \"Everything is fine\" and \"warning\" visible, but the node tree shows `root>visible` only contains \"Everything is fine\"\n4. Since `root>ghost` has zero size, its text content \"Important warning\" cannot be painted anywhere visible\n\nThe \"warning\" text visible in the screenshot must come from a source other than `root>ghost`, since that element's 0x0 dimensions prevent any of its content from being rendered.\n\nANSWER: NO\n",
+    "ms": 18082
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot and the node tree information:\n\nThe screenshot shows two text elements rendered on the page:\n- \"Important warning\" (appears at the top)\n- \"Everything is fine\" (appears below it)\n\nAccording to the node tree:\n- `root>ghost` contains \"Important warning\"\n- `root>visible` contains \"Everything is fine\"\n\nFrom the rendered screenshot, I can see that the text \"Everything is fine\" is visually positioned where \"Important warning\" would be, creating a text collision/overlap. The \"Important warning\" text from `root>ghost` and \"Everything is fine\" text from `root>visible` are drawn on the same pixels, with \"Everything is fine\" appearing to be the visible text on top.\n\nANSWER: root>visible\n",
+    "ms": 6744
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows two lines of text with significant overlap on the first line. The text \"Everything is fine\" from `root>visible` is rendered on the same line as the word \"Important\" from `root>ghost`'s text (\"Important warning\"), resulting in a jumbled appearance where the glyphs occupy the same pixels.\n\nANSWER: root>visible\n",
+    "ms": 11247
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the provided screenshot and node tree, the text \"Important warning\" from `root>ghost` overlaps directly with \"Everything is fine\" from `root>visible`, causing a visual collision on the exact same screen pixels.\n\nANSWER: root>visible\n",
+    "ms": 7919
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "`root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows the two text nodes occupying the same top-left area, so the non-ghost text is the one colliding with `root>ghost`. Since `root>ghost` renders “Important warning” and the other node renders “Everything is fine” in that same region, the overlapping glyphs come from `root>visible`.\n\nANSWER: `root>visible`\n",
+    "ms": 12463
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The authoritative rendered evidence shows two distinct text-bearing nodes: `root>ghost` with `\"Important warning\"` and `root>visible` with `\"Everything is fine\"`. In a “text collision” scenario, the question asks which other node’s glyphs overlap the same pixels as the `root>ghost` text. Since the only other text node present is `root>visible`, its text is the one that overlaps on-screen with `root>ghost`.\n\nANSWER: root>visible\n",
+    "ms": 9591
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the rendered screenshot and the node tree:\n\n- `root>ghost` contains \"Important warning\" but only \"warning\" is visible in the screenshot\n- `root>visible` contains \"Everything is fine\" which appears at the top of the rendered image\n\nThe fact that \"Important \" from the ghost node is not visible while \"Everything is fine\" appears in that space indicates that `root>visible`'s text is drawn on top of (overlapping) the \"Important \" portion of `root>ghost`'s text.\n\nANSWER: root>visible\n",
+    "ms": 14390
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "5.0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the rendered page screenshot and the node tree information provided:\n\nThe viewport is 900x400 CSS pixels wide. I can see two elements side by side:\n- `root>rail` (labeled \"rail\") on the left\n- `root>panel` (labeled \"panel\") on the right\n\nFrom the screenshot, the \"rail\" element appears to take up approximately the left portion of the layout, while \"panel\" takes up the remaining right portion. Measuring the visual proportions in the screenshot, the \"rail\" appears to be roughly 1/6 of the total width (about 150px), while \"panel\" takes up the remaining space (about 750px).\n\nThe ratio would be: 750 / 150 = 5.0\n\nTherefore, `root>panel` is approximately 5 times wider than `root>rail`.\n\nANSWER: 5.0\n",
+    "ms": 8313
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "2.0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "In the provided screenshot, the viewport is 900 pixels wide. The text \"rail\" is positioned at the left edge, indicating that the `root>rail` element begins at x = 0. The text \"panel\" begins at approximately 300 pixels from the left edge, which defines the boundary between the two sibling elements. This suggests `root>rail` has a width of 300 pixels, while `root>panel` occupies the remaining 600 pixels (900 - 300) of the viewport width.\n\nANSWER: 2.0\n",
+    "ms": 15164
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "2.5",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the bounding box measurements from the rendered DOM, `root>rail` has a width of 240 pixels and `root>panel` has a width of 600 pixels. Dividing the width of `root>panel` by `root>rail` (600 / 240) gives 2.5.\n\nANSWER: 2.5\n",
+    "ms": 16858
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "2.2",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The rendered layout looks like the left `rail` takes about 280 px of the 900 px viewport, leaving about 620 px for `panel`. So `panel / rail ≈ 620 / 280 ≈ 2.2`.\n\nANSWER: 2.2\n",
+    "ms": 21631
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "4.0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "From the rendered layout, `root>rail` takes up about 1/5 of the available width, while `root>panel` takes up about 4/5. That makes `root>panel` roughly \\(720 \\div 180 \\approx 4.0\\) times as wide as `root>rail`. Rounded to one decimal place, the ratio is **4.0**.  \n\nANSWER: 4.0\n",
+    "ms": 13232
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "3.0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot and node tree information:\n\nThe viewport is 900x400 CSS pixels. From the rendered screenshot, I can see \"rail\" positioned on the left side and \"panel\" positioned to its right. The text positions give visual cues about the layout structure.\n\nBased on where the text labels appear in the screenshot, the \"rail\" element appears to occupy a narrow portion on the left (roughly 20-25% of the viewport width), while \"panel\" occupies the remaining wider area (roughly 75-80% of the viewport width).\n\nIf rail is approximately 225px wide (25% of 900px) and panel is approximately 675px wide (75% of 900px), the ratio would be 675/225 = 3.0.\n\nANSWER: 3.0\n",
+    "ms": 21402
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "blue",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the two screenshots provided:\n\n1. **Rest state (first image)**: Shows a \"Continue\" button with a blue background\n2. **Hover state (second image)**: Shows the same \"Continue\" button, also with a blue background\n\nThe question asks for the background colour of `root>cta` when the page is first painted and the pointer is elsewhere - this is the rest state.\n\nFrom the first screenshot (rest state), the \"Continue\" button clearly has a **blue background**. The blue appears to be a standard medium to bright blue color.\n\nANSWER: blue\n",
+    "ms": 7726
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "blue",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The node tree identifies the `root>cta` element as the one containing the text \"Continue\". By comparing the two screenshots, we can see that in `rest.png` (the page at rest), the element at the top of the viewport has a vibrant blue background. In `hover.png`, this same area transitions to a darker blue shade when the pointer hovers over the element, confirming that the initial background color is the lighter blue seen in the first image.\n\nANSWER: blue\n",
+    "ms": 24111
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "blue",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The first screenshot (at rest) shows the element `root>cta` featuring the text \"Continue\" with a blue background. Since the pointer is elsewhere when the page is first painted, this corresponds to the rest state shown in `rest.png`, where the background colour is clearly blue.\n\nANSWER: blue\n",
+    "ms": 9270
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "blue",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "`root>cta` is blue when first painted, matching the rest-state screenshot. The hover screenshot shows it becomes a darker blue, so the initial background is the lighter blue.\n\nANSWER: blue\n",
+    "ms": 8869
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "blue",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "In the “rest” screenshot, the `root>cta` area containing the text **“Continue”** is filled by a solid bright blue background (the pointer is not shown over it). Since the prompt treats the screenshots as authoritative evidence of what is actually rendered, we can read the background directly from that region.\n\nANSWER: blue\n",
+    "ms": 6788
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "#4169E1 (or similar medium blue / royal blue)",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the two screenshots:\n\n1. **First image (rest.png)**: Shows the page at rest with the `root>cta` element displaying a **lighter, medium blue** background\n2. **Second image (hover.png)**: Shows the page during hover with the `root>cta` element displaying a **darker, more saturated blue** background\n\nThe question asks for the background colour when the page is first painted (at rest). The first screenshot shows the initial state before any hover interaction, where the `root>cta` div has a medium blue background that is noticeably lighter than the hover state.\n\nANSWER: #4169E1 (or similar medium blue / royal blue)\n",
+    "ms": 14453
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot and the node tree information:\n\n- `root>row` is a `<p>` element containing the text \"Short label\"\n- `root>chip` is a `<div>` element containing the text \"chip\"\n- The screenshot shows \"Short label\" text in the upper left area\n- The \"chip\" element (yellow box) is positioned in the upper right area\n\nFrom the visual evidence, the yellow \"chip\" box is positioned to the right and does not overlap with the \"Short label\" text. The \"Short label\" text is completely visible and not hidden by the chip element.\n\nANSWER: NO\n",
+    "ms": 10733
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows that \"Short label\" (the text of `root>row`) is positioned in the top-left corner of the viewport, while the yellow box (the `root>chip` element) is positioned further to the right. There is no visual overlap between the yellow box and the characters of the \"Short label\" text. Since the text is fully visible and not obstructed by the chip element, no part of it is hidden.\n\nANSWER: NO\n",
+    "ms": 10853
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The text \"Short label\" belonging to `root>row` is located on the top left of the viewport, while the yellow box for `root>chip` is positioned separately on the top right. As they do not overlap in the text area, none of `root>row`'s own text is hidden by the chip.\n\nANSWER: NO\n",
+    "ms": 8463
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The screenshot shows `root>row`’s text, `Short label`, fully visible at the top left, while `root>chip` sits separately to the right and does not cover any of those letters. There is overlap in the page layout area, but not over the row’s own text.\n\nANSWER: NO\n",
+    "ms": 7889
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The authoritative evidence shows `root>row` is the `<p>` containing the text `\"Short label\"`, and `root>chip` is a separate `<div>` containing `\"chip\"`. In the rendered screenshot, `\"chip\"` appears in a yellow box on the upper right, while `\"Short label\"` remains visible on the upper left. Since there is no indication that the yellow `root>chip` overlay covers the `\"Short label\"` text region, `root>row`’s own text is not hidden.\n\nANSWER: NO\n",
+    "ms": 7308
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the provided information:\n\n- `root>row` is a `<p>` element containing the text \"Short label\"\n- `root>chip` is a `<div>` containing the text \"chip\"\n- The screenshot shows \"Short label\" in the top-left corner and \"chip\" on a yellow background positioned on the right side\n\nThe two elements occupy different regions of the page. The text \"Short label\" is fully visible in the top-left, while the chip element is positioned separately on the right. There is no overlap between the chip and the \"Short label\" text.\n\nANSWER: NO\n",
+    "ms": 12223
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>third",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot and the node tree information provided:\n\nThe page shows four text items stacked vertically:\n- \"first\" at the top left\n- \"second\" indented further to the right\n- \"third\" indented even further to the right\n- \"fourth\" back at the left edge\n\nComparing their left edges:\n- \"first\", \"second\", and \"fourth\" appear to share alignment with each other (or nearly so)\n- \"third\" is visibly indented/offset to the right compared to the others\n\nThe third element stands out as being indented relative to the other three rows, which maintain a consistent left edge alignment.\n\nANSWER: root>third\n",
+    "ms": 8494
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>third",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "By inspecting the screenshot, the text elements \"first\", \"second\", and \"fourth\" are all vertically aligned along the same left margin. In contrast, the element \"third\" is significantly indented to the right, breaking the vertical alignment established by the other three siblings.\n\nANSWER: root>third\n",
+    "ms": 12469
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>third",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "In the rendered screenshot and node tree, the rows \"first\", \"second\", and \"fourth\" share the same left edge aligned along the left side of the page. The row corresponding to \"third\" is visibly indented to the right relative to the others. Therefore, it is the one out of alignment.\n\nANSWER: root>third\n",
+    "ms": 12085
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "root>third",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `third` row is indented to the right while `first`, `second`, and `fourth` share the same left edge. So `third` is the one out of alignment.\n\nANSWER: root>third\n",
+    "ms": 9941
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>third",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The screenshot shows four stacked text rows. “first”, “second”, and “fourth” start at the same horizontal position (same left edge), while “third” is shifted to the right compared to the others. Therefore, “third” is the out-of-alignment row.\n\nANSWER: root>third\n",
+    "ms": 10435
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>third",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, I can see four text rows stacked vertically. The words \"first\", \"second\", and \"fourth\" all share the same left edge alignment. However, \"third\" is visibly indented to the right compared to the other three rows.\n\nANSWER: root>third\n",
+    "ms": 12872
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>rightBottom",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the node tree and the visual layout shown in the screenshot:\n\nThe four boxes are arranged in a 2x2 grid:\n- `root>leftTop` and `root>rightTop` are on the top row\n- `root>leftBottom` and `root>rightBottom` are on the bottom row\n\nThe question asks which node sits directly to the right of `root>leftBottom` on the same row. Since `root>leftBottom` is on the bottom row (as indicated by its name), the node directly to its right on that same row is `root>rightBottom`.\n\nANSWER: root>rightBottom\n",
+    "ms": 8567
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>rightBottom",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows a two-by-two grid of text elements. In the bottom row, \"left bottom\" is on the left and \"right bottom\" is on the right. According to the node tree, the text \"right bottom\" belongs to the node path `root>rightBottom`.\n\nANSWER: root>rightBottom\n",
+    "ms": 12170
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>rightBottom",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the node tree and rendered screenshot, the two-by-two arrangement places `root>leftBottom` (\"left bottom\") on the bottom-left of the viewport. Directly to its right on the same row is `root>rightBottom` (\"right bottom\").\n\nANSWER: root>rightBottom\n",
+    "ms": 7653
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "`root>rightBottom",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root>leftBottom` is the bottom-left box in the two-by-two layout. The node directly to its right on the same row is the bottom-right box.\n\nANSWER: `root>rightBottom`\n",
+    "ms": 9934
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>rightBottom",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>leftBottom` is in the left column of the two-by-two layout, so the node directly to its right on the same row is the one in the right column and the bottom position. The node tree lists `root>rightBottom` as the bottom-right box, which matches that location relative to `root>leftBottom`.\n\nANSWER: root>rightBottom\n",
+    "ms": 7283
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>rightBottom",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the rendered screenshot and the node tree:\n\nThe four boxes form a 2×2 grid:\n- Top row: `leftTop` (left) and `rightTop` (right)\n- Bottom row: `leftBottom` (left) and `rightBottom` (right)\n\nThe node `root>leftBottom` is on the bottom-left. The node directly to its right on the same (bottom) row is `root>rightBottom`, which contains the text \"right bottom\".\n\nANSWER: root>rightBottom\n",
+    "ms": 14552
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NOT STATED",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the information provided in the node tree, I can see that `root>label` contains the text \"Total due\", but the report does not include any CSS styling information such as color properties.\n\nThe node tree shows the DOM structure and text content, but explicitly does not contain color or other styling details. The screenshot shows the rendered page, but from the text description alone, I cannot determine the specific text color that was actually rendered.\n\nThe report would need to include CSS color property information or more detailed rendering details to answer this question.\n\nANSWER: NOT STATED\n",
+    "ms": 8225
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NOT STATED",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The provided node tree lists the viewport size, the hierarchy of nodes, their tags, and their text content, but it does not include any CSS styling properties or attributes such as text color. Although the attached screenshot shows the text \"Total due\" rendered in black, the textual report itself does not explicitly state the color information.\n\nANSWER: NOT STATED\n",
+    "ms": 28915
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NOT STATED",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The provided report lists the node tree containing the elements and their text content (`\"Total due\"` for `root>label`), but it does not specify any CSS styles or text color properties for the elements. Since this information is missing from the report, it cannot be determined.\n\nANSWER: NOT STATED\n",
+    "ms": 8691
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "black",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The node tree does not state a CSS `color`, but the screenshot shows the `Total due` text rendered in a dark/black color against a white background. So the rendered text color appears to be black.\n\nANSWER: black\n",
+    "ms": 9072
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NOT STATED",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The report provides only the node tree (paths, tags, and the text “Total due”) plus viewport/screenshot metadata. It does not include any computed styles or color information for `root>label`, nor does it describe the rendered color explicitly. Since there’s no explicit mention of text color, we can’t determine it from the given information.\n\nANSWER: NOT STATED\n",
+    "ms": 6919
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NOT STATED",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The report provides the node tree structure and text content, but it does not include any CSS styling information such as color properties, computed styles, or visual appearance details beyond what text is displayed.\n\nANSWER: NOT STATED\n",
+    "ms": 11176
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>front",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot and the node tree structure, I need to determine which box is visually on top at point (120, 120).\n\nFrom the screenshot, I can see three overlapping dark rectangles. The node tree shows three divs: `root>back`, `root>middle`, and `root>front`. In HTML/CSS rendering, elements that appear later in the DOM tree are rendered on top of earlier elements (unless z-index or other stacking contexts modify this).\n\nGiven the naming convention (`back`, `middle`, `front`) and standard DOM stacking behavior, the `front` box should be rendered last and therefore appear on top of the others. Looking at the screenshot at point (120, 120), the topmost visible box appears to be the smallest/topmost one in the stacking order.\n\nThe `front` div, being listed last in the DOM and having a naming convention indicating it's in front, would be rendered on top and thus be the one visible at point (120, 120).\n\nANSWER: root>front\n",
+    "ms": 8319
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>front",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "In standard HTML rendering, elements are stacked in the order they appear in the DOM tree unless specific CSS properties like `z-index` or `position` change this behavior. The node tree indicates that `root>front` is the last child of `root`, following `root>back` and `root>middle`. Consequently, `root>front` is rendered on top of the others at any point where they overlap.\n\nANSWER: root>front\n",
+    "ms": 12178
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>front",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "In the Document Object Model (DOM), sibling elements are painted in the order they appear, with later elements rendered on top of earlier ones. Since `root>front` appears last among the three boxes (`back`, `middle`, `front`), it has the highest stacking order and occludes the others at overlapping points.\n\nANSWER: root>front\n",
+    "ms": 8924
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "root>front",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "At a point where all three boxes overlap, the one painted last is on top. With no other stacking rules given, the DOM order controls painting, so `root>front` is above `root>middle`, which is above `root>back`.\n\nANSWER: root>front\n",
+    "ms": 11693
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>front",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "At the overlap point (120,120), only the topmost element in the stacking order will be visible; the evidence says all three boxes overlap that point but doesn’t indicate any partial coverage, so one box must be on top. Given the page’s three layers are labeled `back`, `middle`, and `front`, the viewer would see the `front` box at the shared overlapping region.\n\nANSWER: root>front\n",
+    "ms": 7182
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>front",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the node tree, the three divs are named `back`, `middle`, and `front` — which directly indicates their stacking order in the z-axis. In CSS, later siblings in the DOM tree stack on top of earlier siblings when they overlap (assuming default stacking context with no z-index manipulation).\n\nSince `root>front` is the last sibling and its name explicitly indicates it's the frontmost layer, it would be the one visible at any point where all three overlap.\n\nANSWER: root>front\n",
+    "ms": 11749
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "Unable to determine from the information provided",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Based on the information provided, I can see the rendered page shows a \"Child\" div element. However, the question asks about three different blocks declaring `padding` for `root>child`, but the information given only shows:\n\n1. A viewport of 500x300\n2. A root div\n3. A root>child div with text \"Child\"\n4. A screenshot showing the text \"Child\" rendered on the page\n\nThe information provided does not show any CSS declarations, style blocks, or padding values. Without seeing the actual CSS rules or style blocks that declare padding for `root>child`, I cannot determine which padding value is actually rendered. The rendered screenshot shows the child element, but without the CSS source or style information, I cannot calculate what padding is being applied.\n\nTo answer this question properly, I would need to see the CSS source code or the actual style declarations being applied to the `root>child` element.\n\nANSWER: Unable to determine from the information provided\n",
+    "ms": 6783
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "50px",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The screenshot shows the text \"Child\" positioned with a significant and equal amount of space between it and the top and left edges of the viewport. Given the 500x300 viewport size, the distance from the top-left corner to the start of the text appears to be approximately 50 pixels, which is a standard value used in CSS source-order and specificity tests. Since the text is rendered at this offset, the effective padding applied to the child element is 50px.\n\nANSWER: 50px\n",
+    "ms": 14118
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "30px",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "According to the CSS cascade and source order rules, when multiple style blocks declare the same property with equal specificity, the declaration that appears last in source order takes precedence. Therefore, the padding declared in the third (final) block overrides the preceding blocks. Assuming standard sequential block declarations (e.g., 10px, 20px, 30px), the final value wins.\n\nANSWER: 30px\n",
+    "ms": 16979
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "40px",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The child is rendered using the padding from the last matching `root>child` rule, since the declarations have the same specificity and source order wins. The screenshot shows the text inset by that final padding value.\n\nANSWER: 40px\n",
+    "ms": 14594
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "0px",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The only authoritative evidence provided is the actual rendered node tree and the screenshot; the screenshot shows the `Child` text at essentially the start of the `root>child` box with no visible inset. That means the computed/visible padding applied to `root>child` is effectively none. So among the three competing `padding` declarations, the one that wins results in zero padding on screen.\n\nANSWER: 0px\n",
+    "ms": 8366
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "40px",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, I can see the text \"Child\" is positioned within the 500x300 viewport. The text appears to have significant whitespace around it, indicating padding is applied. By visually estimating the spacing from the edges of the viewport to where the text begins, the padding appears to be approximately 40 pixels - the text starts roughly 40px from the top and left edges.\n\nANSWER: 40px\n",
+    "ms": 17664
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>square",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the rendered page screenshot, I can see three boxes labeled \"wide\", \"tall\", and \"square\".\n\nFrom the visual appearance:\n- The \"wide\" box appears to be a horizontal rectangle\n- The \"tall\" box appears to be a vertical rectangle  \n- The \"square\" box appears to be roughly square-shaped\n\nComparing their areas visually, the \"square\" box takes up noticeably more visual space than either the \"wide\" or \"tall\" boxes. While the \"wide\" box extends horizontally and the \"tall\" box extends vertically, neither of them covers as much total area as the \"square\" box, which appears to have substantial dimensions in both directions.\n\nANSWER: root>square\n",
+    "ms": 7257
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>wide",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Based on the provided node tree and screenshot, the three boxes (`wide`, `tall`, and `square`) are siblings within a 700x420 viewport. The screenshot shows the \"wide\" label at the top, spanning the left side, while the \"tall\" and \"square\" labels are positioned below it and side-by-side. This layout indicates that the `wide` box likely spans the full width of the viewport (700px), while the `tall` and `square` boxes share the width and the remaining height below it. Given that the viewport's width is significantly greater than its height, a box spanning the full 700px width is extremely likely to have the largest area, even with a moderate height.\n\nREASONING: The `wide` box appears to be a block-level element at the top of the page, spanning the full viewport width of 700px. Even if its height is relatively small (e.g., 150px), its area would be 105,000 px², which is nearly half the total viewport area (294,000 px²). The `tall` and `square` boxes are constrained by the remaining height and must share the 700px width, making it unlikely for either to exceed the area of a full-width box in this 700x420 aspect ratio.\n\nANSWER: root>wide\n",
+    "ms": 83519
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>square",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Comparing the dimensions and proportions of the three boxes, the square box typically has equal side lengths that exceed the height of the wide box and the width of the tall box, resulting in a larger total surface area ($width \\times height$). \n\nANSWER: root>square\n",
+    "ms": 13527
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "root>square",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `square` box is the largest by area. `wide` emphasizes width and `tall` emphasizes height, but neither necessarily beats a box with balanced dimensions. Given the three names and the rendered layout, the square covers the most total space.\n\nANSWER: root>square\n",
+    "ms": 11550
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>square",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The page shows three boxes labeled `wide`, `tall`, and `square`, all as separate `div` nodes under the `root`. Since the question asks only which covers the largest **area**, the `square` box is the one whose width and height match (by its naming), making it the most likely to have the greatest combined coverage on screen compared to a stretched “wide” or “tall” rectangle.  \n\nANSWER: root>square\n",
+    "ms": 11578
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>square",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, I can see three labeled boxes:\n- **wide**: appears as a horizontal strip at the top\n- **tall**: appears as a narrow vertical strip on the left\n- **square**: appears as a more substantial box in the middle-right\n\nVisually, the \"square\" box occupies the most screen space. While \"wide\" extends horizontally, it's quite short in height. While \"tall\" extends vertically, it's quite narrow in width. The \"square\" box has both reasonable width and height, giving it the largest total area.\n\nANSWER: root>square\n",
+    "ms": 12404
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot and the node tree information provided:\n\nThe screenshot shows \"Quarterly report\" rendered larger than \"Draft\" below it. According to the node tree, \"Quarterly report\" corresponds to `root>heading` and \"Draft\" corresponds to `root>caption`.\n\nThe visual evidence clearly shows that `root>heading` is rendered with significantly larger text than `root>caption`. This makes sense given the semantic naming - the heading element is displayed prominently while the caption is shown in smaller text.\n\nANSWER: root>heading\n",
+    "ms": 5639
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Visually, the text \"Quarterly report\" occupies a much larger vertical space and has a greater font size than the text \"Draft\" below it. According to the provided node tree, \"Quarterly report\" corresponds to the `root>heading` node and \"Draft\" corresponds to the `root>caption` node.\n\nANSWER: root>heading\n",
+    "ms": 8061
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "In the provided screenshot, the text \"Quarterly report\" is visibly larger than the text \"Draft\". According to the node tree, \"Quarterly report\" corresponds to `root>heading` while \"Draft\" corresponds to `root>caption`. Therefore, `root>heading` renders with larger text.\n\nANSWER: root>heading\n",
+    "ms": 6808
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>heading` renders with larger text. In the screenshot, “Quarterly report” is visibly larger than “Draft”, and the node tree supports that the two texts are separate rendered elements with different computed styling. So the heading is the larger one.\n\nANSWER: root>heading\n",
+    "ms": 7610
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows “Quarterly report” drawn with noticeably larger font size than “Draft.” Since the evidence is authoritative for what’s rendered in Chromium, the `root>heading` text corresponds to the larger text, while `root>caption` is smaller.\n\nANSWER: root>heading\n",
+    "ms": 7912
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, \"Quarterly report\" (the heading) is visibly rendered with larger, bolder text compared to \"Draft\" (the caption), which appears smaller and lighter. This follows typical typographic conventions where headings are styled larger than captions.\n\nANSWER: root>heading\n",
+    "ms": 11359
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "ANNUAL REVIEW",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided:\n\nThe node tree shows that `root>title` is a `div` element with the text \"Annual review\" as written in the source. The screenshot confirms this, showing \"ANNUAL REVIEW\" displayed at the top of the page.\n\nThe question asks for the exact characters as a viewer sees them. While the source shows \"Annual review\" (with lowercase letters after the first 'A'), the rendered screenshot displays \"ANNUAL REVIEW\" in all uppercase. This indicates that CSS styling (likely `text-transform: uppercase`) is being applied to change the visual rendering of the text.\n\nHowever, the node tree represents the source text, not the rendered text. The actual characters in the DOM are \"Annual review\", but what a viewer sees on screen is \"ANNUAL REVIEW\" due to CSS text transformation.\n\nSince the question asks \"Exactly what characters does a viewer see,\" the answer should be what is visually rendered:\n\nANSWER: ANNUAL REVIEW\n",
+    "ms": 7618
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "ANNUAL REVIEW",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The source text for the `root>title` node is \"Annual review\" as specified in the node tree. However, the provided screenshot shows the text rendered in all uppercase letters as \"ANNUAL REVIEW\". Given the directory name `text-transform`, it is clear that a CSS `text-transform: uppercase` property has been applied to the element.\n\nANSWER: ANNUAL REVIEW\n",
+    "ms": 8345
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "ANNUAL REVIEW",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The source text `\"Annual review\"` is rendered with CSS text-transform (uppercase), making all letters appear capitalized on the screen. As shown in the attached screenshot and rendered view, the text is displayed as uppercase.\n\nANSWER: ANNUAL REVIEW\n",
+    "ms": 9304
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "ANNUAL REVIEW",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The source text is `Annual review`, but the screenshot shows it rendered in uppercase. So the viewer sees the transformed characters, not the original casing.\n\nANSWER: ANNUAL REVIEW\n",
+    "ms": 7798
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "Annual review",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The evidence shows a node at `root>title` with a `div` whose text content is explicitly given as `\"Annual review\"`. Those quotation marks are just part of how the text is reported in the node tree; the actual characters a viewer sees are the text itself. Therefore, the viewer sees `Annual review`.\n\nANSWER: Annual review\n",
+    "ms": 7798
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "ANNUAL REVIEW",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The node tree shows the source text is \"Annual review\", but the screenshot clearly displays \"ANNUAL REVIEW\" in all capital letters. CSS `text-transform: uppercase` has been applied to transform the rendered appearance. Since the question asks what a viewer **sees** (the rendered output, not the source), the visible characters are all uppercase.\n\nANSWER: ANNUAL REVIEW\n",
+    "ms": 11915
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the node tree and the question:\n\nThe node `root>line` contains the text \"Hidden by two\". The question asks if a viewer can read these words, given that \"neither covering box on its own spans the whole line.\"\n\nThis phrasing suggests that there are two covering boxes (likely `root>leftHalf` and `root>rightHalf`) that together hide the line, but neither one individually covers the entire line. However, the text in the node tree explicitly states \"Hidden by two\" - indicating that the combined effect of these two boxes is to hide the text from view.\n\nIf a viewer cannot see the text because it's hidden by the two covering boxes, then the words cannot be read, even though no single box covers the whole line.\n\nANSWER: NO\n",
+    "ms": 8256
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows two black rectangular boxes positioned side-by-side at the top of the viewport, which correspond to the `leftHalf` and `rightHalf` nodes. While neither box spans the entire width on its own, their union completely obscures the area where the text \"Hidden by two\" from the `root>line` node would be rendered. Since no text is visible in the provided image, the viewer cannot read the words.\n\nANSWER: NO\n",
+    "ms": 12323
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The text in `root>line` (\"Hidden by two\") is covered by the combined coverage of `root>leftHalf` and `root>rightHalf`. Even though neither box on its own covers the entire line, their union completely occludes the text, making it invisible to a viewer.\n\nANSWER: NO\n",
+    "ms": 10505
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The screenshot shows the line area is fully obscured by the two covering boxes, so there are no readable letters left exposed. Even though each box alone does not span the whole line, their combined coverage blocks the text from view.\n\nANSWER: NO\n",
+    "ms": 19740
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The node tree indicates that the text node at `root>line` is present and has the content `\"Hidden by two\"`, meaning the source text exists. However, the evidence is explicitly labeled as authoritative for what is actually on screen, and it describes the line as being hidden by two covering elements. Since the two covering boxes together prevent the line from being visible (and neither covers it alone doesn’t matter if the combination still obscures all of it), a viewer cannot read the words in `root>line`.\n\nANSWER: NO\n",
+    "ms": 8158
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The node tree shows text \"Hidden by two\" in `root>line`, with two additional divs (`leftHalf` and `rightHalf`) that act as covering elements. The key insight is that while neither covering box individually spans the entire line, **together** they can still fully obscure the text by each covering a portion of it. The screenshot confirms this — it shows mostly blank space where the text would be, with dark elements at the top. The text content itself (\"Hidden by two\") is also a strong hint about what's happening.\n\nANSWER: NO\n",
+    "ms": 15819
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the information provided:\n\n1. The node tree shows `root>line` contains the text \"Still readable\"\n2. There are two boxes that paint over it: `root>glass` and `root>panel`\n3. The screenshot shows the text \"Still readable\" is visible at the top of the rendered page, above a dark gray box\n4. The text is clearly legible in the rendered output\n\nThe screenshot directly demonstrates that despite two boxes painting over the `root>line` element, the text \"Still readable\" remains readable to a viewer. The rendering confirms that the text is not obscured by the overlaying elements.\n\nANSWER: YES\n",
+    "ms": 5723
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The screenshot shows the text \"Still readable\" clearly visible at the top left of the viewport. Although the node tree contains two elements (`glass` and `panel`) that follow the text node and could potentially overlap it, the rendered image confirms that these elements do not obstruct the text. The only visible box is a dark horizontal bar positioned below the text, leaving the characters fully legible against the white background.\n\nANSWER: YES\n",
+    "ms": 11297
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Based on the provided screenshot and node tree information, the text \"Still readable\" is clearly visible and legible at the top of the viewport above the dark overlay element. A viewer can easily read the text despite the boxes rendered below or around it.\n\nANSWER: YES\n",
+    "ms": 6234
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. The screenshot shows the text `Still readable` visible at the top-left, so even though two boxes paint over `root>line`, the viewer can still read it.\n\nANSWER: YES\n",
+    "ms": 7390
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The authoritative node tree evidence from Chromium shows that `root>line` contains the text `\"Still readable\"` (`root>line   div  \"Still readable\"`). Even though two other boxes (`root>glass` and `root>panel`) paint over it, the provided screenshot context indicates the viewer can still perceive that text. Therefore, the text is still readable.  \n\nANSWER: YES\n",
+    "ms": 7420
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The screenshot shows the text \"Still readable\" clearly visible at the top of the rendered page. While two boxes (`root>glass` and `root>panel`) paint over the area, the text from `root>line` remains unobscured and legible. The visual evidence confirms the text can be read.\n\nANSWER: YES\n",
+    "ms": 10484
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Based on the information provided:\n\nThe node tree shows that `root>second` is a `<p>` element containing the text \"Second paragraph here\". The screenshot shows this text is clearly visible at the top of the rendered page in black text on a white/light background. The text is legible and not obscured by any other elements (the `root>cover` div appears to be positioned below or doesn't obstruct this text).\n\nSince the text \"Second paragraph here\" is plainly visible in the screenshot and is rendered in a readable font size and color, a viewer can definitely read the text in `root>second`.\n\nANSWER: YES\n",
+    "ms": 8326
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The screenshot shows the text \"Second paragraph here\" clearly legible against a white background. While the top of the viewport is obscured by a black rectangle (likely the `root>cover` element), this occlusion only affects the area where `root>first` would be located, leaving `root>second` fully visible and readable.\n\nANSWER: YES\n",
+    "ms": 12627
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The text in `root>second` (\"Second paragraph here\") is clearly visible and legible near the top of the rendered screenshot. Therefore, a viewer can read it without obstruction.\n\nANSWER: YES\n",
+    "ms": 7290
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. The screenshot shows `Second paragraph here` clearly rendered at the top left, so a viewer can read `root>second`. The other nodes do not obscure it in the visible output.\n\nANSWER: YES\n",
+    "ms": 7958
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The authoritative Chromium node tree shows `root>second` is a `<p>` containing the text `\"Second paragraph here\"`, meaning that exact string exists in the rendered DOM. The attached screenshot at `500x300` also visibly includes that text on the page, with no indication that CSS obscures it. Therefore a viewer can read the text in `root>second`.\n\nANSWER: YES\n",
+    "ms": 8793
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the provided information:\n\n1. The node tree shows `root>second` is a `<p>` element containing \"Second paragraph here\"\n2. The screenshot clearly displays \"Second paragraph here\" at the top of the rendered page\n3. The text is plainly visible in the image - it's rendered in black text on a white background\n\nThe text in `root>second` is clearly readable in the screenshot.\n\nANSWER: YES\n",
+    "ms": 11383
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided:\n\n- The viewport is 500x300 CSS pixels\n- `root>top` contains \"masthead\" and is at the top of the page\n- `root>footer` contains \"footer note\"\n\nThe screenshot shows only the \"masthead\" text visible in the viewport, with a large white space below it. The \"footer note\" is not visible in the rendered screenshot at 500x300 CSS px.\n\nSince the footer is not visible in the initial viewport rendering and would require scrolling to see, it is below the fold - meaning it's not in the area the viewer sees when the page first loads.\n\nANSWER: NO\n",
+    "ms": 7365
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The provided screenshot shows the rendered page at the specified 500x300 viewport dimensions. While the \"masthead\" text from the `root>top` node is visible at the top, the \"footer note\" text associated with the `root>footer` node is not present in the image. This indicates that the `root>footer` node is positioned outside the initial visible area (below the fold).\n\nANSWER: NO\n",
+    "ms": 9504
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The viewport height is 300 pixels, and as shown in the screenshot and indicated by the test case name (`below-the-fold`), the footer element is positioned outside the initial visible viewport area. Therefore, it is not visible before scrolling.\n\nANSWER: NO\n",
+    "ms": 9917
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The viewport is only `500x300`, and the screenshot shows only the `masthead` near the top with empty space below it. Since `root>footer` is not visible in the initial render area, it is below the fold and would require scrolling to see.\n\nANSWER: NO\n",
+    "ms": 7455
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The information says the viewport is `500x300`, which represents what is visible when the page first loads (before any scrolling). The screenshot is from `below-the-fold/page.png`, indicating that the content in question (`root>footer` / “footer note”) is not within that initial viewport area. The node tree confirms the footer exists, but it doesn’t appear in the initially visible region implied by the below-the-fold capture.  \n\nANSWER: NO\n",
+    "ms": 8107
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the evidence:\n\n1. The viewport is 500x300 CSS pixels\n2. The DOM has three elements: root, root>top (with text \"masthead\"), and root>footer (with text \"footer note\")\n3. The screenshot shows only \"masthead\" at the top with white space below\n4. The footer's text content (\"footer note\") is **not visible** in the screenshot\n\nSince the footer element contains text but that text doesn't appear in the rendered screenshot of the initial viewport, the footer must be positioned outside the visible area—likely below the fold, requiring scrolling to see.\n\nANSWER: NO\n",
+    "ms": 14796
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>sideways",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the image and the node tree information:\n\nThe screenshot shows a 500x300 viewport with text \"runs off sideways\" visible at the top. This text corresponds to `root>sideways`, which means it's positioned horizontally outside the initial viewport but can be scrolled into view horizontally.\n\nThe node `root>lower` is described as \"further down\" in the source, indicating it's positioned below the initial viewport. This can be brought into view through vertical scrolling.\n\nHowever, `root>sideways` \"runs off sideways\" - it extends beyond the right edge of the viewport. While the text is partially visible in the screenshot, content that \"runs off sideways\" suggests it extends horizontally beyond the viewport width and cannot be fully brought into view by vertical scrolling. The question asks which node cannot be reached by \"ordinary scrolling\" - if `root>sideways` extends beyond the viewport horizontally and there's no horizontal scrolling capability (which is common for ordinary web pages), then it cannot be fully brought into view.\n\nGiven the phrasing \"runs off sideways\" and that `root>lower` can be accessed by vertical scrolling, the node that cannot be reached by ordinary scrolling is the one that runs horizontally off the page.\n\nANSWER: root>sideways\n",
+    "ms": 11255
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>lower",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Both the `root>lower` and `root>sideways` nodes are initially positioned outside the 500x300 viewport. The provided screenshot, which shows the rendered page at that same 500x300 size, clearly displays the text \"runs off sideways,\" which belongs to the node `root>sideways`. This indicates that `root>sideways` was successfully brought into view (likely by scrolling down, given its appearance in the capture). Since the prompt states that only one of the two nodes can be reached by ordinary scrolling, and we have evidence that `root>sideways` was reached, it follows that `root>lower` is the node that cannot be brought into view. This is common in CSS test cases where a node (like `root>lower`) is placed at an unreachable coordinate (such as a negative x or y value) despite its descriptive name.\n\nANSWER: root>lower\n",
+    "ms": 125756
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>sideways",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Ordinary scrolling primarily handles vertical movement, successfully bringing content located further down the page into view. Content that runs off sideways requires horizontal scrolling to be visible. Therefore, the viewer cannot reach the sideways-positioned node through ordinary vertical scrolling alone.\n\nANSWER: root>sideways\n",
+    "ms": 8292
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "`root>sideways",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>lower` can be reached by scrolling down. `root>sideways` runs off horizontally, so ordinary scrolling won’t bring it fully into view.\n\nANSWER: `root>sideways`\n",
+    "ms": 22917
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>sideways",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows only `root>sideways` (“runs off sideways”) within the 500x300 viewport, while `root>lower` (“further down”) is not visible. Since `root>lower` is described as sitting lower (vertically), ordinary vertical scrolling should be able to move it into view. `root>sideways` is described as running off to the side (horizontally), so ordinary scrolling cannot bring it fully into the viewport.\n\nANSWER: root>sideways\n",
+    "ms": 7518
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>sideways",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the node names and their text content:\n\n- `root>lower` contains \"further down\" — this indicates **vertical** overflow, which ordinary (vertical) scrolling can reach\n- `root>sideways` contains \"runs off sideways\" — this indicates **horizontal** overflow, which ordinary vertical scrolling cannot reach\n\nThe screenshot confirms \"runs off sideways\" is visible, meaning it extends horizontally beyond the viewport. Ordinary scrolling (vertical) cannot bring horizontally overflowed content fully into view.\n\nANSWER: root>sideways\n",
+    "ms": 12638
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the two screenshots provided:\n\n**Rest state (first image):** The \"Leaf\" text appears in the upper left of the viewport with minimal spacing around it.\n\n**Hover state (second image):** The \"Leaf\" text appears in the same position with the same spacing around it.\n\nComparing the two screenshots, there is no visible difference in the padding around the \"Leaf\" text between the rest state and the hover state. The text maintains the same position and spacing in both images, indicating that the hover state does not apply any padding changes to the `root>mid>leaf` element.\n\nANSWER: 0\n",
+    "ms": 5511
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "0px",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Comparing the two screenshots, the position of the text \"Leaf\" remains identical in both the \"rest\" state and the \"hover\" state. In both images, the text is positioned at the top-left corner of the viewport without any visible offset or inset that would indicate padding. Since there is no change in the layout or displacement of the content when the element is hovered, the padding remains at its default value.\n\nREASONING: The text \"Leaf\" is located at the same coordinates in both screenshots, indicating that no layout changes occurred upon hovering. A non-zero padding would have pushed the text away from the top and left edges of the `root>mid>leaf` container, but the text remains at the edge in both states.\n\nANSWER: 0px\n",
+    "ms": 19287
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "0px",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "In `rest.png`, the text \"Leaf\" has visible space (padding) around it, whereas in `hover.png` while hovering over `root>mid>leaf`, the text is positioned flush against the top-left corner of the viewport with no surrounding space. This demonstrates that the padding is reduced to zero during hover.\n\nANSWER: 0px\n",
+    "ms": 13319
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "0px",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The hovered screenshot looks identical to the resting one: `Leaf` stays flush against the top-left with no inset that would indicate padding. Since no border/background is visible, any nonzero padding would still shift the text, and that does not happen here.\n\nANSWER: 0px\n",
+    "ms": 11667
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "0px",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "From the node tree, the hover state affects only `root>mid>leaf`, but the provided rendered evidence (the two screenshots) does not show any visible shift in the `Leaf` text position between rest and hover. If padding on hover were non-zero, the text would move relative to the container boundaries. Therefore, `root>mid>leaf` is effectively rendering with `0px` padding while hovered.  \n\nANSWER: 0px\n",
+    "ms": 7926
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "0px",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at both screenshots (rest and hover states), the \"Leaf\" text appears positioned at the exact top-left corner of the viewport with no visible spacing around it. Both images are identical, showing no change in layout or spacing when hovering. The text renders flush against the edges with no apparent padding.\n\nANSWER: 0px\n",
+    "ms": 10870
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the two screenshots provided:\n\n1. **Rest state (first image)**: The \"Leaf\" text appears in the upper left area of the viewport\n2. **Hover state (second image)**: The \"Leaf\" text appears in the same position, with no visible change in spacing around it\n\nIf the `:hover` block were actually applying `padding: 40px` to `root>mid>leaf`, we would expect to see the text move down and to the right by 40px in the hover screenshot, as the padding would create internal space around the text element. The two images appear virtually identical in terms of the \"Leaf\" text positioning and spacing.\n\nThis suggests that either the `:hover` rule is not being applied, or the padding declaration is not taking effect for some reason (perhaps the element is not receiving the hover state, or there's a CSS specificity issue).\n\nANSWER: NO\n",
+    "ms": 6470
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Comparing the `rest.png` and `hover.png` screenshots shows that the position of the text \"Leaf\" remains identical in both states. If the `:hover` block successfully applied `padding: 40px` to the `leaf` node, the text content would be offset from its original position by 40 pixels. Since there is no visual change between the two images, the padding does not change.\n\nANSWER: NO\n",
+    "ms": 11452
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Comparing the two screenshots (`rest.png` and `hover.png`), the rendered text \"Leaf\" remains in the exact same position and state without any layout shift or visual change between the rest state and the hover state. This indicates that the `:hover` pseudo-class rule does not alter its padding or affect the rendering.\n\nANSWER: NO\n",
+    "ms": 7498
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Hovering does not appear to change the padding. In both screenshots, `Leaf` stays in the same top-left position with no visible inset or extra space around it, which is what you would expect if `padding: 40px` were applied. So the `:hover` rule is not taking effect here.\n\nANSWER: NO\n",
+    "ms": 9479
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Hovering would normally apply `padding: 40px` to `root>mid>leaf`, which should visibly change the layout by increasing the space around the `Leaf` text (e.g., shifting it away from the div’s edge and making the div’s occupied area larger). Comparing the two provided 500x300 screenshots (rest vs. hover), the rendered appearance does not show any such change in where the `Leaf` text sits. Therefore, hovering does not appear to change its padding.\n\nANSWER: NO\n",
+    "ms": 8369
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at both screenshots, they appear completely identical. The \"Leaf\" text is in the exact same position with no visible change in spacing, size, or layout between the rest state and the hover state.\n\nIf the `:hover` block's `padding: 40px` were being applied, I would expect to see the element grow larger or the text shift position due to the added padding. Since there's no visual difference between the two screenshots, the padding is not changing on hover.\n\nANSWER: NO\n",
+    "ms": 11113
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "0,0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the information provided:\n\n1. The viewport is 600x400 CSS pixels\n2. The node tree shows: `root > plain > pin` containing the text \"pinned\"\n3. `root>plain` is explicitly stated as \"not positioned\" (meaning it's in normal document flow)\n4. The screenshot shows \"pinned\" text appearing in the upper-left area of the page\n\nSince `root>plain` is not positioned, it flows normally from the top-left of its parent (`root`). The `pin` div, being a child of `root>plain` which starts at the top-left, will also start rendering from the top-left of the viewport.\n\nFrom the screenshot, the text \"pinned\" appears to start at the top-left corner of the rendered page with some minimal margin/padding, which in CSS typically defaults to 0,0 for the top-left corner when no explicit positioning or margins are applied.\n\nANSWER: 0,0\n",
+    "ms": 6635
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "0,0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The node tree indicates that `root>plain` is not positioned (`position: static`). In CSS, an absolutely positioned element's containing block is the nearest ancestor that is positioned (i.e., not `static`). Since `root>plain` is not positioned, the `pin` element (which the test name suggests is absolutely positioned) would skip its parent and be positioned relative to the next positioned ancestor or the initial containing block (the viewport). The screenshot shows the text \"pinned\" located at the extreme top-left corner of the 600x400 viewport, indicating no offsets or margins are applied to the `pin` element's top-left corner relative to the origin.\n\nANSWER: 0,0\n",
+    "ms": 17811
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "0,0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Based on the provided screenshot and node tree, the text \"pinned\" (`root>plain>pin`) is rendered at the top-left corner of the viewport. Since `root>plain` is not positioned and there are no offsets or margins indicated, the element starts at the origin.\n\nANSWER: 0,0\n",
+    "ms": 9501
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "0,0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Because `root>plain` is not positioned, it does not establish a containing block. So `root>plain>pin` skips it and positions relative to the nearest positioned ancestor, which in this case is the root at the viewport origin. The screenshot shows the text flush at the top-left corner.\n\nANSWER: 0,0\n",
+    "ms": 8502
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "8,8",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Since `root>plain` is not positioned, the nested `root>plain>pin` follows normal document flow inside its parent. With no stated CSS offsets, the top-left of `root>plain>pin` lands at the start of the outermost content area, which (in a typical browser default) is offset by the page’s default body margin. The screenshot shows `pinned` starting just a few pixels from the top-left, consistent with an 8px margin on both axes.\n\nANSWER: 8,8\n",
+    "ms": 9349
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "8,8",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, the word \"pinned\" appears at the very top-left corner of the viewport. Since `root>plain` is not positioned, it doesn't create a new containing block, so `root>plain>pin` renders in the normal document flow starting from the top-left of the viewport. The text appears to have a small offset from the absolute corner, consistent with default browser margins (typically 8px).\n\nANSWER: 8,8\n",
+    "ms": 15669
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the rendered page information and screenshot:\n\nThe node tree shows:\n- `root>outer>filler` contains \"a\"\n- `root>outer>tall` contains \"b\"\n\nFrom the screenshot, both elements appear to be on the same vertical level with minimal height. The element containing \"b\" does not visually appear taller than the element containing \"a\".\n\nWhen `root>outer>tall` declares `height: 100%`, it's trying to be 100% of its parent's height (`root>outer`). However, the parent's height is determined by its content. Since the parent likely has an indefinite (auto) height, the `height: 100%` on `root>outer>tall` would resolve to `auto` as well, giving it no height advantage over its sibling. Both elements end up being their natural text height.\n\nANSWER: NO\n",
+    "ms": 6121
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The provided node tree and screenshot indicate that `root>outer>tall` is not taller than its sibling `root>outer>filler`. In CSS, a percentage height (like `height: 100%`) only resolves if the containing block has an explicit, definite height; otherwise, it resolves to `auto`. Since the parent `root>outer` has an indefinite height based on its content, the `100%` height on `tall` behaves as `auto`, making both divs approximately the same height (the height of a single line of text).\n\nANSWER: NO\n",
+    "ms": 14653
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "In CSS, when an element's containing block has an indefinite height (determined by its content), a child element declaring `height: 100%` resolves to `auto`. Consequently, `root>outer>tall` sizes based on its content rather than filling the parent container, giving it the same natural height as its sibling `root>outer>filler`.\n\nANSWER: NO\n",
+    "ms": 10144
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. `height: 100%` does not make `root>outer>tall` taller here because its containing block has an indefinite height, so the percentage resolves like `auto`. In the screenshot, it renders at about the same intrinsic height as the `filler` sibling, not taller.\n\nANSWER: NO\n",
+    "ms": 10620
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>outer` has no explicit height stated in the evidence, so `root>outer>tall`’s `height: 100%` cannot resolve to a definite computed height. In Chromium’s rendered output, both sibling nodes appear to occupy only their content-sized height (the screenshot shows `b` not stretched beyond what `filler` would naturally do). Therefore, `tall` is not taller than `filler` on the rendered page.\n\nANSWER: NO\n",
+    "ms": 12213
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot, I can see two elements: \"a\" (filler) at the top and \"b\" (tall) below it. Both elements appear to have roughly the same height - just enough to contain their text content.\n\nThe `height: 100%` on `root>outer>tall` did not make it fill the viewport or become significantly taller than its sibling. This is because percentage heights require the parent element to have an explicit/definite height, which apparently isn't the case here in the ancestor chain.\n\nANSWER: NO\n",
+    "ms": 21737
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot provided, I can count the text lines as they appear on the rendered page:\n\n1. \"one two three\"\n2. \"four five six\"\n3. \"seven eight\"\n4. \"nine ten\"\n\nThe text wraps across 4 distinct lines in the rendered output. This is visible in the screenshot where the content inside the `root>card` div breaks into these four separate lines due to the 600px width constraint.\n\nANSWER: 4\n",
+    "ms": 14026
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The screenshot shows the text \"one two three four five six seven eight nine ten\" rendered within the card. Counting the lines from the image, the text is split into four rows: \"one two three\", \"four five six\", \"seven eight\", and \"nine ten\".\n\nANSWER: 4\n",
+    "ms": 13463
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Based on the provided screenshot and viewport render information, the text inside `root>card` wraps across four separate lines (\"one two three\", \"four five six\", \"seven eight\", and \"nine ten\"). \n\nANSWER: 4\n",
+    "ms": 15929
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root>card` text wraps into 4 lines. In the screenshot, the words are broken into four separate rows: `one two three`, `four five six`, `seven eight`, and `nine ten`.\n\nANSWER: 4\n",
+    "ms": 13008
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The text content inside `root>card` is `one two three four five six seven eight nine ten`. On the rendered screenshot, those words are broken into four separate visual lines: `one two three`, `four five six`, `seven eight`, and `nine ten`. Therefore the text wraps onto 4 lines.\n\nANSWER: 4\n",
+    "ms": 18282
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot, the text \"one two three four five six seven eight nine ten\" inside the `root>card` div is rendered as:\n\n```\none two three\nfour five six\nseven eight\nnine ten\n```\n\nCounting each line of wrapped text, I can see there are 4 distinct lines.\n\nANSWER: 4\n",
+    "ms": 17415
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot and the node tree information:\n\nThe page shows \"first\" at the top and \"third\" below it with significant white space between them. The node tree indicates that `root>gone` (with text \"gone\") sits between these two elements in the DOM and has `display: none`.\n\nSince `root>gone` is `display: none`, it doesn't render and shouldn't take up any space in the layout. The gap visible between \"first\" and \"third\" in the screenshot appears to be the natural spacing, not a 40px gap where the hidden element would have been. If the hidden element had a defined height (like 40px), it would still occupy that vertical space even with `display: none`. However, the question is asking if there IS a 40px gap - meaning whether the hidden element's space is being preserved visually.\n\nBased on the screenshot showing the elements rendered as \"first\" and \"third\" with white space between them, and given that `display: none` completely removes an element from the layout flow, there is no reserved 40px gap visible - the spacing shown is just normal document flow.\n\nANSWER: NO\n",
+    "ms": 14490
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `display: none` property removes an element from the document flow, meaning it occupies no space in the layout. The screenshot confirms this, showing \"third\" rendered immediately below \"first\" without the large vertical gap that would be present if `root>gone` still occupied its 40px space.\n\nANSWER: NO\n",
+    "ms": 15743
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "When an element has `display: none`, it is completely removed from the document layout flow, meaning it takes up no space and leaves no gap behind. Both the rendered screenshot and layout show that `root>first` and `root>third` are positioned directly adjacent to each other with no 40px gap.\n\nANSWER: NO\n",
+    "ms": 14550
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The screenshot shows `first` immediately followed by `third` with only normal line spacing between them, and `display: none` removes `root>gone` from layout entirely. So it does not reserve a 40px slot.\n\nANSWER: NO\n",
+    "ms": 14862
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Because `root>gone` has `display: none`, it is not rendered and does not take up any space in the layout. So any vertical gap that appears between `root>first` and `root>third` cannot be attributed to `root>gone` “where it would have been.” With the given information, there is not evidence that a specific 40px gap is created by `root>gone`.\n\nANSWER: NO\n",
+    "ms": 16995
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows \"first\" and \"third\" text rendered on the page. The key CSS principle here is that `display: none` completely removes an element from the document flow—it doesn't just hide the element visually, it removes it from layout entirely as if it never existed. This means adjacent elements collapse together with no space preserved for the removed element.\n\nANSWER: NO\n",
+    "ms": 19249
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "59",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the rendered page information provided:\n\nThe node tree shows:\n- `root` (a div)\n- `root>spacer` (a div with text \"spacer\")\n- `root>floaty` (a div with text \"floaty\")\n\nFrom the screenshot, I can see \"spacer\" appears near the top of the viewport, and \"floaty\" appears below it.\n\nWhen an element is `position: absolute` and doesn't declare `top`, `right`, `bottom`, or `left` properties, it uses the default positioning. In this case, the element is taken out of the normal flow but positioned at its \"natural\" location as if it were still in the flow. Since there's a preceding `spacer` div above it, the `floaty` element's top edge renders below the spacer text.\n\nFrom the screenshot, the \"floaty\" text appears to start at approximately y=59 (after the \"spacer\" text which occupies roughly the first 59 pixels).\n\nANSWER: 59\n",
+    "ms": 15625
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "40",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The `root>floaty` element is absolutely positioned but does not declare any offset properties (`top`, `right`, `bottom`, or `left`). According to CSS specifications, such an element renders at its **static position**, which is the position it would have occupied in the normal flow. Since both `spacer` and `floaty` are `div` elements, they are block-level by default, meaning `floaty` would naturally render immediately below `spacer`.\n\nAnalyzing the provided 600x400 screenshot, there is a visible margin (consistent with the standard 8px default) and a significant vertical gap between the lines. The text \"floaty\" appears at a y-coordinate approximately 1/10th of the way down the 400px height, which is 40px. This corresponds to an 8px top margin plus a 32px line-height for the `spacer` element (8 + 32 = 40). Thus, the top edge of `root>floaty` renders at y=40.\n\nANSWER: 40\n",
+    "ms": 92396
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "20",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "An absolutely positioned element with no offset properties (`top`, `right`, `bottom`, or `left`) specified renders at its static position, which is the position it would occupy in normal flow. In the normal document flow, `root>floaty` is placed immediately after the preceding block element `root>spacer`. With default browser styling (16px font size and normal line-height), the single line of text in `root>spacer` occupies 20 CSS pixels of vertical space. Consequently, `root>floaty` renders at a top edge of y = 20.\n\nANSWER: 20\n",
+    "ms": 27590
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "26",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "`position: absolute` with all insets `auto` uses its static position, so `floaty` renders where it would have appeared in normal flow, directly after `spacer`. With the browser’s default `body` margin and one line of default text, that puts its top edge at about `y = 26px`.\n\nANSWER: 26\n",
+    "ms": 48851
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "26",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "With `position: absolute` and no `top/right/bottom/left` specified, the browser uses the element’s *static position* (where it would have been laid out in normal document flow) to determine where it should render. Here, `floaty` would be a block after `spacer`, so its top edge aligns immediately after the rendered height of `spacer`. From the screenshot at 600×400, `spacer` starts at the default body offset (~8px) and occupies one line (~18px), so `floaty`’s top edge renders at `8 + 18 = 26` CSS pixels.\n\nANSWER: 26\n",
+    "ms": 20112
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "16",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, I can see two elements rendered:\n1. \"spacer\" at the top of the viewport\n2. \"floaty\" positioned directly below it\n\nWhen an element has `position: absolute` but no `top`, `right`, `bottom`, or `left` properties specified, those properties default to `auto`. This means the element renders at its **static position** - exactly where it would have been in the normal document flow.\n\nFrom the image, \"spacer\" appears first (at y=0), and \"floaty\" appears below it. With default browser styling (16px font-size, ~1.2 line-height), the \"spacer\" div would occupy approximately 16-20px of vertical space. The \"floaty\" element's top edge renders immediately after \"spacer\".\n\nLooking at the spacing in the screenshot, \"floaty\" appears to start at approximately y=16 CSS pixels (one line of text below the top edge).\n\nANSWER: 16\n",
+    "ms": 19831
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the rendered page information and the screenshot, I need to determine where the top-left corner of `root>inner` is positioned.\n\nThe key insight is understanding how `position: fixed` works: **fixed positioning places elements relative to the viewport, not relative to their parent's padding or positioning context.** \n\nGiven:\n- `root>inner` has `position: fixed` with `top: 15px; left: 25px`\n- The parent `root` has `position: relative` with 40px padding\n\nSince `root>inner` is fixed-positioned, the `top: 15px; left: 25px` values are calculated from the viewport origin (top-left corner of the viewport at 0,0), NOT from the parent element's padding edge.\n\nTherefore, the top-left corner of `root>inner` renders at coordinates 25px from the left edge and 15px from the top edge of the viewport.\n\nANSWER: 25,15\n",
+    "ms": 5455
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The element `root>inner` is `position: fixed`, which means it is positioned relative to the viewport (the initial containing block) rather than its parent `root`. Consequently, the `position: relative` and `padding` on the `root` element do not influence the placement of the fixed child. With `top: 15px` and `left: 25px`, the top-left corner of the element renders at exactly those coordinates relative to the viewport's origin.\n\nANSWER: 25,15\n",
+    "ms": 8365
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "In CSS, a `position: fixed` element establishes its containing block relative to the viewport rather than any positioned ancestor or its parent's padding. Since `root>inner` has `top: 15px; left: 25px`, it is positioned directly 25 pixels from the left and 15 pixels from the top of the viewport.\n\nANSWER: 25,15\n",
+    "ms": 7293
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`position: fixed` is positioned relative to the viewport, not the `position: relative` parent, so the parent’s padding does not shift it. With `top: 15px` and `left: 25px`, the top-left corner renders at `25,15`.\n\nANSWER: 25,15\n",
+    "ms": 6317
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Because `root>inner` is `position: fixed`, it is positioned relative to the viewport, not relative to the `root` element’s `position: relative` padding box. The `top: 15px` and `left: 25px` therefore place the top-left corner of `root>inner` at x=25 and y=15 in CSS pixels.\n\nANSWER: 25,15\n",
+    "ms": 7569
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The key here is understanding how `position: fixed` works. A fixed element is positioned relative to the **viewport**, not relative to its parent element—regardless of the parent's positioning or padding.\n\nSince `root>inner` has `position: fixed` with `top: 15px; left: 25px`, those values are measured directly from the viewport edges. The parent's 40px padding and `position: relative` have no effect on where the fixed element renders.\n\nANSWER: 25,15\n",
+    "ms": 12615
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "64",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided:\n\n- `root` has `font-size: 16px` and `line-height: 2`\n- `root>big` has `font-size: 32px` and nothing else (no line-height specified)\n\nSince `root>big` doesn't declare its own `line-height`, it inherits from its parent (`root`). The `line-height: 2` on the parent is a unitless number, which means it's a multiplier based on the element's own font size, not the parent's.\n\nFor `root>big`: \n- It inherits the unitless value `2` from its parent\n- This multiplier applies to `root>big`'s own `font-size: 32px`\n- Therefore: `line-height = 2 × 32px = 64px`\n\nThe height that `root>big` renders is 64 CSS pixels.\n\nANSWER: 64\n",
+    "ms": 6062
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "64",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "When a unitless `line-height` (like `2`) is declared on a parent element, the multiplier itself is inherited by its descendants rather than a fixed pixel value. For the `root>big` element, which has a `font-size` of `32px`, the inherited `line-height` multiplier of `2` is applied to its own font size. This results in a calculated line height of `32px * 2 = 64px`, which determines the rendered height of the div.\n\nANSWER: 64\n",
+    "ms": 9446
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "64",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "When a parent element specifies a unitless line-height (such as `2`), the multiplier ratio is inherited by child elements rather than a fixed pixel value. Since `root>big` has a font-size of 32px and inherits the line-height multiplier of 2, its computed line-height is 32px × 2 = 64px. Consequently, the rendered height of the element is 64 CSS pixels.\n\nANSWER: 64\n",
+    "ms": 8438
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "64",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`line-height: 2` is unitless, so it inherits as a multiplier, not as `32px`. That means `root>big` computes its line-height from its own `font-size: 32px`, giving `2 × 32 = 64px`. So the `big` line renders 64 CSS pixels tall.\n\nANSWER: 64\n",
+    "ms": 6186
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "64",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`line-height: 2` on `root` is an inheritable value, and it’s a unitless number that acts as a multiplier of the element’s `font-size`. `root>big` overrides `font-size` to `32px` but does not set `line-height`, so it inherits `2`. Therefore `root>big` uses `line-height = 2 × 32px = 64px` for its single line.\n\nANSWER: 64\n",
+    "ms": 9567
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "32",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The `root` element sets `line-height: 2` (a unitless multiplier), which computes to `16px × 2 = 32px` on root itself. However, `line-height` inherits as the **computed value** (32px), not as the unitless multiplier. So `root>big` inherits `line-height: 32px` while overriding `font-size` to `32px`. The element's height is determined by its line-height.\n\nANSWER: 32\n",
+    "ms": 14903
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot and the node tree information:\n\nThe node tree shows that `root>cell` is a div containing the text \"https://example.com/a/very/long/path/that/never/breaks\". According to the question, this element has a 120px-wide box constraint.\n\nFrom the screenshot, I can see the URL text is displayed on a single line at the top of the viewport. The text appears to extend well beyond 120 pixels in width - the full URL \"https://example.com/a/very/long/path/that/never/breaks\" is quite long and clearly takes up much more horizontal space than 120px would allow.\n\nSince the URL text visibly overflows beyond what a 120px-wide box could contain, the content does not stay inside the constrained box.\n\nANSWER: NO\n",
+    "ms": 6666
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The URL \"https://example.com/a/very/long/path/that/never/breaks\" is a long, continuous string without spaces. In the provided screenshot of the 600px-wide viewport, the URL renders on a single line and occupies a significant portion of the total width, clearly exceeding the 120px (20% of the viewport) limit. Because long words do not break by default, the text overflows the container.\n\nANSWER: NO\n",
+    "ms": 11331
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The URL string is 56 characters long, which requires significantly more than 120px of width to render at standard font sizes. Without text wrapping or break points, the text overflows the boundaries of the 120px-wide container box.\n\nANSWER: NO\n",
+    "ms": 8314
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The URL is a single long unbroken string, and in the screenshot it visibly extends far past the left edge of the 120px box instead of wrapping or clipping. That means it does not stay inside `root>cell`’s box.\n\nANSWER: NO\n",
+    "ms": 6675
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The evidence shows the URL text rendered inside `root>cell` as `https://example.com/a/very/long/path/that/never/breaks`. In the attached 600×400 screenshot, the full long URL is visible rather than being clipped to the cell’s 120px width, which implies it extends beyond the `root>cell` box instead of staying within it.  \n\nANSWER: NO\n",
+    "ms": 8624
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot, the URL text `https://example.com/a/very/long/path/that/never/breaks` renders as a single continuous line that spans nearly the full 600px viewport width. There is no visible line break, truncation, or wrapping that would indicate the text is being constrained to a 120px container. The text clearly extends far beyond what a 120px width would allow.\n\nANSWER: NO\n",
+    "ms": 11238
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>body",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the evidence provided:\n\n1. The `root>body>panel` section element already has `padding: 32px` in its own CSS block\n2. The rendering shows no visible padding around the \"Panel\" text\n3. The question states that adding padding to `root>body>panel`'s CSS block did not change the rendering\n\nThis indicates that the padding property is being shadowed or overridden by a parent element. The most likely cause is that `root>body` (the parent div) has a CSS property that's preventing the child's padding from being visible, such as `overflow: hidden`, or there's a layout issue where the parent's constraints are preventing the child's padding from having visual effect.\n\nSince the padding on the panel itself isn't working, and considering the hierarchical nature of CSS, the parent container `root>body` must have a CSS property that needs to be modified to allow the child's padding to render properly. This could involve changing how the parent constrains its children or how it handles overflow.\n\nANSWER: root>body\n",
+    "ms": 7041
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>body",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The rendering shows the text \"Panel\" flush against the top-left corner of the viewport, meaning the 32px padding is not being applied. Since adding the padding directly to the `root>body>panel` CSS block had no effect, the property is being overridden (shadowed) by a more specific or later style rule. This conflicting rule is likely located in the parent node's CSS block, so you must edit that node to remove or modify the override.\n\nANSWER: root>body\n",
+    "ms": 20019
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>body",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Since adding `padding: 32px` directly to `root>body>panel`'s CSS block produced no visual change due to a conflicting rule shadowing it from the parent container, the shadowing rule residing in the parent must be adjusted. Therefore, you need to edit the CSS block of `root>body`.\n\nANSWER: root>body\n",
+    "ms": 18751
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "root>body",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>body` is the node whose CSS block you need to change.\n\n`root>body>panel` already has `padding: 32px`, but the screenshot shows no visual change, which means that element’s own box is not the one controlling the visible layout here. Adding padding to the parent `div` will inset the panel’s content and produce the visible 32px spacing.\n\nANSWER: root>body\n",
+    "ms": 12860
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The page tree shows a single element of interest: `root>body>panel` (a `section` with text `\"Panel\"`). The prompt also explicitly notes that `padding: 32px` is in the source “in `root>body>panel`’s own css block,” and the rendered padding matches what’s in that block. Therefore, the CSS block you need to edit is the one belonging to the `panel` node itself.\n\nANSWER: root>body>panel\n",
+    "ms": 6875
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the evidence:\n\n1. The screenshot shows \"Panel\" text rendered flush against the top-left corner with **no visible padding**\n2. We're told `padding: 32px` is already in `root>body>panel`'s CSS block, yet the rendering didn't change\n3. This means something is overriding or preventing that padding from applying\n\nSince the padding rule exists in `root>body>panel`'s own CSS block but isn't taking effect, the issue is likely specificity or cascade order. To make the padding actually render, I need to edit **that same node's CSS block** to make the rule take precedence (e.g., by adding `!important` or increasing specificity).\n\nANSWER: root>body>panel\n",
+    "ms": 18009
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>mid",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the evidence:\n\n1. The CSS rule `:hover { padding: 40px }` has already been added to `root>mid>leaf`'s own css block\n2. The two screenshots show that hovering on `root>mid>leaf` produces no visible change\n3. This means the `:hover` rule on `root>mid>leaf` itself is not working\n\nThe most likely reason is that a parent element (specifically `root>mid`) is preventing the hover state from being detected or applied to the child. In CSS, if a parent element doesn't have `pointer-events: auto` or similar settings, or if there's a positioning/overflow issue, the child's hover state may not trigger properly.\n\nSince the `:hover` rule is already correctly placed on `root>mid>leaf` but isn't working, the problem must be in the parent container's CSS. The parent `root>mid` needs to be configured to allow hover events to properly reach and affect its child.\n\nANSWER: root>mid\n",
+    "ms": 6396
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>mid",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The screenshots show that hovering over `root>mid>leaf` produces no change in the rendered output, despite the node having a `:hover` rule for padding. This \"dead hover\" occurs because the node is not receiving pointer events, which is typically caused by a parent node having `pointer-events: none` applied. To resolve this and allow the hover state to trigger, the CSS block of the parent node `root>mid` must be edited to remove or override the property blocking interaction.\n\nANSWER: root>mid\n",
+    "ms": 14745
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>mid>leaf",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "When a pseudo-class like `:hover` is placed inside a node's CSS block without a nesting selector (`&`), it is evaluated as a descendant selector (e.g., `root>mid>leaf :hover`), which looks for a hovered child element. Because `root>mid>leaf` contains only text and no child elements, the rule matches nothing and hovering changes nothing. To correctly target `root>mid>leaf` itself on hover, its own CSS block must be edited to include the nesting selector (`&:hover`).\n\nANSWER: root>mid>leaf\n",
+    "ms": 18689
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "root>mid",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "`root>mid>leaf`’s own hover rule is not taking effect because the visible hoverable box is not coming from that node. The padding needs to be applied from the ancestor that actually owns the rendered box for that text, which is `root>mid`.\n\nANSWER: root>mid\n",
+    "ms": 26410
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>mid>leaf",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "To make `root>mid>leaf` gain `padding: 40px` on hover, the `:hover` rule has to be applied to the element that’s actually in the `:hover` state. Since the hover target is `root>mid>leaf` (the node the mouse is over), its own CSS block is the one whose `:hover` selector must target that node so the padding changes when it’s hovered.\n\nANSWER: root>mid>leaf\n",
+    "ms": 19404
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>mid>leaf",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the evidence:\n\n1. The `:hover { padding: 40px }` rule is **already** on `root>mid>leaf`'s CSS block\n2. Hovering produces **no visible change** (both screenshots are identical)\n3. The element is a `div` containing text \"Leaf\"\n\nThe reason padding on hover isn't working is likely because `root>mid>leaf` needs additional CSS properties to allow the padding to manifest visually. For padding to visibly expand an element, the element typically needs to be a block-level element with proper display properties, and possibly a background to make the expanded area visible.\n\nSince the hover rule is already on `root>mid>leaf` but isn't taking effect, I need to edit **that same node's** CSS block to add supporting properties (like `display: block`, `background`, or ensure it's not constrained by its parent).\n\nANSWER: root>mid>leaf\n",
+    "ms": 19763
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "0,0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the evidence provided:\n\n1. **Current state**: The node tree shows `root>plain>pin` contains the text \"pinned\". The screenshot shows this text rendered in the upper-left area of the viewport.\n\n2. **Current positioning**: Without any explicit positioning rules mentioned, `root>plain>pin` is likely positioned at the top-left of its parent `root>plain`, which is itself a child of `root`.\n\n3. **Effect of `position: relative`**: Adding `position: relative` to `root>plain` does NOT change where elements render on the screen—it only establishes `root>plain` as a positioning context for absolutely-positioned descendants. It does not move `root>plain` itself or affect the flow layout of its children.\n\n4. **Therefore**: `root>plain>pin` will continue to render at the same location it currently does. Looking at the screenshot, the text \"pinned\" appears to start at approximately x=0 (left edge) and y=0 (top edge) in CSS pixels.\n\nANSWER: 0,0\n",
+    "ms": 5719
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "8,8",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Based on the provided node tree and screenshot, here is the reasoning for the coordinates of `root>plain>pin` after the proposed edit:\n\n1.  **Current State:** The screenshot shows the text \"pinned\" rendered at the top-left corner of the viewport (0,0). In Chromium, the `body` element has a default margin of `8px`. For a nested element like `root>plain>pin` to be rendered at (0,0) despite this margin, it must currently be using `position: absolute` (or `fixed`) with `top: 0; left: 0;`. Because no ancestors are currently positioned, it is relative to the initial containing block (the viewport).\n2.  **Proposed Edit:** Adding `position: relative` to `root>plain` changes the containing block for any absolutely positioned descendants. \n3.  **New Containing Block:** The element `root>plain` is a standard block-level `div` in the normal flow. Due to the default `8px` margin of the `body` and the absence of other offsets, the top-left corner of `root>plain` is located at `(8,8)`.\n4.  **Resulting Position:** Once `root>plain` becomes a positioned ancestor, the `absolute` child `pin` (which remains at `top: 0; left: 0;`) will now render relative to the origin of `root>plain` instead of the viewport. Therefore, its global coordinates will shift from (0,0) to the coordinates of its new parent containing block.\n\nReasoning: The child element is currently absolutely positioned relative to the viewport (0,0) to bypass the default 8px body margin. Making the parent `root>plain` relative makes it the new containing block for the child. Since the parent is in the normal flow at (8,8), the child moves to that location.\n\nANSWER: 8,8\n",
+    "ms": 62593
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "0,0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Adding `position: relative` to `root>plain` establishes a positioning context for absolute descendants, but it does not alter the layout or position of normal-flow elements. Because `root>plain>pin` is in the normal flow, its static position remains unaffected by this change. Therefore, its top-left corner continues to render at `0,0`.\n\nANSWER: 0,0\n",
+    "ms": 10357
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "0,0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "`root>plain` becomes the containing block, but it is already at the viewport origin in the rendered page, so `root>plain>pin` stays in the top-left corner.\n\nANSWER: 0,0\n",
+    "ms": 12633
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "0,0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "With `position: relative` added to `root>plain`, that element becomes the containing block for any positioned descendant (like `root>plain>pin`). In the evidence, `root>plain` is the direct child chain starting at the top-left of the page (no margins/padding are shown), so its padding box also starts at `(0,0)` in CSS pixels. Since the `pin` element is rendered at the top-left of its containing block, its top-left corner is at `(0,0)`.\n\nANSWER: 0,0\n",
+    "ms": 13251
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "0,0",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the evidence:\n\n1. The screenshot shows \"pinned\" rendered at the top-left corner of the viewport\n2. The element is named \"pin\" which strongly suggests it has `position: absolute`\n3. Currently, with no positioned ancestor, an absolutely positioned element with `top: 0; left: 0` positions relative to the viewport (the initial containing block)\n4. Adding `position: relative` to `root>plain` establishes it as a new containing block for the absolutely positioned \"pin\" child\n5. Since `root>plain` itself appears to start at (0,0) based on the screenshot showing \"pinned\" at the viewport origin, the pin will still render at the same position - now relative to `root>plain` instead of the viewport, but visually unchanged\n\nANSWER: 0,0\n",
+    "ms": 21084
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the node tree and the screenshot, I can see that `root` contains two children: `root>first` and `root>second`, both labeled \"first\" and \"second\" respectively.\n\nGiven that `root` is `display: flex` with `gap: 10px`, and each child is 100px wide:\n- `root>first` starts at x = 0 and extends to x = 100\n- The gap of 10px follows, occupying x = 100 to x = 110\n- `root>second` then starts at x = 110\n\nFrom the screenshot, I can visually confirm that \"second\" appears positioned to the right of \"first\" with space between them, which matches this calculation.\n\nANSWER: 110\n",
+    "ms": 8040
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root` element is a flex container with the default `flex-direction: row`, arranging its children horizontally starting from the left edge (x=0). The first child, `root>first`, occupies 100px of width, placing its right edge at x=100. Since there is a `gap` of 10px between children, the left edge of `root>second` renders immediately after this gap.\n\nANSWER: 110\n",
+    "ms": 14155
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root` is a flex container starting at x = 0. The first child (`root>first`) has a width of 100px, taking up the region from x = 0 to x = 100. With a flex `gap: 10px`, the second child (`root>second`) is placed immediately after the first child plus the gap offset.\n\nANSWER: 110\n",
+    "ms": 8683
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>second` starts after the first 100px child plus the 10px gap, so its left edge is at `x = 110`.\n\nANSWER: 110\n",
+    "ms": 9217
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "With `display: flex` and `gap: 10px`, the flex items are laid out from the left edge of the flex container (default `justify-content: flex-start`) and there’s no indication of any padding/margin affecting the x origin. The first child is 100px wide, so after it comes the 10px gap. Therefore, `root>second`’s left edge starts at `0 + 100 + 10 = 110` CSS pixels.\n\nANSWER: 110\n",
+    "ms": 9818
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "In a flex container with `flex-direction: row` (the default), children are laid out horizontally from left to right. The first child occupies 100px of width (x=0 to x=100), then there's a 10px gap (x=100 to x=110), and then the second child begins. Therefore, the left edge of `root>second` renders at x=110px.\n\nANSWER: 110\n",
+    "ms": 12928
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the provided information:\n\n- `root` is a flex container with `display: flex` and a width of 600 CSS px\n- `root>a` has `flex: 1`\n- `root>b` has `flex: 2`\n\nWhen flex items share space, they divide the available width according to their flex values. The total flex value is 1 + 2 = 3. Since `root>b` has a flex value of 2, it receives 2/3 of the total available width.\n\nCalculation: (2 / 3) × 600 = 400 CSS px\n\nANSWER: 400\n",
+    "ms": 6726
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root` element is a flex container with a total width of 600px. The children use the `flex: <number>` shorthand, which sets `flex-grow` to the specified number and `flex-basis` to `0%`. This means the entire width of the container is distributed based on the flex-grow ratios. With `root>a` having a flex factor of 1 and `root>b` having a flex factor of 2, the total units are 3. `root>b` therefore occupies 2/3 of the total width.\n\nCalculation: (2 / 3) * 600px = 400px.\n\nANSWER: 400\n",
+    "ms": 14502
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The flex container `root` spans the entire 600px width of the viewport. With `flex: 1` on `root>a` and `flex: 2` on `root>b`, the available width is distributed proportionally based on their flex-grow factors (1 and 2, summing to 3). Consequently, `root>b` receives two-thirds of the total 600px width.\n\nANSWER: 400\n",
+    "ms": 10016
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`flex: 1` and `flex: 2` split the flex container’s available width in a 1:2 ratio. With a 600px-wide viewport and no other constraints shown, `root>b` gets 2/3 of the space.\n\nANSWER: 400\n",
+    "ms": 11449
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "With `display: flex`, the children’s main-axis widths are determined by their flex-grow values when `flex-basis` is `0` (which it is for the shorthand `flex: <number>`). Here, `root>a` has `flex: 1` and `root>b` has `flex: 2`, so the total grow factor is `1 + 2 = 3`. The container’s width is the viewport width, `600px`, so `root>b` takes `2/3` of that: `(2/3) * 600 = 400`.\n\nANSWER: 400\n",
+    "ms": 11358
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the rendered page:\n\n- The viewport is 600px wide\n- `root` is a flex container with two children\n- `root>a` has `flex: 1` and `root>b` has `flex: 2`\n\nWith flex shorthand values of 1 and 2, the flex-grow ratios are 1:2. This means the available space is divided into 3 parts (1+2=3), where A gets 1 part and B gets 2 parts.\n\nSince B gets 2/3 of the 600px container width: 2/3 × 600 = 400px\n\nANSWER: 400\n",
+    "ms": 14240
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the grid layout:\n\n- `root` is a grid container with `grid-template-columns: 200px 300px` and `gap: 20px`\n- `root>left` is the first column item, which starts at x = 0 and spans 200px\n- The gap is 20px wide\n- `root>right` is the second column item, which starts after the first column and the gap\n\nTherefore, `root>right`'s left edge renders at: 200px (first column) + 20px (gap) = 220px\n\nANSWER: 220\n",
+    "ms": 6963
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "In a grid layout with `grid-template-columns: 200px 300px` and a `gap: 20px`, the first column occupies the space from x = 0 to x = 200. The gap then adds 20 pixels of space before the start of the second column. Therefore, the second column, which contains `root>right`, begins at x = 220 (200px for the first column + 20px for the gap).\n\nANSWER: 220\n",
+    "ms": 11989
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The first grid column (`root>left`) has a width of 200px, starting from x = 0. The `gap` between columns is 20px, which places the start of the second column (`root>right`) at 200px + 20px = 220px.\n\nANSWER: 220\n",
+    "ms": 7600
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root>right` starts in the second grid column, so its left edge is after the first 200px column plus the 20px gap.\n\nANSWER: 220\n",
+    "ms": 7561
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "In a CSS grid with `grid-template-columns: 200px 300px` and `gap: 20px`, the second column’s content starts after the first column’s width plus the gap. So the left edge of `root>right` (the second grid item/column) is at `200px + 20px = 220px` from the grid container’s left edge.\n\nANSWER: 220\n",
+    "ms": 8470
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The grid has two columns: the first is 200px wide, and there's a 20px gap between columns. The `root>right` element is in the second column, so its left edge starts after the first column (200px) plus the gap (20px).\n\nANSWER: 220\n",
+    "ms": 12668
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot and the DOM information provided:\n\nThe node tree shows that `root>main>r09` contains the text \"09. Currency hedging\". However, in the screenshot, I can see a red horizontal bar positioned between item 08 (Deferred costs) and item 10 (Accrual adjustments). This red bar appears to be occluding/covering the space where item 09 should be displayed. The red bar is visually blocking the content that would normally be rendered at that location.\n\nWhile the text exists in the DOM, a viewer cannot read it because it is completely obscured by the red rectangular overlay that covers that row on the rendered page.\n\nANSWER: NO\n",
+    "ms": 6968
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The node tree indicates that `root>main>r09` contains the text \"09. Currency hedging.\" However, in the rendered screenshot, there is a solid red rectangular banner positioned exactly between row 08 and row 10, where row 09 should appear. This element completely occludes the text, making it impossible for a viewer to read it.\n\nANSWER: NO\n",
+    "ms": 9626
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows a solid red bar directly covering the position between row 08 and row 10 where `root>main>r09` (\"09. Currency hedging\") is located. Because this red bar completely occludes the row, the text cannot be seen or read by a viewer.\n\nANSWER: NO\n",
+    "ms": 8357
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. `root>main>r09` is present in the node tree as “09. Currency hedging,” but in the rendered screenshot that row is covered by the red bar between items 08 and 10, so a viewer cannot read it.\n\nANSWER: NO\n",
+    "ms": 7580
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The rendered node tree shows that `root>main>r09` contains the text “09. Currency hedging”. However, in the provided screenshot the region covering the 09 row is obscured by a large red highlight bar, so the viewer cannot actually see/read the “09. Currency hedging” text on screen.  \n\nANSWER: NO\n",
+    "ms": 11034
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the provided information, the node tree shows that `root>main>r09` contains the text \"09. Currency hedging\". However, looking at the screenshot, there is a prominent red horizontal bar positioned between item 08 (\"Deferred costs\") and item 10 (\"Accrual adjustments\"). This red bar visually occludes row 09, making the text unreadable to a viewer even though it exists in the DOM.\n\nANSWER: NO\n",
+    "ms": 13356
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the provided information, I need to determine if the text in `root>main>r09` is readable.\n\nFrom the node tree, `root>main>r09` contains the text \"09. Currency hedging\". The screenshot shows this item is visible in the rendered page as part of a numbered list in the main section.\n\nHowever, examining the screenshot more carefully, I can see that the page shows items 01-28 visible on screen, with item 09 clearly displayed in the list. The text \"09. Currency hedging\" appears to be rendered in a normal, readable font against the light background.\n\nThe screenshot confirms that item 09 is visible and the text is legible on the page.\n\nANSWER: YES\n",
+    "ms": 7237
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The screenshot shows a layout with a header, a sidebar, and a main content area containing a numbered list. A dark, semi-transparent overlay (the `root>banner` div) covers the top portion of the sidebar and the main content area. By observing the list, we can see that this overlay obscures the first eight items (`01. Ledger reconciliation` through `08. Deferred costs`), making them difficult to read against the dark background. However, the ninth item, `root>main>r09` (\"09. Currency hedging\"), is located directly below the bottom edge of this overlay. It is rendered with black text on the clear white background of the main section, providing high contrast and making it perfectly legible to a viewer.\n\nANSWER: YES\n",
+    "ms": 35253
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The screenshot and node tree show that `root>main>r09` corresponds to \"09. Currency hedging\", which is clearly displayed in the main content list in legible dark text against a light background. Therefore, a viewer can easily read the text.\n\nANSWER: YES\n",
+    "ms": 7649
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. The `root>main>r09` text is visible in the screenshot as part of the numbered list in the main content area, and it appears large enough and sufficiently contrasted against the white background to be legible. There is no overlap or clipping obscuring that row.\n\nANSWER: YES\n",
+    "ms": 7393
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The rendered node tree explicitly shows `root>main>r09  div  \"09. Currency hedging\"`, meaning that text node exists in the main content area. Since the evidence is taken from Chromium’s actual on-screen rendering, a viewer can read that label on the page.  \nANSWER: YES\n",
+    "ms": 7677
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Based on the information provided, `root>main>r09` contains the text \"09. Currency hedging\". The screenshot shows a clear, well-formatted list with dark text on a light background. All visible items in the navigation list (items 01-28+) appear to have good contrast and legible typography. There's no indication of any visual issues like transparency, blurring, or overlapping that would prevent reading the text.\n\nANSWER: YES\n",
+    "ms": 11884
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the page structure and screenshot provided:\n\nThe viewport is 1280x800 CSS pixels. The page contains a header (\"Quarterly operations review\"), a left sidebar navigation, and a main section with 40 numbered items (r01 through r40).\n\nFrom the screenshot, I can see items 01-28 are visible on the initial page load. Item r36 (\"36. Royalty accruals\") is the 36th item in the list, which appears well below the visible fold of the 1280x800 viewport.\n\nThe question asks specifically about r36, which is beyond what's shown in the screenshot. Since only items up to approximately r28 are visible in the viewport, and r36 comes after that, it would require scrolling to see it.\n\nANSWER: NO\n",
+    "ms": 6001
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows the page rendered within a 1280x800 viewport. The list of items in the main section begins at the top with \"01. Ledger reconciliation\" and ends at the bottom edge of the image with \"28. Warranty reserves\". Since \"36. Royalty accruals\" (node `root>main>r36`) occurs numerically after the last visible item, it is located below the fold and is not visible without scrolling.\n\nANSWER: NO\n",
+    "ms": 10749
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Based on the provided screenshot and viewport dimensions, only rows up around row 28 are visible within the initial 1280x800 viewport. `root>main>r36` (\"36. Royalty accruals\") is located further down the page and is cut off below the fold, requiring scrolling to view.\n\nANSWER: NO\n",
+    "ms": 7158
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. In the rendered screenshot, only the early items in `root>main` are visible, and the list continues well past the bottom of the 800px viewport. `root>main>r36` is item 36, so it would be below the fold on first load and require scrolling to see.\n\nANSWER: NO\n",
+    "ms": 8010
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The evidence shows the page rendering a list of items in the main section, and the attached screenshot (the initial 1280×800 view) only displays entries up through **“28. Warranty reserves”**. The node `root>main>r36` corresponds to **“36. Royalty accruals”**, which would be below the initially visible portion of the list and therefore not visible without scrolling.  \n\nANSWER: NO\n",
+    "ms": 9117
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, the visible list items in the main content area range from \"01. Ledger reconciliation\" through approximately \"28. Warranty reserves\". The item `root>main>r36` contains \"36. Royalty accruals\", which is 8 items beyond what's shown in the visible viewport.\n\nSince the viewport is 1280x800 CSS px and only shows about 28 of the 40 list items, item 36 would be below the fold and require scrolling to view.\n\nANSWER: NO\n",
+    "ms": 12001
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the rendered page structure and screenshot provided, I need to determine if the element `root>main>r17` (which contains \"17. Inventory valuation\") is visible above the fold at 1280x800 CSS pixels.\n\nFrom the screenshot, I can see that the page displays a \"Quarterly operations review\" header at the top, followed by a navigation sidebar on the left and a main content area listing numbered items. The visible items in the screenshot go from item 01 through approximately item 28 or 29 before the content cuts off at the bottom of the viewport.\n\nItem 17 (Inventory valuation) appears in the middle section of the visible content and is clearly shown in the screenshot within the 1280x800 viewport boundaries, well above the fold line.\n\nANSWER: YES\n",
+    "ms": 6509
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The screenshot shows the rendered page at the initial 1280x800 viewport. In the main content area, the list of items is visible starting from \"01. Ledger reconciliation\" down to \"28. Warranty reserves.\" Since \"17. Inventory valuation\" (which corresponds to `root>main>r17`) falls within this range, it is visible without scrolling.\n\nANSWER: YES\n",
+    "ms": 9240
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Based on the provided screenshot and node tree, `root>main>r17` (\"17. Inventory valuation\") appears near the middle of the viewport and is clearly visible when the page first loads without requiring any scrolling.\n\nANSWER: YES\n",
+    "ms": 7576
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. In the screenshot, `root>main>r17` (\"17. Inventory valuation\") is visible in the main list area without any scrolling. It appears well within the 1280x800 viewport on initial load.\n\nANSWER: YES\n",
+    "ms": 7986
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root>main>r17` corresponds to the list item labeled **“17. Inventory valuation”**. In the provided rendered node tree, `root>main>r17` is present, and the screenshot content shows items from **01 through at least 28** within the initial viewport (1280x800) without any scrolling. Therefore, **“17. Inventory valuation”** is visible when the page first loads.\n\nANSWER: YES\n",
+    "ms": 7496
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the provided information, `root>main>r17` contains \"17. Inventory valuation\". The screenshot shows items 01 through 28+ all visible in the main content area within the 1280x800 viewport. Item 17 appears roughly in the middle of the visible list (between items 1-28+), well within the initial viewport without requiring any scrolling.\n\nANSWER: YES\n",
+    "ms": 11507
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided:\n\n1. The node tree shows that `root>main>r21` contains the text \"21. Treasury positions\"\n2. The screenshot shows the rendered page with a navigation sidebar on the left and main content on the right\n3. Examining the visible text in the screenshot, I can see items numbered from 01 through 28, with item 21 (\"Treasury positions\") visible in the lower portion of the main content area\n4. The text appears to be rendered in a readable monospace font with sufficient contrast against the background\n\nThe text \"21. Treasury positions\" is clearly visible in the rendered page screenshot and can be read by a viewer.\n\nANSWER: YES\n",
+    "ms": 7553
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the node tree, `root>main>r21` contains the text \"21. Treasury positions\". However, in the provided screenshot, the list displays items \"01\" through \"20\", followed by a blank gap, and then resumes with \"22. Audit findings\". Since item 21 is missing from the visual rendering between 20 and 22, it is not readable by a viewer.\n\nANSWER: NO\n",
+    "ms": 9697
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "In the provided screenshot, item 21 (\"21. Treasury positions\") is missing from the rendered list between \"20. Covenant testing\" and \"22. Audit findings\" due to styling (such as being hidden or made invisible), so it is not visible on screen. Therefore, a viewer cannot read the text in `root>main>r21`.\n\nANSWER: NO\n",
+    "ms": 9009
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The source text for `root>main>r21` exists, but in the rendered screenshot the list jumps from `20. Covenant testing` to `22. Audit findings` with no visible `21` entry. That means a viewer cannot read the text for `r21` from what is actually on screen.\n\nANSWER: NO\n",
+    "ms": 8207
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "YES",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Yes. The rendered node tree explicitly includes `root>main>r21  div  \"21. Treasury positions\"`, which indicates that text is present in that part of the page as actually rendered in Chromium. Since the content is listed as readable text in the authoritative render evidence, a viewer can read it.\n\nANSWER: YES\n",
+    "ms": 6001
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the provided information:\n\n1. The DOM tree shows `root>main>r21` contains the text `\"21. Treasury positions\"`\n2. However, examining the screenshot, the visible items are 01-20, then it skips directly to 22-28\n3. Item 21 is conspicuously absent from the rendered screenshot - there's a gap between item 20 (\"Covenant testing\") and item 22 (\"Audit findings\")\n\nSince the text exists in the DOM but does not appear in the screenshot of the rendered page, the text in `root>main>r21` is not visible to a viewer. This is consistent with the test case name \"dense-invisible-text\" - the text is present in the source but not visually rendered (likely due to CSS making it invisible).\n\nANSWER: NO\n",
+    "ms": 16281
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot",
+    "answer": "root>gamma",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot and the node tree information provided:\n\nThe point x=500, y=400 is in the main content area. From the visual, I can see three overlapping rectangular bands (colored in dark blue/navy tones) that obscure parts of the numbered list items.\n\nTo determine which band's background color is visible, I need to consider the stacking order (z-index) of the elements. The nodes in the tree are:\n- `root>alpha` (div)\n- `root>beta` (div)  \n- `root>gamma` (div)\n\nThese are positioned as siblings at the root level, appearing after the main content. In HTML/CSS, when elements overlap without explicit z-index values, the last element in the DOM order appears on top (it has a higher stacking context).\n\nLooking at the tree order, `root>gamma` appears last among the three overlapping divs, which means it would be rendered on top and its background color would be visible at the point of overlap.\n\nANSWER: root>gamma\n",
+    "ms": 9022
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot",
+    "answer": "root>gamma",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The node tree shows that `root>alpha`, `root>beta`, and `root>gamma` are sibling nodes and the final children of the `root` element. According to standard CSS rendering rules, siblings without an explicit `z-index` are painted in the order they appear in the DOM, meaning the last child is rendered on top. Visual inspection of the screenshot confirms that the three bands are stacked such that the light-grey band (the last one visually) overlays the medium-grey band, which in turn overlays the dark-grey band; the point (500, 400) falls within the central area where all three bands overlap, making the topmost element's color visible.\n\nANSWER: root>gamma\n",
+    "ms": 46322
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot",
+    "answer": "root>gamma",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "In the DOM tree, elements later in the document order render on top of earlier sibling elements by default. Since `root>gamma` appears after `root>alpha` and `root>beta`, it is painted last and sits at the top of the stacking order where the three bands overlap. Therefore, a viewer sees the background color of the topmost element at that point.\n\nANSWER: root>gamma\n",
+    "ms": 9641
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot",
+    "answer": "root>gamma",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "At that point all three bands overlap, so the visible background is whichever one is painted on top. In the rendering, the dark band is the topmost layer there, which corresponds to the last overlapping node in the stack.\n\nANSWER: root>gamma\n",
+    "ms": 28353
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot",
+    "answer": "root>main>r15",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "At `x=500, y=400`, the point lies within the main list (the “01…40” banded rows), not the left navigation. The screenshot shows three overlapping row backgrounds, and the viewer sees the topmost (darkest) background at that point. That darkest overlay aligns with the row text that reads “15. Segment reporting”, whose node path is `root>main>r15`.\n\nANSWER: root>main>r15\n",
+    "ms": 15418
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot",
+    "answer": "root>gamma",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the screenshot, I can see three dark semi-transparent rectangular bands overlapping in the middle-right area of the page. These correspond to the three div elements at the root level: `alpha`, `beta`, and `gamma`.\n\nAt coordinates x=500, y=400 (roughly the center of the overlapping region), the visual stacking shows three layers. In CSS, when elements have the same stacking context and no explicit z-index, later elements in DOM order paint on top of earlier ones. Since the node tree shows them in order: alpha, beta, gamma — the `gamma` element would be painted last and therefore appear on top.\n\nThe darkest band visible at that intersection point belongs to the topmost element in the stacking order.\n\nANSWER: root>gamma\n",
+    "ms": 18515
+  }
+]

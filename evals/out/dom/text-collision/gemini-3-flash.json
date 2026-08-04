@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>ghost` has a `height` and `width` of 0px, but it contains text and has `overflow: visible`. Because it has zero height, the following block-level element, `root>visible`, is positioned at the same vertical starting point (`y=0`). Since both nodes are located at `x=0, y=0`, the text rendered by `root>ghost` overlaps the pixels used by the text in `root>visible`.\n\nANSWER: root>visible\n",
+  "ms": 16601
+}

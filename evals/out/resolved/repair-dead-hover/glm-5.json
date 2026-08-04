@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report states that `padding: 2px` is *declared by root, inside its `> mid > leaf` block*, and that this declaration outranks the `:hover { padding: 40px }` already present in `root>mid>leaf`'s own CSS block. Since the conflicting winning declaration lives in `root`'s CSS block (the `> mid > leaf` selector within it), editing the leaf's own block cannot raise the hover rule above it. You must edit `root`'s CSS block — either remove/adjust the `padding: 2px` there, or add the `:hover` override there so it wins.\n\nANSWER: root\n",
+  "ms": 23317
+}

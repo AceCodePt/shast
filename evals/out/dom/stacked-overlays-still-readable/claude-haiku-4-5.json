@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering information:\n\nThe `root>line` div contains the text \"Still readable\" and is positioned at y=0 with height=19.1875px, so it occupies the top ~19px of the viewport.\n\nTwo boxes paint over it:\n1. `root>glass` - positioned at y=0, height=100px, z-index=1\n2. `root>panel` - positioned at y=40, height=60px, z-index=2\n\nThe `root>glass` box completely covers `root>line` (from y=0 to y=100), but critically, it has `background-color: rgba(0, 0, 0, 0)` - it's fully transparent. A transparent box doesn't obscure text beneath it; you can still see through it.\n\nThe `root>panel` box (y=40 to y=100, z-index=2) is opaque with `background-color: rgb(48, 48, 48)`, but it only covers the lower portion of `root>line` (which ends at y≈19.2px). Since the panel starts at y=40, it doesn't overlap with `root>line` at all.\n\nTherefore, the text \"Still readable\" in `root>line` remains visible because the only box covering it (`root>glass`) is transparent.\n\nANSWER: YES\n",
+  "ms": 9223
+}

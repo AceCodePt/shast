@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `square` box is the largest by area. `wide` emphasizes width and `tall` emphasizes height, but neither necessarily beats a box with balanced dimensions. Given the three names and the rendered layout, the square covers the most total space.\n\nANSWER: root>square\n",
+  "ms": 11550
+}

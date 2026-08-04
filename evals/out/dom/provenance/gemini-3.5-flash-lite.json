@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The provided computed style data for `root>body>panel` explicitly lists `border-radius: 12px` within its own CSS block. Therefore, that node's CSS block contains and declares the `border-radius` property it renders with.\n\nANSWER: root>body>panel\n",
+  "ms": 7925
+}

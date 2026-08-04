@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>outer>filler` is `60px` tall, while `root>outer>tall` is only `19.1875px` tall in the rendered layout. The fact that `tall` declares `height: 100%` did not make it taller here, likely because that percentage height is not resolving to a larger definite height from its containing block.\n\nANSWER: NO\n",
+  "ms": 8308
+}

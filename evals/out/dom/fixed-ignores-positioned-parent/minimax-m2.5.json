@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`position: fixed` elements are positioned relative to the viewport (their containing block is the initial containing block), not the nearest positioned ancestor. So the parent's `position: relative` and padding do not affect the fixed child's coordinates—`top: 15px` and `left: 25px` are measured from the viewport's top-left corner. The bounding rect confirms this.\n\nANSWER: 25,15\n",
+  "ms": 13372
+}

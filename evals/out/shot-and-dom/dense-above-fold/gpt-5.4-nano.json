@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main` starts at `y=56`, so content at `y=484` is within the initial viewport height of `800`. Specifically, `root>main>r17` has `getBoundingClientRect: x=244 y=484 width=1012 height=26`, meaning it occupies the visible area on first load (no scrolling needed). Therefore, the text for `root>main>r17` should be visible when the page first loads.\n\nANSWER: YES\n",
+  "ms": 8624
+}

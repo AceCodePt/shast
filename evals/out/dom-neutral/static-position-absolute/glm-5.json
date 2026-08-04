@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When an absolutely positioned element declares no inset (`top`/`right`/`bottom`/`left`), browsers place it at its **static position** — the spot it would occupy if it were `position: static` in normal flow. Here `spacer` (static, height 50) occupies y=0 to y=50, so `floaty`'s static position is just below it at y=50. The element is removed from the flow (so it doesn't push siblings), but its top edge still lands at that static position, which the reported `getBoundingClientRect` confirms (`y=50`).\n\nANSWER: 50\n",
+  "ms": 11734
+}

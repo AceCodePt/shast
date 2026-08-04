@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at `root>main>r21`:\n- Color is explicitly set to `#ffffff` (white)\n- Background: the element is at x=244, which is outside the sidebar's x=0–220 range, so it sits on the root's white background (`#ffffff`)\n- White text on a white background is not visible/readable\n\nThis appears to be an intentional \"hidden\" row (notice the only row in the entire list with `color: #ffffff` is r21, while all 39 others inherit the default dark color).\n\nANSWER: NO\n",
+  "ms": 9139
+}

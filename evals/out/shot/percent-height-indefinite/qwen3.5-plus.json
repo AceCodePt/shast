@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, I can see two elements: \"a\" (filler) at the top and \"b\" (tall) below it. Both elements appear to have roughly the same height - just enough to contain their text content.\n\nThe `height: 100%` on `root>outer>tall` did not make it fill the viewport or become significantly taller than its sibling. This is because percentage heights require the parent element to have an explicit/definite height, which apparently isn't the case here in the ancestor chain.\n\nANSWER: NO\n",
+  "ms": 21737
+}

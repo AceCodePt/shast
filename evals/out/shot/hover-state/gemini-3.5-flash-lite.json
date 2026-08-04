@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "blue",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The first screenshot (at rest) shows the element `root>cta` featuring the text \"Continue\" with a blue background. Since the pointer is elsewhere when the page is first painted, this corresponds to the rest state shown in `rest.png`, where the background colour is clearly blue.\n\nANSWER: blue\n",
+  "ms": 9270
+}

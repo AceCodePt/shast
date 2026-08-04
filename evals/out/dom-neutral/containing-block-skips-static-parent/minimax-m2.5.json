@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>plain>pin` is `position: absolute` with `top: 10px` and `left: 10px`. Since its parent `root>plain` is `position: static`, absolute positioning walks up to the next positioned ancestor — `root`, which is `position: relative` and sits at the origin (0,0). So `left:10px, top:10px` is measured from `root`'s top-left, placing the element at (10, 10). This matches the reported `getBoundingClientRect`.\n\nANSWER: 10,10\n",
+  "ms": 8368
+}

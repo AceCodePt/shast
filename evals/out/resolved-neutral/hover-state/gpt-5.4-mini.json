@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The element starts with `background-color: #3355ff`, and the `:hover` color `#0022cc` only applies when the pointer is over it. Since the pointer is elsewhere on first paint, the non-hover style is used.\n\nANSWER: #3355ff\n",
+  "ms": 7161
+}

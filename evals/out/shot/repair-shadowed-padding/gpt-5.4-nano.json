@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The page tree shows a single element of interest: `root>body>panel` (a `section` with text `\"Panel\"`). The prompt also explicitly notes that `padding: 32px` is in the source “in `root>body>panel`’s own css block,” and the rendered padding matches what’s in that block. Therefore, the CSS block you need to edit is the one belonging to the `panel` node itself.\n\nANSWER: root>body>panel\n",
+  "ms": 6875
+}

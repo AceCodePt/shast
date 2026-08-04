@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>gamma` is visually separated from the other two because it appears much lower on the page, with a large blank gap above it, while `alpha` and `beta` are close together near the top.\n\nANSWER: root>gamma\n",
+  "ms": 12990
+}

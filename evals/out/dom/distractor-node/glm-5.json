@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>cover` div is absolutely positioned at `top:0` with a black background and height of **19px**, so it only obscures the region from y=0 to y=19. The `root>first` paragraph occupies y=0 to ~y=19.19, but `root>second` starts at **y=19.1875** and extends to ~y=38.37. Since the cover ends at y=19 and the second paragraph begins at y≈19.19, there is no overlap — the cover does not cover the second paragraph. Therefore the text in `root>second` is visible and readable.\n\nANSWER: YES\n",
+  "ms": 14620
+}

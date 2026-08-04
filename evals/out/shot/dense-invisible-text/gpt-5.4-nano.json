@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Yes. The rendered node tree explicitly includes `root>main>r21  div  \"21. Treasury positions\"`, which indicates that text is present in that part of the page as actually rendered in Chromium. Since the content is listed as readable text in the authoritative render evidence, a viewer can read it.\n\nANSWER: YES\n",
+  "ms": 6001
+}

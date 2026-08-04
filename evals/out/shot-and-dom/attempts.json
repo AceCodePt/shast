@@ -1,0 +1,2882 @@
+[
+  {
+    "case": "occluded-text",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided:\n\nThe `root>lede` element is a `<p>` tag containing the text \"The quarterly results are in and every region beat its targ…\" (72 chars total, truncated in the display).\n\nAccording to the bounding rect data, `root>lede` has:\n- y position: 0px\n- height: 54.375px\n- The viewport is 600x400\n\nHowever, the `root>banner` div is positioned absolutely at the top with:\n- y position: 0px\n- height: 70px\n- z-index: 5 (which places it above content with auto z-index)\n\nThis means the banner (height 70px) completely overlaps and occludes the lede paragraph (which starts at y=0 and is only 54.375px tall). The banner's dark background (rgb(34, 34, 34)) would cover the text in the lede paragraph, making it unreadable. Additionally, the text is truncated with \"…\" indicating the full sentence is not even displayed.\n\nA person reading this page in a browser would not be able to read the whole sentence because it is both occluded by the banner and truncated.\n\nANSWER: NO\n",
+    "ms": 6339
+  },
+  {
+    "case": "occluded-text",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>lede` element is positioned at the top of the viewport (`y=0`) with a height of `54.375px`. However, the `root>banner` element is also positioned at `y=0` with a height of `70px`, a higher `z-index` of 5, and an opaque background color (`rgb(34, 34, 34)`). This results in the banner completely occluding the `root>lede` paragraph, as shown in the screenshot where the dark bar covers the top of the page and even cuts off the top of the subsequent `root>body` text.\n\nANSWER: NO\n",
+    "ms": 14163
+  },
+  {
+    "case": "occluded-text",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>banner` div has an absolute position at `y=0` with a height of 70px and a dark background (`rgb(34, 34, 34)`), placing it directly over the `root>lede` paragraph (which spans `y=0` to `y=54.375`). Because the banner completely covers this region, the text in `root>lede` is occluded and unreadable.\n\nANSWER: NO\n",
+    "ms": 7285
+  },
+  {
+    "case": "occluded-text",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The `root>lede` paragraph occupies `y=0` to about `54px`, but the banner is absolutely positioned at the top with height `70px` and higher `z-index`, so it covers the entire lede text. In the screenshot, only the lower page text is visible below the dark banner, not the full sentence in `root>lede`.\n\nANSWER: NO\n",
+    "ms": 6438
+  },
+  {
+    "case": "occluded-text",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>lede`’s text is rendered starting at the top of the page (`x=0 y=0`), and its bounding box is `600x54.375`. However, `root>banner` is an absolutely positioned `div` with `z-index: 5` that occupies the top of the viewport from `y=0` to `height=70`, which means it overlays the entire `root>lede` area. Because the lede content would be occluded by the banner, a reader cannot read the whole sentence in `root>lede`.\n\nANSWER: NO\n",
+    "ms": 7263
+  },
+  {
+    "case": "occluded-text",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the layout data:\n\n1. The `root>banner` is an absolutely positioned div at `top: 0px` with `height: 70px` and `z-index: 5`\n2. The `root>lede` paragraph starts at `y=0` with `height: 54.375px` and has `z-index: auto` (effectively 0)\n3. Since the banner has a higher z-index (5) and completely overlaps the lede's vertical space (70px > 54.375px), the banner sits on top of the lede text\n4. The screenshot confirms this — only the dark banner is visible at the top, and the \"Details follow...\" text (which starts at y=54.375, below the banner) is the first visible content\n\nThe lede text is completely occluded by the banner overlay.\n\nANSWER: NO\n",
+    "ms": 16993
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the information provided:\n\nThe `root>lede` paragraph contains the text \"The quarterly results are in and every region beat its targ…\" (72 characters total, but truncated in the display).\n\nThe `root>banner` div is positioned absolutely with `position: absolute`, `top: 0px`, `height: 70px`, and `z-index: 5`, which places it on top of other content. The `root>lede` paragraph starts at `y=0` with `height: 54.375px`, meaning it occupies the vertical space from 0 to 54.375px.\n\nSince the banner div (positioned absolutely at y=0 with height 70px and z-index 5) overlaps the lede paragraph's entire vertical space (0 to 54.375px), and the banner has a higher z-index, it would visually cover the lede text. This means a person reading the page would not be able to see and read the whole sentence in `root>lede` because it would be obscured by the absolutely-positioned banner overlay.\n\nANSWER: NO\n",
+    "ms": 9136
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>lede` paragraph contains a 72-character sentence starting with \"The quarterly results are in...\". Although a `root>banner` `div` is absolutely positioned directly over the same area (0,0) and has a higher `z-index` (5) than the `lede` element, its `background-color` is `rgba(0, 0, 0, 0)`, making it completely transparent. The browser's node tree shows the banner has no content, and the provided screenshot confirms that the full text—\"The quarterly results are in and every region beat its target this time.\"—is perfectly visible and unobscured.\n\nANSWER: YES\n",
+    "ms": 29527
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The text content of `root>lede` is truncated and ends with an ellipsis (`targ…`), meaning the complete sentence is cut off and not fully displayed. Therefore, a reader cannot read the whole sentence.\n\nANSWER: NO\n",
+    "ms": 10195
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. The `root>lede` paragraph is fully visible in the screenshot: the sentence appears across two lines, with the first line ending at “its” and the second line continuing “target this time.” Nothing cuts it off or hides part of it.\n\nANSWER: YES\n",
+    "ms": 9287
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>lede` element is a `<p>` with a computed `width` of 600px and a `height` of about 54.4px. With a `line-height` of 19.2px, that height can accommodate roughly 2–3 lines of wrapped text, and there’s no indication of clipping/overflow limiting the text. Since the sentence fits within the visible area of the `lede` paragraph, a person should be able to read the whole sentence.\n\nANSWER: YES\n",
+    "ms": 9860
+  },
+  {
+    "case": "transparent-overlay",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the evidence:\n\n1. The `root>lede` paragraph starts at y=0 with height 54.375px\n2. The `root>banner` div is absolutely positioned at x=0, y=0 with height 70px and z-index 5, placing it **on top** of the lede\n3. However, the banner has `background-color: rgba(0, 0, 0, 0)` — fully transparent\n4. The screenshot confirms the text \"The quarterly results are in and every region beat its target this time.\" is fully visible\n\nSince the banner overlay has a transparent background, it does not obscure the text beneath it.\n\nANSWER: YES\n",
+    "ms": 17225
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>low>inner",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the z-index values and stacking context rules:\n\n- `root>low>inner` has `z-index: 999` and `position: absolute`\n- `root>high` has `z-index: 2` and `position: absolute`\n\nBoth elements are positioned absolutely within the same stacking context (the root element with `position: relative`). When elements overlap in the same stacking context, the one with the higher z-index value appears on top.\n\nSince 999 > 2, `root>low>inner` (the blue box labeled \"inner\") will be rendered on top of `root>high` (the red box labeled \"high\") in the overlapping region. This matches the screenshot, where the blue box is visibly on top of the red box.\n\nANSWER: root>low>inner\n",
+    "ms": 5687
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>high",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root>low` element creates a new stacking context because it is positioned (`position: absolute`) and has a numerical `z-index` (1). Consequently, the `z-index: 999` of `root>low>inner` is scoped within `root>low` and does not affect its stack level relative to elements outside that context. Since `root>high` is a sibling of `root>low` and has a higher `z-index` (2 vs 1), `root>high` is rendered on top of `root>low` and all of its descendants.\n\nANSWER: root>high\n",
+    "ms": 9271
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>high",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>low` and `root>high` are sibling elements with `z-index: 1` and `z-index: 2` respectively within the same parent stacking context. Since `root>high` has a higher z-index, its entire subtree is painted on top of the subtree of `root>low`, regardless of `root>low>inner`'s internal `z-index: 999`. Therefore, `root>high` is visible in the overlapping region.\n\nANSWER: root>high\n",
+    "ms": 7681
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "`root>high",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>high` is visible in the overlap. `root>low>inner` has a very large `z-index`, but it is confined inside `root>low`'s stacking context, and `root>high` has a higher stacking-context `z-index` (`2` vs `1`). So `root>high` paints on top in the overlapping region.\n\nANSWER: `root>high`\n",
+    "ms": 6870
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>low>inner",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Both overlapping elements are `position: absolute`, so their `z-index` values determine which is painted on top within the same stacking context. `root>low>inner` has `z-index: 999`, while `root>high` has `z-index: 2`, so `root>low>inner` is rendered above `root>high` in the overlap region.\n\nANSWER: root>low>inner\n",
+    "ms": 7761
+  },
+  {
+    "case": "z-index-scoped",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>high",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the stacking context:\n\n- `root>low` has `z-index: 1` and `position: absolute`, which creates a new stacking context\n- `root>low>inner` has `z-index: 999`, but this is scoped **within** its parent's stacking context\n- `root>high` has `z-index: 2` at the root stacking context level\n\nSince `root>low` (z-index: 1) is lower than `root>high` (z-index: 2), the entire `root>low` stacking context—including its child `root>low>inner`—renders beneath `root>high`. The high z-index of 999 on `inner` doesn't escape its parent's stacking context.\n\nThe screenshot confirms this: the red \"high\" div appears on top of the blue \"inner\" div in the overlap region.\n\nANSWER: root>high\n",
+    "ms": 16352
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided:\n\nThe `root>card` element has a height of 48px with 8px padding on all sides, giving it an effective content height of 32px (48 - 8 - 8). The text \"Payment failed because the card on file expired last month.\" is rendered with a font-size of 16px and line-height of 19.2px.\n\nFrom the screenshot, the text clearly wraps across multiple lines (4 lines visible), and the text extends beyond the visible border box of the card. The card's bounding rectangle shows width=180px and height=48px, but the text content visibly overflows beyond this boundary, as shown in the rendered image where text appears cut off at the right edge and extends beyond the bottom.\n\nSince the text visibly overflows the 48px height constraint of the card element, not all of the text fits inside the border box.\n\nANSWER: NO\n",
+    "ms": 7216
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>card` element has a total border-box height of 48px. Subtracting the top and bottom padding (8px each) and the borders (1px each) leaves a content area height of only 30px. Given the `line-height` of 19.2px, two lines of text would require 38.4px, which already exceeds the available space. The screenshot confirms that the text wraps into four lines and visually overflows well below the element's bottom border.\n\nANSWER: NO\n",
+    "ms": 10839
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>card` element has a fixed height of 48px, and its text content wraps across multiple lines that exceed this height. As visible in both the bounding rectangle and the screenshot, the lower lines of text (\"on file expired last month.\") overflow vertically outside of the element's border box. \n\nANSWER: NO\n",
+    "ms": 6949
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. `root>card` is only 48px tall total, but the text renders on multiple lines and needs more vertical space than that. The screenshot shows the text spilling beyond the card’s border box, so not all of it fits.\n\nANSWER: NO\n",
+    "ms": 7968
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. `root>card` has a 48px-tall border box with `padding: 8px` on top and bottom and `border-width: 1px` on top and bottom, leaving only `48 - (2*1) - (2*8) = 30px` for the text content box. The computed `line-height` is `19.2px`, so only one line (19.2px) fits; two lines would need `2 * 19.2 = 38.4px`, which exceeds the available 30px. Since the text wraps to multiple lines, it does not all fit inside the 48px border box.  \n\nANSWER: NO\n",
+    "ms": 10724
+  },
+  {
+    "case": "overflowing-text",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the data:\n\n- `root>card` has a height of 48px with 8px padding on top and bottom, leaving 32px for content\n- The text \"Payment failed because the card on file expired last month.\" wraps to 4 lines\n- With a line-height of 19.2px, 4 lines need approximately 76.8px of vertical space\n- The screenshot shows the text clearly extending beyond the bordered box (the border only covers roughly the first two lines)\n\nThe text overflows vertically beyond the element's 48px border box.\n\nANSWER: NO\n",
+    "ms": 15016
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the provided data:\n\nThe `root>card` div has:\n- Height: 48px\n- Padding: 8px on all sides\n- Overflow: visible\n- Line-height: 19.2px\n\nThe text \"Payment failed because the card on file expired last month.\" is displayed within this div. With 8px padding on top and bottom, the available content height is 48px - 16px = 32px, which fits only one line (line-height is 19.2px).\n\nHowever, the screenshot clearly shows the text wrapping to multiple lines, with the last line (\"last month.\") extending below the 48px boundary of the card div.\n\nThe key detail is that `overflow: visible` means content that exceeds the box boundaries is still rendered and visible on the page. The browser's rendering shows the text is painted beyond the card's bounding box, and it's legible in the screenshot.\n\nANSWER: YES\n",
+    "ms": 7570
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>card` element has a specified `height` of 48px and a `line-height` of 19.2px. With its padding and borders, the internal content area is only 30px high, which is insufficient to contain three lines of text (totaling approximately 57.6px). However, the `overflow` property for both `root>card` and its parent `root` is set to `visible`, which means the browser does not clip the content and allows it to be rendered outside the element's boundaries. As shown in the screenshot, the text that exceeds the container's height is still painted on the page.\n\nANSWER: YES\n",
+    "ms": 10036
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>card` element has `overflow: visible`, which means any content overflowing its defined height is not clipped. As seen in both the rendered screenshot and the element's properties, the text extends past the bottom edge of the container and is fully rendered on the page, making it readable.\n\nANSWER: YES\n",
+    "ms": 11207
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. `overflow: visible` means the text is not clipped by the card’s box, so even though the last line falls below the card’s bottom edge, it is still painted and readable on the page. The screenshot shows that line rendered below the border.  \nANSWER: YES\n",
+    "ms": 7211
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root>card` has `height: 48px` and its own `getBoundingClientRect()` is `width=180 height=48`, but its computed `overflow` is `visible`, which means overflowing content is not clipped to the box. Since no clipping (`overflow: hidden`/`clip`) is indicated and there are no other elements listed that would cover it, the portion of the last line that lies below the bottom edge would still be painted and remain readable.  \n\nANSWER: YES\n",
+    "ms": 7069
+  },
+  {
+    "case": "overflow-is-not-truncation",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the evidence:\n\n1. `root>card` has `overflow: visible`, which means content is **not clipped** at the element's boundaries\n2. The screenshot shows all four lines of text are visible on the page\n3. The bordered box only wraps around the first two lines, but the text continues below it\n4. Since `overflow: visible` allows content to paint outside the element's box, and the screenshot confirms all text is visible, the last line is fully readable\n\nThe last line sits outside the border box but is still painted and visible on the page.\n\nANSWER: YES\n",
+    "ms": 15291
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the browser's computed style data provided for `root>body>panel`:\n\nThe element has `padding: 4px 4px 4px 4px` in its computed style, not `32px`. This indicates that the `padding: 32px` declaration in the CSS block is being overridden by another rule with higher specificity or that appears later in the cascade. Since the computed padding is 4px on all sides (not 32px), the original `padding: 32px` declaration has no effect on the rendered page.\n\nANSWER: NO\n",
+    "ms": 5718
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The browser's data for `root>body>panel` shows that its computed padding is `4px 4px 4px 4px`. If the `padding: 32px` declaration were having an effect on the rendered page, the computed padding would be `32px` rather than `4px`. Since the actual rendered padding differs from the declaration, it is not being applied.\n\nANSWER: NO\n",
+    "ms": 11557
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The computed style for `root>body>panel` shows a padding of `4px 4px 4px 4px` rather than the `32px` specified in its CSS block, indicating that the declaration is overridden or ineffective. Because the computed padding is different, the `32px` declaration has no effect on the rendered page.\n\nANSWER: NO\n",
+    "ms": 7144
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The evidence shows the `section`’s computed padding is `4px` on all sides, not `32px`, so the `padding: 32px` declaration is not what’s actually being used. The rendered size also matches the smaller padding value, with no sign of the larger inset that `32px` would create.\n\nANSWER: NO\n",
+    "ms": 7408
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot evidence shows the computed `padding` for `root>body>panel` is `4px 4px 4px 4px`, not `32px`. Since `getComputedStyle()` reflects the final cascade after all CSS rules (including overrides/specificity/order) are applied, a `padding: 32px` declaration would only matter if it were the rule that actually won. Therefore, that `padding: 32px` declaration does not affect the rendered page in this capture.  \nANSWER: NO\n",
+    "ms": 8714
+  },
+  {
+    "case": "dead-declaration",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The computed style data shows `root>body>panel` has `padding: 4px 4px 4px 4px`, not 32px. Since the actual rendered padding is 4px on all sides, the `padding: 32px` declaration in the CSS block is being overridden by something else (likely another CSS rule with higher specificity or later in the cascade). Therefore, that specific `padding: 32px` declaration has no effect on what's actually rendered.\n\nANSWER: NO\n",
+    "ms": 13046
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the CSS information provided:\n\nThe `root>body>panel` element (a `<section>`) renders with a `border-radius: 12px`. Examining the computed styles for each node in the tree:\n\n- `root` has `border-radius: 0px`\n- `root>body` has `border-radius: 0px`\n- `root>body>panel` has `border-radius: 12px`\n\nSince `root>body>panel` itself has the `border-radius: 12px` computed style, and the parent nodes (`root` and `root>body`) both have `border-radius: 0px`, the CSS declaration that produces the `12px` border-radius must be in a CSS rule that targets the `root>body>panel` element itself.\n\nANSWER: root>body>panel\n",
+    "ms": 6484
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The computed style for `root>body>panel` shows a `border-radius` of `12px`, whereas its ancestor nodes (`root` and `root>body`) both have a `border-radius` of `0px`. Since `border-radius` is not an inherited property, the 12px value must be declared in the CSS block targeting the panel node itself.\n\nANSWER: root>body>panel\n",
+    "ms": 12133
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The computed style data provided for `root>body>panel` explicitly lists `border-radius: 12px`, whereas the parent nodes `root` and `root>body` both have a `border-radius` of `0px`. Therefore, the border-radius is declared on the panel node itself.\n\nANSWER: root>body>panel\n",
+    "ms": 7176
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The `border-radius` shown on `root>body>panel` comes from that same node’s own CSS block. The computed style lists `border-radius: 12px` only for `root>body>panel`, and none of the parent nodes show a border radius declaration.\n\nANSWER: root>body>panel\n",
+    "ms": 7030
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "`root>body>panel` is the only node listed with a computed `border-radius` value of `12px`, and its computed styles are shown directly for that node. The evidence provided is authoritative for what’s actually on screen, so the `border-radius` that `root>body>panel` renders must come from the CSS affecting that same node. No other node in the data has a non-zero `border-radius` declaration/value relevant to the panel.\n\nANSWER: root>body>panel\n",
+    "ms": 8481
+  },
+  {
+    "case": "provenance",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the computed styles for each node:\n\n- `root` has `border-radius: 0px`\n- `root>body` has `border-radius: 0px`\n- `root>body>panel` has `border-radius: 12px`\n\nThe screenshot shows the panel with rounded corners, which matches the 12px border-radius. Since the parent nodes both have 0px border-radius, the rounded corners must come from the panel node's own CSS block.\n\nANSWER: root>body>panel\n",
+    "ms": 13700
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the bounding rectangles and positions of the three sibling elements:\n\n- `root>alpha`: y=20, height=40 (occupies y: 20-60)\n- `root>beta`: y=64, height=40 (occupies y: 64-104)\n- `root>gamma`: y=200, height=40 (occupies y: 200-240)\n\nThe alpha and beta elements are close together with only a 4-pixel gap between them (60 to 64). However, gamma is positioned much further down the page, with a 96-pixel gap from beta (104 to 200). This creates a visual separation where gamma stands apart from the other two, which form a visually grouped pair near the top.\n\nANSWER: root>gamma\n",
+    "ms": 7393
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the `getBoundingClientRect` data, `root>alpha` (y=20 to 60) and `root>beta` (y=64 to 104) have a vertical gap of only 4 pixels between them. In contrast, `root>gamma` begins at y=200, creating a much larger gap of 96 pixels from `root>beta`. The screenshot confirms that \"alpha\" and \"beta\" appear as a close pair at the top, while \"gamma\" is positioned significantly further down the page.\n\nANSWER: root>gamma\n",
+    "ms": 10389
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>alpha` and `root>beta` are positioned immediately adjacent to each other with a top coordinate of 20px and 64px respectively. In contrast, `root>gamma` is located much further down at y=200px, leaving a large gap between it and the first two elements. Therefore, `root>gamma` is visually separated from the other two.\n\nANSWER: root>gamma\n",
+    "ms": 7119
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>gamma` is visually separated from the other two. `alpha` and `beta` are close together near the top, with only a small vertical gap between them, while `gamma` sits much lower with a large empty space above it.\n\nANSWER: root>gamma\n",
+    "ms": 7418
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "From the browser’s `getBoundingClientRect()` data, `root>alpha` spans roughly y=20–60, `root>beta` spans y=64–104, and those two boxes are close vertically (only a small gap). `root>gamma` spans y=200–240, which is far below both `alpha` and `beta`, making it visually separated from the other two.  \n\nANSWER: root>gamma\n",
+    "ms": 7902
+  },
+  {
+    "case": "proximity-pair",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>gamma",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the `getBoundingClientRect()` values for the three siblings:\n\n- **root>alpha**: y=20, height=40 → spans y=20 to y=60\n- **root>beta**: y=64, height=40 → spans y=64 to y=104\n- **root>gamma**: y=200, height=40 → spans y=200 to y=240\n\nThe gap between alpha and beta is only 4px (64-60=4), while the gap between beta and gamma is 96px (200-104=96). Alpha and beta are visually close together, while gamma is far below them with a much larger separation.\n\nANSWER: root>gamma\n",
+    "ms": 13882
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the information provided:\n\nThe `root>ghost` div has a bounding rect of width=0 and height=0, meaning it takes up zero space on the page. The screenshot shows only \"Everything is fine\" rendered visually, with no visible text for \"Important warning\" anywhere on the page.\n\nEven though the text \"Important warning\" exists in the DOM as content of the `root>ghost` element, a zero-size container cannot paint its content to the screen. With both width and height set to 0px, there is no rendering area for the text to appear in, regardless of other CSS properties like opacity being set to 1.\n\nThe visual evidence from the screenshot confirms this - only \"Everything is fine\" is visible, and \"Important warning\" is completely absent from the rendered output.\n\nANSWER: NO\n",
+    "ms": 7052
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>ghost` element has its `overflow` property set to `visible` and `opacity` set to `1`. In CSS, content that exceeds the dimensions of a container (in this case, 0x0) will still be rendered if the overflow is not hidden or clipped. The provided screenshot confirms this, as the word \"warning\" is clearly visible on the second line, and the word \"Important\" is painted overlapping \"Everything\" on the first line.\n\nANSWER: YES\n",
+    "ms": 10883
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Even though `root>ghost` has a bounding client rectangle of 0x0, its text content \"Important warning\" is still painted on the page at coordinates (0,0), overlapping with the visible content below it as seen in both the node tree and the screenshot.\n\nANSWER: YES\n",
+    "ms": 8406
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. The screenshot shows “Important warning” painted at the top-left even though `root>ghost` has a 0x0 bounding box, so the text is still visible on the page, likely outside that box.\n\nANSWER: YES\n",
+    "ms": 11595
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The evidence says `root>ghost` has `getBoundingClientRect: x=0 y=0 width=0 height=0`, so the element occupies no on-screen box area. Chromium’s own layout measurements are treated as authoritative for what appears on screen, and the only non-zero rendered region reported is `root>visible` (which contains “Everything is fine”). With `root>ghost` having zero width/height, there’s no place for “Important warning” to be painted.\n\nANSWER: NO\n",
+    "ms": 10636
+  },
+  {
+    "case": "zero-size",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The `root>ghost` element has `width: 0px` and `height: 0px` with `display: block`. Even though `overflow: visible` and `opacity: 1`, a block-level element with zero dimensions provides no area for its text content to be painted. The text \"Important warning\" exists in the DOM but has no rendering box to occupy.\n\nANSWER: NO\n",
+    "ms": 15980
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided:\n\nThe `root>ghost` node has dimensions of 0x0 (width=0px, height=0px), meaning it takes up no space on the screen. However, it contains the text \"Important warning\" according to the node tree.\n\nThe `root>visible` node has dimensions of 400x19.1875px and contains the text \"Everything is fine\". Both nodes have identical `getBoundingClientRect()` coordinates (x=0, y=0).\n\nSince `root>ghost` has zero width and height, its text would be rendered at position (0,0) but with dimensions that don't create a visible bounding box. The `root>visible` node also starts at position (0,0) with full width and height. Given that both nodes are positioned at the same origin and the ghost node's text would be rendered there despite having no layout box, the text from `root>ghost` (\"Important warning\") would be drawn on the same pixels as `root>visible`'s text (\"Everything is fine\") - they would overlap at the same location.\n\nANSWER: root>visible\n",
+    "ms": 8276
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot and bounding box data show that `root>ghost` and `root>visible` both start at the coordinate (0,0). Although `root>ghost` has a calculated width and height of 0, its text content (\"Important warning\") overflows and is rendered starting from the top-left corner, where it overlaps with the text from `root>visible` (\"Everything is fine\").\n\nANSWER: root>visible\n",
+    "ms": 12354
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Both `root>ghost` and `root>visible` have their bounding client rectangles starting at coordinates x=0, y=0. Consequently, the text of `root>visible` is rendered at the exact same origin as the text of `root>ghost`, causing their glyphs to overlap on the same pixels.\n\nANSWER: root>visible\n",
+    "ms": 7401
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "`root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>visible` is the only other node with text at the same top-left position, so its glyphs overlap the `root>ghost` text on the rendered pixels. The screenshot shows both strings occupying the same area, with `root>visible` painted over the same line region.\n\nANSWER: `root>visible`\n",
+    "ms": 7903
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>ghost` reports a bounding box of `x=0 y=0 width=0 height=0`, meaning it occupies no painted area on screen. The only node with non-zero pixels at the same top-left position (`x=0 y=0`) is `root>visible` (`width=400 height=19.1875`), so the pixels where glyphs could overlap with the (zero-area) ghost text location correspond to `root>visible`.\n\nANSWER: root>visible\n",
+    "ms": 11016
+  },
+  {
+    "case": "text-collision",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>visible",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the browser's layout data:\n\n- `root>ghost` has `getBoundingClientRect: x=0 y=0 width=0 height=0` — it occupies no space\n- `root>visible` has `getBoundingClientRect: x=0 y=0 width=400 height=19.1875` — it starts at the same origin\n\nBoth nodes are positioned at the same coordinates (x=0, y=0). Even though `root>ghost` has zero dimensions in its bounding box, its text would still render starting from that position. Since `root>visible` also starts at (0, 0) and contains text, both texts are drawn at the same pixel location.\n\nANSWER: root>visible\n",
+    "ms": 14591
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "2.5",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the bounding rect data provided:\n\n- `root>rail` (nav): width = 240px\n- `root>panel` (section): width = 600px\n\nTo find how many times wider `root>panel` is than `root>rail`, I divide:\n600 ÷ 240 = 2.5\n\nThe panel is exactly 2.5 times wider than the rail.\n\nANSWER: 2.5\n",
+    "ms": 5898
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "2.5",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the browser's data, the width of `root>rail` is 240px and the width of `root>panel` is 600px. Dividing the panel's width by the rail's width (600 / 240) results in exactly 2.5.\n\nANSWER: 2.5\n",
+    "ms": 7439
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "2.5",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>panel` has a width of 600 pixels according to its `getBoundingClientRect`, while `root>rail` has a width of 240 pixels. Dividing 600 by 240 gives 2.5.\n\nANSWER: 2.5\n",
+    "ms": 5945
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "2.5",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>panel` is `600px` wide and `root>rail` is `240px` wide. Dividing `600` by `240` gives `2.5`, so the panel is 2.5 times wider.\n\nANSWER: 2.5\n",
+    "ms": 6849
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "2.5",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>panel` has `getBoundingClientRect` width = 600px, and `root>rail` has width = 240px. The ratio is \\(600 / 240 = 2.5\\). Rounded to one decimal place, that is **2.5**.\n\nANSWER: 2.5\n",
+    "ms": 7312
+  },
+  {
+    "case": "widest-sibling",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "2.5",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "From the browser data:\n- `root>rail` has `width=240px`\n- `root>panel` has `width=600px`\n\nTo find how many times wider the panel is than the rail, divide the panel's width by the rail's width: 600 / 240 = 2.5\n\nANSWER: 2.5\n",
+    "ms": 10629
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "rgb(51, 85, 255)",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the browser data provided for the rest state (before hover), the `root>cta` element has:\n\n```\nbackground-color: rgb(51, 85, 255)\n```\n\nThis is the computed style when the page is first painted and the pointer is elsewhere (not hovering over the element). The hover state shows a darker blue `rgb(0, 34, 204)`, confirming that the initial rest state uses the lighter blue value.\n\nANSWER: rgb(51, 85, 255)\n",
+    "ms": 7651
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "rgb(51, 85, 255)",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The browser's data for the `root>cta` node in its initial state (before the mouse hovers over it) explicitly lists the `background-color` as `rgb(51, 85, 255)`. Comparing this to the hover state data shows the color changes to `rgb(0, 34, 204)`, confirming the first value is the color at rest.\n\nANSWER: rgb(51, 85, 255)\n",
+    "ms": 10534
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "rgb(51, 85, 255)",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "When the page is first painted and the pointer is elsewhere, the computed style data for `root>cta` shows its rest state background color as `rgb(51, 85, 255)`. When hovered, it changes to `rgb(0, 34, 204)`. Therefore, the background colour at rest is `rgb(51, 85, 255)`.\n\nANSWER: rgb(51, 85, 255)\n",
+    "ms": 8566
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "rgb(51, 85, 255)",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "At first paint, when the pointer is elsewhere, `root>cta` has `background-color: rgb(51, 85, 255)`. The hover state changes it to a darker blue, `rgb(0, 34, 204)`, so the initial non-hover color is the lighter blue.\n\nANSWER: rgb(51, 85, 255)\n",
+    "ms": 8940
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "rgb(51, 85, 255)",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "From the “at rest” measurements (pointer elsewhere), `root>cta` has `background-color: rgb(51, 85, 255)`. In the hover state the background changes to `rgb(0, 34, 204)`, confirming that the initial painted background is the first value.\n\nANSWER: rgb(51, 85, 255)\n",
+    "ms": 10737
+  },
+  {
+    "case": "hover-state",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "rgb(51, 85, 255)",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the provided browser data, I can see two states for `root>cta`:\n\n1. **At rest** (first state, pointer elsewhere): `background-color: rgb(51, 85, 255)`\n2. **On hover**: `background-color: rgb(0, 34, 204)` (a darker blue)\n\nThe question asks for the background color when the page is first painted and the pointer is elsewhere, which corresponds to the first (rest) state.\n\nANSWER: rgb(51, 85, 255)\n",
+    "ms": 13862
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the bounding rectangles provided:\n\n- `root>row` (the `<p>` element) occupies the region from x=0 to x=600, y=0 to y=120\n- `root>chip` (the `<div>` element) occupies the region from x=400 to x=560, y=60 to y=100\n\nThe chip element overlaps with the row element in the region x=400 to x=560, y=60 to y=100. However, the row element contains only the text \"Short label\", which according to the visual rendering is positioned in the upper-left area of the paragraph (within the padding and initial line-height). The overlap occurs in the right-center area of the row's bounding box, where there is whitespace, not the text itself.\n\nThe text \"Short label\" is rendered on the first line of the paragraph and does not extend into the region where the chip is positioned (x=400-560, y=60-100).\n\nANSWER: NO\n",
+    "ms": 6421
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>row` spans the top of the page from `y=0` to `y=120`, containing the text \"Short label\" which renders near the top-left (starting at `y=4` due to padding). `root>chip` is an absolute-positioned yellow box located at `x=400, y=60` with a height of `40px`. While `root>chip` overlaps the bounding box of `root>row`, it is positioned vertically below the single line of text and horizontally to the right of it, leaving the text \"Short label\" completely unobstructed.\n\nANSWER: NO\n",
+    "ms": 13514
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The text \"Short label\" in `root>row` is located at the top-left area of the page (with its bounding box extending from x=0 to 600 and y=0 to 120, but the text itself rendered near y=4), whereas `root>chip` is positioned on the right side at x=400 to 560 and y=60 to 100. Although the chip overlaps the paragraph's bounding box, it does not cover or obscure any of the text content \"Short label\".\n\nANSWER: NO\n",
+    "ms": 7913
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. `root>row`’s text `\"Short label\"` is rendered at the top-left of the paragraph, while `root>chip` sits at `x=400, y=60` with a 160x40 box. Their boxes overlap in the row’s area, but the chip does not cover any of the visible text itself.\n\nANSWER: NO\n",
+    "ms": 7758
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>row` (the `<p>`) occupies the rectangle from `x=0..600` and `y=0..120`, while `root>chip` occupies `x=400..560` and `y=60..100`. The `<p>`’s own text is shown via evidence as the string `\"Short label\"`, and its layout would be near the top of the `<p>` (the `<p>` has only `padding: 4px` and a normal line-height of `19.2px`, so the text would be in the top ~20–30px of the `<p>`). Since the chip starts at `y=60`, it overlaps only the lower part of the `<p>`, not the area where `\"Short label\"` would be painted.  \n\nANSWER: NO\n",
+    "ms": 10185
+  },
+  {
+    "case": "partial-cover",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the layout data:\n\n- `root>row` (the `<p>` element) contains the text \"Short label\" and spans from x=0 to x=600, y=0 to y=120\n- `root>chip` is absolutely positioned at x=400, y=60 with dimensions 160x40 (so it spans x=400-560, y=60-100)\n\nWhile the chip does overlap spatially with the row's bounding box, the text \"Short label\" in a static-positioned `<p>` element would naturally flow from the left side. The chip is positioned on the right side of the page (starting at x=400 out of 600px width). The screenshot confirms this - \"Short label\" appears in the top-left corner while the yellow chip with \"chip\" text appears on the right side.\n\nThe chip does not cover the text content of `root>row`.\n\nANSWER: NO\n",
+    "ms": 19603
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>third",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the `getBoundingClientRect()` data for each node:\n\n- `root>first`: x=24 (left edge at 24px)\n- `root>second`: x=24 (left edge at 24px)\n- `root>third`: x=40 (left edge at 40px)\n- `root>fourth`: x=24 (left edge at 24px)\n\nThree of the four rows (first, second, and fourth) have their left edges aligned at x=24px. The third row is the only one with a different left edge position at x=40px, making it 16 pixels further to the right than the others.\n\nANSWER: root>third\n",
+    "ms": 6123
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>third",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `getBoundingClientRect` and `getComputedStyle` data show that the `root>first`, `root>second`, and `root>fourth` nodes all have a horizontal position (x-coordinate and `left` property) of 24px. In contrast, the `root>third` node has a horizontal position of 40px, causing it to be indented further to the right than its siblings.\n\nANSWER: root>third\n",
+    "ms": 9677
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>third",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root>first`, `root>second`, and `root>fourth` elements all share a left position (and `x` coordinate) of 24px. In contrast, `root>third` has a left position of 40px, placing its left edge further to the right than the rest.\n\nANSWER: root>third\n",
+    "ms": 7725
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "`root>third",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Three rows start at `x=24`, but `third` starts at `x=40`, so it is shifted to the right and out of alignment.\n\nANSWER: `root>third`\n",
+    "ms": 8276
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>third",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Three rows (`first`, `second`, and `fourth`) have the same `getBoundingClientRect().left` value of `24px`. The `third` row has a different left edge at `40px`, meaning it is shifted horizontally relative to the others. Therefore, `third` is out of alignment.\n\nANSWER: root>third\n",
+    "ms": 9192
+  },
+  {
+    "case": "misaligned-sibling",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>third",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the `getBoundingClientRect()` data for each node's left edge position:\n\n- **root>first**: x=24px\n- **root>second**: x=24px\n- **root>third**: x=40px\n- **root>fourth**: x=24px\n\nThree nodes (first, second, fourth) share the same left edge at x=24px. The **third** node has its left edge at x=40px, which is 16px further to the right than the others.\n\nANSWER: root>third\n",
+    "ms": 13122
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>rightBottom",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the bounding rectangle data for each node:\n\n- `root>leftBottom`: x=0, y=120, width=300, height=80 (occupies row from y=120 to y=200)\n- `root>rightBottom`: x=340, y=120, width=300, height=80 (occupies row from y=120 to y=200)\n\nBoth nodes share the same y-coordinate (y=120) and height (80px), meaning they're on the same row. The `root>rightBottom` node is positioned at x=340, which is to the right of `root>leftBottom` (which starts at x=0). The gap between them (from x=300 to x=340) indicates they're positioned side-by-side in a two-by-two grid arrangement.\n\nANSWER: root>rightBottom\n",
+    "ms": 8036
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>rightBottom",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the provided data, `root>leftBottom` is positioned at `x=0, y=120` with a height of `80px`. `root>rightBottom` is positioned at `x=340, y=120` with the same height. Since both nodes share the same `y` coordinate and are aligned vertically, they occupy the same row, and the greater `x` coordinate of `root>rightBottom` places it directly to the right of `root>leftBottom`.\n\nANSWER: root>rightBottom\n",
+    "ms": 9926
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>rightBottom",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Both `root>leftBottom` and `root>rightBottom` are located at y=120, placing them on the same horizontal row. Since `root>rightBottom` has an x-coordinate of 340 while `root>leftBottom` is at x=0, `root>rightBottom` sits directly to the right of `root>leftBottom`.\n\nANSWER: root>rightBottom\n",
+    "ms": 6474
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "root>rightBottom",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>leftBottom` is at `x=0, y=120`, and the node on the same row with a larger `x` value is `root>rightBottom` at `x=340, y=120`. Since they share the same `top` position, `root>rightBottom` sits directly to the right of `root>leftBottom`.\n\nANSWER: root>rightBottom\n",
+    "ms": 7114
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>rightBottom",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>leftBottom` has `getBoundingClientRect` showing `x=0` and `y=120`, so it sits on the lower row. On that same row (`y=120`), the only other box is `root>rightBottom`, which starts at `x=340` and shares the same `height=80`. Therefore, the node directly to the right of `root>leftBottom` on the same row is `root>rightBottom`.\n\nANSWER: root>rightBottom\n",
+    "ms": 8250
+  },
+  {
+    "case": "neighbour-to-the-right",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>rightBottom",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the bounding rectangles:\n\n- `root>leftBottom`: x=0, y=120, width=300\n- `root>rightBottom`: x=340, y=120, width=300\n\nBoth nodes share the same y-coordinate (120px), placing them on the same horizontal row. The `root>rightBottom` node is positioned at x=340, which is directly to the right of `root>leftBottom` at x=0. The screenshot confirms this two-by-two layout with \"right bottom\" appearing on the right side of the bottom row.\n\nANSWER: root>rightBottom\n",
+    "ms": 13922
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "rgb(0, 0, 0)",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the browser data provided in the report, I can find the computed style information for the `root>label` element.\n\nThe report explicitly states under the `root>label <div>` section:\n```\ncolor: rgb(0, 0, 0)\n```\n\nThis is the text color (the CSS `color` property) that the element renders with. `rgb(0, 0, 0)` is black.\n\nANSWER: rgb(0, 0, 0)\n",
+    "ms": 6857
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "rgb(0, 0, 0)",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The browser's data for the `root>label` node explicitly lists the `color` property under its computed styles. The value provided is `rgb(0, 0, 0)`, which represents black. This is consistent with the attached screenshot showing the text \"Total due\" rendered in black.\n\nANSWER: rgb(0, 0, 0)\n",
+    "ms": 11245
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "rgb(0, 0, 0)",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The computed style report for `root>label` lists `color: rgb(0, 0, 0)`, which explicitly sets the text color of the element.\n\nANSWER: rgb(0, 0, 0)\n",
+    "ms": 8131
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "black",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "`root>label` renders with `color: rgb(0, 0, 0)`, which is black. The report explicitly includes the computed `color` for that node, so this is stated directly rather than inferred from the screenshot.\n\nANSWER: black\n",
+    "ms": 8698
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "rgb(0, 0, 0)",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The report includes `getComputedStyle()` details for `root>label <div>`, specifically the `color` property. For `root>label`, it states `color: rgb(0, 0, 0)`. So the rendered text colour is black in RGB terms.\n\nANSWER: rgb(0, 0, 0)\n",
+    "ms": 7414
+  },
+  {
+    "case": "not-stated",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "rgb(0, 0, 0)",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "The `root>label` node has `color: rgb(0, 0, 0)` in its `getComputedStyle()` data, which is the CSS property that determines text colour. The value `rgb(0, 0, 0)` represents black.\n\nANSWER: rgb(0, 0, 0)\n",
+    "ms": 12102
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>middle",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the z-index values and bounding rectangles:\n\n- **root>back**: z-index: 1, positioned at (40, 40) with size 200x200\n- **root>middle**: z-index: 3, positioned at (80, 80) with size 200x200\n- **root>front**: z-index: 2, positioned at (100, 100) with size 60x60\n\nThe point (120, 120) falls within all three boxes:\n- root>back: x range [40, 240], y range [40, 240] ✓\n- root>middle: x range [80, 280], y range [80, 280] ✓\n- root>front: x range [100, 160], y range [100, 160] ✓\n\nWhen elements overlap, the one with the highest z-index is rendered on top and visible to the viewer. Among the three boxes, root>middle has z-index: 3, which is the highest. Therefore, a viewer sees root>middle at point (120, 120).\n\nANSWER: root>middle\n",
+    "ms": 8280
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>middle",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "All three boxes overlap the point (120, 120) because their bounds contain that coordinate: `root>back` (40-240), `root>middle` (80-280), and `root>front` (100-160). Among these siblings, the stacking order is determined by their `z-index` values since they are all positioned. `root>middle` has the highest `z-index` (3), followed by `root>front` (2) and `root>back` (1), meaning `root>middle` is rendered on top and obscures the others at that point.\n\nANSWER: root>middle\n",
+    "ms": 26534
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>middle",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "At the point (120, 120), all three boxes overlap because the point falls within the bounding box of each element. For positioned elements sharing a stacking context, stacking order is determined by their `z-index` values. Since `root>middle` has the highest `z-index` (3), compared to `root>back` (1) and `root>front` (2), it renders on top of the others.\n\nANSWER: root>middle\n",
+    "ms": 9941
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "root>middle",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "At `120,120`, all three boxes overlap, so the one with the highest `z-index` is on top. `root>middle` has `z-index: 3`, which is higher than `root>front` (`2`) and `root>back` (`1`), so that is what the viewer sees there.\n\nANSWER: root>middle\n",
+    "ms": 8275
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>middle",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "All three `<div>` boxes contain the point `(120, 120)` because each box’s `getBoundingClientRect()` range covers that coordinate. Since they overlap, the one that appears is determined by stacking order: `root>middle` has the highest `z-index` (`z-index: 3`) compared to `root>front` (`z-index: 2`) and `root>back` (`z-index: 1`). Therefore a viewer sees the middle box at that point.\n\nANSWER: root>middle\n",
+    "ms": 9350
+  },
+  {
+    "case": "topmost-of-three",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>middle",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the z-index values for each box:\n- `root>back`: z-index: 1\n- `root>middle`: z-index: 3\n- `root>front`: z-index: 2\n\nThe point (120, 120) falls within all three boxes' bounding rectangles. In CSS stacking, higher z-index values render on top of lower ones. The `middle` box has the highest z-index (3), so it appears above both `back` (z-index 1) and `front` (z-index 2).\n\nANSWER: root>middle\n",
+    "ms": 17464
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "64px 64px 64px 64px",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided, I need to identify what padding is actually being rendered on the `root>child` element.\n\nThe key data point is from `getBoundingClientRect()` and `getComputedStyle()` for `root>child`, which shows:\n- `padding: 64px 64px 64px 64px`\n\nThis is the computed style that the browser has actually applied and is using for rendering. This represents the final, resolved value after CSS specificity, cascade, and inheritance rules have been applied.\n\nThe question mentions that three different blocks declare padding for `root>child`, but the actual rendered padding is determined by CSS's specificity and source order rules. The computed style shows that 64px padding on all sides is what won in this case.\n\nANSWER: 64px 64px 64px 64px\n",
+    "ms": 8857
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "64px",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The browser's computed style data for the `root>child` node explicitly states that its padding is `64px 64px 64px 64px`. This is visually supported by the screenshot, where the text \"Child\" is clearly offset from the top and left edges of the viewport.\n\nANSWER: 64px\n",
+    "ms": 11488
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "64px",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "According to the computed style data provided by the browser, the element `root>child` has a computed `padding` of `64px 64px 64px 64px`, meaning it renders with 64px of padding on all sides.\n\nANSWER: 64px\n",
+    "ms": 8177
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "64px",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The rendered padding is `64px` on all sides. The computed style for `root>child` explicitly shows `padding: 64px 64px 64px 64px`, so that is the value actually applied, regardless of the other declarations.\n\nANSWER: 64px\n",
+    "ms": 9145
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "19",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The authoritative evidence is the browser’s `getComputedStyle()` for `root>child`. It reports `padding: 64px 64px 64px 64px`, so that is the padding that actually renders regardless of how many `padding` declarations appeared earlier in the source (later rules win or higher specificity applies).  \nANSWER: 19\n",
+    "ms": 8636
+  },
+  {
+    "case": "own-wins-on-source-order",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "64px",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The browser data for `root>child` shows the computed style directly from `getComputedStyle()`. The padding property is listed as `64px 64px 64px 64px`, meaning 64px on all four sides. This is the actual rendered value after CSS cascade and inheritance resolved any competing declarations.\n\nANSWER: 64px\n",
+    "ms": 11446
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>square",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the bounding rectangles for each of the three boxes:\n\n- **root>wide**: width=600, height=60 → area = 600 × 60 = 36,000 square pixels\n- **root>tall**: width=120, height=300 → area = 120 × 300 = 36,000 square pixels\n- **root>square**: width=220, height=220 → area = 220 × 220 = 48,400 square pixels\n\nThe square box has the largest area at 48,400 square pixels, significantly larger than both the wide and tall boxes which are tied at 36,000 square pixels each.\n\nANSWER: root>square\n",
+    "ms": 6391
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>square",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "To determine which box covers the largest area, I calculated the area for each based on their `getBoundingClientRect` dimensions:\n- **root>wide**: 600 width × 60 height = 36,000 square pixels.\n- **root>tall**: 120 width × 300 height = 36,000 square pixels.\n- **root>square**: 220 width × 220 height = 48,400 square pixels.\n\nComparing these results, the square box has the greatest total area.\n\nANSWER: root>square\n",
+    "ms": 9248
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>square",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "To find which box covers the largest area, we calculate the area (width × height) for each of the three boxes:\n- `root>wide`: 600 × 60 = 36,000 sq px\n- `root>tall`: 120 × 300 = 36,000 sq px\n- `root>square`: 220 × 220 = 48,400 sq px\n\nThe square box has the largest area at 48,400 sq px.\n\nANSWER: root>square\n",
+    "ms": 7017
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "`root>square",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `wide` box is `600 × 60 = 36,000` square pixels. The `tall` box is `120 × 300 = 36,000` square pixels. The `square` box is `220 × 220 = 48,400` square pixels, which is larger than both others.\n\nANSWER: `root>square`\n",
+    "ms": 7971
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>square",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "From the rendered layout evidence, the bounding boxes are:\n- `root>wide`: 600×60 = 36,000 area\n- `root>tall`: 120×300 = 36,000 area\n- `root>square`: 220×220 = 48,400 area\n\nSince 48,400 is greater than 36,000, the `square` box covers the largest area.  \nANSWER: root>square\n",
+    "ms": 8305
+  },
+  {
+    "case": "largest-by-area",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>square",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "To find the largest area, I'll calculate width × height for each box using the `getBoundingClientRect()` data:\n\n- **wide**: 600 × 60 = 36,000 square pixels\n- **tall**: 120 × 300 = 36,000 square pixels\n- **square**: 220 × 220 = 48,400 square pixels\n\nThe square box has the largest area at 48,400 square pixels, even though \"wide\" has the greatest width and \"tall\" has the greatest height.\n\nANSWER: root>square\n",
+    "ms": 13960
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the computed styles provided:\n\n- `root>heading` has `font-size: 30px`\n- `root>caption` has `font-size: 22px`\n\nThe `root>heading` element has a larger font size (30px vs 22px), so it renders with larger text.\n\nANSWER: root>heading\n",
+    "ms": 11040
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the computed styles provided, `root>heading` has a `font-size` of **30px**, while `root>caption` has a `font-size` of **22px**. The `font-size` property directly determines the rendered size of the text, and the screenshot confirms that the \"Quarterly report\" text is larger than the \"Draft\" text.\n\nANSWER: root>heading\n",
+    "ms": 8711
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root>heading` node has a font-size of 30px, while the `root>caption` node has a smaller font-size of 22px. Therefore, `root>heading` renders with larger text.\n\nANSWER: root>heading\n",
+    "ms": 7099
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>heading` renders with larger text. Its computed `font-size` is `30px`, while `root>caption` is `22px`, so the heading text is larger on screen.\n\nANSWER: root>heading\n",
+    "ms": 8665
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>heading` renders with larger text than `root>caption`. The browser data shows `root>heading` has `font-size: 30px` (and `line-height: 36px`), while `root>caption` has `font-size: 22px` (and `line-height: 26.4px`). The bounding boxes also reflect this: the heading occupies 36px height versus the caption’s ~26.39px height.  \n\nANSWER: root>heading\n",
+    "ms": 7961
+  },
+  {
+    "case": "inherited-font-size",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>heading",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the `getComputedStyle()` data for each node:\n\n- **root>heading**: `font-size: 30px`, `line-height: 36px`\n- **root>caption**: `font-size: 22px`, `line-height: 26.4px`\n\nThe `root>heading` element has a font-size of 30px, while `root>caption` has a font-size of 22px. Since 30px > 22px, the heading renders with larger text.\n\nANSWER: root>heading\n",
+    "ms": 11214
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "ANNUAL REVIEW",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided, I need to identify what characters are actually visible in the `root>title` element.\n\nThe node tree shows:\n```\nroot>title  div  \"Annual review\"\n```\n\nThis tells me the source text is \"Annual review\". However, the key detail is that the computed style shows `text-transform: uppercase` is applied to both the root and root>title elements.\n\nThe CSS `text-transform: uppercase` property transforms the text to uppercase characters for display, so \"Annual review\" would be rendered as \"ANNUAL REVIEW\" on the screen.\n\nThe screenshot confirms this - the visible text at the top of the page shows \"ANNUAL REVIEW\" in all caps.\n\nANSWER: ANNUAL REVIEW\n",
+    "ms": 6446
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "ANNUAL REVIEW",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The source text for `root>title` is `\"Annual review\"`. However, the computed style for this node (and its parent) includes `text-transform: uppercase`, which instructs the browser to render all characters in their uppercase form. The provided screenshot confirms this transformation, showing the text rendered in all capital letters.\n\nANSWER: ANNUAL REVIEW\n",
+    "ms": 7933
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "ANNUAL REVIEW",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The source text for `root>title` is \"Annual review\", but the element has `text-transform: uppercase` applied in its computed style. As a result, the browser renders all letters in uppercase as seen in the screenshot, displaying \"ANNUAL REVIEW\" to the viewer.\n\nANSWER: ANNUAL REVIEW\n",
+    "ms": 9487
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "ANNUAL REVIEW",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>title` contains the text `Annual review`, and the computed `text-transform: uppercase` means it renders in all caps. So the viewer sees `ANNUAL REVIEW`.\n\nANSWER: ANNUAL REVIEW\n",
+    "ms": 8226
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "ANNUAL REVIEW",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>title` is a `div` whose source text is `\"Annual review\"`. The computed style for that node has `text-transform: uppercase`, and the screenshot shows the rendered result in uppercase. Therefore, the viewer sees the characters `ANNUAL REVIEW`.\n\nANSWER: ANNUAL REVIEW\n",
+    "ms": 8679
+  },
+  {
+    "case": "text-transform",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "ANNUAL REVIEW",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The source text in `root>title` is written as \"Annual review\" (mixed case), but the computed style shows `text-transform: uppercase` is applied to this element. The screenshot confirms this transformation is rendered - it displays \"ANNUAL REVIEW\" in all capital letters. The `text-transform` CSS property changes how text is displayed without changing the underlying DOM text content.\n\nANSWER: ANNUAL REVIEW\n",
+    "ms": 12246
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the information provided:\n\nThe `root>line` div contains the text \"Hidden by two\" and has dimensions of 400x300 (full width).\n\nTwo absolutely positioned boxes are covering it:\n- `leftHalf`: positioned at x=0, width=70px (covers left portion)\n- `rightHalf`: positioned at x=60, width=80px (covers from x=60 to x=140)\n\nThese boxes overlap in the range x=60-70px, but leave a gap uncovered between x=70-60px... wait, that's backwards. Let me recalculate:\n- `leftHalf` covers x=0 to x=70\n- `rightHalf` covers x=60 to x=140 (60+80)\n\nThey overlap from x=60-70, and together they cover x=0 to x=140. The text \"Hidden by two\" spans the full 400px width, so the region from x=140 to x=400 remains visible and uncovered.\n\nHowever, the question asks if a viewer can \"read the words\" - meaning understand the text content. Since the boxes only cover the leftmost 140px of the 400px-wide line, and the text extends across the full width, a viewer can see a significant portion of the text that isn't covered by either box.\n\nANSWER: YES\n",
+    "ms": 8804
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>line` element contains the text \"Hidden by two\" and is located at the top-left of the viewport (x=0, y=0) with a width of 400px and a height of approximately 19px. Two opaque, absolute-positioned `div` elements are placed directly over this area: `leftHalf` covers the rectangle from x=0 to x=70, and `rightHalf` covers the rectangle from x=60 to x=140. Together, their union creates a solid block from x=0 to x=140, which completely obscures the text starting at the beginning of the line.\n\nANSWER: NO\n",
+    "ms": 12392
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The union of `root>leftHalf` (spanning x=0 to 70) and `root>rightHalf` (spanning x=60 to 140) covers the coordinate range from x=0 to 140. Because the text \"Hidden by two\" falls entirely within this covered region (approx. x=0 to 104), every part of the text is occluded by at least one of the covering boxes. Therefore, the text cannot be read.\n\nANSWER: NO\n",
+    "ms": 9557
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The line sits at the top-left where two absolutely positioned boxes overlap, and together they cover roughly the first 140 CSS px of that line. The text `Hidden by two` is short enough that it falls entirely under those boxes, so a viewer cannot read it.\n\nANSWER: NO\n",
+    "ms": 9861
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root>line` element contains the text `\"Hidden by two\"` and is 400px wide, but the two covering elements (`root>leftHalf` and `root>rightHalf`) are absolutely positioned at the same top/height region as the line and together cover the left portion where the text would be rendered. Since neither box alone spans the entire width, some of the line background may remain visible elsewhere, but the screenshot/computed layout indicates the text itself falls within the combined covered area (the boxes’ union spans roughly x=0..140). Therefore the words in `root>line` are not readable to the viewer.\n\nANSWER: NO\n",
+    "ms": 11153
+  },
+  {
+    "case": "union-coverage",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the rendered data:\n\n- `root>line` contains the text \"Hidden by two\" at position (0,0) with height ~19px\n- `root>leftHalf` is an opaque dark box (rgb(16,16,16)) at (0,0) with width 70px, height 20px\n- `root>rightHalf` is an opaque dark box (rgb(32,32,32)) at (60,0) with width 80px, height 20px\n\nBoth covering boxes are absolutely positioned at the same y-coordinate as the text line, with sufficient height (20px) to fully cover the text (~19px). Together they span from x=0 to x=140, and since they're opaque solid colors, they obscure the text beneath them. The screenshot confirms this—only the two dark rectangles are visible at the top, with no readable text.\n\nANSWER: NO\n",
+    "ms": 17498
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the browser data provided:\n\nThe `root>line` div (containing \"Still readable\") is positioned at y=0 with height 19.1875px, so it occupies the top ~19px of the viewport.\n\nTwo boxes paint over it:\n1. `root>glass` - positioned at y=0, z-index: 1, height 100px (covers y=0 to y=100)\n2. `root>panel` - positioned at y=40, z-index: 2, height 60px (covers y=40 to y=100)\n\nSince `root>glass` has z-index: 1 and `root>panel` has z-index: 2, the panel is on top. However, the panel only starts at y=40, so it doesn't cover the text which ends at y≈19.\n\nThe glass div (z-index: 1) does cover the text area (y=0 to y≈19), but critically, its `background-color: rgba(0, 0, 0, 0)` means it's completely transparent. A transparent overlay doesn't obscure text readability.\n\nThe screenshot confirms the text \"Still readable\" is clearly visible at the top, above both overlays.\n\nANSWER: YES\n",
+    "ms": 8420
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The text \"Still readable\" in `root>line` occupies the vertical space from y=0 to y=19.1875. While `root>glass` (z-index: 1) overlays this entire area, its background is transparent, allowing the text to show through. `root>panel` (z-index: 2) is opaque, but it is positioned starting at y=40, meaning it does not overlap with the text at all.\n\nANSWER: YES\n",
+    "ms": 9373
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Although `root>glass` and `root>panel` are positioned above in the stacking order, `root>line` is located at the top (y=0 to y=19.1875) while the dark gray panel starts further down at y=40, leaving the text completely uncovered and fully legible against the background. Therefore, a viewer can still read the text.\n\nANSWER: YES\n",
+    "ms": 6098
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. The text `Still readable` is visibly rendered at the top of the screenshot, and the two absolute-positioned boxes only cover content lower down. Since the line itself remains unobscured, a viewer can still read it.\n\nANSWER: YES\n",
+    "ms": 6850
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root>line` (the text “Still readable”) occupies the top strip of the page: it spans from `y=0` to `y≈19.19`. The two overlay boxes (`root>glass` from `y=0` to `y=100` with `z-index: 1`) has `background-color: rgba(0, 0, 0, 0)` (fully transparent), so it doesn’t obscure the text. The other overlay (`root>panel` from `y=40` to `y=100` with `z-index: 2`) starts below the text region, so it also doesn’t cover it.  \nANSWER: YES\n",
+    "ms": 8364
+  },
+  {
+    "case": "stacked-overlays-still-readable",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the rendering data:\n\n1. **`root>glass`** (z-index: 1) has `background-color: rgba(0, 0, 0, 0)` — fully transparent, so it doesn't actually paint anything over the text.\n\n2. **`root>panel`** (z-index: 2) has a solid dark gray background (`rgb(48, 48, 48)`), but it's positioned at `top: 40px` with height 60px, meaning it spans y=40 to y=100. The text in `root>line` only occupies y=0 to y≈19px, so the panel doesn't overlap the text vertically.\n\n3. The screenshot confirms \"Still readable\" is visible at the top.\n\nBoth boxes technically paint in the stacking context above the text, but one is transparent and the other is positioned below the text, leaving it unobstructed.\n\nANSWER: YES\n",
+    "ms": 16562
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the information provided:\n\nThe `root>second` paragraph contains \"Second paragraph here\" and is positioned at y=19.1875 with a height of 19.1875px. \n\nHowever, there is a `root>cover` div that is absolutely positioned at the top of the page (top: 0px) with a height of 19px and a black background (rgb(0, 0, 0)). This cover div has a width of 500px and z-index of auto, which means it will stack above elements in normal flow.\n\nThe cover div's black background extends from y=0 to y=19px, which completely overlaps with the first paragraph (y=0 to y=19.1875). The second paragraph starts at y=19.1875, which is just below the cover div's bottom edge at y=19px. Since the cover div is only 19px tall and the second paragraph starts at 19.1875px, the second paragraph is not obscured by the cover div.\n\nBased on the screenshot image provided, the text \"Second paragraph here\" is clearly visible and readable on the page.\n\nANSWER: YES\n",
+    "ms": 7713
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>second` element is positioned at `y=19.1875` with a height of `19.1875`. While the `root>cover` element is a solid black rectangle, its height is only `19` and it is positioned at `y=0`. Consequently, `root>cover` only obscures the area from `y=0` to `y=19` (where the first paragraph is located), leaving the text in `root>second` starting at `y=19.1875` completely unobstructed. The screenshot confirms that \"Second paragraph here\" is clearly visible against the background.\n\nANSWER: YES\n",
+    "ms": 10439
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root>second` is positioned at y=19.1875, directly below the black cover div (`root>cover`) which only spans from y=0 to y=19. Therefore, the text in `root>second` (\"Second paragraph here\") is not covered by the black bar and is fully visible to a viewer.\n\nANSWER: YES\n",
+    "ms": 7752
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. The black `root>cover` div is only `19px` tall and sits at `y=0`, so it covers the first paragraph but not the second one, which starts at `y=19.1875`. The screenshot also shows “Second paragraph here” visible at the top left.\n\nANSWER: YES\n",
+    "ms": 8591
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root>second` is a `<p>` with `getBoundingClientRect: x=0 y=19.1875 width=500 height=19.1875`, so it occupies a band starting just below `y=19.1875`. The `root>cover` element is absolutely positioned at `top: 0px` and has height `19px`, meaning it only covers up to about `y=19`. Since `root>second` begins slightly below that (`19.1875`), it is not covered by `root>cover`, and its text color is `rgb(0, 0, 0)`, so the viewer can read it.\n\nANSWER: YES\n",
+    "ms": 7619
+  },
+  {
+    "case": "distractor-node",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the bounding boxes:\n\n- `root>cover` is an absolutely positioned div with a solid black background (`rgb(0, 0, 0)`), covering y=0 to y=19 (height=19px)\n- `root>second` (the paragraph with \"Second paragraph here\") has its bounding box starting at y=19.1875\n\nSince the cover overlay ends at y=19 and the second paragraph begins at y=19.1875, the text sits just **below** the black overlay and is not obscured. The screenshot confirms this—it shows \"Second paragraph here\" clearly visible, with a black bar only at the very top (covering the first paragraph).\n\nANSWER: YES\n",
+    "ms": 16398
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the provided browser data:\n\n- The viewport is 500x300 CSS pixels\n- The `root>footer` element has a `getBoundingClientRect` with `y=700` and `height=60`, meaning it spans from y=700 to y=760\n- Since the viewport only shows from y=0 to y=300, the footer at y=700 is far below the visible area\n\nThe footer element is positioned absolutely at top: 700px, which places it well below the initial viewport. A user would need to scroll down significantly to see this content.\n\nANSWER: NO\n",
+    "ms": 5882
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The viewport is 500x300, meaning the viewer initially sees the area from y=0 to y=300. The `root>footer` element has a `getBoundingClientRect` starting at y=700, which is well below the 300px limit of the initial view. Therefore, the footer is not visible before scrolling.\n\nANSWER: NO\n",
+    "ms": 8182
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The viewport has a height of 300px (spanning from y=0 to y=300), representing the visible area before any scrolling occurs. The `root>footer` element is positioned at y=700 to y=760 according to its bounding client rectangle, placing it well below the initial 300px viewport limit. Therefore, the footer is located below the fold and is not visible when the page first loads.\n\nANSWER: NO\n",
+    "ms": 7394
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The viewport is `500x300`, but `root>footer` is positioned at `y=700` with height `60`, so it starts well below the visible area on first load. The screenshot also shows only the masthead, confirming the footer is offscreen initially.\n\nANSWER: NO\n",
+    "ms": 9953
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The viewer sees the top portion of the page within the initial viewport height (300px). `root>top` is at y=0 with height 40px, which is visible, but `root>footer` has `getBoundingClientRect` y=700 and height 60px, meaning it starts far below the initial viewport and is not visible before any scrolling.  \n\nANSWER: NO\n",
+    "ms": 8131
+  },
+  {
+    "case": "below-the-fold",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The viewport is 500x300 pixels, meaning the visible area on page load spans from y=0 to y=300. The `root>footer` element has a `getBoundingClientRect` with y=700 and height=60, placing it from y=700 to y=760. Since 700 is well below the visible viewport range (0-300), the footer is not visible without scrolling.\n\nANSWER: NO\n",
+    "ms": 12741
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>sideways",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the layout information provided:\n\n**Viewport dimensions:** 500x300 CSS px\n\n**root>lower:** \n- Position: y=700, height=40\n- Extends from y=700 to y=740\n- This is below the initial viewport (0-300), so scrolling down can bring it into view\n\n**root>sideways:**\n- Position: x=0, width=900, height=40\n- Extends from x=0 to x=900 horizontally\n- The viewport is only 500px wide\n- While the element starts at x=0 (in view), it extends to x=900, running 400px beyond the right edge of the viewport\n- Ordinary scrolling is vertical (up/down), not horizontal\n\nThe key insight is that `root>lower` sits below the viewport and can be brought fully into view by scrolling vertically downward. However, `root>sideways` runs off the right side of the viewport horizontally. Since \"ordinary scrolling\" refers to vertical scrolling in the context of a 500px-wide viewport, you cannot scroll horizontally to bring the overflow into view through normal scrolling behavior.\n\nANSWER: root>sideways\n",
+    "ms": 7792
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>sideways",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root` element has a height of 900px, which is significantly larger than the 300px viewport height, enabling vertical scrolling that allows the viewer to reach `root>lower` located at `y=700`. However, the `root` element's width is only 500px, matching the viewport width; because its width is constrained and it does not have horizontal overflow enabled, the 900px wide `root>sideways` node extends beyond the viewable area with no way for the viewer to scroll horizontally to see the hidden portion.\n\nANSWER: root>sideways\n",
+    "ms": 25798
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>sideways",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The root element has a height of 900px (exceeding the 300px viewport height), allowing vertical scrolling to bring `root>lower` (located at y=700) into view. However, `root>sideways` extends horizontally to 900px width while `root` has `overflow: visible`, which does not generate horizontal scrollbars or enable horizontal scrolling. Thus, `root>sideways` cannot be reached by ordinary scrolling.\n\nANSWER: root>sideways\n",
+    "ms": 10525
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "root>sideways",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>lower` can be reached by scrolling down, but `root>sideways` is only off to the right, so ordinary page scrolling won’t bring it fully into view.\n\nANSWER: root>sideways\n",
+    "ms": 25531
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>sideways",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The viewport is 500px wide and 300px tall. `root>lower` has a bounding box of `x=0 y=700 width=400 height=40`, so it fits horizontally within 0–500 and sits below the current view; vertical scrolling can move it up to fully fit in the viewport (its height is only 40px). By contrast, `root>sideways` has `x=0 y=40 width=900 height=40`, so it extends to 900px wide while the viewport is only 500px; ordinary scrolling can’t bring the entire node into view without horizontal scrolling.\n\nANSWER: root>sideways\n",
+    "ms": 8336
+  },
+  {
+    "case": "unreachable-vs-scrollable",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>sideways",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the data:\n\n**Viewport:** 500x300 CSS pixels\n\n**Node analysis:**\n\n1. **`root>lower`** - `getBoundingClientRect: x=0 y=700 width=400 height=40`\n   - Positioned at y=700 with height 40, so it spans from y=700 to y=740\n   - The root has height=900, so the scrollable area extends to y=900\n   - This element is within the scrollable bounds (740 < 900)\n\n2. **`root>sideways`** - `getBoundingClientRect: x=0 y=40 width=900 height=40`\n   - Positioned at x=0 with width=900, so it spans from x=0 to x=900\n   - The viewport width is only 500px\n   - This element extends **horizontally** beyond the viewport (900 > 500)\n\n**Key distinction:** Ordinary scrolling moves vertically (up/down). The `root>lower` element is further down the page (y=700) and can be scrolled into view. The `root>sideways` element extends horizontally off the page (width=900 in a 500px viewport), which cannot be reached by vertical scrolling—horizontal overflow would require horizontal scrolling, but the root has `overflow: visible`, meaning the content simply renders off-screen without a scroll mechanism.\n\nANSWER: root>sideways\n",
+    "ms": 12825
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "2px 2px 2px 2px",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the browser data provided, I need to compare the `root>mid>leaf` element's padding in the two states: at rest and while hovering.\n\nIn the **rest state**, `root>mid>leaf` has:\n- padding: 2px 2px 2px 2px\n\nIn the **hover state**, `root>mid>leaf` has:\n- padding: 2px 2px 2px 2px\n\nThe padding values are identical in both states. The computed style data shows no change to the padding property when the `:hover` state is applied. All four padding values (top, right, bottom, left) remain 2px in both cases.\n\nANSWER: 2px 2px 2px 2px\n",
+    "ms": 6173
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "2px",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The browser data provided for the hover state explicitly lists the computed style for `root>mid>leaf`. Under the section detailing the node's properties while the mouse hovers over it, the `padding` is recorded as `2px 2px 2px 2px`. This value is identical to the padding rendered when the page is at rest, indicating the hover state does not change this specific property.\n\nANSWER: 2px\n",
+    "ms": 15347
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "2px",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the computed style data provided for `root>mid>leaf` while the mouse is hovering over it, the padding property is listed as `padding: 2px 2px 2px 2px`. Therefore, the padding it renders with is 2px.\n\nANSWER: 2px\n",
+    "ms": 8095
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "2px 2px 2px 2px",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "`root>mid>leaf` renders with the same padding while hovered as at rest: `2px` on all sides. The computed style shown for the hovered state still reports `padding: 2px 2px 2px 2px`, and the screenshots show no visible change.\n\nANSWER: 2px 2px 2px 2px\n",
+    "ms": 6856
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "15",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The browser’s computed `padding` for `root>mid>leaf` is shown as `padding: 2px 2px 2px 2px` both at rest and during the hover state. Comparing the hover section to the rest section, only the `root` and `mid` padding resets to `0px`, while the leaf’s padding remains unchanged at 2px on all sides. Therefore, while hovering it renders `padding: 2px 2px 2px 2px`.\n\nANSWER: 15\n",
+    "ms": 11602
+  },
+  {
+    "case": "state-over-ancestor",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "2px",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the hover state data for `root>mid>leaf`:\n\n```\nroot>mid>leaf <div>\n  padding: 2px 2px 2px 2px\n```\n\nThe padding is `2px` on all four sides (top, right, bottom, left). This is the same value as in the rest state - the hover doesn't change the padding.\n\nANSWER: 2px\n",
+    "ms": 10843
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the data provided, I need to compare the computed styles for `root>mid>leaf` in the two states:\n\n**At rest:** `padding: 2px 2px 2px 2px`\n\n**On hover:** `padding: 2px 2px 2px 2px`\n\nThe padding values are identical in both states. Despite the `:hover` block supposedly setting `padding: 40px`, the computed style shows no change when the element is hovered. This indicates that either the `:hover` rule is not being applied, is being overridden by other CSS, or the CSS selector for the `:hover` state is not matching the element correctly.\n\nANSWER: NO\n",
+    "ms": 5430
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the browser's data, hovering over `root>mid>leaf` does not change its padding. The `getComputedStyle` for `root>mid>leaf` shows a padding of `2px 2px 2px 2px` in both the rest state and the hover state, and its `getBoundingClientRect` dimensions remain identical at `500x23.1875`. Furthermore, the provided screenshots for the rest and hover states are visually indistinguishable, confirming that no layout or style change occurred.\n\nANSWER: NO\n",
+    "ms": 9172
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Comparing the computed style data for `root>mid>leaf` at rest and while hovering shows that its padding remains `2px 2px 2px 2px` in both states. Furthermore, the two screenshots show no visual change or expansion when hovered. Therefore, hovering over it does not change its padding.\n\nANSWER: NO\n",
+    "ms": 6177
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The computed styles shown for `root>mid>leaf` are identical at rest and on hover, and `padding` stays `2px 2px 2px 2px` in both states. So the `:hover` rule setting `padding: 40px` is not taking effect here.\n\nANSWER: NO\n",
+    "ms": 6563
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The computed styles show `root>mid>leaf` has `padding: 2px 2px 2px 2px` both before and during hover (the `getComputedStyle`/computed padding value does not change). Also, the bounding rect height stays the same between rest and hover, consistent with unchanged padding. Therefore, despite the hypothetical `:hover { padding: 40px; }`, the measured `:hover` state does not alter its padding.  \n\nANSWER: NO\n",
+    "ms": 7901
+  },
+  {
+    "case": "dead-hover",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the computed style data:\n\n**At rest:**\n- `root>mid>leaf` padding: `2px 2px 2px 2px`\n\n**While hovering:**\n- `root>mid>leaf` padding: `2px 2px 2px 2px`\n\nThe padding values are identical in both states. Additionally, the `getBoundingClientRect` shows the same dimensions (width=500, height=23.1875) in both cases, and the two screenshots appear identical. Despite the `:hover` CSS block specifying `padding: 40px`, the actual rendered padding does not change on hover.\n\nANSWER: NO\n",
+    "ms": 15533
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "30,30",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "Looking at the browser data provided:\n\nThe `root>plain>pin` element has `position: absolute` with `left: 10px` and `top: 10px`. Since its parent `root>plain` has `position: static` (not positioned), the containing block for the absolutely positioned element is not `root>plain`, but rather the next ancestor with a non-static position, which is `root` with `position: relative`.\n\nThe `root` element has padding of `20px 20px 20px 20px`. For an absolutely positioned element, the coordinates are relative to the padding edge of its containing block. Therefore, the top-left corner of `root>plain>pin` is positioned at:\n- x = root's left padding (20px) + left offset (10px) = 30px\n- y = root's top padding (20px) + top offset (10px) = 30px\n\nThis matches the `getBoundingClientRect` data shown, which indicates the element renders at `x=10 y=10` in viewport coordinates, but that's relative to the containing block's content box. The absolute position values are `left: 10px` and `top: 10px` relative to the containing block (`root`).\n\nANSWER: 30,30\n",
+    "ms": 6576
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "10,10",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root>plain>pin` element is `position: absolute`, so its containing block is the nearest positioned ancestor, which is `root` (`position: relative`). Although `root>plain` is its direct parent, it is `position: static` and is skipped for positioning purposes. Since `root` starts at `x=0, y=0` (with 0px borders), and the pinned element specifies `top: 10px` and `left: 10px` relative to `root`, its top-left corner renders at `10,10`.\n\nANSWER: 10,10\n",
+    "ms": 9202
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "10,10",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "According to the browser's `getBoundingClientRect()` data provided for `root>plain>pin`, its bounding rectangle has x=10 and y=10 relative to the viewport. Since `root>plain` has `position: static`, the absolute positioning of `pin` references `root`, placing its top-left corner at those exact coordinates.\n\nANSWER: 10,10\n",
+    "ms": 6006
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "10,10",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root>plain>pin` is `position: absolute`, so it looks for the nearest positioned ancestor. `root>plain` is `static`, so it is skipped. The positioned ancestor is `root`, and `left: 10px; top: 10px` place the element 10px from `root`'s padding box origin, which is at the viewport origin here.\n\nANSWER: 10,10\n",
+    "ms": 12953
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "10,10",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`getBoundingClientRect()` reports the element’s border box position relative to the viewport. For `root>plain>pin`, Chromium reports `x=10` and `y=10`, and `root>plain` being `position: static` means it doesn’t introduce any special offset for the child’s absolutely-positioned coordinate system beyond the normal layout/containing block resolution. Therefore, the top-left corner of `root>plain>pin` renders at `(10, 10)` in CSS pixels.\n\nANSWER: 10,10\n",
+    "ms": 6554
+  },
+  {
+    "case": "containing-block-skips-static-parent",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "10,10",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `getBoundingClientRect()` for `root>plain>pin` directly shows `x=10 y=10`. Since `root>plain` has `position: static`, it does not create a containing block for absolutely positioned descendants. Therefore, `pin` (which is `position: absolute`) positions itself relative to the nearest positioned ancestor—`root` with `position: relative`. The `top: 10px` and `left: 10px` are calculated from `root`'s containing block, resulting in the rendered position shown in the rect data.\n\nANSWER: 10,10\n",
+    "ms": 15984
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the bounding client rectangles provided:\n\n- `root>outer>filler` has a height of 60px\n- `root>outer>tall` has a height of 19.1875px\n\nThe question asks if `root>outer>tall` (which declares `height: 100%`) is taller than its sibling `root>outer>filler`.\n\nSince `root>outer>tall` is 19.1875px and `root>outer>filler` is 60px, `root>outer>tall` is clearly shorter than its sibling. The `height: 100%` declaration on `root>outer>tall` resolves to 19.1875px, which means it's only taking up about 32% of the filler's height. This likely occurs because the parent `root>outer` has a computed height of 79.1875px, and when percentage heights are applied to block elements in a flex or flow context where the parent height is determined by its content, the percentage resolution can behave differently than expected.\n\nANSWER: NO\n",
+    "ms": 5609
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Based on the browser data provided, `root>outer>filler` has a height of 60px, while `root>outer>tall` has a height of 19.1875px. Since 19.1875px is less than 60px, `root>outer>tall` is shorter than its sibling.\n\nANSWER: NO\n",
+    "ms": 7295
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "According to the browser's bounding client rect data, `root>outer>tall` has a height of 19.1875px, while its sibling `root>outer>filler` has a height of 60px. Therefore, `root>outer>tall` is shorter than its sibling, not taller.\n\nANSWER: NO\n",
+    "ms": 5794
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The rendered geometry shows `root>outer>filler` is `60px` tall, while `root>outer>tall` is only `19.1875px` tall. So even though `tall` declares `height: 100%`, its percentage height does not resolve to something larger here, and it ends up shorter than its sibling.\n\nANSWER: NO\n",
+    "ms": 5820
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>outer>filler` has a `getBoundingClientRect()` height of `60`, while `root>outer>tall` has a `getBoundingClientRect()` height of `19.1875`. Since `19.1875` is less than `60`, `root>outer>tall` is not taller than its sibling.  \n\nANSWER: NO\n",
+    "ms": 6170
+  },
+  {
+    "case": "percent-height-indefinite",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the browser's rendering data:\n\n- `root>outer>filler` has a height of **60px**\n- `root>outer>tall` has a height of **19.1875px**\n\nEven though `root>outer>tall` declares `height: 100%`, the percentage height cannot resolve properly because its parent (`root>outer`) has no explicitly set height—it shrinks to fit its content. This causes the 100% to effectively compute to `auto`, leaving `tall` at its natural content height (just enough for the text \"b\").\n\nANSWER: NO\n",
+    "ms": 11668
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the information provided:\n\nThe `root>card` div has a width of 200px with 24px padding on all sides, which means the content width is 200px - 48px = 152px.\n\nThe text \"one two three four five six seven eight nine ten\" needs to fit within this 152px width. With a font-size of 16px and line-height of 19.2px, the text wraps as shown in the screenshot.\n\nCounting the lines in the screenshot:\n1. \"one two three\"\n2. \"four five six\"\n3. \"seven eight\"\n4. \"nine ten\"\n\nThe `getBoundingClientRect()` data for `root>card` shows height=124.75px. With line-height of 19.2px and padding of 24px top and bottom, the content height is approximately 124.75 - 48 = 76.75px. Dividing by line-height: 76.75 / 19.2 ≈ 4 lines.\n\nANSWER: 4\n",
+    "ms": 6324
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root>card` element has a total height of `124.75px` and a `line-height` of `19.2px`. After subtracting the top and bottom padding of `24px` each (total `48px`), the remaining content height is `76.75px`. Dividing this content height by the line height ($76.75 / 19.2 \\approx 4$) indicates the text occupies 4 lines, which is confirmed by the visual evidence in the screenshot.\n\nANSWER: 4\n",
+    "ms": 9710
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The text inside `root>card` wraps across multiple lines due to the constrained width and padding of the container. Examining the provided screenshot and rendering details, the text breaks into four distinct lines: \"one two three\", \"four five six\", \"seven eight\", and \"nine ten\".\n\nANSWER: 4\n",
+    "ms": 7144
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The text in `root>card` is rendered on 4 lines. The screenshot shows the content split as `one two three`, `four five six`, `seven eight`, and `nine ten`, which matches the available width and the card’s padding.\n\nANSWER: 4\n",
+    "ms": 12267
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The screenshot shows the text broken into four visible lines within `root>card`: “one two three four five six seven eight nine ten” is rendered as four rows. This matches the geometry too: the computed `line-height` is 19.2px, so 4 lines take about 76.8px, and with the card’s `padding-top` + `padding-bottom` of 24px + 24px = 48px, the total height is about 124.8px, aligning with the reported `height=124.75px`.  \n\nANSWER: 4\n",
+    "ms": 7670
+  },
+  {
+    "case": "padding-shrinks-content-box",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "4",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the screenshot, I can count the visible lines of text:\n\n1. \"one two three\"\n2. \"four five six\"\n3. \"seven eight\"\n4. \"nine ten\"\n\nThe text content \"one two three four five six seven eight nine ten\" is wrapped across 4 distinct lines within the card element.\n\nANSWER: 4\n",
+    "ms": 10411
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the bounding rectangle data:\n\n- `root>first` has `y=0` and `height=40`, so it occupies y=0 to y=40\n- `root>third` has `y=40` and `height=40`, so it occupies y=40 to y=80\n- `root>gone` has `display: none`, which removes it from the document flow entirely\n\nSince `root>third` starts at y=40 (immediately where `root>first` ends), there is **no gap** between them. The `root>gone` element, despite having a height of 40px in its style, does not occupy any space in the layout because `display: none` removes it from the document flow completely. The third element moved up to fill the space where the gone element would have been.\n\nANSWER: NO\n",
+    "ms": 5217
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the provided information, `root>gone` has `display: none`, which means it is removed from the layout flow and occupies no space. The `getBoundingClientRect` data confirms this, showing that `root>first` ends at `y=40` and `root>third` begins immediately at `y=40`. Therefore, there is no vertical gap between the two visible elements.\n\nANSWER: NO\n",
+    "ms": 7652
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the bounding client rectangles, `root>first` ends at `y=40` and `root>third` begins immediately at `y=40`. Because `root>gone` has `display: none`, it is completely removed from the document layout and leaves no empty space or gap between the surrounding elements.\n\nANSWER: NO\n",
+    "ms": 5529
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The rects show `root>first` occupies `y=0..40` and `root>third` starts at `y=40`, so they are adjacent. Since `root>gone` is `display: none`, it takes no space in layout and leaves no 40px gap.\n\nANSWER: NO\n",
+    "ms": 6264
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>gone` has `display: none`, and its `getBoundingClientRect()` is `width=0 height=0`, meaning it does not participate in layout. `root>first` ends at `y=0 + height=40`, and `root>third` begins exactly at `y=40`. If there were a reserved 40px gap for `root>gone`, `root>third` would have started at `y=80` instead.\n\nANSWER: NO\n",
+    "ms": 6234
+  },
+  {
+    "case": "display-none-closes-gap",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the bounding rectangles:\n\n- `root>first`: y=0, height=40 → occupies y=0 to y=40\n- `root>gone`: width=0, height=0 → takes up no space (as expected with `display: none`)\n- `root>third`: y=40, height=40 → occupies y=40 to y=80\n\n`root>third` starts exactly where `root>first` ends (at y=40). There is no gap between them. When an element has `display: none`, it is completely removed from the layout flow and adjacent elements collapse together as if it never existed.\n\nANSWER: NO\n",
+    "ms": 14377
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "50",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the bounding rectangle data provided:\n\nThe `root>floaty` element has `getBoundingClientRect: x=0 y=50 width=90 height=20`. This means its top edge is positioned at y=50.\n\nEven though `root>floaty` is `position: absolute` with no explicit `top`, `right`, `bottom`, or `left` properties set, it still renders at a specific position. According to the browser's computed layout, the element's top edge is at y=50 CSS pixels.\n\nThe reason this occurs is that when an absolutely positioned element doesn't have explicit positioning properties, it defaults to the position where it would have been in the normal flow. Since `root>floaty` comes after `root>spacer` (which is 50px tall), the absolutely positioned element renders at y=50.\n\nANSWER: 50\n",
+    "ms": 5916
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "50",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>floaty` is `position: absolute` but lacks any specified offsets (`top`, `left`, etc.), meaning it renders at its static position—the position it would occupy in the normal document flow. Since its sibling `root>spacer` has a height of 50px and starts at `y=0`, the static position for the next element begins immediately below it at `y=50`. The provided `getBoundingClientRect` for `root>floaty` confirms this vertical coordinate.\n\nANSWER: 50\n",
+    "ms": 8397
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "50",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "When an element is `position: absolute` without any offset properties (`top`, `right`, `bottom`, or `left`), it is placed at its static position in normal flow. Since `root>spacer` occupies the first 50px of height (`y=0` to `50`), the static position of `root>floaty` places its top edge right below it at `y=50`.\n\nANSWER: 50\n",
+    "ms": 7940
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "50",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "With no `top/right/bottom/left`, an absolutely positioned element uses its static position. Here `root>floaty` comes after `root>spacer`, which occupies the first 50px of vertical flow, so its top edge renders at `y = 50`.\n\nANSWER: 50\n",
+    "ms": 6836
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "50",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Because `root>floaty` is `position: absolute`, its rendered position is given directly by its `getBoundingClientRect()` output. The Chromium data shows `root>floaty getBoundingClientRect: x=0 y=50 width=90 height=20`, so its top edge is at **y = 50** CSS pixels.  \n\nANSWER: 50\n",
+    "ms": 6772
+  },
+  {
+    "case": "static-position-absolute",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "50",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `getBoundingClientRect()` data shows the actual rendered position of the element. For `root>floaty`, it reports `y=50`, which means the top edge of the element is positioned at 50 CSS pixels from the top of the viewport.\n\nEven though `root>floaty` is `position: absolute` with no explicit `top`/`left` values, it renders at its static position (where it would have been in normal document flow). Since `root>spacer` occupies y=0 to y=50 (height=50), the `floaty` element's static position starts at y=50, and that's where it renders.\n\nANSWER: 50\n",
+    "ms": 12086
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the data provided:\n\nThe `root>inner` element has `position: fixed` with `top: 15px` and `left: 25px`. When an element is `position: fixed`, it is positioned relative to the viewport, not relative to its parent's positioning context. This means the `position: relative` on the parent `root` and its 40px padding have no effect on the positioning of the fixed child.\n\nAccording to the `getBoundingClientRect()` data, `root>inner` is at `x=25 y=15`, which confirms it is positioned 25px from the left edge of the viewport and 15px from the top edge of the viewport.\n\nANSWER: 25,15\n",
+    "ms": 5352
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>inner` element has `position: fixed`, which means it is positioned relative to the viewport, ignoring the `position: relative` and padding of its parent `root`. The browser's `getBoundingClientRect` data explicitly confirms that the element is rendered at `x=25` and `y=15`, matching its `left: 25px` and `top: 15px` CSS properties.\n\nANSWER: 25,15\n",
+    "ms": 7873
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "An element with `position: fixed` is positioned relative to the viewport. Since `root>inner` has `top: 15px` and `left: 25px`, and its `getBoundingClientRect()` explicitly confirms its top-left coordinates are `x=25, y=15`, it renders at that location in the viewport.\n\nANSWER: 25,15\n",
+    "ms": 7220
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root>inner` is `position: fixed`, so it is positioned relative to the viewport, not the padded `root` element. Therefore `top: 15px` and `left: 25px` place its top-left corner at `(25, 15)` in viewport coordinates.\n\nANSWER: 25,15\n",
+    "ms": 7310
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`getBoundingClientRect()` reports the rendered position of the element’s top-left corner relative to the viewport (in CSS pixels). For `root>inner`, Chromium reports `x=25` and `y=15`, so its top-left corner is rendered at those coordinates. The `root` padding and `position: relative` don’t change this absolute viewport position because `root>inner` is `position: fixed`.\n\nANSWER: 25,15\n",
+    "ms": 7987
+  },
+  {
+    "case": "fixed-ignores-positioned-parent",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "25,15",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The `root>inner` element has `position: fixed`, which means it is positioned relative to the **viewport**, not relative to its parent. The parent's `position: relative` and 40px padding have no effect on the fixed child's positioning.\n\nThe browser's `getBoundingClientRect()` directly tells us where the element renders: `x=25 y=15`. This matches the CSS `top: 15px; left: 25px` values, confirming the fixed-positioned element renders at those exact viewport coordinates.\n\nANSWER: 25,15\n",
+    "ms": 13587
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "64",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the browser data provided:\n\nThe `root` element has `font-size: 16px` and `line-height: 2` (a unitless ratio). This means the root's line-height is `2 × 16px = 32px`.\n\nThe `root>big` element declares `font-size: 32px` and nothing else for line-height. Since `line-height` is not specified, it inherits from the parent (`root`). When a unitless `line-height` value is inherited, it is NOT recalculated based on the child's font-size—the computed value (32px) is inherited directly.\n\nTherefore, `root>big` has `font-size: 32px` and `line-height: 32px`, giving it a height of 32px.\n\nHowever, looking at the actual `getBoundingClientRect()` data in the information, `root>big` has `height: 64px` and `line-height: 64px`. This indicates the browser computed the line-height ratio against the child's own font-size (32px × 2 = 64px), meaning the unitless ratio was inherited and recalculated.\n\nBased on the actual rendered data provided: `root>big` renders with a height of **64px**.\n\nANSWER: 64\n",
+    "ms": 7533
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "64",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root` element declares a unitless `line-height: 2`, which is inherited by its child `root>big` as a ratio rather than a fixed pixel value. Consequently, `root>big` calculates its own line height by multiplying its `font-size` (32px) by this ratio (2), resulting in 64px. The provided browser data confirms that `root>big` has a computed `line-height` of 64px and a bounding box height of 64px.\n\nANSWER: 64\n",
+    "ms": 8571
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "64",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the provided browser layout data, `root>big` has a `font-size` of `32px` and inherits the unitless `line-height` ratio of `2` from `root`, resulting in a computed line-height of `64px`. According to its `getBoundingClientRect()`, its rendered height is `64px`.\n\nANSWER: 64\n",
+    "ms": 7084
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "64",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`line-height: 2` is unitless, so it inherits as a multiplier rather than a fixed pixel value. `root>big` has `font-size: 32px`, so its used line height becomes `32px * 2 = 64px`, which matches the rendered bounding box height.\n\nANSWER: 64\n",
+    "ms": 6114
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "64",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root` sets `line-height: 2` and `font-size: 16px`, so the effective line-height becomes `2 × 32px = 64px` when `root>big` overrides `font-size` to `32px` (while inheriting the line-height multiplier). The Chromium evidence confirms this: `root>big` has `getComputedStyle` line-height of `64px` and `getBoundingClientRect` height of `64px`.  \n\nANSWER: 64\n",
+    "ms": 10331
+  },
+  {
+    "case": "line-height-ratio-inherits",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "64",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the rendered data for `root>big`:\n\n- `getBoundingClientRect` shows `height=64`\n- `font-size: 32px` and `line-height: 64px`\n\nThe key is that `root` declares `line-height: 2` (a unitless ratio). Unitless line-height values are **inherited as ratios**, not as computed pixel values. So `root>big` inherits the ratio `2` and multiplies it by its own font-size: `32px × 2 = 64px`.\n\nThis is confirmed by the computed style showing `line-height: 64px` and the bounding box height of 64.\n\nANSWER: 64\n",
+    "ms": 15702
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the browser data provided:\n\n- `root>cell` has a width of 120px\n- The text content is \"https://example.com/a/very/long/path/that/never/breaks\"\n- The `root>cell` div has `overflow: visible` (not `overflow: hidden` or `overflow: auto`)\n- The `getBoundingClientRect()` shows the element is only 120px wide\n\nThe URL text is significantly longer than 120 pixels at 16px font size. With `overflow: visible`, the text would overflow outside the 120px-wide box visually, even though the box itself remains 120px wide. The screenshot shows the URL extending beyond the left boundary of the visible area, confirming the text overflows the container.\n\nANSWER: NO\n",
+    "ms": 6462
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The URL in `root>cell` does not stay inside the 120px-wide box. The `getComputedStyle` for `root>cell` specifies a `width` of `120px` and `overflow: visible`, while the screenshot shows the long URL string extending nearly across the entire 600px-wide viewport. Since the URL contains no spaces or break points and the container is only 120px wide, the text overflows its bounds horizontally.\n\nANSWER: NO\n",
+    "ms": 8195
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root>cell` element has a width of 120px and an `overflow: visible` property. Because the URL string is extremely long and does not wrap or break, it overflows the 120px boundary of the box and extends across the screen.\n\nANSWER: NO\n",
+    "ms": 5968
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. The `root>cell` box is only 120px wide, but the URL is a single long unbroken string and the screenshot shows it rendering past that width instead of wrapping or clipping. Since `overflow` is `visible`, the text is allowed to spill outside the box.\n\nANSWER: NO\n",
+    "ms": 8789
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>cell`’s bounding box is only `120px` wide (`getBoundingClientRect width=120`), while the URL in that same element is extremely long and appears as an unbroken text node (a full URL string). The cell also has `overflow: visible` and no evidence of wrapping/truncation being applied, so Chromium would paint the long URL beyond the 120px box rather than constrain it within that width. Therefore, the URL does not stay inside the `root>cell` 120px-wide box.\n\nANSWER: NO\n",
+    "ms": 9561
+  },
+  {
+    "case": "long-word-overflows",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the data:\n\n- `root>cell` has `width=120px` and `overflow: visible`\n- The text content is \"https://example.com/a/very/long/path/that/never/breaks\"\n- The screenshot shows the URL rendering across nearly the full 600px viewport width\n- The parent `root` has `width=600px`\n\nSince the text is visibly rendered extending far beyond the 120px boundary of `root>cell` (it would need roughly 400-500px to display that entire URL at 16px font), and `overflow: visible` allows content to render outside the box, the URL clearly overflows its container.\n\nANSWER: NO\n",
+    "ms": 13099
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>body",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the evidence provided:\n\nThe `root>body>panel` section element currently has `padding: 4px 4px 4px 4px` applied (as shown in the getBoundingClientRect data), even though the question states that `padding: 32px` has already been added to its own css block in the source.\n\nThis means the 32px padding rule in the `root>body>panel` css block is being shadowed or overridden by another css rule that's applying 4px padding instead. The shadowing rule must be coming from a parent or higher-specificity selector.\n\nSince the padding is not rendering as 32px despite being in the source, we need to edit the css block of one of the ancestor nodes that is overriding it. The most likely candidate is `root>body`, which is the direct parent of `root>body>panel` and could be applying a more specific rule that shadows the padding on the panel.\n\nANSWER: root>body\n",
+    "ms": 5919
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>body",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root>body>panel` element currently has a computed padding of 4px, even though `padding: 32px` has already been declared in its own CSS block. This indicates that the 32px declaration is being shadowed (overridden) by a CSS rule with higher specificity or precedence. In this component hierarchy, such shadowing typically occurs when a parent node's CSS block contains a rule specifically targeting the child element. Therefore, to allow the 32px padding to take effect, the overriding rule in the parent's CSS block must be edited.\n\nANSWER: root>body\n",
+    "ms": 37783
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>body",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Even though `padding: 32px` has been added to `root>body>panel`'s own css block, the rendering remains unchanged because a conflicting rule defined in the parent node's css block shadows or overrides it. To successfully apply the 32px padding to the panel, you must edit the css block of its parent container where the shadowing rule resides.\n\nANSWER: root>body\n",
+    "ms": 14737
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "root>body",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>body>panel` already has `padding: 32px`, but its computed padding stays `4px`, so that value is being overridden by a rule from elsewhere in the cascade. The only other plausible source in this tree is the ancestor `root>body` block, which is the one you need to edit.\n\nANSWER: root>body\n",
+    "ms": 28713
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>body>panel",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The screenshot/Chromium evidence shows the computed styles for `root>body>panel` include `padding: 4px 4px 4px 4px`, meaning whatever padding rules are currently applied are coming from that node’s own CSS block. Since you specifically want `root>body>panel` to render with `32px` padding, you need to change the CSS rules that apply to that same node. The `root` and `root>body` blocks both show `padding: 0px`, so they’re not the source of the `panel` padding.\n\nANSWER: root>body>panel\n",
+    "ms": 7012
+  },
+  {
+    "case": "repair-shadowed-padding",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>body",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the evidence:\n\n1. The `root>body>panel` element shows `padding: 4px 4px 4px 4px` in its computed styles\n2. The user states that `padding: 32px` was already added to `root>body>panel`'s own CSS block, but the rendering didn't change\n3. This means the 4px padding is coming from a **different CSS rule** that's overriding it (higher specificity, `!important`, or a parent's CSS block that targets this element)\n\nSince editing `root>body>panel`'s own CSS block had no effect, the 4px padding must be defined in a **parent node's CSS block** (either `root` or `root>body`) using a selector that targets the panel element. To fix this, I need to edit the parent's CSS block where the 4px is actually coming from.\n\nGiven the structure and the \"shadowed\" nature of the problem, the most likely source is `root>body`'s CSS block containing a rule like `panel { padding: 4px }`.\n\nANSWER: root>body\n",
+    "ms": 22411
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>mid",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the evidence provided:\n\n1. The problem states that `:hover { padding: 40px }` has already been added to `root>mid>leaf`'s own CSS block, yet hovering produces no visual change.\n\n2. Comparing the two sets of computed styles (rest vs. hover), the `root>mid>leaf` node shows identical values in both states - padding remains at `2px 2px 2px 2px` even during hover.\n\n3. The issue is that `root>mid>leaf` has `display: block` and `width: 500px` (filling its parent). When you add padding to a block-level element that fills its container, the padding doesn't cause visible growth because the element's content box is constrained.\n\n4. To make the padding visible and cause the element to appear to \"grow,\" you need to apply `box-sizing: border-box` or adjust the parent's styling. However, the more direct solution is to modify the parent (`root>mid`) to have `display: flex` or `display: grid`, or to modify `root>mid>leaf` itself to not fill the full width, or to apply the padding change at the parent level where it will be visible.\n\n5. Since the question asks which node's CSS block must be edited, and the hover rule is already on `root>mid>leaf` but not working, the parent node `root>mid` needs to be edited to allow its child's padding changes to be visible (e.g., by changing how it constrains its children).\n\nANSWER: root>mid\n",
+    "ms": 9536
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>mid",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The rendered data and screenshots show that hovering over `root>mid>leaf` does not trigger the `:hover { padding: 40px }` style, even though the rule exists in the leaf's CSS block. This \"dead hover\" occurs because the leaf element is not receiving pointer events, typically because an ancestor is intercepting them or has disabled them for its descendants. In this specific hierarchy, the intermediate `root>mid` node is the most likely location of a `pointer-events: none` property that is blocking the hover state from reaching the leaf. By editing the CSS block for `root>mid` to enable pointer events or by defining the hover trigger at the `mid` level to affect its child, the desired padding change can be achieved.\n\nANSWER: root>mid\n",
+    "ms": 78755
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>mid>leaf",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "When writing nested CSS rules, a selector like `:hover` without the nesting reference (`&`) applies to descendants rather than the element itself. Since `:hover` was added directly inside `root>mid>leaf`'s CSS block without `&`, hovering the leaf node itself does not trigger the style. Therefore, you must edit `root>mid>leaf`'s own CSS block to include `&` so that the hover selector correctly targets the leaf node.\n\nANSWER: root>mid>leaf\n",
+    "ms": 16739
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "root>mid",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The leaf’s own `:hover` rule isn’t taking effect, so the hover-triggered padding has to be defined from its parent context instead. The immediate parent `root>mid` is the block that can react to the hover and style `root>mid>leaf`.\n\nANSWER: root>mid\n",
+    "ms": 69442
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>mid",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "The computed `padding` on `root>mid>leaf` is `2px` both at rest and during hover. Since the `:hover { padding: 40px }` rule supposedly already exists in the leaf’s own css block but the computed padding does not change, the `2px` padding is almost certainly being set/overridden by styling coming from an ancestor’s css block. The only candidate, based on the node tree and which elements have non-zero padding, is `root>mid`.\n\nANSWER: root>mid\n",
+    "ms": 20435
+  },
+  {
+    "case": "repair-dead-hover",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>mid",
+    "pass": false,
+    "proseAgrees": true,
+    "reply": "Looking at the evidence:\n\n1. The `:hover { padding: 40px }` rule **already exists** in `root>mid>leaf`'s CSS block\n2. When hovering over `root>mid>leaf`, the computed styles show **no change** - padding stays at `2px` instead of becoming `40px`\n3. Both screenshots look identical\n\nThe issue is that in CSS-in-TS systems (where each node has its own CSS block), a `:hover` pseudo-class defined in a child's own CSS block often doesn't work because the hover state needs to be declared by the **parent** that contains the hover relationship. The parent's CSS block can then target the child on hover.\n\nSince `root>mid>leaf`'s own hover rule isn't applying, you need to move the hover rule to the parent node's CSS block (`root>mid`), which can then properly apply the hover styling to its child.\n\nANSWER: root>mid\n",
+    "ms": 46025
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "30,30",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "I need to determine where the top-left corner of `root>plain>pin` would render after adding `position: relative` to `root>plain`.\n\nCurrently, `root>plain>pin` has `position: absolute` with `top: 10px` and `left: 10px`. Its current bounding rect shows it at `x=10 y=10`.\n\nThe key insight is understanding what an absolutely positioned element's coordinates are relative to. Currently, `root>plain` has `position: static`, so the absolutely positioned child `root>plain>pin` is positioned relative to `root` (the nearest positioned ancestor with `position: relative`).\n\nWhen we add `position: relative` to `root>plain`, it becomes the new positioning context for the absolutely positioned child. The `top: 10px` and `left: 10px` values on `root>plain>pin` will then be relative to `root>plain`'s position, not `root`'s position.\n\n`root>plain` has a bounding rect starting at `x=20 y=20`. Adding `position: relative` doesn't change its position on the page, but it does establish a new positioning context.\n\nThe absolutely positioned child with `top: 10px` and `left: 10px` will now be positioned 10px from the top and 10px from the left of `root>plain`'s box edge.\n\nSo the new position would be:\n- x = 20 (root>plain's x) + 10 (left value) = 30\n- y = 20 (root>plain's y) + 10 (top value) = 30\n\nANSWER: 30,30\n",
+    "ms": 6034
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "30,30",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Currently, `root>plain>pin` is `position: absolute` and its nearest positioned ancestor is `root` (`position: relative`). Since `root` starts at (0, 0), the `left: 10px` and `top: 10px` offsets result in the `pin` rendering at (10, 10).\n\nAdding `position: relative` to `root>plain` makes it the new nearest positioned ancestor for `pin`. The `pin` element's offsets will then be calculated relative to the top-left corner of `root>plain`. Since `root>plain` is located at (20, 20), the new coordinates for `pin` will be 20 + 10 for x and 20 + 10 for y.\n\nReasoning:\n1. `root>plain` is at (20, 20) because of `root`'s 20px padding.\n2. `root>plain>pin` is absolute and will now be relative to `root>plain`'s origin.\n3. Adding the `left: 10px` and `top: 10px` to `root>plain`'s (20, 20) origin results in (30, 30).\n\nANSWER: 30,30\n",
+    "ms": 12269
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "30,30",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Adding `position: relative` to `root>plain` makes it the nearest positioned ancestor for `root>plain>pin`, shifting its containing block from `root` to `root>plain`. Since `root>plain`'s padding edge starts at viewport coordinates x=20, y=20, applying `left: 10px` and `top: 10px` places the top-left corner of `root>plain>pin` at `20 + 10 = 30` for both x and y.\n\nANSWER: 30,30\n",
+    "ms": 17258
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "60,60",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "`root>plain` becomes the containing block, so `root>plain>pin` is positioned from `plain`’s padding box. `plain`’s border box starts at `(20,20)`, and its `padding-left/top` is `30`, so the padding box starts at `(50,50)`. Adding `left: 10px; top: 10px` puts `pin` at `(60,60)`.\n\nANSWER: 60,60\n",
+    "ms": 10368
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "30,30",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `pin` element is `position: absolute` with `top: 10px; left: 10px`. An absolutely-positioned element is laid out relative to the nearest ancestor that is *positioned* (not `position: static`). Currently, `root>plain` is `static`, so the nearest positioned ancestor is `root` (`position: relative`), and the evidence shows `root>plain>pin` renders at `(10,10)`.  \n\nAfter adding `position: relative` to `root>plain`, that element becomes the containing block, whose bounding rect starts at `(20,20)`. Keeping the same `top/left` offsets of `10,10` yields `(20+10, 20+10) = (30,30)`.\n\nANSWER: 30,30\n",
+    "ms": 19167
+  },
+  {
+    "case": "predict-containing-block-change",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "30,30",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "## Reasoning\n\nCurrently, `root>plain>pin` has `position: absolute` but its parent `root>plain` has `position: static`. This means `pin` is positioned relative to `root` (the nearest positioned ancestor), placing it at x=10, y=10 relative to `root`'s origin.\n\nWhen `position: relative` is added to `root>plain`, it becomes the containing block for `pin`. The `left: 10px` and `top: 10px` values will now be calculated relative to `root>plain`'s padding box instead.\n\n`root>plain` renders at x=20, y=20 in the viewport. With `pin` offset by 10px from that origin, the new position becomes 20+10=30 for both coordinates.\n\nANSWER: 30,30\n",
+    "ms": 24376
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the browser data provided:\n\n- `root>first` has `getBoundingClientRect: x=0 y=0 width=100`\n- `root>second` has `getBoundingClientRect: x=110 y=0 width=100`\n\nThe `root` element is `display: flex` with `flex-direction: row` and `gap: 10px`. The first child starts at x=0 and is 100px wide, so it occupies the range [0, 100). With a 10px gap, the second child's left edge should start at 100 + 10 = 110px, which matches the getBoundingClientRect data showing `x=110` for `root>second`.\n\nANSWER: 110\n",
+    "ms": 7027
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root` element is a flex container with `flex-direction: row` and a `gap` of `10px`. The first child, `root>first`, starts at `x=0` and has a width of `100px`, placing its right edge at `x=100`. The second child, `root>second`, begins after this width plus the `10px` gap, resulting in an x-coordinate of `110`, which is confirmed by its `getBoundingClientRect` data.\n\nANSWER: 110\n",
+    "ms": 10477
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The first child (`root>first`) starts at an x-coordinate of 0 and has a width of 100px, placing its right edge at x = 100. Because the flex container (`root`) has a `gap` of 10px, the second child (`root>second`) is positioned 10px after the first child's right edge. Therefore, the left edge of `root>second` renders at x = 110.\n\nANSWER: 110\n",
+    "ms": 8557
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root` starts at `x=0`. The first child is `100px` wide, and the flex `gap` adds `10px` between the two items, so the second child begins at `0 + 100 + 10 = 110`.\n\nANSWER: 110\n",
+    "ms": 8940
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root` is a flex container laid out in a row direction with `gap: 10px`. The first child (`root>first`) has width `100px`, so the second child’s left edge should be placed at `100px + 10px = 110px` from the container’s left edge. This matches the provided `getBoundingClientRect()` for `root>second`, which reports `x=110`.\n\nANSWER: 110\n",
+    "ms": 11508
+  },
+  {
+    "case": "flex-row-arranges-children",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "110",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root` container has `display: flex` with `flex-direction: row` and `gap: 10px`. The first child (`root>first`) is 100px wide and starts at x=0, so it ends at x=100. The 10px gap occupies the space from x=100 to x=110. Therefore, `root>second`'s left edge starts at x=110, which is confirmed by its `getBoundingClientRect` showing `x=110`.\n\nANSWER: 110\n",
+    "ms": 14415
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the browser data provided:\n\nThe `root` container is 600px wide with `display: flex`. The two children have `flex: 1 1 0%` and `flex: 2 1 0%` respectively, which means they share the available space in proportion to their flex-grow values (1:2 ratio).\n\nSince there's no gap or padding involved, the 600px is divided between the two children in a 1:2 ratio:\n- `root>a` gets 1/(1+2) × 600 = 200px\n- `root>b` gets 2/(1+2) × 600 = 400px\n\nThis matches the `getBoundingClientRect()` data shown, which confirms `root>b` has `width=400`.\n\nANSWER: 400\n",
+    "ms": 9708
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root` container has a total width of 600px and uses `display: flex`. Both children have a `flex-basis` of `0%`, meaning the entire 600px of space is distributed according to their `flex-grow` factors. Since `root>a` has `flex-grow: 1` and `root>b` has `flex-grow: 2`, the space is divided into 3 units (1 + 2), with `root>b` receiving 2/3 of the total width (600px * 2/3 = 400px). This is confirmed by the browser's `getBoundingClientRect` data, which explicitly states the width of `root>b` is 400.\n\nANSWER: 400\n",
+    "ms": 10382
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The container `root` has a total width of 600px. With `root>a` having a flex factor of 1 and `root>b` having a flex factor of 2, the available free space is distributed proportionally between them (1/3 and 2/3). According to the browser's `getBoundingClientRect()`, `root>b` has a width of 400px.\n\nANSWER: 400\n",
+    "ms": 8091
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The flex container is 600px wide, and both items have `flex-basis: 0%`, so the available space is split only by flex-grow values. With `flex: 1` and `flex: 2`, the 600px is divided into 3 equal parts: `root>a` gets 200px and `root>b` gets 400px. This also matches the reported bounding box for `root>b`.\n\nANSWER: 400\n",
+    "ms": 9403
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root` is a flex container with a total width of 600 CSS pixels. Since `root>a` has `flex: 1` and `root>b` has `flex: 2`, their widths should be in a 1:2 ratio, i.e. 600 × (1/3) = 200 for `root>a` and 600 × (2/3) = 400 for `root>b`. This matches the provided `getBoundingClientRect()` values (`root>b` has width 400).  \nANSWER: 400\n",
+    "ms": 12138
+  },
+  {
+    "case": "flex-grow-shares-remaining",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "400",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Based on the browser's `getBoundingClientRect()` data provided for `root>b`, the width is explicitly given as **400 CSS pixels**.\n\nThis matches the expected flexbox calculation: with `flex: 1 1 0%` on A and `flex: 2 1 0%` on B, the 600px container is divided proportionally by flex-grow values (1+2=3 total shares). Element B gets 2/3 of the space: 600 × (2/3) = 400px.\n\nANSWER: 400\n",
+    "ms": 15160
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the provided data:\n\nThe `root` element is a grid with:\n- `grid-template-columns: 200px 300px` (first column is 200px, second column is 300px)\n- `gap: 20px` (20px gap between columns)\n\nThe `root>right` element is the second grid item. Its left edge position is calculated as:\n- First column width: 200px\n- Gap after first column: 20px\n- Total: 200px + 20px = 220px\n\nThis matches the `getBoundingClientRect()` data which shows `root>right` has `x=220`, confirming the left edge renders at x=220.\n\nANSWER: 220\n",
+    "ms": 7299
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root` element defines a grid with two columns of 200px and 300px width, separated by a 20px gap. The first item, `root>left`, occupies the first 200px (from x=0 to x=200). The `root>right` element starts after both the first column and the gap, placing its left edge at $200\\text{px} + 20\\text{px} = 220\\text{px}$, which is also confirmed by its `getBoundingClientRect` data.\n\nANSWER: 220\n",
+    "ms": 13413
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The `root` element is a CSS grid with a first column width of 200px and a 20px gap. Therefore, the second column (`root>right`) starts immediately after the first column plus the gap, at x = 200 + 20 = 220, which is also confirmed by its `getBoundingClientRect` x value.\n\nANSWER: 220\n",
+    "ms": 8617
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>right` starts after the first 200px column plus the 20px gap, so its left edge renders at `x = 220px`. That matches the reported bounding rect.\n\nANSWER: 220\n",
+    "ms": 8174
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root` is a grid with `grid-template-columns: 200px 300px` and `gap: 20px`. The first column occupies 200px from the grid’s left edge, and then the gap of 20px comes before the second column. So the left edge of `root>right` (the second grid item) renders at `0 + 200 + 20 = 220` CSS pixels, matching the reported bounding box `x=220`.\n\nANSWER: 220\n",
+    "ms": 9118
+  },
+  {
+    "case": "grid-two-columns",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "220",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The browser's own `getBoundingClientRect()` data directly shows that `root>right` renders at `x=220`. This matches the grid layout calculation: the first column is 200px wide, plus the 20px gap, so the second column starts at 200 + 20 = 220px.\n\nANSWER: 220\n",
+    "ms": 12724
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the provided information, I need to determine if the text in `root>main>r09` (which contains \"09. Currency hedging\") is readable by a viewer.\n\nFrom the node tree, `root>main>r09` is a div with the text \"09. Currency hedging\".\n\nFrom the bounding client rect data, `root>main>r09` has:\n- x=244, y=276, width=1012, height=26\n- It's positioned on the page at coordinates that place it within the visible viewport (1280x800)\n\nHowever, looking at `root>banner`, there's a div positioned absolutely at:\n- x=244, y=276, width=700, height=26\n- background-color: rgb(204, 34, 34) (dark red)\n- z-index: 5\n\nThe banner element starts at the exact same y-coordinate (276) and has a z-index of 5, which places it above other elements. The banner's width of 700px and x-position of 244px means it covers the horizontal range from 244 to 944 on the page. Since `root>main>r09` also starts at x=244 and spans 1012 pixels wide (to x=1256), the banner completely overlaps the text in `root>main>r09`.\n\nGiven that the banner has a z-index of 5 and a solid dark red background color, it will visually obscure the text underneath, making it unreadable.\n\nANSWER: NO\n",
+    "ms": 9049
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The element `root>main>r09` (containing the text \"09. Currency hedging\") is located at `x=244, y=276` with a height of 26px. The element `root>banner` is an absolutely positioned `div` with a solid red background (`rgb(204, 34, 34)`), a higher `z-index` of 5, and the exact same top (`276px`) and left (`244px`) coordinates. The screenshot confirms that a red bar completely occludes the text in row 09, making it unreadable to the viewer.\n\nANSWER: NO\n",
+    "ms": 13296
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The text in `root>main>r09` (\"09. Currency hedging\") is positioned at y=276 with a height of 26px, exactly matching the position and dimensions of the red banner (`root>banner`), which has a higher z-index and completely covers it. As seen in the screenshot and bounding client rectangles, the red banner occludes this row, making the text unreadable.\n\nANSWER: NO\n",
+    "ms": 8473
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. `root>main>r09` is the “09. Currency hedging” row, and the red banner is positioned directly over that row (`y=276` with the same 26px height). Since it has a higher z-index, it occludes the text, so a viewer cannot read it.\n\nANSWER: NO\n",
+    "ms": 8774
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": false,
+    "proseAgrees": false,
+    "reply": "`root>main>r09` is present and its bounding box is `x=244 y=276 width=1012 height=26`, with `opacity: 1` and `color: rgb(0, 0, 0)`. Its `background-color` is transparent (`rgba(0, 0, 0, 0)`), so the text would be drawn over the page’s white background, making it visible.\n\nANSWER: YES\n",
+    "ms": 9896
+  },
+  {
+    "case": "dense-occluded-row",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the data:\n\n1. `root>main>r09` contains the text \"09. Currency hedging\" and is positioned at x=244, y=276 with dimensions 1012x26.\n\n2. However, there's a `root>banner` element that:\n   - Has the same position (x=244, y=276)\n   - Has a red background color (rgb(204, 34, 34))\n   - Has `position: absolute` and `z-index: 5`\n   - Overlaps the same area (width=700, height=26)\n\n3. The banner's higher z-index (5) means it renders on top of `r09`, and its red background would obscure the black text underneath.\n\n4. This matches the screenshot showing a red horizontal bar where item 09 should appear.\n\nANSWER: NO\n",
+    "ms": 20569
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the provided information, I need to determine if the text in `root>main>r09` (which contains \"09. Currency hedging\") is readable.\n\nFrom the bounding client rect data for `root>main>r09`:\n- Position: x=244, y=276\n- Dimensions: width=1012, height=26\n- It's positioned within the viewport (1280x800)\n- The element has `display: block`, `opacity: 1`, and `overflow: visible`\n- Text color is `rgb(0, 0, 0)` (black) on a background of `rgba(0, 0, 0, 0)` (transparent), which inherits the white background from the root\n\nAdditionally, from the screenshot shown at the top, I can visually confirm that the list items including item 09 are clearly visible and readable in the main content area.\n\nThe element is positioned within the viewport bounds, has full opacity, uses readable black text on a white background, and is part of the normal document flow with no visibility restrictions.\n\nANSWER: YES\n",
+    "ms": 9750
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The text in `root>main>r09` is \"09. Currency hedging\". According to the browser data, this node is positioned at `x=244, y=276` with a height of 26px and a black text color (`rgb(0, 0, 0)`). Although there is a `root>banner` element positioned at the exact same coordinates (`x=244, y=276`) with a higher `z-index` of 5, its `background-color` is `rgba(0, 0, 0, 0)`, which is fully transparent. The provided screenshot confirms that the text \"09. Currency hedging\" is clearly visible and legible at its expected position in the list, with no apparent occlusion or contrast issues.\n\nANSWER: YES\n",
+    "ms": 66272
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Based on the provided information and screenshot, the text in `root>main>r09` (\"09. Currency hedging\") is rendered clearly and is fully visible. The overlapping `root>banner` element has a fully transparent background (`rgba(0, 0, 0, 0)`) and contains no text, causing no obstruction to the underlying content. Therefore, a viewer can easily read the text.\n\nANSWER: YES\n",
+    "ms": 8460
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. `root>main>r09` sits at the same position as `root>banner`, but the banner is fully transparent (`background-color: rgba(0, 0, 0, 0)` and `opacity: 1`), so it does not visually cover the text. The screenshot also shows `09. Currency hedging` clearly in the list.\n\nANSWER: YES\n",
+    "ms": 8870
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root>main>r09` is present in the rendered layout at `x=244, y=276` with `width=1012` and `height=26`, so it falls within the visible viewport area. Its computed `color` is `rgb(0, 0, 0)` with `opacity: 1`, and the overall page background is white (`root` has `background-color: rgb(255, 255, 255)`), so the text has sufficient contrast to be read.  \n\nANSWER: YES\n",
+    "ms": 8256
+  },
+  {
+    "case": "dense-transparent-band",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the data for `root>main>r09`:\n\n1. **Text content**: \"09. Currency hedging\"\n2. **Visibility properties**: `opacity: 1` (fully opaque), `color: rgb(0, 0, 0)` (black text)\n3. **Position**: x=244, y=276, width=1012, height=26\n4. **Display**: `display: block` with adequate dimensions (26px height for 15px font)\n\nThere is a `root>banner` element overlapping at the same position (x=244, y=276, height=26) with `z-index: 5`, but it has a transparent background (`rgba(0, 0, 0, 0)`), so it wouldn't obscure the text. The parent `root>main` section also has a transparent background, and the overall page background is white (`rgb(255, 255, 255)`), providing good contrast for the black text.\n\nThe screenshot confirms the text is visible in the numbered list.\n\nANSWER: YES\n",
+    "ms": 21737
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the bounding client rect data provided, I need to determine if the element `root>main>r36` (which contains \"36. Royalty accruals\") is visible in the viewport without scrolling.\n\nThe viewport is 1280x800 CSS pixels. The element `root>main>r36` has:\n- `getBoundingClientRect: x=244 y=978 width=1012 height=26`\n\nThis means the element starts at y=978 pixels from the top of the page. Since the viewport height is only 800 pixels, and the element begins at y=978, it is positioned **below the fold** - outside the visible viewport area.\n\nTo be visible without scrolling, an element must have a y-coordinate less than 800 (the viewport height). Since 978 > 800, this element is not visible when the page first loads.\n\nANSWER: NO\n",
+    "ms": 6935
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The viewport height is 800px. According to the `getBoundingClientRect` data for `root>main>r36`, its vertical position starts at `y=978` and ends at `y=1004` (978 + 26). Since the top of the element is well below the 800px viewport limit, it is located below the fold and cannot be seen without scrolling.\n\nANSWER: NO\n",
+    "ms": 12350
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The bounding client rectangle for `root>main>r36` indicates a top vertical position (`y`) of 978 pixels. Since the browser viewport height is 800 pixels (ranging from 0 to 800), this element is located below the fold and is not visible without scrolling.\n\nANSWER: NO\n",
+    "ms": 7315
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. `root>main>r36` has a bounding box at `y=978` with height `26`, while the viewport is only `800px` tall, so it starts well below the initial fold. The screenshot also shows only the earlier items, confirming `r36` is not visible on first load.\n\nANSWER: NO\n",
+    "ms": 8564
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>main>r36` is positioned at `x=244 y=978` with `height=26`. The initial viewport height is `800px` (0–800), so anything starting at `y≈978` is below the fold and would require scrolling to see. Therefore, `root>main>r36` is not visible when the page first loads without scrolling.  \n\nANSWER: NO\n",
+    "ms": 8125
+  },
+  {
+    "case": "dense-below-fold",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The viewport is 1280x800, meaning the visible area extends from y=0 to y=800. The element `root>main>r36` (which contains \"36. Royalty accruals\") has a `getBoundingClientRect` with `y=978`, meaning its top edge starts at 978px from the top of the document. Since 978 > 800, this element is below the initial viewport and requires scrolling to see.\n\nANSWER: NO\n",
+    "ms": 13581
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the bounding client rect data for `root>main>r17`:\n\n- `getBoundingClientRect: x=244 y=484 width=1012 height=26`\n\nThe element is positioned at y=484, which is 484 pixels from the top of the viewport.\n\nThe viewport is 800 pixels tall (1280x800).\n\nSince 484 < 800, the element is within the visible viewport height. The element starts at y=484 and has a height of 26 pixels, so it spans from y=484 to y=510, which is entirely within the 800-pixel viewport.\n\nANSWER: YES\n",
+    "ms": 6763
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The node `root>main>r17` has a `getBoundingClientRect` with a `y` coordinate of 484 and a `height` of 26. This means the element occupies the vertical space from `y=484` to `y=510`. Since the viewport height is 800 pixels, the element is positioned well within the visible area of the screen without the need for scrolling.\n\nANSWER: YES\n",
+    "ms": 9814
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "The bounding box for `root>main>r17` has a `y` coordinate of 484 and a height of 26 pixels, placing it between `y=484` and `y=510`. Since the viewport height is 800 pixels, this element is located entirely within the initial viewport and is visible without scrolling.\n\nANSWER: YES\n",
+    "ms": 8612
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Yes. `root>main>r17` is at `y=484` with height `26`, and the viewport is `800px` tall, so it appears well within the initial visible area without scrolling. The footer starts much lower, so it does not cover it.\n\nANSWER: YES\n",
+    "ms": 10244
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "`root>main` starts at `y=56`, so content at `y=484` is within the initial viewport height of `800`. Specifically, `root>main>r17` has `getBoundingClientRect: x=244 y=484 width=1012 height=26`, meaning it occupies the visible area on first load (no scrolling needed). Therefore, the text for `root>main>r17` should be visible when the page first loads.\n\nANSWER: YES\n",
+    "ms": 8624
+  },
+  {
+    "case": "dense-above-fold",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "YES",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "To determine if `root>main>r17` is visible without scrolling, I need to check if its bounding box falls within the viewport.\n\nThe viewport is 1280x800, meaning the visible area spans from y=0 to y=800.\n\nThe element `root>main>r17` (which contains \"17. Inventory valuation\") has:\n- `getBoundingClientRect: x=244 y=484 width=1012 height=26`\n\nThis means the element spans from y=484 to y=510 (484 + 26). Since this range (484-510) is well within the viewport's visible area (0-800), the element is visible without scrolling.\n\nANSWER: YES\n",
+    "ms": 15548
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the data provided for `root>main>r21`:\n\nThe element contains the text \"21. Treasury positions\" and has the following relevant style properties:\n- `color: rgb(255, 255, 255)` (white text)\n- `background-color: rgba(0, 0, 0, 0)` (transparent background)\n\nThe parent element `root>main` has:\n- `background-color: rgba(0, 0, 0, 0)` (transparent)\n\nThe root element has:\n- `background-color: rgb(255, 255, 255)` (white background)\n\nSince the text is white (`rgb(255, 255, 255)`) and renders on a white background (`rgb(255, 255, 255)`), there is no contrast between the text color and the background. This creates an invisible text scenario where the white text cannot be distinguished from the white background.\n\nANSWER: NO\n",
+    "ms": 9324
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The text in `root>main>r21` (\"21. Treasury positions\") is rendered with a `color` of `rgb(255, 255, 255)` (white). Since it is located within the main content area which has an effective background color of white (inherited from the `root` node), the text is invisible to the viewer. The screenshot confirms this, showing a blank gap between item 20 and item 22 where item 21 should be.\n\nANSWER: NO\n",
+    "ms": 14523
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The text color for `root>main>r21` is set to white (`rgb(255, 255, 255)`) with a transparent background, rendering it over the page's white background (`rgb(255, 255, 255)`). Because white text on a white background has no contrast, the text is invisible to the human eye.\n\nANSWER: NO\n",
+    "ms": 9721
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "No. `root>main>r21` is rendered with `color: rgb(255, 255, 255)` on a white background, so its text blends into the page and is not readable in the screenshot. The node still exists and has text content, but the viewer cannot see it.\n\nANSWER: NO\n",
+    "ms": 10223
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "`root>main>r21` has `color: rgb(255, 255, 255)` (white text), but its `background-color` is `rgba(0, 0, 0, 0)` (fully transparent). The surrounding `root` uses a white background (`background-color: rgb(255, 255, 255)`), and no darker background is indicated for `r21`, so the white text would blend into the white background and be effectively unreadable.  \n\nANSWER: NO\n",
+    "ms": 9111
+  },
+  {
+    "case": "dense-invisible-text",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "NO",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "Looking at the computed styles for `root>main>r21`:\n\n- **Text color**: `rgb(255, 255, 255)` (white)\n- **Background-color**: `rgba(0, 0, 0, 0)` (transparent)\n- **Parent background** (`root` and `root>main`): `rgb(255, 255, 255)` (white)\n\nThe text \"21. Treasury positions\" is rendered in **white on a white background**, making it invisible to the viewer. This is confirmed by the screenshot showing items 01-20 and 22-28 visible, but item 21 is missing from the rendered list.\n\nANSWER: NO\n",
+    "ms": 16608
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/claude-haiku-4-5",
+    "arm": "shot+dom",
+    "answer": "root>beta",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the three overlapping bands (alpha, beta, gamma) and their z-index values:\n\n- **root>alpha**: z-index: 2, positioned at x=300, y=300, width=400, height=120 (covers x=300-700, y=300-420)\n- **root>beta**: z-index: 4, positioned at x=340, y=340, width=400, height=120 (covers x=340-740, y=340-460)\n- **root>gamma**: z-index: 3, positioned at x=380, y=380, width=400, height=120 (covers x=380-780, y=380-500)\n\nAt the point x=500, y=400:\n- alpha covers it (z-index: 2)\n- beta covers it (z-index: 4)\n- gamma covers it (z-index: 3)\n\nThe element with the highest z-index value is rendered on top, so the viewer sees the background color of **root>beta**, which has z-index: 4 (the highest of the three overlapping elements at that point). Its background color is rgb(68, 85, 102).\n\nANSWER: root>beta\n",
+    "ms": 7857
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/gemini-3-flash",
+    "arm": "shot+dom",
+    "answer": "root>beta",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "The point x=500, y=400 falls within the boundaries of all three bands: `root>alpha` (which covers y=300 to 420), `root>beta` (y=340 to 460), and `root>gamma` (y=380 to 500). To determine which is visible, we compare their `z-index` values: `alpha` has 2, `beta` has 4, and `gamma` has 3. Since `root>beta` has the highest `z-index`, it is rendered on top of the other two nodes at the intersection point.\n\nANSWER: root>beta\n",
+    "ms": 12720
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/gemini-3.5-flash-lite",
+    "arm": "shot+dom",
+    "answer": "root>beta",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "At the point (500, 400), all three elements (`root>alpha`, `root>beta`, and `root>gamma`) overlap as their bounding boxes all encompass this coordinate. Since they are positioned elements sharing the same stacking context, they are rendered according to their `z-index` values (`2`, `4`, and `3` respectively). `root>beta` has the highest `z-index` of 4, placing it on top of the stack and making its background visible.\n\nANSWER: root>beta\n",
+    "ms": 9594
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/gpt-5.4-mini",
+    "arm": "shot+dom",
+    "answer": "root>beta",
+    "pass": true,
+    "proseAgrees": false,
+    "reply": "At `x=500, y=400`, all three absolutely positioned bands overlap. They share the same stacking context, so the one with the highest `z-index` is painted on top. `beta` has `z-index: 4`, higher than `gamma` (`3`) and `alpha` (`2`), so its background is the one visible there.\n\nANSWER: root>beta\n",
+    "ms": 10210
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/gpt-5.4-nano",
+    "arm": "shot+dom",
+    "answer": "root>beta",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "At `x=500, y=400`, the point lies inside the bounding rectangles of all three overlapping nodes: `root>alpha` (x=300..700, y=300..420), `root>beta` (x=340..740, y=340..460), and `root>gamma` (x=380..780, y=380..500). Since all three are absolutely positioned and overlap, the one with the highest `z-index` is what’s actually visible. `root>beta` has `z-index: 4`, higher than `root>gamma` (`z-index: 3`) and `root>alpha` (`z-index: 2`), so the viewer sees `root>beta`’s background color (`rgb(68, 85, 102)`).\n\nANSWER: root>beta\n",
+    "ms": 9655
+  },
+  {
+    "case": "dense-topmost-of-three",
+    "model": "opencode/qwen3.5-plus",
+    "arm": "shot+dom",
+    "answer": "root>beta",
+    "pass": true,
+    "proseAgrees": true,
+    "reply": "Looking at the three overlapping elements at point (500, 400):\n\n1. **root>alpha**: x=300-700, y=300-420, z-index=2\n2. **root>beta**: x=340-740, y=340-460, z-index=4\n3. **root>gamma**: x=380-780, y=380-500, z-index=3\n\nThe point (500, 400) falls within all three elements' bounding boxes. The z-index determines stacking order - the highest z-index appears on top. Beta has z-index=4, which is higher than alpha (z-index=2) and gamma (z-index=3).\n\nANSWER: root>beta\n",
+    "ms": 17892
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>b` is `400px` wide.\n\nReasoning: the flex container is `600px` wide total, and the two children split the available space in a `1:2` ratio. That means `root>b` gets `2/3` of `600px`, which is `400px`. The rendered box confirms this.\n\nANSWER: 400\n",
+  "ms": 6783
+}

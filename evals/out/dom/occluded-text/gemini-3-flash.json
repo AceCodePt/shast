@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>banner` element is positioned absolutely at the same coordinates (`x=0, y=0`) as the `root>lede` element. With a height of 70px, the banner completely covers the 54.375px height of the `root>lede` paragraph. Since the banner has a higher `z-index` (5) and an opaque background color (`rgb(34, 34, 34)`), it obscures the text underneath, making it unreadable to a person.\n\nANSWER: NO\n",
+  "ms": 15764
+}

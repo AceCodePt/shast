@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The rendered info explicitly says the `:hover` padding of `40px` is a dead state because the existing `padding: 2px` declaration from `root` in the `> mid > leaf` block has higher priority. So hovering does not change the padding.\n\nANSWER: NO\n",
+  "ms": 6624
+}

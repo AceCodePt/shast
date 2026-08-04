@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered page information and screenshot:\n\nThe node tree shows:\n- `root>outer>filler` contains \"a\"\n- `root>outer>tall` contains \"b\"\n\nFrom the screenshot, both elements appear to be on the same vertical level with minimal height. The element containing \"b\" does not visually appear taller than the element containing \"a\".\n\nWhen `root>outer>tall` declares `height: 100%`, it's trying to be 100% of its parent's height (`root>outer`). However, the parent's height is determined by its content. Since the parent likely has an indefinite (auto) height, the `height: 100%` on `root>outer>tall` would resolve to `auto` as well, giving it no height advantage over its sibling. Both elements end up being their natural text height.\n\nANSWER: NO\n",
+  "ms": 6121
+}

@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "30,30",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Since `root>plain` is not positioned, the containing block for the absolutely positioned `root>plain>pin` is `root`, which has `position: relative`. The padding box of `root` begins at coordinates (20, 20) due to its 20px padding. With `top: 10px` and `left: 10px`, `root>plain>pin` is offset by 10px from the top-left of `root`'s padding box, placing its top-left corner at (30, 30).\n\nANSWER: 30,30\n",
+  "ms": 10394
+}

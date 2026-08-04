@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text is \"Annual review\", but the computed `text-transform: uppercase` on both the root and root>title elements forces all letters to render in uppercase. So every letter becomes capitalized, while spaces remain unchanged.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7074
+}

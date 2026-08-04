@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Compute each box’s area (width × height) from the given rendered sizes:  \n- `wide`: 600 × 60 = 36,000  \n- `tall`: 120 × 300 = 36,000  \n- `square`: 220 × 220 = 48,400  \n\nSince 48,400 is larger than 36,000, the `square` box covers the largest area.  \nANSWER: root>square\n",
+  "ms": 8420
+}

@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser data directly shows that `root>right` has `getBoundingClientRect: x=220`. This matches the grid layout calculation: the first column (`root>left`) is 200px wide, plus the 20px gap equals 220px for the start of the second column.\n\nANSWER: 220\n",
+  "ms": 12019
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the report, the answer is clear from the analysis provided.\n\nThe report explicitly states that `root>mid>leaf` has a \"dead-state\" because the `:hover` pseudo-class rule setting `padding: 40px` is being outranked by a more specific rule. The `root` selector has a `> mid > leaf` block that declares `padding: 2px`, and this declaration has higher specificity/priority than the `:hover` rule. \n\nThe report clearly notes: \"entering `:hover` does not change padding\" — the `:hover` rule is effectively overridden and ignored because the non-hover declaration from `root` is prioritized.\n\nANSWER: NO\n",
+  "ms": 7284
+}

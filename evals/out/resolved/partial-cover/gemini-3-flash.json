@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report states that although `root>chip` covers 9% of the `root>row` box, the specific text within `root>row` is not obscured. Under the entry for `root>row`, it explicitly notes: \"this node's 1 text line(s) stay fully visible.\"\n\nANSWER: NO\n",
+  "ms": 9851
+}

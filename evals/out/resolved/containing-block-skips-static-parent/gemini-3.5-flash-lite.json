@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "30,30",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Since `root>plain` is not positioned, the nearest positioned ancestor for `root>plain>pin` is `root`. The `root` element has `position: relative` and a padding of 20px, meaning its padding box starts at x = 20, y = 20 relative to the page. With `top: 10px` and `left: 10px`, `root>plain>pin` is offset by 10px from `root`'s padding box origin, placing its top-left corner at x = 20 + 10 = 30 and y = 20 + 10 = 30.\n\nANSWER: 30,30\n",
+  "ms": 21183
+}

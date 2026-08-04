@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided browser data (`getBoundingClientRect`), `root>right` has an `x` coordinate of 220. This aligns with `root`'s grid layout where the first column is 200px wide, followed by a 20px gap, placing the left edge of the second column (`root>right`) at 220px.\n\nANSWER: 220\n",
+  "ms": 7661
+}

@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser's computed style data (`getComputedStyle()`) provided for `root>child` explicitly reports its resolved padding as `64px 64px 64px 64px`. Since computed styles reflect the final resolved values after applying the CSS cascade and specificity rules across all conflicting declarations, this is the exact padding the element renders with.\n\nANSWER: 64px\n",
+  "ms": 8104
+}

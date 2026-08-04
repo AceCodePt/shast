@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report indicates that while `root>lede` is covered by the `root>banner` element over 100% of its area, the banner has no background, allowing underlying content to show through. Furthermore, the report explicitly states that the node's two lines of text \"stay fully visible\" despite the overlap. Since the text is fully visible and contained within the viewport, a person reading the page can read the entire sentence.\n\nANSWER: YES\n",
+  "ms": 12661
+}

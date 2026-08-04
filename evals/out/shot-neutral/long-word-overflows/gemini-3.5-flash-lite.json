@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The URL is a single continuous string without natural wrapping points, and without properties like `word-break` or `overflow-wrap` applied, it extends far beyond the bounds of its 120px container. This is clearly visible in the screenshot, where the text stretches significantly to the right across the viewport.\n\nANSWER: NO\n",
+  "ms": 8176
+}

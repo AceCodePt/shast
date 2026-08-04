@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The banner element overlaps 69% of the r09 box, but it has no background, so the content behind it remains visible. Additionally, the annotation explicitly states that r09's 1 text line stays fully visible. So the text \"09. Currency hedging\" is readable.\n\nANSWER: YES\n",
+  "ms": 8396
+}

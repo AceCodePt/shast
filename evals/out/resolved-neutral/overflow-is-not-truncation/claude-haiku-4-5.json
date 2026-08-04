@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the information provided:\n\nThe `root>card` element has `overflow: visible` (explicitly stated in the output). This means that when content overflows outside the element's box, it is still painted on the page rather than being clipped or hidden.\n\nThe text content is 153.61x76.75px, which overflows a 162x30px content box. Since overflow is visible, the overflowing text—including the last line that sits below the bottom edge—will be rendered and visible to the user.\n\nANSWER: YES\n",
+  "ms": 8661
+}

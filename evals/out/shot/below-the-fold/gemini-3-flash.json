@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The provided screenshot shows the rendered page at the specified 500x300 viewport dimensions. While the \"masthead\" text from the `root>top` node is visible at the top, the \"footer note\" text associated with the `root>footer` node is not present in the image. This indicates that the `root>footer` node is positioned outside the initial visible area (below the fold).\n\nANSWER: NO\n",
+  "ms": 9504
+}

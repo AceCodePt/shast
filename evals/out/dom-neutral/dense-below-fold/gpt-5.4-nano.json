@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r36` has `getBoundingClientRect` of `x=244 y=978 width=1012 height=26`. The viewport is `1280x800`, so anything with a top position greater than `800` is below the visible area on first load. Since `978 > 800`, that text is not visible without scrolling.\n\nANSWER: NO\n",
+  "ms": 7233
+}

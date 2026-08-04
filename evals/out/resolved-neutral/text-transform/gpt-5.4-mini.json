@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The element’s written text is `Annual review`, and the parent applies `text-transform: uppercase`, so the viewer sees it converted to uppercase.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 11173
+}

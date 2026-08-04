@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the browser data provided:\n- The width of `root>rail` is 240px.\n- The width of `root>panel` is 600px.\n\nDividing the width of `root>panel` (600) by the width of `root>rail` (240) gives 2.5.\n\nANSWER: 2.5\n",
+  "ms": 8490
+}

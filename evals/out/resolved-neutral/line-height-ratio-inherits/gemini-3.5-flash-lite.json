@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The provided Chromium rendering information explicitly lists the border box dimensions for each element on the page. For `root>big`, the rendered border box height is explicitly specified as 64 CSS pixels.\n\nANSWER: 64\n",
+  "ms": 8327
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Although `root>ghost` has a `width` and `height` of `0px`, its `overflow` property is set to `visible`. In CSS rendering, when an element's dimensions are smaller than its content, `overflow: visible` ensures that the content (in this case, the text \"Important warning\") is not clipped and is still painted onto the screen. Since the opacity is `1` and the display is `block` (rather than `none`), the browser will render the text at the node's coordinates regardless of the container's zero size.\n\nANSWER: YES\n",
+  "ms": 14845
+}

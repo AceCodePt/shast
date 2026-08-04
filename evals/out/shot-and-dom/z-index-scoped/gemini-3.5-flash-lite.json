@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>low` and `root>high` are sibling elements with `z-index: 1` and `z-index: 2` respectively within the same parent stacking context. Since `root>high` has a higher z-index, its entire subtree is painted on top of the subtree of `root>low`, regardless of `root>low>inner`'s internal `z-index: 999`. Therefore, `root>high` is visible in the overlapping region.\n\nANSWER: root>high\n",
+  "ms": 7681
+}

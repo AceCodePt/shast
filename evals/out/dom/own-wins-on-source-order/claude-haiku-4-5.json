@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "64px 64px 64px 64px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the browser's computed data provided, `root>child` has the following computed style for padding:\n\n`padding: 64px 64px 64px 64px`\n\nThis means it renders with 64px of padding on all sides (top, right, bottom, and left).\n\nThe question mentions \"three different blocks declare padding,\" which likely refers to:\n1. CSS rules from different sources (inline styles, classes, or element selectors)\n2. The cascade and specificity determining which wins\n\nHowever, the authoritative information here is the `getComputedStyle()` result shown in the browser data, which represents what actually renders on the screen. According to the browser's own measurement, the computed padding that is actually applied is `64px 64px 64px 64px`.\n\nANSWER: 64px 64px 64px 64px\n",
+  "ms": 7256
+}

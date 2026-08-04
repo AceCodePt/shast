@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, the `root>title` element displays the text \"ANNUAL REVIEW\".\n\nHere's my reasoning: The report explicitly states that `root>title` contains the text written as \"Annual review\" but shows \"(written \\\"Annual review\\\")\" to indicate the original input. However, the critical detail is the CSS style applied to the parent `root` element: `text-transform: uppercase`. This style transforms all text to uppercase letters. Since this is a machine-generated report describing the page \"as it was actually rendered and measured,\" it shows the final, resolved result after CSS transformations are applied. The height and x,y coordinates are the actual rendered measurements, confirming this is the final rendered state. Therefore, what a viewer actually sees is the uppercase-transformed version of the text.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 8878
+}

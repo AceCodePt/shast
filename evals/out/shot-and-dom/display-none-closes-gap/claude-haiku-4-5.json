@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangle data:\n\n- `root>first` has `y=0` and `height=40`, so it occupies y=0 to y=40\n- `root>third` has `y=40` and `height=40`, so it occupies y=40 to y=80\n- `root>gone` has `display: none`, which removes it from the document flow entirely\n\nSince `root>third` starts at y=40 (immediately where `root>first` ends), there is **no gap** between them. The `root>gone` element, despite having a height of 40px in its style, does not occupy any space in the layout because `display: none` removes it from the document flow completely. The third element moved up to fill the space where the gone element would have been.\n\nANSWER: NO\n",
+  "ms": 5217
+}

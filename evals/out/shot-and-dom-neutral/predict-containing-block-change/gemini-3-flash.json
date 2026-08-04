@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Currently, `root>plain>pin` is `position: absolute` and its containing block is `root` (the nearest positioned ancestor), so its `top: 10px` and `left: 10px` are relative to the top-left of `root` (0,0), resulting in the coordinates (10,10).\n\nIf `root>plain` is changed to `position: relative`, it becomes the new containing block for `root>plain>pin`. Since `root>plain` renders at (20,20) based on its parent's padding, the `top: 10px` and `left: 10px` offsets will now be applied relative to that (20,20) origin.\n\nANSWER: 30,30\n",
+  "ms": 11390
+}

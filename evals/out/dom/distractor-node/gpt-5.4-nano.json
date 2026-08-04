@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>second` is a `<p>` with `getBoundingClientRect` starting at `y=19.1875` and height `19.1875`, and its computed `color` is `rgb(0, 0, 0)` on a transparent background. The only overlapping element indicated is `root>cover`, which is an absolutely positioned `<div>` at `top=0` with `height=19`. Since `root>cover` ends at about `y=19` while `root>second` starts at `y≈19.1875`, `root>second` is not covered by `root>cover` according to the provided geometry, so the text should be readable.  \n\nANSWER: YES\n",
+  "ms": 7392
+}

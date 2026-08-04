@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>lede` text is shown with a truncation marker: `\"The quarterly results are in and every region beat its targ…\"` and the evidence notes it is “72 chars.” Since the provided authoritative render evidence only includes a shortened version with an ellipsis (not the complete sentence), a reader of the page as rendered here would not be able to read the entire sentence from that visible content alone.\n\nANSWER: NO\n",
+  "ms": 8128
+}

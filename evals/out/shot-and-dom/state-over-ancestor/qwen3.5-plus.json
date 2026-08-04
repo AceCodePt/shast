@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "2px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the hover state data for `root>mid>leaf`:\n\n```\nroot>mid>leaf <div>\n  padding: 2px 2px 2px 2px\n```\n\nThe padding is `2px` on all four sides (top, right, bottom, left). This is the same value as in the rest state - the hover doesn't change the padding.\n\nANSWER: 2px\n",
+  "ms": 10843
+}

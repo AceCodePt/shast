@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "By analyzing the `y` coordinates and heights of the three siblings, we can determine their vertical spacing. `root>alpha` starts at y=20 and ends at y=60, while `root>beta` starts at y=64, leaving a small 4px gap between them. In contrast, `root>gamma` starts at y=200, which is 96px below the bottom of `root>beta` (y=104), making it visually isolated from the first two.\n\nANSWER: root>gamma\n",
+  "ms": 12944
+}

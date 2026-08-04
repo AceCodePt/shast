@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "2px 2px 2px 2px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The hover snapshot shows no style changes for `root>mid>leaf` compared with rest. Its computed `padding` remains `2px 2px 2px 2px`, so that is what it renders with while hovered.\n\nANSWER: 2px 2px 2px 2px\n",
+  "ms": 9158
+}

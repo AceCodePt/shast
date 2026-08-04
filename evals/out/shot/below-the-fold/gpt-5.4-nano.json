@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The information says the viewport is `500x300`, which represents what is visible when the page first loads (before any scrolling). The screenshot is from `below-the-fold/page.png`, indicating that the content in question (`root>footer` / “footer note”) is not within that initial viewport area. The node tree confirms the footer exists, but it doesn’t appear in the initially visible region implied by the below-the-fold capture.  \n\nANSWER: NO\n",
+  "ms": 8107
+}

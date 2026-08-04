@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Three rows share the same left edge at `x=24`: `first`, `second`, and `fourth`. The `third` row is shifted right to `x=40`, so it is the one out of alignment.\n\nANSWER: root>third\n",
+  "ms": 8448
+}

@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In the screenshot, the overlapping area shows the red “high” rectangle on top of the blue “low → inner” rectangle. Since both elements are present in the DOM (`root>low>inner` and `root>high`) but the visible overlap is red, the viewer sees the node that is rendered above in the overlap region.\n\nANSWER: root>high\n",
+  "ms": 8527
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report for `root>main>r09` (which contains the text \"09. Currency hedging\"):\n\nThe report states:\n- The element is located at `@ x=244 y=276 width=1012 height=26`\n- It has a note: `! covered: root>banner <div> (absolute, z-index 5) paints later than this node over 69% of the box, but has no background, so what is behind it still shows through`\n- Critically, it also states: `! covered: this node's 1 text line(s) stay fully visible`\n\nEven though the banner element (which has z-index 5) covers 69% of the box visually, the banner has no background color—it's transparent. More importantly, the report explicitly confirms that the text line itself remains fully visible. Since the text is fully visible and the viewport shows this row is within the fold (y=276, which is well above the 800px viewport height), a viewer can read the text.\n\nANSWER: YES\n",
+  "ms": 9533
+}

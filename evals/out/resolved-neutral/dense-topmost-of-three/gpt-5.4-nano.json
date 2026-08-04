@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>beta <div>",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At `(x=500, y=400)`, all three absolutely-positioned bands (`root>alpha <div>`, `root>gamma <div>`, and `root>beta <div>`) include that point (their rectangles overlap there). Since they have opaque backgrounds, the one with the highest stacking order (`z-index: 4` for `root>beta`) is painted last and therefore is what the viewer sees.  \nANSWER: root>beta <div>\n",
+  "ms": 9604
+}

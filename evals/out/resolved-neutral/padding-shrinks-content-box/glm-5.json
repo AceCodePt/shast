@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The card's box is 200px wide with 24px padding on each side, giving a content width of 200 − 48 = 152px. The layout report explicitly states the text \"broke onto 4 lines at 152px content width,\" which matches the computed content width. The height of ~124.75px is also consistent with roughly 4 lines of 16px text plus padding (4 × ~19px line height + 48px padding ≈ 124px).\n\nANSWER: 4\n",
+  "ms": 8644
+}

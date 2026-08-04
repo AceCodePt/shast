@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report's annotation for the `border-radius` on `root>body>panel` states it was \"declared by root, inside its '> body > panel' block.\" This means the declaration originates from the CSS block belonging to the `root` node, targeting its descendant panel through that child-chain selector.\n\nANSWER: root\n",
+  "ms": 15121
+}

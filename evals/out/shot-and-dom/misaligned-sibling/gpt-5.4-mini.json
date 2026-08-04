@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "`root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Three rows start at `x=24`, but `third` starts at `x=40`, so it is shifted to the right and out of alignment.\n\nANSWER: `root>third`\n",
+  "ms": 8276
+}

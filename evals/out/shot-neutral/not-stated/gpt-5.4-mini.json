@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "black",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The screenshot shows `Total due` rendered as dark text on a white background. There’s no CSS report here, but the visible rendering indicates the text color is black.\n\nANSWER: black\n",
+  "ms": 8807
+}

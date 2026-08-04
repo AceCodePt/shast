@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The Y-coordinates and heights of the three nodes show that `root>alpha` (bottom at y=60) and `root>beta` (top at y=64) are positioned only 4 pixels apart. In contrast, `root>gamma` (top at y=200) is positioned 96 pixels below the bottom of `root>beta` (y=104), making it visually isolated from the first two.\n\nANSWER: root>gamma\n",
+  "ms": 10055
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r17` is positioned at `x=244, y=484` with `height=26`, so it occupies roughly `y=484` to `y=510` within the initial viewport (`viewport height = 800`). Since this range is fully within `0–800`, it should be visible on first load without scrolling. The sidebar is at `x=0–220` and `r17` starts at `x=244`, so it isn’t obscured by the sidebar’s overlap.\n\nANSWER: YES\n",
+  "ms": 8259
+}

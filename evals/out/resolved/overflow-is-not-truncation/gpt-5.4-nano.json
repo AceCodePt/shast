@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report says `root>card` has `height=48`, and its text wraps and breaks onto 4 lines at an effective content width of 162px. It also explicitly marks `overflows: content is 153.61x76.75px inside a 162x30px content box, so it is painted outside the box rather than cut off (overflow is visible)`. Since the overflow is visible and the last line is below the bottom edge of the card, it would still be painted on the page and be readable by a person.\n\nANSWER: YES\n",
+  "ms": 9471
+}

@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `getComputedStyle()` output for `root>child` is authoritative — it reports `padding: 64px 64px 64px 64px`. Whatever the three competing declarations are, the cascade resolves to a uniform 64px on all sides for the rendered element.\n\nANSWER: 64px\n",
+  "ms": 7763
+}

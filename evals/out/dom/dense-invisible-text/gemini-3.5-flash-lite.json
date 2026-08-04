@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The text color of `root>main>r21` is set to white (`rgb(255, 255, 255)`), while its background (along with its parent containers and the root element) evaluates to white (`rgb(255, 255, 255)`). Because white text is rendered against a white background with no contrast, a viewer cannot read it.\n\nANSWER: NO\n",
+  "ms": 10405
+}

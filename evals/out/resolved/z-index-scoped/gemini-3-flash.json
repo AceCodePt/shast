@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node `root>low` creates a new stacking context because it is positioned and has a non-auto `z-index` (1). This means the `z-index: 999` of `root>low>inner` is scoped entirely within `root>low` and cannot lift it above elements in a higher stacking context. Since `root>high` has a `z-index` of 2, it paints on top of the entire `root>low` stacking context and its descendants.\n\nANSWER: root>high\n",
+  "ms": 14221
+}

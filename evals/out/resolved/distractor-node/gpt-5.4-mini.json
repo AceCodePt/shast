@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The black cover only spans `y=0` to `y=19`, while `root>second` starts at `y=19.19`, so it is not covered by the opaque overlay. Since no other obstruction is reported over `root>second`, its text should be readable.\n\nANSWER: YES\n",
+  "ms": 7370
+}

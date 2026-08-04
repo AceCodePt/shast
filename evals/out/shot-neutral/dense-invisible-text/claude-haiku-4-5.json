@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the image provided and the node tree information:\n\nThe node tree shows that `root>main>r21` contains the text \"21. Treasury positions\". However, in the screenshot of the rendered page, I can see items numbered from 01 through 20 (ending with \"20. Covenant testing\"), and then there's a gap before items 22 onwards appear (starting with \"22. Audit findings\").\n\nItem 21 (\"21. Treasury positions\") is notably absent from the visible portion of the rendered page shown in the screenshot. The text exists in the DOM according to the node tree, but it is not visible in the actual rendering at the 1280x800 viewport shown.\n\nTherefore, a viewer looking at this rendered page cannot read the text in `root>main>r21` because it is not displayed on screen.\n\nANSWER: NO\n",
+  "ms": 6508
+}

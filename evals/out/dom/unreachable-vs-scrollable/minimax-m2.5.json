@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` container is 500×900, taller than the 300px viewport, so vertical scrolling can reach the bottom of `root`. `root>lower` sits at y=700–740, well within that scrollable range, so scrolling down brings it into view.\n\n`root>sideways`, however, is 900px wide while both `root` and the viewport are only 500px wide. Its overflow is horizontal (extending past the right edge), not vertical, and ordinary vertical scrolling won't reveal the clipped horizontal portion.\n\nANSWER: root>sideways\n",
+  "ms": 11644
+}

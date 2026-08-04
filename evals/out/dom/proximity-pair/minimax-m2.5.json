@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The three siblings have these vertical positions and heights:\n\n- **alpha**: y=20 to y=60 (bottom edge at 60)\n- **beta**: y=64 to y=104 (bottom edge at 104)\n- **gamma**: y=200 to y=240 (bottom edge at 240)\n\nThe gap between alpha and beta is only 4px (60→64), meaning they appear stacked closely together. In contrast, the gap between beta and gamma is 96px (104→200), a large visual separation.\n\nANSWER: root>gamma\n",
+  "ms": 9147
+}

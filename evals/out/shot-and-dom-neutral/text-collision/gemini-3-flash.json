@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Both `root>ghost` and `root>visible` are positioned at the same coordinates (`x=0, y=0`) according to their `getBoundingClientRect`. Although `root>ghost` has a width and height of 0, its `overflow` is set to `visible`, causing the text \"Important warning\" to render starting at the origin and overlap with the text \"Everything is fine\" from `root>visible`, which also starts at the origin. The screenshot confirms this collision, showing the characters of both strings drawn over each other.\n\nANSWER: root>visible\n",
+  "ms": 12569
+}

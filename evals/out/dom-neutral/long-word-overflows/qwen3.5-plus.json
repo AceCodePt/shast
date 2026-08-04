@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>cell` element has a width of 120px according to `getBoundingClientRect()`, but the URL text \"https://example.com/a/very/long/path/that/never/breaks\" is approximately 50+ characters long. At 16px font size, this text would require far more than 120px to display on a single line. The computed styles show `overflow: visible` and there are no text-wrapping properties (like `word-break` or `overflow-wrap`) that would constrain the text to stay within the box. This means the text visually renders outside the 120px boundary even though the element's layout box remains 120px wide.\n\nANSWER: NO\n",
+  "ms": 19142
+}

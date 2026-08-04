@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>plain>pin` element is `position: absolute` with `top: 10px` and `left: 10px`. Since its immediate parent `root>plain` is `position: static`, it is positioned relative to its nearest positioned ancestor, which is `root` (`position: relative`). Given that `root` starts at `x=0, y=0` with no border, the offsets are applied directly from the `root` origin, resulting in a render position of `x=10, y=10`, as confirmed by the browser's `getBoundingClientRect` data for the node.\n\nANSWER: 10,10\n",
+  "ms": 12647
+}

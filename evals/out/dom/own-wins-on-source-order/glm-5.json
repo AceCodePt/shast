@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the browser's computed style data, `root>child` has `padding: 64px 64px 64px 64px`, meaning 64px on all four sides (top, right, bottom, left). Regardless of how many CSS blocks declare padding, the cascade resolves to a single winning value per side, and here the winner is 64px uniformly. The `getBoundingClientRect` confirms this: the child fills the full 500px viewport width (so horizontal padding stays internal at 64px each side within content flow), and its height of 147.1875px reflects the content height plus 64px top and 64px bottom padding.\n\nANSWER: 64px\n",
+  "ms": 14825
+}

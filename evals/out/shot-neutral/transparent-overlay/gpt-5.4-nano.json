@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The rendered text for `root>lede` is shown as `\"The quarterly results are in and every region beat its targ…\"` and it’s explicitly truncated with an ellipsis (`targ…`), indicating the full sentence is not fully present in the rendered content at this viewport size. Since the screenshot and authoritative node tree evidence only show the shortened version (72 chars), a reader would not be able to read the entire sentence from what’s rendered on the page as captured.\n\nANSWER: NO\n",
+  "ms": 8906
+}

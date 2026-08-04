@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>ghost` has a `getBoundingClientRect()` of `x=0 y=0 width=0 height=0`, meaning the element occupies no area on the page. Since the provided browser measurements include both layout size and computed styles, there’s no evidence that the text “Important warning” is painted anywhere (it would need some non-zero rendered area or a different effective bounding box). The only non-zero painted area corresponds to `root>visible`, which has the full `400 x 19.1875` height.\n\nANSWER: NO\n",
+  "ms": 8197
+}

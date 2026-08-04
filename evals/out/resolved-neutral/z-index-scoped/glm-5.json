@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>high` is what the viewer sees in the overlap. `root>low>inner`'s z-index of 999 only orders it within the stacking context established by its parent `root>low` (z-index 1). At the root level, the two competing stacking contexts are `root>low` (z-index 1) and `root>high` (z-index 2); since 1 < 2, the entire `root>low` context — including `inner` — paints below `root>high`, regardless of `inner`'s own z-index. The page info confirms this explicitly.\n\nANSWER: root>high\n",
+  "ms": 12907
+}

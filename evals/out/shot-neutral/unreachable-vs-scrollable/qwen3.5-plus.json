@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence:\n\n1. The viewport is 500x300 pixels\n2. `root>lower` contains \"further down\" - this suggests vertical overflow, which ordinary vertical scrolling can reach\n3. `root>sideways` contains \"runs off sideways\" - this indicates horizontal overflow beyond the viewport width\n\nOrdinary scrolling on web pages is vertical (up/down). Content that extends horizontally sideways cannot be brought into view with standard vertical scrolling - it would require horizontal scrolling, which is not considered \"ordinary scrolling\" and may not even be enabled if the content uses `overflow: hidden` or similar.\n\nThe screenshot confirms \"runs off sideways\" is visible but extends beyond the frame horizontally.\n\nANSWER: root>sideways\n",
+  "ms": 15102
+}

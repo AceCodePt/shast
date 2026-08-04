@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "`root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `:hover { padding: 40px }` rule in `root>mid>leaf` loses because `padding: 2px` from `root`’s nested `> mid > leaf` block has higher cascade priority. So the fix is to change the block on `root`, not `leaf`.\n\nANSWER: `root`\n",
+  "ms": 9392
+}

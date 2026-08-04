@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states that `root>cell` has a width of 120px, but the URL content inside it measures 518.41px wide. The report notes \"overflows\" and clarifies that \"content is painted outside the box rather than cut off (overflow is visible)\". This means the URL visually extends beyond the 120px boundary of its container.\n\nANSWER: NO\n",
+  "ms": 11000
+}

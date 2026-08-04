@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The container `root` has a total width of 600px. With `root>a` having a flex factor of 1 and `root>b` having a flex factor of 2, the available free space is distributed proportionally between them (1/3 and 2/3). According to the browser's `getBoundingClientRect()`, `root>b` has a width of 400px.\n\nANSWER: 400\n",
+  "ms": 8091
+}

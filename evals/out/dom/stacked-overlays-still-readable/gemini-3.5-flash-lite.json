@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "While `root>glass` covers the vertical span of `root>line` (y=0 to ~19.19), its background color is fully transparent (`rgba(0, 0, 0, 0)`), and `root>panel` is positioned further down at y=40 to y=100 without intersecting `root>line`. Since neither box obscures the text with an opaque background, the text remains visible and readable.\n\nANSWER: YES\n",
+  "ms": 10413
+}

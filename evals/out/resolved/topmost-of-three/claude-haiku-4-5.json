@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values and paint order:\n\n- `root>back` has z-index: 1\n- `root>front` has z-index: 2\n- `root>middle` has z-index: 3\n\nThe point (120, 120) falls within all three boxes:\n- `root>back`: x=40-240, y=40-240 ✓\n- `root>front`: x=100-160, y=100-160 ✓\n- `root>middle`: x=80-280, y=80-280 ✓\n\nIn CSS, elements are painted in order of their z-index values, with higher z-index values painted on top. Since `root>middle` has the highest z-index (3), it paints last and therefore appears on top at the point (120, 120).\n\nANSWER: root>middle\n",
+  "ms": 6929
+}

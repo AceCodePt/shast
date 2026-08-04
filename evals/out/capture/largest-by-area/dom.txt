@@ -1,0 +1,75 @@
+root <div>
+  getBoundingClientRect: x=0 y=0 width=700 height=400
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 400px
+  left: 0px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: relative
+  top: 0px
+  width: 700px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>wide <div>
+  getBoundingClientRect: x=0 y=0 width=600 height=60
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 60px
+  left: 0px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: absolute
+  top: 0px
+  width: 600px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>tall <div>
+  getBoundingClientRect: x=0 y=80 width=120 height=300
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 300px
+  left: 0px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: absolute
+  top: 80px
+  width: 120px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>square <div>
+  getBoundingClientRect: x=140 y=80 width=220 height=220
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 220px
+  left: 140px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: absolute
+  top: 80px
+  width: 220px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px

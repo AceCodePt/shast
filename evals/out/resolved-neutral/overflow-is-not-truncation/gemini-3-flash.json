@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has a content box height of 30px (48px total height minus padding and borders), but its text content is 76.75px tall. The description explicitly states that \"overflow is visible\" and the content is \"painted outside the box rather than cut off.\" Because the overflow is not clipped and the entire vertical area of the text (extending to approximately y=86) remains well within the 400x300 viewport, the last line is still painted on the page.\n\nANSWER: YES\n",
+  "ms": 13346
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The ghost element has `width:0; height:0` but `overflow: visible`, `color: rgb(0,0,0)`, `opacity: 1`, and `display: block`. With overflow visible, a zero-sized box does **not** clip its contents — the inline text overflows the box and is still painted at the box's position (x=0, y=0). None of the usual hiding mechanisms are present in the computed style (no `overflow:hidden`, no `opacity:0`, no `visibility:hidden`, no `display:none`, color is opaque black). The root's height being only one line is consistent with this: overflowing content from a 0-height in-flow child does not add to the parent's height, so the ghost text simply overlaps the \"Everything is fine\" text at the top-left rather than creating a second line.\n\nANSWER: YES\n",
+  "ms": 142627
+}

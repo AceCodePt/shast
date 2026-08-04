@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>plain>pin` element is `position: absolute`, which means its `top` and `left` offsets are calculated relative to its nearest positioned ancestor. Currently, that ancestor is `root` (at `x=0, y=0`), resulting in the current position of `x=10, y=10`. After adding `position: relative` to `root>plain`, it becomes the nearest positioned ancestor for `pin`. Since `root>plain` is located at `x=20, y=20`, the `top: 10px` and `left: 10px` offsets of `pin` will now be added to that origin.\n\nANSWER: 30,30\n",
+  "ms": 8572
+}

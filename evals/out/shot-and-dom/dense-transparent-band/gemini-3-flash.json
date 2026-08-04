@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>main>r09` is \"09. Currency hedging\". According to the browser data, this node is positioned at `x=244, y=276` with a height of 26px and a black text color (`rgb(0, 0, 0)`). Although there is a `root>banner` element positioned at the exact same coordinates (`x=244, y=276`) with a higher `z-index` of 5, its `background-color` is `rgba(0, 0, 0, 0)`, which is fully transparent. The provided screenshot confirms that the text \"09. Currency hedging\" is clearly visible and legible at its expected position in the list, with no apparent occlusion or contrast issues.\n\nANSWER: YES\n",
+  "ms": 66272
+}

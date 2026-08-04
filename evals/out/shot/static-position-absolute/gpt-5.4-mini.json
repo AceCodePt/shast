@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "26",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`position: absolute` with all insets `auto` uses its static position, so `floaty` renders where it would have appeared in normal flow, directly after `spacer`. With the browser’s default `body` margin and one line of default text, that puts its top edge at about `y = 26px`.\n\nANSWER: 26\n",
+  "ms": 48851
+}

@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report for `root>card` explicitly includes a measurement note regarding text wrapping. It states that the text \"broke onto 4 lines\" at a content width of 152px (calculated as the 200px total width minus 24px padding on each side).\n\nANSWER: 4\n",
+  "ms": 8991
+}

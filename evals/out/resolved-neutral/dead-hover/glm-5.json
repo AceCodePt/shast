@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `:hover` rule sets `padding: 40px`, but the `padding: 2px` declared by `root` inside its `> mid > leaf` block has higher specificity and outranks the `:hover` declaration. Because the hover rule is overridden by the more specific selector, entering `:hover` does not change the padding — it stays at `2px`.\n\nANSWER: NO\n",
+  "ms": 12700
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is specified as 800px, meaning only content with a vertical coordinate (y) less than 800 is visible without scrolling. The element `root>main>r36` is located at y=978, which is well beyond the initial visible area. Furthermore, the element is explicitly marked as `below-fold` in the provided layout information.\n\nANSWER: NO\n",
+  "ms": 9838
+}

@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>cover` div is absolutely positioned at `top: 0px` with height `19px` and a black background, so it covers the area from y=0 to y=19. The `root>second` paragraph is positioned at y=19.1875, which is just below where the cover ends. The cover does not overlap the second paragraph, so its text is visible.\n\nANSWER: YES\n",
+  "ms": 12252
+}

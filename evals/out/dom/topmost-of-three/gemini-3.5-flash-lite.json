@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At the point (120,120), all three absolute-positioned boxes (`root>back`, `root>middle`, and `root>front`) overlap according to their bounding client rectangles. Under CSS stacking context rules for positioned elements with explicit `z-index` values, elements with higher z-index values are rendered on top of those with lower values. Since `root>middle` has a `z-index` of 3 (higher than `root>front`'s 2 and `root>back`'s 1), it is painted on top and is what the viewer actually sees at that point.\n\nANSWER: root>middle\n",
+  "ms": 9195
+}

@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In the overlapping region, `root>high` is painted later than `root>low`, and it has an opaque background, so it covers `root>low`’s content. Although `root>low>inner` has a much larger `z-index` (999) than `root>high` (2), the info explicitly states that `z-index: 999` is scoped to the stacking context of `root>low`, and that entire stacking context paints below `root>high`. Therefore, the viewer sees `root>high` in the overlap.\n\nANSWER: root>high\n",
+  "ms": 11627
+}

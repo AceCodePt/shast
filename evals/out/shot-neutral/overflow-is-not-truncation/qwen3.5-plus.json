@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, I can see the bordered card element with text that extends beyond its bottom edge. The text \"Payment failed because the card\" appears within the border, while \"on file expired last month.\" continues below the border.\n\nCritically, all the text is **visible and readable** in the screenshot. Even though the last line sits below the card's bottom edge, it is still painted on the page and a person can clearly read it. The overflow is visible, not clipped or hidden.\n\nANSWER: YES\n",
+  "ms": 14358
+}

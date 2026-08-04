@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>plain` is static, so it does not establish a containing block. The pinned element therefore positions against the viewport/initial containing block, which places its top-left at the origin. The screenshot also shows it flush to the top-left.\n\nANSWER: 0,0\n",
+  "ms": 10711
+}

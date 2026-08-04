@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The viewport is `500x300`, so the visible area on first load is only from `y=0` to `y=300`. `root>footer` is positioned at `y=700` with height `60`, so it starts well below the initial visible area and is not seen until scrolling.\n\nANSWER: NO\n",
+  "ms": 12268
+}

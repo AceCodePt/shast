@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The container `root` occupies the full viewport width of 600px. The `flex: <number>` shorthand sets the `flex-grow` property to that number and the `flex-basis` to `0`, meaning the entire 600px of available space is distributed proportionally between the two children. With total flex factors of 3 (1 for `a` and 2 for `b`), each share is 200px (600 / 3), so `root>b` receives two shares.\n\nANSWER: 400\n",
+  "ms": 13178
+}

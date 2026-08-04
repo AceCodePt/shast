@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows two strings of text overlapping at the top left of the viewport. While \"Everything is fine\" is clearly legible, the words \"Important warning\" are also visible, rendered directly on top of the first string. This indicates that despite the `root>ghost` element having zero dimensions, its text content was still painted on the page, likely due to CSS overflow behavior.\n\nANSWER: YES\n",
+  "ms": 10529
+}

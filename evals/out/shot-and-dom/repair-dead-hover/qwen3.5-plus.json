@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence:\n\n1. The `:hover { padding: 40px }` rule **already exists** in `root>mid>leaf`'s CSS block\n2. When hovering over `root>mid>leaf`, the computed styles show **no change** - padding stays at `2px` instead of becoming `40px`\n3. Both screenshots look identical\n\nThe issue is that in CSS-in-TS systems (where each node has its own CSS block), a `:hover` pseudo-class defined in a child's own CSS block often doesn't work because the hover state needs to be declared by the **parent** that contains the hover relationship. The parent's CSS block can then target the child on hover.\n\nSince `root>mid>leaf`'s own hover rule isn't applying, you need to move the hover rule to the parent node's CSS block (`root>mid`), which can then properly apply the hover styling to its child.\n\nANSWER: root>mid\n",
+  "ms": 46025
+}

@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered data provided:\n\nThe `root` element has `font-size: 16px` and `line-height: 32px`. The `root>big` element declares `font-size: 32px` and inherits the line-height behavior from its parent.\n\nAccording to the browser's computed style data shown above, `root>big` has:\n- `font-size: 32px`\n- `line-height: 64px`\n- `getBoundingClientRect: height=64`\n\nThe line-height value of 64px on `root>big` is exactly double the font-size (32px × 2 = 64px), which indicates the `line-height: 2` declaration on `root` is being inherited as a multiplier. When `line-height` is specified as a unitless number, it's treated as a multiplier of the element's own font-size. Since `root>big` has `font-size: 32px` and inherits the multiplier of 2, its computed line-height becomes 32px × 2 = 64px.\n\nThe height of the element rendering is determined by its line-height value when no other height constraints are present.\n\nANSWER: 64\n",
+  "ms": 7462
+}

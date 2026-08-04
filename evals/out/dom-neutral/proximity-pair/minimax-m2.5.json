@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Alpha and beta are 44px apart (20→64), while beta and gamma are 136px apart (64→200). Gamma is visually separated from the cluster of alpha and beta.\n\nANSWER: root>gamma\n",
+  "ms": 5612
+}

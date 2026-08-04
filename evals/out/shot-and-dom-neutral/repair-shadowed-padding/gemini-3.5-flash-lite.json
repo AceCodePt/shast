@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Adding `padding: 32px` directly to `root>body>panel`'s css block fails to change its rendered padding because the value is shadowed or overridden by a rule or CSS variable defined on an ancestor node. Therefore, to achieve the desired padding of 32px, we must edit the css block of the root ancestor node where the style or variable originates.\n\nANSWER: root\n",
+  "ms": 15645
+}

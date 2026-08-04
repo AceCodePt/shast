@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered page structure and screenshot provided, I need to determine if the element `root>main>r17` (which contains \"17. Inventory valuation\") is visible above the fold at 1280x800 CSS pixels.\n\nFrom the screenshot, I can see that the page displays a \"Quarterly operations review\" header at the top, followed by a navigation sidebar on the left and a main content area listing numbered items. The visible items in the screenshot go from item 01 through approximately item 28 or 29 before the content cuts off at the bottom of the viewport.\n\nItem 17 (Inventory valuation) appears in the middle section of the visible content and is clearly shown in the screenshot within the 1280x800 viewport boundaries, well above the fold line.\n\nANSWER: YES\n",
+  "ms": 6509
+}

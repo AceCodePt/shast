@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report explicitly states that for `root>card`, the overflow is visible and \"painted outside the box rather than cut off.\" Although the text content height (76.75px) exceeds the available content box height (30px), the CSS `overflow: visible` behavior ensures it is rendered anyway. Since the total height occupied by the overflow remains well within the 300px height of the viewport, the last line is painted on the page and is readable.\n\nANSWER: YES\n",
+  "ms": 16676
+}

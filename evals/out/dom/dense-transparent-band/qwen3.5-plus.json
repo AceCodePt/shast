@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data for `root>main>r09`:\n\n1. **Text content**: \"09. Currency hedging\"\n2. **Opacity**: `1` (fully opaque, not hidden)\n3. **Text color**: `rgb(0, 0, 0)` (black)\n4. **Background**: `rgba(0, 0, 0, 0)` (transparent, showing the white root background `rgb(255, 255, 255)`)\n5. **Display**: `block` (visible)\n6. **Position**: `static` (normal flow)\n\nThere is a `root>banner` element at the same coordinates (x=244, y=276) with `z-index: 5`, but it has a transparent background (`rgba(0, 0, 0, 0)`) and no text content, so it doesn't obscure the text.\n\nThe black text on white background with full opacity means the text is clearly legible.\n\nANSWER: YES\n",
+  "ms": 18683
+}

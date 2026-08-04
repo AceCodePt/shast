@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>second` is readable because its vertical position starts at `y=19.19`, which is below the bottom edge of the opaque `root>cover` element (ending at `y=19`). The report specifically notes that `root>first` is covered, but no such restriction or overlap is mentioned for `root>second`, which sits entirely within the viewport.\n\nANSWER: YES\n",
+  "ms": 10104
+}

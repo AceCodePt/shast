@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>front",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "In standard web rendering, elements that appear later in the DOM order are painted on top of their preceding siblings within the same stacking context. Since `root>front` is the last child in the node tree and all three boxes are stated to overlap at the point (120, 120), `root>front` resides at the top of the stack and is the element visible to the viewer.\n\nANSWER: root>front\n",
+  "ms": 10963
+}

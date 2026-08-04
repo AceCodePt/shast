@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, I need to analyze the stacking context and z-index values.\n\nThe key insight is in the explanation for `root>low>inner`:\n\n> \"the smaller z-index still wins here because this node's z-index 999 is scoped to the stacking context of root>low, and that whole context paints below root>high\"\n\nThis explains the critical concept: `root>low>inner` has z-index 999, but this z-index is **scoped to the stacking context of its parent `root>low`**. The parent `root>low` itself has z-index 1, which establishes a new stacking context. Since `root>high` has z-index 2 at the root level (not scoped within `root>low`), the entire `root>low` stacking context (including `root>low>inner` with its z-index 999) paints below `root>high`.\n\nIn other words, even though `root>low>inner` has a high z-index of 999, it cannot paint above `root>high` because it's constrained within its parent's stacking context, which has a lower z-index (1) than `root>high` (2).\n\nANSWER: root>high\n",
+  "ms": 8810
+}

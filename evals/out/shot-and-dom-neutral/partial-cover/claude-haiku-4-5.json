@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding rectangles and positions:\n\n- `root>row` (the `<p>` element) occupies x=0 to x=600, y=0 to y=120\n- `root>chip` (the `<div>` element) occupies x=400 to x=560, y=60 to y=100\n\nThe chip is positioned absolutely at top=60px and left=400px, which places it within the vertical bounds of root>row (0-120px) and overlaps the horizontal range 400-560px.\n\nHowever, `root>row` contains only the text \"Short label\", which according to the screenshot appears on the left side of the page. Since the chip is positioned at x=400 (on the right side), and the text \"Short label\" is rendered on the left side, the chip does not overlap with the actual text content of `root>row`. The chip paints over the background area of the `<p>` element, but not over the text itself.\n\nANSWER: NO\n",
+  "ms": 7648
+}

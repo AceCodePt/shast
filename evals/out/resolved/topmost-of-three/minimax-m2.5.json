@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The three boxes stack by z-index: middle (3) > front (2) > back (1). The report explicitly states that `root>front` is 100% covered by `root>middle`, so front is not visible at (120,120). Middle paints on top of both front and back at that point, so it is what the viewer sees.\n\nANSWER: root>middle\n",
+  "ms": 5633
+}

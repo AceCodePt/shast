@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows that the text \"a\" (in `root>outer>filler`) and \"b\" (in `root>outer>tall`) are rendered with identical vertical spacing, indicating they have the same height. In CSS, a percentage height like `height: 100%` resolves to `auto` when the parent's height is indefinite (which is suggested by the file path `percent-height-indefinite`). Consequently, `root>outer>tall` simply wraps its content and does not become taller than its sibling.\n\nANSWER: NO\n",
+  "ms": 12514
+}

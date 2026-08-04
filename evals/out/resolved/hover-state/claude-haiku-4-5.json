@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered report, the `root>cta` div has a CSS property explicitly stated: `background-color: #3355ff`.\n\nThe `:hover` state shows an alternative color (`#0022cc`) that applies only when the pointer is hovering over the element. Since the question asks about when \"the page is first painted and the pointer is elsewhere,\" this means the element is in its default state, not being hovered.\n\nTherefore, the background color applied is the one specified in the base styles: `#3355ff`.\n\nANSWER: #3355ff\n",
+  "ms": 9462
+}

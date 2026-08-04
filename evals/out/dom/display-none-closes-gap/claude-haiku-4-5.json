@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles:\n\n- `root>first` has `y=0` and `height=40`, so it occupies the space from y=0 to y=40\n- `root>third` has `y=40` and `height=40`, so it occupies the space from y=40 to y=80\n- `root>gone` has `display: none`, which removes it from the document flow entirely\n\nSince `root>gone` is set to `display: none`, it does not occupy any space in the layout. The `root>third` element is positioned directly after `root>first` with no gap between them (third starts at y=40 where first ends). There is no 40px vertical gap where the hidden element would have been.\n\nANSWER: NO\n",
+  "ms": 7083
+}

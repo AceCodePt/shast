@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the stacking and positioning:\n\n1. **`root>line`** (the text) is at y=0 with height ~19px\n2. **`root>glass`** (z-index: 1) covers y=0 to y=100px but has `background-color: rgba(0, 0, 0, 0)` — fully transparent\n3. **`root>panel`** (z-index: 2) covers y=40px to y=100px with a solid dark background `rgb(48, 48, 48)`\n\nThe text sits at y=0 to ~19px. The opaque panel starts at y=40px, which is **below** the text. The glass element does cover that area but is completely transparent, so it doesn't obscure anything.\n\nThe screenshot confirms this — \"Still readable\" appears at the top, with the dark panel bar visible below it.\n\nANSWER: YES\n",
+  "ms": 18432
+}

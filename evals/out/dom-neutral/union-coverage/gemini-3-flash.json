@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text \"Hidden by two\" in `root>line` is located at the top of the container (y=0) with a height of approximately 19px. Two subsequent elements, `root>leftHalf` and `root>rightHalf`, are both `position: absolute` and also start at y=0 with a height of 20px, meaning they vertically overlap the text entirely. `leftHalf` covers the horizontal range from x=0 to x=70, and `rightHalf` covers the range from x=60 to x=140; because they overlap between x=60 and x=70, they form a continuous opaque block from x=0 to x=140. Since the 13-character text string starts at x=0 and would reasonably fit within 140px at a 16px font size, it is fully obscured by the opaque backgrounds of the two covering boxes.\n\nANSWER: NO\n",
+  "ms": 17226
+}

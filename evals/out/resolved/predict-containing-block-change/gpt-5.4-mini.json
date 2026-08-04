@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "60,60",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Adding `position: relative` to `root>plain` makes it the containing block for the absolutely positioned `pin`. The offsets `top: 10px` and `left: 10px` are measured from `root>plain`’s padding box, whose top-left is at `x=20+30=50`, `y=20+30=50`.\n\nSo `pin` renders at `50+10, 50+10` = `60,60`.\n\nANSWER: 60,60\n",
+  "ms": 10127
+}

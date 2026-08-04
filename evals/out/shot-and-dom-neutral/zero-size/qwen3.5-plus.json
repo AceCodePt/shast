@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The `root>ghost` element has `width=0` and `height=0` according to its `getBoundingClientRect()`. An element with zero dimensions has no area in which to paint its text content. While the text \"Important warning\" exists in the DOM source, it cannot be visibly rendered when the element's box has no width or height. The screenshot confirms this — only \"Everything is fine\" and \"warning\" appear, not the full \"Important warning\" text.\n\nANSWER: NO\n",
+  "ms": 13676
+}

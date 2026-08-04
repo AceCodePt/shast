@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Even though `padding: 32px` has been added to `root>body>panel`'s own css block, the rendering remains unchanged because a conflicting rule defined in the parent node's css block shadows or overrides it. To successfully apply the 32px padding to the panel, you must edit the css block of its parent container where the shadowing rule resides.\n\nANSWER: root>body\n",
+  "ms": 14737
+}

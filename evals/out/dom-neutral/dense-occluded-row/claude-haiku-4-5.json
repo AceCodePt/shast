@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the layout data provided:\n\nThe `root>banner` div is positioned absolutely at `top: 276px` with `height: 26px` and `z-index: 5`, placing it from y=276 to y=302.\n\nThe `root>main>r09` div is positioned at `top: 276px` with `height: 26px`, placing it from y=276 to y=302.\n\nSince the banner has `z-index: 5` and r09 has `z-index: auto` (which defaults to the stacking context of its parent), the absolutely-positioned banner will render on top of r09. The banner occupies the exact same vertical space (y=276 to y=302) and has a width of 700px starting at x=244, which would completely cover the text content of r09.\n\nAdditionally, the banner has a background-color of `rgb(204, 34, 34)` (dark red), which would obscure any text beneath it. Therefore, a viewer would not be able to read the text in r09 as it would be hidden behind the banner.\n\nANSWER: NO\n",
+  "ms": 7750
+}

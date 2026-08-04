@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The `root>ghost` element has `getBoundingClientRect: x=0 y=0 width=0 height=0`, meaning it occupies no visible space on the rendered page. When an element's bounding client rect is 0×0, the browser does not paint its text content anywhere visible, even though the text exists in the DOM tree. The text \"Important warning\" is present in the source but is not rendered on screen.\n\nANSWER: NO\n",
+  "ms": 11248
+}

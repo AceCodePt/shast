@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "`root>mid>leaf`’s own `:hover` block is not matching the leaf itself here; it’s behaving like a descendant selector, so nothing changes when the leaf is hovered. To make the leaf itself gain padding on hover, put the hover rule in its parent’s css block and target the child from there.\n\nANSWER: root>mid\n",
+  "ms": 42085
+}

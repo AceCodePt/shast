@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered page:\n\n- The viewport is 600px wide\n- `root` is a flex container with two children\n- `root>a` has `flex: 1` and `root>b` has `flex: 2`\n\nWith flex shorthand values of 1 and 2, the flex-grow ratios are 1:2. This means the available space is divided into 3 parts (1+2=3), where A gets 1 part and B gets 2 parts.\n\nSince B gets 2/3 of the 600px container width: 2/3 × 600 = 400px\n\nANSWER: 400\n",
+  "ms": 14240
+}

@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values and painting order:\n\n- **root>back**: z-index 1, covers point (120, 120)\n- **root>front**: z-index 2, covers point (120, 120), but the info states it's 100% covered by root>middle\n- **root>middle**: z-index 3, covers point (120, 120)\n\nThe element with the highest z-index paints last and appears on top. Since root>middle has z-index 3 (the highest) and explicitly covers 100% of root>front with its opaque background, it will be the visible box at point (120, 120).\n\nANSWER: root>middle\n",
+  "ms": 17083
+}

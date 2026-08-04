@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In a CSS grid, the `grid-template-columns` define the track widths in order, and `gap` adds spacing between adjacent tracks. The `left` column is 200px wide, so the `right` column starts after 200px. There is a 20px gap between the first and second columns, so `right`’s left edge is at `0 + 200 + 20 = 220` pixels.  \n\nANSWER: 220\n",
+  "ms": 7529
+}

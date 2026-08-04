@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>row` is the `<p>` covering `x=0..600` and `y=0..120` with a single line of text `\"Short label\"`, and it only has padding of `4px`, so that line’s rendered content would be near the top portion of that box (around `y≈4..~23` given `line-height: 19.2px`).  \n\n`root>chip` is an absolutely-positioned `<div>` at `x=400..560` and `y=60..100`, which overlaps the `<p>`’s *area* but occurs much lower than where the `\"Short label\"` line would be painted. So there’s no evidence that the chip covers the `<p>`’s own text.\n\nANSWER: NO\n",
+  "ms": 8711
+}

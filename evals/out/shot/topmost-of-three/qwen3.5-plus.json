@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>front",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the node tree, the three divs are named `back`, `middle`, and `front` — which directly indicates their stacking order in the z-axis. In CSS, later siblings in the DOM tree stack on top of earlier siblings when they overlap (assuming default stacking context with no z-index manipulation).\n\nSince `root>front` is the last sibling and its name explicitly indicates it's the frontmost layer, it would be the one visible at any point where all three overlap.\n\nANSWER: root>front\n",
+  "ms": 11749
+}

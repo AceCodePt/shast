@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence, the `:hover { padding: 40px }` rule is already on `root>mid>leaf` but doesn't apply when hovering. All three nodes have identical bounding boxes (500x23.1875), meaning they occupy the same space.\n\nThe issue is that when elements stack with identical bounds, the hover event may be captured by a parent element instead of the leaf. Since `root>mid` is the direct parent of the leaf and shares the same bounding box, hovering over the visual area triggers `:hover` on `root>mid`, not on `root>mid>leaf`.\n\nTo fix this, you need to move the hover rule to `root>mid`'s CSS block, using a child/descendant selector to style the leaf when the parent is hovered (e.g., `:hover > div` or similar).\n\nANSWER: root>mid\n",
+  "ms": 48558
+}

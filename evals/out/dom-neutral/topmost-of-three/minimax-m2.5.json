@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewer sees the box with the highest z-index among those covering (120,120). All three boxes cover that point (back: [40,240]×[40,240] z=1; front: [100,160]×[100,160] z=2; middle: [80,280]×[80,280] z=3). Middle has z=3, which beats front's 2 and back's 1.\n\nANSWER: root>middle\n",
+  "ms": 7752
+}

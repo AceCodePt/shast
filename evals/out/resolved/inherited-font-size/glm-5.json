@@ -1,0 +1,10 @@
+{
+  "case": "inherited-font-size",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>heading",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>heading` has a resolved font-size of 30px (inherited from root), while `root>caption` has a resolved font-size of 22px. Since 30px > 22px, the heading renders with larger text.\n\nANSWER: root>heading\n",
+  "ms": 7178
+}

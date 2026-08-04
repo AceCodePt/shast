@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "At `x=500, y=400`, all three absolutely positioned bands overlap. They share the same stacking context, so the one with the highest `z-index` is painted on top. `beta` has `z-index: 4`, higher than `gamma` (`3`) and `alpha` (`2`), so its background is the one visible there.\n\nANSWER: root>beta\n",
+  "ms": 10210
+}

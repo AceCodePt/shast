@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>row` element occupies the full width of the viewport (x=0 to 600), and its text \"Short label\" starts at x=4 due to the 4px padding. The `root>chip` element is positioned absolutely starting at x=400. Since \"Short label\" at a 16px font size is much shorter than 400 pixels (typically ending before x=120), the chip does not overlap the area where the text is rendered.\n\nANSWER: NO\n",
+  "ms": 12046
+}

@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node `root>leftBottom` is located at an absolute `y` coordinate of 120px. Checking the coordinates of the other nodes, `root>rightBottom` shares the same `y` coordinate of 120px, placing it on the same horizontal row. Since `root>rightBottom` has an `x` coordinate of 340px compared to `root>leftBottom`'s `x` coordinate of 0px, it sits directly to the right.\n\nANSWER: root>rightBottom\n",
+  "ms": 9036
+}

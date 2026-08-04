@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The information states that the text was written as \"Annual review\". However, the `root` element has the CSS property `text-transform: uppercase`, which is inherited by the `root>title` element. This property converts all characters to uppercase, as confirmed by the rendered text value \"ANNUAL REVIEW\" provided in the description.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 8964
+}

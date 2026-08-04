@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Three rows (`first`, `second`, `fourth`) all have `left: 24px` and the same x-coordinate of 24 in their bounding rects. `third` sits at x=40, shifted 16px to the right, so it is the one out of alignment.\n\nANSWER: root>third\n",
+  "ms": 6708
+}

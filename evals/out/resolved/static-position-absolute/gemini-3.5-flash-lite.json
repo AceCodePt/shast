@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The machine-generated report explicitly provides the absolute bounding box coordinates for each element in the `@` line (`[x, y, width, height]`). For `root>floaty`, the report specifies `@ x=0 y=50 width=90 height=20`, where `y` represents the absolute distance from the top of the page. Therefore, its top edge renders at `y = 50`.\n\nANSWER: 50\n",
+  "ms": 7029
+}

@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states in the `root>card` section that the text wrapped. The line marked with `!` indicates: \"wrapped: text broke onto 4 lines at 152px content width\". This directly tells us the number of lines the text wrapped onto.\n\nANSWER: 4\n",
+  "ms": 8983
+}

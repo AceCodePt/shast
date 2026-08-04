@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the three overlapping divs at point x=500, y=400:\n\n1. **root>alpha**: spans x=300-700, y=300-420, z-index: 2\n2. **root>beta**: spans x=340-740, y=340-460, z-index: 4\n3. **root>gamma**: spans x=380-780, y=380-500, z-index: 3\n\nThe point (500, 400) falls within all three boxes. In CSS stacking, the element with the highest z-index paints last and appears on top. Beta has z-index 4 (highest), gamma has z-index 3, and alpha has z-index 2. The report confirms beta has no \"covered\" warnings, meaning nothing paints over it.\n\nANSWER: root>beta\n",
+  "ms": 19003
+}

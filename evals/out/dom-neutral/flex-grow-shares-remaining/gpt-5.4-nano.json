@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is a flex container with a viewport width of 600px. The browser’s own `getBoundingClientRect()` for `root>b` reports `x=200` and `width=400`, which reflects the final layout after flex sizing. Therefore, `root>b` occupies 400 CSS pixels in width.  \nANSWER: 400\n",
+  "ms": 7068
+}

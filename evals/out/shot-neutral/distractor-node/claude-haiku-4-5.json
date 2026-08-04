@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe node tree shows that `root>second` is a `<p>` tag containing the text \"Second paragraph here\". The screenshot shows this text is clearly visible at the top of the rendered page in black text on a white/light background. The viewport is 500x300 CSS pixels, and the text appears to be rendered normally without any CSS properties that would hide it (such as `display: none`, `visibility: hidden`, or positioning it off-screen).\n\nSince the text \"Second paragraph here\" is visibly displayed in the screenshot, a viewer can definitely read it.\n\nANSWER: YES\n",
+  "ms": 6593
+}

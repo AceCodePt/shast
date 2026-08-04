@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "2px 2px 2px 2px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The hover-state snapshot for `root>mid>leaf` shows `padding: 2px 2px 2px 2px`, which is identical to its non-hover value — the `:hover` state changed nothing about the padding.\n\nANSWER: 2px 2px 2px 2px\n",
+  "ms": 11884
+}

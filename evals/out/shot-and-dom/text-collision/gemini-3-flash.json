@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot and bounding box data show that `root>ghost` and `root>visible` both start at the coordinate (0,0). Although `root>ghost` has a calculated width and height of 0, its text content (\"Important warning\") overflows and is rendered starting from the top-left corner, where it overlaps with the text from `root>visible` (\"Everything is fine\").\n\nANSWER: root>visible\n",
+  "ms": 12354
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The rendered padding on `root>body>panel` is 4px, not 32px. The selector `> body > panel` used by `root` is more specific (it includes the `body` and `panel` element selectors) than the `panel` selector used by `root>body>panel` itself, so `root`'s `padding: 4px` overrides the panel's own `padding: 32px` declaration. The annotation in the rendered info explicitly notes that root's declaration \"shadows\" the 32px declaration on the panel itself.\n\nANSWER: NO\n",
+  "ms": 6547
+}

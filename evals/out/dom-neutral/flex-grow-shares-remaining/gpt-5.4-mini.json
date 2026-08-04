@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is 600px wide, and its two flex items split the available space in a `1:2` ratio. That means the 600px total is divided into 3 equal parts, so each part is 200px. `root>b` gets 2 parts, so its width is 400px.\n\nANSWER: 400\n",
+  "ms": 7370
+}

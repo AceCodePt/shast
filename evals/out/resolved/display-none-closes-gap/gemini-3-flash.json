@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the report, `root>first` occupies the vertical space from y=0 to y=40 (height 40px), and `root>third` begins immediately at y=40. Because `root>gone` has `display: none`, it is removed from the layout flow and occupies 0px of height, allowing the third element to shift up and sit flush against the first element.\n\nANSWER: NO\n",
+  "ms": 10029
+}

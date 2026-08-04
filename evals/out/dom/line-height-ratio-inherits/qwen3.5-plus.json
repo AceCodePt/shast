@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>big` element has `font-size: 32px` and inherits `line-height: 2` from its parent. Since `line-height: 2` is a unitless multiplier, it multiplies the element's own font-size: 32px × 2 = 64px. This is confirmed by the `getBoundingClientRect()` data which shows `height=64` for `root>big`.\n\nANSWER: 64\n",
+  "ms": 13194
+}

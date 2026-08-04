@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The screenshot shows the full `root>lede` sentence rendered on screen, split across two lines: “The quarterly results are in and every region beat its” and “target this time.” Since all of the text is visible, a person can read the whole sentence.\n\nANSWER: YES\n",
+  "ms": 7311
+}

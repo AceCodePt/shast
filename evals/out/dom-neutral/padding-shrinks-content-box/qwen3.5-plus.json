@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the browser data for `root>card`:\n\n- Total height: 124.75px\n- Padding: 24px top and bottom\n- Content height: 124.75 - 24 - 24 = 76.75px\n- Line-height: 19.2px\n\nDividing the content height by line-height: 76.75 / 19.2 ≈ 3.99, which rounds to 4 lines.\n\nANSWER: 4\n",
+  "ms": 13524
+}

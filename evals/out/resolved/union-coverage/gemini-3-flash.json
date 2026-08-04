@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text \"Hidden by two\" is located at the start of `root>line` (x=0, y=0). While neither box spans the entire 400px width of the line, `root>leftHalf` (x=0 to x=70) and `root>rightHalf` (x=60 to x=140) overlap to form a continuous opaque cover from x=0 to x=140. The report explicitly confirms that this combined coverage results in the single text line being \"completely hidden.\"\n\nANSWER: NO\n",
+  "ms": 14364
+}

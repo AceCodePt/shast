@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendering shows `root>body>panel` with 4px padding even though its own block declares `padding: 32px`. The evidence explicitly states that `root>body`'s `> panel` block declares `padding: 4px`, which shadows the 32px on the panel itself. To get 32px, I must edit the parent `root>body`'s css block to remove or override that shadowing rule.\n\nANSWER: root>body\n",
+  "ms": 7546
+}

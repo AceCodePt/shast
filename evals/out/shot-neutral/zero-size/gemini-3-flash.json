@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows that the word \"warning\" is clearly visible on the second line of the rendered page. Additionally, the first line shows characters from the word \"Important\" superimposed on \"Everything is fine,\" indicating that the text content of the `root>ghost` node was indeed painted despite the node itself having a reported size of 0x0.\n\nANSWER: YES\n",
+  "ms": 11802
+}

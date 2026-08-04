@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The screenshot shows the `ghost` text rendered in the top-left area, overlapping the visible line, so `Important warning` is painted despite the element being `0x0`.\n\nANSWER: YES\n",
+  "ms": 10799
+}

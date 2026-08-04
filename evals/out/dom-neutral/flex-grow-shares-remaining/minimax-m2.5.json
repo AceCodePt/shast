@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is a 600px flex container. With `flex-basis: 0%` on both items, the available space (600px) is distributed in proportion to their `flex-grow` values: 1:2. So `root>a` gets 1/3 (200px) and `root>b` gets 2/3 (400px), matching the measured `getBoundingClientRect` width.\n\nANSWER: 400\n",
+  "ms": 6175
+}

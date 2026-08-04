@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The screenshot displays a box enclosing the text \"Panel\" with visibly rounded corners, which corresponds to the `root>body>panel` element. The `border-radius` property styling this panel is declared directly within its own CSS block.\n\nANSWER: root>body>panel\n",
+  "ms": 8222
+}

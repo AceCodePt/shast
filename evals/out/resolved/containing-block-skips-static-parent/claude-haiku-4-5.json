@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report, I need to find where the top-left corner of `root>plain>pin` renders.\n\nThe report directly states that `root>plain>pin` has `@ x=10 y=10 width=80 height=20`. The `@` notation indicates the border box position in absolute CSS pixels from the top-left of the page.\n\nThe key detail is that `root>plain>pin` has `position: absolute` with `top: 10px` and `left: 10px`. Since `root>plain` is explicitly noted as \"not positioned,\" the absolutely positioned element `root>plain>pin` uses `root` (which has `position: relative`) as its positioning context. The `top: 10px` and `left: 10px` values position it 10 pixels from the top and left edges of that relative-positioned ancestor.\n\nThe report confirms this by showing the absolute coordinates: x=10, y=10.\n\nANSWER: 10,10\n",
+  "ms": 8351
+}

@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided information, the sentence in `root>lede` (\"The quarterly results are in...\") is not visible in the rendered screenshot. The screenshot shows a dark banner (`root>banner`) at the top of the viewport that appears to occlude the area where the lede paragraph would typically be rendered, as only the subsequent `root>body` text (\"Details follow in the table below.\") is visible below it. Because the text is covered by the banner, a person reading the page cannot see or read the sentence.\n\nANSWER: NO\n",
+  "ms": 15981
+}

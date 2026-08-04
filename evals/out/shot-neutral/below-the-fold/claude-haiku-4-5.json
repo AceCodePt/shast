@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe viewport is 500x300 CSS pixels. The node tree shows:\n- `root>top` contains \"masthead\"\n- `root>footer` contains \"footer note\"\n\nThe screenshot shows only \"masthead\" text visible in the rendered page at 500x300. The footer is not visible in the initial viewport.\n\nSince the footer element (`root>footer`) does not appear in the screenshot of the initial viewport, it must be positioned below the visible area. This is consistent with it being labeled as \"below-the-fold\" in the file path, which is a web design term for content that requires scrolling to view.\n\nANSWER: NO\n",
+  "ms": 6947
+}

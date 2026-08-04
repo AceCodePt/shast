@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Hovering would normally apply `padding: 40px` to `root>mid>leaf`, which should visibly change the layout by increasing the space around the `Leaf` text (e.g., shifting it away from the div’s edge and making the div’s occupied area larger). Comparing the two provided 500x300 screenshots (rest vs. hover), the rendered appearance does not show any such change in where the `Leaf` text sits. Therefore, hovering does not appear to change its padding.\n\nANSWER: NO\n",
+  "ms": 8369
+}

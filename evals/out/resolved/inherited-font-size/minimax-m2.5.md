@@ -1,0 +1,38 @@
+# inherited-font-size — opencode/minimax-m2.5
+
+- arm: `resolved`
+- probes: an effective text size that no line on the node declares
+- expected: root>heading (30px inherited, against 22px declared)
+- parsed answer: `root>heading`
+- verdict: **PASS**
+- elapsed: 6744ms
+
+## Question
+
+Which renders with larger text, `root>heading` or `root>caption`?
+
+## Context shown to the model
+
+
+```
+viewport 500x300
+@ = border box [x, y, width, height], in CSS px — x and y are absolute from the top-left of the page, already resolved, not relative to the parent
+
+root          div
+  @ x=0 y=0 width=500 height=62.39
+  = font-size: 30px
+
+root>heading  div  "Quarterly report"
+  @ x=0 y=0 width=500 height=36
+  = font-size: 30px (inherited)
+
+root>caption  div  "Draft"
+  @ x=0 y=36 width=500 height=26.39
+  = font-size: 22px
+```
+
+## Model reply
+
+The report specifies `font-size` for each node. `root>heading` has `font-size: 30px` (inherited from root), while `root>caption` has `font-size: 22px`. Since 30px > 22px, `root>heading` renders with larger text. This is also consistent with its measured height (36px vs 26.39px).
+
+ANSWER: root>heading

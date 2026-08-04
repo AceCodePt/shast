@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Ordinary scrolling moves vertically, which successfully brings `root>lower` (located at y=700) into view. However, `root>sideways` extends horizontally to a width of 900px, exceeding the 500px viewport width, and ordinary vertical scrolling cannot pan horizontally to reveal the overflowing content.\n\nANSWER: root>sideways\n",
+  "ms": 11241
+}

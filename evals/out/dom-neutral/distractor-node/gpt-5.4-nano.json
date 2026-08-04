@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>second` is a normal `<p>` with `opacity: 1`, `color: rgb(0, 0, 0)`, and `background-color: rgba(0, 0, 0, 0)` (transparent). Its box starts at `y=19.1875` with height `19.1875`, while the `root>cover` element is `position: absolute` at `top: 0` with height `19`, ending at about `y=19`, so `cover` does not overlap `second`. Nothing in the provided data indicates the `second` text is obscured or clipped, so it should be readable.\n\nANSWER: YES\n",
+  "ms": 11561
+}

@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Since `floaty` is `position: absolute` with no offset properties set, it falls back to its static position—the place it would have occupied in normal flow. In the document flow, `spacer` fills 0–50px, so `floaty`'s static position is at y=50, which matches the reported coordinates.\n\nANSWER: 50\n",
+  "ms": 6399
+}

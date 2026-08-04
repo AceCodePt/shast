@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>line` div sits at x=0, y=0 spanning the full 400px width, and contains the text \"Hidden by two\" rendered in black. The two absolutely-positioned covering boxes (`leftHalf` from x=0–70 and `rightHalf` from x=60–140) together obscure the region x=0–140. Since \"Hidden by two\" at 16px font size is well under 140px wide and starts at the left edge, it falls entirely beneath the overlapping dark boxes. Even hypothetically uncovered portions would still blend with the near-black box backgrounds (rgb 16/32) behind the black text.\n\nANSWER: NO\n",
+  "ms": 9696
+}

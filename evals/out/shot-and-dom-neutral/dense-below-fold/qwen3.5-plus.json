@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding rectangle data:\n\n- Viewport height: **800px** (1280x800)\n- `root>main>r36` (item \"36. Royalty accruals\") has `y=978` and `height=26px`\n\nThis means the element starts at y=978px and extends to y=1004px. Since the viewport only shows from y=0 to y=800, this element is positioned **178px below** the bottom edge of the initial viewport.\n\nANSWER: NO\n",
+  "ms": 17041
+}

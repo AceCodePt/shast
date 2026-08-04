@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The selector `&.big` inside `root>child` expands to `root>child.big`, which carries one extra class compared to the plain `root>child` and `root > child` selectors (specificity 0,2,1 vs 0,1,1). Higher specificity beats source order, so it shadows both other declarations. The report also confirms this directly by stating `padding: 64px` shadows the 4px and 32px values.\n\nANSWER: 64px\n",
+  "ms": 8255
+}

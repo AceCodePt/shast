@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendered text is transformed to uppercase, so the viewer sees the original words with all letters capitalized. The written content is `Annual review`, which becomes `ANNUAL REVIEW` on screen.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7658
+}

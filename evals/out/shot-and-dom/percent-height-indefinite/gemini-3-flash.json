@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the browser data provided, `root>outer>filler` has a height of 60px, while `root>outer>tall` has a height of 19.1875px. Since 19.1875px is less than 60px, `root>outer>tall` is shorter than its sibling.\n\nANSWER: NO\n",
+  "ms": 7295
+}

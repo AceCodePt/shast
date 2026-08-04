@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence:\n\n1. The `root>lede` paragraph starts at y=0 with height 54.375px\n2. The `root>banner` div is absolutely positioned at x=0, y=0 with height 70px and z-index 5, placing it **on top** of the lede\n3. However, the banner has `background-color: rgba(0, 0, 0, 0)` — fully transparent\n4. The screenshot confirms the text \"The quarterly results are in and every region beat its target this time.\" is fully visible\n\nSince the banner overlay has a transparent background, it does not obscure the text beneath it.\n\nANSWER: YES\n",
+  "ms": 17225
+}

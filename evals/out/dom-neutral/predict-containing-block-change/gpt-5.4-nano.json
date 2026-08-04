@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "With `root>plain` currently `position: static`, the absolutely positioned `root>plain>pin` uses the nearest positioned ancestor, which is `root` (`position: relative`). That’s why the pin ends up at `(10, 10)` (its `top: 10px; left: 10px` measured from `root`’s origin).\n\nAfter adding `position: relative` to `root>plain`, `root>plain` becomes the containing block for the absolute positioning. Since `root>plain`’s bounding box starts at `(20, 20)`, the pin’s `left: 10px; top: 10px` move it to `(20+10, 20+10)`.\n\nANSWER: 30,30\n",
+  "ms": 10636
+}

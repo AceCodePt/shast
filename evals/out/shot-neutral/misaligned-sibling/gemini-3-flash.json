@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, the rows containing the text \"first\", \"second\", and \"fourth\" are all aligned to the same vertical line on the left side of the viewport. The row containing the text \"third\" is indented to the right, creating a different left edge compared to the other three.\n\nANSWER: root>third\n",
+  "ms": 10826
+}

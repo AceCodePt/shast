@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report only gives the label’s box size, font size, and padding. It does not include any computed or rendered text color information, so the colour cannot be determined from what’s shown.\n\nANSWER: NOT STATED\n",
+  "ms": 6778
+}

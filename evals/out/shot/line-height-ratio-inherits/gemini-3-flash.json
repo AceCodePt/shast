@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When a unitless `line-height` (like `2`) is declared on a parent element, the multiplier itself is inherited by its descendants rather than a fixed pixel value. For the `root>big` element, which has a `font-size` of `32px`, the inherited `line-height` multiplier of `2` is applied to its own font size. This results in a calculated line height of `32px * 2 = 64px`, which determines the rendered height of the div.\n\nANSWER: 64\n",
+  "ms": 9446
+}

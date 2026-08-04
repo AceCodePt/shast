@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows that \"Short label\" (the text of `root>row`) is positioned in the top-left corner of the viewport, while the yellow box (the `root>chip` element) is positioned further to the right. There is no visual overlap between the yellow box and the characters of the \"Short label\" text. Since the text is fully visible and not obstructed by the chip element, no part of it is hidden.\n\nANSWER: NO\n",
+  "ms": 10853
+}

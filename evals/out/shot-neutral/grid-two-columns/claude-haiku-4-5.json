@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the grid layout:\n\n- `root` is a grid container with `grid-template-columns: 200px 300px` and `gap: 20px`\n- `root>left` occupies the first column (200px wide)\n- `root>right` occupies the second column (300px wide)\n- There is a 20px gap between the columns\n\nThe left edge of `root>right` starts after:\n- The first column: 200px\n- The gap: 20px\n- Total: 200px + 20px = 220px\n\nANSWER: 220\n",
+  "ms": 8880
+}

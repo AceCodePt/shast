@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>line` div contains the text \"Hidden by two\" and has dimensions of 400x300 (full width).\n\nTwo absolutely positioned boxes are covering it:\n- `leftHalf`: positioned at x=0, width=70px (covers left portion)\n- `rightHalf`: positioned at x=60, width=80px (covers from x=60 to x=140)\n\nThese boxes overlap in the range x=60-70px, but leave a gap uncovered between x=70-60px... wait, that's backwards. Let me recalculate:\n- `leftHalf` covers x=0 to x=70\n- `rightHalf` covers x=60 to x=140 (60+80)\n\nThey overlap from x=60-70, and together they cover x=0 to x=140. The text \"Hidden by two\" spans the full 400px width, so the region from x=140 to x=400 remains visible and uncovered.\n\nHowever, the question asks if a viewer can \"read the words\" - meaning understand the text content. Since the boxes only cover the leftmost 140px of the 400px-wide line, and the text extends across the full width, a viewer can see a significant portion of the text that isn't covered by either box.\n\nANSWER: YES\n",
+  "ms": 8804
+}

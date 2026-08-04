@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Both `root>leftBottom` and `root>rightBottom` are located at y=120, placing them on the same horizontal row. Since `root>rightBottom` has an x-coordinate of 340 while `root>leftBottom` is at x=0, `root>rightBottom` sits directly to the right of `root>leftBottom`.\n\nANSWER: root>rightBottom\n",
+  "ms": 6474
+}

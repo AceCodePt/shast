@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r09` has `getBoundingClientRect` of `x=244 y=276 width=1012 height=26`, and its computed text color is black on a transparent background. However, there is an overlapping `root>banner` element starting at `x=244 y=276` with `width=700` and `background-color: rgb(204, 34, 34)` plus `z-index: 5`, which places it above the list item. Since `r09`’s text would be on the left side (within that 700px covered region), the banner would occlude it.  \n\nANSWER: NO\n",
+  "ms": 12680
+}

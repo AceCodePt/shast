@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is a flex container with total width equal to the viewport width shown: 600 CSS px. With `root>a { flex: 1 }` and `root>b { flex: 2 }`, the flex grow values are 1 and 2, so the two items divide the free space in a 1:2 ratio. Therefore `root>b` takes \\( \\frac{2}{1+2} = \\frac{2}{3} \\) of 600px, which is 400px.\n\nANSWER: 400\n",
+  "ms": 9923
+}

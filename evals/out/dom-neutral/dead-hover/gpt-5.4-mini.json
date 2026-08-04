@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `getComputedStyle()` data for `root>mid>leaf` is identical before and during hover, including `padding: 2px 2px 2px 2px`. Its bounding box also stays the same, which is consistent with no padding change taking effect.  \n\nANSWER: NO\n",
+  "ms": 7324
+}

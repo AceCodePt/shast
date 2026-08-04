@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "## Reasoning\n\nThe key detail is that `root>inner` has `position: fixed`. Fixed-position elements are positioned relative to the **viewport**, not relative to their parent element. This means the parent's `position: relative` and 40px padding have no effect on the fixed child's position.\n\nWith `top: 15px` and `left: 25px`, the element is placed 15px from the top of the viewport and 25px from the left of the viewport.\n\nANSWER: 25,15\n",
+  "ms": 78957
+}

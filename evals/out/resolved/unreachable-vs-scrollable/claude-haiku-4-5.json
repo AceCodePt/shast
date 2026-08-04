@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Let me analyze the layout report:\n\nThe viewport is 500x300 px. The root element has height 900px and position relative, so it creates a scrollable container vertically.\n\n**root>lower**: positioned at y=700, width=400, height=40\n- It's below the initial fold (y=700 is beyond the 300px viewport height)\n- It's within the horizontal bounds (x=0 to x=400, which fits in the 500px viewport width)\n- By scrolling down, you can bring this into view since the root element can scroll vertically to 900px total height\n\n**root>sideways**: positioned at y=40, width=900, height=40\n- It's just below the initial fold (y=40 is within the 300px viewport)\n- The report explicitly states it's \"offscreen: 400px past the right edge\"\n- The width is 900px, so it extends from x=0 to x=900\n- The viewport is only 500px wide, and \"pages do not scroll horizontally\"\n- You cannot reach this by scrolling because the page doesn't scroll horizontally\n\nSince the page can only scroll vertically (the viewport height is 300px and root height is 900px), you can scroll down to reach `root>lower`. However, `root>sideways` extends 400px beyond the right edge of the viewport, and since there's no horizontal scrolling capability, you cannot bring it fully into view through ordinary scrolling.\n\nANSWER: root>sideways\n",
+  "ms": 10192
+}

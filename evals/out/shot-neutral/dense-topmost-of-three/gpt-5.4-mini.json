@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "I’m checking the overlap order from the screenshot and the node tree, then I’ll identify which element is visually on top at that point.\nAt `x=500, y=400`, all three bands overlap, but the lightest band is the one that visually sits on top in the rendered stack. Since `root>gamma` is the last of the three and is the visible top layer at that point, its background is what the viewer sees.\n\nANSWER: root>gamma\n",
+  "ms": 18342
+}

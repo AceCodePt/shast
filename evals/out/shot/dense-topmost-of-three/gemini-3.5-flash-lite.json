@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "In the DOM tree, elements later in the document order render on top of earlier sibling elements by default. Since `root>gamma` appears after `root>alpha` and `root>beta`, it is painted last and sits at the top of the stacking order where the three bands overlap. Therefore, a viewer sees the background color of the topmost element at that point.\n\nANSWER: root>gamma\n",
+  "ms": 9641
+}

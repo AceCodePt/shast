@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe URL text \"https://example.com/a/very/long/path/that/never/breaks\" is 60 characters long. The `root>cell` div has a width of 120px with `display: block`, `overflow: visible`, and no special text-wrapping properties specified.\n\nAt a font-size of 16px, a typical character width is approximately 8-10 pixels. This means the URL would require roughly 480-600 pixels to display without wrapping. Since `root>cell` is only 120px wide and has `overflow: visible` (meaning content can overflow), the URL text would extend beyond the 120px boundary.\n\nThe fact that the element has `overflow: visible` and `display: block` means the text will render beyond the box's width rather than wrap or be clipped.\n\nANSWER: NO\n",
+  "ms": 6885
+}

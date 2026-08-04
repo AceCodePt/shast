@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The rendering information for `root>main>r09` explicitly states that its single text line is completely hidden and covered by `root>banner`, an absolute element with an opaque background and a higher z-index. Consequently, the text is obscured and cannot be read by a viewer.\n\nANSWER: NO\n",
+  "ms": 7777
+}

@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The `root>body>panel` node has `border-radius: 12px` in its computed style, while `root` and `root>body` both have `border-radius: 0px`. Since the panel is the only node with a non-zero border-radius and its computed style directly shows `12px`, the declaration must come from a CSS rule targeting the panel itself.\n\nANSWER: root>body>panel\n",
+  "ms": 7899
+}

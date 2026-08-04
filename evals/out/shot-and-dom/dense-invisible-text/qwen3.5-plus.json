@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the computed styles for `root>main>r21`:\n\n- **Text color**: `rgb(255, 255, 255)` (white)\n- **Background-color**: `rgba(0, 0, 0, 0)` (transparent)\n- **Parent background** (`root` and `root>main`): `rgb(255, 255, 255)` (white)\n\nThe text \"21. Treasury positions\" is rendered in **white on a white background**, making it invisible to the viewer. This is confirmed by the screenshot showing items 01-20 and 22-28 visible, but item 21 is missing from the rendered list.\n\nANSWER: NO\n",
+  "ms": 16608
+}

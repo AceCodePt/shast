@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Because `root>inner` is `position: fixed`, it is positioned relative to the viewport, not relative to the `root` element’s `position: relative` padding box. The `top: 15px` and `left: 25px` therefore place the top-left corner of `root>inner` at x=25 and y=15 in CSS pixels.\n\nANSWER: 25,15\n",
+  "ms": 7569
+}

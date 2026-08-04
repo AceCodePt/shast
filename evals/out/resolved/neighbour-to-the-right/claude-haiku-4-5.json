@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, I need to identify which box is on the same row as `root>leftBottom` and positioned to its right.\n\nFrom the measurements:\n- `root>leftBottom` is at y=120 (vertical position) and x=0, with width=300\n- `root>rightBottom` is at y=120 (same vertical position) and x=340\n\nSince both boxes share the same y-coordinate of 120, they are on the same row. The `root>rightBottom` box is positioned to the right of `root>leftBottom` (at x=340, which is further right than x=0).\n\nANSWER: root>rightBottom\n",
+  "ms": 6680
+}

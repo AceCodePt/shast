@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Since `root` is `display: flex`, its children share the available width (600px) according to their flex ratios. `root>a` has `flex: 1` and `root>b` has `flex: 2`, so the total flex is 3 parts: `1 + 2`. That means `root>b` gets `2/3` of 600px = 400px. The measured report also directly states `root>b` has width 400.\n\nANSWER: 400\n",
+  "ms": 7542
+}

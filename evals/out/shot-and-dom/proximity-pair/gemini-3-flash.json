@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the `getBoundingClientRect` data, `root>alpha` (y=20 to 60) and `root>beta` (y=64 to 104) have a vertical gap of only 4 pixels between them. In contrast, `root>gamma` begins at y=200, creating a much larger gap of 96 pixels from `root>beta`. The screenshot confirms that \"alpha\" and \"beta\" appear as a close pair at the top, while \"gamma\" is positioned significantly further down the page.\n\nANSWER: root>gamma\n",
+  "ms": 10389
+}

@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered page image and the node tree information:\n\nThe three sibling elements are:\n- `root>alpha` (appears at the top)\n- `root>beta` (appears below alpha)\n- `root>gamma` (appears much lower on the page)\n\nThere is a significant vertical gap between `root>beta` and `root>gamma`. The first two elements (`alpha` and `beta`) are visually close together near the top of the page, while `root>gamma` is separated from them by substantial whitespace below.\n\nANSWER: root>gamma\n",
+  "ms": 6085
+}

@@ -1,0 +1,10 @@
+{
+  "case": "inherited-font-size",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>heading",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The heading element inherits a `font-size: 30px` from the root, while the caption uses `font-size: 22px`. Since 30px > 22px, the heading renders with larger text.\n\nANSWER: root>heading\n",
+  "ms": 6511
+}

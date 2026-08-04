@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows that the text \"on file expired\" and \"last month.\" is rendered clearly on the page below the black border of the `root>card` element. In CSS, the default value for the `overflow` property is `visible`, which allows content to extend beyond the boundaries of its container without being clipped or hidden. Since the last line is plainly visible in the actual rendering provided, it is still painted on the page.\n\nANSWER: YES\n",
+  "ms": 10966
+}

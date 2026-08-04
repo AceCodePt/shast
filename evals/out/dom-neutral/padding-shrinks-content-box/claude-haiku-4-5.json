@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "6",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe `root>card` div contains the text \"one two three four five six seven eight nine ten\" and has:\n- Width: 200px\n- Line-height: 19.2px\n- Height: 124.75px\n- Padding: 24px on all sides\n\nThe actual content area width is 200px - 24px (left padding) - 24px (right padding) = 152px.\n\nWith a line-height of 19.2px and a total height of 124.75px, we can calculate the number of lines:\n124.75px ÷ 19.2px ≈ 6.5 lines\n\nHowever, we need to account for the padding. The content height available is 124.75px total. Since line-height is 19.2px, we can fit approximately 6 full lines (6 × 19.2 = 115.2px), with some remaining space.\n\nGiven the viewport is 600x400 and the card has a width of 200px with 152px of usable content width, the ten words would wrap across multiple lines. With standard word spacing and font metrics, the text would wrap to approximately 6 lines to fit within the 200px width constraint.\n\nANSWER: 6\n",
+  "ms": 9149
+}

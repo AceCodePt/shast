@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text node `root>line` contains the words `\"Hidden by two\"`. However, the two absolutely-positioned covering divs (`root>leftHalf` and `root>rightHalf`) overlap the same y-range and together span the region where the line’s content would be rendered (they cover x≈0–140 within the 400px-wide line). Since the text color is black and the covering boxes have opaque dark backgrounds, the words are obscured where they appear. Therefore, a viewer cannot read the words in `root>line` from the rendered result described.\n\nANSWER: NO\n",
+  "ms": 13048
+}

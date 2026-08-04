@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "A `position: fixed` element is positioned relative to the viewport (or initial containing block), so its `top: 15px` and `left: 25px` declarations are unaffected by the parent container's padding or relative positioning. As explicitly stated in the rendered layout tree above, the top-left corner of `root>inner` renders at x=25 and y=15.\n\nANSWER: 25,15\n",
+  "ms": 7773
+}

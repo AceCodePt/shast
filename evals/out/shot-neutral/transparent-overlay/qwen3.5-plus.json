@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence:\n\n1. The node tree shows `root>lede` contains a `<p>` element with 72 characters of text\n2. The screenshot shows this text rendered as: \"The quarterly results are in and every region beat its target this time.\" - the full sentence is visible, wrapped across two lines\n3. The text fits within the 600x400 viewport with no overflow or clipping\n\nThe entire sentence is displayed on screen and readable.\n\nANSWER: YES\n",
+  "ms": 13893
+}

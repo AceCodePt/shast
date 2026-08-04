@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is 600px wide and uses flex layout. With `flex: 1` on `root>a` and `flex: 2` on `root>b`, the free space is split in a 1:2 ratio. `root>b` gets 2/(1+2) = 2/3 of 600px = 400px, which matches the rendered box.\n\nANSWER: 400\n",
+  "ms": 6589
+}

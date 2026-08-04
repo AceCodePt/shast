@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first child occupies x=0 to x=100 (width 100px). With `gap: 10px` in a row flex container, 10px is inserted between the two items, so the second child's left edge is at 100 + 10 = 110. This matches the rendered box `@ x=110`.\n\nANSWER: 110\n",
+  "ms": 21245
+}

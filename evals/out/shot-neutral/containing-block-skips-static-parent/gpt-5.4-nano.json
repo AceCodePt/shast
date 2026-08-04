@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Because `root>plain` is not positioned, it remains in normal document flow: each `div` starts at the top-left of its parent’s content box. With default `div` styling (no margins/padding implied by the evidence), `root>plain>pin` therefore begins at the same top-left corner as the viewport content for its ancestor chain. So the top-left render point is at the origin in CSS pixels.\n\nANSWER: 0,0\n",
+  "ms": 9905
+}

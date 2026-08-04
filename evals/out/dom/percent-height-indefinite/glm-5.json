@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>outer>tall` declares `height: 100%`, but that percentage resolves against its parent's *definite* height. The parent `root>outer` has `height: auto` (its 79.1875px is content-determined, not definite), so the percentage does not resolve to a fixed value — it falls back to `auto`, and `tall` is sized by its own content (a single line \"b\" → 19.1875px). Meanwhile `filler` has a fixed height of 60px. So 19.1875px < 60px.\n\nANSWER: NO\n",
+  "ms": 18135
+}

@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>line` contains the text and is positioned normally at the top (`y=0`) with height about `19.19px`. The `root>glass` box is absolutely positioned from `top=0` to `height=100`, so it overlaps `root>line`, but it has `background-color: rgba(0, 0, 0, 0)` (fully transparent), meaning it does not obscure the underlying text. The `root>panel` box starts at `top=40`, so it does not overlap the `root>line` region at all.  \n\nANSWER: YES\n",
+  "ms": 8387
+}

@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "2px 2px 2px 2px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The hover state for `root>mid>leaf` does not change any of the listed computed style values — both the non-hover and hover snapshots show identical padding of `2px 2px 2px 2px`. So the rendered padding on hover remains 2px on every side.\n\nANSWER: 2px 2px 2px 2px\n",
+  "ms": 5783
+}

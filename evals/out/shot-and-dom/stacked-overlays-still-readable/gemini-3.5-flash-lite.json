@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Although `root>glass` and `root>panel` are positioned above in the stacking order, `root>line` is located at the top (y=0 to y=19.1875) while the dark gray panel starts further down at y=40, leaving the text completely uncovered and fully legible against the background. Therefore, a viewer can still read the text.\n\nANSWER: YES\n",
+  "ms": 6098
+}

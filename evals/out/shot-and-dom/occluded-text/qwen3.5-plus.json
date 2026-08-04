@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the layout data:\n\n1. The `root>banner` is an absolutely positioned div at `top: 0px` with `height: 70px` and `z-index: 5`\n2. The `root>lede` paragraph starts at `y=0` with `height: 54.375px` and has `z-index: auto` (effectively 0)\n3. Since the banner has a higher z-index (5) and completely overlaps the lede's vertical space (70px > 54.375px), the banner sits on top of the lede text\n4. The screenshot confirms this — only the dark banner is visible at the top, and the \"Details follow...\" text (which starts at y=54.375, below the banner) is the first visible content\n\nThe lede text is completely occluded by the banner overlay.\n\nANSWER: NO\n",
+  "ms": 16993
+}

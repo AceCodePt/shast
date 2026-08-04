@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The two absolutely positioned boxes overlap the entire area where the `root>line` text would render, and the text is short enough that its glyphs fit within that covered span. Even though neither box alone covers the full line, their overlap hides the whole phrase from view.\n\nANSWER: NO\n",
+  "ms": 12294
+}

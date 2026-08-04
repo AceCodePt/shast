@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The card’s total height is `124.75px`, and it has `24px` top and bottom padding, leaving about `76.75px` for text content. With a `line-height` of `19.2px`, that works out to almost exactly `4` lines (`76.75 / 19.2 ≈ 4`). So the text wraps onto 4 lines.\n\nANSWER: 4\n",
+  "ms": 7958
+}

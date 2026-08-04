@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text \"Still readable\" in `root>line` occupies the vertical space from y=0 to y=19.1875. While `root>glass` (z-index: 1) overlays this entire area, its background is transparent, allowing the text to show through. `root>panel` (z-index: 2) is opaque, but it is positioned starting at y=40, meaning it does not overlap with the text at all.\n\nANSWER: YES\n",
+  "ms": 9373
+}

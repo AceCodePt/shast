@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text \"Still readable\" in `root>line` is located at the top of the viewport between y=0 and y=19.1875. While the `root>glass` element covers this area, it has a completely transparent background (`rgba(0, 0, 0, 0)`), which does not obscure visibility. The opaque `root>panel` begins at y=40, which is entirely below the text's bounding box, leaving the text fully visible and unobstructed.\n\nANSWER: YES\n",
+  "ms": 10662
+}

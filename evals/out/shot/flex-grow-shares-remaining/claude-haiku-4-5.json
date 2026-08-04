@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the provided information:\n\n- `root` is a flex container with `display: flex` and a width of 600 CSS px\n- `root>a` has `flex: 1`\n- `root>b` has `flex: 2`\n\nWhen flex items share space, they divide the available width according to their flex values. The total flex value is 1 + 2 = 3. Since `root>b` has a flex value of 2, it receives 2/3 of the total available width.\n\nCalculation: (2 / 3) × 600 = 400 CSS px\n\nANSWER: 400\n",
+  "ms": 6726
+}

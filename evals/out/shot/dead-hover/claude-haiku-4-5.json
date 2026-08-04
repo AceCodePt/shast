@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the two screenshots provided:\n\n1. **Rest state (first image)**: The \"Leaf\" text appears in the upper left area of the viewport\n2. **Hover state (second image)**: The \"Leaf\" text appears in the same position, with no visible change in spacing around it\n\nIf the `:hover` block were actually applying `padding: 40px` to `root>mid>leaf`, we would expect to see the text move down and to the right by 40px in the hover screenshot, as the padding would create internal space around the text element. The two images appear virtually identical in terms of the \"Leaf\" text positioning and spacing.\n\nThis suggests that either the `:hover` rule is not being applied, or the padding declaration is not taking effect for some reason (perhaps the element is not receiving the hover state, or there's a CSS specificity issue).\n\nANSWER: NO\n",
+  "ms": 6470
+}

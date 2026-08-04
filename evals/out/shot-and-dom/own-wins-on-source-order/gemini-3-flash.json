@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser's computed style data for the `root>child` node explicitly states that its padding is `64px 64px 64px 64px`. This is visually supported by the screenshot, where the text \"Child\" is clearly offset from the top and left edges of the viewport.\n\nANSWER: 64px\n",
+  "ms": 11488
+}

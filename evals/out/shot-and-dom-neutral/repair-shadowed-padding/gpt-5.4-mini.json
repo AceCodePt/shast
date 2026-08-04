@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>body>panel` already has `padding: 32px` in its own block, but the rendered padding is still the earlier `4px`, so that declaration is being overridden by a more general rule upstream. The node whose CSS block needs to change is the one that owns the winning `section` rule, which is `root>body`.\n\nANSWER: root>body\n",
+  "ms": 22561
+}

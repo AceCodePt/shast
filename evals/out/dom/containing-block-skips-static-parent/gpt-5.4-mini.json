@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "30,30",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>plain>pin` is absolutely positioned, so it skips the unpositioned `root>plain` and uses `root` as its containing block. Since `root` has `padding: 20px`, its padding edge starts at `(20,20)`, and `top: 10px; left: 10px` places `pin` 10px further in from there.\n\nANSWER: 30,30\n",
+  "ms": 34837
+}

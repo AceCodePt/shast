@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided for `root>main>r09` (which contains \"09. Currency hedging\"):\n\nThe layout data shows:\n- `root>main>r09` is located at `x=244 y=276 width=1012 height=26`\n- It has a coverage warning: `! covered: root>banner <div> (absolute, z-index 5) paints later than this node, with an opaque background, over 69% of the box`\n- Most critically: `! covered: 1 of 1 text line(s) completely hidden`\n\nThe `root>banner` element (a red banner with `background-color: #cc2222` and `z-index: 5`) is positioned at the same location (`x=244 y=276 width=700 height=26`) and paints on top of `r09`. Since the banner has an opaque background and completely hides the 1 text line in `r09`, the text cannot be read by a viewer.\n\nANSWER: NO\n",
+  "ms": 8824
+}

@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The content area inside `root>card` is only 30px tall (48px border box minus 16px padding and 2px border), but the rendered text measures 76.75px tall. The report explicitly notes `overflows: content is ... 76.75px tall inside a ... 30px content box, so it is painted outside the box rather than cut off`. Since `overflow: visible` is in effect, the text extends outside the 48px border box rather than being clipped to it.\n\nANSWER: NO\n",
+  "ms": 8679
+}

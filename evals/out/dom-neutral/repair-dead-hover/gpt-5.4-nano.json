@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>mid>leaf",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Hovering `root>mid>leaf` should change its computed `padding` from the normal value, but the evidence shows `root>mid>leaf` stays at `padding: 2px` both before and after hover (while `root` and `root>mid` remain at `padding: 0`). Since padding is not inherited and only the hovered element’s computed padding would matter here, the CSS affecting that `2px` padding must be in `root>mid>leaf`’s own CSS block, and that’s the block you need to edit so the hover rule wins and `padding` becomes `40px`.\n\nANSWER: root>mid>leaf\n",
+  "ms": 14669
+}

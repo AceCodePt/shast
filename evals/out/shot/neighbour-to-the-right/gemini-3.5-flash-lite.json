@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the node tree and rendered screenshot, the two-by-two arrangement places `root>leftBottom` (\"left bottom\") on the bottom-left of the viewport. Directly to its right on the same row is `root>rightBottom` (\"right bottom\").\n\nANSWER: root>rightBottom\n",
+  "ms": 7653
+}

@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the browser's data, the height of `root>outer>tall` is 19.1875px, while the height of its sibling `root>outer>filler` is 60px. Even if `root>outer>tall` declares `height: 100%`, the actual rendered height provided in the authoritative evidence shows it is significantly shorter than `root>outer>filler`.\n\nANSWER: NO\n",
+  "ms": 7382
+}

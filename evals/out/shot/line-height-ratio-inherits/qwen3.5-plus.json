@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "32",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The `root` element sets `line-height: 2` (a unitless multiplier), which computes to `16px × 2 = 32px` on root itself. However, `line-height` inherits as the **computed value** (32px), not as the unitless multiplier. So `root>big` inherits `line-height: 32px` while overriding `font-size` to `32px`. The element's height is determined by its line-height.\n\nANSWER: 32\n",
+  "ms": 14903
+}

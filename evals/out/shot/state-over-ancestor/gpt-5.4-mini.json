@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "0px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The hovered screenshot looks identical to the resting one: `Leaf` stays flush against the top-left with no inset that would indicate padding. Since no border/background is visible, any nonzero padding would still shift the text, and that does not happen here.\n\nANSWER: 0px\n",
+  "ms": 11667
+}

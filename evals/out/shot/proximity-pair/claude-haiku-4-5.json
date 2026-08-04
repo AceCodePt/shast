@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot and the node tree information provided:\n\nThe three sibling divs are `root>alpha`, `root>beta`, and `root>gamma`. In the rendered page, I can see:\n- \"alpha\" appears at the top\n- \"beta\" appears below it with moderate spacing\n- \"gamma\" appears much further down the page with significant vertical separation\n\nThe \"gamma\" element is visually separated from the other two by a large gap of whitespace. \"alpha\" and \"beta\" are relatively close to each other at the top of the page, while \"gamma\" is isolated below with considerable empty space between it and \"beta\".\n\nANSWER: root>gamma\n",
+  "ms": 9362
+}

@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`line-height: 2` is a unitless value, so it inherits as a multiplier rather than a fixed computed length. `root>big` inherits the number `2` and applies it to its own `font-size: 32px`, giving `2 × 32px = 64px` for its line box height. The rendered height of 64 confirms this.\n\nANSWER: 64\n",
+  "ms": 10159
+}

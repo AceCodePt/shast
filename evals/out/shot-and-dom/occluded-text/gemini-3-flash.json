@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` element is positioned at the top of the viewport (`y=0`) with a height of `54.375px`. However, the `root>banner` element is also positioned at `y=0` with a height of `70px`, a higher `z-index` of 5, and an opaque background color (`rgb(34, 34, 34)`). This results in the banner completely occluding the `root>lede` paragraph, as shown in the screenshot where the dark bar covers the top of the page and even cuts off the top of the subsequent `root>body` text.\n\nANSWER: NO\n",
+  "ms": 14163
+}

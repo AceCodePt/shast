@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>main>r15",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "At `x=500, y=400`, the point lies within the main list (the “01…40” banded rows), not the left navigation. The screenshot shows three overlapping row backgrounds, and the viewer sees the topmost (darkest) background at that point. That darkest overlay aligns with the row text that reads “15. Segment reporting”, whose node path is `root>main>r15`.\n\nANSWER: root>main>r15\n",
+  "ms": 15418
+}

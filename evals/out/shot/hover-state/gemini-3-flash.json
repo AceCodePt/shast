@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "blue",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The node tree identifies the `root>cta` element as the one containing the text \"Continue\". By comparing the two screenshots, we can see that in `rest.png` (the page at rest), the element at the top of the viewport has a vibrant blue background. In `hover.png`, this same area transitions to a darker blue shade when the pointer hovers over the element, confirming that the initial background color is the lighter blue seen in the first image.\n\nANSWER: blue\n",
+  "ms": 24111
+}

@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the `getBoundingClientRect()` data:\n\n- `root>first` is positioned at y=0 with height=40px, so it occupies the vertical space from y=0 to y=40\n- `root>gone` has `display: none` and its bounding rect shows width=0, height=0 — it takes up no space in the layout\n- `root>third` is positioned at y=40 with height=40px, so it starts exactly where `root>first` ends\n\nSince `root>third` begins at y=40 (immediately after `root>first` ends), there is no gap between them. Elements with `display: none` are removed from the document flow entirely and do not leave any space.\n\nANSWER: NO\n",
+  "ms": 14325
+}

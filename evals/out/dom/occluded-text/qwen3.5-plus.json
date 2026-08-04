@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>banner` div is positioned absolutely at `top: 0px` with `height: 70px` and `z-index: 5`, covering the area from y=0 to y=70. It has an opaque background color (`rgb(34, 34, 34)`). The `root>lede` paragraph sits at `y=0` with `height: 54.375px` and `z-index: auto` (effectively 0). Since the banner has a higher z-index and an opaque background, it will render on top of the lede text, completely obscuring it from view.\n\nANSWER: NO\n",
+  "ms": 17649
+}

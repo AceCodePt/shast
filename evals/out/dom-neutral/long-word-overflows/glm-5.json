@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\nThe `root>cell` div has a computed width of **120px** and contains the long URL `https://example.com/a/very/long/path/that/never/breaks`. URLs are a single unbreakable \"word\" — browsers won't insert line breaks within them unless CSS like `word-break: break-all` or `overflow-wrap: break-word` is applied.\n\nLooking at the computed style of `root>cell`:\n- **overflow: visible** — content is allowed to spill out, not clipped.\n- No `word-break`, `overflow-wrap`, or `word-wrap` property is shown that would force the long string to wrap.\n\nSince there are no break opportunities in the URL and no CSS to force breaking, the text will overflow horizontally beyond the 120px box boundary. The box itself remains 120px wide (confirmed by `getBoundingClientRect`), but the rendered text extends past it.\n\nANSWER: NO\n",
+  "ms": 18351
+}

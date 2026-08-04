@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r21` has `color: rgb(255, 255, 255)` (white) while every other row uses black. Its own background and that of `root>main` are both transparent, so it inherits the white background of `root` (rgb(255,255,255)). White text on a white background is unreadable.\n\nANSWER: NO\n",
+  "ms": 8807
+}

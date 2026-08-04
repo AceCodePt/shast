@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>chip` is absolutely positioned and later in paint order, so it covers part of `root>row`’s box. However, Chromium’s rendering report explicitly notes that, despite being covered, **`root>row`’s 1 text line(s) stay fully visible**. That means the text content of `root>row` is not hidden by `root>chip`.\n\nANSWER: NO\n",
+  "ms": 8653
+}

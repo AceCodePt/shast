@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In a grid layout with `grid-template-columns: 200px 300px` and a `gap: 20px`, the first column occupies the space from x = 0 to x = 200. The gap then adds 20 pixels of space before the start of the second column. Therefore, the second column, which contains `root>right`, begins at x = 220 (200px for the first column + 20px for the gap).\n\nANSWER: 220\n",
+  "ms": 11989
+}

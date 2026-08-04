@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The machine-generated report explicitly states that the content overflows the 120px-wide content box, measuring 518.41px wide and being painted outside the box. Therefore, the URL does not stay inside the box.\n\nANSWER: NO\n",
+  "ms": 7314
+}

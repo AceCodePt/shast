@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The root div is 900px tall but the viewport is only 300px tall, so vertical scrolling can reveal everything from y=0 to y=900. `root>lower` sits at y=700–740, which is within that scrollable range, so scrolling down brings it into view.\n\n`root>sideways`, however, extends horizontally to x=900 while the root (and viewport) are only 500px wide. Since the root's width matches the viewport and there is no horizontal scroll mechanism created (the root doesn't overflow horizontally itself — only the absolutely-positioned child spills out to the right), ordinary scrolling cannot move the viewport sideways to reveal the portion beyond x=500.\n\nANSWER: root>sideways\n",
+  "ms": 34884
+}

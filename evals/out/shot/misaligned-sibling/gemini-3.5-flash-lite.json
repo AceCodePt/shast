@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "In the rendered screenshot and node tree, the rows \"first\", \"second\", and \"fourth\" share the same left edge aligned along the left side of the page. The row corresponding to \"third\" is visibly indented to the right relative to the others. Therefore, it is the one out of alignment.\n\nANSWER: root>third\n",
+  "ms": 12085
+}

@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>big` element has `font-size: 32px` and inherits the unitless `line-height: 2` from `root`. When a unitless line-height is inherited, it gets multiplied by the element's own font-size, giving `32px × 2 = 64px`. This matches the `getBoundingClientRect` data which shows `height=64`.\n\nANSWER: 64\n",
+  "ms": 12665
+}

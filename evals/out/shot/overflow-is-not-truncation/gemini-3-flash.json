@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows that while the text \"on file expired last month.\" overflows the bottom border of the `root>card` element, it remains visible against the white background of the viewport. In standard web rendering, content that overflows a container is still painted on the page unless the `overflow` property is specifically set to a clipping value like `hidden`. Since the text is clearly visible in the provided image, it is painted on the page and can be read.\n\nANSWER: YES\n",
+  "ms": 11856
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The report explicitly says `root>main>r09` is covered by `root>banner`, but also notes that the banner has no background, so the underlying content still shows through. It further states that `r09`’s text line stays fully visible.\n\nANSWER: YES\n",
+  "ms": 8561
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot and node tree show that `root>main>r09` corresponds to \"09. Currency hedging\", which is clearly displayed in the main content list in legible dark text against a light background. Therefore, a viewer can easily read the text.\n\nANSWER: YES\n",
+  "ms": 7649
+}

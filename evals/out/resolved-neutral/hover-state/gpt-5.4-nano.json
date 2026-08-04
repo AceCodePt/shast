@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When the page is first painted, the `:hover` state does not apply because the pointer is elsewhere. The base style for `root>cta` sets `background-color: #3355ff`, and that inherited/non-hover value is what Chromium initially uses.  \n\nANSWER: #3355ff\n",
+  "ms": 5931
+}

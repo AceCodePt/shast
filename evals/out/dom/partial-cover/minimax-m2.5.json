@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the geometry: `root>row` spans y=0 to y=120, and `root>chip` spans y=60 to y=100, so they do overlap vertically (y=60–100 is inside the row). However, `root>row`'s text \"Short label\" is a single line that renders near the top of the paragraph box (roughly y≈4 to y≈23 given the 4px padding and 19.2px line-height). The chip's vertical range (y=60–100) lies below that text baseline, so the chip covers empty whitespace within the row rather than the rendered glyphs.\n\nANSWER: NO\n",
+  "ms": 14596
+}

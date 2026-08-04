@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "According to the report's measured border box dimensions, `root>b` is located at `x=200` with a width of `400`. This measurement is consistent with the `display: flex` property of the `root` container (600px wide), where the total flex growth is 3 units (1 for `root>a` and 2 for `root>b`), resulting in `root>b` occupying two-thirds of the available space.\n\nANSWER: 400\n",
+  "ms": 10264
+}

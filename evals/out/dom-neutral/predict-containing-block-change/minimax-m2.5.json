@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `pin` element is `position: absolute` with `top: 10px; left: 10px`, so it positions itself relative to the nearest positioned ancestor's padding box. Currently that's `root`, whose padding box sits at (0,0), giving `pin` a viewport position of (10,10) — which matches the evidence.\n\nAdding `position: relative` to `root>plain` makes it the positioned ancestor. Its padding box top-left sits at (20,20) in the viewport (per its `getBoundingClientRect`, since padding extends inward from the border). `pin`'s `top:10; left:10` is then measured from that point: (20+10, 20+10) = (30, 30).\n\nANSWER: 30,30\n",
+  "ms": 9298
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `root>main>r17` is positioned at `y=484` with height `26`, so it falls well within the 800px-tall viewport on first load. It is also in the main content area to the right of the sidebar, so nothing in the provided layout obscures it.\n\nANSWER: YES\n",
+  "ms": 10467
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The panel's computed `padding` is `4px 4px 4px 4px`, not `32px`. The rendered height (27.1875px) is consistent with 4px padding (line-height 19.2px + 8px padding ≈ 27.2px), confirming 32px is not applied. Some other rule with higher specificity or later source order overrides the panel's own `padding: 32px` declaration, so it has no effect on the rendered page.\n\nANSWER: NO\n",
+  "ms": 22290
+}

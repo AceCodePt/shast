@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows a solid red bar directly covering the position between row 08 and row 10 where `root>main>r09` (\"09. Currency hedging\") is located. Because this red bar completely occludes the row, the text cannot be seen or read by a viewer.\n\nANSWER: NO\n",
+  "ms": 8357
+}

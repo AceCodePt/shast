@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`position: fixed` is positioned relative to the viewport, not the `position: relative` parent. So `top: 15px; left: 25px` places `root>inner` at x=25, y=15 in the viewport. The reported bounding rect matches that.\n\nANSWER: 25,15\n",
+  "ms": 9636
+}

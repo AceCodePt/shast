@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The text \"Hidden by two\" rendered at 16px font-size is short enough to occupy only the leftmost portion of the 400px-wide `root>line`. The two opaque boxes collectively span x=0 to x=140 (leftHalf covers 0-70, rightHalf covers 60-140), which fully encompasses where the text glyphs are painted. The rendering explicitly confirms \"1 of 1 text line(s) completely hidden,\" so no portion of the text remains visible despite each individual box only covering ~18-20% of the box.\n\nANSWER: NO\n",
+  "ms": 9359
+}

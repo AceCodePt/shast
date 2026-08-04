@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` element occupies the space from y=0 to y=54.375. However, the `root>banner` element is also positioned at the top of the page (y=0) with a height of 70px, and it has an absolute position with a z-index of 5. Since the banner is opaque (dark gray) and completely covers the vertical range of the `lede` text, the sentence is occluded and cannot be read.\n\nANSWER: NO\n",
+  "ms": 12358
+}

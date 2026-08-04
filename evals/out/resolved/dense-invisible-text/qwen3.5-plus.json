@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report for `root>main>r21`:\n\n1. **Position**: y=588, height=26, so it spans y=588 to y=614. This is within the viewport (0-800), so it's **not below-fold**.\n\n2. **Coverage**: The sidebar (x=0 to x=220) doesn't cover this element since it starts at x=244. No \"covered\" warning is present for r21.\n\n3. **Text color**: The element has `color: #ffffff` (white text).\n\n4. **Background**: The root element has `background-color: #ffffff` (white), and `root>main` doesn't specify its own background. This means **white text on a white background**.\n\nThe text is invisible due to zero contrast between the white text (#ffffff) and the white background inherited from root.\n\nANSWER: NO\n",
+  "ms": 17652
+}

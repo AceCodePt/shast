@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The text content for `root>lede` ends with an ellipsis (`…`), indicating that the sentence is truncated and incomplete in the source. Consequently, a reader cannot view the entire sentence on the page.\n\nANSWER: NO\n",
+  "ms": 8579
+}

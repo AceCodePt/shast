@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered information provided:\n\nThe `root>plain>pin` element has `position: absolute` with `top: 10px, left: 10px`. Since `root>plain` is **not positioned** (static), the absolutely positioned `pin` element looks up the tree for the nearest positioned ancestor, which is `root` (with `position: relative`).\n\nHowever, the question asks for the **actual rendered position**, which is explicitly given in the data. The `@` notation shows the border box position in CSS pixels from the top-left of the page, and for `root>plain>pin` it clearly states `x=10 y=10`.\n\nANSWER: 10,10\n",
+  "ms": 21895
+}

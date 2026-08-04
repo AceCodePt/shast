@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "rgb(51, 85, 255) (#3555FF)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "When the page is first painted and the pointer is elsewhere, the browser reports `root>cta`'s `getComputedStyle()` with `background-color: rgb(51, 85, 255)`. The hover state changes this to `rgb(0, 34, 204)`, confirming the non-hover value is the initial one. The hex equivalent of rgb(51, 85, 255) is #3555FF.\n\nANSWER: rgb(51, 85, 255) (#3555FF)\n",
+  "ms": 9895
+}

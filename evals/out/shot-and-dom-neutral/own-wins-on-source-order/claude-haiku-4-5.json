@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "64px 64px 64px 64px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the browser's computed style data provided, the `root>child` element has the following computed padding:\n\n`padding: 64px 64px 64px 64px`\n\nThis means it renders with 64px of padding on all sides (top, right, bottom, and left).\n\nThe reasoning is straightforward: the `getBoundingClientRect()` and `getComputedStyle()` data shown represents what the browser *actually computed and applied* to the element after resolving all CSS declarations. Even though the question states that three different blocks declare padding for this element, the browser has resolved the CSS cascade and specificity rules to arrive at a single computed value. The actual rendered padding is what appears in the `getComputedStyle()` output, which is `64px 64px 64px 64px`.\n\nANSWER: 64px 64px 64px 64px\n",
+  "ms": 7352
+}

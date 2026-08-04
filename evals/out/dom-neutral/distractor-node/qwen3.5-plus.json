@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the positioning data:\n\n- `root>cover` is an absolutely positioned div at y=0 with height=19px, so it covers the area from y=0 to y=19\n- `root>second` (the second paragraph) has its bounding box starting at y=19.1875\n\nSince the cover div ends at y=19 and the second paragraph begins at y=19.1875, the second paragraph is positioned just below the cover overlay. The text is not obscured by the black cover div, and its computed styles show opacity=1 with color=rgb(0,0,0), meaning it's fully opaque black text on a transparent background.\n\nANSWER: YES\n",
+  "ms": 19785
+}

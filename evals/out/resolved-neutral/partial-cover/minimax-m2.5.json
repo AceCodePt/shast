@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The chip overlaps the row's box (9% coverage), but the rendered report explicitly states that `root>row`'s 1 text line(s) stay fully visible. Since the chip does not obscure any text glyphs, no text is hidden.\n\nANSWER: NO\n",
+  "ms": 10874
+}

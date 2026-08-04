@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. In the rendered screenshot, the text `Still readable` is still visible at the top-left, and the overlaid boxes do not obscure it. Since the question is whether a viewer can still read the text from what is actually on screen, the answer is yes.\n\nANSWER: YES\n",
+  "ms": 7744
+}

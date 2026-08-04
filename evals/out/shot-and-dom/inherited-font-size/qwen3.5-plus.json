@@ -1,0 +1,10 @@
+{
+  "case": "inherited-font-size",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>heading",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the `getComputedStyle()` data for each node:\n\n- **root>heading**: `font-size: 30px`, `line-height: 36px`\n- **root>caption**: `font-size: 22px`, `line-height: 26.4px`\n\nThe `root>heading` element has a font-size of 30px, while `root>caption` has a font-size of 22px. Since 30px > 22px, the heading renders with larger text.\n\nANSWER: root>heading\n",
+  "ms": 11214
+}

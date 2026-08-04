@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot clearly shows the text \"Second paragraph here\" rendered against a white background. Although there is a black bar at the top of the viewport (likely the `root>cover` node obscuring the `root>first` paragraph), the text belonging to `root>second` is fully visible and legible.\n\nANSWER: YES\n",
+  "ms": 10979
+}

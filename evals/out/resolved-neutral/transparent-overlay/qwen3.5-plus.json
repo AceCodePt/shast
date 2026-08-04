@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` element contains the text \"The quarterly results are in and every region beat its targ…\" (72 chars). While `root>banner` (an absolutely positioned div with z-index 5) does paint over this element, the information explicitly states that the banner \"has no background, so what is behind it still shows through\" and critically notes that \"this node's 2 text line(s) stay fully visible.\"\n\nANSWER: YES\n",
+  "ms": 15266
+}

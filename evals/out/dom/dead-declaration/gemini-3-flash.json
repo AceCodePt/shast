@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser's data for `root>body>panel` shows a computed padding of `4px 4px 4px 4px` and a total height of `27.1875`. If the `padding: 32px` declaration were in effect, the computed padding would be 32px and the height would be at least 64px (top + bottom padding) plus the line height. Since the authoritative computed values show 4px padding, the 32px declaration is not being applied to the rendered page.\n\nANSWER: NO\n",
+  "ms": 12458
+}

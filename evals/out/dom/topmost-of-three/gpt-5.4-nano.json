@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At point (120,120), all three absolutely-positioned divs overlap because their bounding boxes all contain that coordinate. When elements overlap, Chromium paints them by stacking order, and for positioned elements with `z-index`, the one with the highest `z-index` is on top. Here, `root>middle` has `z-index: 3`, higher than `root>front` (`z-index: 2`) and `root>back` (`z-index: 1`), so that’s what the viewer sees.\n\nANSWER: root>middle\n",
+  "ms": 7939
+}

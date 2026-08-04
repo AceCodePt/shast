@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values and bounding rectangles:\n\n- **root>back**: z-index 1, bounds x=40-240, y=40-240 (contains point 120,120)\n- **root>middle**: z-index 3, bounds x=80-280, y=80-280 (contains point 120,120)\n- **root>front**: z-index 2, bounds x=100-160, y=100-160 (does NOT contain point 120,120)\n\nThe point 120,120 falls within both the back box and the middle box. The middle box has a higher z-index (3 vs 1), so it renders on top and is what the viewer actually sees at that point.\n\nANSWER: root>middle\n",
+  "ms": 8423
+}

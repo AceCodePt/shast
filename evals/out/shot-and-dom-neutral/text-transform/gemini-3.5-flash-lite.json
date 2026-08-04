@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text inside `root>title` is given as `\"Annual review\"`. Because the computed style includes `text-transform: uppercase`, all lowercase letters are transformed into uppercase when rendered. Consequently, the viewer sees the text displayed in all caps.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7276
+}

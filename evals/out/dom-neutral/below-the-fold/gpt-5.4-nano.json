@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is `500x300`, so the initially visible area corresponds to y=0 through y=300. `root>top` is at y=0 with height 40, so it lies within the visible region. `root>footer` has `getBoundingClientRect` starting at `top: 700px` with height 60, placing it well below y=300, so it is not in view on first load before scrolling.\n\nANSWER: NO\n",
+  "ms": 17041
+}

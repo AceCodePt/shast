@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering data:\n\nThe `root>line` div contains \"Still readable\" and is positioned at y=0 with height=19.1875px, so it occupies the top portion of the viewport.\n\nTwo boxes paint over it:\n1. `root>glass` - positioned at y=0, height=100px, z-index=1\n2. `root>panel` - positioned at y=40, height=60px, z-index=2\n\nThe `root>panel` box has a solid background-color of `rgb(48, 48, 48)` (dark gray) and z-index=2, which means it's the topmost layer. Since the panel starts at y=40 and the text is at y=0-19.1875, the panel overlaps the text. With an opaque dark background and higher z-index than the glass element, the text would be obscured by the dark panel.\n\nHowever, the screenshot shows \"Still readable\" text is visible at the top in black, which means the text is rendering above the overlaying boxes. Looking more carefully at the z-stacking: the text itself (not in a separate z-indexed container) would render in document order after the glass and panel divs, making it appear on top despite those divs having z-index values. This is consistent with what the screenshot displays.\n\nANSWER: YES\n",
+  "ms": 9343
+}

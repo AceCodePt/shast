@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The rendered info explicitly says `padding: 4px` declared by `root` in the `> body > panel` block shadows the `padding: 32px` declaration in `root>body>panel` itself, so the 32px value is overridden and does not affect layout.\n\nANSWER: NO\n",
+  "ms": 6896
+}

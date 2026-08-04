@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>mid>leaf",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "To make `root>mid>leaf` gain `padding: 40px` on hover, the hover rule must be defined in the CSS block that applies to that same node, since `padding` is a property of the element itself. The node whose CSS controls its own hover state is therefore `root>mid>leaf`.\n\nANSWER: root>mid>leaf\n",
+  "ms": 20308
+}

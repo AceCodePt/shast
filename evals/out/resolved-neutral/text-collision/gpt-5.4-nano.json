@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>visible  div  \"Everything is fine\"",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Chromium’s layout report says `root>ghost` “draws its text on the same pixels” as `root>visible <div>`, with “over 56% of this node’s glyphs” overlapping. The only other node listed as colliding/overlapping with `root>ghost` is the `root>visible` div containing the text `\"Everything is fine\"`, so that node’s text is drawn on the same pixels.\n\nANSWER: root>visible  div  \"Everything is fine\"\n",
+  "ms": 7908
+}

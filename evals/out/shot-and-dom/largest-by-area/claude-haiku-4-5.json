@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles for each of the three boxes:\n\n- **root>wide**: width=600, height=60 → area = 600 × 60 = 36,000 square pixels\n- **root>tall**: width=120, height=300 → area = 120 × 300 = 36,000 square pixels\n- **root>square**: width=220, height=220 → area = 220 × 220 = 48,400 square pixels\n\nThe square box has the largest area at 48,400 square pixels, significantly larger than both the wide and tall boxes which are tied at 36,000 square pixels each.\n\nANSWER: root>square\n",
+  "ms": 6391
+}

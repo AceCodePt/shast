@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\nThe computed style for `root>body>panel` shows `padding: 4px` and `border-radius: 8px`. We're told `padding: 32px` was already added to the panel's **own** CSS block, yet the computed padding remained `4px` — meaning the panel's own block is losing the cascade for the `padding` property.\n\nThe fact that `border-radius: 8px` **did** take effect on the panel suggests the panel's own block is partially applying (border-radius wins), but a higher-specificity rule from another node's CSS block is overriding only `padding` to `4px`. In these CSS-TS systems, a parent node's CSS block can target its child elements. The direct parent `root>body` is the node whose CSS block is setting `padding: 4px` (and likely `border-radius: 8px` too) on the `<section>` child, winning over the panel's own `padding: 32px`.\n\nTherefore, to get `32px` of padding on the panel, you must edit the CSS block of the node that is currently authoritatively setting that `4px` padding — the parent.\n\nANSWER: root>body\n",
+  "ms": 35435
+}

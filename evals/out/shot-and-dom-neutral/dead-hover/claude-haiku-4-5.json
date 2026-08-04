@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the data provided:\n\n**At rest**, `root>mid>leaf` has:\n- `padding: 2px 2px 2px 2px`\n\n**While hovering** over `root>mid>leaf`, the same element has:\n- `padding: 2px 2px 2px 2px`\n\nThe padding values are identical in both states. Even though there is a `:hover` block that sets `padding: 40px`, the computed style shows no change occurred. This indicates the `:hover` rule is not being applied—either it's not present in the CSS, is being overridden by another rule with higher specificity, or is otherwise ineffective. The visual screenshots also confirm no visual difference between the rest and hover states.\n\nANSWER: NO\n",
+  "ms": 8675
+}

@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Three rows (`first`, `second`, `fourth`) have `x=24`, while `third` has `x=40`.\n\nANSWER: root>third\n",
+  "ms": 9281
+}

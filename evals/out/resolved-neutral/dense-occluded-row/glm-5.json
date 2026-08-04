@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>main>r09` box is covered by `root>banner`, an absolutely-positioned `<div>` with `z-index: 5` and an opaque background (`#cc2222`) that paints later and overlaps 69% of the box. Critically, the notes state \"1 of 1 text line(s) completely hidden,\" meaning the single text line (\"09. Currency hedging\") is entirely obscured by the banner.\n\nANSWER: NO\n",
+  "ms": 14633
+}

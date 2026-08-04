@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>beta div",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "At point `(x=500, y=400)`, all three absolutely-positioned bands (`alpha`, `beta`, and `gamma`) overlap because the point lies within each band’s measured box. When elements overlap, the one with the highest `z-index` is what’s actually painted. Here `alpha` has `z-index: 2`, `gamma` has `z-index: 3`, and `beta` has `z-index: 4`, so the viewer sees `beta`’s opaque background color (`#445566`).\n\nANSWER: root>beta div\n",
+  "ms": 10025
+}

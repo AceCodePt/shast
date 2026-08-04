@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided information and screenshot, the text in `root>main>r09` (\"09. Currency hedging\") is rendered clearly and is fully visible. The overlapping `root>banner` element has a fully transparent background (`rgba(0, 0, 0, 0)`) and contains no text, causing no obstruction to the underlying content. Therefore, a viewer can easily read the text.\n\nANSWER: YES\n",
+  "ms": 8460
+}

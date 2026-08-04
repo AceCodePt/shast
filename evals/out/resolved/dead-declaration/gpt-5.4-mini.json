@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The rendered box shows `padding: 4px`, and the report explicitly says that value shadows the `padding: 32px` declared in `root>body>panel` itself. Since the resolved style already uses 4px, the 32px declaration does not affect the rendered page.\n\nANSWER: NO\n",
+  "ms": 7646
+}

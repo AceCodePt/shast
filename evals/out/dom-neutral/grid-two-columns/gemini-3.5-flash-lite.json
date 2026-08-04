@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>left` has a width of 200px (from x=0 to x=200). With a grid `gap` of 20px, the second column (`root>right`) begins immediately after the first column and the gap, placing its left edge at x = 200 + 20 = 220. This is also explicitly confirmed by `root>right`'s `getBoundingClientRect` data where x=220.\n\nANSWER: 220\n",
+  "ms": 6668
+}

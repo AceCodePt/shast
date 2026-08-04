@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided screenshot and viewport dimensions, only rows up around row 28 are visible within the initial 1280x800 viewport. `root>main>r36` (\"36. Royalty accruals\") is located further down the page and is cut off below the fold, requiring scrolling to view.\n\nANSWER: NO\n",
+  "ms": 7158
+}

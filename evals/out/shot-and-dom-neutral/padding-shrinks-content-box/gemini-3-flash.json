@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The text \"one two three four five six seven eight nine ten\" is contained within `root>card`, which has a total `height` of 124.75px and a `line-height` of 19.2px. With a `padding` of 24px on all sides, the vertical space occupied by the text content is 76.75px (124.75px - 24px top padding - 24px bottom padding). Dividing this content height by the line height (76.75 / 19.2) gives approximately 4, and the provided screenshot confirms the text is wrapped across four lines.\n\nANSWER: 4\n",
+  "ms": 12529
+}

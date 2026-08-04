@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>lede` is truncated with an ellipsis (`targ…`) in the source. Furthermore, `root>banner` is positioned absolutely at the top with a higher stacking order (`z-index: 5`), completely overlapping and obscuring `root>lede`. \n\nANSWER: NO\n",
+  "ms": 9271
+}

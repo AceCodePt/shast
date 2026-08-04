@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe `root>card` div has a width of 200px with 24px padding on all sides, which means the content width is 200px - 48px = 152px.\n\nThe text \"one two three four five six seven eight nine ten\" needs to fit within this 152px width. With a font-size of 16px and line-height of 19.2px, the text wraps as shown in the screenshot.\n\nCounting the lines in the screenshot:\n1. \"one two three\"\n2. \"four five six\"\n3. \"seven eight\"\n4. \"nine ten\"\n\nThe `getBoundingClientRect()` data for `root>card` shows height=124.75px. With line-height of 19.2px and padding of 24px top and bottom, the content height is approximately 124.75 - 48 = 76.75px. Dividing by line-height: 76.75 / 19.2 ≈ 4 lines.\n\nANSWER: 4\n",
+  "ms": 6324
+}

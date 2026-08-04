@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The provided report lists the structural properties, dimensions, font size, and padding for `root>label`, but it does not specify any text color property. Therefore, the text color is not mentioned in the report.\n\nANSWER: NOT STATED\n",
+  "ms": 6971
+}

@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe viewport is 500x300 pixels, which means the viewer can see from y=0 to y=300 when the page first loads.\n\nThe `root>footer` element is positioned at y=700 with a height of 60px, meaning it spans from y=700 to y=760.\n\nSince the footer starts at y=700, which is well below the visible viewport area (0-300px), the footer is not visible when the page first loads. This is confirmed by the annotation \"below-fold\" in the provided information.\n\nANSWER: NO\n",
+  "ms": 7109
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding client rect data provided, I need to determine if the element `root>main>r36` (which contains \"36. Royalty accruals\") is visible in the viewport without scrolling.\n\nThe viewport is 1280x800 CSS pixels. The element `root>main>r36` has:\n- `getBoundingClientRect: x=244 y=978 width=1012 height=26`\n\nThis means the element starts at y=978 pixels from the top of the page. Since the viewport height is only 800 pixels, and the element begins at y=978, it is positioned **below the fold** - outside the visible viewport area.\n\nTo be visible without scrolling, an element must have a y-coordinate less than 800 (the viewport height). Since 978 > 800, this element is not visible when the page first loads.\n\nANSWER: NO\n",
+  "ms": 6935
+}

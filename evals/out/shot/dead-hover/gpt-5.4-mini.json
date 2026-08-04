@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Hovering does not appear to change the padding. In both screenshots, `Leaf` stays in the same top-left position with no visible inset or extra space around it, which is what you would expect if `padding: 40px` were applied. So the `:hover` rule is not taking effect here.\n\nANSWER: NO\n",
+  "ms": 9479
+}

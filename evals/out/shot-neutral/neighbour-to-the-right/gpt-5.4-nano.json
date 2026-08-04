@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "On the same row as `root>leftBottom`, we need the node that is directly to its right in the two-by-two layout. The evidence lists four nodes as a grid: top row is `root>leftTop` (left) and `root>rightTop` (right), and bottom row is `root>leftBottom` (left) and `root>rightBottom` (right). Therefore, the node directly to the right of `root>leftBottom` is `root>rightBottom`.\n\nANSWER: root>rightBottom\n",
+  "ms": 6961
+}

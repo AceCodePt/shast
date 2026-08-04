@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>sideways` node cannot be fully reached by ordinary scrolling. The report explicitly states that \"pages do not scroll horizontally\" and the viewport width is only 500px. Since `root>sideways` has a width of 900px, the 400px extending past the right edge remains offscreen. In contrast, `root>lower` is positioned at y=700, which is accessible via vertical scrolling within the 900px tall root container.\n\nANSWER: root>sideways\n",
+  "ms": 13023
+}

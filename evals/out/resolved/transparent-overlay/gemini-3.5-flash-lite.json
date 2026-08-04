@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Although the `root>banner` element overlaps `root>lede`, the report notes that the banner has no background, so what is behind it remains visible. Furthermore, the report explicitly states that the text lines in `root>lede` stay fully visible. Therefore, a person reading the page can read the entire sentence.\n\nANSWER: YES\n",
+  "ms": 11106
+}

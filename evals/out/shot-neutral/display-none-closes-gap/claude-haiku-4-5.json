@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot and the node tree information provided:\n\nThe screenshot shows \"first\" at the top and \"third\" below it with significant white space between them. The node tree indicates that `root>gone` (which has `display: none`) sits between these two elements in the DOM.\n\nWhen an element has `display: none`, it is completely removed from the document flow - it takes up no space at all. However, the screenshot clearly shows a large vertical gap between \"first\" and \"third\" where the `gone` element would have been rendered if it were visible.\n\nSince `display: none` removes the element from the flow entirely and should take up zero space, but we observe a 40px gap in the rendered output, this indicates that the CSS is NOT properly handling the display property - the element is still taking up space despite being hidden.\n\nANSWER: YES\n",
+  "ms": 8531
+}

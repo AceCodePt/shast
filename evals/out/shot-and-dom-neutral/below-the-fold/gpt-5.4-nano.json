@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewer’s initial viewport is 500x300, so it shows content from y=0 through y=300. `root>footer` has `getBoundingClientRect: x=0 y=700 width=500 height=60`, meaning it starts at y=700, far below the visible area. Therefore, it is not inside what the viewer sees on initial page load.\n\nANSWER: NO\n",
+  "ms": 8912
+}

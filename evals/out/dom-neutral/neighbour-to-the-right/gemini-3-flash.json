@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>leftBottom` is located at a vertical position of y=120 with an x-coordinate of 0. Examining the other nodes, `root>rightBottom` shares the same vertical position (y=120) but is positioned further to the right with an x-coordinate of 340. Thus, `root>rightBottom` is the node directly to its right on the same row.\n\nANSWER: root>rightBottom\n",
+  "ms": 9773
+}

@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "2.0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "In the provided screenshot, the viewport is 900 pixels wide. The text \"rail\" is positioned at the left edge, indicating that the `root>rail` element begins at x = 0. The text \"panel\" begins at approximately 300 pixels from the left edge, which defines the boundary between the two sibling elements. This suggests `root>rail` has a width of 300 pixels, while `root>panel` occupies the remaining 600 pixels (900 - 300) of the viewport width.\n\nANSWER: 2.0\n",
+  "ms": 15164
+}

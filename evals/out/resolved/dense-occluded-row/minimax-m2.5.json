@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The banner (`root>banner`) is positioned at exactly the same coordinates as r09 (x=244, y=276) with the same height (26px) and an opaque red background, and it paints later due to z-index: 5. The report explicitly states that 1 of 1 text line(s) in r09 is completely hidden, meaning the banner covers the entirety of the single text line, making it unreadable.\n\nANSWER: NO\n",
+  "ms": 7650
+}

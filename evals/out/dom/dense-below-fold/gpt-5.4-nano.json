@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>main` starts at `y=56` and the viewport height is `800`, so anything with `y + height` less than or equal to `800` is visible without scrolling. `root>main>r36` has `getBoundingClientRect: x=244 y=978 width=1012 height=26`, meaning it begins at `y=978`, well below `800`. Therefore it is not visible on initial load.  \n\nANSWER: NO\n",
+  "ms": 8389
+}

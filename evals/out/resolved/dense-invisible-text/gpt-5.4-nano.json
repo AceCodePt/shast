@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "`root>main` is marked as being “covered” by the absolute-positioned `root>sidebar <nav>` because the sidebar paints later and has an opaque background. However, `root>main>r21` itself is placed at `x=244` with a width of `1012`, which places it fully to the right of the sidebar (sidebar is `width=220` and starts at `x=0`). Since there’s no “covered” warning on `r21`, the text should be readable.\n\nANSWER: YES\n",
+  "ms": 18969
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report for `root>main>r09`:\n\n1. The element contains the text \"09. Currency hedging\"\n2. It is covered by `root>banner` (absolute positioned, z-index 5) over 69% of its box area\n3. However, the banner has **no background**, so content behind it still shows through\n4. Most critically, the report explicitly states: **\"this node's 1 text line(s) stay fully visible\"**\n\nSince the text lines remain fully visible (the covering element has no opaque background to obscure them), a viewer can read the text.\n\nANSWER: YES\n",
+  "ms": 14149
+}

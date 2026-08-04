@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "**Reasoning:**\n\nThe screenshot shows that the `root>lede` paragraph is not visible on the rendered page. The dark banner at the top is obscuring the lede text, and only the `root>body` paragraph (\"Details follow in the table below.\") is visible below it. Additionally, the source text itself shows truncation (\"targ…\") indicating CSS is cutting off the text. Since the lede content is hidden behind the banner, a person cannot read it.\n\nANSWER: NO\n",
+  "ms": 14061
+}

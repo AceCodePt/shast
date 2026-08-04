@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at `root>main>r21` (\"21. Treasury positions\"):\n- It has `color: #ffffff` (white text) — this is the only row with an explicit color override.\n- Its parent containers have no contrasting background: `root` is `#ffffff` and `main` has no background specified, so it shows through to white.\n- White text on a white background is invisible to the viewer.\n\nANSWER: NO\n",
+  "ms": 9582
+}

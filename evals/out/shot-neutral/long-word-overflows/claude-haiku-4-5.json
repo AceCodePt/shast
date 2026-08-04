@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot provided, I can see the URL \"https://example.com/a/very/long/path/that/never/breaks\" is displayed at the top of the page.\n\nThe URL text appears to extend beyond the visible boundary on the right side of the image, which suggests it overflows the 120px-wide box. A URL of that length (approximately 56 characters) would require significantly more than 120 pixels of width to display without wrapping or breaking, especially in a monospace or default font.\n\nFrom the visual evidence in the screenshot, the text clearly extends beyond what would fit in a 120px-wide container without any text wrapping or word-breaking CSS applied.\n\nANSWER: NO\n",
+  "ms": 6440
+}

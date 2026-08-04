@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "To determine which node is visually separated, we compare their positions based on the `getBoundingClientRect` data. All three nodes share the same `x` (20) and `width` (120), so we look at their vertical placement: `alpha` is at `y=20` (ending at 60), `beta` is at `y=64` (ending at 104), and `gamma` is at `y=200` (ending at 240). The gap between `alpha` and `beta` is only 4px, while the gap between `beta` and `gamma` is 96px, making `gamma` significantly isolated from the other two.\n\nANSWER: root>gamma\n",
+  "ms": 10246
+}

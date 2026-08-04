@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding box data:\n\n- `root>ghost` has `getBoundingClientRect: x=0 y=0 width=0 height=0` — positioned at (0,0) but with zero dimensions\n- `root>visible` has `getBoundingClientRect: x=0 y=0 width=400 height=19.1875` — also positioned at (0,0) with visible dimensions\n\nBoth nodes share the same top-left position (x=0, y=0). Even though `root>ghost` has zero width/height in its bounding box, its text still renders at that position. Since `root>visible` also starts at (0,0), its text is drawn starting from the same pixel coordinates, causing the glyphs to overlap.\n\nANSWER: root>visible\n",
+  "ms": 16671
+}

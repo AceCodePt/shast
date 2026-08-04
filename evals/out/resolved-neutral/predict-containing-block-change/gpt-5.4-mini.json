@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Adding `position: relative` to `root>plain` makes `root>plain>pin` use `plain` as its containing block instead of `root`. `plain` is already rendered at `20,20`, and the pin is offset `10,10` from that, so it moves to `30,30`.\n\nANSWER: 30,30\n",
+  "ms": 17530
+}

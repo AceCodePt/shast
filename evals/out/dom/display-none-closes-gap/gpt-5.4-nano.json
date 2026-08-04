@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>gone` has `display: none`, and its `getBoundingClientRect()` reports `width=0 height=0`, so it does not occupy layout space. `root>first` has `y=0` and `height=40`, while `root>third` starts at `y=40`—immediately after `root>first`. If there were a 40px gap for `root>gone`, `root>third` would have started at `y=80` instead.\n\nANSWER: NO\n",
+  "ms": 17170
+}

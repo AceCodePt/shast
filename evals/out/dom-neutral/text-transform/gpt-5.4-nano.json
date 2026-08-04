@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree shows that `root>title` contains the text `\"Annual review\"` as written in the source. Chromium’s computed style for that node includes `text-transform: uppercase`, which changes the displayed characters to uppercase regardless of the original casing. Therefore, a viewer sees `ANNUAL REVIEW`.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 8783
+}

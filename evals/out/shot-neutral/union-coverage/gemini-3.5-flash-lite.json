@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>line` is obscured by the combined union of `root>leftHalf` and `root>rightHalf`. Since together these boxes cover the entire line, the text cannot be read by a viewer.\n\nANSWER: NO\n",
+  "ms": 11069
+}

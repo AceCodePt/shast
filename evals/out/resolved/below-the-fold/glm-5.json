@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 500×300, meaning the visible area on first load spans y=0 to y=300. `root>footer` is positioned at y=700 with height=60, placing it entirely outside the initial viewport. The report also labels it \"below-fold\".\n\nANSWER: NO\n",
+  "ms": 8113
+}

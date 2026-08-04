@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, the red box labeled \"high\" is visibly on top of the blue box labeled \"inner\" in the overlapping region. The red color completely covers the blue in the area where they overlap, meaning the red element is rendering above the blue element.\n\nFrom the node tree, `root>high` corresponds to the red box, and `root>low>inner` corresponds to the blue box. Since the red box is what's visible on top in the overlapping region, `root>high` must have a higher z-index or stacking context that places it above `root>low>inner`.\n\nANSWER: root>high\n",
+  "ms": 6963
+}

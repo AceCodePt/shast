@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>tall",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Based on the rendered page layout, `root>wide` spans the top width but has a shallow height, while `root>square` has equal dimensions with a moderate area. `root>tall` shares the lower section of the viewport alongside `square` but extends vertically nearly to the bottom, resulting in the largest overall surface area.\n\nANSWER: root>tall\n",
+  "ms": 13707
+}

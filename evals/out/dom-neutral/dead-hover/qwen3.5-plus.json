@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided browser data, I need to compare the padding of `root>mid>leaf` before and during hover.\n\n**Before hover:**\n- `root>mid>leaf` padding: `2px 2px 2px 2px`\n\n**During hover:**\n- `root>mid>leaf` padding: `2px 2px 2px 2px`\n\nThe padding values are identical in both states. Even though there may be a `:hover` CSS rule that attempts to set `padding: 40px`, the actual rendered padding does not change when hovering over the element.\n\nANSWER: NO\n",
+  "ms": 12581
+}

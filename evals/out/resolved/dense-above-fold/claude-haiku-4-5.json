@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the render report, I need to determine if the text in `root>main>r17` (\"17. Inventory valuation\") is visible in the initial viewport without scrolling.\n\nThe viewport is 1280x800 pixels. The `root>main>r17` element is positioned at y=484 with a height of 26 pixels, meaning it spans from y=484 to y=510.\n\nSince the viewport extends from y=0 to y=800, and the element occupies y=484 to y=510, it falls entirely within the visible viewport area. The element does not have a \"below-fold\" annotation, which confirms it's in the initial visible area.\n\nTherefore, the text in `root>main>r17` is visible when the page first loads without scrolling.\n\nANSWER: YES\n",
+  "ms": 8823
+}

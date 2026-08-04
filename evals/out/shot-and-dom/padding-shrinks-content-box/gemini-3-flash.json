@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>card` element has a total height of `124.75px` and a `line-height` of `19.2px`. After subtracting the top and bottom padding of `24px` each (total `48px`), the remaining content height is `76.75px`. Dividing this content height by the line height ($76.75 / 19.2 \\approx 4$) indicates the text occupies 4 lines, which is confirmed by the visual evidence in the screenshot.\n\nANSWER: 4\n",
+  "ms": 9710
+}

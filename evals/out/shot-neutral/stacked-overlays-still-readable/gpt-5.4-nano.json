@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The node tree shows the text node `root>line` contains `\"Still readable\"` and the attached screenshot corresponds to the actual rendered output at 400x300. Since the screenshot is explicitly labeled and shown as “Still readable,” a viewer can still read the text even though other boxes paint over `root>line`.  \nANSWER: YES\n",
+  "ms": 9750
+}

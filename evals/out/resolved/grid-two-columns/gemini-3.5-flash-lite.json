@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the layout report, the `root` element uses a CSS grid with a first column width of 200px and a gap of 20px. The second column (`root>right`) begins immediately after the first column and its 20px gap, placing its left edge at x = 200 + 20 = 220. This is also explicitly confirmed by the measured border box coordinates (`@ x=220`) in the report.\n\nANSWER: 220\n",
+  "ms": 8511
+}

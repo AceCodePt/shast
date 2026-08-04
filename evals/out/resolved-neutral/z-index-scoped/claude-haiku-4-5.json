@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe `root>high` div is the one a viewer sees in the overlapping region. \n\nHere's the reasoning: Although `root>low>inner` has a z-index of 999, this z-index is **scoped to the stacking context of its parent `root>low`**. The entire `root>low` stacking context (which includes `root>low>inner`) has an implicit z-index that is lower than `root>high`'s z-index of 2. The information explicitly states: \"the smaller z-index still wins here because this node's z-index 999 is scoped to the stacking context of root>low, and that whole context paints below root>high\". This means `root>high` paints later and appears on top of the overlapping region.\n\nANSWER: root>high\n",
+  "ms": 9150
+}

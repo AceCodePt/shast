@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The grid has two columns: 200px and 300px wide, with a 20px gap between them. The first column (`root>left`) starts at x=0 and occupies 200px. The 20px gap follows, placing the second column (`root>right`) at x = 200 + 20 = 220. This is confirmed by the `getBoundingClientRect` data which shows `root>right` at x=220.\n\nANSWER: 220\n",
+  "ms": 12677
+}

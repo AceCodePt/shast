@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report shows `root>cta` has `background-color: #3355ff` as its resolved style, with a `:hover` state that changes it to `#0022cc`. Since the pointer is elsewhere when first painted, the hover state does not apply.\n\nANSWER: #3355ff\n",
+  "ms": 5954
+}

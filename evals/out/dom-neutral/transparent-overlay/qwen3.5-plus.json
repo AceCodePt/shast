@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering data:\n\n1. The `root>lede` paragraph starts at y=0 with height 54.375px\n2. The `root>banner` div is absolutely positioned at y=0 with height 70px and has `z-index: 5`\n3. The `root>lede` has `z-index: auto` (default, effectively 0)\n\nSince the banner is absolutely positioned over the same area as the lede text and has a higher z-index (5 vs auto/0), the banner will visually cover the entire lede paragraph. The banner extends 70px from the top while the lede only extends 54.375px from the same starting point.\n\nANSWER: NO\n",
+  "ms": 14479
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Even though `root>ghost` has a bounding client rectangle of 0x0, its text content \"Important warning\" is still painted on the page at coordinates (0,0), overlapping with the visible content below it as seen in both the node tree and the screenshot.\n\nANSWER: YES\n",
+  "ms": 8406
+}

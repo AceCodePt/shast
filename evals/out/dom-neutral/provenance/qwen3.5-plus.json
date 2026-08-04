@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the computed styles for each node:\n\n- `root` has `border-radius: 0px`\n- `root>body` has `border-radius: 0px`\n- `root>body>panel` has `border-radius: 12px`\n\nSince `border-radius` is not an inherited CSS property, and only `root>body>panel` shows `border-radius: 12px` in its computed styles while its ancestors have `0px`, the border-radius declaration must come from the panel node's own CSS block.\n\nANSWER: root>body>panel\n",
+  "ms": 13014
+}

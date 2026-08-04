@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, I can see the text content \"one two three four five six seven eight nine ten\" is displayed across multiple lines due to word wrapping.\n\nCounting the visible lines in the rendered output:\n1. \"one two three\"\n2. \"four five six\"\n3. \"seven eight\"\n4. \"nine ten\"\n\nThe text wraps onto **4 lines**.\n\nANSWER: 4\n",
+  "ms": 12221
+}

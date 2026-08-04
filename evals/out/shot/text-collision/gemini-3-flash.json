@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows two lines of text with significant overlap on the first line. The text \"Everything is fine\" from `root>visible` is rendered on the same line as the word \"Important\" from `root>ghost`'s text (\"Important warning\"), resulting in a jumbled appearance where the glyphs occupy the same pixels.\n\nANSWER: root>visible\n",
+  "ms": 11247
+}

@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>card`’s border box is exactly 48px tall (`getBoundingClientRect: ... height=48`), with 8px top and 8px bottom padding. That leaves 32px for the text’s line area. The computed `line-height` is 19.2px, so two lines would require 38.4px (>32px) and would not fit in the padding-constrained content area. Since the element’s rendered height stayed at 48px, the browser must have been able to lay out the text within that space.\n\nANSWER: YES\n",
+  "ms": 8774
+}

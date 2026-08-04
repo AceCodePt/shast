@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendered layout information explicitly states that `root>floaty` has `@ x=0 y=50 width=90 height=20`. The `y=50` value indicates the absolute position of the element's top edge from the top-left of the page. Since the element is `position: absolute` with no offset properties (`top`, `right`, `bottom`, `left`) declared, it renders at its static position, which in this case is at y=50 (directly below the 50px tall spacer element).\n\nANSWER: 50\n",
+  "ms": 12505
+}

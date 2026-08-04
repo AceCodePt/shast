@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>glass` box has a fully transparent background (`rgba(0, 0, 0, 0)`), and the `root>panel` box is positioned below the text at `top: 40px` (whereas `root>line` occupies `y=0` to `y=19.1875`). Therefore, neither box visually obscures or overlaps the text, so it remains fully visible.\nANSWER: YES\n",
+  "ms": 10266
+}

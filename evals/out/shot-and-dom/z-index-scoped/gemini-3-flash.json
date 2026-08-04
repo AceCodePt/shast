@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>low` element creates a new stacking context because it is positioned (`position: absolute`) and has a numerical `z-index` (1). Consequently, the `z-index: 999` of `root>low>inner` is scoped within `root>low` and does not affect its stack level relative to elements outside that context. Since `root>high` is a sibling of `root>low` and has a higher `z-index` (2 vs 1), `root>high` is rendered on top of `root>low` and all of its descendants.\n\nANSWER: root>high\n",
+  "ms": 9271
+}

@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "`root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>body>panel` is not the box that controls the visible spacing, since adding padding there does nothing. The padding needs to be applied one level up, to the parent that actually lays out the content.\n\nANSWER: `root>body`\n",
+  "ms": 18767
+}

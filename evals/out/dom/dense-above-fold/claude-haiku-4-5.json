@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding client rectangle data for `root>main>r17`:\n\n- **getBoundingClientRect**: x=244 y=484 width=1012 height=26\n\nThe element is positioned at y=484 pixels from the top of the viewport.\n\nThe viewport dimensions are **1280x800** (width × height).\n\nSince the element's top edge is at y=484 and the viewport height is only 800 pixels, the element is visible on the initial page load. The element occupies vertical space from y=484 to y=510 (484 + 26), which is well within the 800-pixel viewport height.\n\nANSWER: YES\n",
+  "ms": 7333
+}

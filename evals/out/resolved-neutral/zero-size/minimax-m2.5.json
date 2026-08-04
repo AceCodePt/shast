@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The ghost div has a 0x0 content box, but the rendering notes indicate that its content (86.41x38.38px) is \"painted outside the box rather than cut off (overflow is visible)\". Additionally, it collides with the visible div's text, confirming that \"Important warning\" glyphs are actually drawn on the page despite the zero-sized container.\n\nANSWER: YES\n",
+  "ms": 8506
+}

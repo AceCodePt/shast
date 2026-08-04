@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text \"Payment failed because the card on file expired last month.\" is 59 characters long, which wraps across multiple lines within the narrow 180px width of `root>card`. With a line-height of 19.2px and vertical padding and borders totaling 18px, the required height for multiple text lines exceeds the 48px height of the border box, causing the text to overflow.\n\nANSWER: NO\n",
+  "ms": 8828
+}

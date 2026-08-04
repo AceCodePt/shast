@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered dimensions from `getBoundingClientRect()`:\n\n- `root>outer>filler`: **height=60px**\n- `root>outer>tall`: **height=19.1875px**\n\nEven though `tall` declares `height: 100%`, the actual rendered height is only 19.1875px, which is significantly less than its sibling `filler` at 60px. This happens because percentage heights in normal flow don't necessarily match sibling heights—they're calculated based on the containing block's height, which in this case doesn't produce a 1:1 match with the sibling.\n\nANSWER: NO\n",
+  "ms": 16114
+}

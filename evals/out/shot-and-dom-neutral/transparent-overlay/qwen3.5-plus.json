@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence:\n\n1. The `root>lede` paragraph contains text shown as \"The quarterly results are in and every region beat its targ…\" - note the ellipsis (… ) at the end, indicating the text is **truncated** in the rendered view.\n\n2. The `root>banner` div is positioned absolutely at `x=0 y=0` with `z-index: 5`, placing it on top of the `root>lede` paragraph which also starts at `y=0`. While the banner has a transparent background, the text itself appears truncated in the source representation.\n\n3. The ellipsis in the displayed text \"targ…\" suggests the full sentence is not visible - it's been cut off (likely \"target\" is incomplete).\n\nSince the text shows an ellipsis indicating truncation, a person cannot read the **whole** sentence - part of it is cut off.\n\nANSWER: NO\n",
+  "ms": 25411
+}

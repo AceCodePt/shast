@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The rendered geometry shows `root>outer>filler` is `60px` tall, while `root>outer>tall` is only `19.1875px` tall. So even though `tall` declares `height: 100%`, its percentage height does not resolve to something larger here, and it ends up shorter than its sibling.\n\nANSWER: NO\n",
+  "ms": 5820
+}

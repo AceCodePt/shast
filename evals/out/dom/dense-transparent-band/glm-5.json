@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "## Reasoning\n\n`root>main>r09` is positioned at x=244, y=276, with text color rgb(0, 0, 0) (black), opacity 1, on the root's white background (rgb(255, 255, 255)) — so the text itself has strong contrast and is otherwise visible.\n\nThe potential issue is the `root>banner` element, which overlaps r09:\n- Banner rect: x=244, y=276, width=700, height=26\n- r09 rect: x=244, y=276, width=1012, height=26\n\nThe banner sits exactly on top of r09 (same origin, same height) and has `position: absolute` with `z-index: 5`, so it paints above r09 (which is `position: static`). However, the banner has `background-color: rgba(0, 0, 0, 0)` (fully transparent) and contains no text content (the node tree shows it as an empty `div`). A transparent, empty element does not visually obscure anything beneath it.\n\nTherefore the text \"09. Currency hedging\" in r09 remains fully readable.\n\nANSWER: YES\n",
+  "ms": 31558
+}

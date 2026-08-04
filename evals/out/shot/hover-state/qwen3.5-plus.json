@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "#4169E1 (or similar medium blue / royal blue)",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the two screenshots:\n\n1. **First image (rest.png)**: Shows the page at rest with the `root>cta` element displaying a **lighter, medium blue** background\n2. **Second image (hover.png)**: Shows the page during hover with the `root>cta` element displaying a **darker, more saturated blue** background\n\nThe question asks for the background colour when the page is first painted (at rest). The first screenshot shows the initial state before any hover interaction, where the `root>cta` div has a medium blue background that is noticeably lighter than the hover state.\n\nANSWER: #4169E1 (or similar medium blue / royal blue)\n",
+  "ms": 14453
+}

@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Although two boxes paint over the region, the first box (`root>glass`) has no background and lets underlying content show through, while the second box (`root>panel`) is positioned below `root>line` and does not overlap it vertically. Furthermore, the rendering details explicitly confirm that the text line stays fully visible and readable.\n\nANSWER: YES\n",
+  "ms": 7390
+}

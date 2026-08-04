@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report states that the `padding: 2px` declared by `root` inside its `> mid > leaf` block outranks and blocks the `:hover` padding rule from taking effect. To allow the hover state to change the padding to 40px, that conflicting declaration must be modified or removed. Therefore, you need to edit the CSS block of the `root` node.\n\nANSWER: root\n",
+  "ms": 8393
+}

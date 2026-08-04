@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` has a total border box height of 48px. However, after accounting for 8px padding and 1px border on the top and bottom, the internal content box height is only 30px. The report explicitly states that the text content measures 76.75px in height and overflows the box, meaning it extends well beyond the 48px border box.\n\nANSWER: NO\n",
+  "ms": 12268
+}

@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding boxes:\n\n- `root>cover` is an absolutely positioned div with a solid black background (`rgb(0, 0, 0)`), covering y=0 to y=19 (height=19px)\n- `root>second` (the paragraph with \"Second paragraph here\") has its bounding box starting at y=19.1875\n\nSince the cover overlay ends at y=19 and the second paragraph begins at y=19.1875, the text sits just **below** the black overlay and is not obscured. The screenshot confirms this—it shows \"Second paragraph here\" clearly visible, with a black bar only at the very top (covering the first paragraph).\n\nANSWER: YES\n",
+  "ms": 16398
+}

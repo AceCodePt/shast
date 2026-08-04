@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at both screenshots:\n\n1. **Rest state**: The \"Leaf\" text appears in the top-left corner of the viewport\n2. **Hover state**: The \"Leaf\" text appears in the exact same position with no visible change in spacing\n\nIf the `:hover` block's `padding: 40px` had taken effect, the text would visibly shift inward from the edges or the element would expand. Since both screenshots are identical, the padding does not change when hovering.\n\nANSWER: NO\n",
+  "ms": 11265
+}

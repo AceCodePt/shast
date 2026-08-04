@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the computed styles for `root>main>r21`:\n\n- **Text color**: `rgb(255, 255, 255)` (white)\n- **Background color**: `rgba(0, 0, 0, 0)` (transparent)\n\nThe parent `root>main` also has a transparent background, and the root element has a white background `rgb(255, 255, 255)`. This means the white text is rendered on top of a white background, resulting in **no contrast** between the text and its background.\n\nANSWER: NO\n",
+  "ms": 13797
+}

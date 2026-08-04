@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the computed styles for each node:\n\n- `root` has `border-radius: 0px`\n- `root>body` has `border-radius: 0px`\n- `root>body>panel` has `border-radius: 12px`\n\nSince `border-radius` is not an inherited property, the 12px value on `root>body>panel` must come from a CSS declaration directly on that element. The parent nodes both have 0px, confirming they are not the source.\n\nANSWER: root>body>panel\n",
+  "ms": 12259
+}

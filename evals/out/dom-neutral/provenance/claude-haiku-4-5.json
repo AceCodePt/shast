@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the data provided:\n\nThe `root>body>panel` section element renders with a `border-radius: 12px` (as shown in its `getComputedStyle()` output).\n\nExamining the CSS blocks for all three nodes:\n- `root` has `border-radius: 0px`\n- `root>body` has `border-radius: 0px`\n- `root>body>panel` has `border-radius: 12px`\n\nThe node whose computed style shows `border-radius: 12px` is `root>body>panel` itself. Since this is the only node with a non-zero border-radius value declared in its CSS block, and CSS is inherited or applied directly to elements, the `border-radius: 12px` that `root>body>panel` renders with must be declared in its own CSS block.\n\nANSWER: root>body>panel\n",
+  "ms": 6585
+}

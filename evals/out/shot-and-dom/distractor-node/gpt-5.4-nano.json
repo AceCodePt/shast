@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>second` is a `<p>` with `getBoundingClientRect: x=0 y=19.1875 width=500 height=19.1875`, so it occupies a band starting just below `y=19.1875`. The `root>cover` element is absolutely positioned at `top: 0px` and has height `19px`, meaning it only covers up to about `y=19`. Since `root>second` begins slightly below that (`19.1875`), it is not covered by `root>cover`, and its text color is `rgb(0, 0, 0)`, so the viewer can read it.\n\nANSWER: YES\n",
+  "ms": 7619
+}

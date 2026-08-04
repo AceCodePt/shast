@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered node data:\n\n1. `root>main>r09` contains the text \"09. Currency hedging\" with black text color (`rgb(0, 0, 0)`) and transparent background.\n\n2. However, there is also a `root>banner` element with:\n   - Same position: `x=244 y=276` (identical to r09)\n   - Same dimensions: `height=26`\n   - `position: absolute` with `z-index: 5`\n   - Red background color: `rgb(204, 34, 34)`\n\n3. Since the banner has `z-index: 5` and is absolutely positioned at the exact same coordinates as r09 (which has `z-index: auto` and `position: static`), the red banner renders on top of r09, obscuring the text.\n\nANSWER: NO\n",
+  "ms": 18784
+}

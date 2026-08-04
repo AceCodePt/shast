@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "19",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The authoritative evidence is the browser’s `getComputedStyle()` for `root>child`. It reports `padding: 64px 64px 64px 64px`, so that is the padding that actually renders regardless of how many `padding` declarations appeared earlier in the source (later rules win or higher specificity applies).  \nANSWER: 19\n",
+  "ms": 8636
+}

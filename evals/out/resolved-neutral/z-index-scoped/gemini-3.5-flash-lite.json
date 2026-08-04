@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>high` has a z-index of 2 at the root level, whereas `root>low` (which contains `root>low>inner`) has a z-index of 1. Because `root>low>inner`'s z-index of 999 is scoped to the stacking context of `root>low`, the entire `root>low` context paints below `root>high`. Consequently, `root>high` paints later and covers `root>low>inner` in their overlapping region.\n\nANSWER: root>high\n",
+  "ms": 15468
+}

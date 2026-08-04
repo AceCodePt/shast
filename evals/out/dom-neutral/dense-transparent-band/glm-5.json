@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at `root>main>r09`: it has black text (`rgb(0,0,0)`), opacity 1, and sits at x=244, y=276. Its background is transparent, but the root div behind it has a white background (`rgb(255,255,255)`), so the text renders as black-on-white — readable.\n\nThere is a `root>banner` element overlapping r09 at the exact same position (x=244, y=276, width=700, height=26) with z-index 5, which sits on top of r09. However, the banner has a fully transparent background (`rgba(0,0,0,0)`), no border, and no text content (the node tree shows it as an empty `div`). Since it is transparent and empty, it does not visually obscure the text of r09 beneath it.\n\nANSWER: YES\n",
+  "ms": 21419
+}

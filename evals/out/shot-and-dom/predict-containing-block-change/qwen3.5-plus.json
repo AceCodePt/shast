@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "## Reasoning\n\nCurrently, `root>plain>pin` has `position: absolute` but its parent `root>plain` has `position: static`. This means `pin` is positioned relative to `root` (the nearest positioned ancestor), placing it at x=10, y=10 relative to `root`'s origin.\n\nWhen `position: relative` is added to `root>plain`, it becomes the containing block for `pin`. The `left: 10px` and `top: 10px` values will now be calculated relative to `root>plain`'s padding box instead.\n\n`root>plain` renders at x=20, y=20 in the viewport. With `pin` offset by 10px from that origin, the new position becomes 20+10=30 for both coordinates.\n\nANSWER: 30,30\n",
+  "ms": 24376
+}

@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "At first paint, `root>cta` is in the non-hover/rest state, so we use the first set of computed styles. There, its `background-color` is `rgb(51, 85, 255)`. The hover state changes it to `rgb(0, 34, 204)`, confirming the initial color is the lighter blue.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 7651
+}

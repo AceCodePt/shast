@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>ghost` is the `<div>` that contains the text `\"Important warning\"`. The browser-reported `getBoundingClientRect()` for that node is `x=0 y=0 width=0 height=0`, meaning the element has no rendered box on the page. With the evidence presented as authoritative for what’s actually on screen, there’s no area where that text could be painted.\n\nANSWER: NO\n",
+  "ms": 8054
+}

@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text in `root>title` is written as \"Annual review\" (mixed case), but the computed style shows `text-transform: uppercase` is applied to this element. The screenshot confirms this transformation is rendered - it displays \"ANNUAL REVIEW\" in all capital letters. The `text-transform` CSS property changes how text is displayed without changing the underlying DOM text content.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 12246
+}

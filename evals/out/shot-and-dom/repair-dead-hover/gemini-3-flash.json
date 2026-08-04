@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The rendered data and screenshots show that hovering over `root>mid>leaf` does not trigger the `:hover { padding: 40px }` style, even though the rule exists in the leaf's CSS block. This \"dead hover\" occurs because the leaf element is not receiving pointer events, typically because an ancestor is intercepting them or has disabled them for its descendants. In this specific hierarchy, the intermediate `root>mid` node is the most likely location of a `pointer-events: none` property that is blocking the hover state from reaching the leaf. By editing the CSS block for `root>mid` to enable pointer events or by defining the hover trigger at the `mid` level to affect its child, the desired padding change can be achieved.\n\nANSWER: root>mid\n",
+  "ms": 78755
+}

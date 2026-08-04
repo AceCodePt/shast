@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>cell` is a `div` whose bounding box is only `120px` wide (`getBoundingClientRect: width=120px`). The URL is the only text node inside that cell, but the computed style for the cell shows `overflow: visible`, which means overflowing content is not clipped to the 120px box. The provided evidence therefore doesn’t indicate that the URL is constrained to stay within the 120px width.  \n\nANSWER: NO\n",
+  "ms": 11438
+}

@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>line` text starts at the same top-left area that is covered by the two absolutely positioned boxes, and those boxes together cover the full horizontal span where the short text would render. Since they are opaque and paint after the line, the words are obscured.\n\nANSWER: NO\n",
+  "ms": 13333
+}

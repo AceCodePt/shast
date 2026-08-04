@@ -1,0 +1,50 @@
+root <div>
+  getBoundingClientRect: x=0 y=0 width=600 height=50
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 50px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: relative
+  width: 600px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>spacer <div>
+  getBoundingClientRect: x=0 y=0 width=600 height=50
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 50px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: static
+  width: 600px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>floaty <div>
+  getBoundingClientRect: x=0 y=50 width=90 height=20
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 20px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: absolute
+  width: 90px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px

@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The annotation explicitly attributes the `border-radius: 12px` declaration to the `root` node, specifically inside its `> body > panel` block.\n\nANSWER: root\n",
+  "ms": 4689
+}

@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Both `root>ghost` and `root>visible` share the same starting coordinates (`x=0, y=0`) and occupy the same vertical space at the top of the viewport. As seen in the rendered screenshot, their text glyphs (\"Important warning\" and \"Everything is fine\") overlap directly on the same pixels.\n\nANSWER: root>visible\n",
+  "ms": 8335
+}

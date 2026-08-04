@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 800 pixels. The element `root>main>r36` has a `getBoundingClientRect` with `y=978` and `height=26`, meaning it starts at 978 pixels from the top of the page. Since 978 > 800, this element is positioned below the visible viewport when the page first loads.\n\nANSWER: NO\n",
+  "ms": 10496
+}

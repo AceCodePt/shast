@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element is a grid container with two columns defined as `200px` and `300px` respectively, separated by a `gap` of `20px`. The first child (`root>left`) occupies the first column starting at `x=0`, while the second child (`root>right`) occupies the second column. Therefore, the left edge of `root>right` begins after the first column's width and the gap: `200px + 20px = 220px`.\n\nANSWER: 220\n",
+  "ms": 8746
+}

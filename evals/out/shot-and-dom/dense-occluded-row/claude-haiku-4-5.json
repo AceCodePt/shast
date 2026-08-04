@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the provided information, I need to determine if the text in `root>main>r09` (which contains \"09. Currency hedging\") is readable by a viewer.\n\nFrom the node tree, `root>main>r09` is a div with the text \"09. Currency hedging\".\n\nFrom the bounding client rect data, `root>main>r09` has:\n- x=244, y=276, width=1012, height=26\n- It's positioned on the page at coordinates that place it within the visible viewport (1280x800)\n\nHowever, looking at `root>banner`, there's a div positioned absolutely at:\n- x=244, y=276, width=700, height=26\n- background-color: rgb(204, 34, 34) (dark red)\n- z-index: 5\n\nThe banner element starts at the exact same y-coordinate (276) and has a z-index of 5, which places it above other elements. The banner's width of 700px and x-position of 244px means it covers the horizontal range from 244 to 944 on the page. Since `root>main>r09` also starts at x=244 and spans 1012 pixels wide (to x=1256), the banner completely overlaps the text in `root>main>r09`.\n\nGiven that the banner has a z-index of 5 and a solid dark red background color, it will visually obscure the text underneath, making it unreadable.\n\nANSWER: NO\n",
+  "ms": 9049
+}

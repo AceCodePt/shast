@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>lede` is a `<p>` that starts at `y=0` and is only `54.375px` tall. The `root>banner` `<div>` is positioned `absolute` at `top: 0` with `height: 70px` and `z-index: 5`, so it will render on top of the `root>lede` content. Because the banner is taller than the lede and sits above it, the lede sentence would be fully occluded, so a reader can’t read the whole sentence.\n\nANSWER: NO\n",
+  "ms": 13087
+}

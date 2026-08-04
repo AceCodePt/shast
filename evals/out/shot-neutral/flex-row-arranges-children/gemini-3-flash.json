@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root` element is a flex container with a default `flex-direction: row`, so its children are arranged horizontally starting from the left edge (x = 0). The first child, `root>first`, has a width of 100px, occupying the space from x = 0 to x = 100. Since there is a `gap` of 10px between the children, the second child, `root>second`, begins immediately after the first child and the gap.\n\nANSWER: 110\n",
+  "ms": 11666
+}

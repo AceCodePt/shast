@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The `root>lede` paragraph is fully visible in the screenshot, wrapping onto two lines without being clipped or hidden. The transparent absolute-positioned banner does not obscure the text visually.\n\nANSWER: YES\n",
+  "ms": 10512
+}

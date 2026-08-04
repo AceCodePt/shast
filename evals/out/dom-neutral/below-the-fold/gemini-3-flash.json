@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport dimensions are 500x300, meaning only the area from y=0 to y=300 is visible upon initial load. According to its `getBoundingClientRect`, the `root>footer` node starts at a Y-coordinate of 700. Since the top of the footer (700px) is below the bottom of the viewport (300px), it is not visible without scrolling.\n\nANSWER: NO\n",
+  "ms": 13588
+}

@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the layout information provided:\n\nThe `root>second` paragraph is positioned at `x=0 y=19.19 width=500 height=19.19`. The `root>cover` div is positioned absolutely at `x=0 y=0 width=500 height=19` with a black background (`#000000`).\n\nThe cover div extends from y=0 to y=19, while the second paragraph starts at y=19.19. Since the cover div only reaches y=19 and the second paragraph begins at y=19.19, there is no overlap between them. The second paragraph is not covered by the black div, so its text is fully visible and readable.\n\nANSWER: YES\n",
+  "ms": 6717
+}

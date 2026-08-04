@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has a fixed height of 48px. After accounting for the top and bottom borders (1px each) and padding (8px each), the available vertical space for the text content is only 30px. Given the line-height of 19.2px and the 180px width, the text wraps into four lines (as shown in the screenshot), requiring approximately 76.8px of height. Consequently, the text significantly overflows the 48px-tall border box.\n\nANSWER: NO\n",
+  "ms": 12994
+}

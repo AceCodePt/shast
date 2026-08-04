@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the `getBoundingClientRect()` data for the three siblings:\n\n- **root>alpha**: y=20, height=40 (occupies y: 20-60)\n- **root>beta**: y=64, height=40 (occupies y: 64-104)\n- **root>gamma**: y=200, height=40 (occupies y: 200-240)\n\nThe alpha and beta elements are positioned close together with only a 4-pixel gap between them (beta starts at y=64 while alpha ends at y=60). In contrast, gamma is positioned much further down the page, with a 96-pixel gap between beta (which ends at y=104) and gamma (which starts at y=200). This creates a clear visual separation where gamma stands apart from the other two.\n\nANSWER: root>gamma\n",
+  "ms": 9159
+}

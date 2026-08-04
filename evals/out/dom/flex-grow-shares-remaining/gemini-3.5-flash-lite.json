@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the browser's rendered data (`getBoundingClientRect()`), `root>b` has a width of 400 pixels (`width=400`). This is also consistent with the flexbox distribution where `root>a` has `flex: 1` (width 200px) and `root>b` has `flex: 2` (width 400px) filling the 600px wide container.\n\nANSWER: 400\n",
+  "ms": 8224
+}

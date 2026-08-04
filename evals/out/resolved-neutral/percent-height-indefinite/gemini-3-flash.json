@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The information provided shows that `root>outer>filler` has a resolved height of 60px. In contrast, `root>outer>tall`, despite declaring `height: 100%`, has a resolved height of only 19.19px. Since 19.19px is less than 60px, it is not taller than its sibling.\n\nANSWER: NO\n",
+  "ms": 8365
+}

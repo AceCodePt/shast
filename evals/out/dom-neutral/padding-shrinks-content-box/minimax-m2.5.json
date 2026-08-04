@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "6",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The card's content area is 200px wide minus 48px of padding (24px each side), giving 152px of usable width. With a line-height of 19.2px and a total height of 124.75px, dividing the height by the line-height gives approximately 6.5, which means the text fills exactly 6 lines.\n\nANSWER: 6\n",
+  "ms": 5086
+}

@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report indicates that the `root>lede` paragraph is entirely obscured by the `root>banner` element. The banner is positioned absolutely at the same coordinates (x=0, y=0) with a higher z-index and an opaque background, and the report explicitly states that it covers 100% of the lede's box. Consequently, all lines of text in the lede are marked as \"completely hidden,\" making the sentence unreadable to a person.\n\nANSWER: NO\n",
+  "ms": 13954
+}

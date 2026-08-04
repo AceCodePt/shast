@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the browser's computed style data for the rest state (before hover), the `root>cta` element has:\n\n`background-color: rgb(51, 85, 255)`\n\nThis is the blue color visible in the first screenshot. When hovered, it changes to `rgb(0, 34, 204)` (a darker blue), but the question asks for the initial/rest state color.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 12298
+}

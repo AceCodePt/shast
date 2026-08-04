@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe node tree shows that `root>title` is a `div` element with the text \"Annual review\" as written in the source. The screenshot confirms this, showing \"ANNUAL REVIEW\" displayed at the top of the page.\n\nThe question asks for the exact characters as a viewer sees them. While the source shows \"Annual review\" (with lowercase letters after the first 'A'), the rendered screenshot displays \"ANNUAL REVIEW\" in all uppercase. This indicates that CSS styling (likely `text-transform: uppercase`) is being applied to change the visual rendering of the text.\n\nHowever, the node tree represents the source text, not the rendered text. The actual characters in the DOM are \"Annual review\", but what a viewer sees on screen is \"ANNUAL REVIEW\" due to CSS text transformation.\n\nSince the question asks \"Exactly what characters does a viewer see,\" the answer should be what is visually rendered:\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7618
+}

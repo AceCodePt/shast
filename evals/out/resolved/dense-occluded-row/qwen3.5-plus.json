@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report for `root>main>r09`:\n\n- The element is marked as **covered**\n- The `root>banner` div (absolute position, z-index 5, opaque background `#cc2222`) paints later than this node\n- It covers 69% of the box\n- Critically: **\"1 of 1 text line(s) completely hidden\"**\n\nSince all text lines in this element are completely hidden by the overlapping banner element with a higher z-index and opaque background, the text cannot be read.\n\nANSWER: NO\n",
+  "ms": 14005
+}

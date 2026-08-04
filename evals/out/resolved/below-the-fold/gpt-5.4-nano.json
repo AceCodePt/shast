@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewer initially sees only the top portion of the page within the viewport height: from `y = 0` down to `y = 300`. `root>footer` is positioned at `y = 700` with `height = 60`, which places it entirely below the fold. Therefore it is not visible when the page first loads (before scrolling).\n\nANSWER: NO\n",
+  "ms": 6180
+}

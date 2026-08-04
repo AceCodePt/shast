@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The top-left corner of `root>inner` renders at **x=25, y=15**.\n\nHere's the reasoning: A `position: fixed` element is positioned relative to the **viewport** (the initial containing block), not relative to its nearest positioned ancestor. This is different from `position: absolute`, which would be offset relative to the padding box of the nearest positioned ancestor (the padded `root` box). Since `root>inner` is `fixed`, its `top: 15px` and `left: 25px` are measured from the viewport's top-left corner, regardless of `root`'s `position: relative` or its 40px padding. The rendered box confirms this: x=25, y=15.\n\nANSWER: 25,15\n",
+  "ms": 17838
+}

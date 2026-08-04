@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first child (`root>first`) occupies x=0 to x=100 (width 100px). Since `root` is `display: flex` with `flex-direction: row` and `gap: 10px`, a 10px gap is inserted between flex items. So `root>second`'s left edge is at 100 + 10 = 110. This matches the reported `getBoundingClientRect` x=110.\n\nANSWER: 110\n",
+  "ms": 14246
+}

@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "2px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided information, the `root>mid>leaf` element renders with **padding: 2px** even when hovered.\n\nThe key detail states that \"padding: 2px declared by root inside its `> mid > leaf` block outranks it — entering `:hover` does not change padding.\" This means the selector from `root` targeting `> mid > leaf` has higher specificity/cascade priority than the `:hover` pseudo-class that would set padding to 40px. The rendered height of 23.19px (with 16px font-size) is consistent with 2px padding top and bottom.\n\nANSWER: 2px\n",
+  "ms": 13311
+}

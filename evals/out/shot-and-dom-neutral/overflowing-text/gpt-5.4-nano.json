@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>card`’s border box height is 48px, with 1px border on top and bottom and 8px padding on top and bottom, leaving only `48 - 2 - 16 = 30px` for the text area. With a line-height of about 19.2px, even 2 lines would require `2 * 19.2 = 38.4px`, and the screenshot shows the text wraps across multiple lines, so the full text cannot fit within the card’s 48px-tall border box.  \n\nANSWER: NO\n",
+  "ms": 11419
+}

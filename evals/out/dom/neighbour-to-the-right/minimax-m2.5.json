@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Both `root>leftBottom` and `root>rightBottom` share the same y-coordinate (120) and height (80), placing them on the same row. `root>rightBottom` has x=340, which is directly to the right of `root>leftBottom` (x=0), with the 40px gap indicating spacing between the two boxes.\n\nANSWER: root>rightBottom\n",
+  "ms": 11264
+}

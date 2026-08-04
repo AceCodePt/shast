@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 800px, meaning content visible without scrolling must be within y=0 to y=800. The element `root>main>r36` (\"36. Royalty accruals\") is positioned at y=978, which is 178px beyond the visible viewport. Additionally, this element is explicitly marked with the \"below-fold\" annotation in the provided data.\n\nANSWER: NO\n",
+  "ms": 12779
+}

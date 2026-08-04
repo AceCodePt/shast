@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Alpha and beta are adjacent: alpha ends at y=60 and beta starts at y=64, a gap of only 4px. Gamma sits at y=200, leaving a 96px empty gap below beta, so it is the one visually separated from the other two.\n\nANSWER: root>gamma\n",
+  "ms": 9925
+}

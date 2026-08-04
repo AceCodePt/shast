@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report directly states the answer in the annotation marked `!` for `root>card`: \"wrapped: text broke onto 4 lines at 152px content width\". This is consistent with the measurements: the card is 200px wide with 24px padding on each side, giving a 152px content width; the total height of 124.75px minus the 48px of vertical padding leaves ~76.75px of content height, which divides evenly into 4 lines at roughly 19.2px each (a typical 16px font with ~1.2 line-height).\n\nANSWER: 4\n",
+  "ms": 14176
+}

@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>card` has `height: 48px` and its own `getBoundingClientRect()` is `width=180 height=48`, but its computed `overflow` is `visible`, which means overflowing content is not clipped to the box. Since no clipping (`overflow: hidden`/`clip`) is indicated and there are no other elements listed that would cover it, the portion of the last line that lies below the bottom edge would still be painted and remain readable.  \n\nANSWER: YES\n",
+  "ms": 7069
+}

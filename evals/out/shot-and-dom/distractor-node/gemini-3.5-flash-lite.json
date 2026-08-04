@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>second` is positioned at y=19.1875, directly below the black cover div (`root>cover`) which only spans from y=0 to y=19. Therefore, the text in `root>second` (\"Second paragraph here\") is not covered by the black bar and is fully visible to a viewer.\n\nANSWER: YES\n",
+  "ms": 7752
+}

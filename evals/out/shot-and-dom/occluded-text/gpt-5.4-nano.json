@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>lede`’s text is rendered starting at the top of the page (`x=0 y=0`), and its bounding box is `600x54.375`. However, `root>banner` is an absolutely positioned `div` with `z-index: 5` that occupies the top of the viewport from `y=0` to `height=70`, which means it overlays the entire `root>lede` area. Because the lede content would be occluded by the banner, a reader cannot read the whole sentence in `root>lede`.\n\nANSWER: NO\n",
+  "ms": 7263
+}

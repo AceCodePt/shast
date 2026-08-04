@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report for `root>card` explicitly indicates that the text wrapped onto 4 lines with the annotation `! wrapped: text broke onto 4 lines at 152px content width`. \n\nANSWER: 4\n",
+  "ms": 6809
+}

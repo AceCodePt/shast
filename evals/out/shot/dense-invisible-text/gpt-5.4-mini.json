@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The source text for `root>main>r21` exists, but in the rendered screenshot the list jumps from `20. Covenant testing` to `22. Audit findings` with no visible `21` entry. That means a viewer cannot read the text for `r21` from what is actually on screen.\n\nANSWER: NO\n",
+  "ms": 8207
+}

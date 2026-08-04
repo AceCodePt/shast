@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>first`, `root>second`, and `root>fourth` elements all share a left position (and `x` coordinate) of 24px. In contrast, `root>third` has a left position of 40px, placing its left edge further to the right than the rest.\n\nANSWER: root>third\n",
+  "ms": 7725
+}

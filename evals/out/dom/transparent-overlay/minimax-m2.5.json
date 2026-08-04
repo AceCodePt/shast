@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The banner (`root>banner`) is absolutely positioned at the top of the page with `z-index: 5`, and it spans the full 600px width and 70px height — which completely covers the `root>lede` paragraph (which sits at y=0–54.375). Since the banner sits above the lede in the stacking order, it overlays the lede's text. Additionally, the lede's text appears to end with an ellipsis (\"…targ…\"), so the sentence is not fully present even if it were visible.\n\nANSWER: NO\n",
+  "ms": 36403
+}

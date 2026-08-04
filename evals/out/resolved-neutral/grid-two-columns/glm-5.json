@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The left column occupies x=0 to x=200 (200px wide). The gap is 20px, spanning x=200 to x=220. So the right column's left edge starts at x=220, which matches the rendered data showing `root>right` at x=220.\n\nANSWER: 220\n",
+  "ms": 9043
+}

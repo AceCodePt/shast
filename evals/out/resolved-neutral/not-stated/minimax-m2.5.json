@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report provides the box dimensions, inherited font-size, and padding for `root>label`, but it does not include any information about the text colour used.\n\nANSWER: NOT STATED\n",
+  "ms": 6656
+}

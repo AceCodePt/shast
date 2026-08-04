@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The grid places the first column at x=0 with width 200px, then a 20px gap, so the second column begins at 200 + 20 = 220px. The computed `getBoundingClientRect` for `root>right` confirms its left edge is at x=220.\n\nANSWER: 220\n",
+  "ms": 7755
+}

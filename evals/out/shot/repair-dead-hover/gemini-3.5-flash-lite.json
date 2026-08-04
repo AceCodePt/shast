@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>mid>leaf",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "When a pseudo-class like `:hover` is placed inside a node's CSS block without a nesting selector (`&`), it is evaluated as a descendant selector (e.g., `root>mid>leaf :hover`), which looks for a hovered child element. Because `root>mid>leaf` contains only text and no child elements, the rule matches nothing and hovering changes nothing. To correctly target `root>mid>leaf` itself on hover, its own CSS block must be edited to include the nesting selector (`&:hover`).\n\nANSWER: root>mid>leaf\n",
+  "ms": 18689
+}

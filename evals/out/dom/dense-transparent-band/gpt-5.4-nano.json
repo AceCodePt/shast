@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r09` corresponds to the text node with the source text `\"09. Currency hedging\"`, so the text content exists in that element. Its computed `color` is `rgb(0, 0, 0)` and there’s no background on `r09` (`background-color: rgba(0, 0, 0, 0)`), while the page/root background is white (`rgb(255, 255, 255)`), which makes the black text readable. Although `root>banner` overlaps the same vertical position and has higher `z-index`, it has a transparent background (`rgba(0, 0, 0, 0)`), so it would not obscure the text.\n\nANSWER: YES\n",
+  "ms": 19015
+}

@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "I need to calculate the area of each box:\n\n1. **root>wide**: width = 600px, height = 60px → area = 600 × 60 = 36,000 px²\n2. **root>tall**: width = 120px, height = 300px → area = 120 × 300 = 36,000 px²\n3. **root>square**: width = 220px, height = 220px → area = 220 × 220 = 48,400 px²\n\nThe square box has the largest area at 48,400 square pixels, which is significantly larger than both the wide box (36,000) and the tall box (36,000). Although the wide and tall boxes have the same area, the square box clearly covers more total area.\n\nANSWER: root>square\n",
+  "ms": 6096
+}

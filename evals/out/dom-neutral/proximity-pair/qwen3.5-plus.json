@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the `getBoundingClientRect()` values for each sibling:\n\n- **root>alpha**: top=20px, height=40px → occupies y=20 to y=60\n- **root>beta**: top=64px, height=40px → occupies y=64 to y=104\n- **root>gamma**: top=200px, height=40px → occupies y=200 to y=240\n\nThe gap between alpha and beta is only 4px (64−60), while the gap between beta and gamma is 96px (200−104). This large vertical space visually separates gamma from the other two elements, which are positioned close together.\n\nANSWER: root>gamma\n",
+  "ms": 13923
+}

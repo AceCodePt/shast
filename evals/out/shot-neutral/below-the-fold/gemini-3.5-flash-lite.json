@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 300px, and the rendered screenshot shows only the masthead at the top with the footer positioned below the initial viewport height. Since the footer is located below the fold, it is not visible in the initial view before scrolling.\n\nANSWER: NO\n",
+  "ms": 10044
+}

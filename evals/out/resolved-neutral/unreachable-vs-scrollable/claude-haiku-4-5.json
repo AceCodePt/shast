@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the viewport and overflow information:\n\nThe viewport is 500x300 pixels. The page can only scroll vertically (normal web behavior), not horizontally. \n\n`root>lower` is positioned at `y=700`, which is below the initial viewport (0-300px). By scrolling down, a viewer can bring this element into view since vertical scrolling is possible.\n\n`root>sideways` is positioned at `x=0 y=40` with a width of 900px. The element extends 400px past the right edge of the 500px viewport (900 - 500 = 400px). The note explicitly states \"pages do not scroll horizontally,\" so there is no way to scroll right to bring the off-screen portion into view.\n\nTherefore, `root>sideways` cannot be brought fully into view by ordinary scrolling, while `root>lower` can be reached by scrolling down.\n\nANSWER: root>sideways\n",
+  "ms": 7671
+}

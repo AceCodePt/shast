@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Based on the provided screenshot and node tree, the text \"pinned\" (`root>plain>pin`) is rendered at the top-left corner of the viewport. Since `root>plain` is not positioned and there are no offsets or margins indicated, the element starts at the origin.\n\nANSWER: 0,0\n",
+  "ms": 9501
+}

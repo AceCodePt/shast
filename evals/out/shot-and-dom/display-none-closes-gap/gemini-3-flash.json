@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided information, `root>gone` has `display: none`, which means it is removed from the layout flow and occupies no space. The `getBoundingClientRect` data confirms this, showing that `root>first` ends at `y=40` and `root>third` begins immediately at `y=40`. Therefore, there is no vertical gap between the two visible elements.\n\nANSWER: NO\n",
+  "ms": 7652
+}

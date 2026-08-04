@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>card` text wraps into 4 lines. In the screenshot, the words are broken into four separate rows: `one two three`, `four five six`, `seven eight`, and `nine ten`.\n\nANSWER: 4\n",
+  "ms": 13008
+}

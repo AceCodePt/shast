@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>first` has a bounding box starting at `y=0` with `height=40`, so it occupies the vertical range `0–40`. `root>gone` has `display: none` and a `getBoundingClientRect` of `width=0 height=0`, meaning it takes up no layout space. `root>third` starts at `y=40` (also `height=40`), so it begins immediately after `root>first` with no extra 40px gap.\n\nANSWER: NO\n",
+  "ms": 5641
+}

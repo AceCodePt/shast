@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "20",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "An absolutely positioned element with no offset properties (`top`, `right`, `bottom`, or `left`) specified renders at its static position, which is the position it would occupy in normal flow. In the normal document flow, `root>floaty` is placed immediately after the preceding block element `root>spacer`. With default browser styling (16px font size and normal line-height), the single line of text in `root>spacer` occupies 20 CSS pixels of vertical space. Consequently, `root>floaty` renders at a top edge of y = 20.\n\nANSWER: 20\n",
+  "ms": 27590
+}

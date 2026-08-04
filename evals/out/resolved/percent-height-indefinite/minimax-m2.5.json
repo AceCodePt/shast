@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `tall` element's `height: 100%` doesn't give it 79.19px because percentage heights only resolve when the parent has a *definite* height. Here the parent `outer` has `height: auto` (it's sized by its content), so the percentage on `tall` collapses to auto and the element just takes its content's natural height (~19.19px for one line of text at 16px). The two children stack to produce `outer`'s 79.19px (60 + 19.19).\n\nANSWER: NO\n",
+  "ms": 13042
+}

@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the bounding client rectangles provided, `root>first`, `root>second`, and `root>fourth` all share an x-coordinate (left edge) of 24px. In contrast, `root>third` has an x-coordinate of 40px, placing its left edge further to the right than the others.\n\nANSWER: root>third\n",
+  "ms": 7771
+}

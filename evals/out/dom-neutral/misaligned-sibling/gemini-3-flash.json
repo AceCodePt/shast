@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided browser data, the nodes `root>first`, `root>second`, and `root>fourth` all have an x-coordinate of 24 and a computed `left` style of 24px. In contrast, `root>third` has an x-coordinate of 40 and a `left` style of 40px, placing its left edge further to the right than the other three rows.\n\nANSWER: root>third\n",
+  "ms": 10723
+}

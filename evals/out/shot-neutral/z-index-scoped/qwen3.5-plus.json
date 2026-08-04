@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, I can see two overlapping rectangles:\n- A blue rectangle with the text \"inner\" (this is `root>low>inner`)\n- A red/pink rectangle with the text \"high\" (this is `root>high`)\n\nIn the overlapping region, the red/pink rectangle is clearly visible on top of the blue rectangle. The red area obscures part of the blue area, meaning `root>high` is rendered above `root>low>inner`.\n\nANSWER: root>high\n",
+  "ms": 15665
+}

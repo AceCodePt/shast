@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The URL \"https://example.com/a/very/long/path/that/never/breaks\" is a long, continuous string without spaces. In the provided screenshot of the 600px-wide viewport, the URL renders on a single line and occupies a significant portion of the total width, clearly exceeding the 120px (20% of the viewport) limit. Because long words do not break by default, the text overflows the container.\n\nANSWER: NO\n",
+  "ms": 11331
+}

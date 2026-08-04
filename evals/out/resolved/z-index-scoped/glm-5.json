@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>high` is what the viewer sees in the overlap. Although `root>low>inner` declares z-index 999, that value only has meaning *within* the stacking context created by its ancestor `root>low` (z-index 1). Stacking contexts are compared as whole units at the level where they're established, so `root>high` (z-index 2) competes directly against `root>low` (z-index 1) — not against `root>low>inner`'s 999. Since 2 > 1, the entire `root>low` subtree, including its inner div, paints below `root>high`. The report confirms this: \"that whole context paints below root>high.\"\n\nANSWER: root>high\n",
+  "ms": 17185
+}

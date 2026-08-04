@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The screenshot shows the text wrapping into four lines, but the bordered card is only about 48px tall, so the lower lines spill below the box instead of fitting inside it.\n\nANSWER: NO\n",
+  "ms": 10324
+}

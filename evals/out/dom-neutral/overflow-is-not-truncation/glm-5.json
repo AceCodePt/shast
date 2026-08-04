@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Reasoning: The `root>card` box has `overflow: visible`, so content that extends past its bottom edge is not clipped — it is still painted on the page. Its ancestor `root` also has `overflow: visible` and won't clip it either, and the overflowing line remains within the 400x300 viewport. Therefore, although the last line sits below the card's bottom border edge, it is still rendered where a person could read it.\n\nANSWER: YES\n",
+  "ms": 28542
+}

@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the layout information provided:\n\n- `root` has a total width of 600 CSS pixels\n- `root>a` has `flex: 1` and occupies 200 CSS pixels\n- `root>b` has `flex: 2` and occupies 400 CSS pixels\n\nIn a flex container, flex items are sized proportionally based on their flex values. With `root>a` having `flex: 1` and `root>b` having `flex: 2`, the ratio is 1:2. This means `root>b` should receive twice the space of `root>a`.\n\nSince the total available width is 600px, it's divided into 3 equal parts (1+2=3): each \"flex unit\" is 200px. Therefore, `root>a` gets 1 × 200px = 200px, and `root>b` gets 2 × 200px = 400px.\n\nThis matches exactly what the layout information shows in the border box measurements.\n\nANSWER: 400\n",
+  "ms": 8285
+}

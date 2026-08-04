@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report indicates that `root>second` is located at `y=19.19` with a height of `19.19`, while the covering element (`root>cover`) is located at `y=0` with a height of `19`, meaning it only covers `root>first`. Because `root>second` does not have any covering warnings or overlapping opaque elements obstructing it, its text is visible and readable.\n\nANSWER: YES\n",
+  "ms": 7822
+}

@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "When the page is first painted and the pointer is elsewhere, the computed style data for `root>cta` shows its rest state background color as `rgb(51, 85, 255)`. When hovered, it changes to `rgb(0, 34, 204)`. Therefore, the background colour at rest is `rgb(51, 85, 255)`.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 8566
+}

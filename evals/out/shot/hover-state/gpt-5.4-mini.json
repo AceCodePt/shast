@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "blue",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>cta` is blue when first painted, matching the rest-state screenshot. The hover screenshot shows it becomes a darker blue, so the initial background is the lighter blue.\n\nANSWER: blue\n",
+  "ms": 8869
+}

@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The provided report lists the node tree and viewport dimensions but does not specify any styling attributes such as text color for `root>label`. Therefore, the color information is not stated in the report.\n\nANSWER: NOT STATED\n",
+  "ms": 6626
+}

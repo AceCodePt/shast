@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `getBoundingClientRect()` data for `root>plain>pin` directly shows where the element renders on screen. It reports `x=10 y=10`, which is the viewport-relative position of the top-left corner. Since `root>plain` has `position: static`, it doesn't create a new positioning context, so the absolutely positioned `pin` element positions relative to `root` (which has `position: relative`). The `left: 10px` and `top: 10px` values place it at those coordinates within the root's coordinate system.\n\nANSWER: 10,10\n",
+  "ms": 14295
+}

@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>body>panel` already has `padding: 32px`, but its computed padding stays `4px`, so that value is being overridden by a rule from elsewhere in the cascade. The only other plausible source in this tree is the ancestor `root>body` block, which is the one you need to edit.\n\nANSWER: root>body\n",
+  "ms": 28713
+}

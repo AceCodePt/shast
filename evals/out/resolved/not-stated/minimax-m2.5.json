@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report lists resolved styles only for font-size and padding on `root>label`. There is no mention of a `color`, `text-color`, or any related property, and no colour is recorded for the rendered text. Since the report does not contain that information, I should not guess (the default browser text colour, typically black, is not stated here).\n\nANSWER: NOT STATED\n",
+  "ms": 6508
+}

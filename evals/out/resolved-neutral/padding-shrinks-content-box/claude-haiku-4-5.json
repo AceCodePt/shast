@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided, the `root>card` div has a note that says \"wrapped: text broke onto 4 lines at 152px content width\". This directly tells us how many lines the text wraps onto.\n\nThe div has a width of 200px with 24px padding on each side, which gives a content width of 152px (200 - 24 - 24 = 152px). The text \"one two three four five six seven eight nine ten\" broke onto 4 lines within this constrained width.\n\nANSWER: 4\n",
+  "ms": 6301
+}

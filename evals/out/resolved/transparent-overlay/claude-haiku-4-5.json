@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the report provided, I need to analyze whether the text in `root>lede` is fully readable.\n\nThe report states that `root>lede` contains a 72-character sentence that wraps onto 2 lines. It also notes that `root>banner` (an absolute positioned div with z-index 5) covers this element. However, the critical detail is the annotation: \"covered: this node's 2 text line(s) stay fully visible.\"\n\nThis explicitly states that both text lines of `root>lede` remain fully visible despite being covered by the banner element. The banner has no background color (only structural styling), so the text behind it shows through and remains readable.\n\nSince both lines of the sentence are fully visible and readable, a person reading this page in a browser can read the whole sentence.\n\nANSWER: YES\n",
+  "ms": 9900
+}

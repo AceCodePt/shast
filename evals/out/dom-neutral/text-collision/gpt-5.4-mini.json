@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>ghost` has a zero-sized bounding box at `0,0`, so its own box is not painting any visible area. The only other text node present and occupying the same top-left region of the page is `root>visible`, so its glyphs are the ones that overlap where `root>ghost` would be.\n\nANSWER: root>visible\n",
+  "ms": 15426
+}

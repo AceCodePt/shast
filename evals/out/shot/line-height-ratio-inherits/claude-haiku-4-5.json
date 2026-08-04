@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\n- `root` has `font-size: 16px` and `line-height: 2`\n- `root>big` has `font-size: 32px` and nothing else (no line-height specified)\n\nSince `root>big` doesn't declare its own `line-height`, it inherits from its parent (`root`). The `line-height: 2` on the parent is a unitless number, which means it's a multiplier based on the element's own font size, not the parent's.\n\nFor `root>big`: \n- It inherits the unitless value `2` from its parent\n- This multiplier applies to `root>big`'s own `font-size: 32px`\n- Therefore: `line-height = 2 × 32px = 64px`\n\nThe height that `root>big` renders is 64 CSS pixels.\n\nANSWER: 64\n",
+  "ms": 6062
+}

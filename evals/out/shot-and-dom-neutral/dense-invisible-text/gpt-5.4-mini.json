@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>main>r21` has white text (`rgb(255, 255, 255)`) on a white page background, so the text is effectively invisible even though it is in the viewport. A viewer would not be able to read it from the rendered page.\n\nANSWER: NO\n",
+  "ms": 8644
+}

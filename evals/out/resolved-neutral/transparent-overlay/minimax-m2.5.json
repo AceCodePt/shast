@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` paragraph is fully painted and its 2 text lines remain fully visible. Although the `root>banner` div (absolute, z-index 5) is painted later over 100% of the lede's box, it has no background, so the text shows through transparently. Nothing visually obscures or clips the text.\n\nANSWER: YES\n",
+  "ms": 8411
+}

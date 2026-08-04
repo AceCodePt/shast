@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report, I need to trace what paints over `root>line` and whether the text remains visible.\n\n`root>line` is a text div at y=0 with height 19.19px containing \"Still readable\".\n\nTwo boxes paint over it:\n\n1. **`root>glass`** (absolute, z-index 1): Covers the full area of `root>line` (x=0 y=0 width=400 height=100). However, the report explicitly states: \"has no background, so what is behind it still shows through\" and \"this node's 1 text line(s) stay fully visible\". So this transparent layer doesn't obscure the text.\n\n2. **`root>panel`** (absolute, z-index 2): Positioned at y=40 with height=60, so it covers y=40 to y=100. Since `root>line` spans y=0 to y=19.19, the panel does NOT overlap with `root>line` at all.\n\nThe report explicitly confirms that the text of `root>line` \"stay fully visible\" despite being painted over by `root>glass`. Since `root>panel` doesn't even overlap with `root>line`, the text remains readable.\n\nANSWER: YES\n",
+  "ms": 7023
+}

@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` sets `line-height: 2`, which means the used line-height is `2 × font-size`. In `root>big`, `font-size` is overridden to `32px`, so its computed line-height becomes `2 × 32px = 64px`. With only that single line of text, `root>big` renders with a height of **64px**.\n\nANSWER: 64\n",
+  "ms": 9295
+}

@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "Annual review",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The provided node-tree evidence is authoritative for what text is actually on screen, and it lists the text inside `root>title` as `\"Annual review\"` (with the page source escaping shown as `\\\"...\\` in the evidence). Therefore, the viewer sees the characters `Annual review` with a space between the words.\n\nANSWER: Annual review\n",
+  "ms": 10043
+}

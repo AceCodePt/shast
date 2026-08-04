@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The bounding client rectangle for `root>main>r36` indicates a top vertical position (`y`) of 978 pixels. Since the browser viewport height is 800 pixels (ranging from 0 to 800), this element is located below the fold and is not visible without scrolling.\n\nANSWER: NO\n",
+  "ms": 7315
+}

@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With a 500x300 viewport, ordinary scrolling can move the page vertically (change `y`), but it cannot change the horizontal (`x`) position of absolutely-positioned elements relative to the viewport. `root>lower` has `x=0` and sits at `y=700`, so vertical scrolling can bring its 40px-tall box into the viewport. `root>sideways` sits at `y=40` already (vertically reachable) but has `width=900` while the viewport is only 500 wide (`x=0`), so it cannot be brought fully into view just by ordinary vertical scrolling.\n\nANSWER: root>sideways\n",
+  "ms": 13009
+}

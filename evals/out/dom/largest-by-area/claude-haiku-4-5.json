@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "I need to calculate the area of each of the three boxes using the getBoundingClientRect data provided.\n\n**root>wide:**\n- width: 600px\n- height: 60px\n- area: 600 × 60 = 36,000 square pixels\n\n**root>tall:**\n- width: 120px\n- height: 300px\n- area: 120 × 300 = 36,000 square pixels\n\n**root>square:**\n- width: 220px\n- height: 220px\n- area: 220 × 220 = 48,400 square pixels\n\nThe \"wide\" and \"tall\" boxes have identical areas of 36,000 square pixels each, while the \"square\" box has a significantly larger area of 48,400 square pixels. This makes sense because the square box, with more balanced dimensions, covers more total area than the elongated rectangles despite having smaller individual width and height measurements.\n\nANSWER: root>square\n",
+  "ms": 8415
+}

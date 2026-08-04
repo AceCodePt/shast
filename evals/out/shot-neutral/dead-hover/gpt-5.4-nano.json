@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The node tree and the screenshots show the same rendered content at rest and during hover: the `Leaf` text appears in the same place in both 500x300 images. If `:hover` were successfully applying `padding: 40px`, the box would become larger and the text would shift inward noticeably compared to rest. Since the screenshots don’t show that change, hovering does not appear to alter the padding.  \n\nANSWER: NO\n",
+  "ms": 11059
+}

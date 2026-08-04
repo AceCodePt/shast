@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report:\n\n- **Viewport** is 500×300 (width × height)\n- **root>lower** is positioned at y=700, which is below the initial viewport (y=0–300). However, the root has height 900px with vertical overflow, so scrolling **down** can bring this element into view.\n- **root>sideways** is 900px wide but the viewport is only 500px wide. The report explicitly notes \"pages do not scroll horizontally\" — meaning the 400px extending past the right edge cannot be reached by any scrolling action.\n\nThe key distinction: vertical overflow enables scrolling to reach content below the fold, but horizontal overflow does **not** enable scrolling since web pages don't scroll horizontally by default.\n\nANSWER: root>sideways\n",
+  "ms": 18030
+}

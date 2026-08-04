@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>cell` is only 120px wide (`getBoundingClientRect width=120`), and it has `overflow: visible`, so its contents are not clipped to that box. The URL is an “unbreakable” long path (`that/never/breaks`), so it will not wrap to fit within 120px; therefore the rendered text will extend beyond the 120px area of `root>cell` (even though the node’s own box is still 120px).  \n\nANSWER: NO\n",
+  "ms": 7585
+}

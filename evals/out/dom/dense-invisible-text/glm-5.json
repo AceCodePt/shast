@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>main>r21` has `color: rgb(255, 255, 255)` (white text) while its own background and its parent's background are both transparent (`rgba(0, 0, 0, 0)`), which means it renders against the root's white background (`rgb(255, 255, 255)`). White text on a white background is invisible. Unlike the other rows which have black text, r21 is the only row with white text, indicating it's likely a selected/active state that failed to apply a contrasting background.\n\nANSWER: NO\n",
+  "ms": 16055
+}

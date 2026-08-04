@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>cell` div has a computed width of 120px with `overflow: visible`, meaning content can render outside its box. The text content is \"https://example.com/a/very/long/path/that/never/breaks\" — the \"never/breaks\" wording indicates the string is intentionally rendered as a single non-breaking token. At 16px font size, this URL is far wider than 120px, so it visually overflows the div's box. The `getBoundingClientRect()` reports the box's own dimensions (120px), not the overflow extent of its content.\n\nANSWER: NO\n",
+  "ms": 8051
+}

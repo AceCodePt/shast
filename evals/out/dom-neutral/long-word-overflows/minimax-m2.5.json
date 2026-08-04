@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The cell has `width: 120px` with `overflow: visible` and `display: block`, so text is rendered on a single line without wrapping. The URL \"https://example.com/a/very/long/path/that/never/breaks\" is far too long to fit in 120px, and with overflow visible the text extends beyond the cell's box boundaries rather than being clipped.\n\nANSWER: NO\n",
+  "ms": 7813
+}

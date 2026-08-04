@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>big` renders at `64px` tall.\n\nReasoning: `root` has `line-height: 2`, so its computed line-height is `2 × 16px = 32px`. `root>big` only changes `font-size` to `32px` and inherits the line-height from `root`, so its line-height stays `32px` unless otherwise specified. The report also shows its measured box height as `64px`, which matches two line-height units at the inherited sizing.\n\nANSWER: 64\n",
+  "ms": 6600
+}

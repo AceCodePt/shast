@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided information:\n\n1. The node tree shows `root>line` contains the text \"Hidden by two\"\n2. There are two covering elements: `root>leftHalf` and `root>rightHalf`\n3. The screenshot shows mostly white space with dark rectangles only at the top-left corner\n4. The question notes that \"neither covering box on its own spans the whole line\" - implying together they cover the entire line\n\nThe text \"Hidden by two\" is not visible in the rendered screenshot. The two half elements together obscure the text content, which aligns with the ironic text content itself (\"Hidden by two\").\n\nANSWER: NO\n",
+  "ms": 16976
+}

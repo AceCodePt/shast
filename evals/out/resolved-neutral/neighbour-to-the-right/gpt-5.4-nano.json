@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>leftBottom` is positioned at `x=0` and `top=120`, with width `300`. On the same row (same `top=120`), the node to the right is the one with `left=340` and width `300`, which is `root>rightBottom`.  \n\nANSWER: root>rightBottom\n",
+  "ms": 6502
+}

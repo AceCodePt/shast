@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "2px 2px 2px 2px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "To determine the padding for `root>mid>leaf` during a hover event, I examined the second set of browser data provided, which represents the state \"while the mouse hovers `root>mid>leaf`\". In that section, the computed style for the `root>mid>leaf` node explicitly lists the padding as `2px 2px 2px 2px`, which is unchanged from its initial state.\n\nANSWER: 2px 2px 2px 2px\n",
+  "ms": 13289
+}

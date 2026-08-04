@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r09` is positioned at `x=244 y=276 width=1012 height=26`, so its text would normally appear there. However, there is a `root>banner` element with an opaque red background (`background-color: rgb(204, 34, 34)`) that sits exactly at `x=244 y=276` with `height=26` and a higher stacking order (`position: absolute; z-index: 5`), overlapping the `r09` region. Because the banner covers the area where the `r09` text would be rendered (left-aligned within that overlapping block), a viewer would not be able to read the `r09` text.\n\nANSWER: NO\n",
+  "ms": 9297
+}

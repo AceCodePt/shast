@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The left edge (CSS `left`) for **first**, **second**, and **fourth** is the same: `left: 24px`. The **third** row is different, with `left: 40px`, meaning it’s horizontally offset relative to the others. Therefore, the **third** row is out of alignment.\n\nANSWER: root>third\n",
+  "ms": 8621
+}

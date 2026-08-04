@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, I need to find which node's CSS block declares the `border-radius: 12px` that `root>body>panel` renders with.\n\nThe report explicitly shows an attribution line for the border-radius:\n```\n← border-radius: 12px   declared by root, inside its \"> body > panel\" block   (adds)\n```\n\nThis line clearly states that the `border-radius: 12px` declaration comes from the `root` node's CSS block, specifically within its `> body > panel` selector block.\n\nANSWER: root\n",
+  "ms": 10543
+}

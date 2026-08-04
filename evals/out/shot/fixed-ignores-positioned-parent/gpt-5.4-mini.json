@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`position: fixed` is positioned relative to the viewport, not the `position: relative` parent, so the parent’s padding does not shift it. With `top: 15px` and `left: 25px`, the top-left corner renders at `25,15`.\n\nANSWER: 25,15\n",
+  "ms": 6317
+}

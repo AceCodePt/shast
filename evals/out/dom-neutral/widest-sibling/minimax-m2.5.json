@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>panel` is 600px wide and `root>rail` is 240px wide. Dividing 600 by 240 gives 2.5, which is already at one decimal place.\n\nANSWER: 2.5\n",
+  "ms": 6489
+}

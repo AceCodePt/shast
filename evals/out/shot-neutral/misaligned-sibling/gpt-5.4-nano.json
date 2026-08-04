@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The node tree shows four stacked `div` rows (`first`, `second`, `third`, `fourth`). From the rendered screenshot, the left edge of three of the labels matches, while the label for `third` is visibly shifted to a different (more indented) left position. Therefore, the `third` row is the outlier.\n\nANSWER: root>third\n",
+  "ms": 10016
+}

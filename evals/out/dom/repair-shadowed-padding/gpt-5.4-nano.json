@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`padding` is not inherited, so the 32px value must be set (or overridden) by CSS rules that directly apply to `root>body>panel` itself. The evidence shows that even after adding `padding: 32px` to `root>body>panel`’s own CSS block, the rendered/computed padding for that node remains `4px`, meaning some *other* CSS rule with higher priority is still winning. Since `root` and `root>body` have `padding: 0px` and only their CSS could contain more-specific selectors targeting the `panel`, the CSS block you’d need to edit is `root>body`’s.\n\nANSWER: root>body\n",
+  "ms": 13906
+}

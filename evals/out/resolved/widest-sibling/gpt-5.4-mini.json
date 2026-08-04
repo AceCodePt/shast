@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>panel` is `600px` wide and `root>rail` is `240px` wide. Dividing `600` by `240` gives `2.5`, so the panel is 2.5 times wider.\n\nANSWER: 2.5\n",
+  "ms": 10909
+}

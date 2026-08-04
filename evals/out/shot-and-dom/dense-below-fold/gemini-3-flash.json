@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport height is 800px. According to the `getBoundingClientRect` data for `root>main>r36`, its vertical position starts at `y=978` and ends at `y=1004` (978 + 26). Since the top of the element is well below the 800px viewport limit, it is located below the fold and cannot be seen without scrolling.\n\nANSWER: NO\n",
+  "ms": 12350
+}

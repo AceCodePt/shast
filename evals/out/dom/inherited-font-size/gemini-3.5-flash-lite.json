@@ -1,0 +1,10 @@
+{
+  "case": "inherited-font-size",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>heading",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided computed style data, `root>heading` has a font size of 30px and a line-height of 36px, whereas `root>caption` has a smaller font size of 22px and a line-height of 26.4px. Therefore, `root>heading` renders with larger text.\n\nANSWER: root>heading\n",
+  "ms": 8349
+}

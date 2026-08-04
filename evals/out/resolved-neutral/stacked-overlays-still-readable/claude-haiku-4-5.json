@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Let me analyze the rendering information provided:\n\n**Reasoning:**\n\n1. `root>line` contains text and is at z-index 0 (default, lowest layer).\n\n2. `root>glass` paints over it with z-index 1, but the information explicitly states: \"has no background, so what is behind it still shows through\". This means the text remains visible through the glass layer.\n\n3. `root>panel` paints on top with z-index 2 and has `background-color: #303030` (opaque dark background). However, `root>panel` is positioned at `top: 40px` with `height: 60px`, meaning it covers only from y=40 to y=100. Since `root>line` is at y=0 with height 19.19, the panel only covers the lower portion of the text area.\n\n4. The information confirms: \"this node's 1 text line(s) stay fully visible\" - explicitly stating that the text of `root>line` remains fully visible despite the overlays.\n\nThe text is readable because the glass layer is transparent and the opaque panel only partially obscures the line (covering the bottom portion), but crucially, the rendering information confirms the text stays fully visible.\n\nANSWER: YES\n",
+  "ms": 9006
+}

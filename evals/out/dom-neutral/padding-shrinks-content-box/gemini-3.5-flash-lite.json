@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The total height of the `root>card` element is 124.75px, and with a top and bottom padding of 24px each (48px total), the content box height is 76.75px. Dividing the content height by the line-height of 19.2px gives 76.75 / 19.2 ≈ 4 lines.\n\nANSWER: 4\n",
+  "ms": 7295
+}

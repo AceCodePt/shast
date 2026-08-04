@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>mid>leaf",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "To make `root>mid>leaf` gain `padding: 40px` on hover, the `:hover` rule has to be applied to the element that’s actually in the `:hover` state. Since the hover target is `root>mid>leaf` (the node the mouse is over), its own CSS block is the one whose `:hover` selector must target that node so the padding changes when it’s hovered.\n\nANSWER: root>mid>leaf\n",
+  "ms": 19404
+}

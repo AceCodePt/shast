@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first grid column is 200px wide, starting at x=0, so it ends at x=200. With a 20px gap between columns, the second column's left edge starts at 200 + 20 = 220. This is confirmed by the bounding rect data showing `root>right` at x=220.\n\nANSWER: 220\n",
+  "ms": 14345
+}

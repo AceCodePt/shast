@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence, the rendering shows `padding: 4px` is being applied to `root>body>panel`, even though `padding: 32px` exists in the panel's own CSS block. The annotation explicitly states that the 4px value is \"declared by root>body, inside its `> panel` block\" and that this \"shadows padding: 32px declared by root>body>panel itself.\"\n\nThis means there's a nested selector structure where `root>body` has a child selector block (`> panel`) that overrides the panel's own declarations. To get 32px padding, I need to change the winning rule — the one in `root>body`'s `> panel` block.\n\nANSWER: root>body\n",
+  "ms": 14282
+}

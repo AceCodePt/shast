@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report marks `root>line div \"Still readable\"` as `covered`, because the `root>glass div` (absolute, `z-index: 1`) paints later than this node. However, it also explicitly states `this node's 1 text line(s) stay fully visible`, meaning the later glass element does not prevent the text from being seen (it has no background). Therefore, the viewer can still read the text.  \n\nANSWER: YES\n",
+  "ms": 6232
+}

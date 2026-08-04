@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The cover div is absolutely positioned at `top:0, left:0` with height `19px`, so it occupies `y=0` to `y=19`. The second paragraph sits at `y=19.1875` to `y≈38.4`, which is entirely below the cover's bottom edge. Since there is no overlap, the black cover does not obscure the second paragraph, and its black text (`rgb(0,0,0)`) on the transparent/white background is visible.\n\nANSWER: YES\n",
+  "ms": 14753
+}

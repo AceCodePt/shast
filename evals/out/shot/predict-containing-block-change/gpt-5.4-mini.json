@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>plain` becomes the containing block, but it is already at the viewport origin in the rendered page, so `root>plain>pin` stays in the top-left corner.\n\nANSWER: 0,0\n",
+  "ms": 12633
+}

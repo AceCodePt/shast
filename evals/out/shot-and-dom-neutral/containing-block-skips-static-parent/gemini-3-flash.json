@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>plain>pin` node is `position: absolute`, so its containing block is the nearest positioned ancestor, which is `root` (`position: relative`). Even though `root>plain` is the direct parent, it is `position: static` and therefore ignored for positioning calculations. Since `root` starts at `(0,0)` and has no borders, the `top: 10px` and `left: 10px` offsets are applied relative to the `(0,0)` origin of the `root` padding box, resulting in the node rendering at `(10,10)`.\n\nANSWER: 10,10\n",
+  "ms": 12439
+}

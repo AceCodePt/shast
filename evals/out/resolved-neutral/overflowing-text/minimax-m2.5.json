@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The card's border box is 48px tall, but the content measures 76.75px tall, which exceeds the box's height. Although overflow is visible rather than clipped, the text still extends beyond the card's own border box.\n\nANSWER: NO\n",
+  "ms": 7146
+}

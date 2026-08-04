@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "7",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe `root>card` div has:\n- Width: 200px\n- Height: 124.75px\n- Line-height: 19.2px\n- Padding: 24px on all sides\n\nThe text content is: \"one two three four five six seven eight nine ten\"\n\nTo calculate the number of lines, I divide the height by the line-height:\n124.75px ÷ 19.2px = 6.497... lines\n\nSince we can't have a partial line, this indicates the text wraps onto approximately 6-7 lines. Given that the height is 124.75px and each line is 19.2px, the text would fit into about 6-7 full lines (6 lines = 115.2px, 7 lines = 134.4px). Since 124.75px falls between these, the text wraps onto 7 lines, though the last line may not be completely filled.\n\nANSWER: 7\n",
+  "ms": 5674
+}

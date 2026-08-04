@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, I can see that the page has a dark banner at the top, and only the text \"Details follow in the table below.\" (which is `root>body`) is visible. The `root>lede` paragraph containing \"The quarterly results are in and every region beat its targ…\" (72 chars) is not visible in the rendered page - it appears to be occluded by the banner element or otherwise hidden from view.\n\nSince the lede text cannot be seen in the rendered screenshot, a person reading this page in a browser cannot read the whole sentence.\n\nANSWER: NO\n",
+  "ms": 17554
+}

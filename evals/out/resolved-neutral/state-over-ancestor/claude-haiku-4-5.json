@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "2px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided, I need to identify which padding rule applies to `root>mid>leaf` when the pointer is hovering over it.\n\nThe key insight is in the \"dead-state\" explanation: `:hover` sets `padding: 40px`, but `padding: 2px` declared by root inside its `\"> mid > leaf\"` block has higher specificity and outranks the `:hover` rule. The note explicitly states that \"entering `:hover` does not change padding.\"\n\nThis is because the selector `root > mid > leaf` (which targets the element directly with tag selectors) has higher specificity than `:hover` applied to that same element. CSS specificity means that the more specific selector wins, regardless of the :hover pseudo-class.\n\nTherefore, the `root>mid>leaf` element renders with the same padding whether or not the pointer is hovering over it, because the base rule (`padding: 2px`) shadows the hover rule (`padding: 40px`).\n\nANSWER: 2px\n",
+  "ms": 7705
+}

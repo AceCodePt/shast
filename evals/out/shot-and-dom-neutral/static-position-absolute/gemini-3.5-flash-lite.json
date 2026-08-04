@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "According to the browser's `getBoundingClientRect` data for `root>floaty`, the top edge (`y`) is located at 50 CSS pixels. An absolutely positioned element with no offset properties specified is placed at its static position in the normal flow, immediately following the preceding `spacer` element.\n\nANSWER: 50\n",
+  "ms": 7731
+}

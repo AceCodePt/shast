@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser data directly provides the answer. Looking at `root>b`'s `getBoundingClientRect()`, it shows `width=400`. This matches the flex distribution: with `flex: 1` and `flex: 2` on a 600px container, the children split in a 1:2 ratio (200px and 400px).\n\nANSWER: 400\n",
+  "ms": 11163
+}

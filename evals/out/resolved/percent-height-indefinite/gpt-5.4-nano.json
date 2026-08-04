@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report gives the *resolved, measured* box sizes. `root>outer>filler` has `height=60px`, while `root>outer>tall` has `height=19.19px` (it starts at `y=60` and ends at `y=79.19`). Since `19.19` is less than `60`, `root>outer>tall` is not taller than its sibling.\n\nANSWER: NO\n",
+  "ms": 8640
+}

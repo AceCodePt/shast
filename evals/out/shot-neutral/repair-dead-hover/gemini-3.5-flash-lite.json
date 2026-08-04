@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Hovering changes nothing because the parent node `root>mid` has `pointer-events: none`, which disables pointer events for all its descendants. To enable hover interaction on `root>mid>leaf`, you must edit `root>mid`'s css block to remove or override `pointer-events: none`.\n\nANSWER: root>mid\n",
+  "ms": 33922
+}

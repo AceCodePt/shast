@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Ordinary scrolling primarily handles vertical movement, successfully bringing content located further down the page into view. Content that runs off sideways requires horizontal scrolling to be visible. Therefore, the viewer cannot reach the sideways-positioned node through ordinary vertical scrolling alone.\n\nANSWER: root>sideways\n",
+  "ms": 8292
+}

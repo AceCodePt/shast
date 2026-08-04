@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data for `root>main>r09`:\n\n- The text content is \"09. Currency hedging\"\n- The element has `opacity: 1` (fully visible)\n- Text color is `rgb(0, 0, 0)` (black)\n- Background is `rgba(0, 0, 0, 0)` (transparent)\n- Font size is 15px with 20px line-height\n- The element is positioned at x=244, y=276 with dimensions 1012x26\n\nThere is a `root>banner` element that overlaps at the same position (x=244, y=276) with `z-index: 5`, but it has a transparent background (`rgba(0, 0, 0, 0)`), so it doesn't obscure the text underneath.\n\nThe screenshot confirms the text \"09. Currency hedging\" is clearly visible in the list with good contrast against the white page background.\n\nANSWER: YES\n",
+  "ms": 27936
+}

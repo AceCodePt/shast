@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, the visible list items in the main content area range from \"01. Ledger reconciliation\" through approximately \"28. Warranty reserves\". The item `root>main>r36` contains \"36. Royalty accruals\", which is 8 items beyond what's shown in the visible viewport.\n\nSince the viewport is 1280x800 CSS px and only shows about 28 of the 40 list items, item 36 would be below the fold and require scrolling to view.\n\nANSWER: NO\n",
+  "ms": 12001
+}

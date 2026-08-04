@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "5.0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered page screenshot and the node tree information provided:\n\nThe viewport is 900x400 CSS pixels wide. I can see two elements side by side:\n- `root>rail` (labeled \"rail\") on the left\n- `root>panel` (labeled \"panel\") on the right\n\nFrom the screenshot, the \"rail\" element appears to take up approximately the left portion of the layout, while \"panel\" takes up the remaining right portion. Measuring the visual proportions in the screenshot, the \"rail\" appears to be roughly 1/6 of the total width (about 150px), while \"panel\" takes up the remaining space (about 750px).\n\nThe ratio would be: 750 / 150 = 5.0\n\nTherefore, `root>panel` is approximately 5 times wider than `root>rail`.\n\nANSWER: 5.0\n",
+  "ms": 8313
+}

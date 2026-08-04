@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In `root>main>r09`, the report marks the box as `covered` and notes that `root>banner <div>` (absolute, `z-index: 5`) paints over 69% of the `r09` box with an opaque background. It also explicitly states: `1 of 1 text line(s) completely hidden`. Therefore, a viewer cannot read the text in `root>main>r09`.  \nANSWER: NO\n",
+  "ms": 8961
+}

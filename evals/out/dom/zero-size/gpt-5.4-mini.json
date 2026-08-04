@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. A `0x0` `getBoundingClientRect()` only says the element’s own border box has no area; it does not prove its contents aren’t painted. Since `root>ghost` still has text content and `overflow` is `visible`, the text can still render outside the zero-sized box.\n\nANSWER: YES\n",
+  "ms": 13206
+}

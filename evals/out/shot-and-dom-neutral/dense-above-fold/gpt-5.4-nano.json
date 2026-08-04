@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main` starts at `y=56` (under the masthead). The node `root>main>r17` has `getBoundingClientRect: x=244 y=484 width=1012 height=26`, which means it lies between `y=484` and `y=510`. Since the viewport height is `800`, that entire range is within the initially visible area (no scrolling needed), and there’s no indication of it being hidden (e.g., `opacity: 0` or `display: none`).\n\nANSWER: YES\n",
+  "ms": 12140
+}

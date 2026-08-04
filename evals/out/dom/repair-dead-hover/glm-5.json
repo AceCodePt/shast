@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\n`root>mid>leaf` already carries `padding: 2px` in its base (non-hover) state, while `root` and `root>mid` have `0px`. So *something* is setting 2px of padding on the leaf from outside the leaf's own block. Adding `:hover { padding: 40px }` to the leaf's own block has **zero** effect — on hover the padding stays exactly `2px`, not `0`, not `40`. That means the 2px rule is beating the `:hover` rule on specificity (or source order), so the 2px is not coming from the leaf's own base rule (its own `:hover` would outrank a same-element base rule).\n\nIn a path-based CSS system, a rule authored in an ancestor's block that targets the leaf accumulates the classes along the path, giving it higher specificity the further up the tree it is written. The leaf's own `:hover` selector (roughly `.leaf:hover`, specificity `(0,2,0)`) is beaten by a rule written in `root`'s block targeting the leaf (roughly `.root .mid .leaf`, specificity `(0,3,0)`), but it would *not* be beaten by a rule written in `root>mid`'s block (`.mid .leaf`, `(0,2,0)`) — that ties and loses on source order because the leaf's block is emitted later.\n\nSo the only ancestor whose block can override the leaf's own `:hover` is `root`, which is where the winning `padding: 2px` must be defined. To get the 40px hover, you must edit `root`'s block (e.g. raise the hover rule to the same path specificity, `.root .mid .leaf:hover`).\n\nANSWER: root\n",
+  "ms": 144811
+}

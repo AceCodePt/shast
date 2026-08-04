@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The viewport is `500x300`, but `root>footer` is positioned at `y=700` with height `60`, so it starts well below the visible area on first load. The screenshot also shows only the masthead, confirming the footer is offscreen initially.\n\nANSWER: NO\n",
+  "ms": 9953
+}

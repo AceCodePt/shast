@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>cell` div has a width of 120px, but the URL text \"https://example.com/a/very/long/path/that/never/breaks\" is displayed in the screenshot extending far beyond that 120px boundary. The screenshot clearly shows the URL text stretching across the full 600px viewport width, well outside the 120px-wide box that contains it.\n\nThe `getBoundingClientRect()` data shows `root>cell` has `width=120px`, but the actual rendered text overflows this constraint and is visible extending to the right in the screenshot. The `overflow: visible` CSS property on the element confirms that overflowing content would be displayed rather than clipped.\n\nANSWER: NO\n",
+  "ms": 7240
+}

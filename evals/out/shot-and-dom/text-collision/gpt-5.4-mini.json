@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "`root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>visible` is the only other node with text at the same top-left position, so its glyphs overlap the `root>ghost` text on the rendered pixels. The screenshot shows both strings occupying the same area, with `root>visible` painted over the same line region.\n\nANSWER: `root>visible`\n",
+  "ms": 7903
+}

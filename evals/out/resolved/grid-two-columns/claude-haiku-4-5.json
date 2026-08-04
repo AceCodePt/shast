@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, I need to find where the right child's left edge is positioned.\n\nThe `root` element is a grid with:\n- `grid-template-columns: 200px 300px` (first column is 200px wide, second column is 300px wide)\n- `gap: 20px` (20px gap between columns)\n\nThe `root>right` element is in the second grid column. Its left edge position is determined by:\n- First column width: 200px\n- Gap: 20px\n- Total: 200px + 20px = 220px\n\nThis matches the reported value in the report: `root>right` has `@ x=220`, confirming that its left edge renders at x=220.\n\nANSWER: 220\n",
+  "ms": 7998
+}

@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is a flex container with total width `600px`. In flex layout, items with `flex: 1` and `flex: 2` share remaining space in a `1:2` ratio, so `root>a` gets `1/3` of `600 = 200px`, and `root>b` gets `2/3` of `600 = 400px`. This also matches the rendered box dimensions shown (`root>b` width is `400`).  \nANSWER: 400\n",
+  "ms": 8352
+}

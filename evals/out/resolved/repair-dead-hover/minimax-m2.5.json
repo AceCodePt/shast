@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The hover rule on `root>mid>leaf` is already correct (`padding: 40px`), but it loses to the descendant selector `> mid > leaf { padding: 2px }` declared inside `root`'s own css block, which has higher specificity than the bare `:hover` pseudo-class. To let the hover padding win, the outranking declaration must go — and that declaration lives in `root`'s css block.\n\nANSWER: root\n",
+  "ms": 9442
+}

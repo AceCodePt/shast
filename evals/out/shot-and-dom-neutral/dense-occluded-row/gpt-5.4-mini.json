@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>main>r09` is at the same position as the red banner (`x=244 y=276 height=26`), and the banner covers the left 700px of that row where the text would appear. In the screenshot, the ninth item is fully occluded, so a viewer cannot read it.\n\nANSWER: NO\n",
+  "ms": 9447
+}

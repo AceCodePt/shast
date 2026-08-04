@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles:\n\n- `root>leftBottom` sits at x=0, y=120, with height=80, so it occupies the row from y=120 to y=200.\n- `root>rightTop` is at y=0 (different row).\n- `root>rightBottom` is at x=340, y=120, height=80, so it shares the same row as `root>leftBottom` and sits 340px to the right.\n\nThe gap between them is 40px (leftBottom ends at x=300, rightBottom starts at x=340), which is consistent with a horizontal gap in a two-by-two grid arrangement.\n\nANSWER: root>rightBottom\n",
+  "ms": 8731
+}

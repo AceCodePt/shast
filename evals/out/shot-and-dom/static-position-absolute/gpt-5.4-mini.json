@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With no `top/right/bottom/left`, an absolutely positioned element uses its static position. Here `root>floaty` comes after `root>spacer`, which occupies the first 50px of vertical flow, so its top edge renders at `y = 50`.\n\nANSWER: 50\n",
+  "ms": 6836
+}

@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided information, the content box is 120px wide, but the URL content is 518.41px wide and explicitly marked as overflowing. Because the content is painted outside the 120px-wide box rather than being constrained within it, the URL does not stay inside the box.\n\nANSWER: NO\n",
+  "ms": 9450
+}

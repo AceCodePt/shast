@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "`root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>rightBottom` has the same `top` value (`120px`) as `root>leftBottom`, so it is on the same row. It also sits to the right because its `x` position is `340px` versus `0px`.\n\nANSWER: `root>rightBottom`\n",
+  "ms": 7616
+}

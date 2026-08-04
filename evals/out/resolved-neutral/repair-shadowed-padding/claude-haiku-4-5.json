@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "`root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence provided:\n\n1. The `root>body>panel` element currently renders with only 4px of padding (height 27.19px total)\n2. The CSS shows that `padding: 4px` is declared by `root>body` in its `> panel` block\n3. This `padding: 4px` declaration is explicitly stated to shadow (override) the `padding: 32px` that was already added to `root>body>panel`'s own css block\n4. The problem is that the child selector rule in the parent (`root>body > panel { padding: 4px }`) has higher specificity and is overriding the element's own padding rule\n\nTo make `root>body>panel` render with 32px of padding, you need to remove or modify the rule that's shadowing it. Since the `padding: 4px` is declared in `root>body`'s css block (in its `> panel` child selector rule), that's the rule that's preventing the 32px padding from taking effect.\n\nANSWER: `root>body`\n",
+  "ms": 15921
+}

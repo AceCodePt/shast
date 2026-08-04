@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, I need to determine if `root>chip` hides any of `root>row`'s text.\n\nThe key information is in the coverage note for `root>row`:\n- `root>chip` covers 9% of `root>row`'s box\n- However, the report explicitly states: \"this node's 1 text line(s) stay fully visible\"\n\nThis means that while `root>chip` does paint over part of `root>row`'s border box (covering 9% of it), the text content itself remains fully visible—it's not obscured by `root>chip`.\n\nANSWER: NO\n",
+  "ms": 7290
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The provided information explicitly states that the padding declared by root inside its `> mid > leaf` block outranks the `:hover` style. Because of this CSS specificity or block hierarchy rule, entering `:hover` does not change the padding.\n\nANSWER: NO\n",
+  "ms": 7456
+}

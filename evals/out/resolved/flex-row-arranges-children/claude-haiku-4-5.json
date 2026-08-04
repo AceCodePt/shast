@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report:\n\n- `root` is a flex container with `flex-direction: row` and `gap: 10px`\n- `root>first` has a left edge at x=0 and width=100px, so it occupies x=0 to x=100\n- The gap is 10px, so there's a 10px space from x=100 to x=110\n- `root>second` has a left edge at x=110 and width=100px\n\nThe report directly states that `root>second` has `@ x=110`, which is the absolute x-coordinate of its left edge from the top-left of the page.\n\nANSWER: 110\n",
+  "ms": 6202
+}

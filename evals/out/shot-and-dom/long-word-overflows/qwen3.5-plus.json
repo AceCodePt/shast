@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data:\n\n- `root>cell` has `width=120px` and `overflow: visible`\n- The text content is \"https://example.com/a/very/long/path/that/never/breaks\"\n- The screenshot shows the URL rendering across nearly the full 600px viewport width\n- The parent `root` has `width=600px`\n\nSince the text is visibly rendered extending far beyond the 120px boundary of `root>cell` (it would need roughly 400-500px to display that entire URL at 16px font), and `overflow: visible` allows content to render outside the box, the URL clearly overflows its container.\n\nANSWER: NO\n",
+  "ms": 13099
+}

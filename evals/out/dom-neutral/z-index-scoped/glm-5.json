@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>low` has `position: absolute` with `z-index: 1`, which establishes a stacking context. The `root>low>inner` element's `z-index: 999` only applies *within* that parent's stacking context, so it cannot compete with siblings of its parent. When the browser compares the two overlapping regions, it compares the stacking context of `root>low` (z-index 1) against `root>high` (z-index 2). Since 1 < 2, the entire `root>low` subtree — including `inner` — renders below `root>high`. This is the classic \"z-index doesn't escape its parent's stacking context\" trap.\n\nANSWER: root>high\n",
+  "ms": 15218
+}

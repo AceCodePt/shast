@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "`root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The rounded corners are on the visible panel itself, so the `border-radius` is most likely declared in the panel node’s own CSS block rather than inherited from `root` or `body`.\n\nANSWER: `root>body>panel`\n",
+  "ms": 11390
+}

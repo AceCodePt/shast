@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "2px 2px 2px 2px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the browser data provided, I need to compare the padding values for `root>mid>leaf` in the two states: before and after hovering.\n\nIn the initial state (before hover):\n- `root>mid>leaf` has `padding: 2px 2px 2px 2px`\n\nIn the hover state (mouse hovering over `root>mid>leaf`):\n- `root>mid>leaf` has `padding: 2px 2px 2px 2px`\n\nThe padding values are identical in both states. There is no change to the padding when the pointer hovers over the element. The `:hover` state does not modify the padding property.\n\nANSWER: 2px 2px 2px 2px\n",
+  "ms": 7094
+}

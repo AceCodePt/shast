@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states that `root>card` overflows, noting that the content dimensions are 153.61x76.75px inside a 162x30px content box. Because the text's vertical size (76.75px) is greater than the available content height and the total 48px border box height, it is painted outside the box rather than fitting inside.\n\nANSWER: NO\n",
+  "ms": 10035
+}

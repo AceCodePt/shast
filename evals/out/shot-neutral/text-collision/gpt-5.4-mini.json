@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "`root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>visible` is the one overlapping `root>ghost`. The screenshot shows the visible text rendered on top of the ghost text, with the overlapping glyphs producing the mixed appearance at the top-left.\n\nANSWER: `root>visible`\n",
+  "ms": 13513
+}

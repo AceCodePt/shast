@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "From the browser’s `getBoundingClientRect()` data, `root>alpha` spans roughly y=20–60, `root>beta` spans y=64–104, and those two boxes are close vertically (only a small gap). `root>gamma` spans y=200–240, which is far below both `alpha` and `beta`, making it visually separated from the other two.  \n\nANSWER: root>gamma\n",
+  "ms": 7902
+}

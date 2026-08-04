@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "From the rendered evidence, `root>panel` has `width=600` and `root>rail` has `width=240`. The ratio is \\(600 / 240 = 2.5\\). Rounded to one decimal place, that is **2.5**.\n\nANSWER: 2.5\n",
+  "ms": 8817
+}

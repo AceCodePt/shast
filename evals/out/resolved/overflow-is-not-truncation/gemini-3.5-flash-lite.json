@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report explicitly states that the overflowing content is painted outside the box rather than cut off because the overflow is visible. Since the text is painted rather than cut off, the last line is still rendered on the page and can be read.\n\nANSWER: YES\n",
+  "ms": 9828
+}

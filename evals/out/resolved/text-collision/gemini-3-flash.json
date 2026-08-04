@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report for `root>ghost` explicitly states in its `! collides` note that `root>visible <div> draws its text on the same pixels`. This is further confirmed by the `! collides` note for `root>visible`, which mentions it draws its text on the same pixels as `root>ghost`.\n\nANSWER: root>visible\n",
+  "ms": 10350
+}

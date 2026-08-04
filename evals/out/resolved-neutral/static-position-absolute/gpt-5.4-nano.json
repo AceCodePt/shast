@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With `position: absolute` and no `top/left/right/bottom` specified, the element’s inset values default to `auto`, so Chromium places it at its “static position” (the position it would have had in normal document flow). In the rendered tree, the preceding `spacer` occupies `height: 50px`, and `floaty` appears immediately after it in the flow. Therefore, `floaty`’s top edge renders at **y = 50px**.\n\nANSWER: 50\n",
+  "ms": 8960
+}

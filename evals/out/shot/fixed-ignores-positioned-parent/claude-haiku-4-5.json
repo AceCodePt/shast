@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered page information and the screenshot, I need to determine where the top-left corner of `root>inner` is positioned.\n\nThe key insight is understanding how `position: fixed` works: **fixed positioning places elements relative to the viewport, not relative to their parent's padding or positioning context.** \n\nGiven:\n- `root>inner` has `position: fixed` with `top: 15px; left: 25px`\n- The parent `root` has `position: relative` with 40px padding\n\nSince `root>inner` is fixed-positioned, the `top: 15px; left: 25px` values are calculated from the viewport origin (top-left corner of the viewport at 0,0), NOT from the parent element's padding edge.\n\nTherefore, the top-left corner of `root>inner` renders at coordinates 25px from the left edge and 15px from the top edge of the viewport.\n\nANSWER: 25,15\n",
+  "ms": 5455
+}

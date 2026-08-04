@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "8,8",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>plain>pin` will render at the top-left of `root>plain`, which is at the page’s default 8px body margin.\n\nANSWER: 8,8\n",
+  "ms": 19022
+}

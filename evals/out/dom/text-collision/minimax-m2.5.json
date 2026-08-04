@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles, `root>ghost` is at x=0, y=0 with width=0 and height=0, so its text \"Important warning\" still renders starting at the top-left of the viewport (text content overflows a zero-sized block). `root>visible` is also positioned at x=0, y=0 and occupies the full 400×19.1875 area, so its text \"Everything is fine\" is rendered in the same top-left region. The two text runs therefore share the same pixels.\n\nANSWER: root>visible\n",
+  "ms": 9795
+}

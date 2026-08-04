@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The provided text report describes the node tree by listing the path, tag, and text content for each node, but it does not include any information regarding CSS styling or text color. While the accompanying screenshot shows the text \"Total due\" rendered in black, the report itself does not explicitly state this property.\n\nANSWER: NOT STATED\n",
+  "ms": 20211
+}

@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text \"Hidden by two\" in `root>line` is located at the top-left corner of the container (x=0, y=0) with a height of approximately 19px. Two opaque, absolute-positioned boxes (`leftHalf` and `rightHalf`) are rendered after the text in the DOM, causing them to stack on top of it. Since `leftHalf` covers x=0 to 70 and `rightHalf` covers x=60 to 140, they form a continuous obscured area from x=0 to x=140, which is wide enough to completely hide the short phrase.\n\nANSWER: NO\n",
+  "ms": 13961
+}

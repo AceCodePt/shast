@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>main>r09` is present and its bounding box is `x=244 y=276 width=1012 height=26`, with `opacity: 1` and `color: rgb(0, 0, 0)`. Its `background-color` is transparent (`rgba(0, 0, 0, 0)`), so the text would be drawn over the page’s white background, making it visible.\n\nANSWER: YES\n",
+  "ms": 9896
+}

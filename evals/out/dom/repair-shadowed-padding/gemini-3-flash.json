@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The computed style of `root>body>panel` shows it is rendering with 4px of padding, even though 32px has been added to its own CSS block in the source. This indicates that the 32px declaration is being overridden by a more specific selector or a rule with an `!important` flag located elsewhere. In such a hierarchy, the most likely place for an overriding rule that targets a child element is the CSS block of its immediate parent, which can define styles for its children that take precedence over the children's own internal styles.\n\nANSWER: root>body\n",
+  "ms": 77539
+}

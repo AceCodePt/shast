@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence:\n\n1. The node tree shows `root>second` is a `<p>` element containing the text \"Second paragraph here\"\n2. The screenshot clearly shows \"Second paragraph here\" rendered and visible at the top of the page\n3. The text is black on a white background with no obstruction\n\nANSWER: YES\n",
+  "ms": 11059
+}

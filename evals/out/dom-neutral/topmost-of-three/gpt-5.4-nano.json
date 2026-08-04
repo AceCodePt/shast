@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "All three `div`s cover the point (120,120), so the winner is determined by stacking order. Their `z-index` values are: `back` = 1, `front` = 2, and `middle` = 3. Since `middle` has the highest `z-index`, it is rendered on top at that point.\n\nANSWER: root>middle\n",
+  "ms": 8551
+}

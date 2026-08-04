@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles provided:\n\n- `root>ghost` has `getBoundingClientRect: x=0 y=0 width=0 height=0` — it occupies zero pixels\n- `root>visible` has `getBoundingClientRect: x=0 y=0 width=400 height=19.1875` — it occupies the same space as the root\n\nSince `root>ghost` has zero width and height, its text is not actually drawn on any pixels on screen. However, the question asks which node's text is drawn on the same pixels as `root>ghost`'s text would be if it were rendered.\n\nGiven that `root>ghost` has x=0, y=0 coordinates with zero dimensions, and `root>visible` also starts at x=0, y=0, the `root>visible` element occupies the space where `root>ghost`'s text would theoretically be positioned (at the origin).\n\nANSWER: root>visible\n",
+  "ms": 8087
+}

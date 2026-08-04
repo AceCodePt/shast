@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The screenshot shows the text \"pinned,\" which is the content of the `root>plain>pin` element, rendered at the top-left corner of the viewport. Because `root>plain` is explicitly stated to be not positioned, it does not serve as a containing block for any absolute positioning; the element `root>plain>pin` therefore defaults to the flow or the initial containing block. The visual evidence confirms that the top-left corner of the element is at the origin of the coordinate system.\n\nANSWER: 0,0\n",
+  "ms": 12014
+}

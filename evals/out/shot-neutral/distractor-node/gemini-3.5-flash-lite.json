@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot and node tree show that the text \"Second paragraph here\" belonging to `root>second` is rendered clearly and visibly on the page. Therefore, a viewer can read it without obstruction.\n\nANSWER: YES\n",
+  "ms": 8464
+}

@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report explicitly provides the resolved coordinates for the `root>inner` box as `@ x=25 y=15`. Since `root>inner` is `position: fixed`, its coordinates are relative to the viewport rather than its parent's padding or position, and the absolute x and y values from the top-left of the page are directly stated in the measured data.\n\nANSWER: 25,15\n",
+  "ms": 9731
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. Even though `root>ghost` has a `0x0` border box, the report explicitly says its content overflows its box and is “painted outside the box rather than cut off” because `overflow` is visible. It also says it collides with `root>visible`, which confirms the text occupies real pixels on the page.\n\nANSWER: YES\n",
+  "ms": 8730
+}

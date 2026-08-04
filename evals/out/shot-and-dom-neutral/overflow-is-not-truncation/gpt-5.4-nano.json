@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>card` has `overflow: visible` in its computed style, meaning any content that extends beyond its box is still painted rather than clipped. The evidence also shows the card’s own box is only 48px tall, but the last line of text extending below that edge is consistent with overflow content. With overflow not hidden/truncated, a person could still read the line where it renders.\n\nANSWER: YES\n",
+  "ms": 9838
+}

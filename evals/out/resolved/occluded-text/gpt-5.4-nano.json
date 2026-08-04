@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>lede` paragraph is positioned at `x=0 y=0` with a height of about `54.38px`, but the report says it is “covered” by `root>banner <div>` (an absolute, opaque element with `z-index: 5`) that paints later and over 100% of the `lede` box. It also states that 2 of 2 text lines are completely hidden, so the full sentence cannot be read.  \nANSWER: NO\n",
+  "ms": 10557
+}

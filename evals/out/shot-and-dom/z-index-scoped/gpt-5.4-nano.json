@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>low>inner",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Both overlapping elements are `position: absolute`, so their `z-index` values determine which is painted on top within the same stacking context. `root>low>inner` has `z-index: 999`, while `root>high` has `z-index: 2`, so `root>low>inner` is rendered above `root>high` in the overlap region.\n\nANSWER: root>low>inner\n",
+  "ms": 7761
+}

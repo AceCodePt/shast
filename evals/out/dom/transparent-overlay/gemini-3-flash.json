@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The `root>lede` element and the `root>banner` element are both positioned at the top-left of the viewport (`x=0, y=0`). The `root>banner` has `position: absolute`, a height of 70px, and a `z-index` of 5, while the `root>lede` has a height of only 54.375px. Because the banner is positioned directly over the lede and has a higher stacking order, it completely covers the text in `root>lede`.\n\nANSWER: NO\n",
+  "ms": 10471
+}

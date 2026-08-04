@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\n`root>card` has a **border-box height of 48px** (from `getBoundingClientRect`). Subtracting the 1px borders and 8px paddings (top + bottom), the **content box is only 30px tall** and **162px wide** (180 − 2 − 16).\n\nThe text *\"Payment failed because the card on file expired last month.\"* is ~59 characters at **16px** font with **19.2px** line-height. In a 162px-wide content box, that text must wrap. Even with a generous ~7px average character width, only ~23 characters fit per line, producing **at least 3 lines**:\n\n> 3 × 19.2px = **57.6px** of text height\n\nThat 57.6px exceeds the 48px border box (and far exceeds the 30px content box). Since `overflow: visible`, the extra text spills out but is still not \"inside\" the border box.\n\nANSWER: NO\n",
+  "ms": 74844
+}

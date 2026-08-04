@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The browser's computed style data shows that `root>body>panel` has `padding: 4px 4px 4px 4px`, not `32px`. This means the `padding: 32px` declaration in the CSS block is being overridden by another rule (likely more specific or later in the cascade). The rendered page reflects the computed 4px padding, not the 32px declaration.\n\nANSWER: NO\n",
+  "ms": 12273
+}

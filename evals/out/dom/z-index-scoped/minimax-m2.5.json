@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>low` has `position: absolute` with `z-index: 1`, which creates a new stacking context. `root>low>inner` (z-index 999) is trapped inside that stacking context, so its z-index of 999 is only compared against siblings within `root>low` — it never reaches the parent's stacking context. `root>high`, also `position: absolute`, sits directly in the root stacking context with `z-index: 2`. Since 2 > 1, the entire `root>low` subtree (including `root>low>inner`) is painted below `root>high`.\n\nANSWER: root>high\n",
+  "ms": 8694
+}

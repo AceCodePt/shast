@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `:hover` rule on `root>mid>leaf` sets `padding: 40px`, but the `padding: 2px` declared by `root` inside its `> mid > leaf` descendant selector block has higher specificity and outranks the `:hover` pseudo-class. Since the descendant selector is more specific than a single pseudo-class on the leaf itself, it wins regardless of hover state. The dead-state annotation explicitly confirms that entering `:hover` does not change padding.\n\nANSWER: NO\n",
+  "ms": 7520
+}

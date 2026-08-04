@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>low>inner",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values and stacking context rules:\n\n- `root>low>inner` has `z-index: 999` and `position: absolute`\n- `root>high` has `z-index: 2` and `position: absolute`\n\nBoth elements are positioned absolutely within the same stacking context (the root element with `position: relative`). When elements overlap in the same stacking context, the one with the higher z-index value appears on top.\n\nSince 999 > 2, `root>low>inner` (the blue box labeled \"inner\") will be rendered on top of `root>high` (the red box labeled \"high\") in the overlapping region. This matches the screenshot, where the blue box is visibly on top of the red box.\n\nANSWER: root>low>inner\n",
+  "ms": 5687
+}

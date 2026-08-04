@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser's `getBoundingClientRect` data for `root>b` explicitly states that its width is 400. This is consistent with the flexbox properties provided: the parent `root` has a width of 600px, and since both children have a `flex-basis` of `0%`, the space is distributed according to their `flex-grow` factors (1 for `root>a` and 2 for `root>b`), resulting in `root>b` receiving two-thirds of the total width.\n\nANSWER: 400\n",
+  "ms": 10982
+}

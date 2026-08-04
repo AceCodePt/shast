@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Reasoning: The viewport is 500×300 and pages only scroll vertically (the report explicitly notes they \"do not scroll horizontally\"). `root>lower` sits at y=700–740, which is below the fold but lies within the vertical extent of the page, so scrolling down brings it into view. `root>sideways` sits at y=40–80 (already in view vertically) but spans x=0–900, extending 400px past the right edge of the 500px-wide viewport. Since there is no horizontal scrolling, that overflow can never be reached by ordinary scrolling.\n\nANSWER: root>sideways\n",
+  "ms": 18100
+}

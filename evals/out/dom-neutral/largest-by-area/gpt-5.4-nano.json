@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "To compare which box covers the largest area, multiply each box’s `getBoundingClientRect()` width by its height.\n\n- `root>wide`: 600 × 60 = 36,000\n- `root>tall`: 120 × 300 = 36,000\n- `root>square`: 220 × 220 = 48,400\n\nSince 48,400 is the largest, the square box covers the greatest area.  \nANSWER: root>square\n",
+  "ms": 9009
+}

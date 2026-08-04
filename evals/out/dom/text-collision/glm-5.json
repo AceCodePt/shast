@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>ghost` div has a zero-sized box (width=0, height=0) but `overflow: visible`, so its text \"Important warning\" still paints starting at its box origin (0, 0). The `root>visible` div also sits at (0, 0) with the same font-size (16px) and line-height (19.2px), so its text \"Everything is fine\" is drawn over exactly the same starting pixels. Since both texts originate at the same coordinate with identical font metrics, their glyphs overlap.\n\nANSWER: root>visible\n",
+  "ms": 16697
+}

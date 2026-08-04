@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Since adding `32px` of padding to `root>body>panel`'s own CSS block produced no change in the rendered output (leaving it at `4px`), the property is being overridden by a conflicting rule or selector with higher precedence. This overriding rule is defined in the CSS block of its direct parent node, which governs styles applied to its descendants. Therefore, you must edit the CSS block of `root>body`.\n\nANSWER: root>body\n",
+  "ms": 14590
+}

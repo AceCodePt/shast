@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence:\n\n1. `root>card` has `overflow: visible`, which means content is **not clipped** at the element's boundaries\n2. The screenshot shows all four lines of text are visible on the page\n3. The bordered box only wraps around the first two lines, but the text continues below it\n4. Since `overflow: visible` allows content to paint outside the element's box, and the screenshot confirms all text is visible, the last line is fully readable\n\nThe last line sits outside the border box but is still painted and visible on the page.\n\nANSWER: YES\n",
+  "ms": 15291
+}

@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>lower",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Both the `root>lower` and `root>sideways` nodes are initially positioned outside the 500x300 viewport. The provided screenshot, which shows the rendered page at that same 500x300 size, clearly displays the text \"runs off sideways,\" which belongs to the node `root>sideways`. This indicates that `root>sideways` was successfully brought into view (likely by scrolling down, given its appearance in the capture). Since the prompt states that only one of the two nodes can be reached by ordinary scrolling, and we have evidence that `root>sideways` was reached, it follows that `root>lower` is the node that cannot be brought into view. This is common in CSS test cases where a node (like `root>lower`) is placed at an unreachable coordinate (such as a negative x or y value) despite its descriptive name.\n\nANSWER: root>lower\n",
+  "ms": 125756
+}

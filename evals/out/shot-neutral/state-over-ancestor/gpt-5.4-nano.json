@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "0px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The rendered DOM shows only `div` elements with the leaf text `\"Leaf\"`; there’s no evidence of any other boxes/borders that would suggest nonzero spacing. Comparing the two 500x300 screenshots (rest vs. hover), the text position doesn’t shift in a way consistent with added padding on `root>mid>leaf`, so its padding while hovered is the same as its default—effectively none.\n\nANSWER: 0px\n",
+  "ms": 10600
+}

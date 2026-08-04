@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "At that point all three bands overlap, so the visible background is whichever one is painted on top. In the rendering, the dark band is the topmost layer there, which corresponds to the last overlapping node in the stack.\n\nANSWER: root>gamma\n",
+  "ms": 28353
+}

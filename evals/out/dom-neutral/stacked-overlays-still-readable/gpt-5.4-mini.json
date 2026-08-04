@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `root>line` sits at the top of the container, while `root>panel` starts at `y=40`, so the dark panel does not overlap the line at all. `root>glass` does overlap it, but its background is fully transparent, so it does not obscure the text.  \nANSWER: YES\n",
+  "ms": 8041
+}

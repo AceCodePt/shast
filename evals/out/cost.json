@@ -1,0 +1,1349 @@
+{
+  "baseline": 6501,
+  "rows": [
+    {
+      "case": "occluded-text",
+      "arm": "dom",
+      "tokens": 830,
+      "chars": 2090,
+      "images": 0
+    },
+    {
+      "case": "transparent-overlay",
+      "arm": "dom",
+      "tokens": 833,
+      "chars": 2091,
+      "images": 0
+    },
+    {
+      "case": "z-index-scoped",
+      "arm": "dom",
+      "tokens": 807,
+      "chars": 2002,
+      "images": 0
+    },
+    {
+      "case": "overflowing-text",
+      "arm": "dom",
+      "tokens": 432,
+      "chars": 1189,
+      "images": 0
+    },
+    {
+      "case": "overflow-is-not-truncation",
+      "arm": "dom",
+      "tokens": 432,
+      "chars": 1189,
+      "images": 0
+    },
+    {
+      "case": "dead-declaration",
+      "arm": "dom",
+      "tokens": 575,
+      "chars": 1495,
+      "images": 0
+    },
+    {
+      "case": "provenance",
+      "arm": "dom",
+      "tokens": 593,
+      "chars": 1566,
+      "images": 0
+    },
+    {
+      "case": "proximity-pair",
+      "arm": "dom",
+      "tokens": 813,
+      "chars": 1998,
+      "images": 0
+    },
+    {
+      "case": "zero-size",
+      "arm": "dom",
+      "tokens": 599,
+      "chars": 1536,
+      "images": 0
+    },
+    {
+      "case": "text-collision",
+      "arm": "dom",
+      "tokens": 599,
+      "chars": 1536,
+      "images": 0
+    },
+    {
+      "case": "widest-sibling",
+      "arm": "dom",
+      "tokens": 626,
+      "chars": 1584,
+      "images": 0
+    },
+    {
+      "case": "partial-cover",
+      "arm": "dom",
+      "tokens": 620,
+      "chars": 1571,
+      "images": 0
+    },
+    {
+      "case": "misaligned-sibling",
+      "arm": "dom",
+      "tokens": 1003,
+      "chars": 2435,
+      "images": 0
+    },
+    {
+      "case": "neighbour-to-the-right",
+      "arm": "dom",
+      "tokens": 1012,
+      "chars": 2488,
+      "images": 0
+    },
+    {
+      "case": "not-stated",
+      "arm": "dom",
+      "tokens": 390,
+      "chars": 1048,
+      "images": 0
+    },
+    {
+      "case": "topmost-of-three",
+      "arm": "dom",
+      "tokens": 795,
+      "chars": 1969,
+      "images": 0
+    },
+    {
+      "case": "own-wins-on-source-order",
+      "arm": "dom",
+      "tokens": 389,
+      "chars": 1050,
+      "images": 0
+    },
+    {
+      "case": "largest-by-area",
+      "arm": "dom",
+      "tokens": 816,
+      "chars": 2000,
+      "images": 0
+    },
+    {
+      "case": "inherited-font-size",
+      "arm": "dom",
+      "tokens": 547,
+      "chars": 1431,
+      "images": 0
+    },
+    {
+      "case": "text-transform",
+      "arm": "dom",
+      "tokens": 402,
+      "chars": 1108,
+      "images": 0
+    },
+    {
+      "case": "union-coverage",
+      "arm": "dom",
+      "tokens": 807,
+      "chars": 2004,
+      "images": 0
+    },
+    {
+      "case": "stacked-overlays-still-readable",
+      "arm": "dom",
+      "tokens": 807,
+      "chars": 1983,
+      "images": 0
+    },
+    {
+      "case": "distractor-node",
+      "arm": "dom",
+      "tokens": 817,
+      "chars": 2031,
+      "images": 0
+    },
+    {
+      "case": "below-the-fold",
+      "arm": "dom",
+      "tokens": 624,
+      "chars": 1581,
+      "images": 0
+    },
+    {
+      "case": "unreachable-vs-scrollable",
+      "arm": "dom",
+      "tokens": 632,
+      "chars": 1603,
+      "images": 0
+    },
+    {
+      "case": "containing-block-skips-static-parent",
+      "arm": "dom",
+      "tokens": 624,
+      "chars": 1586,
+      "images": 0
+    },
+    {
+      "case": "percent-height-indefinite",
+      "arm": "dom",
+      "tokens": 756,
+      "chars": 1878,
+      "images": 0
+    },
+    {
+      "case": "padding-shrinks-content-box",
+      "arm": "dom",
+      "tokens": 411,
+      "chars": 1116,
+      "images": 0
+    },
+    {
+      "case": "display-none-closes-gap",
+      "arm": "dom",
+      "tokens": 729,
+      "chars": 1819,
+      "images": 0
+    },
+    {
+      "case": "static-position-absolute",
+      "arm": "dom",
+      "tokens": 590,
+      "chars": 1499,
+      "images": 0
+    },
+    {
+      "case": "fixed-ignores-positioned-parent",
+      "arm": "dom",
+      "tokens": 439,
+      "chars": 1147,
+      "images": 0
+    },
+    {
+      "case": "line-height-ratio-inherits",
+      "arm": "dom",
+      "tokens": 536,
+      "chars": 1390,
+      "images": 0
+    },
+    {
+      "case": "long-word-overflows",
+      "arm": "dom",
+      "tokens": 419,
+      "chars": 1120,
+      "images": 0
+    },
+    {
+      "case": "repair-shadowed-padding",
+      "arm": "dom",
+      "tokens": 644,
+      "chars": 1781,
+      "images": 0
+    },
+    {
+      "case": "predict-containing-block-change",
+      "arm": "dom",
+      "tokens": 669,
+      "chars": 1784,
+      "images": 0
+    },
+    {
+      "case": "dense-occluded-row",
+      "arm": "dom",
+      "tokens": 10345,
+      "chars": 24783,
+      "images": 0
+    },
+    {
+      "case": "dense-transparent-band",
+      "arm": "dom",
+      "tokens": 10348,
+      "chars": 24783,
+      "images": 0
+    },
+    {
+      "case": "dense-below-fold",
+      "arm": "dom",
+      "tokens": 10134,
+      "chars": 24283,
+      "images": 0
+    },
+    {
+      "case": "dense-above-fold",
+      "arm": "dom",
+      "tokens": 10134,
+      "chars": 24283,
+      "images": 0
+    },
+    {
+      "case": "dense-invisible-text",
+      "arm": "dom",
+      "tokens": 10135,
+      "chars": 24289,
+      "images": 0
+    },
+    {
+      "case": "dense-topmost-of-three",
+      "arm": "dom",
+      "tokens": 10767,
+      "chars": 25786,
+      "images": 0
+    },
+    {
+      "case": "occluded-text",
+      "arm": "shot",
+      "tokens": 462,
+      "chars": 495,
+      "images": 1
+    },
+    {
+      "case": "transparent-overlay",
+      "arm": "shot",
+      "tokens": 461,
+      "chars": 495,
+      "images": 1
+    },
+    {
+      "case": "z-index-scoped",
+      "arm": "shot",
+      "tokens": 445,
+      "chars": 411,
+      "images": 1
+    },
+    {
+      "case": "overflowing-text",
+      "arm": "shot",
+      "tokens": 296,
+      "chars": 407,
+      "images": 1
+    },
+    {
+      "case": "overflow-is-not-truncation",
+      "arm": "shot",
+      "tokens": 299,
+      "chars": 407,
+      "images": 1
+    },
+    {
+      "case": "dead-declaration",
+      "arm": "shot",
+      "tokens": 367,
+      "chars": 390,
+      "images": 1
+    },
+    {
+      "case": "provenance",
+      "arm": "shot",
+      "tokens": 367,
+      "chars": 390,
+      "images": 1
+    },
+    {
+      "case": "proximity-pair",
+      "arm": "shot",
+      "tokens": 353,
+      "chars": 404,
+      "images": 1
+    },
+    {
+      "case": "zero-size",
+      "arm": "shot",
+      "tokens": 299,
+      "chars": 411,
+      "images": 1
+    },
+    {
+      "case": "text-collision",
+      "arm": "shot",
+      "tokens": 299,
+      "chars": 411,
+      "images": 1
+    },
+    {
+      "case": "widest-sibling",
+      "arm": "shot",
+      "tokens": 593,
+      "chars": 387,
+      "images": 1
+    },
+    {
+      "case": "hover-state",
+      "arm": "shot",
+      "tokens": 504,
+      "chars": 447,
+      "images": 2
+    },
+    {
+      "case": "partial-cover",
+      "arm": "shot",
+      "tokens": 437,
+      "chars": 382,
+      "images": 1
+    },
+    {
+      "case": "misaligned-sibling",
+      "arm": "shot",
+      "tokens": 413,
+      "chars": 437,
+      "images": 1
+    },
+    {
+      "case": "neighbour-to-the-right",
+      "arm": "shot",
+      "tokens": 560,
+      "chars": 480,
+      "images": 1
+    },
+    {
+      "case": "not-stated",
+      "arm": "shot",
+      "tokens": 287,
+      "chars": 359,
+      "images": 1
+    },
+    {
+      "case": "topmost-of-three",
+      "arm": "shot",
+      "tokens": 388,
+      "chars": 382,
+      "images": 1
+    },
+    {
+      "case": "own-wins-on-source-order",
+      "arm": "shot",
+      "tokens": 327,
+      "chars": 355,
+      "images": 1
+    },
+    {
+      "case": "largest-by-area",
+      "arm": "shot",
+      "tokens": 522,
+      "chars": 408,
+      "images": 1
+    },
+    {
+      "case": "inherited-font-size",
+      "arm": "shot",
+      "tokens": 335,
+      "chars": 397,
+      "images": 1
+    },
+    {
+      "case": "text-transform",
+      "arm": "shot",
+      "tokens": 322,
+      "chars": 363,
+      "images": 1
+    },
+    {
+      "case": "union-coverage",
+      "arm": "shot",
+      "tokens": 303,
+      "chars": 411,
+      "images": 1
+    },
+    {
+      "case": "stacked-overlays-still-readable",
+      "arm": "shot",
+      "tokens": 304,
+      "chars": 396,
+      "images": 1
+    },
+    {
+      "case": "distractor-node",
+      "arm": "shot",
+      "tokens": 343,
+      "chars": 431,
+      "images": 1
+    },
+    {
+      "case": "below-the-fold",
+      "arm": "shot",
+      "tokens": 335,
+      "chars": 392,
+      "images": 1
+    },
+    {
+      "case": "unreachable-vs-scrollable",
+      "arm": "shot",
+      "tokens": 340,
+      "chars": 408,
+      "images": 1
+    },
+    {
+      "case": "state-over-ancestor",
+      "arm": "shot",
+      "tokens": 588,
+      "chars": 477,
+      "images": 2
+    },
+    {
+      "case": "dead-hover",
+      "arm": "shot",
+      "tokens": 586,
+      "chars": 477,
+      "images": 2
+    },
+    {
+      "case": "containing-block-skips-static-parent",
+      "arm": "shot",
+      "tokens": 440,
+      "chars": 384,
+      "images": 1
+    },
+    {
+      "case": "percent-height-indefinite",
+      "arm": "shot",
+      "tokens": 451,
+      "chars": 416,
+      "images": 1
+    },
+    {
+      "case": "padding-shrinks-content-box",
+      "arm": "shot",
+      "tokens": 439,
+      "chars": 396,
+      "images": 1
+    },
+    {
+      "case": "display-none-closes-gap",
+      "arm": "shot",
+      "tokens": 449,
+      "chars": 404,
+      "images": 1
+    },
+    {
+      "case": "static-position-absolute",
+      "arm": "shot",
+      "tokens": 441,
+      "chars": 385,
+      "images": 1
+    },
+    {
+      "case": "fixed-ignores-positioned-parent",
+      "arm": "shot",
+      "tokens": 431,
+      "chars": 355,
+      "images": 1
+    },
+    {
+      "case": "line-height-ratio-inherits",
+      "arm": "shot",
+      "tokens": 440,
+      "chars": 378,
+      "images": 1
+    },
+    {
+      "case": "long-word-overflows",
+      "arm": "shot",
+      "tokens": 444,
+      "chars": 402,
+      "images": 1
+    },
+    {
+      "case": "repair-shadowed-padding",
+      "arm": "shot",
+      "tokens": 437,
+      "chars": 676,
+      "images": 1
+    },
+    {
+      "case": "repair-dead-hover",
+      "arm": "shot",
+      "tokens": 661,
+      "chars": 768,
+      "images": 2
+    },
+    {
+      "case": "predict-containing-block-change",
+      "arm": "shot",
+      "tokens": 483,
+      "chars": 582,
+      "images": 1
+    },
+    {
+      "case": "dense-occluded-row",
+      "arm": "shot",
+      "tokens": 1963,
+      "chars": 2485,
+      "images": 1
+    },
+    {
+      "case": "dense-transparent-band",
+      "arm": "shot",
+      "tokens": 1961,
+      "chars": 2485,
+      "images": 1
+    },
+    {
+      "case": "dense-below-fold",
+      "arm": "shot",
+      "tokens": 1956,
+      "chars": 2466,
+      "images": 1
+    },
+    {
+      "case": "dense-above-fold",
+      "arm": "shot",
+      "tokens": 1956,
+      "chars": 2466,
+      "images": 1
+    },
+    {
+      "case": "dense-invisible-text",
+      "arm": "shot",
+      "tokens": 1956,
+      "chars": 2466,
+      "images": 1
+    },
+    {
+      "case": "dense-topmost-of-three",
+      "arm": "shot",
+      "tokens": 1976,
+      "chars": 2523,
+      "images": 1
+    },
+    {
+      "case": "occluded-text",
+      "arm": "shot+dom",
+      "tokens": 1194,
+      "chars": 2186,
+      "images": 1
+    },
+    {
+      "case": "transparent-overlay",
+      "arm": "shot+dom",
+      "tokens": 1196,
+      "chars": 2187,
+      "images": 1
+    },
+    {
+      "case": "z-index-scoped",
+      "arm": "shot+dom",
+      "tokens": 1171,
+      "chars": 2098,
+      "images": 1
+    },
+    {
+      "case": "overflowing-text",
+      "arm": "shot+dom",
+      "tokens": 657,
+      "chars": 1285,
+      "images": 1
+    },
+    {
+      "case": "overflow-is-not-truncation",
+      "arm": "shot+dom",
+      "tokens": 659,
+      "chars": 1285,
+      "images": 1
+    },
+    {
+      "case": "dead-declaration",
+      "arm": "shot+dom",
+      "tokens": 871,
+      "chars": 1591,
+      "images": 1
+    },
+    {
+      "case": "provenance",
+      "arm": "shot+dom",
+      "tokens": 888,
+      "chars": 1662,
+      "images": 1
+    },
+    {
+      "case": "proximity-pair",
+      "arm": "shot+dom",
+      "tokens": 1083,
+      "chars": 2094,
+      "images": 1
+    },
+    {
+      "case": "zero-size",
+      "arm": "shot+dom",
+      "tokens": 822,
+      "chars": 1632,
+      "images": 1
+    },
+    {
+      "case": "text-collision",
+      "arm": "shot+dom",
+      "tokens": 822,
+      "chars": 1632,
+      "images": 1
+    },
+    {
+      "case": "widest-sibling",
+      "arm": "shot+dom",
+      "tokens": 1146,
+      "chars": 1680,
+      "images": 1
+    },
+    {
+      "case": "partial-cover",
+      "arm": "shot+dom",
+      "tokens": 983,
+      "chars": 1667,
+      "images": 1
+    },
+    {
+      "case": "misaligned-sibling",
+      "arm": "shot+dom",
+      "tokens": 1321,
+      "chars": 2531,
+      "images": 1
+    },
+    {
+      "case": "neighbour-to-the-right",
+      "arm": "shot+dom",
+      "tokens": 1471,
+      "chars": 2584,
+      "images": 1
+    },
+    {
+      "case": "not-stated",
+      "arm": "shot+dom",
+      "tokens": 613,
+      "chars": 1144,
+      "images": 1
+    },
+    {
+      "case": "topmost-of-three",
+      "arm": "shot+dom",
+      "tokens": 1112,
+      "chars": 2065,
+      "images": 1
+    },
+    {
+      "case": "own-wins-on-source-order",
+      "arm": "shot+dom",
+      "tokens": 652,
+      "chars": 1146,
+      "images": 1
+    },
+    {
+      "case": "largest-by-area",
+      "arm": "shot+dom",
+      "tokens": 1253,
+      "chars": 2096,
+      "images": 1
+    },
+    {
+      "case": "inherited-font-size",
+      "arm": "shot+dom",
+      "tokens": 806,
+      "chars": 1527,
+      "images": 1
+    },
+    {
+      "case": "text-transform",
+      "arm": "shot+dom",
+      "tokens": 660,
+      "chars": 1204,
+      "images": 1
+    },
+    {
+      "case": "union-coverage",
+      "arm": "shot+dom",
+      "tokens": 1031,
+      "chars": 2100,
+      "images": 1
+    },
+    {
+      "case": "stacked-overlays-still-readable",
+      "arm": "shot+dom",
+      "tokens": 1036,
+      "chars": 2079,
+      "images": 1
+    },
+    {
+      "case": "distractor-node",
+      "arm": "shot+dom",
+      "tokens": 1077,
+      "chars": 2127,
+      "images": 1
+    },
+    {
+      "case": "below-the-fold",
+      "arm": "shot+dom",
+      "tokens": 884,
+      "chars": 1677,
+      "images": 1
+    },
+    {
+      "case": "unreachable-vs-scrollable",
+      "arm": "shot+dom",
+      "tokens": 894,
+      "chars": 1699,
+      "images": 1
+    },
+    {
+      "case": "containing-block-skips-static-parent",
+      "arm": "shot+dom",
+      "tokens": 991,
+      "chars": 1682,
+      "images": 1
+    },
+    {
+      "case": "percent-height-indefinite",
+      "arm": "shot+dom",
+      "tokens": 1121,
+      "chars": 1974,
+      "images": 1
+    },
+    {
+      "case": "padding-shrinks-content-box",
+      "arm": "shot+dom",
+      "tokens": 777,
+      "chars": 1212,
+      "images": 1
+    },
+    {
+      "case": "display-none-closes-gap",
+      "arm": "shot+dom",
+      "tokens": 1094,
+      "chars": 1915,
+      "images": 1
+    },
+    {
+      "case": "static-position-absolute",
+      "arm": "shot+dom",
+      "tokens": 954,
+      "chars": 1595,
+      "images": 1
+    },
+    {
+      "case": "fixed-ignores-positioned-parent",
+      "arm": "shot+dom",
+      "tokens": 807,
+      "chars": 1243,
+      "images": 1
+    },
+    {
+      "case": "line-height-ratio-inherits",
+      "arm": "shot+dom",
+      "tokens": 903,
+      "chars": 1486,
+      "images": 1
+    },
+    {
+      "case": "long-word-overflows",
+      "arm": "shot+dom",
+      "tokens": 784,
+      "chars": 1216,
+      "images": 1
+    },
+    {
+      "case": "repair-shadowed-padding",
+      "arm": "shot+dom",
+      "tokens": 941,
+      "chars": 1877,
+      "images": 1
+    },
+    {
+      "case": "predict-containing-block-change",
+      "arm": "shot+dom",
+      "tokens": 1034,
+      "chars": 1880,
+      "images": 1
+    },
+    {
+      "case": "dense-occluded-row",
+      "arm": "shot+dom",
+      "tokens": 11539,
+      "chars": 24880,
+      "images": 1
+    },
+    {
+      "case": "dense-transparent-band",
+      "arm": "shot+dom",
+      "tokens": 11540,
+      "chars": 24880,
+      "images": 1
+    },
+    {
+      "case": "dense-below-fold",
+      "arm": "shot+dom",
+      "tokens": 11327,
+      "chars": 24380,
+      "images": 1
+    },
+    {
+      "case": "dense-above-fold",
+      "arm": "shot+dom",
+      "tokens": 11327,
+      "chars": 24380,
+      "images": 1
+    },
+    {
+      "case": "dense-invisible-text",
+      "arm": "shot+dom",
+      "tokens": 11327,
+      "chars": 24386,
+      "images": 1
+    },
+    {
+      "case": "dense-topmost-of-three",
+      "arm": "shot+dom",
+      "tokens": 11962,
+      "chars": 25883,
+      "images": 1
+    },
+    {
+      "case": "flex-row-arranges-children",
+      "arm": "dom",
+      "tokens": 607,
+      "chars": 1571,
+      "images": 0
+    },
+    {
+      "case": "flex-grow-shares-remaining",
+      "arm": "dom",
+      "tokens": 576,
+      "chars": 1434,
+      "images": 0
+    },
+    {
+      "case": "grid-two-columns",
+      "arm": "dom",
+      "tokens": 594,
+      "chars": 1550,
+      "images": 0
+    },
+    {
+      "case": "flex-row-arranges-children",
+      "arm": "shot",
+      "tokens": 440,
+      "chars": 384,
+      "images": 1
+    },
+    {
+      "case": "flex-grow-shares-remaining",
+      "arm": "shot",
+      "tokens": 439,
+      "chars": 360,
+      "images": 1
+    },
+    {
+      "case": "grid-two-columns",
+      "arm": "shot",
+      "tokens": 436,
+      "chars": 379,
+      "images": 1
+    },
+    {
+      "case": "flex-row-arranges-children",
+      "arm": "shot+dom",
+      "tokens": 974,
+      "chars": 1667,
+      "images": 1
+    },
+    {
+      "case": "flex-grow-shares-remaining",
+      "arm": "shot+dom",
+      "tokens": 943,
+      "chars": 1530,
+      "images": 1
+    },
+    {
+      "case": "grid-two-columns",
+      "arm": "shot+dom",
+      "tokens": 957,
+      "chars": 1646,
+      "images": 1
+    },
+    {
+      "case": "occluded-text",
+      "arm": "resolved",
+      "tokens": 378,
+      "chars": 1163,
+      "images": 0
+    },
+    {
+      "case": "transparent-overlay",
+      "arm": "resolved",
+      "tokens": 387,
+      "chars": 1226,
+      "images": 0
+    },
+    {
+      "case": "z-index-scoped",
+      "arm": "resolved",
+      "tokens": 492,
+      "chars": 1508,
+      "images": 0
+    },
+    {
+      "case": "overflowing-text",
+      "arm": "resolved",
+      "tokens": 203,
+      "chars": 662,
+      "images": 0
+    },
+    {
+      "case": "overflow-is-not-truncation",
+      "arm": "resolved",
+      "tokens": 203,
+      "chars": 662,
+      "images": 0
+    },
+    {
+      "case": "dead-declaration",
+      "arm": "resolved",
+      "tokens": 189,
+      "chars": 574,
+      "images": 0
+    },
+    {
+      "case": "provenance",
+      "arm": "resolved",
+      "tokens": 206,
+      "chars": 621,
+      "images": 0
+    },
+    {
+      "case": "proximity-pair",
+      "arm": "resolved",
+      "tokens": 271,
+      "chars": 741,
+      "images": 0
+    },
+    {
+      "case": "zero-size",
+      "arm": "resolved",
+      "tokens": 296,
+      "chars": 907,
+      "images": 0
+    },
+    {
+      "case": "text-collision",
+      "arm": "resolved",
+      "tokens": 296,
+      "chars": 907,
+      "images": 0
+    },
+    {
+      "case": "widest-sibling",
+      "arm": "resolved",
+      "tokens": 206,
+      "chars": 584,
+      "images": 0
+    },
+    {
+      "case": "hover-state",
+      "arm": "resolved",
+      "tokens": 131,
+      "chars": 385,
+      "images": 0
+    },
+    {
+      "case": "partial-cover",
+      "arm": "resolved",
+      "tokens": 251,
+      "chars": 748,
+      "images": 0
+    },
+    {
+      "case": "misaligned-sibling",
+      "arm": "resolved",
+      "tokens": 338,
+      "chars": 914,
+      "images": 0
+    },
+    {
+      "case": "neighbour-to-the-right",
+      "arm": "resolved",
+      "tokens": 344,
+      "chars": 953,
+      "images": 0
+    },
+    {
+      "case": "not-stated",
+      "arm": "resolved",
+      "tokens": 112,
+      "chars": 326,
+      "images": 0
+    },
+    {
+      "case": "topmost-of-three",
+      "arm": "resolved",
+      "tokens": 383,
+      "chars": 1157,
+      "images": 0
+    },
+    {
+      "case": "own-wins-on-source-order",
+      "arm": "resolved",
+      "tokens": 175,
+      "chars": 550,
+      "images": 0
+    },
+    {
+      "case": "largest-by-area",
+      "arm": "resolved",
+      "tokens": 273,
+      "chars": 743,
+      "images": 0
+    },
+    {
+      "case": "inherited-font-size",
+      "arm": "resolved",
+      "tokens": 150,
+      "chars": 424,
+      "images": 0
+    },
+    {
+      "case": "text-transform",
+      "arm": "resolved",
+      "tokens": 122,
+      "chars": 373,
+      "images": 0
+    },
+    {
+      "case": "union-coverage",
+      "arm": "resolved",
+      "tokens": 354,
+      "chars": 1093,
+      "images": 0
+    },
+    {
+      "case": "stacked-overlays-still-readable",
+      "arm": "resolved",
+      "tokens": 340,
+      "chars": 1021,
+      "images": 0
+    },
+    {
+      "case": "distractor-node",
+      "arm": "resolved",
+      "tokens": 268,
+      "chars": 801,
+      "images": 0
+    },
+    {
+      "case": "below-the-fold",
+      "arm": "resolved",
+      "tokens": 189,
+      "chars": 542,
+      "images": 0
+    },
+    {
+      "case": "unreachable-vs-scrollable",
+      "arm": "resolved",
+      "tokens": 284,
+      "chars": 877,
+      "images": 0
+    },
+    {
+      "case": "state-over-ancestor",
+      "arm": "resolved",
+      "tokens": 253,
+      "chars": 786,
+      "images": 0
+    },
+    {
+      "case": "dead-hover",
+      "arm": "resolved",
+      "tokens": 212,
+      "chars": 639,
+      "images": 0
+    },
+    {
+      "case": "containing-block-skips-static-parent",
+      "arm": "resolved",
+      "tokens": 173,
+      "chars": 494,
+      "images": 0
+    },
+    {
+      "case": "percent-height-indefinite",
+      "arm": "resolved",
+      "tokens": 182,
+      "chars": 499,
+      "images": 0
+    },
+    {
+      "case": "padding-shrinks-content-box",
+      "arm": "resolved",
+      "tokens": 142,
+      "chars": 437,
+      "images": 0
+    },
+    {
+      "case": "display-none-closes-gap",
+      "arm": "resolved",
+      "tokens": 207,
+      "chars": 570,
+      "images": 0
+    },
+    {
+      "case": "static-position-absolute",
+      "arm": "resolved",
+      "tokens": 211,
+      "chars": 633,
+      "images": 0
+    },
+    {
+      "case": "fixed-ignores-positioned-parent",
+      "arm": "resolved",
+      "tokens": 141,
+      "chars": 408,
+      "images": 0
+    },
+    {
+      "case": "line-height-ratio-inherits",
+      "arm": "resolved",
+      "tokens": 150,
+      "chars": 415,
+      "images": 0
+    },
+    {
+      "case": "long-word-overflows",
+      "arm": "resolved",
+      "tokens": 171,
+      "chars": 518,
+      "images": 0
+    },
+    {
+      "case": "repair-shadowed-padding",
+      "arm": "resolved",
+      "tokens": 258,
+      "chars": 858,
+      "images": 0
+    },
+    {
+      "case": "repair-dead-hover",
+      "arm": "resolved",
+      "tokens": 283,
+      "chars": 930,
+      "images": 0
+    },
+    {
+      "case": "predict-containing-block-change",
+      "arm": "resolved",
+      "tokens": 219,
+      "chars": 692,
+      "images": 0
+    },
+    {
+      "case": "flex-row-arranges-children",
+      "arm": "resolved",
+      "tokens": 173,
+      "chars": 485,
+      "images": 0
+    },
+    {
+      "case": "flex-grow-shares-remaining",
+      "arm": "resolved",
+      "tokens": 158,
+      "chars": 419,
+      "images": 0
+    },
+    {
+      "case": "grid-two-columns",
+      "arm": "resolved",
+      "tokens": 167,
+      "chars": 467,
+      "images": 0
+    },
+    {
+      "case": "dense-occluded-row",
+      "arm": "resolved",
+      "tokens": 2657,
+      "chars": 7399,
+      "images": 0
+    },
+    {
+      "case": "dense-transparent-band",
+      "arm": "resolved",
+      "tokens": 2666,
+      "chars": 7454,
+      "images": 0
+    },
+    {
+      "case": "dense-below-fold",
+      "arm": "resolved",
+      "tokens": 2500,
+      "chars": 6911,
+      "images": 0
+    },
+    {
+      "case": "dense-above-fold",
+      "arm": "resolved",
+      "tokens": 2500,
+      "chars": 6911,
+      "images": 0
+    },
+    {
+      "case": "dense-invisible-text",
+      "arm": "resolved",
+      "tokens": 2506,
+      "chars": 6927,
+      "images": 0
+    },
+    {
+      "case": "dense-topmost-of-three",
+      "arm": "resolved",
+      "tokens": 3727,
+      "chars": 10926,
+      "images": 0
+    },
+    {
+      "case": "hover-state",
+      "arm": "dom",
+      "tokens": 714,
+      "chars": 1845,
+      "images": 0
+    },
+    {
+      "case": "state-over-ancestor",
+      "arm": "dom",
+      "tokens": 1038,
+      "chars": 2564,
+      "images": 0
+    },
+    {
+      "case": "dead-hover",
+      "arm": "dom",
+      "tokens": 1038,
+      "chars": 2564,
+      "images": 0
+    },
+    {
+      "case": "repair-dead-hover",
+      "arm": "dom",
+      "tokens": 1109,
+      "chars": 2855,
+      "images": 0
+    },
+    {
+      "case": "hover-state",
+      "arm": "shot+dom",
+      "tokens": 1155,
+      "chars": 2034,
+      "images": 2
+    },
+    {
+      "case": "state-over-ancestor",
+      "arm": "shot+dom",
+      "tokens": 1555,
+      "chars": 2758,
+      "images": 2
+    },
+    {
+      "case": "dead-hover",
+      "arm": "shot+dom",
+      "tokens": 1553,
+      "chars": 2758,
+      "images": 2
+    },
+    {
+      "case": "repair-dead-hover",
+      "arm": "shot+dom",
+      "tokens": 1628,
+      "chars": 3049,
+      "images": 2
+    }
+  ]
+}

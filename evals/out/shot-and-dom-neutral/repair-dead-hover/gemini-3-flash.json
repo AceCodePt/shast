@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The evidence shows that `root>mid>leaf` has `:hover { padding: 40px }` in its CSS block, yet the browser data confirms that the padding remains `2px` even when the mouse is hovering over it. This \"dead hover\" situation indicates that the hover state on the leaf node is not being triggered or applied correctly. To fix this, the hover interaction should be handled by a parent node that covers the same area; editing the CSS block of the parent node `root>mid` allows you to trigger the style change on the leaf node when the parent is hovered.\n\nANSWER: root>mid\n",
+  "ms": 59688
+}

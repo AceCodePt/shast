@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>line` occupies roughly `y=0` to `y≈19.2`. `root>glass` covers `y=0` to `y=100` but has `background-color: rgba(0, 0, 0, 0)` (fully transparent) and no higher-contrast styling that would obscure the text. The `root>panel` box starts at `y=40`, so it does not overlap `root>line` at all (even though it has higher `z-index`). Therefore a viewer can still read the text.\n\nANSWER: YES\n",
+  "ms": 8841
+}

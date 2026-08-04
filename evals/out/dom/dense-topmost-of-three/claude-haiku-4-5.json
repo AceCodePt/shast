@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the three overlapping divs (alpha, beta, and gamma) at the point x=500, y=400:\n\n- **root>alpha**: positioned at x=300, y=300 with width=400, height=120, z-index=2\n  - Covers x: 300-700, y: 300-420\n  - Point (500, 400) is within bounds\n\n- **root>beta**: positioned at x=340, y=340 with width=400, height=120, z-index=4\n  - Covers x: 340-740, y: 340-460\n  - Point (500, 400) is within bounds\n\n- **root>gamma**: positioned at x=380, y=380 with width=400, height=120, z-index=3\n  - Covers x: 380-780, y: 380-500\n  - Point (500, 400) is within bounds\n\nAll three divs contain the point (500, 400). The z-index determines the stacking order: alpha (z-index=2) is at the bottom, gamma (z-index=3) is in the middle, and beta (z-index=4) is at the top. Since beta has the highest z-index, its background color (rgb(68, 85, 102)) is what the viewer actually sees at this point.\n\nANSWER: root>beta\n",
+  "ms": 7541
+}

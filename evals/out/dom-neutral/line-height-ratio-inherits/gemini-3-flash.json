@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the browser data provided, the `getBoundingClientRect` for the `root>big` node explicitly states a height of 64. This rendering occurs because the `line-height: 2` declared on the `root` element is inherited by its children as a multiplier; when applied to the `32px` font-size of `root>big`, it results in a computed `line-height` of 64px, which determines the height of the block.\n\nANSWER: 64\n",
+  "ms": 11137
+}

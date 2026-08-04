@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>second` sits at y=19.19 and extends to about y=38.38. The covering `<div>` (`root>cover`) only occupies y=0 to y=19, so it overlaps `root>first` but stops short of `root>second`. Since `root>second` has no `covered` flag and its top (19.19) is below the cover's bottom edge (19), it remains visible.\n\nANSWER: YES\n",
+  "ms": 11884
+}

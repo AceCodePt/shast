@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the viewport and bounding rectangle data:\n\n1. **Viewport height**: 800px (1280x800)\n2. **root>main>r17 position**: y=484, height=26px, so it spans from y=484 to y=510\n3. **Visible area without scrolling**: y=0 to y=800\n\nSince r17's vertical position (484-510) falls entirely within the viewport's visible area (0-800), the text \"17. Inventory valuation\" is visible when the page first loads without any scrolling needed.\n\nANSWER: YES\n",
+  "ms": 13427
+}

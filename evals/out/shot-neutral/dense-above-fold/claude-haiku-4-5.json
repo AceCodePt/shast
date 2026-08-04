@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the DOM tree and the screenshot provided:\n\nThe viewport is 1280x800 CSS pixels. The page shows a \"Quarterly operations review\" with a left sidebar containing \"Navigation\" and a main section with numbered items.\n\nFrom the screenshot, I can see items numbered up to 28 are visible in the viewport. Item `root>main>r17` is \"17. Inventory valuation\", which appears in the rendered screenshot as a visible item in the list.\n\nCounting the visible items in the screenshot: items 01 through 28 are all within the visible area of the page when it first loads without scrolling.\n\nANSWER: YES\n",
+  "ms": 7470
+}

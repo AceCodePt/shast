@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the page structure and the screenshot provided:\n\nThe viewport is 1280x800 CSS pixels. The page contains a header (\"Quarterly operations review\"), a sidebar navigation on the left, and a main section with 40 numbered items. The screenshot shows items 01-28 are visible on the initial screen.\n\nThe element `root>main>r36` contains \"36. Royalty accruals\" and is the 36th item in the list. Since only items 01-28 are visible in the screenshot without scrolling, and item 36 would require scrolling down to reach it, this text is not visible when the page first loads.\n\nANSWER: NO\n",
+  "ms": 7139
+}

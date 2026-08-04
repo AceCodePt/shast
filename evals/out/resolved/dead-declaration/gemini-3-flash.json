@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states that the `padding: 4px` declaration \"shadows\" the `padding: 32px` declaration, meaning the smaller value takes precedence. Furthermore, the measured height of the `root>body>panel` is only 27.19px; if the 32px padding were applied, the height would necessarily be at least 64px (top + bottom padding) regardless of the content. Therefore, the 32px declaration is overridden and has no effect on the rendered page.\n\nANSWER: NO\n",
+  "ms": 13332
+}

@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>rightBottom` sits directly to the right of `root>leftBottom` on the same row, because both have `y=120` and `rightBottom` has a larger `x` position (`340` vs `0`).\n\nANSWER: root>rightBottom\n",
+  "ms": 7128
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The banner overlays 69% of `r09`'s box, but it has no background, so the content behind it remains visible. The report also explicitly notes that r09's 1 text line stays fully visible.\n\nANSWER: YES\n",
+  "ms": 9891
+}

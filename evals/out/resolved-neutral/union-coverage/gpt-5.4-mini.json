@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The page info explicitly says `root>line` is “completely hidden,” and both opaque boxes overlap it in a way that covers the whole text line together, even though neither one alone spans the full width. So a viewer cannot read the words.\n\nANSWER: NO\n",
+  "ms": 7421
+}

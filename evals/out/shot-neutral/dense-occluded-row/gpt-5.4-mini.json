@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `09. Currency hedging` row is not visible in the screenshot; it is covered by the red banner between items 08 and 10. Since the text is occluded, a viewer cannot read it.\n\nANSWER: NO\n",
+  "ms": 8184
+}

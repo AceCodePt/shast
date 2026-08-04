@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the browser's rendering data:\n\n- `root>outer>filler` has a height of **60px**\n- `root>outer>tall` has a height of **19.1875px**\n\nEven though `root>outer>tall` declares `height: 100%`, the percentage height cannot resolve properly because its parent (`root>outer`) has no explicitly set height—it shrinks to fit its content. This causes the 100% to effectively compute to `auto`, leaving `tall` at its natural content height (just enough for the text \"b\").\n\nANSWER: NO\n",
+  "ms": 11668
+}

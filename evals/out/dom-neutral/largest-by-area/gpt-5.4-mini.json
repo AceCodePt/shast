@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Compute each area from the bounding boxes:\n\n- `root>wide`: 600 × 60 = 36,000\n- `root>tall`: 120 × 300 = 36,000\n- `root>square`: 220 × 220 = 48,400\n\n`root>square` covers the largest area.\n\nANSWER: root>square\n",
+  "ms": 8881
+}

@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "According to the browser's bounding client rect data, `root>outer>tall` has a height of 19.1875px, while its sibling `root>outer>filler` has a height of 60px. Therefore, `root>outer>tall` is shorter than its sibling, not taller.\n\nANSWER: NO\n",
+  "ms": 5794
+}

@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "All three boxes overlap the point (120, 120) because their bounds contain that coordinate: `root>back` (40-240), `root>middle` (80-280), and `root>front` (100-160). Among these siblings, the stacking order is determined by their `z-index` values since they are all positioned. `root>middle` has the highest `z-index` (3), followed by `root>front` (2) and `root>back` (1), meaning `root>middle` is rendered on top and obscures the others at that point.\n\nANSWER: root>middle\n",
+  "ms": 26534
+}

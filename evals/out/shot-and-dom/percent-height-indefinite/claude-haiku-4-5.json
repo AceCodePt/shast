@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding client rectangles provided:\n\n- `root>outer>filler` has a height of 60px\n- `root>outer>tall` has a height of 19.1875px\n\nThe question asks if `root>outer>tall` (which declares `height: 100%`) is taller than its sibling `root>outer>filler`.\n\nSince `root>outer>tall` is 19.1875px and `root>outer>filler` is 60px, `root>outer>tall` is clearly shorter than its sibling. The `height: 100%` declaration on `root>outer>tall` resolves to 19.1875px, which means it's only taking up about 32% of the filler's height. This likely occurs because the parent `root>outer` has a computed height of 79.1875px, and when percentage heights are applied to block elements in a flex or flow context where the parent height is determined by its content, the percentage resolution can behave differently than expected.\n\nANSWER: NO\n",
+  "ms": 5609
+}

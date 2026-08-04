@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` element is positioned at the top-left of the page (x=0, y=0), but the `root>banner` element is also positioned at the same coordinates with a higher z-index (5) and an opaque background. The provided information explicitly states that the banner paints over 100% of the `root>lede` box and that both lines of its text are completely hidden. Therefore, the content is not visible to the reader.\n\nANSWER: NO\n",
+  "ms": 10414
+}

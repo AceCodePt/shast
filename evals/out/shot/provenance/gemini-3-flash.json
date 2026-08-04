@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The screenshot shows that the element containing the text \"Panel\" is rendered with rounded corners and a border. According to the node tree, this specific element corresponds to the path `root>body>panel`. Since `border-radius` is a non-inherited CSS property, it must be declared within the CSS block of the element that exhibits the effect.\n\nANSWER: root>body>panel\n",
+  "ms": 9068
+}

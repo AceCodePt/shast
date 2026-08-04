@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "I'll analyze the two screenshots to compare the rendering at rest versus on hover.\n\nLooking at the \"rest\" screenshot, the \"Leaf\" text appears to be positioned in the upper-left area of the viewport with minimal spacing around it.\n\nLooking at the \"hover\" screenshot, the \"Leaf\" text appears to be in the exact same position and with the same spacing around it.\n\nIf the `:hover` block was successfully applying `padding: 40px`, the \"Leaf\" text would move inward (away from the edges) and the element's bounding box would expand outward by 40px on all sides. This would be visually apparent as the text moving to a different position within the element. However, between the two screenshots, the \"Leaf\" text maintains the same visual position and spacing.\n\nThis indicates that the `:hover` block with `padding: 40px` is not being applied when hovering over the element.\n\nANSWER: NO\n",
+  "ms": 7094
+}

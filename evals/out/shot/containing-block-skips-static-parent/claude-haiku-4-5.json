@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\n1. The viewport is 600x400 CSS pixels\n2. The node tree shows: `root > plain > pin` containing the text \"pinned\"\n3. `root>plain` is explicitly stated as \"not positioned\" (meaning it's in normal document flow)\n4. The screenshot shows \"pinned\" text appearing in the upper-left area of the page\n\nSince `root>plain` is not positioned, it flows normally from the top-left of its parent (`root`). The `pin` div, being a child of `root>plain` which starts at the top-left, will also start rendering from the top-left of the viewport.\n\nFrom the screenshot, the text \"pinned\" appears to start at the top-left corner of the rendered page with some minimal margin/padding, which in CSS typically defaults to 0,0 for the top-left corner when no explicit positioning or margins are applied.\n\nANSWER: 0,0\n",
+  "ms": 6635
+}

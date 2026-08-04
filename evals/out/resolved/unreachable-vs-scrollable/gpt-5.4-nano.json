@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Ordinary scrolling can move the viewport vertically, but the report says pages do **not** scroll horizontally. `root>lower` is positioned at `x=0` with `width=400` in a viewport of width `500`, so vertical scrolling can bring it into view. `root>sideways` has `width=900`, and the report notes it is `400px` past the right edge, meaning vertical scrolling cannot bring the right portion into view.  \n\nANSWER: root>sideways\n",
+  "ms": 7210
+}

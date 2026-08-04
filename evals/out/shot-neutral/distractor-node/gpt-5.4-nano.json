@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The authoritative node tree shows `root>second` is a `p` tag containing the text `\"Second paragraph here\"`, and the attached screenshot of the rendered page at 500x300 shows that same text on screen. Since the evidence indicates the content of `root>second` is actually present in the rendered output, a viewer can read it.  \nANSWER: YES\n",
+  "ms": 7418
+}

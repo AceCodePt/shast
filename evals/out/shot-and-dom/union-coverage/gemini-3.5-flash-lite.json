@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The union of `root>leftHalf` (spanning x=0 to 70) and `root>rightHalf` (spanning x=60 to 140) covers the coordinate range from x=0 to 140. Because the text \"Hidden by two\" falls entirely within this covered region (approx. x=0 to 104), every part of the text is occluded by at least one of the covering boxes. Therefore, the text cannot be read.\n\nANSWER: NO\n",
+  "ms": 9557
+}

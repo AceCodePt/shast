@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles:\n\n- `root>leftBottom`: x=0, y=120, width=300\n- `root>rightBottom`: x=340, y=120, width=300\n\nBoth nodes share the same y-coordinate (120px), placing them on the same horizontal row. The `root>rightBottom` node is positioned at x=340, which is directly to the right of `root>leftBottom` at x=0. The screenshot confirms this two-by-two layout with \"right bottom\" appearing on the right side of the bottom row.\n\nANSWER: root>rightBottom\n",
+  "ms": 13922
+}

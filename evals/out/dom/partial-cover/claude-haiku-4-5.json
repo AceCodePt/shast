@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Let me analyze the positioning and dimensions of these two elements:\n\n**root>row (the `<p>` element):**\n- Positioned at x=0, y=0\n- Width: 600px, Height: 120px\n- So it occupies the rectangle from (0,0) to (600,120)\n\n**root>chip (the `<div>` element):**\n- Positioned at x=400, y=60\n- Width: 160px, Height: 40px\n- So it occupies the rectangle from (400,60) to (560,100)\n\nThe chip element is positioned absolutely at coordinates (400, 60) with dimensions 160x40, which means it spans from x=400 to x=560 and y=60 to y=100.\n\nThe row element spans the full width (0-600) and height (0-120), so the chip's bounding box (400-560, 60-100) is entirely within the row's area. However, the row's text (\"Short label\") is rendered as the text content of the `<p>` element. Since we don't have specific information about where that text is positioned within the `<p>` element, and given that the `<p>` has padding of 4px on all sides and a height of 120px, the text would typically be positioned near the top of the element. The chip is positioned at y=60, which is well below where the text would naturally render (likely in the first ~20-30px of the paragraph), so the chip would not overlap the actual text.\n\nANSWER: NO\n",
+  "ms": 9812
+}

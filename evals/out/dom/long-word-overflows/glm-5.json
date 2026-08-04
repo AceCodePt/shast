@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>cell` box is 120px wide, but the URL text has no spaces or break opportunities, and `overflow` is `visible` with no `word-break`/`overflow-wrap` to force wrapping. So the long URL renders beyond the box's right edge, overflowing it.\n\nANSWER: NO\n",
+  "ms": 17861
+}

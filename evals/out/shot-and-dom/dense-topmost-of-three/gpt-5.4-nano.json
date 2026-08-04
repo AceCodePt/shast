@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At `x=500, y=400`, the point lies inside the bounding rectangles of all three overlapping nodes: `root>alpha` (x=300..700, y=300..420), `root>beta` (x=340..740, y=340..460), and `root>gamma` (x=380..780, y=380..500). Since all three are absolutely positioned and overlap, the one with the highest `z-index` is what’s actually visible. `root>beta` has `z-index: 4`, higher than `root>gamma` (`z-index: 3`) and `root>alpha` (`z-index: 2`), so the viewer sees `root>beta`’s background color (`rgb(68, 85, 102)`).\n\nANSWER: root>beta\n",
+  "ms": 9655
+}

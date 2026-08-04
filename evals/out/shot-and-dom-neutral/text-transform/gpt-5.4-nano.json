@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree reports that the `root>title` div contains the source text `\"Annual review\"`. Chromium’s computed style on that element has `text-transform: uppercase`, and the screenshot confirms the rendered casing. Therefore, a viewer sees the uppercase version of the same characters, including the space.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 8612
+}

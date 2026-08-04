@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The flex container is 600px wide, and both items have `flex-basis: 0%`, so the available space is split only by flex-grow values. With `flex: 1` and `flex: 2`, the 600px is divided into 3 equal parts: `root>a` gets 200px and `root>b` gets 400px. This also matches the reported bounding box for `root>b`.\n\nANSWER: 400\n",
+  "ms": 9403
+}

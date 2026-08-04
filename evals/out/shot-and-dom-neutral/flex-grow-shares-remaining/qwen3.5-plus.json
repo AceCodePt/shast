@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The root container is 600px wide with `display: flex`. The two children have `flex: 1 1 0%` and `flex: 2 1 0%` respectively, meaning they have flex-grow values of 1 and 2 with a flex-basis of 0%. Since the basis is 0%, all 600px of space is distributed according to the grow ratio: 1+2=3 parts total, where `b` gets 2/3 of the space. The `getBoundingClientRect` data confirms `root>b` has `width=400`.\n\nANSWER: 400\n",
+  "ms": 14583
+}

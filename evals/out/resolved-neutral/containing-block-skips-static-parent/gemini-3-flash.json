@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>plain>pin` element is `position: absolute`, so it is positioned relative to its nearest positioned ancestor, which is `root` (`position: relative`). Since `root` starts at absolute coordinates `0,0`, the `top: 10px` and `left: 10px` offsets are applied to that origin, resulting in the coordinates `10,10` as explicitly shown in the rendered box information.\n\nANSWER: 10,10\n",
+  "ms": 10037
+}

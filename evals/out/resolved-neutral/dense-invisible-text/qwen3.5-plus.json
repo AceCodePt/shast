@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered page information:\n\n1. **Position**: `root>main>r21` is at `x=244 y=588` with height 26px, so it spans y=588 to y=614\n2. **Viewport**: The viewport is 1280x800, so y=588-614 is **within the visible fold** (not marked \"below-fold\" like r30+)\n3. **Coverage**: The sidebar (`root>sidebar`) is positioned at `x=0` with `width=220`, ending at x=220. The r21 element starts at x=244, which is **to the right of the sidebar**, so it's not covered by the overlapping sidebar\n4. **Text color**: The element has `color: #ffffff` (white text), but there's no indication of a conflicting background that would make it unreadable\n\nThe element is within the viewport and not obscured by the absolutely-positioned sidebar.\n\nANSWER: YES\n",
+  "ms": 19382
+}

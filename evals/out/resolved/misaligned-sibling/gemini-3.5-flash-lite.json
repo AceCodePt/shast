@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first, second, and fourth rows (`root>first`, `root>second`, and `root>fourth`) all share an absolute left coordinate (`x`) of 24 pixels. In contrast, the third row (`root>third`) is positioned at an absolute left coordinate (`x`) of 40 pixels.\n\nANSWER: root>third\n",
+  "ms": 8278
+}

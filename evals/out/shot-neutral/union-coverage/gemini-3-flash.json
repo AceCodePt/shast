@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows two dark rectangular boxes at the top of the viewport that appear to correspond to `leftHalf` and `rightHalf`. While neither box spans the entire width on its own, their combined area completely covers the location where the text \"Hidden by two\" from `root>line` would be rendered. Since no text is visible in the provided image, a viewer cannot read it.\n\nANSWER: NO\n",
+  "ms": 11825
+}

@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The point (120,120) lies within all three absolutely positioned boxes: `root>back`, `root>middle`, and `root>front`. However, the box a viewer sees is determined by stacking order: `root>middle` has `z-index: 3`, while `root>front` has `z-index: 2` and `root>back` has `z-index: 1`. The rendering notes confirm `root>middle` paints later and fully covers `root>front` at that overlap, so the viewer sees `root>middle` at (120,120).\n\nANSWER: root>middle\n",
+  "ms": 9023
+}

@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>front",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "At the overlap point (120,120), only the topmost element in the stacking order will be visible; the evidence says all three boxes overlap that point but doesn’t indicate any partial coverage, so one box must be on top. Given the page’s three layers are labeled `back`, `middle`, and `front`, the viewer would see the `front` box at the shared overlapping region.\n\nANSWER: root>front\n",
+  "ms": 7182
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the data provided, I need to analyze whether the text in `root>main>r21` is readable.\n\nFrom the getBoundingClientRect data for `root>main>r21`:\n- The element has dimensions: x=244, y=588, width=1012, height=26\n- It's positioned within the viewport (1280x800)\n\nHowever, the critical detail is in the computed style:\n- `color: rgb(255, 255, 255)` (white text)\n- `background-color: rgba(0, 0, 0, 0)` (transparent background)\n\nLooking at the parent element `root>main` (the section):\n- `background-color: rgba(0, 0, 0, 0)` (transparent)\n\nAnd the root element:\n- `background-color: rgb(255, 255, 255)` (white background)\n\nSo `root>main>r21` has white text (rgb(255, 255, 255)) on what appears to be a white background (the page background is white). This creates no contrast between the text and its background, making the text invisible/unreadable to a viewer, despite being physically present in the DOM.\n\nANSWER: NO\n",
+  "ms": 8804
+}

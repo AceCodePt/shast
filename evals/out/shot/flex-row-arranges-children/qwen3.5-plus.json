@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In a flex container with `flex-direction: row` (the default), children are laid out horizontally from left to right. The first child occupies 100px of width (x=0 to x=100), then there's a 10px gap (x=100 to x=110), and then the second child begins. Therefore, the left edge of `root>second` renders at x=110px.\n\nANSWER: 110\n",
+  "ms": 12928
+}

@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, `root>b` has a measured border box with `width=400` CSS pixels. This matches the flex distribution: with `flex: 1` for A and `flex: 2` for B (total flex = 3), the 600px container is split into thirds—A gets 1/3 (200px) and B gets 2/3 (400px).\n\nANSWER: 400\n",
+  "ms": 11238
+}

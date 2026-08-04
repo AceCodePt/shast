@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\n- `root` is a flex container with `display: flex` and `gap: 10px`\n- It contains two children, each 100px wide\n- The viewport is 600px wide\n\nIn a flex container with `flex-direction: row` (the default), children are arranged horizontally from left to right. The first child starts at x=0 and takes up 100px (0 to 100px). Then there's a 10px gap. The second child's left edge therefore starts at x=100 + 10 = 110px.\n\nThe screenshot confirms this layout, showing \"first\" on the left side and \"second\" positioned to its right with visible spacing between them.\n\nANSWER: 110\n",
+  "ms": 6561
+}

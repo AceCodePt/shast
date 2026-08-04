@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has a fixed `height` of 48px and its `overflow` property is set to `visible`. In CSS, `overflow: visible` ensures that content exceeding the dimensions of the box is not clipped and is instead rendered outside the element's boundaries. The provided screenshot confirms this, as the final lines of text are clearly painted on the white background below the black border of the card.\n\nANSWER: YES\n",
+  "ms": 10636
+}

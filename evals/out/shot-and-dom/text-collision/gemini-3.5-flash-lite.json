@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Both `root>ghost` and `root>visible` have their bounding client rectangles starting at coordinates x=0, y=0. Consequently, the text of `root>visible` is rendered at the exact same origin as the text of `root>ghost`, causing their glyphs to overlap on the same pixels.\n\nANSWER: root>visible\n",
+  "ms": 7401
+}

@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "## Reasoning\n\n`root>row` (the `<p>`) has its text \"Short label\" rendered in the top-left of its content box. With padding of 4px and default left text alignment, the text begins around x=4, y=4. At 16px font with ~19.2px line-height, the text sits on the first line occupying roughly y=4 to y=23. \"Short label\" is only ~11 characters, so even at a generous ~10px/char it spans only about x=4 to x=110.\n\n`root>chip` covers the rectangle x=400–560, y=60–100.\n\nThe text region (≈ x:4–110, y:4–23) and the chip region (x:400–560, y:60–100) do not overlap — neither horizontally nor vertically. The chip sits far to the right and below where the short text actually renders, so it occludes only empty space within the row's box, not any glyphs.\n\nANSWER: NO\n",
+  "ms": 19652
+}

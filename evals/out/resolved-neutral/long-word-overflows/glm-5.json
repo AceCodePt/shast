@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The content of `root>cell` is 518.41px wide, but the box is only 120px wide, and the report explicitly marks it as \"overflows.\" Since overflow is visible, the URL is painted outside the 120px box rather than being contained within it.\n\nANSWER: NO\n",
+  "ms": 10013
+}

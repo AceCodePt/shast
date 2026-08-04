@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>plain>pin` is `position: absolute`, so its offset (`left: 10px; top: 10px`) is applied relative to the nearest positioned ancestor. `root>plain` is `position: static`, but `root` is `position: relative`, so `pin`’s containing block is `root`. Therefore, the `getBoundingClientRect()` values for `root>plain>pin` give the rendered top-left corner in the viewport: `x=10`, `y=10`.\n\nANSWER: 10,10\n",
+  "ms": 9367
+}

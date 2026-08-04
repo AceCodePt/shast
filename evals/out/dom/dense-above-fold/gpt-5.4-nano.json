@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r17` has `getBoundingClientRect` with `y=484` and `height=26`, so its content occupies roughly vertical pixels 484–510. The viewport height is `800`, and the footer starts at `y=1108`, so there is no need to scroll to reach `r17` when the page first loads. Therefore the text in `root>main>r17` should be visible.\n\nANSWER: YES\n",
+  "ms": 8433
+}

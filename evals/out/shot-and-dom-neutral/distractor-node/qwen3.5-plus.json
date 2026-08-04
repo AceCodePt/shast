@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>second` paragraph is positioned at y=19.1875, which starts just below the `root>cover` div that ends at y=19 (height 19px from y=0). Since the cover div only extends to y=19 and the second paragraph begins at y=19.1875, the text is not obscured by the black overlay. The paragraph has full opacity (1), black text color, and the screenshot confirms \"Second paragraph here\" is visible.\n\nANSWER: YES\n",
+  "ms": 17047
+}

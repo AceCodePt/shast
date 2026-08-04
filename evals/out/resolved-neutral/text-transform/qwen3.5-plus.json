@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The information shows that `root>title` contains text that was written as \"Annual review\" in the source, but the parent element has `text-transform: uppercase` CSS applied. This causes the text to be rendered in uppercase. The rendered output explicitly shows `\"ANNUAL REVIEW\"`.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 10055
+}

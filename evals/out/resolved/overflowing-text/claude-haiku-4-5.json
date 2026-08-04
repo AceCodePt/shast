@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Let me analyze the report for `root>card`:\n\nThe border box has a height of 48px. To determine if the text fits, I need to account for the padding and border:\n- Padding: 8px (top and bottom)\n- Border-width: 1px (top and bottom)\n- This leaves: 48px - 8px (padding) - 8px (padding) - 1px (border) - 1px (border) = 30px for content height\n\nThe report states the content is 153.61x76.75px inside a 162x30px content box. The content height is 76.75px, but the available content height is only 30px.\n\nSince 76.75px > 30px, the text does not fit inside the border box. The report confirms this by noting \"overflows: content is 153.61x76.75px inside a 162x30px content box, so it is painted outside the box rather than cut off (overflow is visible).\"\n\nANSWER: NO\n",
+  "ms": 9742
+}

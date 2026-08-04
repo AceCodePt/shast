@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The element `root>main>r09` is rendered with visible text (\"09. Currency hedging\") in normal document flow. Although `root>banner` is positioned on top of it with a higher z-index, its background color is fully transparent (`rgba(0, 0, 0, 0)`) and it contains no text or child elements. Consequently, nothing obscures the text, and it is fully readable.\n\nANSWER: YES\n",
+  "ms": 8891
+}

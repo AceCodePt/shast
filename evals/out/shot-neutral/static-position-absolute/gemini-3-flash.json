@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "28",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "To determine the y-coordinate of the top edge of `root>floaty`, we analyze the layout rules and the visual evidence provided:\n\n1.  **Static Position of Absolutely Positioned Elements**: According to CSS specifications, an element with `position: absolute` that does not declare `top`, `right`, `bottom`, or `left` properties is placed at its **static position**. The static position is the location the element would have occupied if it were `position: static` in the normal document flow.\n\n2.  **Document Flow and Block Elements**: \n    *   The `root>spacer` element is a `div`, which is a block-level element by default.\n    *   The `root>floaty` element is also a `div`.\n    *   In the normal flow, a block-level element following another block-level element starts on a new line, immediately below the preceding element's bottom edge.\n\n3.  **Default Browser Styles (Chromium)**:\n    *   Chromium applies a default margin of **8px** to the `body` element. In the screenshot, the text \"spacer\" is offset from the top and left edges by exactly this amount, confirming the 8px margin is present.\n    *   The height of a `div` containing only text is determined by its `line-height`. In Chromium, the default font size is 16px, and the default `line-height` (typically `normal`, which is ~1.2) results in a line box height of approximately **20px** (or 18px-20px depending on the specific font).\n\n4.  **Visual Measurement**:\n    *   The top edge of the `root>spacer` box begins at **y = 8**.\n    *   The distance between the top of the \"spacer\" text and the top of the \"floaty\" text in the screenshot is consistent with a line height of **20px**.\n    *   Summing the top margin (8px) and the height of the first block (`spacer`, 20px) gives the starting y-coordinate for the next block.\n\nTherefore, the top edge of the `root>floaty` element renders at y = 8 + 20 = 28.\n\nANSWER: 28\n",
+  "ms": 129192
+}

@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Let me work through this step by step.\n\nThe `root>plain>pin` element has `position: absolute` with `top: 10px` and `left: 10px`. When an element is absolutely positioned, its position is relative to the nearest positioned ancestor.\n\nLooking at the hierarchy:\n- `root` has `position: relative` (it is positioned)\n- `root>plain` has no position property mentioned (so it's not positioned)\n- `root>plain>pin` has `position: absolute`\n\nSince `root>plain` is not positioned, we skip it when looking for the positioning context. The nearest positioned ancestor is `root`, which has `position: relative`.\n\nThe `root` element has its top-left corner at x=0, y=0. The `root>plain>pin` element has `top: 10px` and `left: 10px` relative to its positioned ancestor (`root`).\n\nTherefore, the top-left corner of `root>plain>pin` renders at:\n- x = 0 + 10 = 10\n- y = 0 + 10 = 10\n\nThis matches the border box information provided (`@ x=10 y=10`), which confirms this reasoning.\n\nANSWER: 10,10\n",
+  "ms": 9368
+}

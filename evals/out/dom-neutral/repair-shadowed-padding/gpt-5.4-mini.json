@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `section` already has a computed `padding: 4px`, so the `32px` change you made in `root>body>panel` is not the rule actually winning in the cascade. The visible spacing is coming from the wrapper rule above it, so you need to edit the `root>body` CSS block.\n\nANSWER: root>body\n",
+  "ms": 28458
+}

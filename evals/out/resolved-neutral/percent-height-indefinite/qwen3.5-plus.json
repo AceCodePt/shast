@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered dimensions:\n\n- `root>outer>filler` has a height of **60px**\n- `root>outer>tall` has a height of **19.19px** (despite declaring `height: 100%`)\n\nThe `height: 100%` on `tall` resolves to 19.19px in the actual rendering, which is significantly less than its sibling's 60px. The percentage height is calculated based on the containing block's height, not the sibling's height.\n\nANSWER: NO\n",
+  "ms": 11481
+}

@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The card’s border box is 48px tall, but it has 8px top and bottom padding plus 1px borders, leaving only 30px for content. The text is a long sentence that would wrap, and even two lines at `line-height: 19.2px` would need more than 30px, so not all of it fits inside the card’s own box.\n\nANSWER: NO\n",
+  "ms": 9516
+}

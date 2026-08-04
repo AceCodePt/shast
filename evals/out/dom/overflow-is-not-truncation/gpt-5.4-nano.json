@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Because `root>card` has `overflow: visible`, it does not clip its contents to its own bounding box. The evidence also shows the element’s border/content box ends at `y + height = 48px`, but with overflow visible, any text that extends past that bottom edge is still painted and can appear on the page outside the element. So a person could still read the last line even though it visually falls below `root>card`’s bottom edge.\n\nANSWER: YES\n",
+  "ms": 10390
+}

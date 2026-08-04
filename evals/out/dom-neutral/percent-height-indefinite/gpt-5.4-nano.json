@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>outer>tall` has `getBoundingClientRect` height `19.1875px`, while its sibling `root>outer>filler` has height `60px`. Even though the CSS says `height: 100%`, the browser’s computed layout shows that the `tall` node is shorter than `filler` in the rendered result.\n\nANSWER: NO\n",
+  "ms": 8277
+}

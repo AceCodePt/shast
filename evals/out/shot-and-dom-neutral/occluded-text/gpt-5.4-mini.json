@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>lede` paragraph sits entirely under the absolutely positioned banner: its box runs from `y=0` to about `54px`, while the banner covers `y=0` to `70px` with higher `z-index`. So the lede text is occluded and a reader cannot read the whole sentence.\n\nANSWER: NO\n",
+  "ms": 10342
+}

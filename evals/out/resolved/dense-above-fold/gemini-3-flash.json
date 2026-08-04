@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 1280x800, meaning any element with a vertical position (y) plus height less than 800 is above the fold. `root>main>r17` is located at y=484 with a height of 26, placing its bottom edge at y=510, which is well within the initial 800px view. Additionally, while the sidebar overlaps the `main` container, the sidebar's width is 220px and `r17` starts at x=244px, so there is no horizontal occlusion.\n\nANSWER: YES\n",
+  "ms": 9691
+}

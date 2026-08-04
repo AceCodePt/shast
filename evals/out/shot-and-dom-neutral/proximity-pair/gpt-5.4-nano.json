@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>alpha` is positioned at `x=20, y=20` and spans `y=20..60`. `root>beta` starts at `y=64` and spans `y=64..104`, so it is only slightly separated from `alpha` (a small gap). `root>gamma` is at `y=200..240`, which is far below both `alpha` and `beta`, making it visually separated from the other two.\n\nANSWER: root>gamma\n",
+  "ms": 13654
+}

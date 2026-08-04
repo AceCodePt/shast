@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Comparing the two screenshots (`rest.png` and `hover.png`), the rendered text \"Leaf\" remains in the exact same position and state without any layout shift or visual change between the rest state and the hover state. This indicates that the `:hover` pseudo-class rule does not alter its padding or affect the rendering.\n\nANSWER: NO\n",
+  "ms": 7498
+}

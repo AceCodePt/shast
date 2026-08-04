@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element is a CSS grid with a first column width of 200px and a 20px gap. Therefore, the second column (`root>right`) starts immediately after the first column plus the gap, at x = 200 + 20 = 220, which is also confirmed by its `getBoundingClientRect` x value.\n\nANSWER: 220\n",
+  "ms": 8617
+}

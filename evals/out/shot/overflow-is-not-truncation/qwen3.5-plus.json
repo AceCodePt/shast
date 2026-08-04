@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, I can see all four lines of text are visible and readable: \"Payment failed\", \"because the card\", \"on file expired\", and \"last month.\" Even though the last line appears to extend beyond the card's border (indicating a visual overflow issue), the text is still clearly painted and visible on the screen where a person could read it.\n\nANSWER: YES\n",
+  "ms": 15781
+}

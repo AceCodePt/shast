@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In the document order, `root>high` appears after `root>low` (which contains `root>low>inner`) under the common parent `root`. Since they share the same stacking context and have default positioning, later siblings are painted on top of earlier ones. This is also visually confirmed by the screenshot, where the red `high` box visibly obscures the blue `inner` box in their overlapping region.\n\nANSWER: root>high\n",
+  "ms": 9065
+}

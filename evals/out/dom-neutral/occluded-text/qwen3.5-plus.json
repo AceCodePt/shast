@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>banner` div is absolutely positioned at `x=0, y=0` with `z-index: 5` and an opaque background color (`rgb(34, 34, 34)`). The `root>lede` paragraph sits at the same position (`x=0, y=0`) but with `z-index: auto` (effectively 0) and `position: static`. Since the banner has a higher z-index and covers 70px of vertical space (while lede is only 54.375px tall), the banner's opaque background will completely obscure the lede text.\n\nANSWER: NO\n",
+  "ms": 16493
+}

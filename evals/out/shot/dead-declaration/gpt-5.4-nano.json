@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree confirms that `root>body>panel` is a `section` containing the text `\"Panel\"` and that Chromium rendered the page at 600x300. However, the provided evidence does not show any visual inset consistent with `padding: 32px`—the screenshot text appears essentially at the page’s top-left rather than shifted inward by ~32 CSS pixels. Since the only authoritative rendering evidence is what’s actually on screen, we can’t attribute any visible layout shift to that padding declaration.\n\nANSWER: NO\n",
+  "ms": 11669
+}

@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `getBoundingClientRect()` for `root>plain>pin` directly shows `x=10 y=10`. Since `root>plain` has `position: static`, it does not create a containing block for absolutely positioned descendants. Therefore, `pin` (which is `position: absolute`) positions itself relative to the nearest positioned ancestor—`root` with `position: relative`. The `top: 10px` and `left: 10px` are calculated from `root`'s containing block, resulting in the rendered position shown in the rect data.\n\nANSWER: 10,10\n",
+  "ms": 15984
+}

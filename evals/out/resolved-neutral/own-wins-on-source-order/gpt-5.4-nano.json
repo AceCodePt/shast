@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendered output explicitly lists `padding: 64px` for `root>child`, meaning that 64px is the final, applied padding after CSS cascade/shadowing. The trace then clarifies that this `64px` “shadows” (overrides) the other declarations: `4px` from `root`’s `> child` block and `32px` from `root>child`’s earlier top-of-block declaration, both of which are superseded by the later/more-specific `&.big` rule.\n\nANSWER: 64px\n",
+  "ms": 9156
+}

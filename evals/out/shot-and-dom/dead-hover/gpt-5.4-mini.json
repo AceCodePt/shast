@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The computed styles shown for `root>mid>leaf` are identical at rest and on hover, and `padding` stays `2px 2px 2px 2px` in both states. So the `:hover` rule setting `padding: 40px` is not taking effect here.\n\nANSWER: NO\n",
+  "ms": 6563
+}

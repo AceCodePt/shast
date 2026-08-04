@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows that the text \"Important\" (part of the content for `root>ghost`) is rendered at the same coordinates as the text \"Everything\" from `root>visible`, creating a visible collision of glyphs in the top-left corner. Although the word \"warning\" appears on a subsequent line, the initial portion of `root>ghost`'s text is drawn on the same pixels as the text in `root>visible`.\n\nANSWER: root>visible\n",
+  "ms": 11179
+}

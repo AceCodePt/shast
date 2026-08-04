@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Adding `position: relative` to `root>plain` establishes a positioning context for absolute descendants, but it does not alter the layout or position of normal-flow elements. Because `root>plain>pin` is in the normal flow, its static position remains unaffected by this change. Therefore, its top-left corner continues to render at `0,0`.\n\nANSWER: 0,0\n",
+  "ms": 10357
+}

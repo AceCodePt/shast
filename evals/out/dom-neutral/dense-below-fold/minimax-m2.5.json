@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 800px tall, but `root>main>r36` is positioned at y=978 with a height of 26px (extending to y=1004). This means the entire element sits below the visible 800px viewport, so it cannot be seen without scrolling.\n\nANSWER: NO\n",
+  "ms": 6833
+}

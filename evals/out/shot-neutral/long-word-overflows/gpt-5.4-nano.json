@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The evidence shows that the entire URL text `https://example.com/a/very/long/path/that/never/breaks` is the contents of the `root>cell` element. Since the URL is a very long, effectively unbreakable string (“that/never/breaks” contains no natural breakpoints), there’s no reason to expect it to wrap to fit a 120px-wide box; instead, the likely behavior for such “long-word-overflows” is to overflow the container. Therefore, the URL does not stay contained within the 120px-wide `root>cell` box.  \n\nANSWER: NO\n",
+  "ms": 9346
+}

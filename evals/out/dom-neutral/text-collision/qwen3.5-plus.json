@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding box data:\n\n- `root>ghost` has `x=0 y=0 width=0 height=0` — it occupies no visible area\n- `root>visible` has `x=0 y=0 width=400 height=19.1875` — it starts at the same origin position\n\nBoth elements share the same top-left position (0, 0). Since `root>ghost` is collapsed to zero dimensions, any text it would render would be at position (0, 0), which is exactly where `root>visible` begins rendering its text. The visible element's text occupies the pixels at that same origin point.\n\nANSWER: root>visible\n",
+  "ms": 17984
+}

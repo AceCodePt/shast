@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the computed style data:\n\n**At rest:** `root>mid>leaf` has `padding: 2px 2px 2px 2px`\n\n**While hovering:** `root>mid>leaf` has `padding: 2px 2px 2px 2px`\n\nThe padding values are identical in both states. Even though there may be a `:hover` CSS rule that attempts to set `padding: 40px`, the browser's computed style shows no actual change—the padding remains 2px on all sides. The screenshots also appear identical, confirming no visual change occurs on hover.\n\nANSWER: NO\n",
+  "ms": 14261
+}

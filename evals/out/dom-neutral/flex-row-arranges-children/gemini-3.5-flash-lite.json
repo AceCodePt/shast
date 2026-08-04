@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>first` has a width of 100px and starts at x=0. Because `root` has a flex `gap` of 10px, `root>second` is positioned immediately after `root>first` plus the 10px gap, placing its left edge at x = 100 + 10 = 110 (which also matches the `getBoundingClientRect` data x=110).\n\nANSWER: 110\n",
+  "ms": 6036
+}

@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first column is 200px wide, and the gap between columns is 20px, so the second column's left edge starts at 200 + 20 = 220px. This matches the reported `getBoundingClientRect` for `root>right` (x=220).\n\nANSWER: 220\n",
+  "ms": 8134
+}

@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element is a flex container with a total width of 600px. The children use the `flex: <number>` shorthand, which sets `flex-grow` to the specified number and `flex-basis` to `0%`. This means the entire width of the container is distributed based on the flex-grow ratios. With `root>a` having a flex factor of 1 and `root>b` having a flex factor of 2, the total units are 3. `root>b` therefore occupies 2/3 of the total width.\n\nCalculation: (2 / 3) * 600px = 400px.\n\nANSWER: 400\n",
+  "ms": 14502
+}

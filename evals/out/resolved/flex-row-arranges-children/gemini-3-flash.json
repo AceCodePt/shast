@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states the coordinates for the border box of `root>second` as `@ x=110 y=0 width=100 height=19.19`. This position is calculated by taking the starting position of the first child (`x=0`), adding its width (`100px`), and then adding the specified flex `gap` of `10px`.\n\nANSWER: 110\n",
+  "ms": 9532
+}

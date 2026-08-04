@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element declares `line-height: 2` as a unitless number. Unitless line-height values are inherited as unitless, not as computed pixel values. This means `root>big` inherits `line-height: 2` and multiplies it by its own `font-size: 32px`.\n\nTherefore: 32px × 2 = 64px\n\nANSWER: 64\n",
+  "ms": 12870
+}

@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The URL in `root>cell` does not stay inside the 120px-wide box. The `getComputedStyle` for `root>cell` specifies a `width` of `120px` and `overflow: visible`, while the screenshot shows the long URL string extending nearly across the entire 600px-wide viewport. Since the URL contains no spaces or break points and the container is only 120px wide, the text overflows its bounds horizontally.\n\nANSWER: NO\n",
+  "ms": 8195
+}

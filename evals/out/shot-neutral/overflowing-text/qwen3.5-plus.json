@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, I can see the text \"Payment failed because the card on file expired last month.\" is displayed across 4 lines within a bordered box. All the text is fully visible and contained within the border - nothing is cut off or overflowing.\n\nANSWER: YES\n",
+  "ms": 14640
+}

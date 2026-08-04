@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values for each box:\n- `root>back`: z-index: 1\n- `root>middle`: z-index: 3\n- `root>front`: z-index: 2\n\nThe point (120, 120) falls within all three boxes' bounding rectangles. In CSS stacking, higher z-index values render on top of lower ones. The `middle` box has the highest z-index (3), so it appears above both `back` (z-index 1) and `front` (z-index 2).\n\nANSWER: root>middle\n",
+  "ms": 17464
+}

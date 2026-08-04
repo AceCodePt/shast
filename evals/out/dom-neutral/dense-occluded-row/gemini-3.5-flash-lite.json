@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The element `root>banner` is positioned absolutely at `x=244 y=276` with a width of 700px, height of 26px, and `z-index: 5`, directly overlapping `root>main>r09` (which occupies `x=244` to `1256` at `y=276`). Because `root>banner` has an opaque background color (`rgb(204, 34, 34)`) and sits on top in the stacking order, it visually obscures the text of `root>main>r09`.\n\nANSWER: NO\n",
+  "ms": 8591
+}

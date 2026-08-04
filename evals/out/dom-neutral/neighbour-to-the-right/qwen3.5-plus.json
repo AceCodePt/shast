@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding box data:\n\n- `root>leftBottom` has `x=0, y=120` (bottom-left corner)\n- `root>rightBottom` has `x=340, y=120` (same y-coordinate, but further right)\n\nBoth nodes share the same `top: 120px` position, placing them on the same horizontal row. The node with the larger x-value (340px vs 0px) sits to the right.\n\nANSWER: root>rightBottom\n",
+  "ms": 12642
+}

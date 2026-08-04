@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The screenshot shows a bordered box with rounded corners containing the text \"Panel\". According to the provided node tree, the text \"Panel\" is the content of the node `root>body>panel`. Since `border-radius` is a non-inherited CSS property, it must be declared in the CSS block of the node that exhibits the visual effect.\n\nANSWER: root>body>panel\n",
+  "ms": 13334
+}

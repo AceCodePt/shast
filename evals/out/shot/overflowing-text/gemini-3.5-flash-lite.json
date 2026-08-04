@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot and node tree show that `root>card`'s 48px-tall box only contains the first two lines of text (\"Payment failed because the card\"). The remaining text (\"on file expired last month.\") overflows and renders completely outside the bottom border of the box. Therefore, not all of the text fits inside the box.\n\nANSWER: NO\n",
+  "ms": 9883
+}

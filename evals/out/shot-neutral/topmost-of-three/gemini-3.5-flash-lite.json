@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>front",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "In standard document order, elements appearing later in the DOM tree are rendered on top of preceding elements. Since `root>front` is the last of the three box divs in the node tree, it is painted last and sits above `root>back` and `root>middle`. Therefore, at any overlapping point such as (120,120), the viewer sees the topmost element.\n\nANSWER: root>front\n",
+  "ms": 7480
+}

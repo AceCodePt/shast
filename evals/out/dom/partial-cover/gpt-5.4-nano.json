@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>row` is a normal-flow `<p>` with a bounding box from `y=0` to `y=120`. `root>chip` is an absolutely positioned `<div>` painted on top, with a box from `y=60` to `y=100` and `x=400` to `x=560`, so it overlaps the *area* of the `<p>` in the middle.\n\nHowever, `root>row`’s only text is `\"Short label\"` (single line), and the `<p>` has only `padding: 4px` with no evidence of vertical centering or extra lines; that text would render near the top of the `<p>` (around `y≈4` onward), not down in `y=60..100`. Since the chip’s overlap region is below where that text would appear, none of the row’s own text is hidden.\n\nANSWER: NO\n",
+  "ms": 10545
+}

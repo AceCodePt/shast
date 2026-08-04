@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered screenshot:\n\n```\nfirst\nsecond\n  third\nfourth\n```\n\nThree rows (\"first\", \"second\", \"fourth\") share the same left edge alignment. The \"third\" row is visibly indented to the right compared to the others.\n\nANSWER: root>third\n",
+  "ms": 11060
+}

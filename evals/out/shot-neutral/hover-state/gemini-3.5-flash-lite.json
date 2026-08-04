@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "blue",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Based on the attached screenshots and the node tree, the `root>cta` element containing the text \"Continue\" is rendered with a blue background when the page is first painted and the pointer is elsewhere.\n\nANSWER: blue\n",
+  "ms": 8515
+}

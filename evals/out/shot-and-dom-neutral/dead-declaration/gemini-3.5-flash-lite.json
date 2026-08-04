@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The computed style for `root>body>panel` shows a padding of `4px` rather than `32px`, indicating that the `padding: 32px` declaration is overridden by another rule in the CSS cascade. Since the final computed padding is 4px, the `padding: 32px` declaration has no effect on the rendered page.\n\nANSWER: NO\n",
+  "ms": 8894
+}

@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "No. The `root>banner` element is absolutely positioned at the top with `height: 70px` and `z-index: 5`, while `root>lede` starts at `y=0` and is only `54.375px` tall. That means the banner overlaps the entire lede paragraph, so the sentence would be covered rather than fully readable.\n\nANSWER: NO\n",
+  "ms": 7678
+}

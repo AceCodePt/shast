@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\nThe `root>ghost` node has `getBoundingClientRect` of `x=0 y=0 width=0 height=0`, meaning its text glyphs originate at coordinate (0, 0). The `root>visible` node has `getBoundingClientRect` of `x=0 y=0 width=400 height=19.1875`, so its text glyphs also originate at (0, 0). Both texts start at the same top-left point, so their glyphs overlap on the same pixels. The `root` container merely wraps these children and isn't the node whose text overlaps.\n\nANSWER: root>visible\n",
+  "ms": 11505
+}

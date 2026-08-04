@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the collision information provided:\n\n- `root>ghost` has a collision note stating: \"root>visible <div> draws its text on the same pixels, over 56% of this node's glyphs\"\n- `root>visible` has a collision note stating: \"root>ghost <div> draws its text on the same pixels, over 50% of this node's glyphs\"\n\nBoth nodes are positioned at x=0 y=0, and since `root>ghost` has 0x0 dimensions with visible overflow, its text paints outside its box and overlaps with `root>visible`'s text.\n\nANSWER: root>visible\n",
+  "ms": 13843
+}

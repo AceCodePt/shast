@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>banner` div is positioned absolutely at y=0 with height 70px and z-index 5, directly overlaying the `root>lede` paragraph which sits at y=0 with height 54.375px. Since the banner is fully opaque (rgb(34, 34, 34)) and stacks above the lede, the lede's text is visually obscured.\n\nANSWER: NO\n",
+  "ms": 9374
+}

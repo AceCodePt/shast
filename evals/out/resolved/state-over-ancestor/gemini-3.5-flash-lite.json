@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "2px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report notes that the `:hover` state is a \"dead-state\" because the `padding: 2px` declared by root outranks the `:hover` rule (`padding: 40px`). Consequently, entering hover does not change the padding, and the element continues to render with its base resolved padding.\n\nANSWER: 2px\n",
+  "ms": 8035
+}

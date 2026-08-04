@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>row` (the `<p>`) occupies the rectangle from `x=0..600` and `y=0..120`, while `root>chip` occupies `x=400..560` and `y=60..100`. The `<p>`’s own text is shown via evidence as the string `\"Short label\"`, and its layout would be near the top of the `<p>` (the `<p>` has only `padding: 4px` and a normal line-height of `19.2px`, so the text would be in the top ~20–30px of the `<p>`). Since the chip starts at `y=60`, it overlaps only the lower part of the `<p>`, not the area where `\"Short label\"` would be painted.  \n\nANSWER: NO\n",
+  "ms": 10185
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the overlapping boxes at point (500, 400):\n\n- **root>alpha**: positioned at x=300, y=300, width=400, height=120 (covers x: 300-700, y: 300-420). Point (500, 400) is within these bounds. z-index: 2\n- **root>beta**: positioned at x=340, y=340, width=400, height=120 (covers x: 340-740, y: 340-460). Point (500, 400) is within these bounds. z-index: 4\n- **root>gamma**: positioned at x=380, y=380, width=400, height=120 (covers x: 380-780, y: 380-500). Point (500, 400) is within these bounds. z-index: 3\n\nAll three boxes contain the point (500, 400). The z-index values determine stacking order: higher z-index values appear on top. Beta has z-index: 4, which is the highest of the three, so its background color (rgb(68, 85, 102)) is what a viewer sees at that point.\n\nANSWER: root>beta\n",
+  "ms": 7816
+}

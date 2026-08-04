@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the browser data provided, I need to find the background color of `root>cta` in the initial state (before hover).\n\nThe first set of `getComputedStyle()` data shows the initial render state, where `root>cta` has:\n- `background-color: rgb(51, 85, 255)`\n\nThe second set of data shows the `:hover` state, where the background color changes to `rgb(0, 34, 204)`.\n\nSince the question asks for the background color \"when the page is first painted and the pointer is elsewhere,\" this refers to the initial state before any hover interaction occurs.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 6751
+}

@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>ghost`’s `getBoundingClientRect()` is `x=0 y=0 width=0 height=0`, so its painted glyphs (if any) would originate at the top-left of the viewport (0,0) with no nonzero layout area. The only other node with content that occupies those same top-left pixels is `root>visible`, whose bounding box is `x=0 y=0 width=400 height=19.1875`, covering the same initial pixel region where `root>ghost` would paint from.  \n\nANSWER: root>visible\n",
+  "ms": 12292
+}

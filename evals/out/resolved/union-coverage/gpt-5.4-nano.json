@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>line` contains a single text line, and the report explicitly marks it as `! covered: 1 of 1 text line(s) completely hidden`. Even though the two absolutely positioned covering divs don’t each span the entire line on their own, together they fully obscure the text. Therefore, a viewer cannot read the words in `root>line`.\n\nANSWER: NO\n",
+  "ms": 8885
+}

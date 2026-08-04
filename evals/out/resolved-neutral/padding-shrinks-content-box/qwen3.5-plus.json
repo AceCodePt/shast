@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The information provided explicitly states in the `root>card` section that the text \"broke onto 4 lines at 152px content width\". The 152px content width comes from the 200px total width minus the 24px padding on each side (200 - 48 = 152px). The text \"one two three four five six seven eight nine ten\" wraps across 4 lines within this constrained width.\n\nANSWER: 4\n",
+  "ms": 11611
+}

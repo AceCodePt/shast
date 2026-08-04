@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The screenshot shows the top of the page covered by a dark banner, and the `root>lede` text is not fully visible on screen. Since part of that sentence is occluded, a person cannot read the whole sentence.\n\nANSWER: NO\n",
+  "ms": 7696
+}

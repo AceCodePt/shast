@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `border-radius` property applied to `root>body>panel` is declared in the root node's CSS block under `> body > panel`. The intermediate node `root>body` and the target node `root>body>panel` do not contain a `border-radius` declaration. Therefore, the declaration originates from the root node.\n\nANSWER: root\n",
+  "ms": 14772
+}

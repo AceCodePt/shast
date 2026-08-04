@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The `border-radius` shown on `root>body>panel` comes from that same node’s own CSS block. The computed style lists `border-radius: 12px` only for `root>body>panel`, and none of the parent nodes show a border radius declaration.\n\nANSWER: root>body>panel\n",
+  "ms": 7030
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text for `root>main>r09` (\"09. Currency hedging\") is rendered in the main section and is clearly visible in the screenshot. Although `root>banner` is positioned over it with a higher z-index, its background-color is fully transparent (`rgba(0, 0, 0, 0)`) and it contains no text, so it does not obstruct the underlying content.\n\nANSWER: YES\n",
+  "ms": 10523
+}

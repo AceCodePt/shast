@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree shows that `root>title` contains the text **\"Annual review\"** in the source. The computed style for that node includes `text-transform: uppercase`, which changes the rendered text to uppercase without altering the underlying characters or whitespace (so the space between “Annual” and “review” remains). Therefore the viewer sees **ANNUAL REVIEW**.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 9142
+}

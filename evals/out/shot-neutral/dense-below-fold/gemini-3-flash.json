@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows the rendered page at the specified viewport of 1280x800. In the image, the list of items starts from \"01\" and is visible only up to \"28. Warranty reserves\" at the very bottom edge of the screen. Since \"36. Royalty accruals\" (node `root>main>r36`) appears much further down the list, it is located below the fold and is not visible without scrolling.\n\nANSWER: NO\n",
+  "ms": 8778
+}

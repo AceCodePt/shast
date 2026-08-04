@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "According to the browser data for `root>big`, its `getBoundingClientRect()` reports a height of 64 pixels. This is because `root>big` inherits the unitless line-height factor of 2 from `root` and computes its line-height based on its own `font-size` of 32px (2 × 32px = 64px).\n\nANSWER: 64\n",
+  "ms": 9496
+}

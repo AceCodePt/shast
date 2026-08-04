@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport width is 600 pixels and `root` is a flex container taking the full width of 600px. The items `root>a` and `root>b` have `flex: 1` and `flex: 2` respectively, with a default flex-basis of 0. Distributing the 600px container width proportionally according to their flex-grow factors (1 and 2), `root>b` receives 2/3 of the total width. Therefore, `root>b` is 400 pixels wide.\n\nANSWER: 400\n",
+  "ms": 11781
+}

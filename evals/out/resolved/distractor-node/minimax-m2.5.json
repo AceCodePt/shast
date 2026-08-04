@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>cover` div spans y=0 to y=19 with an opaque black background, but `root>second` starts at y=19.19 — just below the cover. The report does not flag `root>second` as covered, and there is no other element overlapping it. So its text is fully visible to the viewer.\n\nANSWER: YES\n",
+  "ms": 7056
+}

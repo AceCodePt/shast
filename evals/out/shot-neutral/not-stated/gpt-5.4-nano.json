@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report’s authoritative Chromium node tree includes the text content (“Total due”) and the viewport/layout, but it does not provide any computed styles such as the text color for `root>label`. Since no color information is stated anywhere in the given excerpt, we can’t determine the rendered text color from this report alone.\n\nANSWER: NOT STATED\n",
+  "ms": 8003
+}

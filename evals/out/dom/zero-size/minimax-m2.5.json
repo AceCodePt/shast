@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the measurements, `root` has a height of 19.1875px, which corresponds to exactly one line of text (matching the line-height of 19.2px). The `root>visible` element also has height 19.1875 and occupies that single line at y=0 with \"Everything is fine\". \n\n`root>ghost` has width=0 and height=0 with `overflow: visible`. Even though overflow allows content to escape the box bounds, a zero-width inline formatting context typically collapses line boxes and prevents text from painting. More decisively, if any text from `root>ghost` were rendered, it would either add to `root`'s total height (it does not — it stays at one line) or overlap the line already occupied by `root>visible` at y=0. There is no second line of layout space anywhere on the page for \"Important warning\" to occupy.\n\nANSWER: NO\n",
+  "ms": 20147
+}

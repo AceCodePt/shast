@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding client rect data provided:\n\n- The viewport is 1280x800 (visible area when page first loads)\n- `root>main>r36` has `getBoundingClientRect: y=978`\n\nThe element's top edge is at y=978, which is well below the viewport's bottom edge at y=800. This means the element is positioned below the fold and would not be visible without scrolling down the page.\n\nANSWER: NO\n",
+  "ms": 6587
+}

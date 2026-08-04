@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendering information for `root>body>panel` explicitly attributes the `border-radius: 12px` declaration to the `root` node. It specifies that the property was \"declared by root, inside its '> body > panel' block\", indicating that the CSS rule is defined within the `root` node's scope rather than in the `body` or the `panel` itself.\n\nANSWER: root\n",
+  "ms": 6616
+}

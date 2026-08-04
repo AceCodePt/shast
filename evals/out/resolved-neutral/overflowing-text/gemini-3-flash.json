@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has a border box height of 48px. Subtracting the top and bottom padding (8px each) and border-width (1px each) leaves a content box height of only 30px. Since the rendered text content is 76.75px tall, it exceeds both the 30px content box and the 48px border box, resulting in a visible overflow.\n\nANSWER: NO\n",
+  "ms": 11452
+}

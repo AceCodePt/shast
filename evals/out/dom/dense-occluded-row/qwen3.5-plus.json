@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering data:\n\n1. `root>main>r09` contains the text \"09. Currency hedging\" with black text (`color: rgb(0, 0, 0)`), fully opaque (`opacity: 1`), at position x=244, y=276.\n\n2. However, `root>banner` is positioned at the **exact same coordinates** (x=244, y=276, width=700, height=26) with `position: absolute` and `z-index: 5`.\n\n3. Since `root>main>r09` has `z-index: auto` (effectively 0) and the banner has `z-index: 5`, the red banner (`background-color: rgb(204, 34, 34)`) will render on top of r09, obscuring the text.\n\nANSWER: NO\n",
+  "ms": 19357
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 1280x800, meaning it shows content from y=0 to y=800. The element `root>main>r17` has a bounding box with y=484 and height=26, so it occupies the vertical space from y=484 to y=510. Since this range (484-510) is entirely within the viewport (0-800), the element is visible without scrolling.\n\nANSWER: YES\n",
+  "ms": 15272
+}

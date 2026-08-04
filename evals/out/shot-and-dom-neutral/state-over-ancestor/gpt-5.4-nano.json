@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "2px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "On hover, the `getComputedStyle()` evidence for `root>mid>leaf` shows `padding: 2px 2px 2px 2px`, and the hover section does not change that value compared to the rest state. The bounding rect stays the same too, consistent with padding being unchanged.  \n\nANSWER: 2px\n",
+  "ms": 8448
+}

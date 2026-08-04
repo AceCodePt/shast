@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The provided report for `root>label` specifies its position, dimensions, font-size, and padding, but it does not list a `color` or `text-color` property. Since the report contains no information regarding the visual appearance of the text other than its size, the text color is unknown.\n\nANSWER: NOT STATED\n",
+  "ms": 7131
+}

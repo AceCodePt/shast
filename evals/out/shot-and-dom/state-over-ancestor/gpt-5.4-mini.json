@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "2px 2px 2px 2px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "`root>mid>leaf` renders with the same padding while hovered as at rest: `2px` on all sides. The computed style shown for the hovered state still reports `padding: 2px 2px 2px 2px`, and the screenshots show no visible change.\n\nANSWER: 2px 2px 2px 2px\n",
+  "ms": 6856
+}

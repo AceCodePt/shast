@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The screenshot shows the text `Still readable` visible at the top-left, so even though two boxes paint over `root>line`, the viewer can still read it.\n\nANSWER: YES\n",
+  "ms": 7390
+}

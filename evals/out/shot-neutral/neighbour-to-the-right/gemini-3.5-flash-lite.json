@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the rendered node tree and screenshot, the four boxes form a two-by-two grid where `root>leftBottom` corresponds to the text \"left bottom\" on the bottom-left. The node directly to its right on the same row is `root>rightBottom`, which displays \"right bottom\".\n\nANSWER: root>rightBottom\n",
+  "ms": 5842
+}

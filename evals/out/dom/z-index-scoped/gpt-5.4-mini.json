@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>high` is on top in the overlap. `root>low` creates its own stacking context because it is positioned and has `z-index: 1`, so `root>low>inner` with `z-index: 999` can only stack within that context. `root>high` is a sibling stacking context with `z-index: 2`, so it paints above the entire `root>low` subtree.\n\nANSWER: root>high\n",
+  "ms": 9290
+}

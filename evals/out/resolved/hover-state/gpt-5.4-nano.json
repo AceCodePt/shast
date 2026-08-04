@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report lists two background colors for `root>cta`: a default `background-color: #3355ff` and a `:hover` state `background-color: #0022cc`. Since the pointer is elsewhere when the page is first painted, the `:hover` rule does not apply. Therefore, the background color is the default one.\n\nANSWER: #3355ff\n",
+  "ms": 12316
+}

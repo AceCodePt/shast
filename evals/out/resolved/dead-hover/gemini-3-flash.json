@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly identifies the element as being in a \"dead-state\" regarding its `:hover` interaction. It states that while a `:hover` block exists to set `padding: 40px`, it is outranked by a `padding: 2px` declaration from a selector within `root`. Consequently, the report concludes that \"entering `:hover` does not change padding.\"\n\nANSWER: NO\n",
+  "ms": 8419
+}

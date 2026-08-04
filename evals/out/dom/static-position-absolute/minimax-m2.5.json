@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The absolute element's static position is determined by where it would have been in normal flow. Since `root>spacer` already occupies the full 50px height of `root`, `root>floaty`'s natural flow position is at y=50. Without any `top`/`bottom` overrides, the browser keeps it at that static position.\n\nANSWER: 50\n",
+  "ms": 15160
+}

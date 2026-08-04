@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "`root>body>panel` is the node whose computed layout info includes `border-radius: 12px`. In the provided data, only that panel node’s computed style lists `border-radius`, which means the CSS declaration that results in the rendered `border-radius` (12px) is associated with the `root>body>panel` node’s own CSS block.\n\nANSWER: root>body>panel\n",
+  "ms": 6957
+}

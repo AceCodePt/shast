@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text line `root>line` is explicitly marked as having \"1 of 1 text line(s) completely hidden\" due to the overlapping opaque absolute elements (`root>leftHalf` and `root>rightHalf`). Together, these covering boxes span the region containing the text, completely obstructing it from view.\n\nANSWER: NO\n",
+  "ms": 8240
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r17` corresponds to the list item labeled **“17. Inventory valuation”**. In the provided rendered node tree, `root>main>r17` is present, and the screenshot content shows items from **01 through at least 28** within the initial viewport (1280x800) without any scrolling. Therefore, **“17. Inventory valuation”** is visible when the page first loads.\n\nANSWER: YES\n",
+  "ms": 7496
+}

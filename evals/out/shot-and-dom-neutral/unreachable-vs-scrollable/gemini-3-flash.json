@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element has a width of 500px and a height of 900px, while the viewport is 500px wide and 300px high. Because the `root` element's height (900px) exceeds the viewport height (300px), the browser will provide vertical scrolling, allowing the viewer to scroll down to reach the `root>lower` node, which is located at `y=700`.\n\nHowever, the `root` element's width (500px) exactly matches the viewport width. The `root>sideways` node, although 900px wide, is absolutely positioned and does not expand the width of its parent (`root`). Since the `root` container remains 500px wide and has `overflow: visible`, the extra width of the child node simply spills out to the right without triggering a horizontal scrollbar. Therefore, the viewer can scroll down to see `root>lower`, but they cannot scroll sideways to see the full extent of `root>sideways`.\n\nREASONING: The vertical height of the content (900px) exceeds the viewport height (300px), creating a vertical scrollbar that makes `root>lower` reachable. The horizontal width of the content (500px) does not exceed the viewport width (500px), so no horizontal scrollbar is created to reach the overflowing part of `root>sideways`.\n\nANSWER: root>sideways\n",
+  "ms": 97653
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The evidence shows the page rendering a list of items in the main section, and the attached screenshot (the initial 1280×800 view) only displays entries up through **“28. Warranty reserves”**. The node `root>main>r36` corresponds to **“36. Royalty accruals”**, which would be below the initially visible portion of the list and therefore not visible without scrolling.  \n\nANSWER: NO\n",
+  "ms": 9117
+}

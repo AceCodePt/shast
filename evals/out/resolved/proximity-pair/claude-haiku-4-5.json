@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the measured positions of the three siblings:\n\n- `root>alpha` is at y=20 (top: 20px)\n- `root>beta` is at y=64 (top: 64px)\n- `root>gamma` is at y=200 (top: 200px)\n\nAll three elements have the same width (120px) and height (40px).\n\nThe vertical spacing reveals that `root>alpha` and `root>beta` are closely positioned (only 44px apart vertically, with their bottom edges at y=60 and y=104 respectively). However, `root>gamma` is positioned much further down at y=200, creating a large gap of 96px between `root>beta`'s bottom edge (y=104) and `root>gamma`'s top edge (y=200).\n\nThis significant vertical separation visually isolates `root>gamma` from the other two elements.\n\nANSWER: root>gamma\n",
+  "ms": 11005
+}

@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>first` occupies `y=0` to `y=40`. The `root>gone` element is `display: none`, and the rendered layout shows it has `@ x=0 y=0 width=0 height=0`, meaning it does not take up any space in the normal flow. `root>third` starts at `y=40` immediately after `root>first`, so there is no extra vertical gap.  \n\nANSWER: NO\n",
+  "ms": 8977
+}

@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. Even though `root>line` is “covered” because the later-painted `root>glass` element overlaps it, the given notes state that `root>glass` has no background, so what’s behind it still shows through. Also, the information explicitly says that this node’s single text line stays fully visible.  \n\nANSWER: YES\n",
+  "ms": 8706
+}

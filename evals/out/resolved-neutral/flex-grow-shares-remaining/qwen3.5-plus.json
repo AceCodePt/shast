@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered layout data:\n\nThe root flex container is 600px wide. With `flex: 1` and `flex: 2`, the two children divide the space in a 1:2 ratio. This means 3 total parts, so each part is 600/3 = 200px. Item A (flex: 1) gets 200px, and item B (flex: 2) gets 400px.\n\nThe rendered data confirms this: `root>b` has `width=400`.\n\nANSWER: 400\n",
+  "ms": 12060
+}

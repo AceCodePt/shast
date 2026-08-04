@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "3",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The only concrete evidence provided is the rendered screenshot: the text “Child” appears essentially flush with the top-left of the child’s content area, with no obvious extra inset that would indicate a non-zero `padding` on `root > child`. Since the prompt asks what padding it actually renders with, the authoritative conclusion from the rendering is that `root > child` ends up with no effective padding.\n\nANSWER: 3\n",
+  "ms": 18172
+}

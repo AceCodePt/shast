@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report explicitly states the resolved coordinates for `root>plain>pin` as `@ x=10 y=10`. Since this element has `position: absolute` and its parent `root>plain` is not positioned (static), the absolute positioning is relative to the nearest positioned ancestor, which is `root` (with `position: relative`). The `top: 10px, left: 10px` values are resolved relative to `root`'s padding box, and the report already gives us the final viewport coordinates.\n\nANSWER: 10,10\n",
+  "ms": 16601
+}

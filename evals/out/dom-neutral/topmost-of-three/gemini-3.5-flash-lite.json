@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "All three boxes share the same stacking context established by the root element and are positioned absolutely. Their stacking order is determined by their `z-index` values: `root>back` has `z-index: 1`, `root>front` has `z-index: 2`, and `root>middle` has `z-index: 3`. Since `root>middle` has the highest `z-index`, it is painted on top of the other two boxes at the overlapping point (120, 120).\n\nANSWER: root>middle\n",
+  "ms": 8716
+}

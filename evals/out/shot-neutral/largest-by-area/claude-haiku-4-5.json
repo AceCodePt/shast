@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "root>wide",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered page screenshot and the node tree information:\n\nThe viewport is 700x420 CSS pixels. I can see three boxes on the page:\n- \"wide\" box at the top\n- \"tall\" box on the bottom left\n- \"square\" box on the bottom right\n\nFrom the screenshot, the \"wide\" box appears to span nearly the full width of the viewport (approximately 700px wide) and has a moderate height. The \"tall\" box appears narrower but taller, and the \"square\" box appears to be roughly equal in width and height.\n\nComparing the visual areas: the \"wide\" box covers significantly more total area than the other two boxes. Its width is much greater, and even though its height is modest, the product of its dimensions (width × height) clearly exceeds both the \"tall\" and \"square\" boxes.\n\nANSWER: root>wide\n",
+  "ms": 6521
+}

@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When an absolutely positioned element has no offsets specified, it stays at its **static position** — where it would have been placed in normal flow. In the normal flow, `root>spacer` occupies y=0 to y=50 (filling the root's content box), so `floaty` would come immediately after it, at y=50. Since no offsets are declared, it renders at that static position.\n\nANSWER: 50\n",
+  "ms": 7324
+}

@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the bounding rect data provided, the `root>first`, `root>second`, and `root>fourth` elements all share a left coordinate (`x`) of 24 pixels. In contrast, `root>third` has a left coordinate of 40 pixels, meaning it is indented further to the right and out of alignment with the others.\n\nANSWER: root>third\n",
+  "ms": 8524
+}

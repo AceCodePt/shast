@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` text is \"covered\" by `root>banner`, but the report is explicit that the banner has **no background**, so what is behind it still shows through. Furthermore, the report states directly that this node's 2 text line(s) **stay fully visible**. The wrapping is just a layout detail (text broke onto 2 lines), not truncation — the ellipsis in the report is the report's own display truncation, not a rendering one.\n\nANSWER: YES\n",
+  "ms": 16887
+}

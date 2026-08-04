@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Three rows sit at x=24 (first, second, fourth), while third sits at x=40. So the third row's left edge is shifted right by 16px, making it the outlier.\n\nANSWER: root>third\n",
+  "ms": 6622
+}

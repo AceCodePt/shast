@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the data for `root>main>r21`:\n\n- The text content is \"21. Treasury positions\"\n- The `color` is `rgb(255, 255, 255)` (white text)\n- The `background-color` is `rgba(0, 0, 0, 0)` (transparent)\n- The parent `root>main` also has a transparent background\n- The root element has `background-color: rgb(255, 255, 255)` (white)\n\nSince the text is white and the effective background (inherited from root) is also white, there is no contrast. The white text on a white background would be invisible to a viewer.\n\nANSWER: NO\n",
+  "ms": 16233
+}

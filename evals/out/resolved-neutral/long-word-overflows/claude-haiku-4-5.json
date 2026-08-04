@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>cell` div has a width of 120px, but the content (the URL) is 518.41px wide. The key detail is the `overflows` notation which states: \"content is 518.41x19.19px inside a 120x19.19px content box, so it is painted outside the box rather than cut off (overflow is visible)\".\n\nThis explicitly indicates that the content overflows and is \"painted outside the box\" rather than being contained within it. Since the URL's rendered width (518.41px) far exceeds the container's width (120px), and the overflow is visible rather than hidden, the URL does not stay inside the 120px-wide box.\n\nANSWER: NO\n",
+  "ms": 8540
+}

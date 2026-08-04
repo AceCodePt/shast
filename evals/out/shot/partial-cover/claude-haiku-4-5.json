@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot and the node tree information:\n\n- `root>row` is a `<p>` element containing the text \"Short label\"\n- `root>chip` is a `<div>` element containing the text \"chip\"\n- The screenshot shows \"Short label\" text in the upper left area\n- The \"chip\" element (yellow box) is positioned in the upper right area\n\nFrom the visual evidence, the yellow \"chip\" box is positioned to the right and does not overlap with the \"Short label\" text. The \"Short label\" text is completely visible and not hidden by the chip element.\n\nANSWER: NO\n",
+  "ms": 10733
+}

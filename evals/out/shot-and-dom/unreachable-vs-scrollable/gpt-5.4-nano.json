@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport is 500px wide and 300px tall. `root>lower` has a bounding box of `x=0 y=700 width=400 height=40`, so it fits horizontally within 0–500 and sits below the current view; vertical scrolling can move it up to fully fit in the viewport (its height is only 40px). By contrast, `root>sideways` has `x=0 y=40 width=900 height=40`, so it extends to 900px wide while the viewport is only 500px; ordinary scrolling can’t bring the entire node into view without horizontal scrolling.\n\nANSWER: root>sideways\n",
+  "ms": 8336
+}

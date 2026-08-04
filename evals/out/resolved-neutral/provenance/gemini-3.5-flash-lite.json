@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided information, the `border-radius: 12px` property applied to `root>body>panel` is explicitly indicated as being declared by `root` inside its `\"> body > panel\"` block. \n\nANSWER: root\n",
+  "ms": 6051
+}

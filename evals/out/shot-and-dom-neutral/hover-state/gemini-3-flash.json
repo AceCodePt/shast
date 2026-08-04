@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the browser's data for the node `root>cta` at rest (when the pointer is elsewhere), the `background-color` is explicitly listed as `rgb(51, 85, 255)`. This is confirmed by comparing it to the hover state data, which shows the color changing to `rgb(0, 34, 204)`.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 10130
+}

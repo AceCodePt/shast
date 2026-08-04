@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided, I need to determine if a viewer can read the text in `root>main>r09`, which contains \"09. Currency hedging\".\n\nFrom the screenshot of the rendered page, I can see the navigation list on the left side showing items 01-28 visible on screen. The item `root>main>r09` (\"09. Currency hedging\") is clearly visible in the rendered output - it appears in the list of numbered items in the main content area.\n\nThe DOM tree structure shows this element exists with the text content \"09. Currency hedging\", and the screenshot confirms this text is rendered and visible on the page at the 1280x800 viewport size.\n\nTherefore, a viewer can read this text.\n\nANSWER: YES\n",
+  "ms": 6934
+}

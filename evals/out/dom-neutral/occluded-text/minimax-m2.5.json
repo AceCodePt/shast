@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The banner is absolutely positioned at (0, 0) with width 600 and height 70, and has z-index 5, placing it on top of the lede paragraph. The lede's bounding rect spans (0, 0) to (600, 54.375), which is entirely within the banner's covered area. Because the banner has an opaque background (rgb(34, 34, 34)) and sits above the lede in the stacking order, the lede text is fully occluded from view.\n\nANSWER: NO\n",
+  "ms": 7138
+}

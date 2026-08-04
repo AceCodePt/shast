@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree shows the source text is \"Annual review\", but the screenshot clearly displays \"ANNUAL REVIEW\" in all capital letters. CSS `text-transform: uppercase` has been applied to transform the rendered appearance. Since the question asks what a viewer **sees** (the rendered output, not the source), the visible characters are all uppercase.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 11915
+}

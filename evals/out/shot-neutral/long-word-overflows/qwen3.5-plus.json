@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, the URL text `https://example.com/a/very/long/path/that/never/breaks` appears as a single continuous line that extends across the viewport. Since the container (`root>cell`) is only 120px wide and the URL contains no natural break points (no spaces or hyphens), the text overflows horizontally beyond the container boundaries rather than wrapping or breaking.\n\nANSWER: NO\n",
+  "ms": 12239
+}

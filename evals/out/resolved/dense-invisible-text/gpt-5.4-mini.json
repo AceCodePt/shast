@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `r21` is rendered at `color: #ffffff` on a white main background, so the text has no visible contrast. The sidebar overlaps part of `main`, but `r21` starts at `x=244`, outside the sidebar’s `x=0..220` range, so the issue is color, not coverage.\n\nANSWER: NO\n",
+  "ms": 7843
+}

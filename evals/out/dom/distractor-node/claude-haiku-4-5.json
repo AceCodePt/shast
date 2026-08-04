@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the layout data provided:\n\nThe `root>second` paragraph is positioned at y=19.1875 and has a height of 19.1875px, placing it vertically from approximately y=19.1875 to y=38.375.\n\nThe `root>cover` div is positioned absolutely at y=0 with a height of 19px and a black background (rgb(0, 0, 0)). This cover div spans from y=0 to y=19, which does not overlap with the `root>second` paragraph's vertical position.\n\nSince the cover div only extends to y=19 and the second paragraph starts at y=19.1875, the text in `root>second` is not obscured by the cover layer. The viewer can read the text.\n\nANSWER: YES\n",
+  "ms": 8933
+}

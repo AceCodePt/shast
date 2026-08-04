@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly measures `root>b` as having a width of 400 pixels (`width=400`). Alternatively, in a flex container of width 600px, items with flex: 1 and flex: 2 divide the available space into 3 parts (200px each), giving `root>b` a width of 400px (2 × 200px).\n\nANSWER: 400\n",
+  "ms": 7160
+}

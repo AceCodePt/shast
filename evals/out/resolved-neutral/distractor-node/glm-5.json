@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>second` sits at y=19.19 with height 19.19, while the opaque `root>cover` div spans y=0 to y=19 (height 19px). The cover therefore ends at y=19, which is just above where the second paragraph begins at y=19.19, leaving the second paragraph fully visible and uncovered.\n\nANSWER: YES\n",
+  "ms": 18807
+}

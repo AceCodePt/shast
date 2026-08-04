@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>ghost` div has a bounding rect of width=0 and height=0, meaning it takes up zero space on the page. The screenshot shows only \"Everything is fine\" rendered visually, with no visible text for \"Important warning\" anywhere on the page.\n\nEven though the text \"Important warning\" exists in the DOM as content of the `root>ghost` element, a zero-size container cannot paint its content to the screen. With both width and height set to 0px, there is no rendering area for the text to appear in, regardless of other CSS properties like opacity being set to 1.\n\nThe visual evidence from the screenshot confirms this - only \"Everything is fine\" is visible, and \"Important warning\" is completely absent from the rendered output.\n\nANSWER: NO\n",
+  "ms": 7052
+}

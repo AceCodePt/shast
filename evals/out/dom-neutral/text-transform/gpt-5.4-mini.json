@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text inside `root>title` is `Annual review`, and the computed style shows `text-transform: uppercase` on that element. That means the browser renders the same characters in uppercase while preserving the space.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7932
+}

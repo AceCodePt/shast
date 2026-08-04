@@ -1,0 +1,134 @@
+[
+  {
+    "tag": "div",
+    "path": "root",
+    "style": {
+      "display": "block",
+      "position": "static",
+      "top": null,
+      "right": null,
+      "bottom": null,
+      "left": null,
+      "z-index": null,
+      "width": 600,
+      "height": 53.1875,
+      "padding": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "border-width": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "border-style": "solid",
+      "font-size": 16,
+      "line-height": 19.2,
+      "text-transform": "none",
+      "background-color": null
+    },
+    "x": 0,
+    "y": 0,
+    "width": 600,
+    "height": 53.1875,
+    "runs": [],
+    "children": [
+      1
+    ],
+    "contentWidth": 600,
+    "contentHeight": 53.1875
+  },
+  {
+    "tag": "div",
+    "path": "root>body",
+    "style": {
+      "display": "block",
+      "position": "static",
+      "top": null,
+      "right": null,
+      "bottom": null,
+      "left": null,
+      "z-index": null,
+      "width": 600,
+      "height": 53.1875,
+      "padding": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "border-width": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "border-style": "solid",
+      "font-size": 16,
+      "line-height": 19.2,
+      "text-transform": "none",
+      "background-color": null
+    },
+    "x": 0,
+    "y": 0,
+    "width": 600,
+    "height": 53.1875,
+    "runs": [],
+    "children": [
+      2
+    ],
+    "contentWidth": 600,
+    "contentHeight": 53.1875
+  },
+  {
+    "tag": "section",
+    "path": "root>body>panel",
+    "style": {
+      "display": "block",
+      "position": "static",
+      "top": null,
+      "right": null,
+      "bottom": null,
+      "left": null,
+      "z-index": null,
+      "width": 600,
+      "height": 53.1875,
+      "padding": {
+        "top": 16,
+        "right": 16,
+        "bottom": 16,
+        "left": 16
+      },
+      "border-width": {
+        "top": 1,
+        "right": 1,
+        "bottom": 1,
+        "left": 1
+      },
+      "border-style": "solid",
+      "font-size": 16,
+      "line-height": 19.2,
+      "text-transform": "none",
+      "background-color": null
+    },
+    "x": 0,
+    "y": 0,
+    "width": 600,
+    "height": 53.1875,
+    "runs": [
+      {
+        "text": "",
+        "x": 17,
+        "y": 17,
+        "width": 48.015625,
+        "height": 19.1875
+      }
+    ],
+    "children": [],
+    "contentWidth": 48.015625,
+    "contentHeight": 19.1875
+  }
+]

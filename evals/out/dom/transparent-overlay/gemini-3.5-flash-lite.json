@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The text for `root>lede` is truncated with an ellipsis (`targ…`) in the source, and the absolute-positioned banner (`root>banner`) with `z-index: 5` overlays the region from y=0 to y=70, completely covering the `root>lede` paragraph located at y=0 to y=54.375. Therefore, a person cannot read the whole sentence.\n\nANSWER: NO\n",
+  "ms": 9126
+}

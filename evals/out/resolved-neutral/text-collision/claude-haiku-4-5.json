@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the collision information provided:\n\nThe `root>ghost` div has a note stating: \"collides: root>visible <div> draws its text on the same pixels, over 56% of this node's glyphs\"\n\nThis explicitly tells us that `root>visible` is the node whose text is drawn on the same pixels as `root>ghost`'s text. The collision is bidirectional—`root>visible` also notes it collides with `root>ghost`, with over 50% of its glyphs overlapping.\n\nANSWER: root>visible\n",
+  "ms": 6383
+}

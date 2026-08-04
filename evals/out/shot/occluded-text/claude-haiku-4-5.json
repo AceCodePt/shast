@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe node tree shows that `root>lede` contains a `p` element with text: \"The quarterly results are in and every region beat its targ…\" (72 chars)\n\nThe ellipsis (\"…\") at the end indicates the text is truncated in the source representation. The screenshot shows a dark overlay at the top of the page that appears to be occluding (covering) text. The visible text in the screenshot reads \"details follow in the table below.\" which corresponds to the `root>body` element, while the `root>lede` text above it is hidden behind the dark overlay.\n\nSince the lede text is occluded by the dark overlay at the top of the page, a person reading this page in a browser would not be able to read the whole sentence in `root>lede`.\n\nANSWER: NO\n",
+  "ms": 9024
+}

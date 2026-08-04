@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With `position: absolute` and all inset properties (`top/right/bottom/left`) left unspecified (treated as `auto`), the element’s position is taken from its *static position*—where it would have appeared in normal document flow. In the given node order, `root>spacer` occupies the first 50px of height, and `root>floaty` would follow it, so its top aligns at y=50. This matches the provided `getBoundingClientRect` evidence: `root>floaty` has `y=50`.\n\nANSWER: 50\n",
+  "ms": 8128
+}

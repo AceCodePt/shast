@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>main>r09` is a `div` at `x=244 y=276 width=1012 height=26` with `color: rgb(0,0,0)` and a transparent background. However, there is a separate `root>banner` element positioned at exactly the same `x=244 y=276`, with the same height/overlapping width, an opaque `background-color: rgb(204, 34, 34)`, and a higher `z-index: 5`. That banner would cover whatever is underneath in `r09`, so the text in `root>main>r09` would not be readable.  \n\nANSWER: NO\n",
+  "ms": 9196
+}

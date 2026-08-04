@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 300px (spanning y=0 to y=300), representing the visible area when the page first loads. The report explicitly lists `root>footer` as being located at y=700 with a height of 60px, and labels it as \"below-fold\". Therefore, it is outside the initial viewable area.\n\nANSWER: NO\n",
+  "ms": 8183
+}

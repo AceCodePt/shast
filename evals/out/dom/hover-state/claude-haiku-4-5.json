@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided information, I need to identify the background color of `root>cta` in the initial state (before hovering).\n\nThe data shows two states:\n1. **Initial state** (first set of measurements): `root>cta` has `background-color: rgb(51, 85, 255)`\n2. **Hover state** (second set of measurements): `root>cta` has `background-color: rgb(0, 34, 204)`\n\nWhen the page is first painted and the pointer is elsewhere (not hovering), the element displays the initial background color, which is `rgb(51, 85, 255)`. This is a bright blue color.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 5149
+}

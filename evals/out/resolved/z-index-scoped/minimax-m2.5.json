@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In the overlapping region, `root>high` is what the viewer sees. Although `root>low>inner` has z-index 999, that value is scoped to the stacking context created by `root>low` (z-index 1), so the entire `root>low` context paints below `root>high`. The report also confirms this by noting `root>high` \"paints later\" and covers ~48% of `root>low>inner`.\n\nANSWER: root>high\n",
+  "ms": 9202
+}

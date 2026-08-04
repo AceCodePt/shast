@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text color of node `root>main>r21` is set to `rgb(255, 255, 255)` (white). Its parents, `root>main` and `root`, provide the background, with `root` specifically having a `background-color` of `rgb(255, 255, 255)` (white). Since white text is being rendered on a white background, it is invisible to the viewer.\n\nANSWER: NO\n",
+  "ms": 8751
+}

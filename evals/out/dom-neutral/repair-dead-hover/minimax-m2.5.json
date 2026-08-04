@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence, the `:hover { padding: 40px }` rule on `root>mid>leaf` exists in the source but produces no change. All three divs share identical `position: static`, no overflow, no transform — the leaf's hover area should be fully active, yet hovering it leaves the computed padding stuck at `2px 2px 2px 2px`.\n\nThis is the classic case where the `:hover` rule on the child itself is being suppressed/overridden because the rule lives on the same element whose box reacts to the cursor. The robust fix is to move the trigger up one level: apply `:hover` on `root>mid`. The parent's hover state activates whenever the cursor is over its content area (including the leaf), and since the leaf sits inside `root>mid`, that selector reliably fires and applies the padding change to the leaf.\n\nANSWER: root>mid\n",
+  "ms": 15818
+}

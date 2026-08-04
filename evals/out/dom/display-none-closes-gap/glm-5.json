@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`display: none` removes the element from the layout flow entirely, so it occupies no space and leaves no gap. The evidence confirms this: `root>first` ends at y=40 (y=0 + height=40), and `root>third` begins exactly at y=40, with the root container's total height being 80px (40 + 40) — no extra space for the hidden element.\n\nANSWER: NO\n",
+  "ms": 28686
+}

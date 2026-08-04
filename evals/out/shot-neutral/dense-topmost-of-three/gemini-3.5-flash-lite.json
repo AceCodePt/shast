@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "In standard DOM painting order, sibling elements that appear later in the document tree render on top of earlier overlapping siblings. Since `root>gamma` is ordered after `root>alpha` and `root>beta`, it paints on top of them at the overlapping point.\n\nANSWER: root>gamma\n",
+  "ms": 10855
+}

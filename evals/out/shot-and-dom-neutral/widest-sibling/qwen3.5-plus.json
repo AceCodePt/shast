@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the browser data provided:\n\n- `root>rail` has a width of **240px** (from `getBoundingClientRect: x=0 y=0 width=240 height=300`)\n- `root>panel` has a width of **600px** (from `getBoundingClientRect: x=264 y=0 width=600 height=300`)\n\nTo find how many times wider `root>panel` is than `root>rail`:\n600  240 = 2.5\n\nANSWER: 2.5\n",
+  "ms": 13933
+}

@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The URL \"https://example.com/a/very/long/path/that/never/breaks\" is 61 characters long. In a standard rendering, 61 characters will significantly exceed a 120px width, as even a very narrow font would require more than 2 pixels per character. The screenshot confirms that the text renders on a single line and extends across most of the 600px-wide viewport, clearly overflowing the 120px boundary of the cell.\n\nANSWER: NO\n",
+  "ms": 9511
+}

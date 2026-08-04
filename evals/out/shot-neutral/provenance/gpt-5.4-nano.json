@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The only node in the provided (authoritative) rendering tree whose text and element identity match what is visually labeled “Panel” is `root>body>panel`. Since the `border-radius` in question is what `root>body>panel` renders with, the declaration must come from the CSS block that targets that same node (rather than `root` or `root>body`, which are generic containers). Therefore the `border-radius` is declared in the CSS associated with `root>body>panel`.\n\nANSWER: root>body>panel\n",
+  "ms": 8007
+}

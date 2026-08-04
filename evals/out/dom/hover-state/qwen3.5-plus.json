@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The data shows two states: the initial state (pointer elsewhere) and the hover state. In the first state, `root>cta` has `background-color: rgb(51, 85, 255)`. When hovering, it changes to `rgb(0, 34, 204)`. Since the question asks for the color when the page is first painted and the pointer is elsewhere, I need the non-hover state.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 10487
+}

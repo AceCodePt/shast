@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the CSS information provided:\n\nThe `root>body>panel` element (a `<section>`) renders with a `border-radius: 12px`. Examining the computed styles for each node in the tree:\n\n- `root` has `border-radius: 0px`\n- `root>body` has `border-radius: 0px`\n- `root>body>panel` has `border-radius: 12px`\n\nSince `root>body>panel` itself has the `border-radius: 12px` computed style, and the parent nodes (`root` and `root>body`) both have `border-radius: 0px`, the CSS declaration that produces the `12px` border-radius must be in a CSS rule that targets the `root>body>panel` element itself.\n\nANSWER: root>body>panel\n",
+  "ms": 6484
+}

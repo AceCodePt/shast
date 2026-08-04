@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>cell` div has a width of only 120px, but the URL \"https://example.com/a/very/long/path/that/never/breaks\" is a long unbreakable string that would require significantly more horizontal space to display fully. The screenshot clearly shows the text extending beyond the container's bounds, running off the edge of the 120px-wide box. Since there's no word-break or overflow-wrap CSS applied, the text overflows the container.\n\nANSWER: NO\n",
+  "ms": 15819
+}

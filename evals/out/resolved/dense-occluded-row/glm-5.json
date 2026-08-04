@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>main>r09` is covered by `root>banner` (absolute, z-index 5, opaque `#cc2222` background) over 69% of its box, and the report explicitly notes that \"1 of 1 text line(s) completely hidden.\" The banner sits at the same coordinates (x=244, y=276) and paints later, fully obscuring the text.\n\nANSWER: NO\n",
+  "ms": 10778
+}

@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `third` row is indented to the right while `first`, `second`, and `fourth` share the same left edge. So `third` is the one out of alignment.\n\nANSWER: root>third\n",
+  "ms": 9941
+}

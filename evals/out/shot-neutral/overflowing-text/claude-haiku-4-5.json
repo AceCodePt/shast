@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot and the node tree information provided:\n\nThe `root>card` div contains the text \"Payment failed because the card on file expired last month.\" The screenshot shows this text is rendered across 4 lines within the card's border box. The card has a height of 48px according to the question.\n\nFrom the visual rendering in the screenshot, the text appears to fit within the vertical space of the card without overflowing. All four lines of text are visible and contained within the card's boundaries.\n\nANSWER: YES\n",
+  "ms": 6416
+}

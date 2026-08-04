@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `padding: 4px` rule declared within `root>body`'s css block (targeting `> panel`) currently shadows the `padding: 32px` rule defined inside `root>body>panel`'s own css block. To allow the 32px padding to take effect on the panel, you must edit `root>body`'s css block to remove or change this overriding declaration.\n\nANSWER: root>body\n",
+  "ms": 10297
+}

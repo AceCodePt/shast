@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered data for `root>big`:\n\n- `getBoundingClientRect` shows `height=64`\n- `font-size: 32px` and `line-height: 64px`\n\nThe key is that `root` declares `line-height: 2` (a unitless ratio). Unitless line-height values are **inherited as ratios**, not as computed pixel values. So `root>big` inherits the ratio `2` and multiplies it by its own font-size: `32px × 2 = 64px`.\n\nThis is confirmed by the computed style showing `line-height: 64px` and the bounding box height of 64.\n\nANSWER: 64\n",
+  "ms": 15702
+}

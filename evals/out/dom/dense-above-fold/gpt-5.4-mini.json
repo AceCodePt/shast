@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r17` is visible on initial load. Its bounding box is `y=484` with height `26`, so it sits well within the `1280x800` viewport without any scrolling. It is also positioned in the main content area to the right of the sidebar, so it is not obscured.\n\nANSWER: YES\n",
+  "ms": 8796
+}

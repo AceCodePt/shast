@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text color for `root>main>r21` is set to `#ffffff` (white), while the background of the page (`root`) is also `#ffffff` (white). Because white text on a white background lacks any visible contrast, the text is rendered invisibly.\n\nANSWER: NO\n",
+  "ms": 8116
+}

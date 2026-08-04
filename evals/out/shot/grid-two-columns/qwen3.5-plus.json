@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The grid has two columns: the first is 200px wide, and there's a 20px gap between columns. The `root>right` element is in the second column, so its left edge starts after the first column (200px) plus the gap (20px).\n\nANSWER: 220\n",
+  "ms": 12668
+}

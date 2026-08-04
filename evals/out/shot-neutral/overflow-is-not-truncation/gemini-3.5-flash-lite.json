@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text overflowing the bottom edge of the `root>card` element (\"on file expired last month.\") is fully rendered and clearly visible against the page background in the attached screenshot. Because default CSS overflow behavior is visible, content exceeding an element's bounding box continues to be painted on the screen and is completely legible.\n\nANSWER: YES\n",
+  "ms": 8548
+}

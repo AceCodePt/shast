@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The evidence shows the URL text rendered inside `root>cell` as `https://example.com/a/very/long/path/that/never/breaks`. In the attached 600×400 screenshot, the full long URL is visible rather than being clipped to the cell’s 120px width, which implies it extends beyond the `root>cell` box instead of staying within it.  \n\nANSWER: NO\n",
+  "ms": 8624
+}

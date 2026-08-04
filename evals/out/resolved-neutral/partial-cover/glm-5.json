@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The chip (`root>chip`) is positioned absolutely at x=400–560, y=60–100, overlapping the bottom-right region of `root>row`'s box (which spans 600×120). The overlap covers ~9% of the row's box area. However, the row's text consists of a single line that sits at the top of the box, and the report explicitly notes that the row's \"1 text line(s) stay fully visible.\" The chip overlaps empty padding/whitespace area of the row, not the text glyphs themselves.\n\nANSWER: NO\n",
+  "ms": 18221
+}

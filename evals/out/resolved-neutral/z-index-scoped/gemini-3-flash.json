@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>low` and `root>high` nodes are siblings that both create stacking contexts. Because `root>high` has a higher `z-index` (2) than `root>low` (1), the entire `root>low` subtree—including `root>low>inner`—is painted behind `root>high`. The `z-index: 999` on the inner node is only relevant within the `root>low` stacking context and cannot bring it above `root>high`.\n\nANSWER: root>high\n",
+  "ms": 13953
+}

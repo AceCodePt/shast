@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\nThe rendered box for `root>child` explicitly shows `padding: 64px` in its resolved styles. Three sources competed:\n\n1. **`padding: 32px`** — `root>child`'s own base CSS block (top-level).\n2. **`padding: 4px`** — `root`'s `> child` block (a parent/nested rule targeting the child).\n3. **`padding: 64px`** — `root>child`'s `&.big` block (a compound selector adding the `.big` class).\n\nThe `&.big` rule compiles to a selector that combines the base element selector with the `.big` class (e.g., `.child.big` or similar), giving it higher specificity than both the plain base rule (32px) and the parent's `> child` rule (4px). Higher specificity wins regardless of source order, so the 64px declaration from the `&.big` block is what the browser applies. This is confirmed by the rendered geometry: with 64px padding on all sides, the content area is `500 − 128 = 372px` wide, and the total height of `147.19px` is consistent with 64px top/bottom padding around a single line of 16px text.\n\nANSWER: 64px\n",
+  "ms": 20569
+}

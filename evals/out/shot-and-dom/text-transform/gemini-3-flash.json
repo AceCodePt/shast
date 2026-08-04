@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text for `root>title` is `\"Annual review\"`. However, the computed style for this node (and its parent) includes `text-transform: uppercase`, which instructs the browser to render all characters in their uppercase form. The provided screenshot confirms this transformation, showing the text rendered in all capital letters.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7933
+}

@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding boxes:\n\n- `root>line` spans x=0 to x=400 (full width)\n- `root>leftHalf` covers x=0 to x=70 (width=70, positioned absolutely at left=0)\n- `root>rightHalf` covers x=60 to x=140 (width=80, positioned absolutely at left=60)\n\nTogether, the two absolutely-positioned divs cover from x=0 to x=140, with an overlap between x=60-70. The text \"Hidden by two\" at 16px font size would be approximately 100-130px wide, fitting entirely within the covered region (0-140px). Additionally, both covering boxes have dark backgrounds (rgb(16,16,16) and rgb(32,32,32)) while the text color is black (rgb(0,0,0)), resulting in extremely poor contrast even where the backgrounds don't fully obscure the text.\n\nANSWER: NO\n",
+  "ms": 23346
+}

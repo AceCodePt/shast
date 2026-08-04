@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The URL in `root>cell` does not stay inside the 120px-wide box. While the container is constrained to 120px, the long URL has no spaces to allow for line breaking, and the `overflow` property is set to `visible`. As shown in the screenshot, the text extends horizontally across a significant portion of the 600px-wide viewport, far exceeding the 120px boundary of its parent element.\n\nANSWER: NO\n",
+  "ms": 12895
+}

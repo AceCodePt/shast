@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided information:\n\nThe `root>banner` div is positioned absolutely at `top: 0px` with `z-index: 5` and has a height of 70px with a dark background color (`rgb(34, 34, 34)`). The `root>lede` paragraph starts at `y=0` with a height of only 54.375px and has black text (`color: rgb(0, 0, 0)`). Since the banner overlays the lede (higher z-index, same starting position, taller height) and has a dark background with black text behind it, the lede text would be obscured and unreadable. The screenshot confirms this, showing only \"Details follow in the table below.\" visible while the top portion is covered by a dark bar.\n\nANSWER: NO\n",
+  "ms": 21157
+}

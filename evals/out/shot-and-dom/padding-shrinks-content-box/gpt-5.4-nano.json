@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows the text broken into four visible lines within `root>card`: “one two three four five six seven eight nine ten” is rendered as four rows. This matches the geometry too: the computed `line-height` is 19.2px, so 4 lines take about 76.8px, and with the card’s `padding-top` + `padding-bottom` of 24px + 24px = 48px, the total height is about 124.8px, aligning with the reported `height=124.75px`.  \n\nANSWER: 4\n",
+  "ms": 7670
+}

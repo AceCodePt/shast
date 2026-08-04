@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles and positions of the three sibling elements:\n\n- **root>alpha**: y=20, height=40 (spans y=20 to y=60)\n- **root>beta**: y=64, height=40 (spans y=64 to y=104)\n- **root>gamma**: y=200, height=40 (spans y=200 to y=240)\n\nThe alpha and beta elements are positioned close together with only a 4-pixel gap between them (beta starts at y=64, just 4 pixels below alpha's end at y=60). In contrast, gamma is positioned much further down the page, starting at y=200, which creates a large 96-pixel gap between beta (ending at y=104) and gamma (starting at y=200).\n\nThis visual separation is confirmed by the screenshot, which shows alpha and beta clustered near the top of the viewport with gamma isolated far below.\n\nANSWER: root>gamma\n",
+  "ms": 7738
+}

@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "2px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser's `getComputedStyle()` data for the `root>mid>leaf` node specifically lists its padding as `2px 2px 2px 2px` while the mouse is hovering over it. Comparing this to the data at rest shows that the padding value remains unchanged between the two states, which is further supported by the visual evidence in the provided screenshots.\n\nANSWER: 2px\n",
+  "ms": 12491
+}

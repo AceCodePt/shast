@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The `root>line` node contains the text `\"Hidden by two\"` and its bounding box spans the full viewport width (400px). The two covering elements (`root>leftHalf` and `root>rightHalf`) are absolutely positioned and together cover only a limited horizontal range (approximately x=0 to x=140), since neither covers the full width by itself. Because there is uncovered area of the `root>line` box outside those overlays, at least some of the text would remain visible, so a viewer could read the words.\n\nANSWER: YES\n",
+  "ms": 9325
+}

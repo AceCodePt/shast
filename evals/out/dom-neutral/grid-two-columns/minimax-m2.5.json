@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first grid column occupies x=0 to x=200 (200px wide). The 20px gap follows, ending at x=220. The second column therefore starts at x=220, matching the bounding rect of `root>right`.\n\nANSWER: 220\n",
+  "ms": 6052
+}

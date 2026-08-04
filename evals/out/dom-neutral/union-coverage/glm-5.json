@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\nThe text \"Hidden by two\" lives in `root>line`, a static block spanning the full 400px but left-aligned, so the actual glyphs start at x=0 and occupy only the first ~100–120px (13 characters at 16px).\n\nThe two covering boxes are both `position: absolute` (painted on top of the static line) with opaque dark backgrounds:\n- `leftHalf`: x=0 → 70\n- `rightHalf`: x=60 → 140\n\nThey overlap between x=60 and x=70, so their union is a single continuous opaque strip from x=0 to x=140. There is no gap between them. Since the short text fits entirely within that 0–140 range, every glyph is covered by at least one of the two boxes. (Beyond x=140 the line is uncovered, but there's no text there to read.)\n\nANSWER: NO\n",
+  "ms": 34819
+}

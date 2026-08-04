@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the positioning data:\n\n1. `root>line` contains the text \"Hidden by two\" and spans x=0 to x=400 at y=0 with height ~19px\n2. `root>leftHalf` is absolutely positioned at x=0, covering width 70px (x=0 to x=70)\n3. `root>rightHalf` is absolutely positioned at x=60, covering width 80px (x=60 to x=140)\n\nBoth `leftHalf` and `rightHalf` appear after `line` in the DOM tree and have opaque dark backgrounds (rgb(16,16,16) and rgb(32,32,32)). Since they are later siblings with absolute positioning, they render on top of `line`. Together they cover from x=0 to x=140. The text color is black (rgb(0,0,0)), which would have extremely poor contrast against these very dark backgrounds. The element is literally named \"Hidden by two\" indicating it's meant to be obscured by the two overlay boxes.\n\nANSWER: NO\n",
+  "ms": 24030
+}

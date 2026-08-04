@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows the card text broken into four visual lines. This matches the rendered layout: the content is constrained to a 200px-wide box with padding, so the sentence wraps repeatedly across the available width.\n\nANSWER: 4\n",
+  "ms": 9848
+}

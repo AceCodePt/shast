@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is 600px wide and its children have `flex: 1` and `flex: 2`, so the remaining space is split in a 1:2 ratio. That gives `root>a` 200px and `root>b` 400px, matching the rendered bounding box.\n\nANSWER: 400\n",
+  "ms": 7454
+}

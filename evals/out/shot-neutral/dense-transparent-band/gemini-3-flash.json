@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>main>r09` is \"09. Currency hedging\". In the provided screenshot, this text is clearly visible in the main section of the page, appearing as the ninth item in the numbered list. The text is rendered in a dark color against a light background with high contrast, making it perfectly legible to a viewer. While a `root>banner` element exists in the node tree, it does not obscure this specific item in the rendered output shown.\n\nANSWER: YES\n",
+  "ms": 34392
+}

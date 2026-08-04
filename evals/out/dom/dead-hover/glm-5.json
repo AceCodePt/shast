@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "## Reasoning\n\nComparing the computed style of `root>mid>leaf` across the two states:\n\n- **Normal state:** `padding: 2px 2px 2px 2px`\n- **Hover state:** `padding: 2px 2px 2px 2px`\n\nThe padding is identical (2px on all sides) in both the normal and hover states. Furthermore, the element's height remains `23.1875px` in both cases — if the `:hover` rule's `padding: 40px` had applied, the top and bottom padding alone would add 80px, making the height much larger.\n\nThis tells us the `:hover` block is not winning the cascade. The most likely cause is a **specificity problem**: the rule setting the base `padding: 2px` has higher specificity (or equal specificity with later source order) than the `:hover` rule, so the `40px` value is overridden and never reflected in the computed style.\n\nANSWER: NO\n",
+  "ms": 19470
+}

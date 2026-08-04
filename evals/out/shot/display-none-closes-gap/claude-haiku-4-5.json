@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot and the node tree information:\n\nThe page shows \"first\" at the top and \"third\" below it with significant white space between them. The node tree indicates that `root>gone` (with text \"gone\") sits between these two elements in the DOM and has `display: none`.\n\nSince `root>gone` is `display: none`, it doesn't render and shouldn't take up any space in the layout. The gap visible between \"first\" and \"third\" in the screenshot appears to be the natural spacing, not a 40px gap where the hidden element would have been. If the hidden element had a defined height (like 40px), it would still occupy that vertical space even with `display: none`. However, the question is asking if there IS a 40px gap - meaning whether the hidden element's space is being preserved visually.\n\nBased on the screenshot showing the elements rendered as \"first\" and \"third\" with white space between them, and given that `display: none` completely removes an element from the layout flow, there is no reserved 40px gap visible - the spacing shown is just normal document flow.\n\nANSWER: NO\n",
+  "ms": 14490
+}

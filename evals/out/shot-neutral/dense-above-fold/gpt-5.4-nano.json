@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The rendered viewport screenshot shows the sidebar/top area plus the main list entries starting at “01. Ledger reconciliation” and continuing down sequentially. In that visible region, entries including “17. Inventory valuation” are present, indicating that `root>main>r17` is within the initially visible (no-scroll) portion of the page.  \nANSWER: YES\n",
+  "ms": 8059
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The padding of `root>mid>leaf` is `2px 2px 2px 2px` in both the non-hover and hover states — the computed padding values are identical. Despite the CSS rule claiming `:hover` sets `padding: 40px`, the browser's computed style shows no change, so the hover rule is not taking effect on the rendered element.\n\nANSWER: NO\n",
+  "ms": 6754
+}

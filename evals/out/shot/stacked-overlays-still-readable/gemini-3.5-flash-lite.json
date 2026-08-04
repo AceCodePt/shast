@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided screenshot and node tree information, the text \"Still readable\" is clearly visible and legible at the top of the viewport above the dark overlay element. A viewer can easily read the text despite the boxes rendered below or around it.\n\nANSWER: YES\n",
+  "ms": 6234
+}

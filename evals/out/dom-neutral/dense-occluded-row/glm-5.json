@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "## Reasoning\n\n`root>main>r09` is positioned at **x=244, y=276** with width=1012, height=26, containing the text \"09. Currency hedging\".\n\n`root>banner` is positioned at **x=244, y=276** with width=700, height=26, and has:\n- `position: absolute` (so it renders in a separate stacking layer)\n- `z-index: 5` (higher than r09, which is `static`/`auto`)\n- `background-color: rgb(204, 34, 34)` — a fully **opaque** red\n\nThe banner occupies the exact same top-left origin as r09 and covers the left 700px of r09's 1012px width. Since the text \"09. Currency hedging\" is left-aligned and short (well under 700px at 15px font size), it falls entirely within the banner's opaque coverage area. The banner's opaque background paints over r09's text, making it unreadable.\n\nANSWER: NO\n",
+  "ms": 18675
+}

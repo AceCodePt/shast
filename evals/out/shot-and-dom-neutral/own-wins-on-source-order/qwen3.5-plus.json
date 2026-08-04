@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser's `getComputedStyle()` data for `root>child` explicitly shows `padding: 64px 64px 64px 64px`. This is the authoritative computed value that the browser actually applies after resolving all CSS cascade conflicts. The screenshot confirms this visually — the word \"Child\" appears inset from the container edges, consistent with substantial padding.\n\nANSWER: 64px\n",
+  "ms": 10645
+}

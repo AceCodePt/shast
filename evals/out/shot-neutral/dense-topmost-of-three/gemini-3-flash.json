@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The point x=500, y=400 falls within the bounds of all three decorative bands (`alpha`, `beta`, and `gamma`) rendered in the center of the page. According to standard CSS stacking rules, siblings are stacked in their DOM order, meaning the element that appears last in the source code is rendered on top of the others. Visually, the screenshot confirms this as the bottom-most band (the grey one) occludes the middle and top bands at the overlap point.\n\nANSWER: root>gamma\n",
+  "ms": 31322
+}

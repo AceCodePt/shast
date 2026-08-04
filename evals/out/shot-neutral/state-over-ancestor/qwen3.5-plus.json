@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "0px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at both screenshots (rest and hover states), the \"Leaf\" text appears in the exact same position - flush against the top-left corner of its container in both images. There is no visible spacing between the text and the container edges in either screenshot, and the hover state doesn't appear to change the layout at all.\n\nANSWER: 0px\n",
+  "ms": 12635
+}

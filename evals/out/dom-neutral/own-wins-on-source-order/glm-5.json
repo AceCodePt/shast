@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "64px 64px 64px 64px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The browser's computed style for `root>child` shows `padding: 64px 64px 64px 64px`, which is the authoritative result after the CSS cascade resolved all three competing declarations (specificity + source order picked the winner). The element's box matches that: its rect is 500×147.1875, and with 64px padding on all sides the content area is consistent with the single line of text plus that padding.\n\nANSWER: 64px 64px 64px 64px\n",
+  "ms": 11099
+}

@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided information:\n\n- The viewport is 500x300 CSS pixels\n- The screenshot shows only \"masthead\" visible at the top\n- The `root>footer` div with class \"footer note\" is not visible in the screenshot\n- The path to this file includes \"below-the-fold\" which hints at the footer's position\n\nSince the footer does not appear in the rendered screenshot of the initial viewport, it must be positioned outside the visible area (likely below the 300px viewport height), requiring scrolling to see it.\n\nANSWER: NO\n",
+  "ms": 14626
+}

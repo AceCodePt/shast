@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `root>lede` has enough space to show its text without clipping, and `overflow` is visible, so nothing cuts the sentence off. The empty `banner` is transparent, so it does not obscure the text underneath.\n\nANSWER: YES\n",
+  "ms": 19592
+}

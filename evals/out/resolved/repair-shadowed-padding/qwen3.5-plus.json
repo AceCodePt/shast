@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report shows that `root>body>panel` already has `padding: 32px` in its own CSS block, but it's rendering with 4px padding instead. The evidence states that `padding: 4px` is \"declared by root>body, inside its `\"> panel\"` block\" and this \"shadows padding: 32px declared by root>body>panel itself.\" This means the parent node `root>body` is overriding the child's own padding declaration through some kind of child-targeting syntax. To fix this, I need to edit the parent's CSS block that's causing the override.\n\nANSWER: root>body\n",
+  "ms": 13800
+}

@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>lower` can be reached by scrolling down, because it is only below the current viewport and its 400px width fits in the 500px viewport. `root>sideways` cannot be fully brought into view by ordinary scrolling because it is 900px wide, wider than the viewport, so no scroll position can make its entire box visible at once.\n\nANSWER: root>sideways\n",
+  "ms": 16084
+}

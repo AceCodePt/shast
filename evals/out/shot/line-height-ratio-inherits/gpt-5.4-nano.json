@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`line-height: 2` on `root` is an inheritable value, and it’s a unitless number that acts as a multiplier of the element’s `font-size`. `root>big` overrides `font-size` to `32px` but does not set `line-height`, so it inherits `2`. Therefore `root>big` uses `line-height = 2 × 32px = 64px` for its single line.\n\nANSWER: 64\n",
+  "ms": 9567
+}

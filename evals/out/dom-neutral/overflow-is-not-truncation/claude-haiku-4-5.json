@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Let me analyze the information provided:\n\nThe `root>card` div has:\n- Height: 48px\n- Padding: 8px on all sides\n- Line-height: 19.2px\n- Overflow: visible\n\nThe text \"Payment failed because the card on file expired last month.\" is contained within `root>card`.\n\nWith padding of 8px on top and bottom, the available content area is 48px - 8px - 8px = 32px tall.\n\nThe line-height is 19.2px. If the text wraps into multiple lines, a second line would start at 19.2px from the first line's baseline. Given the limited 32px height available after padding, a second line of text would extend beyond the 48px boundary of the `root>card` div.\n\nHowever, the crucial detail is the `overflow: visible` property. This means content that extends beyond the element's box is still rendered and visible on the page—it's not clipped or hidden.\n\nTherefore, even though the last line of text extends below the bottom edge of `root>card`, it will still be painted on the page because overflow is set to visible, not hidden or auto.\n\nANSWER: YES\n",
+  "ms": 7822
+}

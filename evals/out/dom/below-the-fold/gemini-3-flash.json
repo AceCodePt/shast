@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport height is 300px, meaning only the area from y=0 to y=300 is visible when the page first loads. The `root>footer` element has a `getBoundingClientRect` y-coordinate of 700, placing its top edge 400 pixels below the bottom of the initial visible area. Since the entire element (from y=700 to y=760) is outside the 300px viewport limit, it is not visible without scrolling.\n\nANSWER: NO\n",
+  "ms": 10773
+}

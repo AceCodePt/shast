@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot and the node tree information:\n\n- `root>row` contains a `<p>` element with the text \"Short label\"\n- `root>chip` is a `<div>` element with the text \"chip\" that paints over part of `root>row`\n\nFrom the screenshot, I can see that \"Short label\" appears in the upper left area, while the yellow \"chip\" element is positioned in the upper right area. The \"chip\" element visually overlaps the general area of `root>row`, but examining the actual text positions, the \"Short label\" text itself is fully visible and not obscured by the \"chip\" element.\n\nThe \"chip\" appears to be positioned to the right and below where the \"Short label\" text is rendered, so while the div elements may overlap spatially, the actual text content of `root>row` (\"Short label\") is not hidden.\n\nANSWER: NO\n",
+  "ms": 7123
+}

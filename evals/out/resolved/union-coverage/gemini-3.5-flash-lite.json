@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states that 1 of 1 text line(s) in `root>line` are completely hidden due to the covering boxes. Therefore, a viewer cannot read the words.\n\nANSWER: NO\n",
+  "ms": 8510
+}

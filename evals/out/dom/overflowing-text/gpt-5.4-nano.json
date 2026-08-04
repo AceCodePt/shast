@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>card`’s border box is 48px tall, but its usable content height is smaller due to padding and borders: `48 - (1px*2 borders) - (8px*2 padding) = 30px`. With `line-height: 19.2px`, at most one full line of text can fit inside that 30px content area (two lines would require 38.4px). Since the provided text is a long sentence, it will not fit on a single line within the 180px-wide box, so not all of it can fit inside the 48px-tall border box.\n\nANSWER: NO\n",
+  "ms": 20020
+}

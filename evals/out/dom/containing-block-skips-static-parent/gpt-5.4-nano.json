@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>plain>pin` is absolutely positioned, and the browser-provided `getBoundingClientRect()` for that node is authoritative for where it renders on the viewport. In the data, `root>plain>pin` reports `x=10` and `y=10`, which are the CSS-pixel coordinates of its top-left corner.\n\nANSWER: 10,10\n",
+  "ms": 14271
+}

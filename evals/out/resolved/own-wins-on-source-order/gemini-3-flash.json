@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states that the rendered padding for the `root>child` element is 64px. According to the conflict resolution notes, the 64px declaration within the `&.big` block takes precedence and shadows both the 32px declaration at the top of the element's CSS block and the 4px declaration from the parent's block.\n\nANSWER: 64px\n",
+  "ms": 10495
+}

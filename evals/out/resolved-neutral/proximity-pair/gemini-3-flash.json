@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`alpha` and `beta` are positioned close together with only a 4px vertical gap between them (`alpha` ends at y=60 and `beta` starts at y=64). In contrast, `gamma` starts at y=200, creating a much larger 96px gap from the bottom of `beta`, making it visually isolated from the cluster formed by the first two.\n\nANSWER: root>gamma\n",
+  "ms": 10071
+}

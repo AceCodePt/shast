@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The padding of `root>body>panel` is currently being overridden and shadowed by `padding: 4px` declared inside `root>body`'s css block under its `> panel` block. Since this external declaration shadows the 32px padding defined in `root>body>panel`'s own css block, you must edit `root>body`'s css block to remove or change the conflicting rule.\n\nANSWER: root>body\n",
+  "ms": 9343
+}

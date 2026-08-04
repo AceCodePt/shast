@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rows `root>first`, `root>second`, and `root>fourth` all have an `x` coordinate of 24, indicating they are aligned to the same left edge. The `root>third` row has an `x` coordinate of 40, which places it 16 pixels further to the right than the others. Therefore, the third row is the one out of alignment.\n\nANSWER: root>third\n",
+  "ms": 10428
+}

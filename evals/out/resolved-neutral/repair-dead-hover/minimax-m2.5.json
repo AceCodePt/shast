@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `:hover { padding: 40px }` lives on `root>mid>leaf` itself, but `root`'s `> mid > leaf` block also declares `padding: 2px` with higher specificity (a selector beats a bare `:hover`), so the hover rule is overridden regardless of cursor state. To let hover take effect, the conflicting `padding: 2px` must be removed (or the hover rule moved alongside it) — and that conflicting declaration lives in `root`'s block.\n\nANSWER: root\n",
+  "ms": 9016
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The information explicitly states that `root>ghost` has `overflow: visible` (implied by the overflow behavior description). Even though its box is 0x0 pixels, the text content measuring 86.41x38.38px is \"painted outside the box rather than cut off.\" Additionally, the collision note confirms that this node's glyphs are being drawn and overlapping with `root>visible`'s text on over 56% of the glyphs.\n\nANSWER: YES\n",
+  "ms": 12473
+}

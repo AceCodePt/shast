@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report includes only layout and inherited/resolved box metrics for `root>label` (position, size, padding, and font-size). It does not include any resolved `color`/text color information (for example, an RGBA value or a named colour), nor does it describe any CSS properties related to text color for that label. Since the report doesn’t state the text colour, I can’t determine it from the given information.\n\nANSWER: NOT STATED\n",
+  "ms": 6216
+}

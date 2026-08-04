@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>title` is a `div` whose source text is `\"Annual review\"`. The computed style for that node has `text-transform: uppercase`, and the screenshot shows the rendered result in uppercase. Therefore, the viewer sees the characters `ANNUAL REVIEW`.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 8679
+}

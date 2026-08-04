@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "`root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>lower` can be reached by normal vertical scrolling, but `root>sideways` is off to the side, so ordinary scrolling cannot bring it fully into view.\n\nANSWER: `root>sideways`\n",
+  "ms": 11412
+}

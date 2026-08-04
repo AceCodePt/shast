@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Adding `position: relative` to `root>plain` establishes it as the containing block for the descendant element `root>plain>pin`. Since `root>plain` is positioned at the top-left corner of the layout with no margins, padding, or offsets, the absolute positioning of `pin` relative to its new containing block remains unchanged. Therefore, `root>plain>pin` continues to render at the origin.\n\nANSWER: 0,0\n",
+  "ms": 12583
+}

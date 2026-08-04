@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>first` occupies y=0 to y=40, and `root>third` starts at y=40. There is no gap between them because `display: none` removes the element from the layout entirely, leaving no reserved space.\n\nANSWER: NO\n",
+  "ms": 5240
+}

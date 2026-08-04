@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows a black border box containing the text \"Payment failed because the card on file expired last month.\" While the first two lines of text are within the box, the remaining lines (\"on file expired\" and \"last month.\") clearly overflow past the bottom border. Since a significant portion of the text is rendered outside the boundary of the box, it does not fit within the specified 48px-tall border box.\n\nANSWER: NO\n",
+  "ms": 10823
+}

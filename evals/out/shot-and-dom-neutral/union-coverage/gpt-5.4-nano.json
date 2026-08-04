@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>line` is a `<div>` with a bounding box spanning the full width (about 400px), and the node tree indicates the text `\"Hidden by two\"` is inside it. The two covering boxes (`root>leftHalf` and `root>rightHalf`) are absolutely positioned and only cover the left portion of the line (roughly x=0..70 and x=60..140), so they do not cover the entire line area. Since at least some part of `root>line` is not covered, a viewer can read the words in `root>line`.\n\nANSWER: YES\n",
+  "ms": 11609
+}

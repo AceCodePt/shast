@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the browser data provided:\n\nThe `root` container has `display: flex` and a total width of 600px. The two children have `flex: 1 1 0%` and `flex: 2 1 0%` respectively, meaning they share the available space in a 1:2 ratio.\n\nWith a 1:2 flex ratio, the total \"flex units\" is 3 (1 + 2). The `root>b` element with `flex: 2` gets 2/3 of the container's width.\n\nCalculating: 2/3 × 600px = 400px\n\nThis is confirmed by the `getBoundingClientRect()` data for `root>b`, which explicitly shows `width=400`.\n\nANSWER: 400\n",
+  "ms": 6782
+}

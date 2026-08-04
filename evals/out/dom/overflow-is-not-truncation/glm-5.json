@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "## Reasoning\n\n`root>card` has `overflow: visible` (confirmed in the computed style). This means content that overflows the element's content box is **not clipped** — it is still painted on the page and remains readable.\n\nLet's verify the geometry. The card is 180px wide with 8px padding all around and 1px borders, giving a content area of 162px × 30px (48 − 8 − 8 − 1 − 1). With a 16px font and 19.2px line-height, the long sentence \"Payment failed because the card on file expired last month.\" wraps to roughly three lines:\n\n- Line 1: y ≈ 9 → 28.2\n- Line 2: y ≈ 28.2 → 47.4\n- Line 3: y ≈ 47.4 → 66.6\n\nThe card's bottom edge is at y = 48px, so line 3 (starting at ≈47.4 and extending to ≈66.6) sits below that edge. But because `overflow` is `visible` (not `hidden` or `clip`), the browser still paints that overflowing line — it spills out onto the page where a person can read it.\n\nANSWER: YES\n",
+  "ms": 26038
+}

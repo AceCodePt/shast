@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "For an element with `position: fixed`, the `top` and `left` CSS properties are relative to the **viewport**, not its parent element. The parent's `position: relative` and padding have no effect on the fixed element's positioning.\n\nThe `getBoundingClientRect()` data directly tells us where the element renders on screen: `x=25 y=15`. This matches the computed styles `top: 15px; left: 25px`, confirming the fixed element is positioned 25px from the left edge and 15px from the top edge of the viewport.\n\nANSWER: 25,15\n",
+  "ms": 18451
+}

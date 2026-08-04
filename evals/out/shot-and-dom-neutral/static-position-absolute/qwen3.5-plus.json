@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `getBoundingClientRect()` for `root>floaty` explicitly shows `y=50`, which is the actual rendered position of its top edge in viewport coordinates. Since the element is `position: absolute` with no offset properties (`top`, `right`, `bottom`, `left`) specified, it remains at its static position—directly after the `spacer` element which occupies 50px of height (from y=0 to y=50).\n\nANSWER: 50\n",
+  "ms": 14008
+}

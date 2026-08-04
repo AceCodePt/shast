@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>mid>leaf",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "When writing nested CSS rules, a selector like `:hover` without the nesting reference (`&`) applies to descendants rather than the element itself. Since `:hover` was added directly inside `root>mid>leaf`'s CSS block without `&`, hovering the leaf node itself does not trigger the style. Therefore, you must edit `root>mid>leaf`'s own CSS block to include `&` so that the hover selector correctly targets the leaf node.\n\nANSWER: root>mid>leaf\n",
+  "ms": 16739
+}

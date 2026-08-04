@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree indicates that the text node at `root>line` is present and has the content `\"Hidden by two\"`, meaning the source text exists. However, the evidence is explicitly labeled as authoritative for what is actually on screen, and it describes the line as being hidden by two covering elements. Since the two covering boxes together prevent the line from being visible (and neither covers it alone doesn’t matter if the combination still obscures all of it), a viewer cannot read the words in `root>line`.\n\nANSWER: NO\n",
+  "ms": 8158
+}

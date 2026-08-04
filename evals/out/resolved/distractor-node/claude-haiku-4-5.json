@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report, I need to determine if the text \"Second paragraph here\" in `root>second` is readable.\n\nFrom the measurements:\n- `root>second` is positioned at `y=19.19` with `height=19.19`\n- `root>cover` is an absolute-positioned div at `y=0` with `height=19px` and a black background (`#000000`)\n\nThe covering div extends from y=0 to y=19, while the second paragraph starts at y=19.19. Since the cover div ends at y=19 and the second paragraph begins at y=19.19, there is no overlap. The second paragraph is positioned below the covering element and is not obscured.\n\nThe report explicitly notes that only the first paragraph has \"1 of 1 text line(s) completely hidden\" - it does not indicate any coverage of the second paragraph.\n\nANSWER: YES\n",
+  "ms": 7296
+}

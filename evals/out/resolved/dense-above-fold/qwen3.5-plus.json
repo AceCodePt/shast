@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report:\n\n1. The viewport height is **800px**\n2. `root>main>r17` (\"17. Inventory valuation\") has position **y=484** and **height=26**, so it spans from y=484 to y=510\n3. Since y=510 is well within the 800px viewport height, the element is above the fold\n4. The sidebar (which covers part of main) is at x=0 with width=220, but r17 starts at x=244, so it's not obscured by the sidebar\n\nANSWER: YES\n",
+  "ms": 14244
+}

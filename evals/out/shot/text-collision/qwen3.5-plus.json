@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered screenshot and the node tree:\n\n- `root>ghost` contains \"Important warning\" but only \"warning\" is visible in the screenshot\n- `root>visible` contains \"Everything is fine\" which appears at the top of the rendered image\n\nThe fact that \"Important \" from the ghost node is not visible while \"Everything is fine\" appears in that space indicates that `root>visible`'s text is drawn on top of (overlapping) the \"Important \" portion of `root>ghost`'s text.\n\nANSWER: root>visible\n",
+  "ms": 14390
+}

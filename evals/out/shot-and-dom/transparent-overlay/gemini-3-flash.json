@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` paragraph contains a 72-character sentence starting with \"The quarterly results are in...\". Although a `root>banner` `div` is absolutely positioned directly over the same area (0,0) and has a higher `z-index` (5) than the `lede` element, its `background-color` is `rgba(0, 0, 0, 0)`, making it completely transparent. The browser's node tree shows the banner has no content, and the provided screenshot confirms that the full text—\"The quarterly results are in and every region beat its target this time.\"—is perfectly visible and unobscured.\n\nANSWER: YES\n",
+  "ms": 29527
+}

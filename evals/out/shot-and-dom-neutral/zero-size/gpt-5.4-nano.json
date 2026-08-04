@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The node tree indicates the text `\"Important warning\"` is inside `root>ghost`, but Chromium’s authoritative layout data shows `root>ghost` has `getBoundingClientRect` of `x=0 y=0 width=0 height=0`. If the element has zero size, there’s no rendered box area for Chromium to paint the text onto. The other div (`root>visible`) has a normal height, consistent with the visible content.\n\nANSWER: NO\n",
+  "ms": 9134
+}

@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "`root>rightBottom",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>leftBottom` is the bottom-left box in the two-by-two layout. The node directly to its right on the same row is the bottom-right box.\n\nANSWER: `root>rightBottom`\n",
+  "ms": 9934
+}
