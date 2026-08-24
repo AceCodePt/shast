@@ -2911,7 +2911,7 @@ describe("runtime CSS attribute validation", () => {
     htmlTagConfig: TAG_CONFIG,
     cssSyntaxConfig: MOCK_CSS_SYNTAX,
     cssAttributesConfig: CSS_ATTRS,
-    cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
+    cssPseudoClassConfig: [":hover"],
     cssPropertiesConfig: CSS_PROPS,
   });
 
@@ -3225,7 +3225,6 @@ describe("runtime CSS attribute validation", () => {
     const CSS_PROPS_WITH_VAR = cssPropertiesConfig(
       SUPPORTED_KEYWORDS,
       MOCK_CSS_SYNTAX,
-      // @ts-expect-error custom property registry entries are not typed here
       { "--my-var": { syntax: "string", inherits: false, "initial-value": "hello" } },
     );
 
@@ -3248,7 +3247,6 @@ describe("runtime CSS attribute validation", () => {
     const CSS_PROPS_WITH_VAR = cssPropertiesConfig(
       SUPPORTED_KEYWORDS,
       MOCK_CSS_SYNTAX,
-      // @ts-expect-error custom property registry entries are not typed here
       { "--my-var": { syntax: "string", inherits: false, "initial-value": "hello" } },
     );
 

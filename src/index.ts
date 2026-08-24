@@ -39,36 +39,6 @@ const { createComponent, renderComponent } = engine({
   cssPropertiesConfig: CSS_GLOBAL_PROPERTIES,
 });
 
-const card = createComponent({
-  tag: "div",
-  attributes: { dir: "auto" },
-  innerHTML: {
-    someImage: {
-      tag: "a",
-      attributes: {
-        href: "",
-      },
-      css: {},
-    },
-    css: {
-      "--_a": "10%",
-      width: "10px",
-      "::after": { display: "flex" },
-    },
-    asdf: {
-      tag: "div",
-    },
-  },
-  css: {
-    width: "100px",
-    "> content": {
-      display: "flex",
-      gap: "5px",
-      "> title": {},
-    },
-  },
-});
-
 const list = createComponent({
   tag: "ul",
   innerHTML: {
@@ -98,12 +68,12 @@ const list = createComponent({
       "align-items": "end",
     },
     "::before": {},
-    ":visited": {},
-    "> content": {
-      "> title": {
+    "> item": {
+      "> image": {},
+      "> text": {
         color: "hsl(1 1% 1%)",
+        "> demo": {},
       },
-      "> subtitle": {},
     },
   },
 });

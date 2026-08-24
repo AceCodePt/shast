@@ -22,7 +22,7 @@ export type ValidateCSSPropertiesConfig<
       [K in keyof P]: K extends string
         ? K extends `--${string}`
           ? {
-              syntax: DSLValidate<S, P[K]["syntax"]>;
+              syntax: DSLValidate<Keywords & S, P[K]["syntax"]>;
               inherits: boolean;
               "initial-value": DSLInfer<Keywords & S, P[K]["syntax"]>;
             }
