@@ -8,6 +8,7 @@
 	"main": "src/index.ts",
 	"type": "module",
 	"scripts": {
+		"check": "tsc --noEmit",
 		"test": "tsc --noEmit && node --import=tsx/esm --test",
 		"test:watch": "node --import=tsx/esm --test --watch",
 		"test:conformance": "CONFORMANCE=1 node --import=tsx/esm --test tests/text-renderer/conformance.test.ts",
