@@ -7,4 +7,4 @@ export default cssQueriesConfig([
   "@media (width < 1024px)",
   "@media (width >= 1024px)",
   "@media (prefers-reduced-motion: reduce)",
-] as const);
+]);

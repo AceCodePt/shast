@@ -14,4 +14,4 @@ export default cssQueriesConfig([
   "@media (768px <= width < 1024px)",
   "@container (width > 400px)",
   "@container (min-width: 600px)",
-] as const);
+]);

@@ -117,7 +117,7 @@ describe("cssQueriesConfig", () => {
       const queries = cssQueriesConfig([
         "@media (width < 768px)",
         "@container (width > 400px)",
-      ] as const);
+      ]);
       assertType<
         Equal<
           typeof queries,
@@ -137,7 +137,7 @@ describe("cssQueriesConfig", () => {
         "@media (width >= 1024px)",
         "@media (768px <= width < 1024px)",
         "@media (height <= 600px)",
-      ] as const);
+      ]);
       assert.equal(config.length, 4);
     });
 
@@ -148,7 +148,7 @@ describe("cssQueriesConfig", () => {
         "@media (orientation: landscape)",
         "@media (resolution >= 2dppx)",
         "@media (min-device-pixel-ratio: 2)",
-      ] as const);
+      ]);
       assert.equal(config.length, 5);
     });
 
@@ -159,7 +159,7 @@ describe("cssQueriesConfig", () => {
         "@media screen and (width < 768px)",
         "@media only screen and (width >= 1024px)",
         "@media not print",
-      ] as const);
+      ]);
       assert.equal(config.length, 5);
     });
 
@@ -169,7 +169,7 @@ describe("cssQueriesConfig", () => {
         "@container sidebar (min-width: 600px)",
         "@container (width > 400px) and (height > 200px)",
         "@container style(--theme: dark)",
-      ] as const);
+      ]);
       assert.equal(config.length, 4);
     });
 
@@ -187,7 +187,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error unknown media feature is a type-level error
-          return cssQueriesConfig(["@media (frobnicate: 3)"] as const);
+          return cssQueriesConfig(["@media (frobnicate: 3)"]);
         },
         /Unknown or invalid media feature/,
       );
@@ -197,7 +197,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error missing @ prefix is a type-level error
-          return cssQueriesConfig(["media (width < 768px)"] as const);
+          return cssQueriesConfig(["media (width < 768px)"]);
         },
         /must start with/,
       );
@@ -207,7 +207,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error unclosed paren is a type-level error
-          return cssQueriesConfig(["@media (width < 768px"] as const);
+          return cssQueriesConfig(["@media (width < 768px"]);
         },
         /Unclosed parenthesis/,
       );
@@ -217,7 +217,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error bad operator is a type-level error
-          return cssQueriesConfig(["@media (width == 768px)"] as const);
+          return cssQueriesConfig(["@media (width == 768px)"]);
         },
         /Invalid comparison/,
       );
@@ -227,7 +227,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error invalid value is a type-level error
-          return cssQueriesConfig(["@media (prefers-color-scheme: yellow)"] as const);
+          return cssQueriesConfig(["@media (prefers-color-scheme: yellow)"]);
         },
         /Unknown or invalid media feature/,
       );
@@ -237,7 +237,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error unknown container feature is a type-level error
-          return cssQueriesConfig(["@container (frobnicate: 3)"] as const);
+          return cssQueriesConfig(["@container (frobnicate: 3)"]);
         },
         /Unknown or invalid container feature/,
       );
@@ -246,12 +246,12 @@ describe("cssQueriesConfig", () => {
 
   describe("Edge Cases", () => {
     test("empty array is accepted", () => {
-      const config = cssQueriesConfig([] as const);
+      const config = cssQueriesConfig([]);
       assert.deepStrictEqual(config, []);
     });
 
     test("query with only a media type is accepted", () => {
-      const config = cssQueriesConfig(["@media all"] as const);
+      const config = cssQueriesConfig(["@media all"]);
       assert.equal(config.length, 1);
     });
 
@@ -259,7 +259,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error unknown @ prefix is a type-level error
-          return cssQueriesConfig(["@phone (width < 768px)"] as const);
+          return cssQueriesConfig(["@phone (width < 768px)"]);
         },
         /must start with/,
       );

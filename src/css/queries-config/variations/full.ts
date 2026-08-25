@@ -28,4 +28,4 @@ export default cssQueriesConfig([
   "@container (400px < width <= 800px)",
   "@container style(--theme: dark)",
   "@container sidebar style(--theme: dark)",
-] as const);
+]);
