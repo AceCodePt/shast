@@ -1,7 +1,6 @@
-import { parseValueAgainstDSL, SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
-import FULL_SYNTAX_CONFIG from "@/css/syntax-config/variations/full.ts";
 import {
   CONTAINER_LENGTH_FEATURES,
+  LENGTH_UNITS,
   MEDIA_LENGTH_FEATURES,
   MEDIA_RATIO_FEATURES,
   MEDIA_RESOLUTION_FEATURES,
@@ -12,8 +11,23 @@ import {
   PREFERS_REDUCED_MOTION_VALUES,
   RANGE_FEATURES,
   RANGE_OPS,
-  type ValidateQueries,
+  RESOLUTION_UNITS,
 } from "./types.ts";
+import type {
+  QUERY_VOCABULARY,
+  QueryVocabulary,
+  ValidateQueries,
+} from "./types.ts";
+
+const LENGTH_VALUE_REGEX = new RegExp(
+  `^\\d+(?:\\.\\d+)?(?:${LENGTH_UNITS.join("|")})$`,
+);
+
+const RESOLUTION_VALUE_REGEX = new RegExp(
+  `^\\d+(?:\\.\\d+)?(?:${RESOLUTION_UNITS.join("|")})$`,
+);
+
+const NUMBER_VALUE_REGEX = /^\d+(?:\.\d+)?$/;
 
 const MEDIA_TYPE_REGEX = new RegExp(`^(${MEDIA_TYPES.join("|")})(?: |$)`);
 const MEDIA_TYPE_AND_REGEX = new RegExp(
@@ -24,25 +38,16 @@ function fail(query: string, message: string): never {
   throw new Error(`${message} in query: "${query}"`);
 }
 
-function matchesDSL(dsl: string, value: string): boolean {
-  try {
-    parseValueAgainstDSL(SUPPORTED_KEYWORDS, dsl as never, value as never);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 function isLength(value: string): boolean {
-  return matchesDSL(FULL_SYNTAX_CONFIG["<length>"], value);
+  return LENGTH_VALUE_REGEX.test(value);
 }
 
 function isResolution(value: string): boolean {
-  return matchesDSL(FULL_SYNTAX_CONFIG["<resolution>"], value);
+  return RESOLUTION_VALUE_REGEX.test(value);
 }
 
 function isNumber(value: string): boolean {
-  return matchesDSL(FULL_SYNTAX_CONFIG["<number>"], value);
+  return NUMBER_VALUE_REGEX.test(value);
 }
 
 function isMediaFeatureValue(feature: string, value: string): boolean {
@@ -336,9 +341,10 @@ function validateQueryString(query: string): void {
   fail(query, 'Query must start with "@media" or "@container"');
 }
 
-export function cssQueriesConfig<const T extends readonly string[]>(
-  queries: ValidateQueries<T>,
-): T {
+export function cssQueriesConfig<
+  const T extends readonly string[],
+  const V extends QueryVocabulary = typeof QUERY_VOCABULARY,
+>(queries: ValidateQueries<T, V>): T {
   for (const query of queries) {
     validateQueryString(query);
   }

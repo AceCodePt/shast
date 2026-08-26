@@ -2,7 +2,20 @@ import test, { describe } from "node:test";
 import assert from "node:assert";
 import { cssQueriesConfig } from "@/css/queries-config/index.ts";
 import { uniqueArray } from "@/types.ts";
-import type { ValidateQueries, ValidateQuery } from "@/css/queries-config/types.ts";
+import {
+  type QUERY_VOCABULARY,
+  type ValidateQueries as RawValidateQueries,
+  type ValidateQuery as RawValidateQuery,
+} from "@/css/queries-config/types.ts";
+
+type ValidateQuery<S extends string> = RawValidateQuery<
+  S,
+  typeof QUERY_VOCABULARY
+>;
+type ValidateQueries<T extends readonly string[]> = RawValidateQueries<
+  T,
+  typeof QUERY_VOCABULARY
+>;
 import MINIMAL_QUERIES from "@/css/queries-config/variations/minimal.ts";
 import COMMON_QUERIES from "@/css/queries-config/variations/common.ts";
 import FULL_QUERIES from "@/css/queries-config/variations/full.ts";
