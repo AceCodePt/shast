@@ -467,3 +467,5 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
     ],
   },
 });
+
+// lsp-touch
