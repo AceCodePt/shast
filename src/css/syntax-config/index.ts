@@ -21,3 +21,5 @@ export function cssSyntaxConfig<
 
   return config as T;
 }
+
+// lsp-touch
