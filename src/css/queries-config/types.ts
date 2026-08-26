@@ -1,3 +1,7 @@
+import type { SupportedKeywords } from "@/dsl/index.ts";
+import type { InferCSSSyntax } from "@/css/syntax-config/types.ts";
+import type FULL_SYNTAX_CONFIG from "@/css/syntax-config/variations/full.ts";
+
 type Trim<S extends string> = S extends ` ${infer R}`
   ? Trim<R>
   : S extends `${infer L} `
@@ -6,35 +10,19 @@ type Trim<S extends string> = S extends ` ${infer R}`
 
 type Num = `${number}`;
 
-type LengthUnit =
-  | "px"
-  | "rem"
-  | "em"
-  | "vw"
-  | "vh"
-  | "vmin"
-  | "vmax"
-  | "ch"
-  | "lh"
-  | "dvh"
-  | "dvw"
-  | "svh"
-  | "svw"
-  | "cqw"
-  | "cqh"
-  | "cqi"
-  | "cqb"
-  | "cqmin"
-  | "cqmax"
-  | "in"
-  | "pt"
-  | "pc"
-  | "cm"
-  | "mm";
+// Length / Resolution / Number value vocabularies are the DSL's existing
+// tokens — the query DSL reuses them rather than re-declaring units.
+export type Length = InferCSSSyntax<
+  SupportedKeywords,
+  typeof FULL_SYNTAX_CONFIG,
+  "<length>"
+>;
 
-export type Length = `${Num}${LengthUnit}`;
-
-type Resolution = `${Num}${"dpi" | "dpcm" | "dppx" | "x"}`;
+type Resolution = InferCSSSyntax<
+  SupportedKeywords,
+  typeof FULL_SYNTAX_CONFIG,
+  "<resolution>"
+>;
 
 type OpCompare<F extends string, V extends string> =
   | `(${F} < ${V})`
