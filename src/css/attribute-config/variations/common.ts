@@ -723,3 +723,5 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
   "page-break-after": "'auto' | 'avoid' | 'always' | 'left' | 'right'",
   "page-break-inside": "'auto' | 'avoid'",
 });
+
+// lsp-touch
