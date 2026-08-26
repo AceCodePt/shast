@@ -6,8 +6,6 @@ type Trim<S extends string> = S extends ` ${infer R}`
     ? Trim<L>
     : S;
 
-type Num = `${number}`;
-
 export const LENGTH_UNITS = uniqueArray([
   "px",
   "rem",
@@ -132,42 +130,106 @@ export const QUERY_VOCABULARY = {
   containerLengthFeatures: CONTAINER_LENGTH_FEATURES,
 } as const;
 
-type Length<Units extends readonly string[]> = `${number}${Units[number]}`;
+type IsUnitValue<S extends string, Units extends readonly string[]> =
+  S extends `${number}${Units[number]}` ? true : false;
 
-type Resolution<Units extends readonly string[]> = `${number}${Units[number]}`;
+type IsNumber<S extends string> = S extends `${number}` ? true : false;
 
-type OpCompare<
-  Operators extends readonly string[],
+type MediaFeatureValueOk<
   F extends string,
-  V extends string,
-> = `(${F} ${Operators[number]} ${V})`;
+  Value extends string,
+  V extends QueryVocabulary,
+> = F extends V["mediaLengthFeatures"][number]
+  ? IsUnitValue<Value, V["lengthUnits"]>
+  : F extends V["mediaResolutionFeatures"][number]
+    ? IsUnitValue<Value, V["resolutionUnits"]>
+    : F extends V["mediaRatioFeatures"][number]
+      ? IsNumber<Value>
+      : F extends "orientation"
+        ? Value extends V["orientationValues"][number]
+          ? true
+          : false
+        : F extends "prefers-color-scheme"
+          ? Value extends V["prefersColorSchemeValues"][number]
+            ? true
+            : false
+          : F extends "prefers-reduced-motion"
+            ? Value extends V["prefersReducedMotionValues"][number]
+              ? true
+              : false
+            : false;
 
-type RangeCompare<
-  RangeOperators extends readonly string[],
-  LengthUnits extends readonly string[],
+type ContainerFeatureValueOk<
   F extends string,
-> = `(${Length<LengthUnits>} ${RangeOperators[number]} ${F} ${RangeOperators[number]} ${Length<LengthUnits>})`;
+  Value extends string,
+  V extends QueryVocabulary,
+> = F extends V["containerLengthFeatures"][number]
+  ? IsUnitValue<Value, V["lengthUnits"]>
+  : false;
 
-type MediaFeature<V extends QueryVocabulary> =
-  | OpCompare<V["operators"], V["mediaLengthFeatures"][number], Length<V["lengthUnits"]>>
-  | `(${V["mediaLengthFeatures"][number]}: ${Length<V["lengthUnits"]>})`
-  | RangeCompare<V["rangeOperators"], V["lengthUnits"], V["rangeFeatures"][number]>
-  | OpCompare<V["operators"], V["mediaResolutionFeatures"][number], Resolution<V["resolutionUnits"]>>
-  | `(${V["mediaResolutionFeatures"][number]}: ${Resolution<V["resolutionUnits"]>})`
-  | OpCompare<V["operators"], V["mediaRatioFeatures"][number], Num>
-  | `(${V["mediaRatioFeatures"][number]}: ${Num})`
-  | `(orientation: ${V["orientationValues"][number]})`
-  | `(prefers-color-scheme: ${V["prefersColorSchemeValues"][number]})`
-  | `(prefers-reduced-motion: ${V["prefersReducedMotionValues"][number]})`;
+type RangeComparison<Inner extends string, V extends QueryVocabulary> =
+  Inner extends `${infer L1} ${infer Op1} ${infer F} ${infer Op2} ${infer L2}`
+    ? Op1 extends V["rangeOperators"][number]
+      ? Op2 extends V["rangeOperators"][number]
+        ? F extends V["rangeFeatures"][number]
+          ? IsUnitValue<L1, V["lengthUnits"]> extends true
+            ? IsUnitValue<L2, V["lengthUnits"]> extends true
+              ? true
+              : false
+            : false
+          : false
+        : false
+      : false
+    : false;
+
+type MediaComparison<Inner extends string, V extends QueryVocabulary> =
+  Inner extends `${infer A} ${infer Op} ${infer B}`
+    ? Op extends V["operators"][number]
+      ? MediaFeatureValueOk<A, B, V> extends true
+        ? true
+        : MediaFeatureValueOk<B, A, V> extends true
+          ? true
+          : RangeComparison<Inner, V>
+      : RangeComparison<Inner, V>
+    : RangeComparison<Inner, V>;
+
+type ContainerComparison<Inner extends string, V extends QueryVocabulary> =
+  Inner extends `${infer A} ${infer Op} ${infer B}`
+    ? Op extends V["operators"][number]
+      ? ContainerFeatureValueOk<A, B, V> extends true
+        ? true
+        : ContainerFeatureValueOk<B, A, V> extends true
+          ? true
+          : RangeComparison<Inner, V>
+      : RangeComparison<Inner, V>
+    : RangeComparison<Inner, V>;
+
+type ValidateMediaFeature<S extends string, V extends QueryVocabulary> =
+  S extends `(${infer Inner})`
+    ? Inner extends `${infer F}:${infer RawValue}`
+      ? MediaFeatureValueOk<Trim<F>, Trim<RawValue>, V>
+      : MediaComparison<Inner, V>
+    : false;
+
+type ValidateContainerFeature<S extends string, V extends QueryVocabulary> =
+  S extends `style(${infer Inner})`
+    ? Inner extends `--${string}:${string}`
+      ? true
+      : false
+    : S extends `(${infer Inner})`
+      ? Inner extends `${infer F}:${infer RawValue}`
+        ? ContainerFeatureValueOk<Trim<F>, Trim<RawValue>, V>
+        : ContainerComparison<Inner, V>
+      : false;
 
 type MediaFeatureList<S extends string, V extends QueryVocabulary> =
   S extends `${infer A} and ${infer B}`
-    ? Trim<A> extends MediaFeature<V>
+    ? ValidateMediaFeature<Trim<A>, V> extends true
       ? Trim<B> extends MediaFeatureList<Trim<B>, V>
         ? S
         : MediaFeatureList<Trim<B>, V>
       : `Invalid media feature: ${Trim<A>}`
-    : S extends MediaFeature<V>
+    : ValidateMediaFeature<S, V> extends true
       ? S
       : `Invalid media feature: ${Trim<S>}`;
 
@@ -176,29 +238,29 @@ type MediaQuery<S extends string, V extends QueryVocabulary> =
     ? Trim<R> extends V["mediaTypes"][number]
       ? S
       : Trim<R> extends `${V["mediaTypes"][number]} and ${infer F}`
-        ? F extends MediaFeatureList<F, V>
+        ? MediaFeatureList<Trim<F>, V> extends Trim<F>
           ? S
-          : F
+          : MediaFeatureList<Trim<F>, V>
         : Trim<R> extends MediaFeatureList<Trim<R>, V>
           ? S
-          : `Invalid condition after 'not': ${Trim<R>}`
+          : MediaFeatureList<Trim<R>, V>
     : S extends `only ${infer R}`
       ? Trim<R> extends `${V["mediaTypes"][number]} and ${infer F}`
-        ? F extends MediaFeatureList<F, V>
+        ? MediaFeatureList<Trim<F>, V> extends Trim<F>
           ? S
-          : F
+          : MediaFeatureList<Trim<F>, V>
         : `Expected media type and conditions after 'only': ${Trim<R>}`
       : S extends V["mediaTypes"][number]
         ? S
         : S extends `${V["mediaTypes"][number]} and ${infer F}`
-          ? F extends MediaFeatureList<F, V>
+          ? MediaFeatureList<Trim<F>, V> extends Trim<F>
             ? S
-            : F
+            : MediaFeatureList<Trim<F>, V>
           : MediaFeatureList<S, V>;
 
 type MediaQueryList<S extends string, V extends QueryVocabulary> =
   S extends `${infer A},${infer B}`
-    ? Trim<A> extends MediaQuery<Trim<A>, V>
+    ? MediaQuery<Trim<A>, V> extends Trim<A>
       ? Trim<B> extends MediaQueryList<Trim<B>, V>
         ? S
         : MediaQueryList<Trim<B>, V>
@@ -207,20 +269,14 @@ type MediaQueryList<S extends string, V extends QueryVocabulary> =
       ? S
       : MediaQuery<S, V>;
 
-type ContainerFeature<V extends QueryVocabulary> =
-  | OpCompare<V["operators"], V["containerLengthFeatures"][number], Length<V["lengthUnits"]>>
-  | `(${V["containerLengthFeatures"][number]}: ${Length<V["lengthUnits"]>})`
-  | RangeCompare<V["rangeOperators"], V["lengthUnits"], V["rangeFeatures"][number]>
-  | `style(--${string}: ${string})`;
-
 type ContainerFeatureList<S extends string, V extends QueryVocabulary> =
   S extends `${infer A} and ${infer B}`
-    ? Trim<A> extends ContainerFeature<V>
+    ? ValidateContainerFeature<Trim<A>, V> extends true
       ? Trim<B> extends ContainerFeatureList<Trim<B>, V>
         ? S
         : ContainerFeatureList<Trim<B>, V>
       : `Invalid container feature: ${Trim<A>}`
-    : S extends ContainerFeature<V>
+    : ValidateContainerFeature<S, V> extends true
       ? S
       : `Invalid container feature: ${Trim<S>}`;
 
