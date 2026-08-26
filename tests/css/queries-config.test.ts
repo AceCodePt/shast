@@ -1,6 +1,7 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
 import { cssQueriesConfig } from "@/css/queries-config/index.ts";
+import { uniqueArray } from "@/types.ts";
 import type { ValidateQueries, ValidateQuery } from "@/css/queries-config/types.ts";
 import MINIMAL_QUERIES from "@/css/queries-config/variations/minimal.ts";
 import COMMON_QUERIES from "@/css/queries-config/variations/common.ts";
@@ -294,6 +295,33 @@ describe("cssQueriesConfig", () => {
         "@media (prefers-reduced-motion: reduce)",
       ] as const;
       assertType<Equal<ValidateQueries<typeof minimal>, typeof minimal>>();
+    });
+  });
+
+  describe("uniqueArray vocabulary", () => {
+    test("infers the literal tuple from the array", () => {
+      const arr = uniqueArray(["all", "screen", "print"]);
+      assertType<Equal<typeof arr, readonly ["all", "screen", "print"]>>();
+    });
+
+    test("rejects duplicates as a type-level error", () => {
+      function rejectDuplicates(): void {
+        // @ts-expect-error duplicate items are a type-level error
+        uniqueArray(["a", "a"]);
+      }
+      assert.equal(typeof rejectDuplicates, "function");
+    });
+
+    test("preserves the reference", () => {
+      const input = ["<", "<=", ">", ">="] as const;
+      assert.strictEqual(uniqueArray(input), input);
+    });
+
+    test("throws at runtime for duplicates passed via cast", () => {
+      assert.throws(
+        () => uniqueArray(["a", "a"] as string[]),
+        /Duplicate item/,
+      );
     });
   });
 });

@@ -88,3 +88,25 @@ export type JoinUnion<U extends string, Sep extends string = " | "> =
   UnionToTuple<U> extends infer A extends readonly string[]
     ? JoinTuple<A, Sep>
     : "";
+
+type HasDuplicate<T extends readonly string[]> = T extends readonly [
+  infer Head extends string,
+  ...infer Tail extends string[],
+]
+  ? Head extends Tail[number]
+    ? true
+    : HasDuplicate<Tail>
+  : false;
+
+export function uniqueArray<const T extends readonly string[]>(
+  items: HasDuplicate<T> extends true ? `duplicate items in array` : T,
+): T {
+  const seen: string[] = [];
+  for (const item of items) {
+    if (seen.includes(item)) {
+      throw new Error(`Duplicate item "${item}" in uniqueArray`);
+    }
+    seen.push(item);
+  }
+  return items as T;
+}

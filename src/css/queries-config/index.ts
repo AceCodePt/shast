@@ -1,40 +1,24 @@
 import { parseValueAgainstDSL, SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
 import FULL_SYNTAX_CONFIG from "@/css/syntax-config/variations/full.ts";
-import type { ValidateQueries } from "./types.ts";
+import {
+  CONTAINER_LENGTH_FEATURES,
+  MEDIA_LENGTH_FEATURES,
+  MEDIA_RATIO_FEATURES,
+  MEDIA_RESOLUTION_FEATURES,
+  MEDIA_TYPES,
+  OPERATORS,
+  ORIENTATION_VALUES,
+  PREFERS_COLOR_SCHEME_VALUES,
+  PREFERS_REDUCED_MOTION_VALUES,
+  RANGE_FEATURES,
+  RANGE_OPS,
+  type ValidateQueries,
+} from "./types.ts";
 
-const MEDIA_TYPES = new Set(["all", "screen", "print"]);
-
-const MEDIA_LENGTH_FEATURES = new Set([
-  "width",
-  "min-width",
-  "max-width",
-  "height",
-  "min-height",
-  "max-height",
-]);
-
-const MEDIA_RESOLUTION_FEATURES = new Set([
-  "resolution",
-  "min-resolution",
-  "max-resolution",
-]);
-
-const MEDIA_RATIO_FEATURES = new Set([
-  "device-pixel-ratio",
-  "min-device-pixel-ratio",
-  "max-device-pixel-ratio",
-]);
-
-const CONTAINER_LENGTH_FEATURES = new Set([
-  "width",
-  "min-width",
-  "max-width",
-  "height",
-  "min-height",
-  "max-height",
-]);
-
-const OPERATORS = new Set(["<", "<=", ">", ">="]);
+const MEDIA_TYPE_REGEX = new RegExp(`^(${MEDIA_TYPES.join("|")})(?: |$)`);
+const MEDIA_TYPE_AND_REGEX = new RegExp(
+  `^(${MEDIA_TYPES.join("|")}) and (.+)$`,
+);
 
 function fail(query: string, message: string): never {
   throw new Error(`${message} in query: "${query}"`);
@@ -62,19 +46,21 @@ function isNumber(value: string): boolean {
 }
 
 function isMediaFeatureValue(feature: string, value: string): boolean {
-  if (MEDIA_LENGTH_FEATURES.has(feature)) return isLength(value);
-  if (MEDIA_RESOLUTION_FEATURES.has(feature)) return isResolution(value);
-  if (MEDIA_RATIO_FEATURES.has(feature)) return isNumber(value);
-  if (feature === "orientation") return value === "portrait" || value === "landscape";
-  if (feature === "prefers-color-scheme") return value === "light" || value === "dark";
+  if (MEDIA_LENGTH_FEATURES.includes(feature)) return isLength(value);
+  if (MEDIA_RESOLUTION_FEATURES.includes(feature)) return isResolution(value);
+  if (MEDIA_RATIO_FEATURES.includes(feature)) return isNumber(value);
+  if (feature === "orientation") return ORIENTATION_VALUES.includes(value);
+  if (feature === "prefers-color-scheme") {
+    return PREFERS_COLOR_SCHEME_VALUES.includes(value);
+  }
   if (feature === "prefers-reduced-motion") {
-    return value === "reduce" || value === "no-preference";
+    return PREFERS_REDUCED_MOTION_VALUES.includes(value);
   }
   return false;
 }
 
 function isContainerFeatureValue(feature: string, value: string): boolean {
-  return CONTAINER_LENGTH_FEATURES.has(feature) && isLength(value);
+  return CONTAINER_LENGTH_FEATURES.includes(feature) && isLength(value);
 }
 
 function validateOperatorForm(
@@ -85,7 +71,7 @@ function validateOperatorForm(
   const tokens = inner.split(/\s+/).filter((t) => t !== "");
   if (tokens.length === 3) {
     const [a, op, b] = tokens;
-    if (op === undefined || !OPERATORS.has(op)) {
+    if (op === undefined || !OPERATORS.includes(op)) {
       fail(query, `Invalid comparison operator "${op ?? ""}"`);
     }
     if (isFeatureValue(a!, b!)) return;
@@ -97,12 +83,15 @@ function validateOperatorForm(
     if (
       op1 === undefined ||
       op2 === undefined ||
-      !OPERATORS.has(op1) ||
-      !OPERATORS.has(op2)
+      !RANGE_OPS.includes(op1) ||
+      !RANGE_OPS.includes(op2)
     ) {
-      fail(query, `Invalid comparison operator in "${inner}"`);
+      fail(query, `Invalid range comparison operator in "${inner}"`);
     }
-    if (!isFeatureValue(feature!, v1!) || !isFeatureValue(feature!, v2!)) {
+    if (feature === undefined || !RANGE_FEATURES.includes(feature)) {
+      fail(query, `Invalid range comparison "${inner}"`);
+    }
+    if (!isFeatureValue(feature, v1!) || !isFeatureValue(feature, v2!)) {
       fail(query, `Invalid range comparison "${inner}"`);
     }
     return;
@@ -220,7 +209,7 @@ function validateFeatureList(
 }
 
 function validateMediaTypeAnd(rest: string, query: string): void {
-  const match = /^(all|screen|print) and (.+)$/.exec(rest);
+  const match = MEDIA_TYPE_AND_REGEX.exec(rest);
   if (match === null) {
     fail(query, `Expected media type and conditions after "and"`);
   }
@@ -245,7 +234,7 @@ function validateMediaQuery(queryPart: string, query: string): void {
       validateFeatureList(rest, "media", query);
       return;
     }
-    const type = /^(all|screen|print)(?: |$)/.exec(rest)?.[1];
+    const type = MEDIA_TYPE_REGEX.exec(rest)?.[1];
     if (type !== undefined) {
       const after = rest.slice(type.length).trim();
       if (after === "") return;
@@ -263,7 +252,7 @@ function validateMediaQuery(queryPart: string, query: string): void {
     if (rest === "") {
       fail(query, "Missing media type after 'only'");
     }
-    const type = /^(all|screen|print)(?: |$)/.exec(rest)?.[1];
+    const type = MEDIA_TYPE_REGEX.exec(rest)?.[1];
     if (type === undefined) {
       fail(query, "Expected media type after 'only'");
     }
@@ -278,7 +267,7 @@ function validateMediaQuery(queryPart: string, query: string): void {
     fail(query, `Expected 'and' after 'only ${type}'`);
   }
   const firstToken = /^[^\s]+/.exec(q)?.[0];
-  if (firstToken !== undefined && MEDIA_TYPES.has(firstToken)) {
+  if (firstToken !== undefined && MEDIA_TYPES.includes(firstToken)) {
     if (q === firstToken) return;
     validateMediaTypeAnd(q, query);
     return;

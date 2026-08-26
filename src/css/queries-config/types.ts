@@ -1,6 +1,7 @@
 import type { SupportedKeywords } from "@/dsl/index.ts";
 import type { InferCSSSyntax } from "@/css/syntax-config/types.ts";
 import type FULL_SYNTAX_CONFIG from "@/css/syntax-config/variations/full.ts";
+import { uniqueArray } from "@/types.ts";
 
 type Trim<S extends string> = S extends ` ${infer R}`
   ? Trim<R>
@@ -10,8 +11,8 @@ type Trim<S extends string> = S extends ` ${infer R}`
 
 type Num = `${number}`;
 
-// Length / Resolution / Number value vocabularies are the DSL's existing
-// tokens — the query DSL reuses them rather than re-declaring units.
+// Length / Resolution value vocabularies are the DSL's existing tokens — the
+// query DSL reuses them rather than re-declaring units.
 export type Length = InferCSSSyntax<
   SupportedKeywords,
   typeof FULL_SYNTAX_CONFIG,
@@ -24,47 +25,80 @@ type Resolution = InferCSSSyntax<
   "<resolution>"
 >;
 
-type OpCompare<F extends string, V extends string> =
-  | `(${F} < ${V})`
-  | `(${F} <= ${V})`
-  | `(${F} > ${V})`
-  | `(${F} >= ${V})`;
+export const OPERATORS = uniqueArray(["<", "<=", ">", ">="]);
+type Op = (typeof OPERATORS)[number];
 
-type RangeCompare<F extends string> =
-  | `(${Length} < ${F} < ${Length})`
-  | `(${Length} <= ${F} <= ${Length})`
-  | `(${Length} < ${F} <= ${Length})`
-  | `(${Length} <= ${F} < ${Length})`;
+export const RANGE_OPS = uniqueArray(["<", "<="]);
+type RangeOp = (typeof RANGE_OPS)[number];
 
-type MediaLengthFeature =
-  | "width"
-  | "min-width"
-  | "max-width"
-  | "height"
-  | "min-height"
-  | "max-height";
+type OpCompare<F extends string, V extends string> = `(${F} ${Op} ${V})`;
 
-type MediaResolutionFeature =
-  | "resolution"
-  | "min-resolution"
-  | "max-resolution";
+type RangeCompare<F extends string> = `(${Length} ${RangeOp} ${F} ${RangeOp} ${Length})`;
 
-type MediaRatioFeature =
-  | "device-pixel-ratio"
-  | "min-device-pixel-ratio"
-  | "max-device-pixel-ratio";
+export const MEDIA_TYPES = uniqueArray(["all", "screen", "print"]);
+type MediaType = (typeof MEDIA_TYPES)[number];
+
+export const MEDIA_LENGTH_FEATURES = uniqueArray([
+  "width",
+  "min-width",
+  "max-width",
+  "height",
+  "min-height",
+  "max-height",
+]);
+type MediaLengthFeature = (typeof MEDIA_LENGTH_FEATURES)[number];
+
+export const MEDIA_RESOLUTION_FEATURES = uniqueArray([
+  "resolution",
+  "min-resolution",
+  "max-resolution",
+]);
+type MediaResolutionFeature = (typeof MEDIA_RESOLUTION_FEATURES)[number];
+
+export const MEDIA_RATIO_FEATURES = uniqueArray([
+  "device-pixel-ratio",
+  "min-device-pixel-ratio",
+  "max-device-pixel-ratio",
+]);
+type MediaRatioFeature = (typeof MEDIA_RATIO_FEATURES)[number];
+
+export const RANGE_FEATURES = uniqueArray(["width", "height"]);
+type RangeFeature = (typeof RANGE_FEATURES)[number];
+
+export const ORIENTATION_VALUES = uniqueArray(["portrait", "landscape"]);
+type OrientationValue = (typeof ORIENTATION_VALUES)[number];
+
+export const PREFERS_COLOR_SCHEME_VALUES = uniqueArray(["light", "dark"]);
+type PrefersColorSchemeValue = (typeof PREFERS_COLOR_SCHEME_VALUES)[number];
+
+export const PREFERS_REDUCED_MOTION_VALUES = uniqueArray([
+  "reduce",
+  "no-preference",
+]);
+type PrefersReducedMotionValue =
+  (typeof PREFERS_REDUCED_MOTION_VALUES)[number];
+
+export const CONTAINER_LENGTH_FEATURES = uniqueArray([
+  "width",
+  "min-width",
+  "max-width",
+  "height",
+  "min-height",
+  "max-height",
+]);
+type ContainerLengthFeature = (typeof CONTAINER_LENGTH_FEATURES)[number];
 
 type MediaFeature =
   | OpCompare<MediaLengthFeature, Length>
   | `(${MediaLengthFeature}: ${Length})`
-  | RangeCompare<"width" | "height">
+  | RangeCompare<RangeFeature>
   | OpCompare<MediaResolutionFeature, Resolution>
   | `(${MediaResolutionFeature}: ${Resolution})`
   | OpCompare<MediaRatioFeature, Num>
   | `(${MediaRatioFeature}: ${Num})`
-  | `(orientation: ${"portrait" | "landscape"})`
-  | `(prefers-color-scheme: ${"light" | "dark"})`
-  | `(prefers-reduced-motion: ${"reduce" | "no-preference"})`;
+  | `(orientation: ${OrientationValue})`
+  | `(prefers-color-scheme: ${PrefersColorSchemeValue})`
+  | `(prefers-reduced-motion: ${PrefersReducedMotionValue})`;
 
 type MediaFeatureList<S extends string> = S extends `${infer A} and ${infer B}`
   ? Trim<A> extends MediaFeature
@@ -75,8 +109,6 @@ type MediaFeatureList<S extends string> = S extends `${infer A} and ${infer B}`
   : S extends MediaFeature
     ? S
     : `Invalid media feature: ${Trim<S>}`;
-
-type MediaType = "all" | "screen" | "print";
 
 type MediaQuery<S extends string> = S extends `not ${infer R}`
   ? Trim<R> extends MediaType
@@ -112,18 +144,10 @@ type MediaQueryList<S extends string> = S extends `${infer A},${infer B}`
     ? S
     : MediaQuery<S>;
 
-type ContainerLengthFeature =
-  | "width"
-  | "min-width"
-  | "max-width"
-  | "height"
-  | "min-height"
-  | "max-height";
-
 type ContainerFeature =
   | OpCompare<ContainerLengthFeature, Length>
   | `(${ContainerLengthFeature}: ${Length})`
-  | RangeCompare<"width" | "height">
+  | RangeCompare<RangeFeature>
   | `style(--${string}: ${string})`;
 
 type ContainerFeatureList<S extends string> = S extends `${infer A} and ${infer B}`
