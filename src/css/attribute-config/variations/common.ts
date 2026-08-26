@@ -1,6 +1,6 @@
 import { cssAttributeConfig } from "@/css/attribute-config/index.ts";
 import commonCSSSyntax from "@/css/syntax-config/variations/common.ts";
-import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
+import { SUPPORTED_KEYWORDS } from "tsyntax";
 
 export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
   perspective: {
@@ -723,3 +723,5 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
   "page-break-after": "'auto' | 'avoid' | 'always' | 'left' | 'right'",
   "page-break-inside": "'auto' | 'avoid'",
 });
+
+// lsp-touch

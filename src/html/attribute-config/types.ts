@@ -2,7 +2,7 @@ import type {
   DSLInfer,
   DSLValidate,
   SupportedKeywordsConfig,
-} from "@/dsl/index.ts";
+} from "tsyntax";
 
 export interface BaseHTMLAttributesConfig {
   [attribute: string]: string;

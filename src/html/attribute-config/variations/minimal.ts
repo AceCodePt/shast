@@ -1,4 +1,4 @@
-import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
+import { SUPPORTED_KEYWORDS } from "tsyntax";
 import { htmlAttributeConfig } from "@/html/attribute-config/index.ts";
 
 export default htmlAttributeConfig(SUPPORTED_KEYWORDS, {

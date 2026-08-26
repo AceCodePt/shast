@@ -1,6 +1,6 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
-import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "@/dsl/index.ts";
+import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
 import { htmlAttributeConfig } from "@/html/attribute-config/index.ts";
 import type {
   InferHTMLAttributesConfig,

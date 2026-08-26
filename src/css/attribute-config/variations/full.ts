@@ -1,6 +1,6 @@
 import { cssAttributeConfig } from "@/css/attribute-config/index.ts";
 import fullCSSSyntax from "@/css/syntax-config/variations/full.ts";
-import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
+import { SUPPORTED_KEYWORDS } from "tsyntax";
 
 export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   // ── Box Model ──────────────────────────────────────────────────────────────
@@ -978,3 +978,5 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "vector-effect":
     "'none' | 'non-scaling-stroke' | 'non-scaling-size' | 'non-rotation' | 'fixed-position'",
 });
+
+// lsp-touch

@@ -14,7 +14,7 @@ import type {
 import {
   parseValueAgainstDSL,
   type SupportedKeywordsConfig,
-} from "@/dsl/index.ts";
+} from "tsyntax";
 import type {
   BaseHTMLAttributesConfig,
   InferHTMLAttributesConfig,

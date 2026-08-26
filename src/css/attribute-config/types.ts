@@ -2,7 +2,7 @@ import type {
   DSLInfer,
   DSLValidate,
   SupportedKeywordsConfig,
-} from "@/dsl/index.ts";
+} from "tsyntax";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
 
 export interface BaseCSSAttributeSimpleConfig {

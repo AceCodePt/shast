@@ -2,7 +2,7 @@ import {
   dslString,
   detectCircularReferences,
   type SupportedKeywordsConfig,
-} from "@/dsl/index.ts";
+} from "tsyntax";
 import type { BaseCSSSyntaxConfig, ValidateCSSSyntaxConfig } from "./types.ts";
 
 export function cssSyntaxConfig<
@@ -21,3 +21,5 @@ export function cssSyntaxConfig<
 
   return config as T;
 }
+
+// lsp-touch

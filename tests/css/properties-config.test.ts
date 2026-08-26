@@ -1,6 +1,6 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
-import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "@/dsl/index.ts";
+import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
 import { cssPropertiesConfig } from "@/css/properties-config/index.ts";
 import type { ValidateCSSPropertiesConfig } from "@/css/properties-config/types.ts";
 import { assertType, type Equal } from "../type-utils.ts";

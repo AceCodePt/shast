@@ -1,4 +1,4 @@
-import { dslString, type SupportedKeywordsConfig } from "@/dsl/index.ts";
+import { dslString, type SupportedKeywordsConfig } from "tsyntax";
 import type {
   BaseCSSAttributesComplexConfig,
   ValidateCSSAttributesConfig,
