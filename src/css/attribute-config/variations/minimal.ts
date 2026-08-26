@@ -1,6 +1,6 @@
 import { cssAttributeConfig } from "@/css/attribute-config/index.ts";
 import minimalCSSSyntax from "@/css/syntax-config/variations/minimal.ts";
-import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
+import { SUPPORTED_KEYWORDS } from "tsyntax";
 
 export default cssAttributeConfig(SUPPORTED_KEYWORDS, minimalCSSSyntax, {
   // ── Box Model ──────────────────────────────────────────────────────────────

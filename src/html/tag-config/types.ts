@@ -1,5 +1,5 @@
 import type { BaseCSSAttributesComplexConfig } from "@/css/attribute-config/types.ts";
-import type { SupportedKeywordsConfig } from "@/dsl/index.ts";
+import type { SupportedKeywordsConfig } from "tsyntax";
 import type {
   BaseHTMLAttributesConfig,
   ValidateHTMLAttributesConfig,

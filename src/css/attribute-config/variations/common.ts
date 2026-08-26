@@ -1,6 +1,6 @@
 import { cssAttributeConfig } from "@/css/attribute-config/index.ts";
 import commonCSSSyntax from "@/css/syntax-config/variations/common.ts";
-import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
+import { SUPPORTED_KEYWORDS } from "tsyntax";
 
 export default cssAttributeConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
   perspective: {

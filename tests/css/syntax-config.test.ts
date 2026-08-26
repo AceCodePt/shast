@@ -1,6 +1,6 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
-import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "@/dsl/index.ts";
+import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
 import { cssSyntaxConfig } from "@/css/syntax-config/index.ts";
 import type {
   InferCSSSyntax,

@@ -5,7 +5,7 @@ import type {
 import type { BaseCSSPropertiesConfig } from "@/css/properties-config/types.ts";
 import type { BaseCSSPseudoClassConfig } from "@/css/pseudo-class-config/types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
-import type { DSLInfer, SupportedKeywordsConfig } from "@/dsl/index.ts";
+import type { DSLInfer, SupportedKeywordsConfig } from "tsyntax";
 import type {
   BaseHTMLAttributesConfig,
   InferHTMLAttributesConfig,

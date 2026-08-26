@@ -1,6 +1,6 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
-import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "@/dsl/index.ts";
+import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
 import { htmlTagConfig } from "@/html/tag-config/index.ts";
 import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/minimal.ts";
 import type { ValidateHTMLTagConfig } from "@/html/tag-config/types.ts";

@@ -1,6 +1,6 @@
 import type { BaseCSSAttributesComplexConfig } from "@/css/attribute-config/types.ts";
 import type { BaseHTMLTagConfig, ValidateHTMLTagConfig } from "./types.ts";
-import { dslString, type SupportedKeywordsConfig } from "@/dsl/index.ts";
+import { dslString, type SupportedKeywordsConfig } from "tsyntax";
 
 export const htmlTagConfig = <
   const Keywords extends SupportedKeywordsConfig,

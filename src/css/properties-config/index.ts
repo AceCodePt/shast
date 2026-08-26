@@ -2,7 +2,7 @@ import {
   dslString,
   parseValueAgainstDSL,
   type SupportedKeywordsConfig,
-} from "@/dsl/index.ts";
+} from "tsyntax";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
 import type {
   BaseCSSPropertiesConfig,

@@ -1,4 +1,4 @@
-import { SUPPORTED_KEYWORDS } from "@/dsl/index.ts";
+import { SUPPORTED_KEYWORDS } from "tsyntax";
 import { cssSyntaxConfig } from "@/css/syntax-config/index.ts";
 
 export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
