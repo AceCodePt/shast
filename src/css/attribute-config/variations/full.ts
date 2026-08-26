@@ -978,3 +978,5 @@ export default cssAttributeConfig(SUPPORTED_KEYWORDS, fullCSSSyntax, {
   "vector-effect":
     "'none' | 'non-scaling-stroke' | 'non-scaling-size' | 'non-rotation' | 'fixed-position'",
 });
+
+// lsp-touch
