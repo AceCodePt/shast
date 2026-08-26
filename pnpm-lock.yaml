@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      tsyntax:
+        specifier: link:/home/sagi/stuff/tsyntax/main
+        version: link:../../tsyntax/main
       typescript:
         specifier: ^7.0.2
         version: 7.0.2

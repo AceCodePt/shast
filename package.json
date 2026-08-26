@@ -47,6 +47,7 @@
 		"tsx": "^4.23.1"
 	},
 	"dependencies": {
+		"tsyntax": "link:/home/sagi/stuff/tsyntax/main",
 		"typescript": "^7.0.2"
 	}
 }
