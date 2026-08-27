@@ -6,15 +6,17 @@ import {
 } from "tsyntax";
 import type { BaseCSSAttributesComplexConfig } from "@/css/attribute-config/types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import { CSS_IDENTIFIER_REGEX } from "@/css/ident.ts";
 import type {
   BaseKeyframesConfig,
   ValidateKeyframesConfig,
 } from "./types.ts";
+import { FRAME_SELECTOR_ALIASES } from "./types.ts";
 
 // A legal CSS identifier: a letter/underscore/hyphen (or non-ASCII) start,
 // then letters/digits/hyphens/underscores (or non-ASCII). No spaces, and a
-// `--` prefix (reserved for custom properties) is rejected.
-const KEYFRAME_NAME = /^-?[_a-zA-Z\u00A0-\uFFFF][_a-zA-Z0-9\u00A0-\uFFFF-]*$/;
+// `--` prefix (reserved for custom properties) is rejected. Built from the
+// shared ident data (see @/css/ident.ts).
 
 const PERCENTAGE_SELECTOR = /^\d+(?:\.\d+)?%$/;
 
@@ -28,11 +30,10 @@ function isFrameSelector(selector: string): boolean {
 }
 
 // `from`/`to` are aliases for `0%`/`100%`, so a `from` + `0%` pair is a
-// duplicate keyframe and must be rejected like any other duplicate.
+// duplicate keyframe and must be rejected like any other duplicate. The alias
+// map is the same data the type-level NormalizeSelector reads.
 function normalizeSelector(selector: string): string {
-  if (selector === "from") return "0%";
-  if (selector === "to") return "100%";
-  return selector;
+  return (FRAME_SELECTOR_ALIASES as Record<string, string>)[selector] ?? selector;
 }
 
 function validateFrameProperty(
@@ -90,7 +91,7 @@ export function cssKeyframesConfig<
   const keywords = Object.assign({}, SUPPORTED_KEYWORDS, syntaxConfig);
 
   for (const [name, frames] of Object.entries(config)) {
-    if (!KEYFRAME_NAME.test(name)) {
+    if (!CSS_IDENTIFIER_REGEX.test(name)) {
       throw new Error(
         `Invalid keyframe name '${name}': must be a legal CSS identifier with no spaces`,
       );

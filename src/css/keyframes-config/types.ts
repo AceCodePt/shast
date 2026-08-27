@@ -7,6 +7,15 @@ import type {
   BaseCSSAttributesComplexConfig,
 } from "@/css/attribute-config/types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type {
+  ContainsIllegalCharacter,
+  CSSIdentifierCharacter,
+  CSSIdentifierDigit,
+} from "@/css/ident.ts";
+import type {
+  KeysMatching,
+  ResolveComplexValue,
+} from "@/types.ts";
 
 export interface BaseKeyframesConfig {
   [name: string]: Record<string, Record<string, any>>;
@@ -21,28 +30,11 @@ export type KeyframeName<C extends BaseKeyframesConfig> = Extract<
 
 // ---------------------------------------------------------------------------
 // Keyframe name validation: a legal CSS identifier (no spaces, no digit start,
-// no `--` prefix, no illegal characters). Mirrors the engine's class-name wall
-// but is stricter, so a name that passes the type wall is always renderable.
+// no `--` prefix, no illegal characters). The character vocabulary lives in
+// @/css/ident.ts and is shared with the engine's class-name wall. This wall is
+// stricter than the class-name wall, so a name that passes the type wall is
+// always renderable.
 // ---------------------------------------------------------------------------
-
-type CSSIdentifierDigit =
-  | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
-
-type CSSIdentifierCharacter =
-  | CSSIdentifierDigit
-  | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j"
-  | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t"
-  | "u" | "v" | "w" | "x" | "y" | "z"
-  | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J"
-  | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T"
-  | "U" | "V" | "W" | "X" | "Y" | "Z"
-  | "-" | "_";
-
-type ContainsIllegalNameCharacter<S extends string> = S extends `${infer Head}${infer Tail}`
-  ? Head extends CSSIdentifierCharacter
-    ? ContainsIllegalNameCharacter<Tail>
-    : true
-  : false;
 
 export type ValidateKeyframeName<S extends string> = S extends ""
   ? `Invalid keyframe name '${S}': must not be empty`
@@ -51,7 +43,7 @@ export type ValidateKeyframeName<S extends string> = S extends ""
     : S extends `${infer First}${string}`
       ? First extends CSSIdentifierDigit
         ? `Invalid keyframe name '${S}': must not start with a digit`
-        : ContainsIllegalNameCharacter<S> extends true
+        : ContainsIllegalCharacter<S, CSSIdentifierCharacter> extends true
           ? `Invalid keyframe name '${S}': contains an illegal character or space`
           : S
       : S;
@@ -69,19 +61,33 @@ export type ValidateFrameSelector<S extends string> = S extends
 
 // `from` and `0%` (and `to` and `100%`) are the same keyframe in CSS, so both
 // walls normalize before the duplicate check. Object keys are unique strings,
-// so the only collisions that can occur are the two alias pairs.
+// so the only collisions that can occur are the two alias pairs. The alias map
+// is DATA (a const) so the type-level check and the runtime normalizeSelector
+// (see ./index.ts) read the same pairs and cannot drift.
+export const FRAME_SELECTOR_ALIASES = {
+  from: "0%",
+  to: "100%",
+} as const;
+
+export type FrameSelectorAliases = typeof FRAME_SELECTOR_ALIASES;
+
+// Normalize a selector to its canonical form (`from` -> `0%`, `to` -> `100%`).
+export type NormalizeSelector<S extends string> = S extends keyof FrameSelectorAliases
+  ? FrameSelectorAliases[S]
+  : S;
+
+// A frame set has a duplicate when two distinct keys normalize to the same
+// selector (e.g. `from` and `0%` are both `0%` after normalization).
 type HasDuplicateSelector<Frames extends Record<string, any>> =
-  true extends
-    | ("from" extends keyof Frames
-        ? "0%" extends keyof Frames
-          ? true
-          : false
-        : false)
-    | ("to" extends keyof Frames
-        ? "100%" extends keyof Frames
-          ? true
-          : false
-        : false)
+  true extends {
+    [K in keyof Frames & string]: NormalizeSelector<K> extends infer N extends string
+      ? N extends keyof Frames
+        ? K extends N
+          ? false
+          : true
+        : false
+      : false;
+  }[keyof Frames & string]
     ? true
     : false;
 
@@ -91,12 +97,6 @@ type HasDuplicateSelector<Frames extends Record<string, any>> =
 // block — string attributes validate against their DSL, gate attributes
 // (complex values) against one of their value keys.
 // ---------------------------------------------------------------------------
-
-type ResolveComplexValue<
-  Keywords extends SupportedKeywordsConfig,
-  S extends BaseCSSSyntaxConfig,
-  V extends string,
-> = V extends `<${string}>` ? DSLInfer<Keywords & S, V> : V;
 
 type FramePropertyValueOk<
   Keywords extends SupportedKeywordsConfig,
@@ -165,8 +165,3 @@ export type ValidateKeyframesConfig<
       : ValidateKeyframeName<K>
     : C[K];
 };
-
-// The css attributes config keys whose value is a plain DSL string.
-type KeysMatching<Obj extends Record<string, any>, T> = {
-  [K in keyof Obj]: Obj[K] extends T ? K : never;
-}[keyof Obj];

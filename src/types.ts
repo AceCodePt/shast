@@ -1,3 +1,6 @@
+import type { DSLInfer, SupportedKeywordsConfig } from "tsyntax";
+import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+
 export type IsUnion<T, U = T> = T extends any
   ? [U] extends [T]
     ? false
@@ -97,6 +100,25 @@ type HasDuplicate<T extends readonly string[]> = T extends readonly [
     ? true
     : HasDuplicate<Tail>
   : false;
+
+export type FilterOut<
+  Obj extends Record<string, any>,
+  K extends keyof Obj,
+  T,
+> = Obj[K] extends T ? K : never;
+
+// Union of keys whose value matches T
+export type KeysMatching<Obj extends Record<string, any>, T> = {
+  [K in keyof Obj]: FilterOut<Obj, K, T>;
+}[keyof Obj];
+
+// A value key of a complex attribute is either a literal (`"flex"`) or a DSL
+// pattern (`"<length>"`). Turn it into the type a user may actually write.
+export type ResolveComplexValue<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  V extends string,
+> = V extends `<${string}>` ? DSLInfer<Keywords & CSSSyntaxConfig, V> : V;
 
 export function uniqueArray<const T extends readonly string[]>(
   items: HasDuplicate<T> extends true ? `duplicate items in array` : T,
