@@ -2346,6 +2346,7 @@ describe("createComponent (engine)", () => {
                 attributes: { class: "foo!bar" },
                 innerHTML: "Click",
                 css: {
+                  // @ts-expect-error Invalid class name 'foo!bar' is rejected at the type level
                   "&.foo!bar": { color: "red" },
                 },
               }),
@@ -2372,6 +2373,57 @@ describe("createComponent (engine)", () => {
               "&.baz_qux": { color: "blue" },
             },
           });
+        });
+
+        // Type-level probe: a class name must be a legal CSS identifier, so an
+        // invalid one is rejected by the type wall where the component is
+        // created, and valid multi-class values still typecheck and render.
+        test("rejects a class name starting with a digit at the type level", () => {
+          assert.throws(
+            () =>
+              createClassComponent({
+                tag: "button",
+                attributes: { class: "1bad" },
+                innerHTML: "Click",
+                css: {
+                  // @ts-expect-error '1bad' is not a legal CSS class name
+                  "&.1bad": { color: "red" },
+                },
+              }),
+            /CSS Error: Class selector '&.1bad' has an invalid class name '1bad'/,
+          );
+        });
+
+        test("rejects a class name with an illegal character at the type level", () => {
+          assert.throws(
+            () =>
+              createClassComponent({
+                tag: "button",
+                attributes: { class: "a b!c" },
+                innerHTML: "Click",
+                css: {
+                  // @ts-expect-error 'b!c' is not a legal CSS class name
+                  "&.b!c": { color: "red" },
+                },
+              }),
+            /CSS Error: Class selector '&.b!c' has an invalid class name 'b!c'/,
+          );
+        });
+
+        test("accepts valid multi-class values and renders their selectors", () => {
+          const comp = createClassComponent({
+            tag: "button",
+            attributes: { class: "foo bar" },
+            innerHTML: "Click",
+            css: {
+              "&.foo": { color: "red" },
+              "&.bar": { color: "blue" },
+            },
+          });
+          const { html, css } = renderBound(comp);
+          assert.ok(html.includes('class="foo bar"'));
+          assert.ok(css.includes("&.foo"));
+          assert.ok(css.includes("&.bar"));
         });
       });
 
