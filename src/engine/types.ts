@@ -5,6 +5,11 @@ import type {
 import type { BaseCSSPropertiesConfig } from "@/css/properties-config/types.ts";
 import type { BaseCSSPseudoClassConfig } from "@/css/pseudo-class-config/types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type {
+  CSSIdentifierCharacter,
+  CSSIdentifierDigit,
+  ContainsIllegalCharacter,
+} from "@/css/ident.ts";
 import type { DSLInfer, SupportedKeywordsConfig } from "tsyntax";
 import type {
   BaseHTMLAttributesConfig,
@@ -19,11 +24,6 @@ import type {
   Trim,
   UnionToIntersection,
 } from "@/types.ts";
-import type {
-  CSSIdentifierCharacter,
-  CSSIdentifierDigit,
-  ContainsIllegalCharacter,
-} from "@/css/ident.ts";
 
 export type BaseComponentInnerHTMLStructure =
   | string
@@ -158,10 +158,11 @@ type ValidateComponentInnerHTMLStructure<
         : `This element cannot contain a string`
       : never;
 
-// A legal character in a CSS class name: letters, digits, hyphen and
-// underscore. A class name must not START with a digit, and may otherwise
-// contain only these characters. The character vocabulary lives in
-// @/css/ident.ts and is shared with keyframes-config.
+// Whether `S` contains any character that is not a legal CSS identifier
+// character. `S` is a single class name (already space-split). The character
+// set itself lives in @/css/ident.ts.
+type ContainsIllegalClassNameCharacter<S extends string> =
+  ContainsIllegalCharacter<S, CSSIdentifierCharacter>;
 
 // Returns `S` unchanged when `S` is a legal CSS class name, otherwise a
 // diagnostic string literal. `SplitSpace` applies this to every name so that
@@ -169,7 +170,7 @@ type ValidateComponentInnerHTMLStructure<
 type ValidateClassName<S extends string> = S extends `${infer First}${string}`
   ? First extends CSSIdentifierDigit
     ? `Invalid CSS class name '${S}': must not start with a digit`
-    : ContainsIllegalCharacter<S, CSSIdentifierCharacter> extends true
+    : ContainsIllegalClassNameCharacter<S> extends true
       ? `Invalid CSS class name '${S}': contains an illegal character`
       : S
   : S;

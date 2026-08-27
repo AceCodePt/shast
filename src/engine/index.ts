@@ -26,8 +26,8 @@ import type {
 } from "@/html/tag-config/types.ts";
 import { renderCSSPropertiesConfig } from "@/engine/render/properties-config.ts";
 import { renderComponent } from "@/engine/render/render-component.ts";
+import { CSS_IDENTIFIER_REGEX as CSS_CLASS_NAME } from "@/css/ident.ts";
 import type { MakeUndefinedOptional } from "@/types.ts";
-import { CSS_IDENTIFIER_REGEX } from "@/css/ident.ts";
 import type {
   BaseComponentStructure,
   ValidateComponentStructure,
@@ -39,7 +39,6 @@ type AllowedTagSet = Set<string> | null;
 // then letters/digits/hyphens/underscores (or non-ASCII). Unlike class
 // *existence* (which is dynamic and unsound to reject at runtime), an invalid
 // class *name* is always malformed regardless of state, so it is safe to throw.
-// The regex is built from the shared ident data (see @/css/ident.ts).
 
 function intersectAllowed(
   inheritedAllowed: AllowedTagSet,
@@ -311,7 +310,7 @@ export function validateComponentNode(
             );
           }
           const className = key.slice(2);
-          if (!CSS_IDENTIFIER_REGEX.test(className)) {
+          if (!CSS_CLASS_NAME.test(className)) {
             throw new Error(
               `CSS Error: Class selector '${key}' has an invalid class name '${className}'`,
             );

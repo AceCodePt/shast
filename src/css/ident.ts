@@ -1,58 +1,39 @@
-// ---------------------------------------------------------------------------
 // Data-first CSS identifier vocabulary.
 //
-// The ASCII identifier characters are the single source of truth for the
-// identifier walls: the type-level unions are DERIVED from the data strings
-// (CharsOf string-split), and the runtime regex is BUILT from the same data,
-// so the two walls cannot drift.
-//
-// The type-level character set is ASCII-only. The runtime additionally accepts
-// the non-ASCII \u00A0-\uFFFF range (matching real CSS custom-ident parsing);
-// that range is a character RANGE, not a finite set, so it lives separately as
-// a regex fragment rather than as a CharsOf element. This is a consolidation,
-// not a tightening: runtime acceptance is unchanged.
-// ---------------------------------------------------------------------------
+// The identifier character set is DATA (the const strings below), and every
+// type-level union and the runtime check are derived from that same data so
+// the two walls cannot drift. The non-ASCII allowance (\u00A0-\uFFFF) is
+// appended at runtime only and deliberately absent from the type-level union,
+// exactly as before: this is a consolidation, not a tightening.
 
-// Characters allowed at the START of a CSS identifier (no digits: a custom
-// ident cannot begin with a digit; `-` is handled separately as the optional
-// `-?` prefix in the runtime regex and as an ordinary (non-digit) character at
-// the type level). Written as a single literal so `CharsOf` can split it.
-export const ALLOWED_IDENTIFIER_START =
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-
-// Every character allowed anywhere in a CSS identifier: the start characters
-// plus digits and the hyphen. A single literal so `CharsOf` can split it.
 export const ALLOWED_IDENTIFIER_CHARS =
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789-";
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-" as const;
 
-// The non-ASCII range the runtime additionally accepts, as a regex source
-// fragment (a character range, so it cannot be a CharsOf element).
-export const NON_ASCII_IDENTIFIER_RANGE = "\\u00A0-\\uFFFF";
+export const ALLOWED_IDENTIFIER_START =
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_" as const;
 
-// Split a string into a union of its characters. Peels several characters per
-// recursion level (instead of one) so the recursion depth stays well under
-// TypeScript's instantiation limit even for the full 64-character identifier
-// alphabet.
-export type CharsOf<S extends string> = string extends S
-  ? never
-  : S extends `${infer A}${infer B}${infer C}${infer D}${infer Rest}`
-    ? A | B | C | D | CharsOf<Rest>
-    : S extends `${infer A}${infer B}${infer C}${infer Rest}`
-      ? A | B | C | CharsOf<Rest>
-      : S extends `${infer A}${infer B}${infer Rest}`
-        ? A | B | CharsOf<Rest>
-        : S extends `${infer A}${infer Rest}`
-          ? A | CharsOf<Rest>
-          : never;
+export const ALLOWED_IDENTIFIER_DIGITS = "0123456789" as const;
 
-// Every legal ASCII CSS identifier character, derived from the data const.
+// Splits a string into a union of its characters. Consumes four characters per
+// recursion level so the 63-char vocabulary stays well under the instantiation
+// depth limit.
+export type CharsOf<S extends string> =
+  S extends `${infer C1}${infer C2}${infer C3}${infer C4}${infer Rest}`
+    ? C1 | C2 | C3 | C4 | CharsOf<Rest>
+    : S extends `${infer C1}${infer C2}${infer C3}${infer C4}`
+      ? C1 | C2 | C3 | C4
+      : S extends `${infer C1}${infer C2}${infer C3}`
+        ? C1 | C2 | C3
+        : S extends `${infer C1}${infer C2}`
+          ? C1 | C2
+          : S extends `${infer C1}`
+            ? C1
+            : never;
+
 export type CSSIdentifierCharacter = CharsOf<typeof ALLOWED_IDENTIFIER_CHARS>;
+export type CSSIdentifierDigit = CharsOf<typeof ALLOWED_IDENTIFIER_DIGITS>;
 
-// The digits, as a separate union (used to reject a digit at the start).
-export type CSSIdentifierDigit = CharsOf<"0123456789">;
-
-// Whether `S` contains any character outside `Allowed`. `S` is a single,
-// already-split identifier.
+// Whether `S` contains any character not in `Allowed`.
 export type ContainsIllegalCharacter<
   S extends string,
   Allowed extends string,
@@ -62,31 +43,13 @@ export type ContainsIllegalCharacter<
     : true
   : false;
 
-// Escape a literal character for use inside a regex character class. Only `-`
-// (and the class terminators) are special here; `-` must be escaped so it does
-// not form a range with its neighbours.
-function escapeClassChar(c: string): string {
-  return c === "-" || c === "\\" || c === "]" || c === "^" ? `\\${c}` : c;
-}
+// Runtime check built from the same data the type union derives from: an
+// optional leading hyphen, then a start character, then any allowed character
+// (plus the non-ASCII range).
+const NON_ASCII_RANGE = "\\u00A0-\\uFFFF";
+const escapeClassChar = (chars: string): string =>
+  chars.replace(/[-\\\]^]/g, "\\$&");
 
-function classSource(chars: string, range: string): string {
-  let src = "";
-  for (const c of chars) src += escapeClassChar(c);
-  return src + range;
-}
-
-const IDENT_START_CLASS = classSource(
-  ALLOWED_IDENTIFIER_START,
-  NON_ASCII_IDENTIFIER_RANGE,
-);
-const IDENT_CHARS_CLASS = classSource(
-  ALLOWED_IDENTIFIER_CHARS,
-  NON_ASCII_IDENTIFIER_RANGE,
-);
-
-// A legal CSS identifier: an optional leading hyphen, a start character, then
-// zero or more identifier characters. Built from the same data strings that
-// drive the type-level unions.
 export const CSS_IDENTIFIER_REGEX = new RegExp(
-  `^-?[${IDENT_START_CLASS}][${IDENT_CHARS_CLASS}]*$`,
+  `^-?[${escapeClassChar(ALLOWED_IDENTIFIER_START)}${NON_ASCII_RANGE}][${escapeClassChar(ALLOWED_IDENTIFIER_CHARS)}${NON_ASCII_RANGE}]*$`,
 );

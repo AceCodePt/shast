@@ -8,14 +8,11 @@ import type {
 } from "@/css/attribute-config/types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
 import type {
-  ContainsIllegalCharacter,
   CSSIdentifierCharacter,
   CSSIdentifierDigit,
+  ContainsIllegalCharacter,
 } from "@/css/ident.ts";
-import type {
-  KeysMatching,
-  ResolveComplexValue,
-} from "@/types.ts";
+import type { KeysMatching, ResolveComplexValue } from "@/types.ts";
 
 export interface BaseKeyframesConfig {
   [name: string]: Record<string, Record<string, any>>;
@@ -30,10 +27,8 @@ export type KeyframeName<C extends BaseKeyframesConfig> = Extract<
 
 // ---------------------------------------------------------------------------
 // Keyframe name validation: a legal CSS identifier (no spaces, no digit start,
-// no `--` prefix, no illegal characters). The character vocabulary lives in
-// @/css/ident.ts and is shared with the engine's class-name wall. This wall is
-// stricter than the class-name wall, so a name that passes the type wall is
-// always renderable.
+// no `--` prefix, no illegal characters). Mirrors the engine's class-name wall
+// but is stricter, so a name that passes the type wall is always renderable.
 // ---------------------------------------------------------------------------
 
 export type ValidateKeyframeName<S extends string> = S extends ""
@@ -60,34 +55,27 @@ export type ValidateFrameSelector<S extends string> = S extends
   : `Invalid keyframe selector '${S}': must be 'from', 'to', or a percentage like '50%'`;
 
 // `from` and `0%` (and `to` and `100%`) are the same keyframe in CSS, so both
-// walls normalize before the duplicate check. Object keys are unique strings,
-// so the only collisions that can occur are the two alias pairs. The alias map
-// is DATA (a const) so the type-level check and the runtime normalizeSelector
-// (see ./index.ts) read the same pairs and cannot drift.
-export const FRAME_SELECTOR_ALIASES = {
+// walls normalize before the duplicate check. The alias map is data shared
+// with the runtime normalizeSelector. Object keys are unique strings, so the
+// only collisions that can occur are the two alias pairs.
+export const KEYFRAME_SELECTOR_ALIASES = {
   from: "0%",
   to: "100%",
 } as const;
 
-export type FrameSelectorAliases = typeof FRAME_SELECTOR_ALIASES;
+export type NormalizeSelector<S extends string> =
+  S extends keyof typeof KEYFRAME_SELECTOR_ALIASES
+    ? (typeof KEYFRAME_SELECTOR_ALIASES)[S]
+    : S;
 
-// Normalize a selector to its canonical form (`from` -> `0%`, `to` -> `100%`).
-export type NormalizeSelector<S extends string> = S extends keyof FrameSelectorAliases
-  ? FrameSelectorAliases[S]
-  : S;
-
-// A frame set has a duplicate when two distinct keys normalize to the same
-// selector (e.g. `from` and `0%` are both `0%` after normalization).
 type HasDuplicateSelector<Frames extends Record<string, any>> =
   true extends {
-    [K in keyof Frames & string]: NormalizeSelector<K> extends infer N extends string
-      ? N extends keyof Frames
-        ? K extends N
-          ? false
-          : true
+    [Alias in keyof typeof KEYFRAME_SELECTOR_ALIASES]: Alias extends keyof Frames
+      ? NormalizeSelector<Alias> extends keyof Frames
+        ? true
         : false
       : false;
-  }[keyof Frames & string]
+  }[keyof typeof KEYFRAME_SELECTOR_ALIASES]
     ? true
     : false;
 

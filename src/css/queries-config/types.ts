@@ -67,8 +67,6 @@ export const QUERY_VOCABULARY = {
   containerLengthFeatures: CONTAINER_LENGTH_FEATURES,
 } as const;
 
-// The vocabulary is DATA: the interface is derived from the const rather than
-// hand-written, so the type cannot drift from the runtime arrays.
 export type QueryVocabulary = typeof QUERY_VOCABULARY;
 
 // Value validation reuses the syntax config's own <length> / <resolution> DSL
