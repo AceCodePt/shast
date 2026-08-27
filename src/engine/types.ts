@@ -151,6 +151,39 @@ type ValidateComponentInnerHTMLStructure<
         : `This element cannot contain a string`
       : never;
 
+// A legal character in a CSS class name: letters, digits, hyphen and
+// underscore. A class name must not START with a digit, and may otherwise
+// contain only these characters.
+type CSSIdentifierCharacter =
+  | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m"
+  | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
+  | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M"
+  | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
+  | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+  | "-" | "_";
+
+type CSSIdentifierDigit =
+  | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+
+// Whether `S` contains any character that is not a legal CSS identifier
+// character. `S` is a single class name (already space-split).
+type ContainsIllegalClassNameCharacter<S extends string> = S extends `${infer Head}${infer Tail}`
+  ? Head extends CSSIdentifierCharacter
+    ? ContainsIllegalClassNameCharacter<Tail>
+    : true
+  : false;
+
+// Returns `S` unchanged when `S` is a legal CSS class name, otherwise a
+// diagnostic string literal. `SplitSpace` applies this to every name so that
+// garbage class names fail the type wall where the component is created.
+type ValidateClassName<S extends string> = S extends `${infer First}${string}`
+  ? First extends CSSIdentifierDigit
+    ? `Invalid CSS class name '${S}': must not start with a digit`
+    : ContainsIllegalClassNameCharacter<S> extends true
+      ? `Invalid CSS class name '${S}': contains an illegal character`
+      : S
+  : S;
+
 type SplitSpace<S extends string> = string extends S
   ? never
   : S extends never
@@ -158,8 +191,8 @@ type SplitSpace<S extends string> = string extends S
     : Trim<S> extends ""
       ? never
       : Trim<S> extends `${infer Head} ${infer Tail}`
-        ? Trim<Head> | SplitSpace<Tail>
-        : Trim<S>;
+        ? ValidateClassName<Trim<Head>> | SplitSpace<Tail>
+        : ValidateClassName<Trim<S>>;
 
 type FilterOut<
   Obj extends Record<string, any>,
