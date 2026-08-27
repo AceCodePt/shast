@@ -13,10 +13,17 @@ import type {
 import type { BaseHTMLTagConfig } from "@/html/tag-config/types.ts";
 import type {
   JoinUnion,
+  KeysMatching,
   MakeUndefinedOptional,
+  ResolveComplexValue,
   Trim,
   UnionToIntersection,
 } from "@/types.ts";
+import type {
+  CSSIdentifierCharacter,
+  CSSIdentifierDigit,
+  ContainsIllegalCharacter,
+} from "@/css/ident.ts";
 
 export type BaseComponentInnerHTMLStructure =
   | string
@@ -153,25 +160,8 @@ type ValidateComponentInnerHTMLStructure<
 
 // A legal character in a CSS class name: letters, digits, hyphen and
 // underscore. A class name must not START with a digit, and may otherwise
-// contain only these characters.
-type CSSIdentifierCharacter =
-  | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m"
-  | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
-  | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M"
-  | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
-  | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
-  | "-" | "_";
-
-type CSSIdentifierDigit =
-  | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
-
-// Whether `S` contains any character that is not a legal CSS identifier
-// character. `S` is a single class name (already space-split).
-type ContainsIllegalClassNameCharacter<S extends string> = S extends `${infer Head}${infer Tail}`
-  ? Head extends CSSIdentifierCharacter
-    ? ContainsIllegalClassNameCharacter<Tail>
-    : true
-  : false;
+// contain only these characters. The character vocabulary lives in
+// @/css/ident.ts and is shared with keyframes-config.
 
 // Returns `S` unchanged when `S` is a legal CSS class name, otherwise a
 // diagnostic string literal. `SplitSpace` applies this to every name so that
@@ -179,7 +169,7 @@ type ContainsIllegalClassNameCharacter<S extends string> = S extends `${infer He
 type ValidateClassName<S extends string> = S extends `${infer First}${string}`
   ? First extends CSSIdentifierDigit
     ? `Invalid CSS class name '${S}': must not start with a digit`
-    : ContainsIllegalClassNameCharacter<S> extends true
+    : ContainsIllegalCharacter<S, CSSIdentifierCharacter> extends true
       ? `Invalid CSS class name '${S}': contains an illegal character`
       : S
   : S;
@@ -193,25 +183,6 @@ type SplitSpace<S extends string> = string extends S
       : Trim<S> extends `${infer Head} ${infer Tail}`
         ? ValidateClassName<Trim<Head>> | SplitSpace<Tail>
         : ValidateClassName<Trim<S>>;
-
-type FilterOut<
-  Obj extends Record<string, any>,
-  K extends keyof Obj,
-  T,
-> = Obj[K] extends T ? K : never;
-
-// Union of keys whose value matches T
-type KeysMatching<Obj extends Record<string, any>, T> = {
-  [K in keyof Obj]: FilterOut<Obj, K, T>;
-}[keyof Obj];
-
-// A value key of a complex attribute is either a literal (`"flex"`) or a DSL
-// pattern (`"<length>"`). Turn it into the type a user may actually write.
-type ResolveComplexValue<
-  Keywords extends SupportedKeywordsConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
-  V extends string,
-> = V extends `<${string}>` ? DSLInfer<Keywords & CSSSyntaxConfig, V> : V;
 
 // ---------------------------------------------------------------------------
 // Gate tables.

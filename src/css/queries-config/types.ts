@@ -1,15 +1,10 @@
 import type { SupportedKeywords } from "tsyntax";
 import { uniqueArray } from "@/types.ts";
+import type { Trim } from "@/types.ts";
 import type {
   BaseCSSSyntaxConfig,
   InferCSSSyntax,
 } from "@/css/syntax-config/types.ts";
-
-type Trim<S extends string> = S extends ` ${infer R}`
-  ? Trim<R>
-  : S extends `${infer L} `
-    ? Trim<L>
-    : S;
 
 export const OPERATORS = uniqueArray(["<", "<=", ">", ">="]);
 
@@ -58,20 +53,6 @@ export const CONTAINER_LENGTH_FEATURES = uniqueArray([
   "max-height",
 ]);
 
-export interface QueryVocabulary {
-  readonly operators: readonly string[];
-  readonly rangeOperators: readonly string[];
-  readonly mediaTypes: readonly string[];
-  readonly mediaLengthFeatures: readonly string[];
-  readonly mediaResolutionFeatures: readonly string[];
-  readonly mediaRatioFeatures: readonly string[];
-  readonly rangeFeatures: readonly string[];
-  readonly orientationValues: readonly string[];
-  readonly prefersColorSchemeValues: readonly string[];
-  readonly prefersReducedMotionValues: readonly string[];
-  readonly containerLengthFeatures: readonly string[];
-}
-
 export const QUERY_VOCABULARY = {
   operators: OPERATORS,
   rangeOperators: RANGE_OPS,
@@ -85,6 +66,10 @@ export const QUERY_VOCABULARY = {
   prefersReducedMotionValues: PREFERS_REDUCED_MOTION_VALUES,
   containerLengthFeatures: CONTAINER_LENGTH_FEATURES,
 } as const;
+
+// The vocabulary is DATA: the interface is derived from the const rather than
+// hand-written, so the type cannot drift from the runtime arrays.
+export type QueryVocabulary = typeof QUERY_VOCABULARY;
 
 // Value validation reuses the syntax config's own <length> / <resolution> DSL
 // tokens — there is no separate unit vocabulary. When a token is absent from
