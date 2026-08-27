@@ -7,6 +7,12 @@ import type {
   BaseCSSAttributesComplexConfig,
 } from "@/css/attribute-config/types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type {
+  CSSIdentifierCharacter,
+  CSSIdentifierDigit,
+  ContainsIllegalCharacter,
+} from "@/css/ident.ts";
+import type { KeysMatching, ResolveComplexValue } from "@/types.ts";
 
 export interface BaseKeyframesConfig {
   [name: string]: Record<string, Record<string, any>>;
@@ -25,25 +31,6 @@ export type KeyframeName<C extends BaseKeyframesConfig> = Extract<
 // but is stricter, so a name that passes the type wall is always renderable.
 // ---------------------------------------------------------------------------
 
-type CSSIdentifierDigit =
-  | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
-
-type CSSIdentifierCharacter =
-  | CSSIdentifierDigit
-  | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j"
-  | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t"
-  | "u" | "v" | "w" | "x" | "y" | "z"
-  | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J"
-  | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T"
-  | "U" | "V" | "W" | "X" | "Y" | "Z"
-  | "-" | "_";
-
-type ContainsIllegalNameCharacter<S extends string> = S extends `${infer Head}${infer Tail}`
-  ? Head extends CSSIdentifierCharacter
-    ? ContainsIllegalNameCharacter<Tail>
-    : true
-  : false;
-
 export type ValidateKeyframeName<S extends string> = S extends ""
   ? `Invalid keyframe name '${S}': must not be empty`
   : S extends `--${string}`
@@ -51,7 +38,7 @@ export type ValidateKeyframeName<S extends string> = S extends ""
     : S extends `${infer First}${string}`
       ? First extends CSSIdentifierDigit
         ? `Invalid keyframe name '${S}': must not start with a digit`
-        : ContainsIllegalNameCharacter<S> extends true
+        : ContainsIllegalCharacter<S, CSSIdentifierCharacter> extends true
           ? `Invalid keyframe name '${S}': contains an illegal character or space`
           : S
       : S;
@@ -68,20 +55,27 @@ export type ValidateFrameSelector<S extends string> = S extends
   : `Invalid keyframe selector '${S}': must be 'from', 'to', or a percentage like '50%'`;
 
 // `from` and `0%` (and `to` and `100%`) are the same keyframe in CSS, so both
-// walls normalize before the duplicate check. Object keys are unique strings,
-// so the only collisions that can occur are the two alias pairs.
+// walls normalize before the duplicate check. The alias map is data shared
+// with the runtime normalizeSelector. Object keys are unique strings, so the
+// only collisions that can occur are the two alias pairs.
+export const KEYFRAME_SELECTOR_ALIASES = {
+  from: "0%",
+  to: "100%",
+} as const;
+
+export type NormalizeSelector<S extends string> =
+  S extends keyof typeof KEYFRAME_SELECTOR_ALIASES
+    ? (typeof KEYFRAME_SELECTOR_ALIASES)[S]
+    : S;
+
 type HasDuplicateSelector<Frames extends Record<string, any>> =
-  true extends
-    | ("from" extends keyof Frames
-        ? "0%" extends keyof Frames
-          ? true
-          : false
-        : false)
-    | ("to" extends keyof Frames
-        ? "100%" extends keyof Frames
-          ? true
-          : false
-        : false)
+  true extends {
+    [Alias in keyof typeof KEYFRAME_SELECTOR_ALIASES]: Alias extends keyof Frames
+      ? NormalizeSelector<Alias> extends keyof Frames
+        ? true
+        : false
+      : false;
+  }[keyof typeof KEYFRAME_SELECTOR_ALIASES]
     ? true
     : false;
 
@@ -91,12 +85,6 @@ type HasDuplicateSelector<Frames extends Record<string, any>> =
 // block — string attributes validate against their DSL, gate attributes
 // (complex values) against one of their value keys.
 // ---------------------------------------------------------------------------
-
-type ResolveComplexValue<
-  Keywords extends SupportedKeywordsConfig,
-  S extends BaseCSSSyntaxConfig,
-  V extends string,
-> = V extends `<${string}>` ? DSLInfer<Keywords & S, V> : V;
 
 type FramePropertyValueOk<
   Keywords extends SupportedKeywordsConfig,
@@ -165,8 +153,3 @@ export type ValidateKeyframesConfig<
       : ValidateKeyframeName<K>
     : C[K];
 };
-
-// The css attributes config keys whose value is a plain DSL string.
-type KeysMatching<Obj extends Record<string, any>, T> = {
-  [K in keyof Obj]: Obj[K] extends T ? K : never;
-}[keyof Obj];

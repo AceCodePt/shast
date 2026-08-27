@@ -26,6 +26,7 @@ import type {
 } from "@/html/tag-config/types.ts";
 import { renderCSSPropertiesConfig } from "@/engine/render/properties-config.ts";
 import { renderComponent } from "@/engine/render/render-component.ts";
+import { CSS_IDENTIFIER_REGEX as CSS_CLASS_NAME } from "@/css/ident.ts";
 import type { MakeUndefinedOptional } from "@/types.ts";
 import type {
   BaseComponentStructure,
@@ -38,7 +39,6 @@ type AllowedTagSet = Set<string> | null;
 // then letters/digits/hyphens/underscores (or non-ASCII). Unlike class
 // *existence* (which is dynamic and unsound to reject at runtime), an invalid
 // class *name* is always malformed regardless of state, so it is safe to throw.
-const CSS_CLASS_NAME = /^-?[_a-zA-Z\u00A0-\uFFFF][_a-zA-Z0-9\u00A0-\uFFFF-]*$/;
 
 function intersectAllowed(
   inheritedAllowed: AllowedTagSet,
