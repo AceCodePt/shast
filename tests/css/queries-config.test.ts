@@ -3,7 +3,7 @@ import assert from "node:assert";
 import { cssQueriesConfig } from "@/css/queries-config/index.ts";
 import { uniqueArray } from "@/types.ts";
 import {
-  type QueryVocabularyFor,
+  QUERY_VOCABULARY,
   type ValidateQueries as RawValidateQueries,
   type ValidateQuery as RawValidateQuery,
 } from "@/css/queries-config/types.ts";
@@ -11,12 +11,16 @@ import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
 
 type ValidateQuery<S extends string> = RawValidateQuery<
   S,
-  QueryVocabularyFor<typeof COMMON_SYNTAX>
+  typeof QUERY_VOCABULARY,
+  typeof COMMON_SYNTAX
 >;
 type ValidateQueries<T extends readonly string[]> = RawValidateQueries<
   T,
-  QueryVocabularyFor<typeof COMMON_SYNTAX>
+  typeof QUERY_VOCABULARY,
+  typeof COMMON_SYNTAX
 >;
+type ValidateQueryWith<Cfg extends BaseCSSSyntaxConfig, S extends string> =
+  RawValidateQuery<S, typeof QUERY_VOCABULARY, Cfg>;
 import MINIMAL_QUERIES from "@/css/queries-config/variations/minimal.ts";
 import COMMON_QUERIES from "@/css/queries-config/variations/common.ts";
 import FULL_QUERIES from "@/css/queries-config/variations/full.ts";
@@ -317,29 +321,47 @@ describe("cssQueriesConfig", () => {
     });
   });
 
-  describe("DSL-Derived Unit Vocabulary", () => {
-    test('"768px" extends the common length units derived from the DSL', () => {
-      type LengthUnits =
-        QueryVocabularyFor<typeof COMMON_SYNTAX>["lengthUnits"];
-      assertType<"768px" extends LengthUnits ? true : false>();
+  describe("DSL-Derived Value Validation", () => {
+    test('"768px" is a valid length with common syntax', () => {
+      assertType<
+        Equal<
+          ValidateQueryWith<typeof COMMON_SYNTAX, "@media (width < 768px)">,
+          "@media (width < 768px)"
+        >
+      >();
     });
 
-    test('"1cqw" does not extend the common length units', () => {
-      type LengthUnits =
-        QueryVocabularyFor<typeof COMMON_SYNTAX>["lengthUnits"];
-      assertType<Equal<"1cqw" extends LengthUnits ? true : false, false>>();
+    test('"1cqw" is rejected with common syntax but accepted with full', () => {
+      assertType<
+        Equal<
+          ValidateQueryWith<typeof COMMON_SYNTAX, "@media (width < 1cqw)">,
+          "Invalid media feature: (width < 1cqw)"
+        >
+      >();
+      assertType<
+        Equal<
+          ValidateQueryWith<typeof FULL_SYNTAX, "@media (width < 1cqw)">,
+          "@media (width < 1cqw)"
+        >
+      >();
     });
 
-    test('"2dppx" extends the common resolution units', () => {
-      type ResolutionUnits =
-        QueryVocabularyFor<typeof COMMON_SYNTAX>["resolutionUnits"];
-      assertType<"2dppx" extends ResolutionUnits ? true : false>();
-    });
-
-    test('"2dppx" does not extend minimal resolution units (no <resolution>)', () => {
-      type ResolutionUnits =
-        QueryVocabularyFor<typeof MINIMAL_SYNTAX>["resolutionUnits"];
-      assertType<Equal<"2dppx" extends ResolutionUnits ? true : false, false>>();
+    test('"2dppx" resolution is rejected with minimal syntax (no <resolution>)', () => {
+      assertType<
+        Equal<
+          ValidateQueryWith<
+            typeof MINIMAL_SYNTAX,
+            "@media (resolution >= 2dppx)"
+          >,
+          "Invalid media feature: (resolution >= 2dppx)"
+        >
+      >();
+      assertType<
+        Equal<
+          ValidateQueryWith<typeof COMMON_SYNTAX, "@media (resolution >= 2dppx)">,
+          "@media (resolution >= 2dppx)"
+        >
+      >();
     });
 
     test("resolution queries are a type error and throw without <resolution>", () => {

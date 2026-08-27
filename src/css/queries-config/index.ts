@@ -15,8 +15,9 @@ import {
   PREFERS_REDUCED_MOTION_VALUES,
   RANGE_FEATURES,
   RANGE_OPS,
+  QUERY_VOCABULARY,
 } from "./types.ts";
-import type { QueryVocabularyFor, ValidateQueries } from "./types.ts";
+import type { ValidateQueries } from "./types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
 
 const MEDIA_TYPE_REGEX = new RegExp(`^(${MEDIA_TYPES.join("|")})(?: |$)`);
@@ -137,7 +138,7 @@ function validateContainerName(name: string, query: string): void {
 export function cssQueriesConfig<
   const S extends BaseCSSSyntaxConfig,
   const T extends readonly string[],
->(syntaxConfig: S, queries: ValidateQueries<T, QueryVocabularyFor<S>>): T {
+>(syntaxConfig: S, queries: ValidateQueries<T, typeof QUERY_VOCABULARY, S>): T {
   const keywords = Object.assign({}, SUPPORTED_KEYWORDS, syntaxConfig);
 
   const lengthSyntax = syntaxConfig["<length>"];

@@ -61,8 +61,6 @@ export const CONTAINER_LENGTH_FEATURES = uniqueArray([
 export interface QueryVocabulary {
   readonly operators: readonly string[];
   readonly rangeOperators: readonly string[];
-  readonly lengthUnits: string;
-  readonly resolutionUnits: string;
   readonly mediaTypes: readonly string[];
   readonly mediaLengthFeatures: readonly string[];
   readonly mediaResolutionFeatures: readonly string[];
@@ -74,24 +72,28 @@ export interface QueryVocabulary {
   readonly containerLengthFeatures: readonly string[];
 }
 
-export type QueryVocabularyFor<S extends BaseCSSSyntaxConfig> = {
-  readonly operators: typeof OPERATORS;
-  readonly rangeOperators: typeof RANGE_OPS;
-  readonly lengthUnits: InferCSSSyntax<SupportedKeywords, S, "<length>">;
-  readonly resolutionUnits: InferCSSSyntax<SupportedKeywords, S, "<resolution>">;
-  readonly mediaTypes: typeof MEDIA_TYPES;
-  readonly mediaLengthFeatures: typeof MEDIA_LENGTH_FEATURES;
-  readonly mediaResolutionFeatures: typeof MEDIA_RESOLUTION_FEATURES;
-  readonly mediaRatioFeatures: typeof MEDIA_RATIO_FEATURES;
-  readonly rangeFeatures: typeof RANGE_FEATURES;
-  readonly orientationValues: typeof ORIENTATION_VALUES;
-  readonly prefersColorSchemeValues: typeof PREFERS_COLOR_SCHEME_VALUES;
-  readonly prefersReducedMotionValues: typeof PREFERS_REDUCED_MOTION_VALUES;
-  readonly containerLengthFeatures: typeof CONTAINER_LENGTH_FEATURES;
-};
+export const QUERY_VOCABULARY = {
+  operators: OPERATORS,
+  rangeOperators: RANGE_OPS,
+  mediaTypes: MEDIA_TYPES,
+  mediaLengthFeatures: MEDIA_LENGTH_FEATURES,
+  mediaResolutionFeatures: MEDIA_RESOLUTION_FEATURES,
+  mediaRatioFeatures: MEDIA_RATIO_FEATURES,
+  rangeFeatures: RANGE_FEATURES,
+  orientationValues: ORIENTATION_VALUES,
+  prefersColorSchemeValues: PREFERS_COLOR_SCHEME_VALUES,
+  prefersReducedMotionValues: PREFERS_REDUCED_MOTION_VALUES,
+  containerLengthFeatures: CONTAINER_LENGTH_FEATURES,
+} as const;
 
-type IsUnitValue<Value extends string, Units extends string> =
-  Value extends Units ? true : false;
+// Value validation reuses the syntax config's own <length> / <resolution> DSL
+// tokens — there is no separate unit vocabulary. When a token is absent from
+// the config, InferCSSSyntax yields never and the value can never match.
+type IsDSLValue<
+  Value extends string,
+  Cfg extends BaseCSSSyntaxConfig,
+  Token extends string,
+> = Value extends InferCSSSyntax<SupportedKeywords, Cfg, Token> ? true : false;
 
 type IsNumber<S extends string> = S extends `${number}` ? true : false;
 
@@ -99,10 +101,11 @@ type MediaFeatureValueOk<
   F extends string,
   Value extends string,
   V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
 > = F extends V["mediaLengthFeatures"][number]
-  ? IsUnitValue<Value, V["lengthUnits"]>
+  ? IsDSLValue<Value, Cfg, "<length>">
   : F extends V["mediaResolutionFeatures"][number]
-    ? IsUnitValue<Value, V["resolutionUnits"]>
+    ? IsDSLValue<Value, Cfg, "<resolution>">
     : F extends V["mediaRatioFeatures"][number]
       ? IsNumber<Value>
       : F extends "orientation"
@@ -123,148 +126,183 @@ type ContainerFeatureValueOk<
   F extends string,
   Value extends string,
   V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
 > = F extends V["containerLengthFeatures"][number]
-  ? IsUnitValue<Value, V["lengthUnits"]>
+  ? IsDSLValue<Value, Cfg, "<length>">
   : false;
 
-type RangeComparison<Inner extends string, V extends QueryVocabulary> =
-  Inner extends `${infer L1} ${infer Op1} ${infer F} ${infer Op2} ${infer L2}`
-    ? Op1 extends V["rangeOperators"][number]
-      ? Op2 extends V["rangeOperators"][number]
-        ? F extends V["rangeFeatures"][number]
-          ? IsUnitValue<L1, V["lengthUnits"]> extends true
-            ? IsUnitValue<L2, V["lengthUnits"]> extends true
-              ? true
-              : false
+type RangeComparison<
+  Inner extends string,
+  V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
+> = Inner extends `${infer L1} ${infer Op1} ${infer F} ${infer Op2} ${infer L2}`
+  ? Op1 extends V["rangeOperators"][number]
+    ? Op2 extends V["rangeOperators"][number]
+      ? F extends V["rangeFeatures"][number]
+        ? IsDSLValue<L1, Cfg, "<length>"> extends true
+          ? IsDSLValue<L2, Cfg, "<length>"> extends true
+            ? true
             : false
           : false
         : false
       : false
-    : false;
+    : false
+  : false;
 
-type MediaComparison<Inner extends string, V extends QueryVocabulary> =
-  Inner extends `${infer A} ${infer Op} ${infer B}`
-    ? Op extends V["operators"][number]
-      ? MediaFeatureValueOk<A, B, V> extends true
-        ? true
-        : MediaFeatureValueOk<B, A, V> extends true
-          ? true
-          : RangeComparison<Inner, V>
-      : RangeComparison<Inner, V>
-    : RangeComparison<Inner, V>;
-
-type ContainerComparison<Inner extends string, V extends QueryVocabulary> =
-  Inner extends `${infer A} ${infer Op} ${infer B}`
-    ? Op extends V["operators"][number]
-      ? ContainerFeatureValueOk<A, B, V> extends true
-        ? true
-        : ContainerFeatureValueOk<B, A, V> extends true
-          ? true
-          : RangeComparison<Inner, V>
-      : RangeComparison<Inner, V>
-    : RangeComparison<Inner, V>;
-
-type ValidateMediaFeature<S extends string, V extends QueryVocabulary> =
-  S extends `(${infer Inner})`
-    ? Inner extends `${infer F}:${infer RawValue}`
-      ? MediaFeatureValueOk<Trim<F>, Trim<RawValue>, V>
-      : MediaComparison<Inner, V>
-    : false;
-
-type ValidateContainerFeature<S extends string, V extends QueryVocabulary> =
-  S extends `style(${infer Inner})`
-    ? Inner extends `--${string}:${string}`
+type MediaComparison<
+  Inner extends string,
+  V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
+> = Inner extends `${infer A} ${infer Op} ${infer B}`
+  ? Op extends V["operators"][number]
+    ? MediaFeatureValueOk<A, B, V, Cfg> extends true
       ? true
-      : false
-    : S extends `(${infer Inner})`
-      ? Inner extends `${infer F}:${infer RawValue}`
-        ? ContainerFeatureValueOk<Trim<F>, Trim<RawValue>, V>
-        : ContainerComparison<Inner, V>
-      : false;
+      : MediaFeatureValueOk<B, A, V, Cfg> extends true
+        ? true
+        : RangeComparison<Inner, V, Cfg>
+    : RangeComparison<Inner, V, Cfg>
+  : RangeComparison<Inner, V, Cfg>;
 
-type MediaFeatureList<S extends string, V extends QueryVocabulary> =
-  S extends `${infer A} and ${infer B}`
-    ? ValidateMediaFeature<Trim<A>, V> extends true
-      ? Trim<B> extends MediaFeatureList<Trim<B>, V>
+type ContainerComparison<
+  Inner extends string,
+  V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
+> = Inner extends `${infer A} ${infer Op} ${infer B}`
+  ? Op extends V["operators"][number]
+    ? ContainerFeatureValueOk<A, B, V, Cfg> extends true
+      ? true
+      : ContainerFeatureValueOk<B, A, V, Cfg> extends true
+        ? true
+        : RangeComparison<Inner, V, Cfg>
+    : RangeComparison<Inner, V, Cfg>
+  : RangeComparison<Inner, V, Cfg>;
+
+type ValidateMediaFeature<
+  S extends string,
+  V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
+> = S extends `(${infer Inner})`
+  ? Inner extends `${infer F}:${infer RawValue}`
+    ? MediaFeatureValueOk<Trim<F>, Trim<RawValue>, V, Cfg>
+    : MediaComparison<Inner, V, Cfg>
+  : false;
+
+type ValidateContainerFeature<
+  S extends string,
+  V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
+> = S extends `style(${infer Inner})`
+  ? Inner extends `--${string}:${string}`
+    ? true
+    : false
+  : S extends `(${infer Inner})`
+    ? Inner extends `${infer F}:${infer RawValue}`
+      ? ContainerFeatureValueOk<Trim<F>, Trim<RawValue>, V, Cfg>
+      : ContainerComparison<Inner, V, Cfg>
+    : false;
+
+type MediaFeatureList<
+  S extends string,
+  V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
+> = S extends `${infer A} and ${infer B}`
+  ? ValidateMediaFeature<Trim<A>, V, Cfg> extends true
+    ? Trim<B> extends MediaFeatureList<Trim<B>, V, Cfg>
+      ? S
+      : MediaFeatureList<Trim<B>, V, Cfg>
+    : `Invalid media feature: ${Trim<A>}`
+  : ValidateMediaFeature<S, V, Cfg> extends true
+    ? S
+    : `Invalid media feature: ${Trim<S>}`;
+
+type MediaQuery<
+  S extends string,
+  V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
+> = S extends `not ${infer R}`
+  ? Trim<R> extends V["mediaTypes"][number]
+    ? S
+    : Trim<R> extends `${V["mediaTypes"][number]} and ${infer F}`
+      ? MediaFeatureList<Trim<F>, V, Cfg> extends Trim<F>
         ? S
-        : MediaFeatureList<Trim<B>, V>
-      : `Invalid media feature: ${Trim<A>}`
-    : ValidateMediaFeature<S, V> extends true
+        : MediaFeatureList<Trim<F>, V, Cfg>
+      : Trim<R> extends MediaFeatureList<Trim<R>, V, Cfg>
+        ? S
+        : MediaFeatureList<Trim<R>, V, Cfg>
+  : S extends `only ${infer R}`
+    ? Trim<R> extends `${V["mediaTypes"][number]} and ${infer F}`
+      ? MediaFeatureList<Trim<F>, V, Cfg> extends Trim<F>
+        ? S
+        : MediaFeatureList<Trim<F>, V, Cfg>
+      : `Expected media type and conditions after 'only': ${Trim<R>}`
+    : S extends V["mediaTypes"][number]
       ? S
-      : `Invalid media feature: ${Trim<S>}`;
-
-type MediaQuery<S extends string, V extends QueryVocabulary> =
-  S extends `not ${infer R}`
-    ? Trim<R> extends V["mediaTypes"][number]
-      ? S
-      : Trim<R> extends `${V["mediaTypes"][number]} and ${infer F}`
-        ? MediaFeatureList<Trim<F>, V> extends Trim<F>
+      : S extends `${V["mediaTypes"][number]} and ${infer F}`
+        ? MediaFeatureList<Trim<F>, V, Cfg> extends Trim<F>
           ? S
-          : MediaFeatureList<Trim<F>, V>
-        : Trim<R> extends MediaFeatureList<Trim<R>, V>
-          ? S
-          : MediaFeatureList<Trim<R>, V>
-    : S extends `only ${infer R}`
-      ? Trim<R> extends `${V["mediaTypes"][number]} and ${infer F}`
-        ? MediaFeatureList<Trim<F>, V> extends Trim<F>
-          ? S
-          : MediaFeatureList<Trim<F>, V>
-        : `Expected media type and conditions after 'only': ${Trim<R>}`
-      : S extends V["mediaTypes"][number]
-        ? S
-        : S extends `${V["mediaTypes"][number]} and ${infer F}`
-          ? MediaFeatureList<Trim<F>, V> extends Trim<F>
-            ? S
-            : MediaFeatureList<Trim<F>, V>
-          : MediaFeatureList<S, V>;
+          : MediaFeatureList<Trim<F>, V, Cfg>
+        : MediaFeatureList<S, V, Cfg>;
 
-type MediaQueryList<S extends string, V extends QueryVocabulary> =
-  S extends `${infer A},${infer B}`
-    ? MediaQuery<Trim<A>, V> extends Trim<A>
-      ? Trim<B> extends MediaQueryList<Trim<B>, V>
-        ? S
-        : MediaQueryList<Trim<B>, V>
-      : `Invalid media query: ${Trim<A>}`
-    : MediaQuery<S, V> extends S
+type MediaQueryList<
+  S extends string,
+  V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
+> = S extends `${infer A},${infer B}`
+  ? MediaQuery<Trim<A>, V, Cfg> extends Trim<A>
+    ? Trim<B> extends MediaQueryList<Trim<B>, V, Cfg>
       ? S
-      : MediaQuery<S, V>;
+      : MediaQueryList<Trim<B>, V, Cfg>
+    : `Invalid media query: ${Trim<A>}`
+  : MediaQuery<S, V, Cfg> extends S
+    ? S
+    : MediaQuery<S, V, Cfg>;
 
-type ContainerFeatureList<S extends string, V extends QueryVocabulary> =
-  S extends `${infer A} and ${infer B}`
-    ? ValidateContainerFeature<Trim<A>, V> extends true
-      ? Trim<B> extends ContainerFeatureList<Trim<B>, V>
-        ? S
-        : ContainerFeatureList<Trim<B>, V>
-      : `Invalid container feature: ${Trim<A>}`
-    : ValidateContainerFeature<S, V> extends true
+type ContainerFeatureList<
+  S extends string,
+  V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
+> = S extends `${infer A} and ${infer B}`
+  ? ValidateContainerFeature<Trim<A>, V, Cfg> extends true
+    ? Trim<B> extends ContainerFeatureList<Trim<B>, V, Cfg>
       ? S
-      : `Invalid container feature: ${Trim<S>}`;
+      : ContainerFeatureList<Trim<B>, V, Cfg>
+    : `Invalid container feature: ${Trim<A>}`
+  : ValidateContainerFeature<S, V, Cfg> extends true
+    ? S
+    : `Invalid container feature: ${Trim<S>}`;
 
-type ValidateContainerQuery<S extends string, V extends QueryVocabulary> =
-  S extends `style(${string}`
-    ? ContainerFeatureList<S, V>
-    : S extends `(${string}`
-      ? ContainerFeatureList<S, V>
-      : S extends `${string} ${infer F}`
-        ? F extends ContainerFeatureList<F, V>
-          ? S
-          : F
-        : S;
-
-export type ValidateQuery<S extends string, V extends QueryVocabulary> =
-  S extends `@media ${infer Q}`
-    ? Trim<Q> extends MediaQueryList<Trim<Q>, V>
-      ? S
-      : MediaQueryList<Trim<Q>, V>
-    : S extends `@container ${infer Q}`
-      ? Trim<Q> extends ValidateContainerQuery<Trim<Q>, V>
+type ValidateContainerQuery<
+  S extends string,
+  V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
+> = S extends `style(${string}`
+  ? ContainerFeatureList<S, V, Cfg>
+  : S extends `(${string}`
+    ? ContainerFeatureList<S, V, Cfg>
+    : S extends `${string} ${infer F}`
+      ? F extends ContainerFeatureList<F, V, Cfg>
         ? S
-        : ValidateContainerQuery<Trim<Q>, V>
-      : `Query must start with @media or @container`;
+        : F
+      : S;
+
+export type ValidateQuery<
+  S extends string,
+  V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
+> = S extends `@media ${infer Q}`
+  ? Trim<Q> extends MediaQueryList<Trim<Q>, V, Cfg>
+    ? S
+    : MediaQueryList<Trim<Q>, V, Cfg>
+  : S extends `@container ${infer Q}`
+    ? Trim<Q> extends ValidateContainerQuery<Trim<Q>, V, Cfg>
+      ? S
+      : ValidateContainerQuery<Trim<Q>, V, Cfg>
+    : `Query must start with @media or @container`;
 
 export type ValidateQueries<
   T extends readonly string[],
   V extends QueryVocabulary,
+  Cfg extends BaseCSSSyntaxConfig,
 > = {
-  [K in keyof T]: T[K] extends string ? ValidateQuery<T[K], V> : T[K];
+  [K in keyof T]: T[K] extends string ? ValidateQuery<T[K], V, Cfg> : T[K];
 };
