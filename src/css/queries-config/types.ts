@@ -1,55 +1,15 @@
+import type { SupportedKeywords } from "tsyntax";
 import { uniqueArray } from "@/types.ts";
+import type {
+  BaseCSSSyntaxConfig,
+  InferCSSSyntax,
+} from "@/css/syntax-config/types.ts";
 
 type Trim<S extends string> = S extends ` ${infer R}`
   ? Trim<R>
   : S extends `${infer L} `
     ? Trim<L>
     : S;
-
-export const LENGTH_UNITS = uniqueArray([
-  "px",
-  "rem",
-  "em",
-  "vw",
-  "vh",
-  "vmin",
-  "vmax",
-  "ch",
-  "lh",
-  "rlh",
-  "ex",
-  "rex",
-  "cap",
-  "rcap",
-  "ic",
-  "ric",
-  "dvh",
-  "dvw",
-  "dvmin",
-  "dvmax",
-  "svh",
-  "svw",
-  "svmin",
-  "svmax",
-  "lvh",
-  "lvw",
-  "lvmin",
-  "lvmax",
-  "cqw",
-  "cqh",
-  "cqi",
-  "cqb",
-  "cqmin",
-  "cqmax",
-  "in",
-  "pt",
-  "pc",
-  "cm",
-  "mm",
-  "Q",
-]);
-
-export const RESOLUTION_UNITS = uniqueArray(["dpi", "dpcm", "dppx", "x"]);
 
 export const OPERATORS = uniqueArray(["<", "<=", ">", ">="]);
 
@@ -101,8 +61,8 @@ export const CONTAINER_LENGTH_FEATURES = uniqueArray([
 export interface QueryVocabulary {
   readonly operators: readonly string[];
   readonly rangeOperators: readonly string[];
-  readonly lengthUnits: readonly string[];
-  readonly resolutionUnits: readonly string[];
+  readonly lengthUnits: string;
+  readonly resolutionUnits: string;
   readonly mediaTypes: readonly string[];
   readonly mediaLengthFeatures: readonly string[];
   readonly mediaResolutionFeatures: readonly string[];
@@ -114,24 +74,24 @@ export interface QueryVocabulary {
   readonly containerLengthFeatures: readonly string[];
 }
 
-export const QUERY_VOCABULARY = {
-  operators: OPERATORS,
-  rangeOperators: RANGE_OPS,
-  lengthUnits: LENGTH_UNITS,
-  resolutionUnits: RESOLUTION_UNITS,
-  mediaTypes: MEDIA_TYPES,
-  mediaLengthFeatures: MEDIA_LENGTH_FEATURES,
-  mediaResolutionFeatures: MEDIA_RESOLUTION_FEATURES,
-  mediaRatioFeatures: MEDIA_RATIO_FEATURES,
-  rangeFeatures: RANGE_FEATURES,
-  orientationValues: ORIENTATION_VALUES,
-  prefersColorSchemeValues: PREFERS_COLOR_SCHEME_VALUES,
-  prefersReducedMotionValues: PREFERS_REDUCED_MOTION_VALUES,
-  containerLengthFeatures: CONTAINER_LENGTH_FEATURES,
-} as const;
+export type QueryVocabularyFor<S extends BaseCSSSyntaxConfig> = {
+  readonly operators: typeof OPERATORS;
+  readonly rangeOperators: typeof RANGE_OPS;
+  readonly lengthUnits: InferCSSSyntax<SupportedKeywords, S, "<length>">;
+  readonly resolutionUnits: InferCSSSyntax<SupportedKeywords, S, "<resolution>">;
+  readonly mediaTypes: typeof MEDIA_TYPES;
+  readonly mediaLengthFeatures: typeof MEDIA_LENGTH_FEATURES;
+  readonly mediaResolutionFeatures: typeof MEDIA_RESOLUTION_FEATURES;
+  readonly mediaRatioFeatures: typeof MEDIA_RATIO_FEATURES;
+  readonly rangeFeatures: typeof RANGE_FEATURES;
+  readonly orientationValues: typeof ORIENTATION_VALUES;
+  readonly prefersColorSchemeValues: typeof PREFERS_COLOR_SCHEME_VALUES;
+  readonly prefersReducedMotionValues: typeof PREFERS_REDUCED_MOTION_VALUES;
+  readonly containerLengthFeatures: typeof CONTAINER_LENGTH_FEATURES;
+};
 
-type IsUnitValue<S extends string, Units extends readonly string[]> =
-  S extends `${number}${Units[number]}` ? true : false;
+type IsUnitValue<Value extends string, Units extends string> =
+  Value extends Units ? true : false;
 
 type IsNumber<S extends string> = S extends `${number}` ? true : false;
 

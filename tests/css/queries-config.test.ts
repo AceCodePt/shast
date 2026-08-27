@@ -3,22 +3,26 @@ import assert from "node:assert";
 import { cssQueriesConfig } from "@/css/queries-config/index.ts";
 import { uniqueArray } from "@/types.ts";
 import {
-  type QUERY_VOCABULARY,
+  type QueryVocabularyFor,
   type ValidateQueries as RawValidateQueries,
   type ValidateQuery as RawValidateQuery,
 } from "@/css/queries-config/types.ts";
+import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
 
 type ValidateQuery<S extends string> = RawValidateQuery<
   S,
-  typeof QUERY_VOCABULARY
+  QueryVocabularyFor<typeof COMMON_SYNTAX>
 >;
 type ValidateQueries<T extends readonly string[]> = RawValidateQueries<
   T,
-  typeof QUERY_VOCABULARY
+  QueryVocabularyFor<typeof COMMON_SYNTAX>
 >;
 import MINIMAL_QUERIES from "@/css/queries-config/variations/minimal.ts";
 import COMMON_QUERIES from "@/css/queries-config/variations/common.ts";
 import FULL_QUERIES from "@/css/queries-config/variations/full.ts";
+import MINIMAL_SYNTAX from "@/css/syntax-config/variations/minimal.ts";
+import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
+import FULL_SYNTAX from "@/css/syntax-config/variations/full.ts";
 import { assertType, type Equal } from "../type-utils.ts";
 
 describe("cssQueriesConfig", () => {
@@ -127,9 +131,10 @@ describe("cssQueriesConfig", () => {
   });
 
   describe("Type Inference", () => {
-    test("infers the exact literal union of passed query strings", () => {
-      const queries = cssQueriesConfig([
+    test("infers the exact literal tuple of passed query strings", () => {
+      const queries = cssQueriesConfig(COMMON_SYNTAX, [
         "@media (width < 768px)",
+        "@media (resolution >= 2dppx)",
         "@container (width > 400px)",
       ]);
       assertType<
@@ -137,6 +142,7 @@ describe("cssQueriesConfig", () => {
           typeof queries,
           readonly [
             "@media (width < 768px)",
+            "@media (resolution >= 2dppx)",
             "@container (width > 400px)",
           ]
         >
@@ -146,7 +152,7 @@ describe("cssQueriesConfig", () => {
 
   describe("Runtime Validation", () => {
     test("accepts media width/height comparison operators", () => {
-      const config = cssQueriesConfig([
+      const config = cssQueriesConfig(COMMON_SYNTAX, [
         "@media (width < 768px)",
         "@media (width >= 1024px)",
         "@media (768px <= width < 1024px)",
@@ -156,7 +162,7 @@ describe("cssQueriesConfig", () => {
     });
 
     test("accepts media feature-value queries", () => {
-      const config = cssQueriesConfig([
+      const config = cssQueriesConfig(COMMON_SYNTAX, [
         "@media (prefers-color-scheme: dark)",
         "@media (prefers-reduced-motion: reduce)",
         "@media (orientation: landscape)",
@@ -167,7 +173,7 @@ describe("cssQueriesConfig", () => {
     });
 
     test("accepts compound media queries", () => {
-      const config = cssQueriesConfig([
+      const config = cssQueriesConfig(COMMON_SYNTAX, [
         "@media (width < 768px) and (prefers-color-scheme: dark)",
         "@media (width < 768px), (orientation: portrait)",
         "@media screen and (width < 768px)",
@@ -178,7 +184,7 @@ describe("cssQueriesConfig", () => {
     });
 
     test("accepts container queries", () => {
-      const config = cssQueriesConfig([
+      const config = cssQueriesConfig(COMMON_SYNTAX, [
         "@container (width > 400px)",
         "@container sidebar (min-width: 600px)",
         "@container (width > 400px) and (height > 200px)",
@@ -192,7 +198,7 @@ describe("cssQueriesConfig", () => {
         "@media (width < 768px)",
         "@container (width > 400px)",
       ] as const;
-      const config = cssQueriesConfig(input);
+      const config = cssQueriesConfig(COMMON_SYNTAX, input);
       assert.strictEqual(config, input);
       assert.deepStrictEqual(config, input);
     });
@@ -201,7 +207,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error unknown media feature is a type-level error
-          return cssQueriesConfig(["@media (frobnicate: 3)"]);
+          return cssQueriesConfig(COMMON_SYNTAX, ["@media (frobnicate: 3)"]);
         },
         /Unknown or invalid media feature/,
       );
@@ -211,7 +217,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error missing @ prefix is a type-level error
-          return cssQueriesConfig(["media (width < 768px)"]);
+          return cssQueriesConfig(COMMON_SYNTAX, ["media (width < 768px)"]);
         },
         /must start with/,
       );
@@ -221,7 +227,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error unclosed paren is a type-level error
-          return cssQueriesConfig(["@media (width < 768px"]);
+          return cssQueriesConfig(COMMON_SYNTAX, ["@media (width < 768px"]);
         },
         /Unclosed parenthesis/,
       );
@@ -231,7 +237,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error bad operator is a type-level error
-          return cssQueriesConfig(["@media (width == 768px)"]);
+          return cssQueriesConfig(COMMON_SYNTAX, ["@media (width == 768px)"]);
         },
         /Invalid comparison/,
       );
@@ -241,7 +247,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error invalid value is a type-level error
-          return cssQueriesConfig(["@media (prefers-color-scheme: yellow)"]);
+          return cssQueriesConfig(COMMON_SYNTAX, ["@media (prefers-color-scheme: yellow)"]);
         },
         /Unknown or invalid media feature/,
       );
@@ -251,7 +257,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error unknown container feature is a type-level error
-          return cssQueriesConfig(["@container (frobnicate: 3)"]);
+          return cssQueriesConfig(COMMON_SYNTAX, ["@container (frobnicate: 3)"]);
         },
         /Unknown or invalid container feature/,
       );
@@ -260,12 +266,12 @@ describe("cssQueriesConfig", () => {
 
   describe("Edge Cases", () => {
     test("empty array is accepted", () => {
-      const config = cssQueriesConfig([]);
+      const config = cssQueriesConfig(COMMON_SYNTAX, []);
       assert.deepStrictEqual(config, []);
     });
 
     test("query with only a media type is accepted", () => {
-      const config = cssQueriesConfig(["@media all"]);
+      const config = cssQueriesConfig(COMMON_SYNTAX, ["@media all"]);
       assert.equal(config.length, 1);
     });
 
@@ -273,7 +279,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () => {
           // @ts-expect-error unknown @ prefix is a type-level error
-          return cssQueriesConfig(["@phone (width < 768px)"]);
+          return cssQueriesConfig(COMMON_SYNTAX, ["@phone (width < 768px)"]);
         },
         /must start with/,
       );
@@ -308,6 +314,65 @@ describe("cssQueriesConfig", () => {
         "@media (prefers-reduced-motion: reduce)",
       ] as const;
       assertType<Equal<ValidateQueries<typeof minimal>, typeof minimal>>();
+    });
+  });
+
+  describe("DSL-Derived Unit Vocabulary", () => {
+    test('"768px" extends the common length units derived from the DSL', () => {
+      type LengthUnits =
+        QueryVocabularyFor<typeof COMMON_SYNTAX>["lengthUnits"];
+      assertType<"768px" extends LengthUnits ? true : false>();
+    });
+
+    test('"1cqw" does not extend the common length units', () => {
+      type LengthUnits =
+        QueryVocabularyFor<typeof COMMON_SYNTAX>["lengthUnits"];
+      assertType<Equal<"1cqw" extends LengthUnits ? true : false, false>>();
+    });
+
+    test('"2dppx" extends the common resolution units', () => {
+      type ResolutionUnits =
+        QueryVocabularyFor<typeof COMMON_SYNTAX>["resolutionUnits"];
+      assertType<"2dppx" extends ResolutionUnits ? true : false>();
+    });
+
+    test('"2dppx" does not extend minimal resolution units (no <resolution>)', () => {
+      type ResolutionUnits =
+        QueryVocabularyFor<typeof MINIMAL_SYNTAX>["resolutionUnits"];
+      assertType<Equal<"2dppx" extends ResolutionUnits ? true : false, false>>();
+    });
+
+    test("resolution queries are a type error and throw without <resolution>", () => {
+      assert.throws(
+        () => {
+          // @ts-expect-error minimal syntax has no <resolution> token
+          return cssQueriesConfig(MINIMAL_SYNTAX, ["@media (resolution >= 2dppx)"]);
+        },
+        /Invalid comparison/,
+      );
+    });
+
+    test("@media (width < 1cqw) passes with full syntax but throws with common", () => {
+      const full = cssQueriesConfig(FULL_SYNTAX, ["@media (width < 1cqw)"]);
+      assert.deepStrictEqual(full, ["@media (width < 1cqw)"]);
+      assert.throws(
+        () => {
+          // @ts-expect-error common syntax has no cqw unit
+          return cssQueriesConfig(COMMON_SYNTAX, ["@media (width < 1cqw)"]);
+        },
+        /Invalid comparison/,
+      );
+    });
+
+    test("throws a clear error when the config lacks a <length> token", () => {
+      assert.throws(
+        () =>
+          cssQueriesConfig(
+            { "<number>": "`${number}`" } as unknown as BaseCSSSyntaxConfig,
+            [],
+          ),
+        /"<length>" token/,
+      );
     });
   });
 

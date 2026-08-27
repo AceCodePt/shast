@@ -20,6 +20,9 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // Cross-reference — cannot be expressed in the DSL without token references
   "<length-percentage>": "<length> | <percentage>",
 
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
+  "<resolution>": "`${number}${'dpi' | 'dpcm' | 'dppx' | 'x'}`",
+
   // https://developer.mozilla.org/en-US/docs/Web/CSS/angle
   "<angle>": "`${number}${'deg' | 'rad' | 'turn' | 'grad'}`",
 
