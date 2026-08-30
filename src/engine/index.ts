@@ -57,6 +57,7 @@ export function validateComponentNode(
   tagConfig: BaseHTMLTagConfig,
   cssAttributesConfig: Record<string, any>,
   cssPropertiesConfig: Record<string, any>,
+  cssQueriesConfig: readonly string[],
   inheritedAllowed: AllowedTagSet,
   mergedKeywords: Record<string, string>,
 ): void {
@@ -268,6 +269,7 @@ export function validateComponentNode(
       cssProps: Record<string, any>,
       nodeTag: string | undefined,
       parentGates: Record<string, string>,
+      registeredQueries: Set<string>,
       inPseudoElement?: boolean,
     ): void => {
       // Gates the author wrote in this scope, in any order, plus the tag's
@@ -317,6 +319,38 @@ export function validateComponentNode(
           }
         }
         const value = block[key];
+        if (key.startsWith("@")) {
+          // A query key (`@media ...` / `@container ...`). The key must be an
+          // exact registered query string; the block then validates with the
+          // same node/context (queries never change the target element).
+          if (!registeredQueries.has(key)) {
+            throw new Error(
+              `CSS Error: Query '${key}' is not registered in the cssQueriesConfig. Registered queries are: ${[...registeredQueries].join(", ")}`,
+            );
+          }
+          if (
+            value === null ||
+            typeof value !== "object" ||
+            Array.isArray(value)
+          ) {
+            throw new Error(
+              `CSS Error: Query block '${key}' must be a CSS block object`,
+            );
+          }
+          const nextInPseudoElement = key.startsWith("::") || !!inPseudoElement;
+          validateCSS(
+            value as Record<string, unknown>,
+            contextInnerHTML,
+            contextClasses,
+            cssAttrs,
+            cssProps,
+            nodeTag,
+            parentGates,
+            registeredQueries,
+            nextInPseudoElement,
+          );
+          continue;
+        }
         if (
           value !== null &&
           typeof value === "object" &&
@@ -410,6 +444,7 @@ export function validateComponentNode(
             // children slot; pseudo-class / class / pseudo-element blocks pass
             // the parent gates through unchanged.
             key.startsWith("> ") ? explicitGates : parentGates,
+            registeredQueries,
             nextInPseudoElement,
           );
         } else if (!key.startsWith("> ") && !key.startsWith("&.")) {
@@ -457,6 +492,7 @@ export function validateComponentNode(
       cssPropertiesConfig,
       tag,
       {},
+      new Set(cssQueriesConfig),
     );
   }
 
@@ -540,6 +576,7 @@ export function validateComponentNode(
       tagConfig,
       cssAttributesConfig,
       cssPropertiesConfig,
+      cssQueriesConfig,
       forwardAllowed,
       mergedKeywords,
     );
@@ -558,6 +595,7 @@ export default function engine<
   const CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   const CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   const CSSPropertiesConfig extends BaseCSSPropertiesConfig,
+  const CSSQueriesConfig extends readonly string[],
 >(
   config: {
     supportedKeywords: SupportedKeywords;
@@ -585,6 +623,7 @@ export default function engine<
       CSSSyntaxConfig,
       CSSPropertiesConfig
     >;
+    cssQueriesConfig: CSSQueriesConfig;
   },
   options?: { skipValidation?: boolean },
 ) {
@@ -599,6 +638,7 @@ export default function engine<
       CSSAttributesConfig,
       CSSPseudoClassConfig,
       CSSPropertiesConfig,
+      CSSQueriesConfig,
       keyof HTMLTagConfig | "#text",
       T,
       keyof HTMLTagConfig | "#text"
@@ -617,6 +657,7 @@ export default function engine<
         config.htmlTagConfig,
         config.cssAttributesConfig,
         config.cssPropertiesConfig,
+        config.cssQueriesConfig,
         null,
         mergedKeywords,
       );

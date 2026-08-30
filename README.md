@@ -54,6 +54,7 @@ const { createComponent, renderComponent } = engine({
   cssAttributesConfig: CSS_ATTRIBUTES_CONFIG,
   cssPseudoClassConfig: CSS_GLOBAL_PSEUDO_CLASSES_CONFIG,
   cssPropertiesConfig: CSS_GLOBAL_PROPERTIES,
+  cssQueriesConfig: ["@media (width < 768px)"], // exact registered query strings
 });
 
 const card = createComponent({
