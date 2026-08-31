@@ -248,6 +248,8 @@ function markTargetedChildren(
       markTargetedChildren(block, node, targeted);
     } else if (key.startsWith("&.")) {
       markTargetedChildren(block, node, targeted);
+    } else if (key.startsWith("@media ") || key.startsWith("@container ")) {
+      markTargetedChildren(block, node, targeted);
     }
   }
 }
@@ -293,12 +295,12 @@ function collectTargetedChildren(
   return targeted;
 }
 
-function renderRule(
-  selector: string,
+function renderNestedBlock(
   cssBlock: Record<string, unknown>,
   node: BaseComponentStructure,
+  selector: string,
   indent: number,
-): string | null {
+): string {
   const declarations: string[] = [];
   const nestedRules: string[] = [];
 
@@ -363,23 +365,55 @@ function renderRule(
         );
         if (rule !== null) nestedRules.push(rule);
       }
+    } else if (key.startsWith("@media ") || key.startsWith("@container ")) {
+      // A registered query key (`@media ...` / `@container ...`). It expands
+      // to a scoped @-rule that continues the current selector: declarations
+      // and nested rules inside the block apply to the same element scope.
+      if (value !== null && typeof value === "object") {
+        const rule = renderQueryRule(
+          key,
+          value as Record<string, unknown>,
+          node,
+          selector,
+          indent + 1,
+        );
+        if (rule !== null) nestedRules.push(rule);
+      }
     } else {
       declarations.push(`${key}: ${String(value)};`);
     }
   }
 
-  if (declarations.length === 0 && nestedRules.length === 0) {
-    return null;
-  }
-
-  const pad = INDENT_UNIT.repeat(indent);
   const innerPad = INDENT_UNIT.repeat(indent + 1);
-  const body = [
+  return [
     ...declarations.map((declaration) => `${innerPad}${declaration}`),
     ...nestedRules,
   ].join("\n");
+}
 
+function renderRule(
+  selector: string,
+  cssBlock: Record<string, unknown>,
+  node: BaseComponentStructure,
+  indent: number,
+): string | null {
+  const body = renderNestedBlock(cssBlock, node, selector, indent);
+  if (body === "") return null;
+  const pad = INDENT_UNIT.repeat(indent);
   return `${pad}${selector} {\n${body}\n${pad}}`;
+}
+
+function renderQueryRule(
+  query: string,
+  cssBlock: Record<string, unknown>,
+  node: BaseComponentStructure,
+  selector: string,
+  indent: number,
+): string | null {
+  const body = renderNestedBlock(cssBlock, node, selector, indent);
+  if (body === "") return null;
+  const pad = INDENT_UNIT.repeat(indent);
+  return `${pad}${query} {\n${body}\n${pad}}`;
 }
 
 function collectCSS(node: BaseComponentStructure): string[] {

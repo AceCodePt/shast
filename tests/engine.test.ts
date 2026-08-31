@@ -14,6 +14,8 @@ import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/common.ts";
 import CSS_GLOBAL_PSEUDO_CLASSES_CONFIG from "@/css/pseudo-class-config/variations/common.ts";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
 
+const EMPTY_QUERIES = [] as const;
+
 const CSS_GLOBAL_PROPERTIES = cssPropertiesConfig(
   SUPPORTED_KEYWORDS,
   CSS_SYNTAX_CONFIG,
@@ -38,6 +40,7 @@ const {
   cssAttributesConfig: CSS_ATTRIBUTES_CONFIG,
   cssPseudoClassConfig: CSS_GLOBAL_PSEUDO_CLASSES_CONFIG,
   cssPropertiesConfig: CSS_GLOBAL_PROPERTIES,
+  cssQueriesConfig: EMPTY_QUERIES,
 });
 
 describe("engine", () => {
@@ -234,6 +237,7 @@ const { createComponent: createMockComponent } = engine({
   cssAttributesConfig: MOCK_CSS_ATTR_CONFIG,
   cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
   cssPropertiesConfig: MOCK_CSS_PROPERTIES,
+  cssQueriesConfig: EMPTY_QUERIES,
 });
 
 const { createComponent: createInheritComponent } = engine({
@@ -244,6 +248,7 @@ const { createComponent: createInheritComponent } = engine({
   cssAttributesConfig: MOCK_CSS_ATTR_CONFIG,
   cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
   cssPropertiesConfig: MOCK_CSS_PROPERTIES,
+  cssQueriesConfig: EMPTY_QUERIES,
 });
 
 describe("createComponent (engine)", () => {
@@ -831,6 +836,7 @@ describe("createComponent (engine)", () => {
       cssAttributesConfig: PSEUDO_CSS_ATTRIBUTES,
       cssPseudoClassConfig: GLOBAL_PSEUDO,
       cssPropertiesConfig: PSEUDO_CSS_PROPERTIES,
+      cssQueriesConfig: EMPTY_QUERIES,
     });
 
     test("accepts a declared pseudo-class block containing CSS properties", () => {
@@ -978,6 +984,7 @@ describe("createComponent (engine)", () => {
         cssAttributesConfig: PSEUDO_CSS_ATTRIBUTES,
         cssPseudoClassConfig: GLOBAL_PSEUDO,
         cssPropertiesConfig: PSEUDO_CSS_PROPERTIES,
+        cssQueriesConfig: EMPTY_QUERIES,
       });
       createNoPseudoComponent({
         tag: "widget",
@@ -1042,6 +1049,7 @@ describe("createComponent (engine)", () => {
       cssAttributesConfig: PE_CSS_ATTRIBUTES,
       cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
       cssPropertiesConfig: PE_CSS_PROPERTIES,
+      cssQueriesConfig: EMPTY_QUERIES,
     });
 
     test("accepts a declared pseudo-element block containing CSS properties", () => {
@@ -1208,6 +1216,7 @@ describe("createComponent (engine)", () => {
         cssAttributesConfig: PE_CSS_ATTRIBUTES,
         cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
         cssPropertiesConfig: PE_CSS_PROPERTIES,
+        cssQueriesConfig: EMPTY_QUERIES,
       });
       createNoPEComponent({
         tag: "plain",
@@ -2218,6 +2227,7 @@ describe("createComponent (engine)", () => {
           cssAttributesConfig: CLASS_CSS_ATTRIBUTES,
           cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
           cssPropertiesConfig: CLASS_CSS_PROPERTIES,
+          cssQueriesConfig: EMPTY_QUERIES,
         });
 
         test("accepts &.className when class is declared in attributes", () => {
@@ -2280,6 +2290,7 @@ describe("createComponent (engine)", () => {
             cssAttributesConfig: CLASS_CSS_ATTRIBUTES,
             cssPseudoClassConfig: [":active"],
             cssPropertiesConfig: CLASS_CSS_PROPERTIES,
+            cssQueriesConfig: EMPTY_QUERIES,
           });
           const config = createPseudoClassComponent({
             tag: "button",
@@ -2475,6 +2486,7 @@ describe("createComponent (engine)", () => {
           cssAttributesConfig: CHILD_CSS_ATTRIBUTES,
           cssPseudoClassConfig: [":hover"],
           cssPropertiesConfig: CHILD_CSS_PROPERTIES,
+          cssQueriesConfig: EMPTY_QUERIES,
         });
 
         test("accepts a valid > childName selector", () => {
@@ -2754,6 +2766,7 @@ describe("createComponent (engine)", () => {
       cssAttributesConfig: PROD_CSS_ATTRIBUTES,
       cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
       cssPropertiesConfig: PROD_CSS_PROPERTIES,
+      cssQueriesConfig: EMPTY_QUERIES,
     }, { skipValidation: true });
 
     test("skips validation — invalid data passes through", () => {
@@ -2887,6 +2900,7 @@ describe("implicit display from tag config at type level", () => {
     cssAttributesConfig: CSS_ATTRS,
     cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
     cssPropertiesConfig: CSS_PROPS,
+    cssQueriesConfig: EMPTY_QUERIES,
   }, { skipValidation: true });
 
   test("implicit flex display unlocks flex-direction", () => {
@@ -2965,6 +2979,7 @@ describe("runtime CSS attribute validation", () => {
     cssAttributesConfig: CSS_ATTRS,
     cssPseudoClassConfig: [":hover"],
     cssPropertiesConfig: CSS_PROPS,
+    cssQueriesConfig: EMPTY_QUERIES,
   });
 
   test("accepts a valid simple CSS attribute value", () => {
@@ -3288,6 +3303,7 @@ describe("runtime CSS attribute validation", () => {
       cssAttributesConfig: CSS_ATTRS,
       cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
       cssPropertiesConfig: CSS_PROPS_WITH_VAR,
+      cssQueriesConfig: EMPTY_QUERIES,
     });
 
     assert.doesNotThrow(() =>
@@ -3310,6 +3326,7 @@ describe("runtime CSS attribute validation", () => {
       cssAttributesConfig: CSS_ATTRS,
       cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
       cssPropertiesConfig: CSS_PROPS_WITH_VAR,
+      cssQueriesConfig: EMPTY_QUERIES,
     });
 
     assert.throws(

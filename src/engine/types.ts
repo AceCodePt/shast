@@ -81,6 +81,7 @@ type ValidateComponentInnerHTMLItemStructure<
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
+  CSSQueriesConfig extends readonly string[],
   AllowedTags extends keyof HTMLTagConfig | "#text",
   T extends BaseComponentStructure | string,
   CurrentTag extends keyof HTMLTagConfig,
@@ -97,6 +98,7 @@ type ValidateComponentInnerHTMLItemStructure<
         CSSAttributesConfig,
         CSSPseudoClassConfig,
         CSSPropertiesConfig,
+        CSSQueriesConfig,
         HTMLTagConfig[CurrentTag]["innerHTML"] extends any[]
           ? // This is the check for when
             "#text" extends HTMLTagConfig[CurrentTag]["innerHTML"][number]
@@ -116,6 +118,7 @@ type ValidateComponentInnerHTMLStructure<
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
+  CSSQueriesConfig extends readonly string[],
   AllowedTags extends keyof HTMLTagConfig | "#text",
   T extends BaseComponentInnerHTMLStructure,
   CurrentTag extends keyof HTMLTagConfig,
@@ -132,6 +135,7 @@ type ValidateComponentInnerHTMLStructure<
                 CSSAttributesConfig,
                 CSSPseudoClassConfig,
                 CSSPropertiesConfig,
+                CSSQueriesConfig,
                 AllowedTags,
                 T[K],
                 CurrentTag
@@ -145,6 +149,7 @@ type ValidateComponentInnerHTMLStructure<
                   CSSAttributesConfig,
                   CSSPseudoClassConfig,
                   CSSPropertiesConfig,
+                  CSSQueriesConfig,
                   AllowedTags,
                   T[K][number],
                   CurrentTag
@@ -495,6 +500,7 @@ type ValidateComponentCSSStructure<
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
+  CSSQueriesConfig extends readonly string[],
   T extends BaseComponentStructure,
   CSSValue extends Record<string, any> | undefined,
   IsInPseudoElement extends boolean,
@@ -519,6 +525,7 @@ type ValidateComponentCSSStructure<
                   CSSAttributesConfig,
                   CSSPseudoClassConfig,
                   CSSPropertiesConfig,
+                  CSSQueriesConfig,
                   UnionToIntersection<
                     Extract<T["innerHTML"][K][number], BaseComponentStructure>
                   >,
@@ -534,6 +541,7 @@ type ValidateComponentCSSStructure<
                     CSSAttributesConfig,
                     CSSPseudoClassConfig,
                     CSSPropertiesConfig,
+                    CSSQueriesConfig,
                     T["innerHTML"][K],
                     CSSValue[`> ${K & string}`],
                     IsInPseudoElement,
@@ -623,11 +631,30 @@ type ValidateComponentCSSStructure<
             CSSAttributesConfig,
             CSSPseudoClassConfig,
             CSSPropertiesConfig,
+            CSSQueriesConfig,
             T,
             CSSValue[K],
             IsInPseudoElement,
             CSSParent
           >;
+        } & {
+          [
+            K in CSSQueriesConfig[number]
+          ]?: CSSValue[K] extends Record<string, any>
+            ? ValidateComponentCSSStructure<
+                Keywords,
+                HTMLTagConfig,
+                CSSSyntaxConfig,
+                CSSAttributesConfig,
+                CSSPseudoClassConfig,
+                CSSPropertiesConfig,
+                CSSQueriesConfig,
+                T,
+                CSSValue[K],
+                IsInPseudoElement,
+                CSSParent
+              >
+            : `Query block '${K}' must be a CSS block object`;
         } & (false extends IsInPseudoElement
           ? {
               [
@@ -643,6 +670,7 @@ type ValidateComponentCSSStructure<
                 CSSAttributesConfig,
                 CSSPseudoClassConfig,
                 CSSPropertiesConfig,
+                CSSQueriesConfig,
                 T,
                 CSSValue[K],
                 true,
@@ -660,6 +688,7 @@ type ValidateComponentCSSStructure<
                       CSSAttributesConfig,
                       CSSPseudoClassConfig,
                       CSSPropertiesConfig,
+                      CSSQueriesConfig,
                       T,
                       CSSValue[`&.${K}`],
                       false,
@@ -679,6 +708,7 @@ export type ValidateComponentStructure<
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
+  CSSQueriesConfig extends readonly string[],
   AllowedTags extends keyof HTMLTagConfig,
   T extends BaseComponentStructure,
   CurrentAllowedTags extends keyof HTMLTagConfig,
@@ -696,6 +726,7 @@ export type ValidateComponentStructure<
                   CSSAttributesConfig,
                   CSSPseudoClassConfig,
                   CSSPropertiesConfig,
+                  CSSQueriesConfig,
                   T,
                   T["css"],
                   false
@@ -723,6 +754,7 @@ export type ValidateComponentStructure<
                         CSSAttributesConfig,
                         CSSPseudoClassConfig,
                         CSSPropertiesConfig,
+                        CSSQueriesConfig,
                         AllowedTags,
                         T[K],
                         T["tag"]
