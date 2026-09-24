@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided information:\n\nThe viewport is 1280x800 CSS pixels. The page has 40 rows (r01 through r40) in the main content area. From the screenshot, I can see items 01 through 28 are visible. The element `root>main>r36` contains \"36. Royalty accruals\" — this is item 36 out of 40 total items.\n\nSince only items up to approximately 28 fit in the initial viewport and item 36 comes after that, it would be below the fold and require scrolling to view.\n\nANSWER: NO\n",
+  "ms": 14667
+}

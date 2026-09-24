@@ -1,0 +1,50 @@
+root <div>
+  getBoundingClientRect: x=0 y=0 width=600 height=19.1875
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: grid
+  font-size: 16px
+  gap: 20px
+  grid-template-columns: 200px 300px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: static
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>left <div>
+  getBoundingClientRect: x=0 y=0 width=200 height=19.1875
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  gap: normal
+  grid-template-columns: none
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: static
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>right <div>
+  getBoundingClientRect: x=220 y=0 width=300 height=19.1875
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  gap: normal
+  grid-template-columns: none
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: static
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px

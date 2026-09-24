@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The rendered screenshot and node tree show that only the first two lines of the text are contained within the `root>card` border box, while the remaining lines overflow outside its bottom edge. Therefore, not all of the text fits inside the box.\n\nANSWER: NO\n",
+  "ms": 8249
+}

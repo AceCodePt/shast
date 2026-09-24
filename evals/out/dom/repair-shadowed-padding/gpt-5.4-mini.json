@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "`root>body",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `section` itself already has `padding: 32px` in its own block, but the rendered box did not change, so that block is not the one governing the visible spacing. The padding needs to be applied on the containing wrapper so it affects the section’s position and interior space from outside.\n\nANSWER: `root>body`\n",
+  "ms": 23191
+}

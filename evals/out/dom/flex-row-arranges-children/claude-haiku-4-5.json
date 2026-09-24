@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the provided browser data:\n\n- `root` is a flex container with `gap: 10px`\n- `root>first` has `getBoundingClientRect: x=0` and `width=100`, so it occupies x=0 to x=100\n- `root>second` has `getBoundingClientRect: x=110`\n\nThe gap creates 10 pixels of space between the two children. The first child ends at x=100, the 10px gap spans from x=100 to x=110, and the second child's left edge starts at x=110.\n\nANSWER: 110\n",
+  "ms": 6985
+}

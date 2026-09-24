@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The element `root>plain` is not positioned (`position: static`), so the containing block for `root>plain>pin` skips over it to the viewport root. As shown in the screenshot and node hierarchy, the pinned element renders at the top-left corner.\n\nANSWER: 0,0\n",
+  "ms": 10111
+}

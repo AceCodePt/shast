@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The screenshot shows the list only through `28. Warranty reserves` at the bottom of the visible area, so `root>main>r36` is below the fold on initial load and would require scrolling to see.\n\nANSWER: NO\n",
+  "ms": 9171
+}

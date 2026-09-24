@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Three declarations exist for `root>child`:\n\n1. `.root > .child` (from `root`'s `> child` block) — specificity (0,2,0)\n2. `.root > .child` (base of `root>child`) — specificity (0,2,0)\n3. `.root > .child.big` (from `root>child`'s `&.big` block) — specificity (0,3,0)\n\nThe `&.big` nesting compiles to `.big` appended to the parent selector, giving it three class selectors instead of two. With higher specificity, it wins regardless of source order. The rendered box width of 500px (border-box) is also consistent with 64px padding (content area = 500 − 128 = 372px).\n\nANSWER: 64px\n",
+  "ms": 9155
+}

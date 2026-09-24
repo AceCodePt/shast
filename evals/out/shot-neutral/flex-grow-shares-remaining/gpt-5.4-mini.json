@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root` is 600px wide, and `flex: 1` vs `flex: 2` splits the available space in a 1:2 ratio. So `root>b` gets 2/3 of 600px.\n\nANSWER: 400\n",
+  "ms": 11450
+}

@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>row` has a height of 120px and contains the text \"Short label\" starting from the top-left (with 4px padding). Given the `line-height` of 19.2px, the text is rendered in the top portion of the element, roughly between y=4 and y=23. `root>chip` is positioned at y=60, which is well below the line of text. Furthermore, the text \"Short label\" is short enough that it will not extend to x=400, where the chip begins horizontally.\n\nANSWER: NO\n",
+  "ms": 14208
+}

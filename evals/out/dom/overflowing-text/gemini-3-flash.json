@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has a fixed border box height of 48px and a total width of 180px. After accounting for the 1px border and 8px padding on all sides, the available content area is 162px wide and 30px tall.\n\nThe text \"Payment failed because the card on file expired last month.\" consists of 60 characters (including spaces). At a standard 16px font size, the average character width is roughly 8-9px, meaning the text would require approximately 480px of horizontal space. Within the 162px content width, the text must wrap into at least three lines. With a `line-height` of 19.2px, three lines of text occupy 57.6px of height, which already exceeds the 48px border box height even before adding the top border and padding (an additional 9px).\n\nEven if the text were to somehow fit into two lines, the height required (9px for top spacing + 38.4px for two lines = 47.4px) would be extremely tight, but the character count makes a two-line wrap impossible for a 16px font in a 162px wide container.\n\nANSWER: NO\n",
+  "ms": 46515
+}

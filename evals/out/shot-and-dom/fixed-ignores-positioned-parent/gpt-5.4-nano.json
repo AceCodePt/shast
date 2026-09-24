@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`getBoundingClientRect()` reports the rendered position of the element’s top-left corner relative to the viewport (in CSS pixels). For `root>inner`, Chromium reports `x=25` and `y=15`, so its top-left corner is rendered at those coordinates. The `root` padding and `position: relative` don’t change this absolute viewport position because `root>inner` is `position: fixed`.\n\nANSWER: 25,15\n",
+  "ms": 7987
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The node tree shows a `root>ghost` div containing the text `\"Important warning\"`, so the text exists in the DOM. However, the question states that `root>ghost` renders at `0x0`, and Chromium would not paint the contents of an element that has no rendered area. Since the evidence is meant to be authoritative for what is actually on screen, we should treat that text as not being painted anywhere visible.\n\nANSWER: NO\n",
+  "ms": 8851
+}

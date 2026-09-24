@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "`root>front",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The point `120,120` is inside all three boxes, and the box painted on top is the one that visually covers the others there. In the screenshot, that topmost layer is the `front` box.\n\nANSWER: `root>front`\n",
+  "ms": 17379
+}

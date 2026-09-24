@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. Although `root>main>r09` is marked as “covered” by `root>banner <div>` (higher `z-index`), the banner “has no background, so what is behind it still shows through.” The render info also explicitly states that `this node's 1 text line(s) stay fully visible`, so the text in `root>main>r09` should be readable.\n\nANSWER: YES\n",
+  "ms": 9261
+}

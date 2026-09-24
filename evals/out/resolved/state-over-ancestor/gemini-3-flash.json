@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "2px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report states that the `root>mid>leaf` element renders with `padding: 2px`. Although entering the `:hover` state attempts to set the padding to `40px`, the report explicitly notes that the `padding: 2px` declaration (from the `root` block) outranks the hover style, meaning that entering `:hover` does not change the padding.\n\nANSWER: 2px\n",
+  "ms": 10553
+}

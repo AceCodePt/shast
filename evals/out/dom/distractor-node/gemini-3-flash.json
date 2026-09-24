@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>second` paragraph is positioned at a `y` coordinate of `19.1875` and has a height of `19.1875`, meaning it occupies the vertical space from `19.1875` to `38.375`. The `root>cover` element, which has a black background, is positioned at `y=0` with a height of `19`, ending just before the second paragraph begins. Since there is no overlap between the cover and the second paragraph, and the second paragraph is within the viewport with an opacity of 1, the text is visible.\n\nANSWER: YES\n",
+  "ms": 15268
+}

@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`height: 100%` only makes `tall` fill its containing block if that container has a definite height. From the rendered page, `root>outer` does not appear to have a definite height, so `tall` ends up sizing to its content rather than becoming taller than `filler`. The screenshot also shows both items as simple single-line boxes with no extra vertical expansion on `tall`.\n\nANSWER: NO\n",
+  "ms": 7952
+}

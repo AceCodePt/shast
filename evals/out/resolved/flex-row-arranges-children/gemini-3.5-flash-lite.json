@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "According to the provided machine-generated report, the bounding box for `root>second` explicitly specifies its position as `x=110 y=0 width=100 height=19.19`. Therefore, its left edge renders at an x-coordinate of 110 pixels.\n\nANSWER: 110\n",
+  "ms": 6589
+}

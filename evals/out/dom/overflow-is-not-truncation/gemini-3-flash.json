@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has `overflow: visible`, which is the default CSS behavior that allows content to be rendered even if it extends beyond the element's specified dimensions. Since the parent `root` element also has `overflow: visible` and the viewport is 300px tall (much taller than the 48px card), there is nothing to clip or hide the text that overflows the bottom edge.\n\nANSWER: YES\n",
+  "ms": 14779
+}

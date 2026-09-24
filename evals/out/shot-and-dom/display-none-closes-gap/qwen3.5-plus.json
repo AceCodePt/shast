@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles:\n\n- `root>first`: y=0, height=40 → occupies y=0 to y=40\n- `root>gone`: width=0, height=0 → takes up no space (as expected with `display: none`)\n- `root>third`: y=40, height=40 → occupies y=40 to y=80\n\n`root>third` starts exactly where `root>first` ends (at y=40). There is no gap between them. When an element has `display: none`, it is completely removed from the layout flow and adjacent elements collapse together as if it never existed.\n\nANSWER: NO\n",
+  "ms": 14377
+}

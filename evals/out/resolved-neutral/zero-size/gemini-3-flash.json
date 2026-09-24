@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The information for `root>ghost` explicitly states that although the node has a 0x0 box, it \"overflows\" and the content is \"painted outside the box rather than cut off\" because \"overflow is visible.\" Furthermore, the \"collides\" note confirms that this node \"draws its text on the same pixels\" as the visible node, confirming the text is rendered.\n\nANSWER: YES\n",
+  "ms": 9321
+}

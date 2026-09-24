@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>row` (the `<p>`) spans the full viewport width (0–600) and from y=0 to y=120, while `root>chip` covers only a smaller rectangle from x=400 to x=560 and y=60 to y=100, which overlaps part of the `<p>`’s area. However, `root>row`’s visible text (“Short label”) is on the left side (per the screenshot), not within the overlap region on the right where the yellow chip is painted. So the chip overlaps blank space in the `<p>`, not its own text.\n\nANSWER: NO\n",
+  "ms": 10809
+}

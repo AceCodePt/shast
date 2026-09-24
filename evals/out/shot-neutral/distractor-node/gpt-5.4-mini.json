@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The screenshot shows `Second paragraph here` clearly at the top-left of the page, so a viewer can read the text in `root>second`.\n\nANSWER: YES\n",
+  "ms": 7791
+}

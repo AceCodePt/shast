@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report for `root>lede` explicitly indicates that the `root>banner` <div> (with an opaque background and higher z-index) covers 100% of its box, resulting in all 2 of 2 text lines being completely hidden from view. Consequently, a user reading the page cannot see or read the sentence.\n\nANSWER: NO\n",
+  "ms": 11355
+}

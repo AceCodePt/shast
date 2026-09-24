@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The URL `https://example.com/a/very/long/path/that/never/breaks` is approximately 55 characters long. At a font size of 16px, even with a narrow font, this continuous string of text will significantly exceed the 120px width of the `root>cell` container. Because the container has `overflow: visible` and there are no spaces to trigger a line break, the URL will overflow the box.\n\nANSWER: NO\n",
+  "ms": 9975
+}

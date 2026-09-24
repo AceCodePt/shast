@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The annotation explicitly states `overflows` and notes that content of 518.41x19.19px is painted outside the 120x19.19px content box rather than being clipped, since overflow is visible.\n\nANSWER: NO\n",
+  "ms": 7123
+}

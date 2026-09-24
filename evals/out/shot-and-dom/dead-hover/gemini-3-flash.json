@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the browser's data, hovering over `root>mid>leaf` does not change its padding. The `getComputedStyle` for `root>mid>leaf` shows a padding of `2px 2px 2px 2px` in both the rest state and the hover state, and its `getBoundingClientRect` dimensions remain identical at `500x23.1875`. Furthermore, the provided screenshots for the rest and hover states are visually indistinguishable, confirming that no layout or style change occurred.\n\nANSWER: NO\n",
+  "ms": 9172
+}

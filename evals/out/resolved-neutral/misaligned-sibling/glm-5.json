@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Three rows — `first`, `second`, and `fourth` — all share a left edge at `x=24`. The `third` row is offset at `x=40`, breaking the alignment.\n\nANSWER: root>third\n",
+  "ms": 11232
+}

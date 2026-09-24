@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The nodes `root>alpha`, `root>beta`, and `root>gamma` all contain the point x=500, y=400 within their bounding boxes (alpha: 300-700x300-420; beta: 340-740x340-460; gamma: 380-780x380-500). These elements are all absolutely positioned, so their stacking order is determined by their `z-index` values. `root>beta` has a `z-index` of 4, which is higher than `root>gamma` (z-index 3) and `root>alpha` (z-index 2), meaning it is rendered on top and its background color is what the viewer sees.\n\nANSWER: root>beta\n",
+  "ms": 22838
+}

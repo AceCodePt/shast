@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has a total border-box height of 48px. Subtracting the top and bottom padding (8px each) and the borders (1px each) leaves a content area height of only 30px. Given the `line-height` of 19.2px, two lines of text would require 38.4px, which already exceeds the available space. The screenshot confirms that the text wraps into four lines and visually overflows well below the element's bottom border.\n\nANSWER: NO\n",
+  "ms": 10839
+}

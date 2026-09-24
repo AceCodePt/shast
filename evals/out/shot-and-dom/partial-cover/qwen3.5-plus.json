@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the layout data:\n\n- `root>row` (the `<p>` element) contains the text \"Short label\" and spans from x=0 to x=600, y=0 to y=120\n- `root>chip` is absolutely positioned at x=400, y=60 with dimensions 160x40 (so it spans x=400-560, y=60-100)\n\nWhile the chip does overlap spatially with the row's bounding box, the text \"Short label\" in a static-positioned `<p>` element would naturally flow from the left side. The chip is positioned on the right side of the page (starting at x=400 out of 600px width). The screenshot confirms this - \"Short label\" appears in the top-left corner while the yellow chip with \"chip\" text appears on the right side.\n\nThe chip does not cover the text content of `root>row`.\n\nANSWER: NO\n",
+  "ms": 19603
+}

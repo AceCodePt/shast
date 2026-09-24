@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows a blue box containing the text \"inner\" and a red box containing the text \"high\". In the overlapping region, the red box (\"high\") is rendered on top of the blue box (\"inner\"), obscuring it. Based on the node tree, these correspond to `root>high` and `root>low>inner` respectively.\n\nANSWER: root>high\n",
+  "ms": 7919
+}

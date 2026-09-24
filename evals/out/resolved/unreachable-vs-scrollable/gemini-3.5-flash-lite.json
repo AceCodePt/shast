@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Ordinary scrolling on web pages is vertical, which allows the viewer to scroll down and bring elements located below the fold, such as `root>lower`, into view. Conversely, web pages do not scroll horizontally, meaning elements extending past the right edge of the viewport like `root>sideways` cannot be reached through ordinary scrolling.\n\nANSWER: root>sideways\n",
+  "ms": 8710
+}

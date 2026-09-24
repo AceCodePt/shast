@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>line` element contains the text \"Hidden by two\" and is located at the top-left of the viewport (x=0, y=0) with a width of 400px and a height of approximately 19px. Two opaque, absolute-positioned `div` elements are placed directly over this area: `leftHalf` covers the rectangle from x=0 to x=70, and `rightHalf` covers the rectangle from x=60 to x=140. Together, their union creates a solid block from x=0 to x=140, which completely obscures the text starting at the beginning of the line.\n\nANSWER: NO\n",
+  "ms": 12392
+}

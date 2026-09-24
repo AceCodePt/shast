@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Three rows share a left edge at x=24 (first, second, fourth), while `third` is at x=40. The outlier is `third`.\n\nANSWER: root>third\n",
+  "ms": 8626
+}

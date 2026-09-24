@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The screenshot’s authoritative computed style shows that `root>body>panel` has `border-radius: 12px`. The node path for that rendered element is `root>body>panel`, so the CSS declaration that produces the observed `border-radius` must come from that element’s own CSS rule (“node’s css block”) rather than from the root or body nodes (which both report `border-radius: 0px`).  \n\nANSWER: root>body>panel\n",
+  "ms": 8020
+}

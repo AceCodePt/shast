@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Node `root>ghost` is positioned at coordinates `x=0 y=0` with zero width and height. Node `root>visible` has a bounding rectangle starting at the same origin (`x=0 y=0`), meaning its text is rendered starting at that exact point. Therefore, `root>ghost`'s text overlaps with the pixels of `root>visible`.\n\nANSWER: root>visible\n",
+  "ms": 9090
+}

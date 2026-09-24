@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When `line-height` is specified as a unitless number (like `2`), the multiplier itself is inherited by child elements rather than a fixed computed pixel value. The child element `root>big` inherits this multiplier of `2` and applies it to its own `font-size` of `32px`. Therefore, the height of the line box for `root>big` is 32px * 2 = 64px.\n\nANSWER: 64\n",
+  "ms": 10452
+}

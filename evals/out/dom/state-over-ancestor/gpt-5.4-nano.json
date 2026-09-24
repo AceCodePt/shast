@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "16px (2px all sides)",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "While hovering over `root>mid>leaf`, the browser’s `getComputedStyle()` evidence shows the `padding` value for that node is `2px 2px 2px 2px`. The non-hover snapshot lists the same `padding`, indicating `:hover` does not change padding for this element.  \n\nANSWER: 16px (2px all sides)\n",
+  "ms": 6024
+}

@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding client rectangles provided:\n\nThe `root>plain>pin` element has `getBoundingClientRect: x=10 y=10 width=80 height=20`. The `getBoundingClientRect()` method returns coordinates relative to the viewport (not relative to any parent element).\n\nSince `root>plain>pin` has `position: absolute` and `top: 10px; left: 10px`, it is positioned absolutely. Its parent `root>plain` has `position: static` (not positioned), so the absolutely positioned child is positioned relative to the nearest positioned ancestor, which is `root` (which has `position: relative`).\n\nThe bounding client rect gives us the actual rendered position in viewport coordinates: x=10, y=10 represents the top-left corner of the element as it appears on the screen.\n\nANSWER: 10,10\n",
+  "ms": 7339
+}

@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The text sits at the top of the page, and the only opaque overlay (`root>panel`) starts lower down at `y=40`, so it does not cover the text line. The other box is transparent, so even though two boxes are painted above it in stacking order, the text remains visible and readable.\n\nANSWER: YES\n",
+  "ms": 8361
+}

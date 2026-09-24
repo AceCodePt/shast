@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The node tree indicates that the `root>lede` paragraph contains a 72-character string, which corresponds to the full sentence \"The quarterly results are in and every region beat its target this time.\" The attached screenshot shows this entire sentence rendered clearly at the top of the page. Although there is a `root>banner` div in the node tree, the screenshot confirms it is either transparent or positioned elsewhere, as it does not obstruct the text. All 72 characters, including the trailing period, are visible and readable within the viewport.\n\nANSWER: YES\n",
+  "ms": 32875
+}

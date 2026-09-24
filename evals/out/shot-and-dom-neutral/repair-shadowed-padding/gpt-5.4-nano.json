@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The only node whose computed styles show a non-zero padding is `root>body>panel`, and the prompt explicitly states that `padding: 32px` is (or should be) part of that node’s own CSS block. Other nodes (`root` and `root>body`) have `padding: 0px`, so changing their CSS would not affect the panel’s padding. Therefore, you must edit the CSS block attached to the `section` node `root>body>panel`.\n\nANSWER: root>body>panel\n",
+  "ms": 10768
+}

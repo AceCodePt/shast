@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The rendered `section` has `padding: 4px` in the computed style, and its height is only `27.1875px`, which is consistent with small padding, not `32px`. So the `padding: 32px` declaration was overridden or otherwise not applied.\n\nANSWER: NO\n",
+  "ms": 8226
+}

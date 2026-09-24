@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the browser data provided:\n\n- `root>first` has `getBoundingClientRect: x=0 y=0 width=100`\n- `root>second` has `getBoundingClientRect: x=110 y=0 width=100`\n\nThe `root` element is `display: flex` with `flex-direction: row` and `gap: 10px`. The first child starts at x=0 and is 100px wide, so it occupies x=0 to x=100. With a 10px gap between flex items, the second child's left edge should start at x=110 (100px for first child + 10px gap).\n\nThe bounding client rect confirms this: the second child's left edge is at x=110.\n\nANSWER: 110\n",
+  "ms": 8824
+}

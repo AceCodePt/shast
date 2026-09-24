@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "3.0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Based on the 900px viewport and rendered layout in the screenshot, `root>rail` occupies 1/4 of the total width (225px) while `root>panel` occupies the remaining 3/4 (675px). Dividing the width of `root>panel` by `root>rail` gives 3.0.\n\nANSWER: 3.0\n",
+  "ms": 18060
+}

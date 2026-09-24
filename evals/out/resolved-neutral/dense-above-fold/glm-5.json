@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r17` is positioned at y=484 with height=26, so it occupies y=484 to y=510. The viewport height is 800px, so this range falls entirely within the visible area (0–800). It is also not marked \"below-fold\" in the render dump, unlike elements starting at r30 (y=822).\n\nANSWER: YES\n",
+  "ms": 10740
+}

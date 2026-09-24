@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values and bounding rectangles:\n\n- **root>back**: z-index: 1, positioned at (40, 40) with size 200x200\n- **root>middle**: z-index: 3, positioned at (80, 80) with size 200x200\n- **root>front**: z-index: 2, positioned at (100, 100) with size 60x60\n\nThe point (120, 120) falls within all three boxes:\n- root>back: x range [40, 240], y range [40, 240] ✓\n- root>middle: x range [80, 280], y range [80, 280] ✓\n- root>front: x range [100, 160], y range [100, 160] ✓\n\nWhen elements overlap, the one with the highest z-index is rendered on top and visible to the viewer. Among the three boxes, root>middle has z-index: 3, which is the highest. Therefore, a viewer sees root>middle at point (120, 120).\n\nANSWER: root>middle\n",
+  "ms": 8280
+}

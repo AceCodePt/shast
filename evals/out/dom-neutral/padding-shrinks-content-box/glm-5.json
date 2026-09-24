@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The card's total height is 124.75px with 24px padding on top and bottom (48px total), leaving a content height of 124.75 − 48 = 76.75px. With a line-height of 19.2px, the number of text lines is 76.75 ÷ 19.2 ≈ 4. This matches exactly: 4 × 19.2 = 76.8px content + 48px padding = 124.8px ≈ the measured 124.75px height.\n\nANSWER: 4\n",
+  "ms": 15329
+}

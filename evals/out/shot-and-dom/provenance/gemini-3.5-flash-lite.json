@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The computed style data provided for `root>body>panel` explicitly lists `border-radius: 12px`, whereas the parent nodes `root` and `root>body` both have a `border-radius` of `0px`. Therefore, the border-radius is declared on the panel node itself.\n\nANSWER: root>body>panel\n",
+  "ms": 7176
+}

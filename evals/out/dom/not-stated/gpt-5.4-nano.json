@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "rgb(0, 0, 0)",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The report includes `root>label <div>` and lists `getComputedStyle` details for that node. Specifically, it states `color: rgb(0, 0, 0)` for `root>label`, which is the text colour used when rendering.  \nANSWER: rgb(0, 0, 0)\n",
+  "ms": 6942
+}

@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "50px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The screenshot shows the text \"Child\" positioned with a clear, uniform offset from the top and left edges of the viewport. Given the viewport dimensions of 500x300 pixels, the gap between the edge and the text is approximately 50 pixels (about 1/10th of the total width). This visual spacing indicates that the `padding` applied to the `root>child` element is 50px.\n\nANSWER: 50px\n",
+  "ms": 13964
+}

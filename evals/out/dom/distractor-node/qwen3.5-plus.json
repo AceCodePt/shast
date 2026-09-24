@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding boxes:\n\n- `root>cover` is positioned at y=0 with height=19px, so it covers the vertical range from y=0 to y=19\n- `root>second` is positioned at y=19.1875, meaning it starts just below y=19\n\nThe black cover div (`root>cover`) ends at y=19, while the second paragraph begins at y=19.1875. There is no overlap—the cover does not obscure the second paragraph. The text in `root>second` has black color on a transparent background with full opacity, so it should be visible.\n\nANSWER: YES\n",
+  "ms": 16713
+}

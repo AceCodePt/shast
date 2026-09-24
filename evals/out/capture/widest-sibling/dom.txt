@@ -1,0 +1,56 @@
+root <div>
+  getBoundingClientRect: x=0 y=0 width=900 height=300
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 300px
+  left: 0px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: relative
+  top: 0px
+  width: 900px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>rail <nav>
+  getBoundingClientRect: x=0 y=0 width=240 height=300
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 300px
+  left: 0px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: absolute
+  top: 0px
+  width: 240px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>panel <section>
+  getBoundingClientRect: x=264 y=0 width=600 height=300
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 300px
+  left: 264px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: absolute
+  top: 0px
+  width: 600px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px

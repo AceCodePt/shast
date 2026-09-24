@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "30,30",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>plain>pin` is `position: absolute`, so it uses the nearest positioned ancestor as its containing block. `root` is `position: relative`, and its padding edge starts at `20,20`, so `top: 10px; left: 10px` places the pin at `20+10, 20+10` in the viewport.\n\nANSWER: 30,30\n",
+  "ms": 17538
+}

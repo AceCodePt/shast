@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "According to the browser's `getBoundingClientRect()` data provided in the rendering report, `root>big` has a measured height of 64 pixels. Therefore, `root>big` renders with a height of 64 CSS pixels.\n\nANSWER: 64\n",
+  "ms": 6832
+}

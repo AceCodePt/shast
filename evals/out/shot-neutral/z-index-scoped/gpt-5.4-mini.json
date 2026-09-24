@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In the overlapping area, the red `root>high` box is on top of the blue `root>low>inner` box, because the screenshot shows the red region covering the blue region where they intersect. That means a viewer sees `root>high` in the overlap.\n\nANSWER: root>high\n",
+  "ms": 6959
+}

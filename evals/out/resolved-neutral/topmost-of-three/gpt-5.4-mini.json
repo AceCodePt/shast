@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At `120,120`, all three boxes overlap, so the visible one is the box with the highest stacking order. `root>middle` has `z-index: 3`, which is above `root>front` (`z-index: 2`) and `root>back` (`z-index: 1`), so it paints on top at that point.\n\nANSWER: root>middle\n",
+  "ms": 8592
+}

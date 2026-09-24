@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The report says `root>lede` is wrapped onto 2 lines and those text lines stay fully visible, even though the absolute-positioned banner overlaps the box. Since the banner has no background and does not obscure the text, a reader can read the entire sentence.\n\nANSWER: YES\n",
+  "ms": 10610
+}

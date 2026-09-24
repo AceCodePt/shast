@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes, the text \"Important warning\" is painted on the page despite the element rendering at 0x0. As noted in the overflow explanation, the content box is 0x0 but the content is 86.41x38.38px and is painted outside the box rather than cut off because overflow is visible. Additionally, it collides with `root>visible` by drawing its text on the same pixels.\n\nANSWER: YES\n",
+  "ms": 6348
+}

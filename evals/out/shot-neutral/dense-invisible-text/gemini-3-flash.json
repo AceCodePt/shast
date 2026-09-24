@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The node tree indicates that the element `root>main>r21` contains the text \"21. Treasury positions.\" However, in the provided screenshot, there is a blank gap between \"20. Covenant testing\" and \"22. Audit findings\" where item 21 should be. Since the text is not visible in the actual rendering, a viewer cannot read it.\n\nANSWER: NO\n",
+  "ms": 11959
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows the rendered page at the initial 1280x800 viewport. In the main content area, the list of items is visible starting from \"01. Ledger reconciliation\" down to \"28. Warranty reserves.\" Since \"17. Inventory valuation\" (which corresponds to `root>main>r17`) falls within this range, it is visible without scrolling.\n\nANSWER: YES\n",
+  "ms": 9240
+}

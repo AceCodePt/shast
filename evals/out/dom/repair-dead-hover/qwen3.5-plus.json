@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence:\n\n1. The `:hover { padding: 40px }` rule already exists in `root>mid>leaf`'s own CSS block, but hovering produces no change\n2. All three nodes have identical computed styles both before and during hover\n3. The leaf shows `padding: 2px` consistently, meaning something is overriding the hover rule\n\nSince the hover rule in the leaf's own CSS block isn't applying, a more specific rule from a parent must be overriding it. In CSS cascade/specificity, a parent's rule targeting a child can override the child's own pseudo-class rules if it has higher specificity. The `mid` node is the direct parent that would control styling for its descendants.\n\nANSWER: root>mid\n",
+  "ms": 31228
+}

@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `getBoundingClientRect()` data provided directly by the browser for `root>plain>pin` specifies its bounding rectangle coordinates relative to the viewport as `x=10` and `y=10`. Therefore, the top-left corner renders at x=10, y=10.\n\nANSWER: 10,10\n",
+  "ms": 7218
+}

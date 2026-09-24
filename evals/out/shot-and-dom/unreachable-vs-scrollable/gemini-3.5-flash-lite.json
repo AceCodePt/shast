@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The root element has a height of 900px (exceeding the 300px viewport height), allowing vertical scrolling to bring `root>lower` (located at y=700) into view. However, `root>sideways` extends horizontally to 900px width while `root` has `overflow: visible`, which does not generate horizontal scrollbars or enable horizontal scrolling. Thus, `root>sideways` cannot be reached by ordinary scrolling.\n\nANSWER: root>sideways\n",
+  "ms": 10525
+}

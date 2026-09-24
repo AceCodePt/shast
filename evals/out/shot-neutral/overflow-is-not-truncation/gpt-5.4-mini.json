@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The screenshot shows the text continuing below the card’s border box, and it is still visible on the page. Since the overflow is not clipped, the last line is painted and readable.\n\nANSWER: YES\n",
+  "ms": 10505
+}

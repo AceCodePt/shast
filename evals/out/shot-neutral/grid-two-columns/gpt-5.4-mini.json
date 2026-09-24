@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The grid starts at the left edge of the viewport, and the first column is `200px` wide. The `20px` gap comes after that first column, so `root>right` begins after `200 + 20 = 220` CSS pixels.\n\nANSWER: 220\n",
+  "ms": 8530
+}

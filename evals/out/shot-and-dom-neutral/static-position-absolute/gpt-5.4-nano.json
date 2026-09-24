@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With `position: absolute` and no `top/right/bottom/left` specified, Chromium falls back to its normal positioning behavior for absolute elements, which results in the element being placed starting at the same y offset as observed in the rendered layout. The authoritative evidence is `root>floaty`’s `getBoundingClientRect()`, which reports `y=50` (the top edge). Therefore its top edge renders at 50 CSS pixels from the viewport’s top.\n\nANSWER: 50\n",
+  "ms": 8514
+}

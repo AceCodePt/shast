@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report explicitly states that while `root>banner` covers 69% of `root>main>r09` with an absolute position, the banner has no background, allowing what is behind it to show through. Furthermore, the report notes that this node's text line stays fully visible.\n\nANSWER: YES\n",
+  "ms": 7866
+}

@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The text node is literally \"Annual review\", but `text-transform: uppercase` resolves at render time, so the viewer sees uppercase letters.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7094
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In the provided screenshot, item 21 (\"21. Treasury positions\") is missing from the rendered list between \"20. Covenant testing\" and \"22. Audit findings\" due to styling (such as being hidden or made invisible), so it is not visible on screen. Therefore, a viewer cannot read the text in `root>main>r21`.\n\nANSWER: NO\n",
+  "ms": 9009
+}

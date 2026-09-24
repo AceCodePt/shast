@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text inside `root>card` wraps across multiple lines due to the constrained width and padding of the container. Examining the provided screenshot and rendering details, the text breaks into four distinct lines: \"one two three\", \"four five six\", \"seven eight\", and \"nine ten\".\n\nANSWER: 4\n",
+  "ms": 7144
+}

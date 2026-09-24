@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Because `root>plain` is not positioned, it does not establish a containing block. So `root>plain>pin` skips it and positions relative to the nearest positioned ancestor, which in this case is the root at the viewport origin. The screenshot shows the text flush at the top-left corner.\n\nANSWER: 0,0\n",
+  "ms": 8502
+}

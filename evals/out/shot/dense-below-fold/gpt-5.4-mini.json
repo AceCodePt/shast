@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. In the rendered screenshot, only the early items in `root>main` are visible, and the list continues well past the bottom of the 800px viewport. `root>main>r36` is item 36, so it would be below the fold on first load and require scrolling to see.\n\nANSWER: NO\n",
+  "ms": 8010
+}

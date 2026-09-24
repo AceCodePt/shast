@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `root>card` has `overflow: visible`, so text that extends below its bottom edge is not clipped by the element itself. Since there’s no ancestor clipping shown either, the last line would still be painted and readable on the page.\n\nANSWER: YES\n",
+  "ms": 8263
+}

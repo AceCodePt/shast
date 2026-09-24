@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The report says the text “broke onto 4 lines,” and that the content is `153.61x76.75px` inside a `162x30px` content box, meaning it needs `76.75px` of height but only `48px` total is available for the border box (with the content box being only `30px` tall). Since the rendered content height exceeds the card’s own border box height, the text does not fully fit inside `root>card`’s 48px-tall border box.\n\nANSWER: NO\n",
+  "ms": 8350
+}

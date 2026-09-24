@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "r17 is at y=484 with height=26, so it spans y=484–510. The viewport is 800px tall, so it is fully within the visible area without scrolling.\n\nANSWER: YES\n",
+  "ms": 7787
+}

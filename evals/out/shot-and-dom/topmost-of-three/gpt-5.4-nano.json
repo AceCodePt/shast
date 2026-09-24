@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "All three `<div>` boxes contain the point `(120, 120)` because each box’s `getBoundingClientRect()` range covers that coordinate. Since they overlap, the one that appears is determined by stacking order: `root>middle` has the highest `z-index` (`z-index: 3`) compared to `root>front` (`z-index: 2`) and `root>back` (`z-index: 1`). Therefore a viewer sees the middle box at that point.\n\nANSWER: root>middle\n",
+  "ms": 9350
+}

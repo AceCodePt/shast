@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`getBoundingClientRect()` reports the element’s top-left corner relative to the viewport. For `root>plain>pin`, Chromium reports `x=10px` and `y=10px`, meaning its top-left corner is drawn at those coordinates in CSS pixels. Since `root>plain` is `position: static` (not positioned), there’s no additional offset from a positioned ancestor; the viewport-relative rectangle already captures the final on-screen position.\n\nANSWER: 10,10\n",
+  "ms": 9662
+}

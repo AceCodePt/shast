@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>line` div contains the text \"Hidden by two\" and spans the full width of 400px (from x=0 to x=400) at y=0 with height 19.1875px.\n\nThe two covering boxes are:\n- `leftHalf`: x=0, width=70px (covers 0-70px)\n- `rightHalf`: x=60, width=80px (covers 60-140px)\n\nThese boxes overlap in the range 60-70px, but they leave a gap between x=70 and x=60... wait, that's incorrect. Let me reconsider: rightHalf starts at x=60, so the coverage is actually 0-70px (leftHalf) and 60-140px (rightHalf), meaning x=70-140px is covered by rightHalf. The text spans 0-400px, so the region from x=140-400px is completely uncovered and visible.\n\nHowever, the question asks if a viewer can read the words. While part of the line (from x=140 onwards) is visible, the leftmost portion of the text \"Hidden by two\" is obscured by the two boxes covering the 0-140px range. Since a significant portion of the text at the beginning is hidden, a viewer cannot read the complete words.\n\nANSWER: NO\n",
+  "ms": 8835
+}

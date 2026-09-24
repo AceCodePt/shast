@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report states that the `padding: 2px` declaration preventing the hover effect is \"declared by root\" inside its own CSS block targeting the `> mid > leaf` path. Since this specific override in the `root` node's CSS outranks the leaf's own `:hover` rule, you must edit the `root` node's block to remove or modify the conflicting style.\n\nANSWER: root\n",
+  "ms": 12397
+}

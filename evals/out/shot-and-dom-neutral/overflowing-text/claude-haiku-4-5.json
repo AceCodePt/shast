@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>card` element has a height of 48px with padding of 8px on all sides, giving it a content box height of 48 - 16 = 32px (subtracting top and bottom padding).\n\nThe text inside uses a font-size of 16px with a line-height of 19.2px. The text \"Payment failed because the card on file expired last month.\" is multiple lines, and from the screenshot, I can see it spans 4 lines of text.\n\nWith 4 lines at 19.2px per line, that's approximately 76.8px of text height needed. However, the content box only has 32px of vertical space available (48px total height minus 16px padding).\n\nThe screenshot clearly shows the text is overflowing - the bottom lines of text extend beyond the visible border box of the card element.\n\nANSWER: NO\n",
+  "ms": 8358
+}

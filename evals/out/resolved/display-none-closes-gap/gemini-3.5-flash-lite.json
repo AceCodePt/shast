@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report shows that `root>first` occupies y=0 to y=40, and `root>third` immediately starts at y=40 with no space between them. Furthermore, `root>gone` has a measured size of `width=0 height=0` and `display: none`, meaning it takes up no layout space. \n\nANSWER: NO\n",
+  "ms": 7450
+}

@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When an element has `display: none`, it is completely removed from the document layout flow, meaning it takes up no space and leaves no gap behind. Both the rendered screenshot and layout show that `root>first` and `root>third` are positioned directly adjacent to each other with no 40px gap.\n\nANSWER: NO\n",
+  "ms": 14550
+}

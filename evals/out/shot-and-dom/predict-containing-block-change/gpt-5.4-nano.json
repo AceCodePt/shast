@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `pin` element is `position: absolute` with `top: 10px; left: 10px`. An absolutely-positioned element is laid out relative to the nearest ancestor that is *positioned* (not `position: static`). Currently, `root>plain` is `static`, so the nearest positioned ancestor is `root` (`position: relative`), and the evidence shows `root>plain>pin` renders at `(10,10)`.  \n\nAfter adding `position: relative` to `root>plain`, that element becomes the containing block, whose bounding rect starts at `(20,20)`. Keeping the same `top/left` offsets of `10,10` yields `(20+10, 20+10) = (30,30)`.\n\nANSWER: 30,30\n",
+  "ms": 19167
+}

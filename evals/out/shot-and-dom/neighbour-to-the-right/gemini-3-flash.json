@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided data, `root>leftBottom` is positioned at `x=0, y=120` with a height of `80px`. `root>rightBottom` is positioned at `x=340, y=120` with the same height. Since both nodes share the same `y` coordinate and are aligned vertically, they occupy the same row, and the greater `x` coordinate of `root>rightBottom` places it directly to the right of `root>leftBottom`.\n\nANSWER: root>rightBottom\n",
+  "ms": 9926
+}

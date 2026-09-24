@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the layout information provided:\n\nThe viewport is 1280x800 (the visible area when the page first loads). The element `root>main>r17` (\"17. Inventory valuation\") has a y-coordinate of 484 and height of 26, placing it at vertical position 484-510 pixels from the top of the page.\n\nSince 484 is well within the 800-pixel viewport height, and there is no \"below-fold\" annotation on this element (unlike later items starting from r30 onwards which are marked \"below-fold\"), the text in `root>main>r17` is visible without scrolling.\n\nANSWER: YES\n",
+  "ms": 9225
+}

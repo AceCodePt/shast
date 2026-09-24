@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 1280×800, so only content with y positions from 0 to 800 is visible without scrolling. `root>main>r36` is positioned at y=978, which is well beyond the 800px viewport boundary. The report also explicitly tags it as `below-fold`, confirming it requires scrolling to be seen.\n\nANSWER: NO\n",
+  "ms": 13846
+}

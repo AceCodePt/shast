@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has a specified `height` of 48px and a `line-height` of 19.2px. With its padding and borders, the internal content area is only 30px high, which is insufficient to contain three lines of text (totaling approximately 57.6px). However, the `overflow` property for both `root>card` and its parent `root` is set to `visible`, which means the browser does not clip the content and allows it to be rendered outside the element's boundaries. As shown in the screenshot, the text that exceeds the container's height is still painted on the page.\n\nANSWER: YES\n",
+  "ms": 10036
+}

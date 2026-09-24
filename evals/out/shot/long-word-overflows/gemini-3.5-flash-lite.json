@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The URL string is 56 characters long, which requires significantly more than 120px of width to render at standard font sizes. Without text wrapping or break points, the text overflows the boundaries of the 120px-wide container box.\n\nANSWER: NO\n",
+  "ms": 8314
+}

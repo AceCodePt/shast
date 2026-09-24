@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "To determine which node sits to the right of `root>leftBottom`, we compare the vertical and horizontal coordinates provided by `getBoundingClientRect`. Both `root>leftBottom` and `root>rightBottom` share a `y` coordinate of 120, placing them on the same row. In this row, `root>leftBottom` is positioned at `x=0`, while `root>rightBottom` is positioned at `x=340`, placing it directly to the right.\n\nANSWER: root>rightBottom\n",
+  "ms": 9193
+}

@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Let me analyze the bounding rectangles and positioning:\n\n- `root>line` is a div at position (0, 0) with width 400px and height 19.1875px\n- `root>leftHalf` is absolutely positioned at (0, 0) with width 70px and height 20px\n- `root>rightHalf` is absolutely positioned at (60, 0) with width 80px and height 20px\n\nThe leftHalf covers pixels 0-70 horizontally, and the rightHalf covers pixels 60-140 horizontally. Together they create a gap from pixel 140 onwards (since the viewport is 400px wide).\n\nHowever, the question states that \"neither covering box on its own spans the whole line\" - meaning there's a gap. Looking at the coverage:\n- leftHalf: 0-70px\n- rightHalf: 60-140px\n- Uncovered: 140-400px (and a small gap between 70-60 is actually overlapping, not a gap)\n\nWait, let me reconsider: leftHalf ends at 70px, rightHalf starts at 60px, so there's actually an overlap from 60-70px. But more importantly, pixels 140-400px are completely uncovered.\n\nSince the text in `root>line` spans the full 400px width (width: 400px), and a significant portion (pixels 140-400px) is not covered by either box, a viewer would be able to read the words in the uncovered portion of the line.\n\nANSWER: YES\n",
+  "ms": 9361
+}

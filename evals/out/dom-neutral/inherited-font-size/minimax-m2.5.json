@@ -1,0 +1,10 @@
+{
+  "case": "inherited-font-size",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>heading",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `font-size` computed style directly indicates the rendered text size. `root>heading` has `font-size: 30px` while `root>caption` has `font-size: 22px`, so heading's text is larger.\n\nANSWER: root>heading\n",
+  "ms": 7412
+}

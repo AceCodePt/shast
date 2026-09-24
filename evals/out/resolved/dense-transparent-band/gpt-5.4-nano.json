@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The element `root>main>r09` is marked as `covered` by `root>banner` because the banner paints later with a higher `z-index`. However, the report also states that this node’s “1 text line(s) stay fully visible,” and the banner has no background (so it doesn’t fully obscure what’s behind it). Therefore the text in `root>main>r09` should be readable.  \n\nANSWER: YES\n",
+  "ms": 7962
+}

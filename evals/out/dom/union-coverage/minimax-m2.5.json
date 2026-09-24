@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the data:\n- `root>line` contains \"Hidden by two\" and spans the full width (x=0, width=400, y=0).\n- `root>leftHalf` covers x=0–70 (absolute, dark background).\n- `root>rightHalf` covers x=60–140 (absolute, dark background).\n- Together the two boxes cover x=0–140 with no gap.\n\nSince both boxes are absolutely positioned above the static `root>line`, and the text \"Hidden by two\" at 16px font is roughly ~100px wide (well within the 140px covered region), the visible characters are fully obscured. The uncovered portion (x=140–400) is empty whitespace, not additional text.\n\nANSWER: NO\n",
+  "ms": 14227
+}

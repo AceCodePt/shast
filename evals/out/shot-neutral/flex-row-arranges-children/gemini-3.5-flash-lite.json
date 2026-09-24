@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The flex container `root` starts at x = 0. The first child (`root>first`) is 100px wide, occupying the horizontal space from x = 0 to 100. With a `gap: 10px`, the second child (`root>second`) is positioned immediately after the first child plus the gap offset. Therefore, `root>second`'s left edge renders at x = 100 + 10 = 110.\n\nANSWER: 110\n",
+  "ms": 8623
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "At x=500, y=400:\n- **alpha** (x=300..700, y=300..420) covers it (z-index 2)\n- **gamma** (x=380..780, y=380..500) covers it (z-index 3)\n- **beta** (x=340..740, y=340..460) covers it (z-index 4)\n\nThe covering chain in the report confirms the paint order: beta paints over gamma (covering ~60% of gamma's box), and gamma paints over alpha (covering ~27% of alpha's box). Since z-index 4 is the highest, **beta** is the topmost layer and its background (#445566) is what the viewer sees at that point.\n\nANSWER: root>beta\n",
+  "ms": 5927
+}

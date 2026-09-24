@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "I need to determine which element's background color is visible at the point (500, 400) where three elements overlap.\n\nLet me identify the three overlapping elements and their z-index values:\n\n1. **root>alpha**: \n   - Position: x=300, y=300, width=400, height=120\n   - Bounds: x from 300 to 700, y from 300 to 420\n   - z-index: 2\n   - Background: rgb(34, 51, 68)\n\n2. **root>beta**:\n   - Position: x=340, y=340, width=400, height=120\n   - Bounds: x from 340 to 740, y from 340 to 460\n   - z-index: 4\n   - Background: rgb(68, 85, 102)\n\n3. **root>gamma**:\n   - Position: x=380, y=380, width=400, height=120\n   - Bounds: x from 380 to 780, y from 380 to 500\n   - z-index: 3\n   - Background: rgb(102, 119, 136)\n\nAt the point (500, 400):\n- alpha covers it (300 ≤ 500 ≤ 700 and 300 ≤ 400 ≤ 420) ✓\n- beta covers it (340 ≤ 500 ≤ 740 and 340 ≤ 400 ≤ 460) ✓\n- gamma covers it (380 ≤ 500 ≤ 780 and 380 ≤ 400 ≤ 500) ✓\n\nAll three elements overlap at this point. The z-index determines which is on top: alpha has z-index 2, gamma has z-index 3, and beta has z-index 4. The highest z-index (4) means beta is rendered on top and its background color is visible.\n\nANSWER: root>beta\n",
+  "ms": 6974
+}

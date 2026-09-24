@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided screenshot, the text \"one two three four five six seven eight nine ten\" is rendered across four distinct lines. The first line displays \"one two three\", the second line displays \"four five six\", the third line displays \"seven eight\", and the fourth line displays \"nine ten\". This indicates that the layout engine has wrapped the text at these specific points to fit the container's width.\n\nANSWER: 4\n",
+  "ms": 11406
+}

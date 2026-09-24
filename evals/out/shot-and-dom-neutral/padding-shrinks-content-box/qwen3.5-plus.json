@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, I can see the text inside `root>card` is displayed as:\n- \"one two three\" (line 1)\n- \"four five six\" (line 2)\n- \"seven eight\" (line 3)\n- \"nine ten\" (line 4)\n\nThe card has a width of 200px with 24px padding on each side, leaving only 152px of content width. This causes the text to wrap into 4 distinct lines.\n\nANSWER: 4\n",
+  "ms": 14140
+}

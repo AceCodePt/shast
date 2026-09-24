@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, I can see four text rows stacked vertically. The words \"first\", \"second\", and \"fourth\" all share the same left edge alignment. However, \"third\" is visibly indented to the right compared to the other three rows.\n\nANSWER: root>third\n",
+  "ms": 12872
+}

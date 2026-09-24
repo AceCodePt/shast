@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser's data for the `root>child` node, which reflects the final values from `getComputedStyle()`, explicitly lists the `padding` as `64px 64px 64px 64px`. As the information provided is authoritative for what is actually on screen, this value represents the final result after all CSS declarations have been resolved.\n\nANSWER: 64px\n",
+  "ms": 11692
+}

@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The area of each box is calculated by multiplying its width by its height. For `root>wide`, the area is 600 × 60 = 36,000 px². For `root>tall`, the area is 120 × 300 = 36,000 px². For `root>square`, the area is 220 × 220 = 48,400 px², making it the largest.\n\nANSWER: root>square\n",
+  "ms": 7466
+}

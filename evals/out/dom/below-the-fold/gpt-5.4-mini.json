@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The viewport is only `500x300`, while `root>footer` is positioned at `y=700` with height `60`, so it starts well below the visible area on initial load. Nothing about the given data suggests it is brought into view without scrolling.\n\nANSWER: NO\n",
+  "ms": 8042
+}

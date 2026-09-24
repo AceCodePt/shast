@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The authoritative evidence is the rendered node tree plus the 600×400 screenshot. `root>row` contains the text `\"Short label\"`, and in the screenshot that text is visible on the page. The `root>chip` element (“chip”) appears elsewhere (top area) and does not cover any portion of the `\"Short label\"` text region. Therefore, none of `root>row`’s own text is hidden by `root>chip`.  \n\nANSWER: NO\n",
+  "ms": 7089
+}

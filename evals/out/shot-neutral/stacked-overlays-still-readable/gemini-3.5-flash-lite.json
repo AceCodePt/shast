@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The rendered screenshot clearly displays the text \"Still readable\" at the top of the viewport in a legible font and color, unaffected by the underlying boxes. Therefore, a viewer can easily read the text.\n\nANSWER: YES\n",
+  "ms": 6553
+}

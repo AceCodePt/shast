@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The annotation for `root>card` explicitly states \"wrapped: text broke onto 4 lines at 152px content width\", directly indicating the number of lines.\n\nANSWER: 4\n",
+  "ms": 7705
+}

@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>line` (\"Hidden by two\") is covered by the combined coverage of `root>leftHalf` and `root>rightHalf`. Even though neither box on its own covers the entire line, their union completely occludes the text, making it invisible to a viewer.\n\nANSWER: NO\n",
+  "ms": 10505
+}

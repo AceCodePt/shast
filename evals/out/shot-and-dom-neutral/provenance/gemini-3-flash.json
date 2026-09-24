@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The `root>body>panel` node has a computed `border-radius` of `12px`, whereas its parent nodes (`root` and `root>body`) have a `border-radius` of `0px`. Since `border-radius` is not an inherited CSS property, the declaration must be contained within a CSS block targeting the `root>body>panel` node itself.\n\nANSWER: root>body>panel\n",
+  "ms": 11066
+}

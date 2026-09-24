@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the annotations on `root>line`:\n1. `root>glass` paints over 100% of its box, but has no background — so what is behind it still shows through.\n2. The report explicitly states: \"this node's 1 text line(s) stay fully visible.\"\n\nAdditionally, `root>panel` (y=40–100) sits below `root>line` (y=0–19.19), so it doesn't actually overlap the text's box — it only overlaps the glass. Because the glass is transparent and the panel misses the text, the text remains unobstructed.\n\nANSWER: YES\n",
+  "ms": 8704
+}

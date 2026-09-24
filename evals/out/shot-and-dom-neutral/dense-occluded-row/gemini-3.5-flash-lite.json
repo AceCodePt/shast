@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The red banner (`root>banner`) is positioned absolutely at coordinates (x=244, y=276) with a width of 700px and height of 26px, exactly matching the location and dimensions of `root>main>r09`. As a result, the solid red background completely occludes the text for row 09, making it unreadable to a viewer.\n\nANSWER: NO\n",
+  "ms": 9214
+}

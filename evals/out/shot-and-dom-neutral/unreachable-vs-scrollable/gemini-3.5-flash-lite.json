@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Ordinary scrolling only scrolls vertically, allowing the viewer to reach `root>lower` which is positioned further down the page at y=700. However, `root>sideways` extends horizontally to 900px—wider than the 500px viewport—and cannot be brought into view by standard vertical scrolling.\n\nANSWER: root>sideways\n",
+  "ms": 9648
+}

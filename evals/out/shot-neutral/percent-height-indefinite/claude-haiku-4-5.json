@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the node tree and screenshot:\n\nThe node tree shows:\n- `root>outer>filler` contains text \"a\"\n- `root>outer>tall` contains text \"b\" and declares `height: 100%`\n\nFrom the screenshot, I can see that \"a\" appears near the top of the viewport, and \"b\" appears slightly below it. Both elements appear to be roughly the same height - they're both single lines of text with minimal vertical space.\n\nSince `root>outer>tall` has `height: 100%`, it would take 100% of its parent's (`root>outer`) height. However, the parent `root>outer` likely has a height determined by its content or other styling. The screenshot shows that the element containing \"b\" is not visibly taller than the element containing \"a\" - they appear to be approximately the same size.\n\nIf `root>outer>tall` were actually 100% of the parent height, it would extend much further down the page than what's visible in the screenshot. The fact that it doesn't suggests either: (1) the parent has indefinite height (making 100% resolve to auto), or (2) the layout isn't behaving as a simple percentage would suggest.\n\nANSWER: NO\n",
+  "ms": 8117
+}

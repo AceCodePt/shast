@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>right` element is in the second grid column. The first column is 200px wide, and there's a 20px gap between columns. So the second column starts at 200 + 20 = 220px from the left edge.\n\nThis is confirmed by the browser's `getBoundingClientRect()` data for `root>right`, which shows `x=220`.\n\nANSWER: 220\n",
+  "ms": 13127
+}

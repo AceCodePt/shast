@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows four stacked text rows. “first”, “second”, and “fourth” start at the same horizontal position (same left edge), while “third” is shifted to the right compared to the others. Therefore, “third” is the out-of-alignment row.\n\nANSWER: root>third\n",
+  "ms": 10435
+}

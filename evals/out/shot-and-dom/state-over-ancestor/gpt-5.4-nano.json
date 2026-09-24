@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "15",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The browser’s computed `padding` for `root>mid>leaf` is shown as `padding: 2px 2px 2px 2px` both at rest and during the hover state. Comparing the hover section to the rest section, only the `root` and `mid` padding resets to `0px`, while the leaf’s padding remains unchanged at 2px on all sides. Therefore, while hovering it renders `padding: 2px 2px 2px 2px`.\n\nANSWER: 15\n",
+  "ms": 11602
+}

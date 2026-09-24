@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Comparing the rest and hover screenshots, the position and appearance of the \"Leaf\" text remain identical with no visual expansion or layout shift indicating a change in padding. Therefore, hovering over the element does not change its padding.\n\nANSWER: NO\n",
+  "ms": 8060
+}

@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The issue is that `root` has a CSS rule targeting `> mid > leaf` that sets `padding: 2px`, and this rule is outranking the `:hover { padding: 40px }` declared on `root>mid>leaf`'s own block. The evidence explicitly states the 2px padding \"declared by root, inside its '> mid > leaf' block outranks it.\" To fix this, you need to edit the `root` node's CSS block to either remove that padding rule or make it less specific, so the hover rule on `leaf` can take effect.\n\nANSWER: root\n",
+  "ms": 15758
+}

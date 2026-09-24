@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>wide",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Based on the provided node tree and screenshot, the three boxes (`wide`, `tall`, and `square`) are siblings within a 700x420 viewport. The screenshot shows the \"wide\" label at the top, spanning the left side, while the \"tall\" and \"square\" labels are positioned below it and side-by-side. This layout indicates that the `wide` box likely spans the full width of the viewport (700px), while the `tall` and `square` boxes share the width and the remaining height below it. Given that the viewport's width is significantly greater than its height, a box spanning the full 700px width is extremely likely to have the largest area, even with a moderate height.\n\nREASONING: The `wide` box appears to be a block-level element at the top of the page, spanning the full viewport width of 700px. Even if its height is relatively small (e.g., 150px), its area would be 105,000 px², which is nearly half the total viewport area (294,000 px²). The `tall` and `square` boxes are constrained by the remaining height and must share the 700px width, making it unlikely for either to exceed the area of a full-width box in this 700x420 aspect ratio.\n\nANSWER: root>wide\n",
+  "ms": 83519
+}

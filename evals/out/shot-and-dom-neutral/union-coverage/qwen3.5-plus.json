@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering data:\n\n1. `root>line` contains the text \"Hidden by two\" at position y=0, spanning the full 400px width\n2. `root>leftHalf` is absolutely positioned at x=0, y=0 with width=70px and a dark background (rgb(16,16,16))\n3. `root>rightHalf` is absolutely positioned at x=60, y=0 with width=80px and a dark background (rgb(32,32,32))\n\nBoth covering divs are absolutely positioned children of root (same parent as `line`), placing them on top of the text line. Together they cover from x=0 to x=140 (with overlap between x=60-70). The text \"Hidden by two\" would start in this covered region. The screenshot confirms this - it shows mostly white space with two dark rectangles in the top-left corner where the text would be.\n\nSince the dark opaque boxes are rendered over the text area and the text begins in that covered region, a viewer cannot read the words.\n\nANSWER: NO\n",
+  "ms": 20090
+}

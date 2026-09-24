@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "To determine the largest area, I calculated the area (width × height) for each of the three boxes:\n- `root>wide`: 600 px × 60 px = 36,000 px²\n- `root>tall`: 120 px × 300 px = 36,000 px²\n- `root>square`: 220 px × 220 px = 48,400 px²\n\nComparing these results, the square box covers the greatest area.\n\nANSWER: root>square\n",
+  "ms": 10937
+}

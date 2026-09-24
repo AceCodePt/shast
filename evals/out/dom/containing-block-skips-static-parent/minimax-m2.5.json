@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The pin uses `position: absolute` with `top: 10px` and `left: 10px`. Its containing block is the nearest *positioned* ancestor — `root>plain` is `position: static`, so it is skipped, and the containing block becomes `root`, which is `position: relative` at `(0,0)`. The pin's offset is therefore measured from the root, placing its top-left at `(10, 10)`, matching the reported `getBoundingClientRect`.\n\nANSWER: 10,10\n",
+  "ms": 5044
+}

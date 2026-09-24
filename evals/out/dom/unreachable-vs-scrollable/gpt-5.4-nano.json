@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>lower` is positioned at `y=700` with `height=40`, so it lies below the initial viewport (`300px` tall). By ordinary (vertical) scrolling, the viewer can scroll down far enough to bring the entire `400px`-wide node into the `500px`-wide viewport.\n\n`root>sideways` starts at `y=40` (so it’s already within the initial vertical view), but it has `width=900`, which extends beyond the `500px` viewport to the right. Ordinary scrolling can change the vertical position, but it cannot shift the node horizontally far enough to make all of it fully visible.\n\nANSWER: root>sideways\n",
+  "ms": 8707
+}

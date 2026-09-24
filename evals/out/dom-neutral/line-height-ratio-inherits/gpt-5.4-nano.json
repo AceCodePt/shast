@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>big` inherits `line-height: 2` from `root`, so with its own `font-size: 32px`, the effective line-height becomes `2 × 32px = 64px`. Chromium’s computed styles also report `line-height: 64px`, and the authoritative `getBoundingClientRect()` height for `root>big` is `64` CSS pixels.  \n\nANSWER: 64\n",
+  "ms": 8055
+}

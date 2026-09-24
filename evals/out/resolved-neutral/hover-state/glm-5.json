@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>cta` element has a base style of `background-color: #3355ff` and a `:hover` state that changes it to `#0022cc`. When the page is first painted and the pointer is elsewhere, the `:hover` state is not active, so the base background color applies.\n\nANSWER: #3355ff\n",
+  "ms": 9563
+}

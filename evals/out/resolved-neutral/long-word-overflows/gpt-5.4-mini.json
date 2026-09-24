@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The box is only 120px wide, but the content is 518.41px wide and is marked as overflowing. Since overflow is visible, the URL is painted outside the `root>cell` box rather than staying inside it.\n\nANSWER: NO\n",
+  "ms": 9023
+}

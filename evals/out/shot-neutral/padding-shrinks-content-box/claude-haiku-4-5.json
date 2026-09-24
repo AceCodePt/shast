@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot provided, I can see the text \"one two three four five six seven eight nine ten\" rendered inside the `root>card` div.\n\nCounting the lines in the rendered output:\n1. \"one two three\"\n2. \"four five six\"\n3. \"seven eight\"\n4. \"nine ten\"\n\nThe text wraps onto 4 separate lines based on the visual rendering shown in the screenshot.\n\nANSWER: 4\n",
+  "ms": 6598
+}

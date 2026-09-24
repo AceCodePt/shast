@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>mid>leaf",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "In CSS nesting, writing `:hover` directly inside an element's block without the ampersand (`&`) acts as a descendant selector (`& :hover`) rather than targeting the element itself. Since `root>mid>leaf` is a leaf node with no children, this selector matches nothing, which is why adding `:hover { padding: 40px }` inside its CSS block changes nothing. To fix this and apply the hover state to the element itself, you must edit `root>mid>leaf`'s own CSS block to use `&:hover`.\n\nANSWER: root>mid>leaf\n",
+  "ms": 15765
+}

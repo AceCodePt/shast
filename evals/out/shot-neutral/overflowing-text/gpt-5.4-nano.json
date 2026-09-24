@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>card` contains the text “Payment failed because the card on file expired last month.”, and the evidence shows that this text is rendered across multiple wrapped lines (it appears as 4 separate lines: “Payment failed”, “because the card”, “on file expired”, “last month.”). With a 48px-tall border box, four typical text lines (even with moderate line-height) exceed 48px in total height, so not all of the text can fit within that box.\n\nANSWER: NO\n",
+  "ms": 10727
+}

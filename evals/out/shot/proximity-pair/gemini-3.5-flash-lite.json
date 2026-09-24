@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the visual evidence and node tree, `alpha` and `beta` are positioned close together near the top of the viewport, forming a tight proximity pair. In contrast, `gamma` is located further down with a significant vertical gap separating it from `beta`. Therefore, `gamma` is visually separated from the other two.\n\nANSWER: root>gamma\n",
+  "ms": 9084
+}

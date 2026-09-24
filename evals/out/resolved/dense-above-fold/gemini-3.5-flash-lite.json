@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r17` is located at y=484 with a height of 26px, placing it well within the initial viewport height of 800px without any `below-fold` designation. Additionally, while `root>main` has a `covered` warning due to the sidebar spanning x=0 to 220, `root>main>r17` starts at x=244, meaning it is not overlapped by the sidebar.\n\nANSWER: YES\n",
+  "ms": 9093
+}

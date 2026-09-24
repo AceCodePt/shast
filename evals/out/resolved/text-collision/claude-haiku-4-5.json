@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, I need to find which node's text overlaps with `root>ghost`'s text.\n\nThe report states that `root>ghost` has a collision note:\n- `! collides: root>visible <div> draws its text on the same pixels, over 56% of this node's glyphs`\n\nThis explicitly tells us that `root>visible` draws its text on the same pixels as `root>ghost`, with over 56% of `root>ghost`'s glyphs being covered.\n\nThis is further confirmed by the collision note on `root>visible`:\n- `! collides: root>ghost <div> draws its text on the same pixels, over 50% of this node's glyphs`\n\nBoth nodes are positioned at the same coordinates (x=0, y=0) and the `root>ghost` node has zero dimensions (0x0px) with visible overflow, so its content bleeds out and overlaps with the `root>visible` node's text.\n\nANSWER: root>visible\n",
+  "ms": 10798
+}

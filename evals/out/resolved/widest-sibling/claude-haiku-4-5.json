@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, I need to compare the widths of the two elements:\n\n- `root>rail` has width: 240px\n- `root>panel` has width: 600px\n\nTo find how many times wider `root>panel` is than `root>rail`, I divide:\n600 ÷ 240 = 2.5\n\nThis means `root>panel` is 2.5 times as wide as `root>rail`.\n\nANSWER: 2.5\n",
+  "ms": 9678
+}

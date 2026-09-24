@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 1280×800, so it shows content from y=0 to y=800. `root>main>r17` has `getBoundingClientRect: y=484 height=26`, meaning it spans from y=484 to y=510, which is well within the visible viewport range.\n\nANSWER: YES\n",
+  "ms": 7289
+}

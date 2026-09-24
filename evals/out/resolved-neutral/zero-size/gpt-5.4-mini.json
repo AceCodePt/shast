@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. Even though `root>ghost` has a `0x0` border box, the info says its text overflows its content box and is painted outside the box because `overflow` is visible. It also collides with `root>visible`, which confirms its glyphs are actually drawn on page pixels.\n\nANSWER: YES\n",
+  "ms": 6478
+}

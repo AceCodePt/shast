@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element is a flex container with `flex-direction: row` and a `gap` of 10px. The first child, `root>first`, starts at x=0 and has a width of 100px, occupying the space from x=0 to x=100. The 10px gap is applied between the children, so `root>second` begins immediately after the first child's width plus the gap, which is confirmed by its `getBoundingClientRect` showing x=110.\n\nANSWER: 110\n",
+  "ms": 9741
+}

@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>outer>filler` has a `getBoundingClientRect()` height of `60`, while `root>outer>tall` has a `getBoundingClientRect()` height of `19.1875`. Since `19.1875` is less than `60`, `root>outer>tall` is not taller than its sibling.  \n\nANSWER: NO\n",
+  "ms": 6170
+}

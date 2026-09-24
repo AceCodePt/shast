@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot and the node tree information:\n\nThe viewport is 500x300 CSS pixels. The screenshot shows \"runs off sideways\" text in the upper left, which corresponds to `root>sideways`. The text \"further down\" is not visible in the screenshot, indicating `root>lower` is positioned below the initial viewport.\n\nSince `root>lower` is positioned further down (below the initial viewport), it can be brought into view by scrolling vertically. However, `root>sideways` runs off the side of the viewport, meaning it extends beyond the horizontal boundaries. While vertical scrolling can bring `root>lower` into view, horizontal scrolling would be needed to fully see `root>sideways`. The question asks which node cannot be reached by \"ordinary scrolling\" - typically referring to vertical scrolling on a webpage.\n\nGiven that `root>lower` is below the fold but within the scrollable area, it can be reached by vertical scrolling. The node `root>sideways` that \"runs off sideways\" extends beyond the horizontal viewport boundaries and cannot be fully brought into view through ordinary (vertical) scrolling alone.\n\nANSWER: root>sideways\n",
+  "ms": 8271
+}

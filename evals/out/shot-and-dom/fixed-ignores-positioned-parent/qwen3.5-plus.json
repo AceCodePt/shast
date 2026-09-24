@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>inner` element has `position: fixed`, which means it is positioned relative to the **viewport**, not relative to its parent. The parent's `position: relative` and 40px padding have no effect on the fixed child's positioning.\n\nThe browser's `getBoundingClientRect()` directly tells us where the element renders: `x=25 y=15`. This matches the CSS `top: 15px; left: 25px` values, confirming the fixed-positioned element renders at those exact viewport coordinates.\n\nANSWER: 25,15\n",
+  "ms": 13587
+}

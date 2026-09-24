@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the `getBoundingClientRect` data provided for the `root>floaty` element, its `y` coordinate is explicitly stated as 50. In Chromium, the `y` value returned by `getBoundingClientRect()` represents the distance from the top edge of the viewport to the top edge of the element's border box. Since the element is `position: absolute` without specified offsets, it renders at its \"static position\" immediately following its preceding sibling (`root>spacer`), which occupies the first 50 pixels of height.\n\nANSWER: 50\n",
+  "ms": 9838
+}

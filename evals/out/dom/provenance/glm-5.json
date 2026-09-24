@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The `root>body>panel` node renders with `border-radius: 12px`, while both `root` and `root>body` have `border-radius: 0px`. Since the rendered value (12px) does not match the ancestors' declared values (0px), the `border-radius: 12px` declaration must originate from the CSS block associated with the `root>body>panel` node itself.\n\nANSWER: root>body>panel\n",
+  "ms": 15003
+}

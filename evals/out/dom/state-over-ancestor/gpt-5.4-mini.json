@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "2px 2px 2px 2px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The hovered and non-hovered computed styles for `root>mid>leaf` are identical. Its padding is `2px 2px 2px 2px`, so hovering does not change it.\n\nANSWER: 2px 2px 2px 2px\n",
+  "ms": 7423
+}

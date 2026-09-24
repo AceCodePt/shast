@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Computing area = width × height from `getBoundingClientRect`:\n\n- `wide`: 600 × 60 = 36,000\n- `tall`: 120 × 300 = 36,000\n- `square`: 220 × 220 = 48,400\n\nThe wide and tall boxes tie at 36,000, while square is larger at 48,400.\n\nANSWER: root>square\n",
+  "ms": 9143
+}

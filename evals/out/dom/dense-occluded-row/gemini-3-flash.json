@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node `root>main>r09` is located at `x=244, y=276` and contains the text \"09. Currency hedging\". However, the node `root>banner` is also located at `x=244, y=276` with the same height and a width of 700px, which covers the majority of `root>main>r09`. Since `root>banner` has a higher `z-index` (5) and a solid red background color (`rgb(204, 34, 34)`), it obscures the text in `root>main>r09`.\n\nANSWER: NO\n",
+  "ms": 12899
+}

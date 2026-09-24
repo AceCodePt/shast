@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The evidence shows that `root`, `root>mid`, and `root>mid>leaf` all occupy the exact same bounding box (`x=0 y=0 width=500 height=23.1875`). Although the `:hover { padding: 40px }` rule is already present in `root>mid>leaf`'s CSS block, the hover state data indicates the padding remains at `2px`, meaning the `:hover` pseudo-class is not being triggered on the leaf node itself. This typically happens in rendering engines when multiple elements perfectly overlap and an ancestor node (in this case, the immediate parent) captures the pointer events, preventing the child from entering the hover state. To resolve this, you must edit the parent node's CSS block to trigger the style change on the child when the parent is hovered (e.g., using `root>mid:hover > div`).\n\nANSWER: root>mid\n",
+  "ms": 97524
+}

@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The screenshot shows `root>row`’s text, `Short label`, fully visible at the top left, while `root>chip` sits separately to the right and does not cover any of those letters. There is overlap in the page layout area, but not over the row’s own text.\n\nANSWER: NO\n",
+  "ms": 7889
+}

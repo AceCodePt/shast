@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at `root>main>r21`:\n- Its text color is `#ffffff` (white).\n- The `main` section has no background-color of its own, so it shows the root's `background-color: #ffffff` (white).\n\nWhite text on a white background is invisible to a viewer, so the text cannot be read.\n\nANSWER: NO\n",
+  "ms": 15651
+}

@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>lede` paragraph starts at `y=0` and is only `54.375px` tall, while the `banner` is absolutely positioned at the top with `height=70px` and `z-index=5`, so it overlaps and covers the lede area. That means a reader would not be able to see the whole sentence in the browser.\n\nANSWER: NO\n",
+  "ms": 11306
+}

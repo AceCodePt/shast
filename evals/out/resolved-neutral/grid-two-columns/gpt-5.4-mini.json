@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first grid column is `200px` wide, and the gap between columns is `20px`. So the second item starts after `200 + 20 = 220px` from the left edge of `root`.\n\nANSWER: 220\n",
+  "ms": 7642
+}

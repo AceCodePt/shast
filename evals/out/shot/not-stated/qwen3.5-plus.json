@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report provides the node tree structure and text content, but it does not include any CSS styling information such as color properties, computed styles, or visual appearance details beyond what text is displayed.\n\nANSWER: NOT STATED\n",
+  "ms": 11176
+}

@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "0px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "From the node tree, the hover state affects only `root>mid>leaf`, but the provided rendered evidence (the two screenshots) does not show any visible shift in the `Leaf` text position between rest and hover. If padding on hover were non-zero, the text would move relative to the container boundaries. Therefore, `root>mid>leaf` is effectively rendering with `0px` padding while hovered.  \n\nANSWER: 0px\n",
+  "ms": 7926
+}

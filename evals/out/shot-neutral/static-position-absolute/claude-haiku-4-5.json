@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "27",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\n1. The viewport is 600x400 CSS pixels\n2. There are two div elements: `root>spacer` and `root>floaty`\n3. `root>floaty` has `position: absolute` but declares no `top`, `right`, `bottom`, or `left` properties\n4. From the screenshot, I can see \"spacer\" text at the top and \"floaty\" text below it\n\nWhen an absolutely positioned element has no explicit positioning properties (`top`, `right`, `bottom`, `left`), it uses the default positioning behavior. According to CSS specifications, an absolutely positioned element without positioning properties will be positioned as if it were statically positioned - meaning it follows the normal document flow.\n\nFrom the screenshot, the \"floaty\" text appears to start approximately where the \"spacer\" text ends. The \"spacer\" text appears to be at the very top of the page, and \"floaty\" appears to be positioned directly below it. Based on the visual rendering shown in the screenshot, the top edge of `root>floaty` appears to be at approximately y=27 CSS pixels (accounting for the line height of the \"spacer\" text above it).\n\nANSWER: 27\n",
+  "ms": 9939
+}

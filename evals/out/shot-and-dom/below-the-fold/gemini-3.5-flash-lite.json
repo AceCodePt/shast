@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport has a height of 300px (spanning from y=0 to y=300), representing the visible area before any scrolling occurs. The `root>footer` element is positioned at y=700 to y=760 according to its bounding client rectangle, placing it well below the initial 300px viewport limit. Therefore, the footer is located below the fold and is not visible when the page first loads.\n\nANSWER: NO\n",
+  "ms": 7394
+}

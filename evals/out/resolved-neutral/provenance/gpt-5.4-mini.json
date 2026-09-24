@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "`root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>body>panel` gets its `border-radius: 12px` from the `root` node’s CSS block. The note says that value is “declared by root, inside its `> body > panel` block,” so the declaration lives on `root`, not on `body` or `panel`.\n\nANSWER: `root`\n",
+  "ms": 6932
+}

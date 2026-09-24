@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot clearly shows that a dark banner at the top of the viewport completely occludes the lede paragraph (`root>lede`). Therefore, the text is hidden and cannot be read by a user viewing the page.\n\nANSWER: NO\n",
+  "ms": 10079
+}

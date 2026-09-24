@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The information states that the viewport is 500px wide and that the page does not scroll horizontally. While `root>lower` is positioned below the initial viewport at y=700, it can be reached through vertical scrolling. In contrast, `root>sideways` is 900px wide, meaning 400px of its content extends past the right edge of the viewport and cannot be brought into view because horizontal scrolling is unavailable.\n\nANSWER: root>sideways\n",
+  "ms": 9660
+}

@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "When the page is first painted and the pointer is elsewhere, `root>cta` uses the non-hover style. The computed `background-color` in that state is `rgb(51, 85, 255)`, which is a bright blue.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 6024
+}

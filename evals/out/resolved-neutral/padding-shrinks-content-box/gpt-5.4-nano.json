@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendering info states that inside `root>card`, the text `\"one two three four five six seven eight nine ten\"` wrapped onto **4 lines**. This is explicitly noted by: `! wrapped: text broke onto 4 lines at 152px content width`.  \nSo the text inside `root>card` wraps onto **4** lines.\n\nANSWER: 4\n",
+  "ms": 6210
+}

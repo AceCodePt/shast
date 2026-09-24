@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendered padding is `64px` on all sides. The computed style for `root>child` explicitly shows `padding: 64px 64px 64px 64px`, so that is the value actually applied, regardless of the other declarations.\n\nANSWER: 64px\n",
+  "ms": 9145
+}

@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding rectangles:\n\n- `root>row` (the `<p>` element) occupies: x=0 to x=600, y=0 to y=120\n- `root>chip` (the `<div>` element) occupies: x=400 to x=560, y=60 to y=100\n\nThe chip's bounding box (x=400 to x=560, y=60 to y=100) overlaps with the row's bounding box in the region x=400 to x=560, y=60 to y=100.\n\nHowever, the key question is whether `root>row`'s own text is hidden. The text \"Short label\" is in the `<p>` element. Without knowing the exact horizontal and vertical positioning of where that text is rendered within the `<p>`'s 600x120 box, we cannot definitively say the text is hidden just from the bounding rectangles. The text could be positioned in the upper-left portion of the `<p>` (e.g., y=0 to y=19.2 based on line-height), which would not overlap with the chip at y=60 to y=100.\n\nGiven that the chip starts at y=60 and the text likely renders near the top of the paragraph (within the first line-height of ~19.2px), the text would likely not be hidden by the chip.\n\nANSWER: NO\n",
+  "ms": 7638
+}

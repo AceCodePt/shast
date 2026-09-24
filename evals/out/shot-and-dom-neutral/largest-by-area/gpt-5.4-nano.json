@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "To compare areas, use each node’s `getBoundingClientRect()` width and height and multiply them.\n\n- `wide`: \\(600 \\times 60 = 36{,}000\\)\n- `tall`: \\(120 \\times 300 = 36{,}000\\)\n- `square`: \\(220 \\times 220 = 48{,}400\\)\n\nThe `square` box covers the largest area.\n\nANSWER: root>square\n",
+  "ms": 8185
+}

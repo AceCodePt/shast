@@ -1,0 +1,10 @@
+{
+  "case": "inherited-font-size",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>heading",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "According to the browser's `getComputedStyle()` data, `root>heading` has a `font-size` of 30px, while `root>caption` has a `font-size` of 22px. Since 30px is greater than 22px, the text in the heading node is rendered at a larger size.\n\nANSWER: root>heading\n",
+  "ms": 12363
+}

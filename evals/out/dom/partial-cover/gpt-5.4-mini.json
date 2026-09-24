@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>row` spans `y=0` to `120`, but its text `\"Short label\"` would occupy the first line near the top of the `<p>` element, around `y=4` to `23.2` given the padding and line-height. The chip only covers `y=60` to `100`, so it overlaps the paragraph box but not the text itself.\n\nANSWER: NO\n",
+  "ms": 7923
+}

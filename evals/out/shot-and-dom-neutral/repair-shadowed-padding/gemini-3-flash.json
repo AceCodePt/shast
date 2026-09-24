@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The evidence indicates that `root>body>panel` has `padding: 32px` in its own CSS block, yet the browser reports a computed padding of `4px`. In CSS, when a property defined on a specific node is ignored, it is being \"shadowed\" or overridden by a rule with higher specificity or importance. \n\nIn this layout, the most likely source of such an override is the immediate parent node, `root>body`. It is common for \"container\" components to define styles for their direct children (e.g., using a selector like `root>body > *` or `root>body > section`). Since adding the desired `32px` padding to the `panel`'s own block did not change the rendering, the conflicting `4px` rule must be coming from a more dominant selector, which is typically found in the parent node's CSS block. To \"repair\" the shadowed padding and allow the child's style to take effect, you must edit the block where the overriding rule is defined.\n\nREASONING: The `root>body>panel` node's own CSS block already contains the `32px` value, but it is being overridden by a `4px` value. This shadowing typically occurs when a parent node (like `root>body`) uses a more specific selector to enforce styles on its children.\n\nANSWER: root>body\n",
+  "ms": 78632
+}

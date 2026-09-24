@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>main>r36` is positioned at `x=244 y=978` with `height=26`. The initial viewport height is `800px` (0–800), so anything starting at `y≈978` is below the fold and would require scrolling to see. Therefore, `root>main>r36` is not visible when the page first loads without scrolling.  \n\nANSWER: NO\n",
+  "ms": 8125
+}

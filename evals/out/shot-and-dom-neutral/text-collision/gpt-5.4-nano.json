@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>ghost` has a `getBoundingClientRect()` of `x=0 y=0 width=0 height=0`, meaning its rendered box occupies no visible area. In contrast, `root>visible` (and the `root` container) is actually laid out at the top-left with `x=0 y=0 width=400 height=19.1875`, so any glyph pixels that would coincide with the (effectively point-like) `root>ghost` location would coincide with the visible text drawn at that same origin. Therefore, the node whose text is drawn on the same pixels as `root>ghost` is `root>visible`.\n\nANSWER: root>visible\n",
+  "ms": 10942
+}

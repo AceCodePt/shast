@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport is 500x300 pixels, meaning the visible area on page load spans from y=0 to y=300. The `root>footer` element has a `getBoundingClientRect` with y=700 and height=60, placing it from y=700 to y=760. Since 700 is well below the visible viewport range (0-300), the footer is not visible without scrolling.\n\nANSWER: NO\n",
+  "ms": 12741
+}

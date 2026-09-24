@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report, I need to determine if the overflowing text is actually painted and visible.\n\nThe key information is:\n- The `root>card` element has a border box of 400x48px (though the card itself is 180x48px)\n- The content overflows: \"content is 153.61x76.75px inside a 162x30px content box\"\n- Critically, the overflow property is stated as \"visible\" (not \"hidden\" or \"clip\")\n\nWhen `overflow: visible` is set, overflowing content is painted outside the box boundaries. The report explicitly states \"it is painted outside the box rather than cut off.\" Since the last line of text extends below the bottom edge and overflow is visible, that text will be rendered and painted on the page where it can be read.\n\nANSWER: YES\n",
+  "ms": 9819
+}

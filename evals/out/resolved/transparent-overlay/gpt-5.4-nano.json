@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` paragraph is 54.38px tall and it wraps onto 2 lines because the content width is limited (it breaks at 584px). The report also says the node’s 2 text line(s) stay fully visible, and that although `root>banner` is absolutely positioned with a higher z-index and paints later, it has no background, so it doesn’t visually obscure the text. Since all lines of the `root>lede` text remain fully visible, a reader can read the entire sentence.\n\nANSWER: YES\n",
+  "ms": 10469
+}

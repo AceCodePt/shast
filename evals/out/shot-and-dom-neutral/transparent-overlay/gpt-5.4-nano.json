@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` node (`<p>`) has a bounding box width of 600px, so the content is laid out horizontally across the page. Its computed height is ~54.375px, which corresponds to roughly 3 lines at the given line-height (19.2px), indicating the full sentence is wrapped and fits within the visible area rather than being clipped. The computed `overflow` is `visible`, not hidden, so there’s no sign the text is being truncated.\n\nANSWER: YES\n",
+  "ms": 9553
+}

@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` box has height 54.375px, which is exactly 2 lines (19.2px line-height × 2) plus its 16px of padding (8px top + 8px bottom), so the 72-character sentence wraps to two lines and fits within the box. Its `overflow` is `visible`, so even if it spilled it would still render. The `root>banner` does overlap the lede (absolute, top:0, height:70, z-index:5), but it has a transparent background (`rgba(0,0,0,0)`) and no text content, so it doesn't visually obscure anything. The lede also sits well within the 600x400 viewport. Therefore the full sentence is readable.\n\nANSWER: YES\n",
+  "ms": 55801
+}

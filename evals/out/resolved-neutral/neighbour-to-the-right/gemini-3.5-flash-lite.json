@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the given information, `root>leftBottom` is located at `y=120` and `x=0`. Inspecting the other nodes at the same vertical position (`y=120`), `root>rightBottom` is located at `x=340`, directly to the right of `root>leftBottom` on the same row.\n\nANSWER: root>rightBottom\n",
+  "ms": 6769
+}

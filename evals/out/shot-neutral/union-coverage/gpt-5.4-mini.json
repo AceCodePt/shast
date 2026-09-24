@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The screenshot shows only the covering boxes, not the text itself, so the words in `root>line` are not readable from what’s visible. Even though neither covering box spans the whole line alone, together they still prevent the line text from being seen.\n\nANSWER: NO\n",
+  "ms": 9238
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The `root>ghost` box is 0x0, but the `overflows` annotation states its content is 86.41x38.38px \"inside a 0x0px content box, so it is painted outside the box rather than cut off (overflow is visible).\" Because the default `overflow` is `visible`, the text escapes the zero-sized box and is painted on the page regardless. The `collides` flag corroborates this: it reports that `root>visible` draws its text \"on the same pixels\" as `root>ghost`, which could only happen if `root>ghost`'s glyphs are actually being rendered. The two strings overlap spatially because both originate at x=0, y=0 and the ghost's wrapped text spills outward from that point.\n\nANSWER: YES\n",
+  "ms": 17744
+}

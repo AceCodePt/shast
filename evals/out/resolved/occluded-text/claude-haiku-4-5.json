@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, the `root>lede` paragraph contains the text \"The quarterly results are in and every region beat its targ…\" and has a key issue noted:\n\n- The text is marked as \"covered: root>banner <div> (absolute, z-index 5) paints later than this node, with an opaque background, over 100% of the box\"\n- Additionally, it states \"covered: 2 of 2 text line(s) completely hidden\"\n\nThis means the banner div, which has `z-index: 5` and an opaque background (#222222), is positioned absolutely at the top and completely overlays the lede paragraph. Since both text lines are completely hidden by this opaque overlay, a person reading the page in a browser would not be able to see or read the whole sentence (or any of it).\n\nANSWER: NO\n",
+  "ms": 12514
+}

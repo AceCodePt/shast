@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "`root>body>panel` is the only node shown with a computed `border-radius` of `12px`, so its own CSS block is the source of that declaration. The other nodes have `border-radius: 0px`, so they are not the origin of the rendered rounding.\n\nANSWER: root>body>panel\n",
+  "ms": 7078
+}

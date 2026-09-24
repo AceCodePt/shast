@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at `root>lede`:\n- The text wraps onto 2 lines within the 54.38px height box at 584px content width\n- The report explicitly states \"this node's 2 text line(s) stay fully visible\"\n- Although `root>banner` paints later over 100% of the lede's box (it's absolute, z-index 5, positioned at top:0 left:0 width:600 height:70), it has no background, so it doesn't visually obscure the text beneath it\n\nThe banner is effectively transparent, so it does not block reading. All wrapped lines are reported as fully visible.\n\nANSWER: YES\n",
+  "ms": 12472
+}

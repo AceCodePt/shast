@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Comparing the `rest.png` and `hover.png` screenshots shows that the position of the text \"Leaf\" remains identical in both states. If the `:hover` block successfully applied `padding: 40px` to the `leaf` node, the text content would be offset from its original position by 40 pixels. Since there is no visual change between the two images, the padding does not change.\n\nANSWER: NO\n",
+  "ms": 11452
+}

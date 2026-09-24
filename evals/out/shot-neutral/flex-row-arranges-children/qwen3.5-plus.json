@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, I can see \"first\" on the left and \"second\" positioned to its right with visible spacing between them.\n\nWith `display: flex` (default row direction), the first child starts at x=0 and is 100px wide. The `gap: 10px` adds 10px of space after the first child before the second child begins.\n\nSo the second child's left edge is at: 100px (first child width) + 10px (gap) = 110px\n\nANSWER: 110\n",
+  "ms": 12662
+}

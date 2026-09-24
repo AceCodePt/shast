@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the `getBoundingClientRect()` values for each sibling:\n\n- **root>alpha**: y=20, height=40 → spans from y=20 to y=60\n- **root>beta**: y=64, height=40 → spans from y=64 to y=104\n- **root>gamma**: y=200, height=40 → spans from y=200 to y=240\n\nThe gap between alpha and beta is only **4 pixels** (64 - 60 = 4), while the gap between beta and gamma is **96 pixels** (200 - 104 = 96). This large spacing visually isolates gamma from the other two elements, which cluster together near the top.\n\nANSWER: root>gamma\n",
+  "ms": 15543
+}

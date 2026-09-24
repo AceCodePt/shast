@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report says `root>title` is a `div` that contains the text `\"ANNUAL REVIEW\"`. It also notes the text was “written `Annual review`”, and since `root` has `text-transform: uppercase`, the viewer sees the transformed uppercase version. Therefore, the exact characters are the uppercase letters and the space between the two words.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7863
+}

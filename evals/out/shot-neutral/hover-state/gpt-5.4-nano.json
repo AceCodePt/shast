@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "blue",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The node tree shows `root>cta` contains the text “Continue”. In the first (rest) screenshot, when the pointer is elsewhere, the area corresponding to `root>cta` is shown with a solid blue background (contrasting with the white background elsewhere). Therefore, the background colour of `root>cta` on first paint is blue.  \n\nANSWER: blue\n",
+  "ms": 9653
+}

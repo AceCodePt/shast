@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`flex: 1` and `flex: 2` split the flex container’s available width in a 1:2 ratio. With a 600px-wide viewport and no other constraints shown, `root>b` gets 2/3 of the space.\n\nANSWER: 400\n",
+  "ms": 11449
+}

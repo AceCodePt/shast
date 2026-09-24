@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `root>second` is positioned below the black `cover` div: its top is at `y=19.1875`, while the cover only extends to `y=19`. Since the second paragraph is black text on a transparent background and is not overlapped by the cover, a viewer can read it.\n\nANSWER: YES\n",
+  "ms": 7409
+}

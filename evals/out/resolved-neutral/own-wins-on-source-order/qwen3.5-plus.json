@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the rendered information provided, the `root>child` element shows `padding: 64px` in its computed styles. The note explicitly states this value \"shadows\" (overrides) both the `padding: 4px` declared by the parent's `\"> child\"` block and the `padding: 32px` declared at the top of the child's own CSS block. The 64px value from the `\"&.big\"` block wins the CSS cascade.\n\nANSWER: 64px\n",
+  "ms": 13940
+}

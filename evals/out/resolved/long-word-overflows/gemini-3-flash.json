@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report states that the content inside `root>cell` measures 518.41px in width, which is significantly larger than the 120px width of the box itself. Furthermore, it explicitly notes that the content \"overflows\" and is \"painted outside the box rather than cut off.\"\n\nANSWER: NO\n",
+  "ms": 9497
+}

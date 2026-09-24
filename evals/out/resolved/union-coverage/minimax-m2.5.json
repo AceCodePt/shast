@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The two covering boxes together paint over the range x=0 to x=140 (leftHalf covers 0–70, rightHalf covers 60–140). The text \"Hidden by two\" at 16px is roughly 110–130px wide and starts at x=0, so the combined coverage fully obscures it — even though no single box spans the whole line. The report explicitly confirms \"1 of 1 text line(s) completely hidden\".\n\nANSWER: NO\n",
+  "ms": 9041
+}

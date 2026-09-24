@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered measurements provided in the report:\n\nThe `root>inner` element has `position: fixed` with `top: 15px` and `left: 25px`. Fixed positioning takes coordinates relative to the viewport, not relative to any ancestor element's padding or positioning context.\n\nThe report directly states that `root>inner` has:\n- `@ x=25 y=15 width=70 height=20`\n\nThis means the border box of `root>inner` starts at x=25, y=15 in absolute coordinates from the top-left of the page. The `root` element's `position: relative` and padding do not affect where a `position: fixed` child renders, since fixed positioning removes the element from the document flow and positions it relative to the viewport.\n\nANSWER: 25,15\n",
+  "ms": 7425
+}

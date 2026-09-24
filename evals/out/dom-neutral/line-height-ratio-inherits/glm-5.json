@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>big` inherits the **unitless** `line-height: 2` as the literal number `2`, not as a resolved pixel value. It then multiplies that by its own `font-size: 32px`, giving `2 × 32px = 64px`. The browser data confirms this: `line-height: 64px` and `height: 64`.\n\nANSWER: 64\n",
+  "ms": 13885
+}

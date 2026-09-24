@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the data provided, I need to compare the computed styles for `root>mid>leaf` in the two states:\n\n**At rest:** `padding: 2px 2px 2px 2px`\n\n**On hover:** `padding: 2px 2px 2px 2px`\n\nThe padding values are identical in both states. Despite the `:hover` block supposedly setting `padding: 40px`, the computed style shows no change when the element is hovered. This indicates that either the `:hover` rule is not being applied, is being overridden by other CSS, or the CSS selector for the `:hover` state is not matching the element correctly.\n\nANSWER: NO\n",
+  "ms": 5430
+}

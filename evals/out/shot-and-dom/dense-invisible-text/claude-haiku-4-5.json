@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the data provided for `root>main>r21`:\n\nThe element contains the text \"21. Treasury positions\" and has the following relevant style properties:\n- `color: rgb(255, 255, 255)` (white text)\n- `background-color: rgba(0, 0, 0, 0)` (transparent background)\n\nThe parent element `root>main` has:\n- `background-color: rgba(0, 0, 0, 0)` (transparent)\n\nThe root element has:\n- `background-color: rgb(255, 255, 255)` (white background)\n\nSince the text is white (`rgb(255, 255, 255)`) and renders on a white background (`rgb(255, 255, 255)`), there is no contrast between the text color and the background. This creates an invisible text scenario where the white text cannot be distinguished from the white background.\n\nANSWER: NO\n",
+  "ms": 9324
+}

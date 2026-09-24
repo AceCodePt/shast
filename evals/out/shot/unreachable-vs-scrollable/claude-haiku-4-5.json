@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the image and the node tree information:\n\nThe screenshot shows a 500x300 viewport with text \"runs off sideways\" visible at the top. This text corresponds to `root>sideways`, which means it's positioned horizontally outside the initial viewport but can be scrolled into view horizontally.\n\nThe node `root>lower` is described as \"further down\" in the source, indicating it's positioned below the initial viewport. This can be brought into view through vertical scrolling.\n\nHowever, `root>sideways` \"runs off sideways\" - it extends beyond the right edge of the viewport. While the text is partially visible in the screenshot, content that \"runs off sideways\" suggests it extends horizontally beyond the viewport width and cannot be fully brought into view by vertical scrolling. The question asks which node cannot be reached by \"ordinary scrolling\" - if `root>sideways` extends beyond the viewport horizontally and there's no horizontal scrolling capability (which is common for ordinary web pages), then it cannot be fully brought into view.\n\nGiven the phrasing \"runs off sideways\" and that `root>lower` can be accessed by vertical scrolling, the node that cannot be reached by ordinary scrolling is the one that runs horizontally off the page.\n\nANSWER: root>sideways\n",
+  "ms": 11255
+}

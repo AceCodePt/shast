@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided, I need to find the background color of `root>cta` when the page is first painted (at rest state, before any hover).\n\nIn the first set of data labeled \"the browser's own data for each node\" (which represents the initial/rest state), the `root>cta` element has:\n```\nbackground-color: rgb(51, 85, 255)\n```\n\nThis is confirmed by the first screenshot labeled \"rest.png\" which shows a bright blue button.\n\nWhen the mouse hovers over `root>cta`, the background-color changes to `rgb(0, 34, 204)` (a darker blue), as shown in the hover state data and the \"hover.png\" screenshot.\n\nThe question asks for the background color when the page is first painted and the pointer is elsewhere, which is the rest state.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 9301
+}

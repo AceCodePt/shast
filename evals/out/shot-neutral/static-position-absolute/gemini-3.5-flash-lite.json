@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "16",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "An absolutely positioned element with `auto` for all offset properties is placed at its static position, which is the position it would occupy in the normal document flow. Because `root>spacer` precedes `floaty` in the normal flow, `floaty` renders immediately below `spacer`. With standard browser defaults (16px font size and line height), `spacer` occupies 16px vertically, placing the top edge of `floaty` at y = 16.\n\nANSWER: 16\n",
+  "ms": 10542
+}

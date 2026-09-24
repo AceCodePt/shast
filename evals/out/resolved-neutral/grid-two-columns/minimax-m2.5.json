@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first column occupies x=0 to x=200. The 20px gap follows, ending at x=220. The second column therefore begins at x=220, which is where `root>right` starts.\n\nANSWER: 220\n",
+  "ms": 6715
+}

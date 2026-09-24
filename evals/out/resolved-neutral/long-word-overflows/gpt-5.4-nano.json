@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>cell` element has a computed painted/content box width of `120px`. The information explicitly says the URL “overflows” and that Chromium reports the content as `518.41x19.19px` inside a `120x19.19px` content box, and that overflow is visible (painted outside the box rather than cut off). Therefore, the URL does not stay confined within the 120px-wide box.\n\nANSWER: NO\n",
+  "ms": 8845
+}

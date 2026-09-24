@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe `root>card` element has a height of 48px with 8px padding on all sides, giving it an effective content height of 32px (48 - 8 - 8). The text \"Payment failed because the card on file expired last month.\" is rendered with a font-size of 16px and line-height of 19.2px.\n\nFrom the screenshot, the text clearly wraps across multiple lines (4 lines visible), and the text extends beyond the visible border box of the card. The card's bounding rectangle shows width=180px and height=48px, but the text content visibly overflows beyond this boundary, as shown in the rendered image where text appears cut off at the right edge and extends beyond the bottom.\n\nSince the text visibly overflows the 48px height constraint of the card element, not all of the text fits inside the border box.\n\nANSWER: NO\n",
+  "ms": 7216
+}

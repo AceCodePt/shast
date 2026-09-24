@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\n1. The node tree shows `root>line` contains the text \"Still readable\"\n2. There are two boxes that paint over it: `root>glass` and `root>panel`\n3. The screenshot shows the text \"Still readable\" is visible at the top of the rendered page, above a dark gray box\n4. The text is clearly legible in the rendered output\n\nThe screenshot directly demonstrates that despite two boxes painting over the `root>line` element, the text \"Still readable\" remains readable to a viewer. The rendering confirms that the text is not obscured by the overlaying elements.\n\nANSWER: YES\n",
+  "ms": 5723
+}

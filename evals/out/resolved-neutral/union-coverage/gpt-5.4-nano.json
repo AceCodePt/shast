@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>line` node’s 19.19px-tall text line is marked `covered`, with `! covered: ... absolute ... paints later than this node` and it states that `1 of 1 text line(s) completely hidden`. Even though the two covering boxes (`root>leftHalf` and `root>rightHalf`) do not individually span the whole line, together they obscure the entire line’s contents (over significant portions and resulting in full text line concealment).  \n\nANSWER: NO\n",
+  "ms": 7108
+}

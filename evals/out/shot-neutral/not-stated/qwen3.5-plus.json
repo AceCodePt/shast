@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The provided report contains the node tree structure showing that `root>label` is a `div` with text \"Total due\", and a screenshot of the rendered page. However, the node tree information only includes the path, tag name, and text content — it does not include computed CSS properties like `color`. The screenshot visually shows the rendering but the report data itself does not state what text colour value is applied.\n\nANSWER: NOT STATED\n",
+  "ms": 11631
+}

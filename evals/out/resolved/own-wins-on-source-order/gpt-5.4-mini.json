@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "It renders with `padding: 64px`.\n\nThe report already gives the resolved value for `root>child` as `padding: 64px`, and it notes that this declaration comes from `root>child` itself inside its `&.big` block. That declaration overrides the `32px` declaration earlier in the same block and the `4px` declaration from the parent rule.\n\nANSWER: 64px\n",
+  "ms": 8458
+}

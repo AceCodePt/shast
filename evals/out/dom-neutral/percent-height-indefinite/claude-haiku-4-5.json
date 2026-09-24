@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the browser's computed data:\n\n- `root>outer>filler` has `height: 60px`\n- `root>outer>tall` has `height: 19.1875px`\n\nThe question states that `root>outer>tall` declares `height: 100%`. When an element declares `height: 100%`, it inherits the height of its parent. The parent is `root>outer`, which has `height: 79.1875px`. However, the computed style shows `root>outer>tall` actually renders at `19.1875px`, not the full parent height.\n\nThis discrepancy suggests that `height: 100%` is being resolved relative to the content height of the parent (the line-height), not the parent's full height. Regardless of the reason, the actual rendered heights are what matter: `root>outer>tall` at 19.1875px is significantly shorter than `root>outer>filler` at 60px.\n\nANSWER: NO\n",
+  "ms": 10665
+}

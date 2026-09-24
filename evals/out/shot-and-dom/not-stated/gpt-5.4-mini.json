@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "black",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>label` renders with `color: rgb(0, 0, 0)`, which is black. The report explicitly includes the computed `color` for that node, so this is stated directly rather than inferred from the screenshot.\n\nANSWER: black\n",
+  "ms": 8698
+}

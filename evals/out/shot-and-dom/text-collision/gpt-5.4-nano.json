@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>ghost` reports a bounding box of `x=0 y=0 width=0 height=0`, meaning it occupies no painted area on screen. The only node with non-zero pixels at the same top-left position (`x=0 y=0`) is `root>visible` (`width=400 height=19.1875`), so the pixels where glyphs could overlap with the (zero-area) ghost text location correspond to `root>visible`.\n\nANSWER: root>visible\n",
+  "ms": 11016
+}

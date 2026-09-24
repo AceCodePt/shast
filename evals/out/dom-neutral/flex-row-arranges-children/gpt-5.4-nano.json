@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With `root` set to `display: flex` (row) and the default `justify-content: flex-start`, the first child is laid out starting at the left edge of `root` (x = 0). Each child is 100px wide, and `gap: 10px` adds 10px between them, so the second child’s left edge is at `0 + 100 + 10 = 110px` (which matches the provided `getBoundingClientRect` data).  \n\nANSWER: 110\n",
+  "ms": 7404
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The node `root>main>r09` and the node `root>banner` share the exact same starting coordinates (x=244, y=276) and height (26px). The `root>banner` element is absolutely positioned with a higher `z-index` of 5 (compared to `r09`'s `auto`) and has an opaque red background-color (`rgb(204, 34, 34)`). Since the banner's width of 700px is more than sufficient to cover the text \"09. Currency hedging\" at the start of the 1012px wide `r09` container, the text is obscured from view.\n\nANSWER: NO\n",
+  "ms": 14290
+}

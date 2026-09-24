@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Let me analyze the information provided about the page layout.\n\nThe `root>lede` element is a `<p>` tag containing text that reads: \"The quarterly results are in and every region beat its targ…\" (72 chars total).\n\nLooking at the layout:\n- The `root>banner` div is positioned absolutely at `top: 0px` with `height: 70px` and `z-index: 5`\n- The `root>lede` paragraph is positioned statically at `top: auto` with `y=0` in its bounding rect, meaning it starts at the top of the viewport\n- The `root>lede` has a height of 54.375px and starts at y=0\n\nSince the banner is absolutely positioned with `z-index: 5` and covers the area from y=0 to y=70, while the lede paragraph also starts at y=0 and extends to y=54.375, the banner will be layered on top of the lede content. The lede text would be hidden behind the banner's dark background (`rgb(34, 34, 34)`).\n\nAdditionally, the text shown in the source is truncated with \"…\" indicating it doesn't display the full sentence anyway.\n\nTherefore, a person reading this page cannot read the whole sentence in `root>lede` because: (1) the banner overlays and obscures it, and (2) the text itself appears to be truncated in the display.\n\nANSWER: NO\n",
+  "ms": 10160
+}

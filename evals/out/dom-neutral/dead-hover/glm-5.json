@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Comparing the computed padding of `root>mid>leaf` in the two states:\n\n- **Base (no hover):** padding `2px 2px 2px 2px`\n- **Hover:** padding `2px 2px 2px 2px`\n\nThe padding is identical in both snapshots. The `:hover` rule declaring `padding: 40px` is not being applied — likely because another rule with higher specificity (or the non-hover rule itself) is winning the cascade, or the `:hover` selector isn't actually matching this element. Regardless, the browser's own computed style shows the padding stays at 2px when hovering.\n\nANSWER: NO\n",
+  "ms": 10828
+}

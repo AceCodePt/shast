@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "rgb(0, 0, 0)",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The browser's data for the node `root>label` explicitly lists the `color` property as `rgb(0, 0, 0)`. This property determines the color of the text rendered within that element.\n\nANSWER: rgb(0, 0, 0)\n",
+  "ms": 8489
+}

@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The point (120, 120) falls within all three boxes' bounds. Paint order is determined by z-index: `back` (z-index 1) paints first, `front` (z-index 2) second, and `middle` (z-index 3) last — so `middle` is on top. The report confirms this: `front` is 100% covered by `middle`, and `back` is covered 64% by `middle`, which includes the overlap region around (120, 120).\n\nANSWER: root>middle\n",
+  "ms": 12612
+}

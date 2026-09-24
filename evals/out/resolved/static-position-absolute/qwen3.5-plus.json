@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states the measured position of `root>floaty` as `@ x=0 y=50 width=90 height=20`. The `y=50` value represents the absolute position of the border box's top edge from the top-left of the page in CSS pixels. Since `root>floaty` is `position: absolute` with no offset properties specified, it renders at its static position, which is immediately after the `root` element that has `height=50`.\n\nANSWER: 50\n",
+  "ms": 11846
+}

@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>lede` is a `<p>` containing the sentence text, and its rendered bounding box is `600px` wide with a height of `54.375px` and `overflow: visible`, so the browser is not clipping the content. The line height is `19.2px`, so the element height fits roughly 3 lines, which is consistent with the 72-character sentence wrapping rather than being truncated. Therefore, a reader can read the whole sentence as it appears in that node.\n\nANSWER: YES\n",
+  "ms": 12279
+}

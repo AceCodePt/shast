@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When a parent element specifies a unitless line-height (such as `2`), the multiplier ratio is inherited by child elements rather than a fixed pixel value. Since `root>big` has a font-size of 32px and inherits the line-height multiplier of 2, its computed line-height is 32px × 2 = 64px. Consequently, the rendered height of the element is 64 CSS pixels.\n\nANSWER: 64\n",
+  "ms": 8438
+}

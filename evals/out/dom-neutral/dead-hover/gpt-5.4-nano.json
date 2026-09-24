@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The evidence shows `root>mid>leaf` has `padding: 2px 2px 2px 2px` both before hovering and after hovering. In the hover comparison, `getComputedStyle()` for the hovered node does not change, and there is no indication that padding becomes `40px`. Therefore, based on the provided Chromium measurements, hovering does **not** change its padding.\n\nANSWER: NO\n",
+  "ms": 8481
+}

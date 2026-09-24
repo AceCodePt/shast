@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "`root>beta",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "At `x=500, y=400`, the point lies inside all three overlapping boxes: `alpha`, `beta`, and `gamma`. Their z-index order is `alpha` = 2, `gamma` = 3, `beta` = 4, so `beta` paints last and sits on top.\n\nANSWER: `root>beta`\n",
+  "ms": 6916
+}

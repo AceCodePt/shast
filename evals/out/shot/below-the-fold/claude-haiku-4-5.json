@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\n- The viewport is 500x300 CSS pixels\n- `root>top` contains \"masthead\" and is at the top of the page\n- `root>footer` contains \"footer note\"\n\nThe screenshot shows only the \"masthead\" text visible in the viewport, with a large white space below it. The \"footer note\" is not visible in the rendered screenshot at 500x300 CSS px.\n\nSince the footer is not visible in the initial viewport rendering and would require scrolling to see, it is below the fold - meaning it's not in the area the viewer sees when the page first loads.\n\nANSWER: NO\n",
+  "ms": 7365
+}

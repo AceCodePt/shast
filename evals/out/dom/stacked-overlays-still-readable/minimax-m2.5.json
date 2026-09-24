@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The line text occupies y=0 to ~19.19. The glass overlay (z-index=1) spans y=0–100 but has a transparent background (rgba(0,0,0,0)), so it doesn't obscure the text. The panel (z-index=2, opaque dark gray) sits at y=40–100, which is below the text's vertical range, so it doesn't cover it either. Nothing paints an opaque layer over the line's text region.\n\nANSWER: YES\n",
+  "ms": 10208
+}

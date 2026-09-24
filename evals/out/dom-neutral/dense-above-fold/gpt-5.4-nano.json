@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main` starts at `y=56` and is 1052px tall, so its contents extend well beyond the initial viewport. `root>main>r17` has `getBoundingClientRect: x=244 y=484 width=1012 height=26`, which places it within the initial 1280×800 viewport (since 484–510 is visible without scrolling). The computed styles show no hiding/overflow constraints on these nodes.\n\nANSWER: YES\n",
+  "ms": 6958
+}

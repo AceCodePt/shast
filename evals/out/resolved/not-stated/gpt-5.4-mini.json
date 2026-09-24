@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report only gives geometry and some inherited typography details like `font-size` and `padding`. It does not include any computed `color` or text paint information for `root>label`, so the text colour cannot be determined from what’s provided.\n\nANSWER: NOT STATED\n",
+  "ms": 6743
+}

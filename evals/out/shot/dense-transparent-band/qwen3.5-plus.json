@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the information provided, `root>main>r09` contains the text \"09. Currency hedging\". The screenshot shows a clear, well-formatted list with dark text on a light background. All visible items in the navigation list (items 01-28+) appear to have good contrast and legible typography. There's no indication of any visual issues like transparency, blurring, or overlapping that would prevent reading the text.\n\nANSWER: YES\n",
+  "ms": 11884
+}

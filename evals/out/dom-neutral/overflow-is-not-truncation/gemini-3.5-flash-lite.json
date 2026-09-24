@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has `overflow: visible` in its computed style, which specifies that content overflowing the element's bounding box is not clipped and is rendered outside its bounds. Because overflow is not hidden or clipped, the text that extends past the bottom edge of the card is still painted on the page and readable.\n\nANSWER: YES\n",
+  "ms": 6595
+}

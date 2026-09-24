@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence:\n\n1. The viewport is 500x300 CSS pixels\n2. The DOM has three elements: root, root>top (with text \"masthead\"), and root>footer (with text \"footer note\")\n3. The screenshot shows only \"masthead\" at the top with white space below\n4. The footer's text content (\"footer note\") is **not visible** in the screenshot\n\nSince the footer element contains text but that text doesn't appear in the rendered screenshot of the initial viewport, the footer must be positioned outside the visible area—likely below the fold, requiring scrolling to see.\n\nANSWER: NO\n",
+  "ms": 14796
+}

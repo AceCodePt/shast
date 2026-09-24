@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided browser data for the `root>child` node, the `getComputedStyle()` section explicitly lists its `padding` as `64px 64px 64px 64px`. This is corroborated by the node's `getBoundingClientRect` height of `147.1875px`, which approximately equals the sum of the top padding (64px), the line-height (19.2px), and the bottom padding (64px).\n\nANSWER: 64px\n",
+  "ms": 10004
+}

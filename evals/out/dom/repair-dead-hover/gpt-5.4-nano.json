@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The hover attempt is in `root>mid>leaf`’s own CSS block, but Chromium’s `getComputedStyle()` shows the leaf’s computed `padding` stays at `2px` both before and during hover. That means the `:hover { padding: 40px }` rule from the leaf’s block is not winning (either not applied as expected, or overridden by a higher-priority rule coming from another node’s CSS). Since only the leaf’s padding would be affected and the leaf’s own hover change didn’t show up in computed styles, you need to edit the parent node’s CSS block that’s supplying/overriding the leaf’s padding rule.\n\nANSWER: root>mid\n",
+  "ms": 18677
+}

@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>leftBottom` is at `x=0` and `y=120` with a width of `300`. On that same row (`y=120`), the other box to the right has coordinates starting at `x=340` and `y=120`, which matches `root>rightBottom`. Since it is directly to the right on the same row, it’s the node requested.\n\nANSWER: root>rightBottom\n",
+  "ms": 7229
+}

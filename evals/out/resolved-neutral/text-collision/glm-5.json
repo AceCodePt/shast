@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the `root>ghost` node's own collision note: \"root>visible <div> draws its text on the same pixels, over 56% of this node's glyphs.\" This is corroborated by `root>visible`'s reciprocal note that it draws its text on the same pixels as `root>ghost` (over 50% of its glyphs). Both nodes occupy overlapping screen space (both at x=0 y=0), causing their glyphs to collide.\n\nANSWER: root>visible\n",
+  "ms": 10719
+}

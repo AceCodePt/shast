@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "From the rendered screenshot, `alpha` and `beta` appear closer together vertically, while `gamma` is positioned noticeably farther away from both of them (it sits much lower, with a larger gap separating it from the other two). Therefore, `gamma` is visually separated.\n\nANSWER: root>gamma\n",
+  "ms": 8882
+}

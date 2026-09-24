@@ -1,0 +1,10 @@
+{
+  "case": "inherited-font-size",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>heading",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the screenshot, the text \"Quarterly report\" is rendered with a significantly larger font size than the text \"Draft\" below it. According to the provided node tree, \"Quarterly report\" corresponds to the `root>heading` node, while \"Draft\" corresponds to the `root>caption` node.\n\nANSWER: root>heading\n",
+  "ms": 8352
+}

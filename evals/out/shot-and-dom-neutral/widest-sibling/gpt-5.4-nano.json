@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>rail` has `getBoundingClientRect().width = 240px`, and `root>panel` has `getBoundingClientRect().width = 600px`. The ratio is `600 / 240 = 2.5`, so `root>panel` is **2.5** times wider (already to one decimal place).\n\nANSWER: 2.5\n",
+  "ms": 10595
+}

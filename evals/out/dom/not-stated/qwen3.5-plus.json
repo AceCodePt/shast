@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "rgb(0, 0, 0)",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The browser's computed style data for `root>label` explicitly shows `color: rgb(0, 0, 0)`, which is the CSS `color` property that determines text color. This value represents black.\n\nANSWER: rgb(0, 0, 0)\n",
+  "ms": 9250
+}

@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the layout information, I need to identify which box sits directly to the right of `root>leftBottom` on the same row.\n\nFrom the data:\n- `root>leftBottom` is at position x=0, y=120 with width=300 and height=80\n- This means it occupies the left side of the second row (y=120)\n\nLooking at the other boxes on the same row (y=120):\n- `root>rightBottom` is at position x=340, y=120 with width=300 and height=80\n- This is on the same row and positioned to the right\n\nThere's a gap between x=300 (where leftBottom ends) and x=340 (where rightBottom starts), but `root>rightBottom` is clearly the box directly to the right of `root>leftBottom` on the same row.\n\nANSWER: root>rightBottom\n",
+  "ms": 7367
+}

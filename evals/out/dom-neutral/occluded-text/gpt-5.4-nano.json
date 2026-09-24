@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The `root>lede` element is a `<p>` whose bounding box is `width=600px` and `height=54.375px`, with `line-height=19.2px`, which suggests the text spans only a few wrapped lines (roughly 2–3 lines). Since the page shows the lede text inside that visible area (`overflow: visible`) and the text is not clipped, a reader can view all the characters across the wrapped lines.\n\nANSWER: YES\n",
+  "ms": 9038
+}

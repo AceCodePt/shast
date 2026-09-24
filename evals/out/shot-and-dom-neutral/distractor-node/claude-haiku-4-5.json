@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided, I need to determine if the text \"Second paragraph here\" in `root>second` is readable to a viewer.\n\nFrom the data, I can see that:\n1. The `root>second` paragraph is positioned at y=19.1875 and has a height of 19.1875px\n2. The `root>cover` div is positioned at y=0 (top of the page) with a height of 19px and has `background-color: rgb(0, 0, 0)` (solid black) with `position: absolute`\n\nThe cover div, being absolutely positioned at the top with a black background and height of 19px, completely overlaps with the first paragraph (which spans y=0 to y=19.1875). However, the second paragraph starts at y=19.1875, which is just below where the cover div ends (at y=19).\n\nSince the second paragraph begins right at or just after the bottom edge of the black cover div, it should be visible and readable. The cover div only extends to y=19, while the second paragraph starts at y=19.1875.\n\nANSWER: YES\n",
+  "ms": 10661
+}

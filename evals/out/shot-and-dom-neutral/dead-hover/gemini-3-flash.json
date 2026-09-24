@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The browser's data for `root>mid>leaf` shows that its padding is `2px 2px 2px 2px` both at rest and while being hovered. Furthermore, the `getBoundingClientRect` dimensions and the provided screenshots are identical in both states, confirming that the layout did not change and the `padding: 40px` was not applied.\n\nANSWER: NO\n",
+  "ms": 11457
+}

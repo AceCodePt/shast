@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree shows that `root>title` contains the source text \"Annual review\". However, the computed styles show `text-transform: uppercase`, which transforms the rendered text to all uppercase characters. The element is fully visible (opacity: 1, visible color), so the viewer sees the uppercase version.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 12369
+}

@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `tall` div's `height: 100%` does not produce a taller box here. Its `outer` parent has an auto/computed height of 79.1875px (driven by its content), so `height: 100%` resolves to just the intrinsic line height of the single character \"b\" (19.1875px), well below `filler`'s 60px.\n\nANSWER: NO\n",
+  "ms": 9130
+}

@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree lists the text content as \"Annual review\", and the computed style for `root>title` includes `text-transform: uppercase`. This CSS property transforms all letters in the text to uppercase when rendered on screen. Consequently, the viewer sees the text fully capitalized.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 9652
+}

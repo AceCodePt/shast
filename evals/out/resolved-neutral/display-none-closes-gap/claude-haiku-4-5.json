@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered layout information:\n\n- `root>first` occupies y=0 to y=40 (40px height)\n- `root>gone` has `display: none` and is hidden\n- `root>third` occupies y=40 to y=80 (40px height)\n\nSince `root>gone` has `display: none`, it is completely removed from the document flow. This means it does not take up any space in the layout. `root>third` is positioned immediately after `root>first` with no gap between them (first ends at y=40, third starts at y=40). The 40px of vertical space that `root>gone` would have occupied is not rendered as a gap—instead, `root>third` collapses directly into that space.\n\nANSWER: NO\n",
+  "ms": 7784
+}

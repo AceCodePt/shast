@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 1280x800, meaning the visible area extends from y=0 to y=800. The element `root>main>r36` (which contains \"36. Royalty accruals\") has a `getBoundingClientRect` with `y=978`, meaning its top edge starts at 978px from the top of the document. Since 978 > 800, this element is below the initial viewport and requires scrolling to see.\n\nANSWER: NO\n",
+  "ms": 13581
+}

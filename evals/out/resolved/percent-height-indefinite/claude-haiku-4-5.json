@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the measurements in the report:\n\n- `root>outer>filler` has a height of 60px\n- `root>outer>tall` has a height of 19.19px\n\nEven though `root>outer>tall` declares `height: 100%`, it resolves to only 19.19px because `100%` refers to the height of its parent container (`root>outer`), which is 79.19px. The `100%` value means it takes up the full remaining height of the parent after the filler div occupies 60px, resulting in approximately 19.19px.\n\nSince 19.19px is less than 60px, `root>outer>tall` is not taller than its sibling.\n\nANSWER: NO\n",
+  "ms": 6983
+}

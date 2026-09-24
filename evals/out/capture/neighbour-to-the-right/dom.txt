@@ -1,0 +1,94 @@
+root <div>
+  getBoundingClientRect: x=0 y=0 width=800 height=300
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 300px
+  left: 0px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: relative
+  top: 0px
+  width: 800px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>leftTop <div>
+  getBoundingClientRect: x=0 y=0 width=300 height=80
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 80px
+  left: 0px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: absolute
+  top: 0px
+  width: 300px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>rightTop <div>
+  getBoundingClientRect: x=340 y=0 width=300 height=80
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 80px
+  left: 340px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: absolute
+  top: 0px
+  width: 300px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>leftBottom <div>
+  getBoundingClientRect: x=0 y=120 width=300 height=80
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 80px
+  left: 0px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: absolute
+  top: 120px
+  width: 300px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>rightBottom <div>
+  getBoundingClientRect: x=340 y=120 width=300 height=80
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 80px
+  left: 340px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: absolute
+  top: 120px
+  width: 300px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px

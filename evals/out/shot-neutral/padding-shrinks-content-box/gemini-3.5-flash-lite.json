@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the provided screenshot and node tree, the text inside `root>card` (\"one two three four five six seven eight nine ten\") wraps across multiple rows. Counting the lines visible in the rendered output, the text spans 4 distinct lines.\n\nANSWER: 4\n",
+  "ms": 8560
+}

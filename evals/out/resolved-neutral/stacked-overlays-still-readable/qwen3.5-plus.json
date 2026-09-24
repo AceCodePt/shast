@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering information:\n\n1. `root>line` contains the text \"Still readable\" at y=0 with height 19.19px\n2. `root>glass` (z-index 1) covers 100% of `root>line` but has **no background**, so content behind shows through\n3. `root>panel` (z-index 2, opaque background) starts at y=40px, which is **below** `root>line` (ends at y=19.19px)\n\nThe notes explicitly state that `root>glass` \"has no background, so what is behind it still shows through\" and that `root>line`'s \"1 text line(s) stay fully visible\". The opaque panel doesn't actually overlap the text line since it's positioned lower on the page.\n\nANSWER: YES\n",
+  "ms": 15059
+}

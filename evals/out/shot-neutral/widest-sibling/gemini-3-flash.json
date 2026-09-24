@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "2.0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Based on the provided viewport dimensions (900x400) and the rendered screenshot, the `root>rail` element (containing the text \"rail\") starts at the left edge of the viewport. The `root>panel` element (containing the text \"panel\") begins at approximately x=300, which is one-third of the total 900px width. Assuming these two sibling elements fill the viewport width, the `rail` element is 300px wide, and the `panel` element occupies the remaining 600px (from x=300 to x=900). Dividing the width of the panel by the width of the rail gives 600 / 300 = 2.0.\n\nANSWER: 2.0\n",
+  "ms": 17737
+}

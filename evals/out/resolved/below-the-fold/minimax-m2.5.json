@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 500x300 pixels, meaning only the top 300 pixels of the page are visible without scrolling. The footer is positioned at y=700 with height=60, placing it at 700-760 pixels from the top — far below the 300px viewport boundary. The report even explicitly marks it as \"below-fold\".\n\nANSWER: NO\n",
+  "ms": 6889
+}

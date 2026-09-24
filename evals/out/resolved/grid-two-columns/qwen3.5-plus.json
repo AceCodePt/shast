@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The grid has two columns: 200px and 300px wide, with a 20px gap between them. The left column starts at x=0 and is 200px wide, so it ends at x=200. The 20px gap occupies the space from x=200 to x=220. Therefore, the right column's left edge starts at x=220, which matches the reported position in the layout data.\n\nANSWER: 220\n",
+  "ms": 11562
+}

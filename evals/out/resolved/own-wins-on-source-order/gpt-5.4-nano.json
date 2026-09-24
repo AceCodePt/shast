@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report’s computed box styles list `padding: 64px` for `root>child`, so that is what is actually rendered. The accompanying note says the `padding: 64px` from `root>child`’s own `&.big` block “shadows” the other declarations (`4px` from `root > child` and `32px` from the top of `root>child`’s CSS block). Therefore the final effective padding is 64px.\n\nANSWER: 64px\n",
+  "ms": 10583
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>ghost` element has a width and height of 0px, but its `overflow` property is set to `visible`. In CSS, this means that any content inside the element—such as the text \"Important warning\"—will not be clipped and will still be painted on the screen even if it exceeds the container's zero-size boundaries. The provided screenshot confirms this, as the word \"warning\" is clearly visible on a second line, and the first line shows the text \"Important\" overlapping \"Everything is fine\".\n\nANSWER: YES\n",
+  "ms": 10647
+}

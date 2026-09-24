@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>main>r21` cannot be read by a viewer because its color is explicitly set to `#ffffff` (white), and the `root` container has a `background-color` of `#ffffff` (white). Although the element is located within the visible viewport (at `y=588` with a viewport height of `800`) and is not occluded by the sidebar (which only extends to `x=220` while the text starts at `x=244`), the lack of contrast between the white text and the white background makes it invisible.\n\nANSWER: NO\n",
+  "ms": 15329
+}

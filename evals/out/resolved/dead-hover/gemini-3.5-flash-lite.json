@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states that the padding of `2px` declared by root in its `\"> mid > leaf\"` block outranks the `:hover` block's setting of `40px`. As a result, entering `:hover` does not change the padding.\n\nANSWER: NO\n",
+  "ms": 6651
+}

@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Three rows (`first`, `second`, `fourth`) sit at `x=24`, but `third` is at `x=40`, placing it 16px further right than the others.\n\nANSWER: root>third\n",
+  "ms": 7106
+}

@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The information shows that `root>gone` has `display: none`, which removes it from the layout flow, causing it to occupy no space (0x0). The coordinates confirm this, as `root>first` ends at y=40 (y=0 + height=40) and `root>third` begins exactly at y=40, leaving no vertical gap between them.\n\nANSWER: NO\n",
+  "ms": 8850
+}

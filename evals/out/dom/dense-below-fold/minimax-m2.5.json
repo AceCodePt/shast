@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport height is 800px. `root>main>r36` is positioned at y=978 with a height of 26px, placing its bottom edge at y=1004. Since 1004 exceeds the viewport height of 800, this row lies below the visible area and cannot be seen without scrolling.\n\nANSWER: NO\n",
+  "ms": 7341
+}

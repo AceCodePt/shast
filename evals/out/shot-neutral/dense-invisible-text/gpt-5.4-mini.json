@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. In the rendered screenshot, the list jumps from `20. Covenant testing` to `22. Audit findings`, so `root>main>r21` is not shown on screen. Since the viewer cannot see that row, they cannot read its text.\n\nANSWER: NO\n",
+  "ms": 7198
+}

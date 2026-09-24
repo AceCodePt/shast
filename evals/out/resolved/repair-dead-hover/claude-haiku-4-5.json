@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, the issue is a specificity problem. The `root>mid>leaf` element has `:hover { padding: 40px }` in its own CSS block, but it's not working because there's a more specific rule that takes precedence.\n\nThe report explicitly states: \"padding: 2px declared by root, inside its '> mid > leaf' block outranks it — entering `:hover` does not change padding\"\n\nThis means the `root` node has a CSS rule in its `> mid > leaf` block that declares `padding: 2px`. This rule is more specific than the `:hover` pseudo-class selector on the element itself, so it wins in the cascade.\n\nTo fix this, you need to increase the specificity of the `:hover` rule by moving it to the `root` node's `> mid > leaf` block (where the conflicting rule already exists), so both rules have equal specificity and the `:hover` can properly override the base padding value. Alternatively, you could add `> mid > leaf:hover` as a rule in the `root` block's CSS to match the specificity of the existing `> mid > leaf` rule.\n\nANSWER: root\n",
+  "ms": 8350
+}

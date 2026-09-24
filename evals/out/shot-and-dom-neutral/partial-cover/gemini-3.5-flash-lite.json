@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The bounding client rect of `root>row` spans from y=0 to y=120, and its text \"Short label\" is positioned at the top-left of the element. Meanwhile, `root>chip` is located at x=400 to 560 and y=60 to 100, which places it below and to the right of the text. Therefore, the chip does not overlap with or hide any of `root>row`'s text.\n\nANSWER: NO\n",
+  "ms": 11756
+}

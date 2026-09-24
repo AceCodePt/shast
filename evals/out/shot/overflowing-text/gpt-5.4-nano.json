@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>card` contains the text `\"Payment failed because the card on file expired last month.\"`, which (as seen in the rendered screenshot) wraps into multiple lines: “Payment failed”, “because the card”, “on file expired”, “last month.”. With a 48px-tall border box, fitting would require that the total rendered line height across these lines stays within 48px, but the text clearly occupies more than three typical 16px lines, indicating it cannot fit vertically in 48px.\n\nANSWER: NO\n",
+  "ms": 11632
+}

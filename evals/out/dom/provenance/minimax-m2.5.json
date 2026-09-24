@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The `root>body>panel` node has `border-radius: 12px`, while its ancestors `root` and `root>body` both have `border-radius: 0px`. Since the panel's computed radius matches no inherited value from its parents, the declaration must be set on the panel itself.\n\nANSWER: root>body>panel\n",
+  "ms": 7384
+}

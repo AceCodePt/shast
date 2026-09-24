@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The information provided for `root>cta` specifies a default `background-color` of `#3355ff`. While a `:hover` state is defined with `#0022cc`, the question describes the initial paint with the pointer elsewhere, meaning the hover pseudo-class is not active. Therefore, the element will display its base background color.\n\nANSWER: #3355ff\n",
+  "ms": 9154
+}

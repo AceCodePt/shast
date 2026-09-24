@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "8,8",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Since `root>plain` is not positioned, the nested `root>plain>pin` follows normal document flow inside its parent. With no stated CSS offsets, the top-left of `root>plain>pin` lands at the start of the outermost content area, which (in a typical browser default) is offset by the page’s default body margin. The screenshot shows `pinned` starting just a few pixels from the top-left, consistent with an 8px margin on both axes.\n\nANSWER: 8,8\n",
+  "ms": 9349
+}

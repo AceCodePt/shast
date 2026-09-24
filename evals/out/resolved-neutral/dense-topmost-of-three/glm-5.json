@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "At (500, 400), all three absolutely-positioned bands overlap: alpha (x 300–700, y 300–420), beta (x 340–740, y 340–460), and gamma (x 380–780, y 380–500). Their z-indexes are alpha=2, gamma=3, beta=4, so beta paints last and on top of the others with its opaque background, covering gamma and alpha at that point.\n\nANSWER: root>beta\n",
+  "ms": 10073
+}

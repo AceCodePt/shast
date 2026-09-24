@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The text in `root>main>r21` (\"21. Treasury positions\") is rendered with a `color` of `rgb(255, 255, 255)` (white). Since it is located within the main content area which has an effective background color of white (inherited from the `root` node), the text is invisible to the viewer. The screenshot confirms this, showing a blank gap between item 20 and item 22 where item 21 should be.\n\nANSWER: NO\n",
+  "ms": 14523
+}

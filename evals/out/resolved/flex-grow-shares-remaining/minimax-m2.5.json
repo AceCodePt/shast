@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The root container is 600px wide and is a flex container. The two children have `flex: 1` and `flex: 2`, meaning they share the available width in a 1:2 ratio. `root>b` gets 2 out of 3 parts: (2/3) × 600 = 400px.\n\nANSWER: 400\n",
+  "ms": 6892
+}

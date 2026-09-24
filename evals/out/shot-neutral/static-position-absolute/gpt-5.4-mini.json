@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "42",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`floaty` renders at the normal-flow static position, immediately below `spacer`. In the screenshot, that places its top edge at about `42` CSS pixels from the top of the viewport.\n\nANSWER: 42\n",
+  "ms": 44285
+}

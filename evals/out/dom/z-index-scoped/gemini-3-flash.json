@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Both `root>low` and `root>high` are positioned elements that create stacking contexts within their parent. `root>low` has a `z-index` of 1, while `root>high` has a `z-index` of 2. Because `root>high` has a higher `z-index` in the same stacking context, it renders above `root>low` and all of its descendants, including `root>low>inner`, regardless of the `inner` node's own `z-index`.\n\nANSWER: root>high\n",
+  "ms": 11088
+}

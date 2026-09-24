@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r09` has `getBoundingClientRect` at `x=244 y=276` with `width=1012 height=26`, and the viewport is `1280x800`, so it falls within the visible area vertically and horizontally. Its `color` is `rgb(0, 0, 0)` and it has `background-color: rgba(0, 0, 0, 0)` with `opacity: 1`, so the text should render in black against the page background rather than being hidden or transparent.  \n\nANSWER: YES\n",
+  "ms": 6449
+}

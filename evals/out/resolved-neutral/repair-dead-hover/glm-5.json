@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\nThe evidence tells us two things about where the rules live:\n\n1. **`padding: 2px`** is declared in **`root`'s CSS block**, using a `> mid > leaf` selector. That selector chains three classes/elements, giving it high specificity — roughly (0, 3, 0).\n\n2. **`:hover { padding: 40px }`** is already in **`root>mid>leaf`'s own CSS block**. A self-selector like `.leaf:hover` only carries roughly (0, 2, 0) specificity.\n\nBecause (0, 3, 0) > (0, 2, 0), the `:hover` rule on the leaf's own block can never outrank the `padding: 2px` coming from `root`'s `> mid > leaf` block — no matter what we do inside the leaf's own block (we can't conjure extra selector specificity from a single node's self-selector). The only way to get a `:hover` rule with enough specificity to win is to put it in the **same block that already owns the winning selector** — `root`'s block — where a `> mid > leaf:hover` selector would carry (0, 4, 0) and beat the base (0, 3, 0).\n\nANSWER: root\n",
+  "ms": 27943
+}

@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In a flex container with `display: flex` (default row direction), when children have `flex: 1` and `flex: 2` with no specified basis, they default to `flex-basis: 0%`. This means the available space (600px viewport width) is distributed according to the flex-grow ratios.\n\nTotal flex-grow units = 1 + 2 = 3. Element B has 2 units, so it gets 2/3 of the available width.\n\n2/3 × 600px = 400px\n\nANSWER: 400\n",
+  "ms": 16005
+}

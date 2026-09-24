@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "2px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the report, the `root>mid>leaf` element has a `dead-state` indicator that explicitly explains the CSS specificity issue.\n\nThe report states that `:hover` sets `padding: 40px`, but this is outranked by `padding: 2px` declared by `root` inside its `> mid > leaf` block. The report explicitly notes: \"entering `:hover` does not change padding.\"\n\nThis means that even when hovering over the element, the padding remains `2px` because the selector `root > mid > leaf` (which targets the element directly and applies padding: 2px) has higher specificity than the `:hover` pseudo-class selector that would apply `padding: 40px`.\n\nANSWER: 2px\n",
+  "ms": 7879
+}

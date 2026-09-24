@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` box has a fixed `height: 48px`, with `padding: 8px` on top/bottom and `border-width: 1px` on top/bottom, leaving only about 30px of usable content area inside. The text \"Payment failed because the card on file expired last month.\" is roughly 55 characters long and must fit in a content width of ~162px (180 − 16 padding − 2 border). At a 16px font with ~8px average glyph width, that string needs around 440px, so it will wrap to at least 2 lines. Two lines at a `line-height` of 19.2px require 38.4px, which already exceeds the 30px content area, and adding padding/border brings the total above 48px. So the text overflows the 48px border box.\n\nANSWER: NO\n",
+  "ms": 8066
+}

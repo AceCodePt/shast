@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>front",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "In standard HTML rendering, elements are stacked in the order they appear in the DOM tree unless specific CSS properties like `z-index` or `position` change this behavior. The node tree indicates that `root>front` is the last child of `root`, following `root>back` and `root>middle`. Consequently, `root>front` is rendered on top of the others at any point where they overlap.\n\nANSWER: root>front\n",
+  "ms": 12178
+}

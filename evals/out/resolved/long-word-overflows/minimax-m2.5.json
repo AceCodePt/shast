@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report explicitly states that `root>cell` has `overflows: content is 518.41x19.19px inside a 120x19.19px content box`, meaning the URL (518.41px wide) is much wider than the 120px container and is painted outside the box rather than being clipped.\n\nANSWER: NO\n",
+  "ms": 5718
+}

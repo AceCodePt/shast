@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>card` div has a 48px-tall border box, but the rendered layout indicates the text “broke onto 4 lines” and that the content box is only `162x30px`, while the painted content is `153.61x76.75px`—meaning it extends beyond the box vertically. Since the overflow is visible (not clipped), the full text does not fit within the card’s 48px-tall border box.  \nANSWER: NO\n",
+  "ms": 8551
+}

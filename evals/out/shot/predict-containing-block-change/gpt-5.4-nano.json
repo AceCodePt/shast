@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "With `position: relative` added to `root>plain`, that element becomes the containing block for any positioned descendant (like `root>plain>pin`). In the evidence, `root>plain` is the direct child chain starting at the top-left of the page (no margins/padding are shown), so its padding box also starts at `(0,0)` in CSS pixels. Since the `pin` element is rendered at the top-left of its containing block, its top-left corner is at `(0,0)`.\n\nANSWER: 0,0\n",
+  "ms": 13251
+}

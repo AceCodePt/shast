@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding rectangles:\n\n- `root>line` is a div at position x=0, y=0 with width=400 and height=19.1875\n- `root>leftHalf` is positioned absolutely at x=0, y=0 with width=70 and height=20\n- `root>rightHalf` is positioned absolutely at x=60, y=0 with width=80 and height=20\n\nThe two covering boxes overlap the text in `root>line`, but as noted, neither spans the whole line. The `leftHalf` covers x=0 to x=70, and `rightHalf` covers x=60 to x=140. Together they cover x=0 to x=140, but `root>line` extends to x=400.\n\nThis means the portion of `root>line` from x=140 onwards (a width of 260 pixels) is not covered by either box and remains visible. Since part of the text is visible and not obscured, a viewer can read at least some of the words in `root>line`.\n\nANSWER: YES\n",
+  "ms": 8053
+}

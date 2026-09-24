@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When an absolutely positioned element declares no offsets (`top`/`right`/`bottom`/`left`), per the CSS spec it is placed at its **static position** — the spot it would occupy in normal flow had it not been positioned. Here `spacer` occupies the first 50px of height, so `floaty`'s static position is immediately after it at y=50. The report confirms this: `floaty` renders at y=50, matching the static position rather than being pulled to the containing block's edges.\n\nANSWER: 50\n",
+  "ms": 16722
+}

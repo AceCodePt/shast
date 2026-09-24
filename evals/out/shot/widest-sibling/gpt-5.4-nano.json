@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "4.0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "From the rendered layout, `root>rail` takes up about 1/5 of the available width, while `root>panel` takes up about 4/5. That makes `root>panel` roughly \\(720 \\div 180 \\approx 4.0\\) times as wide as `root>rail`. Rounded to one decimal place, the ratio is **4.0**.  \n\nANSWER: 4.0\n",
+  "ms": 13232
+}

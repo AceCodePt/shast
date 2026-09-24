@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Because `root>floaty` is `position: absolute` with no `top/right/bottom/left` specified, Chromium positions it at its static position relative to its containing block. In the provided browser evidence, `root>floaty`’s `getBoundingClientRect()` reports `y=50` with `height=20`, so its top edge renders at **y = 50 CSS pixels**.\n\nANSWER: 50\n",
+  "ms": 14995
+}

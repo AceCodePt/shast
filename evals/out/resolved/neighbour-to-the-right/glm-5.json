@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Both `root>leftBottom` and `root>rightBottom` share `y=120` and `height=80`, so they occupy the same row. `leftBottom` spans x=0–300, and `rightBottom` starts at x=340, placing it directly to the right on the same row.\n\nANSWER: root>rightBottom\n",
+  "ms": 7908
+}

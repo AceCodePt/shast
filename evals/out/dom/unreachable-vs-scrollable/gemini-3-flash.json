@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element has a height of 900px, which is significantly taller than the 300px viewport height, thus enabling vertical scrolling that allows the viewer to reach `root>lower` (located at y=700). Conversely, the `root` element's width is 500px, which exactly matches the viewport width; because the container does not exceed the horizontal bounds of the viewport, horizontal scrolling is not triggered. Consequently, the portion of `root>sideways` extending from x=500 to x=900 remains off-screen and inaccessible.\n\nANSWER: root>sideways\n",
+  "ms": 27355
+}

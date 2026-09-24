@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "#4169E1",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the two screenshots:\n\n1. **Rest state (first image)**: The `root>cta` div has a lighter, brighter blue background\n2. **Hover state (second image)**: The same div has a noticeably darker, deeper blue background\n\nThe question asks for the background colour when the page is first painted and the pointer is elsewhere — that's the rest state. The visual shows a medium-bright blue, similar to a royal blue or primary blue shade.\n\nANSWER: #4169E1\n",
+  "ms": 16300
+}

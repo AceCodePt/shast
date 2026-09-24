@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided screenshot and node tree, the text \"Important warning\" from `root>ghost` overlaps directly with \"Everything is fine\" from `root>visible`, causing a visual collision on the exact same screen pixels.\n\nANSWER: root>visible\n",
+  "ms": 7919
+}

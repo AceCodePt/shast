@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report shows `root>title` with the displayed text `\"ANNUAL REVIEW\"` (written `\"Annual review\"`). The parenthetical \"(written ...)\" indicates the original source text, while the first quoted string is what is actually rendered. The `text-transform: uppercase` on `root` is inherited and applied, converting \"Annual review\" to its uppercase form for display.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 13256
+}

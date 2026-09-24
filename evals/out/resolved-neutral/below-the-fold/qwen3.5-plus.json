@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 500x300 pixels, meaning the visible area extends from y=0 to y=300 when the page first loads. The `root>footer` element is positioned at y=700 with height 60, placing it from y=700 to y=760. Since y=700 is well below the viewport's bottom edge at y=300, the footer is not visible without scrolling. This is also explicitly indicated by the \"below-fold\" marker in the data.\n\nANSWER: NO\n",
+  "ms": 10017
+}

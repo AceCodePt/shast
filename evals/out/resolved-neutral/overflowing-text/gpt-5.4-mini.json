@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>card` border box is only 48px tall, but the text is laid out on 4 lines and the content height is reported as 76.75px inside a 30px-tall content box, so it overflows beyond the element’s box. Because overflow is visible, the extra text is painted outside rather than fitting within the 48px border box.\n\nANSWER: NO\n",
+  "ms": 8990
+}

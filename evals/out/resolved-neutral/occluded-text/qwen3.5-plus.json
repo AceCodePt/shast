@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering information:\n\nThe `root>lede` paragraph contains the text \"The quarterly results are in and every region beat its targ…\" broken into 2 lines. However, the `root>banner` div is positioned absolutely at the same location (x=0, y=0), has a higher z-index (5), paints **later** than the lede node, and has an **opaque background** (#222222).\n\nCritically, the annotation states the banner covers **100% of the box** and **2 of 2 text line(s) completely hidden**. This means the entire lede paragraph is obscured by the opaque banner.\n\nANSWER: NO\n",
+  "ms": 16817
+}

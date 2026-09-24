@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 500x300, meaning only the area from y=0 to y=300 is visible. The footer element is positioned at y=700 with a height of 60px (using absolute positioning), placing it well below the visible viewport area. Therefore, it is not visible on initial load.\n\nANSWER: NO\n",
+  "ms": 6543
+}

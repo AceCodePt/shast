@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport size is 500x300, meaning only content within the vertical range of 0 to 300 pixels is visible before scrolling. According to the `getBoundingClientRect` data, the `root>footer` element starts at y=700 and ends at y=760. Since the element's top boundary (700px) is well beyond the viewport's maximum height (300px), it is located \"below the fold\" and is not visible initially.\n\nANSWER: NO\n",
+  "ms": 10687
+}

@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the node tree and the question:\n\nThe node `root>line` contains the text \"Hidden by two\". The question asks if a viewer can read these words, given that \"neither covering box on its own spans the whole line.\"\n\nThis phrasing suggests that there are two covering boxes (likely `root>leftHalf` and `root>rightHalf`) that together hide the line, but neither one individually covers the entire line. However, the text in the node tree explicitly states \"Hidden by two\" - indicating that the combined effect of these two boxes is to hide the text from view.\n\nIf a viewer cannot see the text because it's hidden by the two covering boxes, then the words cannot be read, even though no single box covers the whole line.\n\nANSWER: NO\n",
+  "ms": 8256
+}

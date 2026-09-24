@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The provided information explicitly states that the `root>mid>leaf` element is in a \"dead-state.\" It explains that although a `:hover` block attempts to set the `padding` to `40px`, the `padding: 2px` declared by the `root` selector outranks it, and therefore \"entering `:hover` does not change padding.\"\n\nANSWER: NO\n",
+  "ms": 9746
+}

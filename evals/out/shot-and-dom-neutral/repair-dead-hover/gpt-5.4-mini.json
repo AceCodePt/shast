@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "`root>mid>leaf` is already the hovered element in the source, but its own hover rule has no visible effect, so the padding change has to be applied one level up where the hover state is actually active and can affect the subtree. Since `root>mid` is the immediate ancestor that still receives `:hover` when the leaf is under the pointer, editing that css block will make the leaf grow as intended.\n\nANSWER: root>mid\n",
+  "ms": 32013
+}

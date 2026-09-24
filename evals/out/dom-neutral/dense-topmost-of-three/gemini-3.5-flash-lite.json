@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At the point (x=500, y=400), all three overlapping elements (`root>alpha`, `root>beta`, and `root>gamma`) cover this coordinate. Their stacking order is determined by their `z-index` values: `root>alpha` has a `z-index` of 2, `root>gamma` has a `z-index` of 3, and `root>beta` has a `z-index` of 4. Since `root>beta` has the highest `z-index`, it renders in front of the others, making its background visible.\n\nANSWER: root>beta\n",
+  "ms": 7229
+}

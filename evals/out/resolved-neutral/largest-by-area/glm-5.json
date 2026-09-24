@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Areas:\n- `root>wide`: 600 × 60 = 36,000\n- `root>tall`: 120 × 300 = 36,000\n- `root>square`: 220 × 220 = 48,400\n\nThe wide and tall boxes tie at 36,000 px², while the square box is larger at 48,400 px².\n\nANSWER: root>square\n",
+  "ms": 11083
+}

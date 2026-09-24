@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Because `root>floaty` is `position: absolute` with no `top/right/bottom/left`, the renderer uses its “static position” as the reference point for where it would have appeared in normal document flow. In the measured report, the border box for `root>floaty` is given as `x=0 y=50` with `height=20`, so its top edge renders at `y = 50` CSS pixels.\n\nANSWER: 50\n",
+  "ms": 10330
+}

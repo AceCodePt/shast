@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>low>inner",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values:\n- `root>low>inner` has `z-index: 999`\n- `root>high` has `z-index: 2`\n\nIn CSS stacking contexts, elements with higher z-index values appear on top of elements with lower z-index values. Since 999 is significantly higher than 2, `root>low>inner` will be rendered above `root>high` in the overlapping region.\n\nBoth elements are positioned absolutely and are siblings within the same stacking context (the root div), so the z-index comparison directly determines their stacking order.\n\nANSWER: root>low>inner\n",
+  "ms": 6291
+}

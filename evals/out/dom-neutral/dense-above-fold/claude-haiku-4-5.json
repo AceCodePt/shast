@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding client rect data for `root>main>r17`:\n\n- **Y position**: `y=484` (vertical position on the page)\n- **Height**: `height=26` \n- **Viewport height**: `1280x800` (the viewport is 800 pixels tall)\n\nThe element `root>main>r17` starts at y=484 and extends to y=510 (484 + 26). Since the viewport is only 800 pixels tall, and this element is positioned at y=484, it falls well within the visible viewport area when the page first loads without any scrolling.\n\nAll the row elements from r01 through r27 appear to be within the initial 800-pixel viewport (r27 ends at y=770, which is still within 800). The elements only start going below the fold at around r28 onwards.\n\nANSWER: YES\n",
+  "ms": 6996
+}

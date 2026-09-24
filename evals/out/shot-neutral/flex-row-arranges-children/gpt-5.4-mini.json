@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In a row flex container, the second item starts after the first item’s 100px width plus the 10px gap, so it renders at x = 110px from the root’s left edge. With no other offset specified, that is the viewport x.\n\nANSWER: 110\n",
+  "ms": 20904
+}

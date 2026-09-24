@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The node tree shows that `root>alpha`, `root>beta`, and `root>gamma` are sibling nodes and the final children of the `root` element. According to standard CSS rendering rules, siblings without an explicit `z-index` are painted in the order they appear in the DOM, meaning the last child is rendered on top. Visual inspection of the screenshot confirms that the three bands are stacked such that the light-grey band (the last one visually) overlays the medium-grey band, which in turn overlays the dark-grey band; the point (500, 400) falls within the central area where all three bands overlap, making the topmost element's color visible.\n\nANSWER: root>gamma\n",
+  "ms": 46322
+}

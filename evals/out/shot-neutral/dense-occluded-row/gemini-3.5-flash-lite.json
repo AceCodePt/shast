@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "In the rendered screenshot, the text for `root>main>r09` (\"09. Currency hedging\") is completely covered and occluded by a solid red horizontal bar positioned between item 08 and item 10. Because the text is hidden behind this opaque element, a viewer cannot read it.\n\nANSWER: NO\n",
+  "ms": 9383
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r21` is rendered with `color: rgb(255, 255, 255)` (white text). The `main` section (`root>main`) has `background-color: rgba(0, 0, 0, 0)` (transparent), while the overall `root` has a white background (`background-color: rgb(255, 255, 255)`), so the white text would appear on a white background. That makes the text effectively not readable for a viewer.\n\nANSWER: NO\n",
+  "ms": 9908
+}

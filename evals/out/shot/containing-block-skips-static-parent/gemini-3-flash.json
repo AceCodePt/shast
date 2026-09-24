@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The node tree indicates that `root>plain` is not positioned (`position: static`). In CSS, an absolutely positioned element's containing block is the nearest ancestor that is positioned (i.e., not `static`). Since `root>plain` is not positioned, the `pin` element (which the test name suggests is absolutely positioned) would skip its parent and be positioned relative to the next positioned ancestor or the initial containing block (the viewport). The screenshot shows the text \"pinned\" located at the extreme top-left corner of the 600x400 viewport, indicating no offsets or margins are applied to the `pin` element's top-left corner relative to the origin.\n\nANSWER: 0,0\n",
+  "ms": 17811
+}

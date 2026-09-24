@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 300px, meaning only content within the vertical range of y=0 to y=300 is visible when the page first loads. The `root>footer` is positioned at y=700, which is far below the bottom edge of the initial viewport. Furthermore, the provided information explicitly labels the element as \"below-fold.\"\n\nANSWER: NO\n",
+  "ms": 8026
+}

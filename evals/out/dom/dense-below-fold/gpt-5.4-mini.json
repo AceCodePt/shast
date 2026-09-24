@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>main>r36` is at `y=978` with height `26`, while the viewport only shows up to `y=800`. Since it starts well below the visible area, it would require scrolling to see it.\n\nANSWER: NO\n",
+  "ms": 7464
+}

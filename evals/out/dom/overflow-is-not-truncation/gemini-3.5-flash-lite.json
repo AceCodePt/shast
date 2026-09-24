@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The computed style for `root>card` specifies `overflow: visible`, which is the default behavior in CSS. When content overflows an element with `overflow: visible`, it is not clipped and is rendered and painted outside the element's bounding box. Therefore, the text remains visible on the page where a person can read it.\n\nANSWER: YES\n",
+  "ms": 6205
+}

@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>gone` has `display: none`, meaning it is completely removed from the document layout and takes up zero space (both its width and height are 0). Furthermore, `root>third` is positioned immediately at `y=40` right below `root>first` (which spans from `y=0` to `y=40`). Therefore, there is no vertical gap where `root>gone` would have been.\n\nANSWER: NO\n",
+  "ms": 8453
+}

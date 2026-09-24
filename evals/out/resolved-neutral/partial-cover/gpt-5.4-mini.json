@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>chip` overlaps part of `root>row`, but the description explicitly says `root>row`’s single text line stays fully visible. So the overlap only covers non-text area of the paragraph, not its text.\n\nANSWER: NO\n",
+  "ms": 8543
+}

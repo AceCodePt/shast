@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the layout data provided:\n\nThe `root>main>r09` element has a `getBoundingClientRect` showing:\n- x=244, y=276\n- width=1012, height=26\n\nThe viewport is 1280x800, so this element is positioned within the visible viewport area.\n\nHowever, there's a critical issue: the `root>banner` element is positioned absolutely at:\n- x=244, y=276\n- width=700, height=26\n- z-index=5\n\nThis banner element occupies the exact same vertical position (y=276) and shares the same x-coordinate as `root>main>r09`. Since the banner has `z-index: 5` and appears to be layered on top, it would cover the text in `root>main>r09` at least partially. The banner spans from x=244 to x=944 (244+700), while r09 spans from x=244 to x=1256 (244+1012), so the banner would obscure the left portion of the text.\n\nAdditionally, the banner's text content is not specified in the node tree, but its positioning directly overlaps with r09's content area.\n\nANSWER: NO\n",
+  "ms": 7649
+}

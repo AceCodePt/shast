@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>high` paints later (higher z-index at the root stacking context level) and has an opaque background, so it covers `root>low>inner`. Although `inner` has z-index 999, that value only matters within `root>low`'s own stacking context, and the entire `root>low` context paints below `root>high`.\n\nANSWER: root>high\n",
+  "ms": 6958
+}

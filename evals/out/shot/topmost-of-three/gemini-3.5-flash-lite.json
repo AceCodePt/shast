@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>front",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "In the Document Object Model (DOM), sibling elements are painted in the order they appear, with later elements rendered on top of earlier ones. Since `root>front` appears last among the three boxes (`back`, `middle`, `front`), it has the highest stacking order and occludes the others at overlapping points.\n\nANSWER: root>front\n",
+  "ms": 8924
+}

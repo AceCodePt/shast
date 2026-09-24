@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "rgb(0, 0, 0)",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The browser's computed style data for `root>label` explicitly lists its `color` property as `rgb(0, 0, 0)`. Since computed style data from Chromium is authoritative for what is rendered on screen, the text color is `rgb(0, 0, 0)`.\n\nANSWER: rgb(0, 0, 0)\n",
+  "ms": 7759
+}

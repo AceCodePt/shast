@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe `root>floaty` element has `position: absolute` but no explicit `top`, `right`, `bottom`, or `left` properties. According to CSS positioning rules, when an absolutely positioned element has no offset properties specified, it renders at its \"static position\" — which is where it would have appeared in the normal document flow if it weren't absolutely positioned.\n\nFrom the layout information, `root>floaty` has `@ x=0 y=50`, which tells us its border box starts at y=50. The y-coordinate in the @ notation represents the absolute position from the top of the page, and for an absolutely positioned element with no offset properties, this position is determined by its static position in the normal flow.\n\nSince the element is positioned after the spacer (which occupies y=0 to y=50), and the floaty element itself has a height of 20px, its top edge renders at y=50.\n\nANSWER: 50\n",
+  "ms": 8180
+}

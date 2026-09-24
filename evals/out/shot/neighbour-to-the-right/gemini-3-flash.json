@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows a two-by-two grid of text elements. In the bottom row, \"left bottom\" is on the left and \"right bottom\" is on the right. According to the node tree, the text \"right bottom\" belongs to the node path `root>rightBottom`.\n\nANSWER: root>rightBottom\n",
+  "ms": 12170
+}

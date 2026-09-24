@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "`root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows the two text nodes occupying the same top-left area, so the non-ghost text is the one colliding with `root>ghost`. Since `root>ghost` renders “Important warning” and the other node renders “Everything is fine” in that same region, the overlapping glyphs come from `root>visible`.\n\nANSWER: `root>visible`\n",
+  "ms": 12463
+}

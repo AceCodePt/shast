@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the browser's layout data:\n\n- `root>ghost` has `getBoundingClientRect: x=0 y=0 width=0 height=0` — it occupies no space\n- `root>visible` has `getBoundingClientRect: x=0 y=0 width=400 height=19.1875` — it starts at the same origin\n\nBoth nodes are positioned at the same coordinates (x=0, y=0). Even though `root>ghost` has zero dimensions in its bounding box, its text would still render starting from that position. Since `root>visible` also starts at (0, 0) and contains text, both texts are drawn at the same pixel location.\n\nANSWER: root>visible\n",
+  "ms": 14591
+}

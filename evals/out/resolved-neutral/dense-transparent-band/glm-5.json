@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The banner that overlaps `r09` has no background, so the text behind it shows through. The rendering info also explicitly states that `r09`'s \"1 text line(s) stay fully visible.\"\n\nANSWER: YES\n",
+  "ms": 9220
+}

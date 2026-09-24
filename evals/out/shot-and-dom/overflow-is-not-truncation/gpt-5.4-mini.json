@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `overflow: visible` means the text is not clipped by the card’s box, so even though the last line falls below the card’s bottom edge, it is still painted and readable on the page. The screenshot shows that line rendered below the border.  \nANSWER: YES\n",
+  "ms": 7211
+}

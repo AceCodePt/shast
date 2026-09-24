@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding client rectangles provided:\n\n- The viewport is 1280x800 (visible area)\n- `root>main>r36` has `getBoundingClientRect: y=978` with height 26px, placing it from y=978 to y=1004\n- Since the visible viewport only extends to y=800, and r36 starts at y=978, it is well below the fold\n\nThe text in `root>main>r36` (\"36. Royalty accruals\") is positioned at y=978, which is 178 pixels below the bottom of the initial viewport (y=800). This means the user would need to scroll down to see this element.\n\nANSWER: NO\n",
+  "ms": 10028
+}

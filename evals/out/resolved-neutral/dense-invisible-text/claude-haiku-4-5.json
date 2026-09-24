@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided for `root>main>r21`:\n\n```\nroot>main>r21  div      \"21. Treasury positions\"\n  @ x=244 y=588 width=1012 height=26\n  = font-size: 15px (inherited), padding-bottom: 6px, color: #ffffff\n```\n\nThe key detail is that this element has `color: #ffffff` (white text). Looking at the parent `root>main` section, it has `background-color: #ffffff` (white background). \n\nWhen white text is rendered on a white background, there is no contrast between the foreground and background colors, making the text invisible to a viewer. The text \"21. Treasury positions\" would be present in the DOM but completely unreadable due to the lack of visual contrast.\n\nANSWER: NO\n",
+  "ms": 8289
+}

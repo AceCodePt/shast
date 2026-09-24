@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The evidence says `root>ghost` has `getBoundingClientRect: x=0 y=0 width=0 height=0`, so the element occupies no on-screen box area. Chromium’s own layout measurements are treated as authoritative for what appears on screen, and the only non-zero rendered region reported is `root>visible` (which contains “Everything is fine”). With `root>ghost` having zero width/height, there’s no place for “Important warning” to be painted.\n\nANSWER: NO\n",
+  "ms": 10636
+}

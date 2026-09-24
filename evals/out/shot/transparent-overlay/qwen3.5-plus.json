@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence:\n\n1. The viewport is 600x400 CSS pixels\n2. The screenshot shows the rendered page with the text \"The quarterly results are in and every region beat its target this time.\" fully visible, wrapping across two lines\n3. The `root>lede` element contains this complete sentence, and the screenshot confirms it's all displayed on screen (not truncated with an ellipsis visually)\n\nThe text wraps to a second line but remains fully readable within the viewport.\n\nANSWER: YES\n",
+  "ms": 17050
+}

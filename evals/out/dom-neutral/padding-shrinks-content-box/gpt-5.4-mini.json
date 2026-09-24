@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>card` element is `124.75px` tall, and it has `24px` top and bottom padding, so the text content area is about `76.75px` high. With a computed `line-height` of `19.2px`, that fits about `4` lines (`76.75 / 19.2 ≈ 4`).  \n\nANSWER: 4\n",
+  "ms": 7101
+}

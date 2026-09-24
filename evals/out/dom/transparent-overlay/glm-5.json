@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` text (72 chars) fits comfortably: its box is 600px wide with 8px padding (584px content width) and ~54px tall (~2 lines at 19.2px line-height), and `overflow: visible` ensures nothing is clipped. The `root>banner` overlaps it (absolute, top:0, height:70, z-index:5), but the banner is empty with a transparent background (`rgba(0,0,0,0)`), so it doesn't obscure the lede's text. Therefore the whole sentence is readable.\n\nANSWER: YES\n",
+  "ms": 28459
+}

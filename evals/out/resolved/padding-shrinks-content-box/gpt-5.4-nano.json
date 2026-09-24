@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report states that within `root>card`, the text broke onto **4 lines** because it wrapped after hitting the available content width (152px). Therefore, the number of wrapped lines is 4.\n\nANSWER: 4\n",
+  "ms": 7637
+}

@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `root>glass` paints over the line, but it has no background, so the text still shows through. `root>panel` is opaque, but it starts at `y=40`, so it does not cover `root>line` at all.\n\nANSWER: YES\n",
+  "ms": 6672
+}

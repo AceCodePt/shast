@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "## Reasoning\n\nThe `root>line` box is 400px wide, but that's just the block container width — the actual text glyphs of \"Hidden by two\" occupy only the leftmost portion of that box (roughly 100–120px at 16px font size).\n\nThe two covering boxes together cover x=0 to x=140:\n- `root>leftHalf`: x=0 to x=70\n- `root>rightHalf`: x=60 to x=140 (overlapping the left half from 60–70)\n\nSince the text glyphs start at x=0 and fit within ~120px, they fall entirely within the combined covered region (0–140px). The report confirms this explicitly: **\"1 of 1 text line(s) completely hidden.\"** Neither box alone spans the whole line, but together their opaque backgrounds cover every pixel where the glyphs are painted, leaving only empty space to the right uncovered.\n\nANSWER: NO\n",
+  "ms": 18595
+}

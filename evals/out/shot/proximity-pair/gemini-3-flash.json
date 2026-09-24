@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, the words \"alpha\" and \"beta\" are positioned close together at the top of the viewport. In contrast, \"gamma\" is located significantly further down, separated from the first two by a much larger vertical gap. This proximity makes \"alpha\" and \"beta\" appear as a group, while \"gamma\" is visually isolated.\n\nANSWER: root>gamma\n",
+  "ms": 15678
+}

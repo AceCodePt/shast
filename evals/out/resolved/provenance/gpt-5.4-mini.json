@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report says `root>body>panel` renders with `border-radius: 12px`, and the attribution line shows that value was “declared by `root`, inside its `> body > panel` block.” So the css block belongs to the `root` node.\n\nANSWER: root\n",
+  "ms": 9177
+}

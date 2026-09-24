@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report shows that `padding: 2px` is declared by **root** inside its `> mid > leaf` block, and this rule outranks the `:hover { padding: 40px }` on the leaf element itself. The cascade is determined by selector specificity and source order — the rule from root's CSS block is winning over the leaf's own hover rule. To make the hover effect work, you must edit the CSS block where the overriding `padding: 2px` rule lives.\n\nANSWER: root\n",
+  "ms": 13106
+}

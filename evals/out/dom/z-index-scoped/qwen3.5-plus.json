@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values and stacking context:\n\n- `root>low` has `z-index: 1` and creates a stacking context (it's positioned absolutely)\n- `root>low>inner` has `z-index: 999`, but it's confined within its parent's stacking context\n- `root>high` has `z-index: 2` at the root level\n\nSince `root>low` (z-index: 1) is below `root>high` (z-index: 2) in the root stacking context, all children of `root>low` — including `root>low>inner` regardless of its high z-index — are painted below `root>high`. The child's z-index only matters within its parent's stacking context, not globally.\n\nANSWER: root>high\n",
+  "ms": 15410
+}

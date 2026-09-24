@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "When the page is first painted and the pointer is elsewhere, the `root>cta` element is in its default (non-hovered) state. According to the initial computed style data provided before the hover state section, its background-color is `rgb(51, 85, 255)`.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 5984
+}

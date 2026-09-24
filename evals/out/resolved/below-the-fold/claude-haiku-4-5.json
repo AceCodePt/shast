@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report:\n\n- The viewport is 500x300 (the visible area when the page first loads)\n- The `root>footer` element is positioned at y=700 with height=60, meaning it occupies the area from y=700 to y=760\n- The report explicitly marks it as \"below-fold\", which means it's below the visible viewport\n- Since the footer starts at y=700 and the viewport only shows from y=0 to y=300, the footer is completely outside the initially visible area\n\nThe footer requires scrolling down to see it, so it is not visible when the page first loads.\n\nANSWER: NO\n",
+  "ms": 8312
+}

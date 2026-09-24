@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly marks `:hover` as a dead state: the root's `> mid > leaf` block declares `padding: 2px`, which outranks the `:hover` rule's `padding: 40px`. Since specificity favors the descendant selector over the pseudo-class, entering `:hover` produces no change.\n\nANSWER: NO\n",
+  "ms": 6764
+}

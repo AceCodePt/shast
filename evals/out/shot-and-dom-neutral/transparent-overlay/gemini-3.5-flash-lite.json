@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The paragraph `root>lede` is rendered fully on the page, with its text wrapping across two visible lines without being obscured by any opaque elements (as the overlapping `root>banner` div is completely transparent). Therefore, a person reading the page can see and read the entire sentence.\n\nANSWER: YES\n",
+  "ms": 9082
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r36` has `getBoundingClientRect: x=244 y=978 width=1012 height=26`, meaning its top edge starts at y=978 pixels from the top of the viewport. The viewport height is 800px, so r36 lies entirely below what’s visible on initial load without scrolling.  \n\nANSWER: NO\n",
+  "ms": 8833
+}

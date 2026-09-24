@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "2px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states that while `:hover` sets padding to 40px, the `padding: 2px` declared by root inside its \"> mid > leaf\" block **outranks** the hover state. The report confirms this by noting \"entering `:hover` does not change padding\" and marks the element as being in \"dead-state\" for hover purposes.\n\nANSWER: 2px\n",
+  "ms": 12248
+}

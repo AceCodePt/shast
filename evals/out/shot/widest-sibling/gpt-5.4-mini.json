@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "2.2",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The rendered layout looks like the left `rail` takes about 280 px of the 900 px viewport, leaving about 620 px for `panel`. So `panel / rail ≈ 620 / 280 ≈ 2.2`.\n\nANSWER: 2.2\n",
+  "ms": 21631
+}

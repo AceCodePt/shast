@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With `display: flex` in a row, the children are laid out left-to-right. The first child (`root>first`) starts at `x=0` and is `100px` wide, so its right edge is at `x=100`. The container has `gap: 10px`, so the second child starts after that gap: `100 + 10 = 110`. Therefore, `root>second`’s left edge renders at `x=110px`.\n\nANSWER: 110\n",
+  "ms": 8478
+}

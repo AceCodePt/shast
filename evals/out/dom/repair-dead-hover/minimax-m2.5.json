@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence:\n\n- The hover rule `leaf:hover { padding: 40px }` is already in `root>mid>leaf`'s CSS block, yet hovering produces no change in the leaf's computed padding (still 2px).\n- All three nodes share the **exact same** bounding rect (0, 0, 500 × 23.1875) and have no z-index/transform, so they are stacked at the same position with `root>mid>leaf` painted on top by document order.\n- The leaf has a base `padding: 2px` rule that the hover rule should override, but it doesn't. This is the classic signature of `pointer-events: none` being set somewhere on the leaf's own block — when that property is on the leaf, the cursor passes straight through it and the parent (`root>mid`) becomes the actual hover target, so `leaf:hover` never matches.\n\nThe fix is to move the hover trigger up to the parent that actually receives the pointer (`root>mid`), and from there use a descendant selector to apply the padding to the leaf. Editing the leaf's own block won't help because its `pointer-events` is what makes it invisible to the cursor in the first place.\n\nANSWER: root>mid\n",
+  "ms": 38244
+}

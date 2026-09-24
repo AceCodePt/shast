@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text inside `root>title` is \"Annual review\", but the element has `text-transform: uppercase` applied via inheritance from `root`. This CSS property converts all letters to uppercase regardless of how they were written in the markup.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 6043
+}

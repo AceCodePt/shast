@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, `root>second` has its border box explicitly listed as `@ x=110 y=0 width=100 height=19.19`. The x-coordinate represents the left edge position in CSS pixels from the top-left of the page.\n\nThis matches the expected flexbox calculation: the first child is 100px wide starting at x=0, plus the 10px gap, so the second child starts at 0 + 100 + 10 = 110px.\n\nANSWER: 110\n",
+  "ms": 12076
+}

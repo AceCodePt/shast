@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, I need to find how many lines the text wraps onto.\n\nThe report explicitly states under the `root>card` div:\n- `! wrapped: text broke onto 4 lines at 152px content width`\n\nThis is a direct statement about the wrapping behavior of the text inside that element.\n\nMy reasoning: The report includes a \"wrapped\" note that specifically tells us the text broke onto 4 lines. The content width is 152px (which comes from the 200px width minus 24px padding on each side = 152px usable content width). The text \"one two three four five six seven eight nine ten\" (10 words) couldn't fit on fewer lines given this constraint, so it wrapped across 4 lines.\n\nANSWER: 4\n",
+  "ms": 9801
+}

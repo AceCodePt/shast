@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the layout information provided, I need to determine if `root>main>r36` (which contains \"36. Royalty accruals\") is visible in the initial viewport without scrolling.\n\nThe key details are:\n- The viewport is 1280x800 (width × height in CSS pixels)\n- `root>main>r36` is positioned at y=978 (measuring from the top of the page)\n- The element has a height of 26 pixels\n- This means the element spans from y=978 to y=1004\n\nSince the viewport only extends from y=0 to y=800, and `root>main>r36` starts at y=978, it is entirely below the fold (below the initial viewport). The layout information even marks it with \"below-fold\" to indicate this.\n\nANSWER: NO\n",
+  "ms": 10285
+}

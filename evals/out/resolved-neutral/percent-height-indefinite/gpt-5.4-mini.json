@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>outer>filler` is 60px tall, while `root>outer>tall` actually renders at 19.19px, even though it declares `height: 100%`. The computed/rendered box is what matters here, and it is shorter than its sibling.\n\nANSWER: NO\n",
+  "ms": 7838
+}

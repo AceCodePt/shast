@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>ghost` has a bounding box of `width=0 height=0`, so its own layout box contributes no visible area. The only other node with a nonzero box occupying the top-left of the viewport is `root>visible` (`x=0 y=0 width=400 height=19.1875`), so any glyphs that `root>ghost` may paint would be occurring at the same starting pixels as `root>visible`’s rendered line. Therefore, the text pixels overlap with `root>visible`’s text.\n\nANSWER: root>visible\n",
+  "ms": 13580
+}

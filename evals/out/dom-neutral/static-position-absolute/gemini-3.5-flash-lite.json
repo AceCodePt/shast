@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "According to the `getBoundingClientRect()` output provided for `root>floaty`, the bounding rectangle's top edge coordinate is explicitly listed as `y=50`.\n\nANSWER: 50\n",
+  "ms": 5777
+}

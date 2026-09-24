@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe `root>ghost` node has dimensions of 0x0 (width=0px, height=0px), meaning it takes up no space on the screen. However, it contains the text \"Important warning\" according to the node tree.\n\nThe `root>visible` node has dimensions of 400x19.1875px and contains the text \"Everything is fine\". Both nodes have identical `getBoundingClientRect()` coordinates (x=0, y=0).\n\nSince `root>ghost` has zero width and height, its text would be rendered at position (0,0) but with dimensions that don't create a visible bounding box. The `root>visible` node also starts at position (0,0) with full width and height. Given that both nodes are positioned at the same origin and the ghost node's text would be rendered there despite having no layout box, the text from `root>ghost` (\"Important warning\") would be drawn on the same pixels as `root>visible`'s text (\"Everything is fine\") - they would overlap at the same location.\n\nANSWER: root>visible\n",
+  "ms": 8276
+}

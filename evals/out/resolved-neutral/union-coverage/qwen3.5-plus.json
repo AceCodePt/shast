@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering information:\n\n1. `root>line` contains the text \"Hidden by two\" and is positioned at x=0, y=0\n2. Two absolutely positioned divs with opaque backgrounds paint over it:\n   - `root>leftHalf`: covers x=0 to x=70 (18% of the line)\n   - `root>rightHalf`: covers x=60 to x=140 (20% of the line)\n3. Together they cover from x=0 to x=140, which is enough to cover the entire text content (the phrase \"Hidden by two\" is approximately 70-100px wide at 16px font)\n4. Crucially, the data explicitly states: **\"1 of 1 text line(s) completely hidden\"**\n\nThe text is fully obscured by the combination of these two opaque divs, even though neither one alone spans the entire line width.\n\nANSWER: NO\n",
+  "ms": 20714
+}

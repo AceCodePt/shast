@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The point x=500, y=400 falls within the boundaries of all three bands: `root>alpha` (which covers y=300 to 420), `root>beta` (y=340 to 460), and `root>gamma` (y=380 to 500). To determine which is visible, we compare their `z-index` values: `alpha` has 2, `beta` has 4, and `gamma` has 3. Since `root>beta` has the highest `z-index`, it is rendered on top of the other two nodes at the intersection point.\n\nANSWER: root>beta\n",
+  "ms": 12720
+}

@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, I can see \"first\" and \"third\" text with no visible gap between them. The element `root>gone` has `display: none`, which completely removes an element from the layout flow—it doesn't occupy any space at all. This is different from `visibility: hidden`, which would preserve the space. The screenshot confirms this behavior: \"third\" appears directly below \"first\" with no 40px gap where the \"gone\" element would have been.\n\nANSWER: NO\n",
+  "ms": 14131
+}

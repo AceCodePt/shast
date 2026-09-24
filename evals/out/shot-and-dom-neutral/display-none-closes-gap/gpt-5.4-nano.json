@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Because `root>gone` has `display: none`, it does not participate in layout, so it cannot contribute any space between its siblings. The rendered geometry shows `root>first` spans from `y=0` to `y=40`, and `root>third` starts exactly at `y=40` (no offset), meaning there is no 40px gap where `root>gone` would have been.\n\nANSWER: NO\n",
+  "ms": 8933
+}

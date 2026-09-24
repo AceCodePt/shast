@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The dark banner (`root>banner`) positioned at the top of the viewport overlaps and completely occludes the lede paragraph (`root>lede`), making its text unreadable in the rendered page.\n\nANSWER: NO\n",
+  "ms": 11905
+}

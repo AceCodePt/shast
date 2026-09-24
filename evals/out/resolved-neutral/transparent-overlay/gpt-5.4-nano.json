@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` paragraph has a computed box width of 600px and height of 54.38px, and Chromium reports that the text “wrapped” onto 2 lines at a content width of 584px. That means the sentence is fully present, just broken across two visible lines. Even though a later absolutely-positioned `root>banner` element overlaps parts of the box (and has no background), the tool notes that this node’s 2 lines “stay fully visible,” so the entire sentence remains readable.\n\nANSWER: YES\n",
+  "ms": 8041
+}

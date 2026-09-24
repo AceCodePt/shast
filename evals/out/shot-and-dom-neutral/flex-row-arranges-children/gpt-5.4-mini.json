@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` starts at `x=0`. The first child is `100px` wide, and the flex `gap` adds `10px` between the two items, so the second child begins after `100 + 10 = 110px`.\n\nANSWER: 110\n",
+  "ms": 6252
+}

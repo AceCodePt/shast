@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` container has a total width of 600px and uses `display: flex`. Both children have a `flex-basis` of `0%`, meaning the entire 600px of space is distributed according to their `flex-grow` factors. Since `root>a` has `flex-grow: 1` and `root>b` has `flex-grow: 2`, the space is divided into 3 units (1 + 2), with `root>b` receiving 2/3 of the total width (600px * 2/3 = 400px). This is confirmed by the browser's `getBoundingClientRect` data, which explicitly states the width of `root>b` is 400.\n\nANSWER: 400\n",
+  "ms": 10382
+}

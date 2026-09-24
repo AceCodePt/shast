@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering data:\n\n1. **`root>glass`** (z-index: 1) has `background-color: rgba(0, 0, 0, 0)` — fully transparent, so it doesn't actually paint anything over the text.\n\n2. **`root>panel`** (z-index: 2) has a solid dark gray background (`rgb(48, 48, 48)`), but it's positioned at `top: 40px` with height 60px, meaning it spans y=40 to y=100. The text in `root>line` only occupies y=0 to y≈19px, so the panel doesn't overlap the text vertically.\n\n3. The screenshot confirms \"Still readable\" is visible at the top.\n\nBoth boxes technically paint in the stacking context above the text, but one is transparent and the other is positioned below the text, leaving it unobstructed.\n\nANSWER: YES\n",
+  "ms": 16562
+}

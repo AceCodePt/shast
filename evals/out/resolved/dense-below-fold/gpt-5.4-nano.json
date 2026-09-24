@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r36` is positioned at `x=244 y=978` with `height=26`. The viewport height is `800`, so anything starting around `y=978` is below the initially visible area. The report explicitly marks it as `below-fold`, confirming it won’t be visible without scrolling.\n\nANSWER: NO\n",
+  "ms": 8520
+}

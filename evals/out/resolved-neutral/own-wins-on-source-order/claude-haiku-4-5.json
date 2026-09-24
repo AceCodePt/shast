@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\n1. **`root > child` block** declares `padding: 4px`\n2. **`root>child` itself (at top of css block)** declares `padding: 32px`\n3. **`root>child` itself (inside `&.big` block)** declares `padding: 64px`\n\nThe note explicitly states that the `&.big` block's `padding: 64px` \"shadows padding: 4px declared by root\" and \"also padding: 32px declared by root>child itself, at the top of its css block.\"\n\nThis indicates that `padding: 64px` from the `&.big` block has the highest specificity and takes precedence. The shadow/override behavior shows that the most specific rule (inside the `&.big` block) wins out over the less specific rules.\n\nAdditionally, the rendered dimensions show `padding: 64px` because the element's height is 147.19px, which is consistent with the 64px padding value being applied (visible in the layout calculations).\n\nANSWER: 64px\n",
+  "ms": 8498
+}

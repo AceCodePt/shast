@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows the text \"one two three four five six seven eight nine ten\" rendered within the card. Counting the lines from the image, the text is split into four rows: \"one two three\", \"four five six\", \"seven eight\", and \"nine ten\".\n\nANSWER: 4\n",
+  "ms": 13463
+}

@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>leftBottom` is positioned at `x=0` with `width=300` and `top=120`, so its row has vertical position 120. On that same row, the other box with `top: 120px` is `root>rightBottom`, which sits at `x=340` (to the right of the left box). Therefore, the node directly to the right of `root>leftBottom` on the same row is `root>rightBottom`.\n\nANSWER: root>rightBottom\n",
+  "ms": 5863
+}

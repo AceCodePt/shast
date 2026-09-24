@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser’s authoritative computed style for `root>child` shows `padding: 64px 64px 64px 64px`, meaning 64px on all four sides. Even though there are “three different blocks” that declare padding in the source, the final value that actually renders is the computed one Chromium reports.\n\nANSWER: 64px\n",
+  "ms": 8112
+}

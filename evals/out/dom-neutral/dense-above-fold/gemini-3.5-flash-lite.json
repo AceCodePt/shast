@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport has a height of 800 pixels (y=0 to y=800). According to its bounding rectangle, `root>main>r17` is located at y=484 with a height of 26 pixels, spanning from y=484 to y=510, which is fully within the visible area without scrolling.\n\nANSWER: YES\n",
+  "ms": 5943
+}

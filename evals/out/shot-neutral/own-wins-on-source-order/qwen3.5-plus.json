@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "50px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, I can see the text \"Child\" positioned within the viewport. The text appears to have consistent spacing from the edges of its container. By visually estimating the distance from the left edge of the viewport to where the text begins, and considering the 500x300 viewport size, the padding appears to be approximately 50 pixels on each side.\n\nANSWER: 50px\n",
+  "ms": 14233
+}

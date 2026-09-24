@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "For `position: fixed` elements, positioning is relative to the viewport, not the parent element. The parent's `position: relative` and 40px padding do not affect the fixed element's position. The `top: 15px` and `left: 25px` values are applied directly from the viewport origin.\n\nThe rendered bounding box confirms this: `@ x=25 y=15`.\n\nANSWER: 25,15\n",
+  "ms": 11008
+}

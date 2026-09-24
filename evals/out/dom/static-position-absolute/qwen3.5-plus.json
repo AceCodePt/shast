@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `getBoundingClientRect()` data for `root>floaty` explicitly shows `y=50`, which represents the y-coordinate of the element's top edge relative to the viewport. This is the browser's authoritative measurement of where the element actually renders on screen, regardless of what CSS properties are declared. The element renders at y=50 because that's where the browser positioned it (likely due to its position in the DOM flow before the absolute positioning was applied, or inherited positioning context).\n\nANSWER: 50\n",
+  "ms": 18868
+}

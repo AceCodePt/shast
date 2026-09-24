@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element defines a grid with two columns of 200px and 300px width, separated by a 20px gap. The first item, `root>left`, occupies the first 200px (from x=0 to x=200). The `root>right` element starts after both the first column and the gap, placing its left edge at $200\\text{px} + 20\\text{px} = 220\\text{px}$, which is also confirmed by its `getBoundingClientRect` data.\n\nANSWER: 220\n",
+  "ms": 13413
+}

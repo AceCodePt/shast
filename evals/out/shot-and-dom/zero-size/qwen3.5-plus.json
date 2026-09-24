@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The `root>ghost` element has `width: 0px` and `height: 0px` with `display: block`. Even though `overflow: visible` and `opacity: 1`, a block-level element with zero dimensions provides no area for its text content to be painted. The text \"Important warning\" exists in the DOM but has no rendering box to occupy.\n\nANSWER: NO\n",
+  "ms": 15980
+}

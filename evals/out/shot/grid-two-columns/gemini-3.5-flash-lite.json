@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first grid column (`root>left`) has a width of 200px, starting from x = 0. The `gap` between columns is 20px, which places the start of the second column (`root>right`) at 200px + 20px = 220px.\n\nANSWER: 220\n",
+  "ms": 7600
+}

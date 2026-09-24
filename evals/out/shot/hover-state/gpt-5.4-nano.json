@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "blue",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "In the “rest” screenshot, the `root>cta` area containing the text **“Continue”** is filled by a solid bright blue background (the pointer is not shown over it). Since the prompt treats the screenshots as authoritative evidence of what is actually rendered, we can read the background directly from that region.\n\nANSWER: blue\n",
+  "ms": 6788
+}

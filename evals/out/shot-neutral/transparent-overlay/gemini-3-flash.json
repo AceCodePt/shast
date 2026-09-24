@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the node tree and the provided screenshot, a person reading the page can indeed read the whole sentence in `root>lede`. The node tree specifies that the text in `root>lede` is \"The quarterly results are in and every region beat its target this time.\" (a total of 72 characters). The screenshot shows this exact sentence rendered clearly in black text on a white background, split across two lines (\"The quarterly results are in and every region beat its\" and \"target this time.\"). Every word and the concluding period are fully visible and legible. Although a `root>banner` div exists in the node tree, the screenshot confirms that it is not obscuring any part of the text in `root>lede`.\n\nANSWER: YES\n",
+  "ms": 87009
+}

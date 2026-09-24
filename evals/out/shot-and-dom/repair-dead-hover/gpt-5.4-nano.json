@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The computed `padding` on `root>mid>leaf` is `2px` both at rest and during hover. Since the `:hover { padding: 40px }` rule supposedly already exists in the leaf’s own css block but the computed padding does not change, the `2px` padding is almost certainly being set/overridden by styling coming from an ancestor’s css block. The only candidate, based on the node tree and which elements have non-zero padding, is `root>mid`.\n\nANSWER: root>mid\n",
+  "ms": 20435
+}

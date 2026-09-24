@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot and the node tree information:\n\n- `root>row` is a `<p>` element containing the text \"Short label\"\n- `root>chip` is a `<div>` containing the text \"chip\" with a yellow background\n\nIn the rendered image at 600x400, the \"Short label\" text appears in the top-left corner and is fully visible. The yellow \"chip\" element is positioned on the right side of the viewport and does not overlap with the \"Short label\" text at all.\n\nSince the text \"Short label\" from `root>row` is completely visible with no part obscured by the `root>chip` element, none of its own text is hidden.\n\nANSWER: NO\n",
+  "ms": 12984
+}

@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "**Reasoning:** Looking at the y-coordinates from `getBoundingClientRect()`:\n- `alpha` occupies y=20 to y=60\n- `beta` occupies y=64 to y=104\n- `gamma` occupies y=200 to y=240\n\n`alpha` and `beta` are stacked close together (only a 4px gap between them), while `gamma` is roughly 96px below `beta`. This makes `gamma` the visually separated sibling.\n\nANSWER: root>gamma\n",
+  "ms": 10828
+}

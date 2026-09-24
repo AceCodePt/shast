@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "19",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The browser’s `getComputedStyle()` output is authoritative for what `root>child` actually renders. For `root>child`, the computed `padding` is explicitly shown as `padding: 64px 64px 64px 64px` (top/right/bottom/left). Even though multiple declarations exist, the final computed value is what takes effect.\n\nANSWER: 19\n",
+  "ms": 9984
+}

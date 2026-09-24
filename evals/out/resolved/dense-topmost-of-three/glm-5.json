@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "All three bands (alpha, beta, gamma) contain the point (500, 400): alpha spans [300,700]×[300,420], beta [340,740]×[340,460], gamma [380,780]×[380,500]. Among overlapping opaque backgrounds, the highest z-index wins. beta has z-index 4, above gamma's 3 and alpha's 2, and the report shows beta is not covered by anything while it covers parts of both alpha and gamma. So beta's background is what the viewer sees.\n\nANSWER: root>beta\n",
+  "ms": 11357
+}

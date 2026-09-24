@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "`root>body>panel` is the only node listed with a computed `border-radius` value of `12px`, and its computed styles are shown directly for that node. The evidence provided is authoritative for what’s actually on screen, so the `border-radius` that `root>body>panel` renders must come from the CSS affecting that same node. No other node in the data has a non-zero `border-radius` declaration/value relevant to the panel.\n\nANSWER: root>body>panel\n",
+  "ms": 8481
+}

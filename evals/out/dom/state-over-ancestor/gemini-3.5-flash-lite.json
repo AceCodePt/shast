@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "2px 2px 2px 2px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "According to the browser's computed style data provided for the hover state, the padding property for `root>mid>leaf` is explicitly listed as `2px 2px 2px 2px`. This value remains unchanged from its normal state.\n\nANSWER: 2px 2px 2px 2px\n",
+  "ms": 9277
+}

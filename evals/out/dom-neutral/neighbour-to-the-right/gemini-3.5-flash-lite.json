@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the browser's bounding client rectangle data, `root>leftBottom` is positioned at y=120 and x=0. On the same row (y=120), `root>rightBottom` is positioned further to the right at x=340.\n\nANSWER: root>rightBottom\n",
+  "ms": 7709
+}

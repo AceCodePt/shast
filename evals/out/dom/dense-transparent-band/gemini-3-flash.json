@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text \"09. Currency hedging\" is located within the node `root>main>r09` at coordinates `x=244, y=276`. This position is well within the `1280x800` viewport. The text color is black (`rgb(0, 0, 0)`) and the background of the root container is white (`rgb(255, 255, 255)`), providing clear contrast.\n\nWhile there is an overlapping element, `root>banner`, positioned at the exact same coordinates (`x=244, y=276`) with a higher `z-index` of 5, the browser data shows its `background-color` is `rgba(0, 0, 0, 0)`, which is fully transparent. Furthermore, the node tree indicates that the banner contains no text content and it has no borders or padding that would obscure the row. Therefore, the banner is invisible and does not prevent a viewer from reading the text underneath it.\n\nANSWER: YES\n",
+  "ms": 52124
+}

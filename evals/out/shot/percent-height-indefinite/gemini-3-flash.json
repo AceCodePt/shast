@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The provided node tree and screenshot indicate that `root>outer>tall` is not taller than its sibling `root>outer>filler`. In CSS, a percentage height (like `height: 100%`) only resolves if the containing block has an explicit, definite height; otherwise, it resolves to `auto`. Since the parent `root>outer` has an indefinite height based on its content, the `100%` height on `tall` behaves as `auto`, making both divs approximately the same height (the height of a single line of text).\n\nANSWER: NO\n",
+  "ms": 14653
+}

@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The viewport is only `500x300`, and the screenshot shows only the `masthead` near the top with empty space below it. Since `root>footer` is not visible in the initial render area, it is below the fold and would require scrolling to see.\n\nANSWER: NO\n",
+  "ms": 7455
+}

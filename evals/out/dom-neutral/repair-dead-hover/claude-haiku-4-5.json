@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>mid>leaf",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence provided:\n\n1. The `:hover { padding: 40px }` rule is already in `root>mid>leaf`'s own CSS block (as stated in the problem).\n\n2. Comparing the two states (non-hover vs hover), the `root>mid>leaf` element shows **no change** in padding — it remains `2px 2px 2px 2px` in both cases.\n\n3. All three nodes (`root`, `root>mid`, and `root>mid>leaf`) have identical computed styles in both states — nothing changed on hover.\n\nThe issue is that `root>mid>leaf` has `padding: 2px` set directly on it (visible in the non-hover state), which is taking precedence over the `:hover` rule. In CSS, when a property is set on an element itself, it applies at all times including hover state. The `:hover` pseudo-class rule in `root>mid>leaf`'s block is being overridden by the direct padding declaration.\n\nTo make the hover effect work, you need to remove or override the direct `padding: 2px` declaration. Since the direct padding is on `root>mid>leaf` itself, that's the CSS block you must edit — you need to either remove the base `padding: 2px` or change the `:hover` rule to use `!important`, or restructure the CSS so the hover state can take effect.\n\nANSWER: root>mid>leaf\n",
+  "ms": 9605
+}

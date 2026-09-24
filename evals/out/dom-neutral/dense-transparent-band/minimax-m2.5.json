@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The `root>banner` element is positioned at exactly x=244, y=276, width=700, height=26 — directly overlapping `root>main>r09` which sits at x=244, y=276, width=1012, height=26. The banner has `z-index: 5` while r09 has `z-index: auto`, so the banner renders on top of r09's content area, obscuring it.\n\nANSWER: NO\n",
+  "ms": 14571
+}

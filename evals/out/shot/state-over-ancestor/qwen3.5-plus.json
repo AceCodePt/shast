@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "0px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at both screenshots (rest and hover states), the \"Leaf\" text appears positioned at the exact top-left corner of the viewport with no visible spacing around it. Both images are identical, showing no change in layout or spacing when hovering. The text renders flush against the edges with no apparent padding.\n\nANSWER: 0px\n",
+  "ms": 10870
+}

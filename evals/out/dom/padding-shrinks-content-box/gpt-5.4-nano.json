@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>card` has `padding: 24px` top and bottom, so the vertical space available for the text lines is `124.75 - 48 = 76.75px`. With `line-height: 19.2px`, that allows `76.75 / 19.2 ≈ 4.0` lines worth of height, meaning the text wraps onto 4 lines inside `root>card`.\n\nANSWER: 4\n",
+  "ms": 9404
+}

@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The URL is a single long unbroken string, and in the screenshot it visibly extends far past the left edge of the 120px box instead of wrapping or clipping. That means it does not stay inside `root>cell`’s box.\n\nANSWER: NO\n",
+  "ms": 6675
+}

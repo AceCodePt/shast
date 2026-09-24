@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At `x=500, y=400`, the point lies within the bounding rectangles of all three absolutely-positioned bands: `root>alpha` (x 300–700, y 300–420), `root>beta` (x 340–740, y 340–460), and `root>gamma` (x 380–780, y 380–500). Since they overlap at that point, the visible background is from the element with the highest `z-index`. `root>beta` has `z-index: 4` (higher than `root>gamma` at 3 and `root>alpha` at 2), so its background color is what a viewer actually sees.\n\nANSWER: root>beta\n",
+  "ms": 9004
+}

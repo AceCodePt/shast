@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `first`, `second`, and `fourth` rows all start at `x=24`, so they share the same left edge. The `third` row starts at `x=40`, which makes it the one that is shifted to the right and out of alignment.\n\nANSWER: root>third\n",
+  "ms": 8147
+}

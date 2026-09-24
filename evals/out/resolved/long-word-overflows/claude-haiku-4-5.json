@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, the `root>cell` div has a width of 120px and contains a URL with a content width of 518.41px.\n\nThe report explicitly states \"overflows: content is 518.41x19.19px inside a 120x19.19px content box, so it is painted outside the box rather than cut off (overflow is visible)\". This means the URL content extends beyond the 120px-wide box and is painted outside of it.\n\nTherefore, the URL does not stay inside the box—it overflows and extends beyond the boundaries.\n\nANSWER: NO\n",
+  "ms": 6778
+}

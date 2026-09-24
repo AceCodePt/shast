@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report shows `root>title` is a div element with the content noted as `\"ANNUAL REVIEW\"` and clarifies it was `(written \"Annual review\")`. The parent `root` div has `text-transform: uppercase` applied. Since `text-transform: uppercase` is a presentational CSS property that transforms text visually without changing the underlying DOM content, the viewer sees the transformed uppercase version.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 12273
+}

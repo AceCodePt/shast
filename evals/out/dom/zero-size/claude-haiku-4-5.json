@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Based on the browser data provided, I can analyze whether the text \"Important warning\" is painted on the page.\n\nThe `root>ghost` div has:\n- `width: 0px` and `height: 0px` (zero dimensions)\n- `getBoundingClientRect: x=0 y=0 width=0 height=0` (occupies no space)\n- `display: block` (normal block display, not hidden)\n- `opacity: 1` (fully opaque)\n\nEven though the element has `display: block` and is technically in the DOM with full opacity, it has zero width and zero height. This means the element's bounding box has no dimensions, so there is no space allocated for it to render any content. When an element has zero dimensions, its text content cannot be painted on the page because there is nowhere for the rendering engine to place it.\n\nANSWER: NO\n",
+  "ms": 8265
+}

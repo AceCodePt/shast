@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The information states that while `root>banner` paints over 100% of the `root>lede` box due to its absolute positioning and higher z-index, it has no background, allowing the content behind it to show through. Furthermore, the notes for `root>lede` explicitly confirm that the node's two lines of text stay fully visible.\n\nANSWER: YES\n",
+  "ms": 10362
+}

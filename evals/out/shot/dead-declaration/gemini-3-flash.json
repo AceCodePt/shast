@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows the text \"Panel\" positioned in the extreme top-left corner of the viewport with minimal spacing from the edges. If a `padding: 32px` declaration were active on the `panel` element, there would be a significant 32-pixel gap between the element's boundaries and its content (the text). Since the text appears nearly flush with the top and left, the padding is clearly not being applied.\n\nANSWER: NO\n",
+  "ms": 12271
+}

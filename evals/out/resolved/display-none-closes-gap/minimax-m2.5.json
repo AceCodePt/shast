@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>first` ends at y=40 (y=0 + height=40), and `root>third` begins at y=40. Since `root>gone` has `display: none`, it is removed from the flow and contributes no space, so the two siblings are flush with no gap between them.\n\nANSWER: NO\n",
+  "ms": 5819
+}

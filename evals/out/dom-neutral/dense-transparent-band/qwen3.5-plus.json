@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data for `root>main>r09`:\n\n1. **Text content**: \"09. Currency hedging\"\n2. **Visibility properties**: `opacity: 1`, `display: block` — element is fully visible\n3. **Text color**: `color: rgb(0, 0, 0)` (black)\n4. **Background**: The page root has `background-color: rgb(255, 255, 255)` (white), providing good contrast\n\nThere is a `root>banner` element at the same position (x=244, y=276, height=26), but it has `background-color: rgba(0, 0, 0, 0)` (fully transparent) and contains no text, so it does not obscure the content beneath it.\n\nThe text is black on a white background with full opacity and no obscuring elements.\n\nANSWER: YES\n",
+  "ms": 22155
+}

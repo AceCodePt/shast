@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The evidence shows the `section`’s computed padding is `4px` on all sides, not `32px`, so the `padding: 32px` declaration is not what’s actually being used. The rendered size also matches the smaller padding value, with no sign of the larger inset that `32px` would create.\n\nANSWER: NO\n",
+  "ms": 7408
+}

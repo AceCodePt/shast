@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "`root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at this problem, I need to understand why the `:hover { padding: 40px }` rule on `root>mid>leaf` itself isn't working.\n\nThe two screenshots show no visual difference between the rest state and the hover state, even though the CSS rule is already present in `root>mid>leaf`'s own block. This means the hover effect isn't being applied.\n\nThe most likely reason is that `root>mid>leaf` cannot be hovered directly because it's being obscured or blocked by another element. Since `root>mid` is the parent of `root>mid>leaf`, if `root>mid` has a hover state that's interfering—or more likely, if `root>mid` or `root` has CSS that's preventing the child from receiving pointer events—the hover wouldn't work.\n\nThe key insight: if `root>mid` has `pointer-events: none` or similar blocking, the hover event can't reach `root>mid>leaf`. To fix this, I need to ensure the parent chain allows pointer events through. The most direct fix would be to edit `root>mid`'s CSS block to either remove pointer-event blocking or to add an explicit `:hover` rule that doesn't interfere with the child's hover behavior.\n\nHowever, another possibility is that `root` itself is blocking pointer events. But `root>mid` is the direct parent and the most likely culprit.\n\nANSWER: `root>mid`\n",
+  "ms": 7536
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered page data provided, I need to check the text visibility in `root>main>r21`.\n\nThe element `root>main>r21` contains the text \"21. Treasury positions\" and has the following relevant style properties:\n- `color: rgb(255, 255, 255)` (white text)\n- `background-color: rgba(0, 0, 0, 0)` (transparent background)\n\nThe parent element `root>main` (section) has:\n- `background-color: rgba(0, 0, 0, 0)` (transparent)\n\nAnd the root element has:\n- `background-color: rgb(255, 255, 255)` (white background)\n\nSince `root>main>r21` has white text (`rgb(255, 255, 255)`) on what effectively becomes a white background (the root's white background shows through the transparent parent), the white text would be invisible against the white background. This is a contrast issue that makes the text unreadable.\n\nAll other rows in the main section have `color: rgb(0, 0, 0)` (black text), which would be readable on the white background. Row 21 is the anomaly with white text.\n\nANSWER: NO\n",
+  "ms": 9502
+}

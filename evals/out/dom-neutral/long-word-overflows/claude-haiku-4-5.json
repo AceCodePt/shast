@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe `root>cell` div has a width of 120px and contains the text \"https://example.com/a/very/long/path/that/never/breaks\", which is approximately 66 characters long.\n\nAt a font-size of 16px with the default font, a URL of this length would typically require significantly more than 120 pixels of horizontal space to display without wrapping. The URL contains no spaces or natural break points (hyphens at word boundaries), so it cannot wrap and would overflow the container.\n\nThe computed styles show `overflow: visible` (not `hidden` or `auto`), meaning any content that exceeds the 120px width would render outside the box rather than being clipped or scrollable.\n\nANSWER: NO\n",
+  "ms": 8823
+}

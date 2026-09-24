@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The absolute positioned elements `root>leftHalf` (spanning x=0 to 70) and `root>rightHalf` (spanning x=60 to 140) are rendered on top of the static text element `root>line` in the stacking order. Together, they completely cover the region where the text \"Hidden by two\" is located (x=0 to 140, y=0 to 20) with opaque backgrounds, entirely obscuring the text from view. \n\nANSWER: NO\n",
+  "ms": 10813
+}

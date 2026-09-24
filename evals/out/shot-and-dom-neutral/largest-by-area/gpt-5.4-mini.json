@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `wide` box is `600 × 60 = 36,000` square pixels.  \nThe `tall` box is `120 × 300 = 36,000` square pixels.  \nThe `square` box is `220 × 220 = 48,400` square pixels, which is the largest.\n\nANSWER: root>square\n",
+  "ms": 9438
+}

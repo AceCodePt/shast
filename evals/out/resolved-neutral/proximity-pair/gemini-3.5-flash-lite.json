@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>alpha` and `root>beta` are positioned close together near the top of the container (y=20 to y=60 and y=64 to y=104, respectively), forming a single group. In contrast, `root>gamma` is located much further down at y=200 to y=240, separated by a large vertical gap.\n\nANSWER: root>gamma\n",
+  "ms": 7676
+}

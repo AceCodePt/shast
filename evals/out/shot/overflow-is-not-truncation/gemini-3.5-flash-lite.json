@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided screenshot and node tree, the text extending past the bottom edge of the `root>card` box (\"on file expired last month.\") is rendered directly onto the page canvas below the element's border. Because there is no clipping or overflow hidden rule applied, the text remains fully visible and readable by anyone viewing the page.\n\nANSWER: YES\n",
+  "ms": 8961
+}

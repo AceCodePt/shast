@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>line` element contains the text `\"Hidden by two\"` and is 400px wide, but the two covering elements (`root>leftHalf` and `root>rightHalf`) are absolutely positioned at the same top/height region as the line and together cover the left portion where the text would be rendered. Since neither box alone spans the entire width, some of the line background may remain visible elsewhere, but the screenshot/computed layout indicates the text itself falls within the combined covered area (the boxes’ union spans roughly x=0..140). Therefore the words in `root>line` are not readable to the viewer.\n\nANSWER: NO\n",
+  "ms": 11153
+}

@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>row`’s text `\"Short label\"` is rendered at the top-left of the paragraph, while `root>chip` sits at `x=400, y=60` with a 160x40 box. Their boxes overlap in the row’s area, but the chip does not cover any of the visible text itself.\n\nANSWER: NO\n",
+  "ms": 7758
+}

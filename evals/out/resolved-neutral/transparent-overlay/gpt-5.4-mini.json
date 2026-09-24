@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The `root>lede` text wraps onto 2 lines, and the overlay banner does not hide its text because it has no background; the info says the node’s 2 text lines stay fully visible. So a reader can see the whole sentence.\n\nANSWER: YES\n",
+  "ms": 7565
+}

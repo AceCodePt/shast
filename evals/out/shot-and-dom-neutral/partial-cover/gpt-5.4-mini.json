@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>row`’s text is rendered at the top-left of the paragraph, while `root>chip` sits at `x=400, y=60` and only overlaps the lower-right area of the row box. Since the row’s actual text occupies the first line near the top, the chip does not cover any of that text.\n\nANSWER: NO\n",
+  "ms": 9733
+}

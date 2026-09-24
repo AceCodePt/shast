@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The `root>main>r09` text is visible in the screenshot as part of the numbered list in the main content area, and it appears large enough and sufficiently contrasted against the white background to be legible. There is no overlap or clipping obscuring that row.\n\nANSWER: YES\n",
+  "ms": 7393
+}

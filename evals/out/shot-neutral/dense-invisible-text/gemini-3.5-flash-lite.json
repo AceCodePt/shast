@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "In the provided screenshot, the rendered page jumps directly from item 20 (\"20. Covenant testing\") to item 22 (\"22. Audit findings\"), omitting item 21 (\"21. Treasury positions\"). Although item 21 exists in the underlying node tree, it is hidden in the visual rendering due to CSS or display properties. Therefore, a viewer cannot see or read its text.\n\nANSWER: NO\n",
+  "ms": 7820
+}

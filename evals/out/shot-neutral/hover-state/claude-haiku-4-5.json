@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "blue",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the first screenshot (rest.png), which shows the page at rest with the pointer elsewhere, I can see the \"Continue\" button has a blue background.\n\nThe button occupies the top portion of the 400x300 viewport and displays the text \"Continue\" in black text against this solid blue background color. The blue appears to be a standard bright/royal blue color.\n\nANSWER: blue\n",
+  "ms": 7295
+}

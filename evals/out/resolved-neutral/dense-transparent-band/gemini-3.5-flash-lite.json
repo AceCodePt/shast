@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Although `root>main>r09` is overlapped by an absolute-positioned banner, the banner lacks a background color, allowing underlying elements to show through. Additionally, the rendering information explicitly states that the node's text line stays fully visible.\n\nANSWER: YES\n",
+  "ms": 7270
+}

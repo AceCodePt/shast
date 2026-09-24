@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the node tree, `root>main>r21` contains the text \"21. Treasury positions\". However, in the provided screenshot, the list displays items \"01\" through \"20\", followed by a blank gap, and then resumes with \"22. Audit findings\". Since item 21 is missing from the visual rendering between 20 and 22, it is not readable by a viewer.\n\nANSWER: NO\n",
+  "ms": 9697
+}

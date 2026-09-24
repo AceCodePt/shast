@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The authoritative Chromium node tree shows `root>second` is a `<p>` containing the text `\"Second paragraph here\"`, meaning that exact string exists in the rendered DOM. The attached screenshot at `500x300` also visibly includes that text on the page, with no indication that CSS obscures it. Therefore a viewer can read the text in `root>second`.\n\nANSWER: YES\n",
+  "ms": 8793
+}

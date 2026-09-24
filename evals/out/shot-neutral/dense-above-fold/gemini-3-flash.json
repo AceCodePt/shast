@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The node `root>main>r17` corresponds to the text \"17. Inventory valuation\". By examining the provided screenshot of the 1280x800 viewport, the list of items in the main section is visible from \"01. Ledger reconciliation\" down to \"28. Warranty reserves\". Since row 17 falls well within this range, it is visible without any scrolling.\n\nANSWER: YES\n",
+  "ms": 9777
+}

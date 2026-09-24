@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>ghost` sits at x=0, y=0 with a 0×0 box, so any glyphs from \"Important warning\" would render at the same y-line (line-height 19.2px) as the sibling. `root>visible` occupies the same origin (x=0, y=0) with height 19.1875px, meaning its \"Everything is fine\" text is drawn in the identical pixel band as ghost's would be. The root itself contains no text, so only the visible sibling overlaps ghost's text region.\n\nANSWER: root>visible\n",
+  "ms": 7229
+}

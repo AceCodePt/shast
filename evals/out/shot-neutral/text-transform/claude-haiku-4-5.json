@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe node tree shows:\n```\nroot>title  div  \"Annual review\"\n```\n\nThis indicates that the `root>title` element is a `div` with the text content \"Annual review\" as written in the source.\n\nThe screenshot confirms this - it shows the text \"ANNUAL REVIEW\" displayed at the top of the page. However, the node tree explicitly states the text \"as written in the source\" is \"Annual review\" (with that specific capitalization).\n\nThe discrepancy between the source text \"Annual review\" and what appears on screen as \"ANNUAL REVIEW\" is due to CSS styling (likely `text-transform: uppercase` or similar), but the question asks for what characters a viewer sees, which would be the rendered uppercase version visible in the screenshot.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7346
+}

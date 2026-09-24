@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The provided information explicitly states that the content overflows the content box and is \"painted outside the box rather than cut off (overflow is visible).\" Because overflow is visible, the text extending past the bottom edge of the card remains rendered on the page and can be read.\n\nANSWER: YES\n",
+  "ms": 9033
+}

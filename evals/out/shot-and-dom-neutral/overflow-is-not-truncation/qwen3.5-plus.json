@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering data:\n\n1. **root>card** has `height: 48px` and `overflow: visible`\n2. The text content spans 4 lines based on the screenshot (\"Payment failed\" / \"because the card\" / \"on file expired\" / \"last month.\")\n3. With `line-height: 19.2px` and `padding: 8px` top/bottom, the available content height is only 32px, which fits roughly 1.6 lines\n4. Critically, `overflow: visible` means content is **not clipped** — it paints outside the element's box\n\nThe screenshot confirms all 4 lines are visible on screen, including \"last month.\" which extends below the card's 48px boundary. Since `overflow: visible` allows painting outside the element's bounds, the last line is fully readable.\n\nANSWER: YES\n",
+  "ms": 18632
+}

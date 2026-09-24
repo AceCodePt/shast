@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "`root>mid>leaf`’s own hover rule is not taking effect because the visible hoverable box is not coming from that node. The padding needs to be applied from the ancestor that actually owns the rendered box for that text, which is `root>mid`.\n\nANSWER: root>mid\n",
+  "ms": 26410
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the report, I need to check the properties of `root>main>r21`, which is the div containing \"21. Treasury positions\".\n\nThe key details are:\n- Position: x=244 y=588 width=1012 height=26\n- Viewport height: 800px\n- The element is at y=588, which is well within the visible viewport (0-800px)\n- The element has `color: #ffffff` (white text)\n- The parent `root>main` has `padding-left: 244px` and no background-color specified, inheriting white from the root\n- There's no indication of opacity issues, visibility hidden, or display none\n\nThe text \"21. Treasury positions\" is positioned above the fold (y=588 is less than viewport height 800), making it visible. The white text color should be readable against the white background of the page, though there may be a contrast issue. However, the question asks if a viewer can \"read\" the text, which technically means it's visible and present on screen.\n\nGiven that the element is within the viewport bounds and not hidden, the text is readable in the sense that it exists and is displayed, even if the contrast might make it difficult to see.\n\nANSWER: YES\n",
+  "ms": 9168
+}

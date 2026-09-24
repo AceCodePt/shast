@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report:\n\n- `root` has a total width of 600 CSS px\n- `root>a` has `flex: 1` and occupies 200 px\n- `root>b` has `flex: 2` and occupies 400 px\n\nSince `root` is a flex container with its children having flex values of 1 and 2, the available space is divided in a 1:2 ratio. With a total width of 600 px and a ratio of 1:2, the space is split into 3 parts (1+2=3). Each part equals 600÷3 = 200 px. Therefore, `root>b` with `flex: 2` gets 2 parts, which is 2 × 200 = 400 px.\n\nThis matches the measured width shown in the report for `root>b`.\n\nANSWER: 400\n",
+  "ms": 7596
+}

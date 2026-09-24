@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report shows `root>cell` has a measured box of `width=120px` and is marked `overflows`, meaning the content’s measured size is `518.41x19.19px`, which is far wider than the 120px container. It also explicitly states that overflow is visible and that the URL is painted outside the box rather than cut off. Therefore, the URL does not stay inside the 120px-wide box.\n\nANSWER: NO\n",
+  "ms": 8299
+}

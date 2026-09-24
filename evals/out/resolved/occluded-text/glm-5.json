@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>banner` is an absolutely-positioned element with `z-index: 5` and an opaque `#222222` background that paints later than `root>lede`, covering 100% of its box. The report explicitly notes both text lines in `root>lede` are \"completely hidden,\" so none of the sentence is visible.\n\nANSWER: NO\n",
+  "ms": 13303
+}

@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report shows that `root>body>panel` renders with `border-radius: 12px`. It also explicitly notes: “border-radius: 12px declared by root, inside its `> body > panel` block (adds)”. That means the `border-radius` declaration comes from the `root` node’s CSS block (not from `root>body` or the `panel` node itself).\n\nANSWER: root\n",
+  "ms": 9149
+}

@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows the text \"Second paragraph here\" clearly legible against a white background. While the top of the viewport is obscured by a black rectangle (likely the `root>cover` element), this occlusion only affects the area where `root>first` would be located, leaving `root>second` fully visible and readable.\n\nANSWER: YES\n",
+  "ms": 12627
+}

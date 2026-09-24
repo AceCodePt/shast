@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "From the browser evidence, `root>body>panel` is the `<section>` node that corresponds to the element whose computed styles include `padding: 4px 4px 4px 4px`. The prompt explicitly says that `padding: 32px` has already been added to `root>body>panel`’s own CSS block and that the rendered result did not change, which identifies that this padding is controlled by that same node’s CSS block. Therefore, to make `root>body>panel` render with 32px padding, you must edit the CSS block for `root>body>panel`.\n\nANSWER: root>body>panel\n",
+  "ms": 7848
+}

@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>rail` has width 240px, while `root>panel` has width 600px. The ratio of how many times wider the panel is than the rail is \\(600 / 240 = 2.5\\). Rounded to one decimal place, that’s still 2.5.\n\nANSWER: 2.5\n",
+  "ms": 9710
+}

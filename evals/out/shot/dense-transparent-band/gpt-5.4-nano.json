@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The rendered node tree explicitly shows `root>main>r09  div  \"09. Currency hedging\"`, meaning that text node exists in the main content area. Since the evidence is taken from Chromium’s actual on-screen rendering, a viewer can read that label on the page.  \nANSWER: YES\n",
+  "ms": 7677
+}

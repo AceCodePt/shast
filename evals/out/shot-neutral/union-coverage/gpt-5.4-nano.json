@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The node tree indicates that `root>line` contains the text `\"Hidden by two\"`, and the screenshot is treated as the authoritative rendering evidence. Since the question notes that neither covering box alone spans the whole line, the intended setup is that the two coverings work together to conceal the full line content. Therefore, a viewer would not be able to read the words in `root>line`.  \n\nANSWER: NO\n",
+  "ms": 11881
+}

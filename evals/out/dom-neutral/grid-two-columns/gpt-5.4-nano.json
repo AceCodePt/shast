@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With a grid starting at `x = 0`, the first column occupies `200px` and the grid `gap` of `20px` is inserted before the second column. So the left edge of the second grid item (`root>right`) is at `0 + 200 + 20 = 220` CSS pixels.  \n\nANSWER: 220\n",
+  "ms": 7321
+}

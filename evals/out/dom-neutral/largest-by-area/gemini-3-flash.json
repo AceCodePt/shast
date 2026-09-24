@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "To find the box with the largest area, we calculate the area (width × height) for each of the three nodes based on their `getBoundingClientRect` data:\n- `root>wide`: 600 width × 60 height = 36,000 units²\n- `root>tall`: 120 width × 300 height = 36,000 units²\n- `root>square`: 220 width × 220 height = 48,400 units²\n\nComparing these results, the `root>square` node covers the largest area.\n\nANSWER: root>square\n",
+  "ms": 9567
+}

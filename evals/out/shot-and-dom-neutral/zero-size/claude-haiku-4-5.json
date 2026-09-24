@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence provided:\n\n1. The `root>ghost` div has `getBoundingClientRect()` dimensions of `width=0 height=0`, meaning it occupies zero space on the page.\n\n2. The node tree shows that \"Important warning\" is the text content of `root>ghost`.\n\n3. The screenshot clearly shows only \"Everything is fine\" and \"warning\" visible on the page - the text \"Important warning\" does not appear anywhere.\n\n4. While the `root>ghost` div has `display: block` and `opacity: 1`, these properties don't matter when an element has zero width and height. The browser cannot paint text that has no layout space allocated to it.\n\nThe zero dimensions mean the element is completely collapsed and no content from it can be rendered on the page, regardless of other CSS properties.\n\nANSWER: NO\n",
+  "ms": 7116
+}

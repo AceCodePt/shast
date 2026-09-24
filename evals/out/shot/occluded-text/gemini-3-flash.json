@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows a large dark banner (likely the `root>banner` div) at the top of the viewport. While the text for `root>body` (\"Details follow in the table below.\") is visible, the text for `root>lede` (\"The quarterly results are in...\") is entirely missing from the rendered area. It is clearly occluded by the banner, meaning a person reading the page cannot see or read the sentence.\n\nANSWER: NO\n",
+  "ms": 17727
+}

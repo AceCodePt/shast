@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The screenshot shows the top content area occluded by the dark bar, and the `root>lede` sentence is not fully visible on screen. Since part of it is cut off, a reader cannot read the whole sentence.\n\nANSWER: NO\n",
+  "ms": 10949
+}

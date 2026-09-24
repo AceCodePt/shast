@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewer’s initial viewport is 500x300, meaning it shows the page area from the top (y = 0) down to y = 300. The `root>footer` element is positioned at y = 700 with height 60, and it’s explicitly labeled “below-fold,” so it lies entirely outside the initial visible region before any scrolling.  \nANSWER: NO\n",
+  "ms": 6550
+}

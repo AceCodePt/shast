@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "All three boxes cover `120,120`, so the deciding factor is stacking order. Since they are positioned and have explicit `z-index` values, the box with the highest `z-index` is painted on top. `root>middle` has `z-index: 3`, higher than `root>front` (`2`) and `root>back` (`1`), so it is the one the viewer sees there.\n\nANSWER: root>middle\n",
+  "ms": 7741
+}

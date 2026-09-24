@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "40",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The `root>floaty` element is absolutely positioned but does not declare any offset properties (`top`, `right`, `bottom`, or `left`). According to CSS specifications, such an element renders at its **static position**, which is the position it would have occupied in the normal flow. Since both `spacer` and `floaty` are `div` elements, they are block-level by default, meaning `floaty` would naturally render immediately below `spacer`.\n\nAnalyzing the provided 600x400 screenshot, there is a visible margin (consistent with the standard 8px default) and a significant vertical gap between the lines. The text \"floaty\" appears at a y-coordinate approximately 1/10th of the way down the 400px height, which is 40px. This corresponds to an 8px top margin plus a 32px line-height for the `spacer` element (8 + 32 = 40). Thus, the top edge of `root>floaty` renders at y=40.\n\nANSWER: 40\n",
+  "ms": 92396
+}

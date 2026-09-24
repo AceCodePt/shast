@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Since `root` is `display: flex` with a 600px-wide viewport, the children’s widths are determined by their flex values. The browser-reported `getBoundingClientRect()` for `root>b` shows `x=200` and `width=400`, meaning its content box spans 400 CSS pixels.  \n\nANSWER: 400\n",
+  "ms": 7995
+}

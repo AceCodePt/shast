@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the DOM structure and computed styles:\n\nThe `root>second` paragraph contains \"Second paragraph here\" and is positioned at `y=19.1875` with a height of `19.1875px`, placing it from approximately y=19.1875 to y=38.375.\n\nHowever, the `root>cover` div is absolutely positioned at `top: 0px` with `height: 19px` and `background-color: rgb(0, 0, 0)` (solid black). This means it covers the area from y=0 to y=19, which overlaps with the `root>first` paragraph but not with `root>second`.\n\nSince `root>second` starts at y=19.1875 (below the cover div's bottom edge at y=19), and there are no other elements obscuring it, the text in `root>second` should be visible and readable to a viewer.\n\nANSWER: YES\n",
+  "ms": 8510
+}

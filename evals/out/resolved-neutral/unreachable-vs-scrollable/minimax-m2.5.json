@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>lower` sits below the fold (y=700), but the page extends to 900px tall, so vertical scrolling can reveal it. `root>sideways` is 900px wide on a 500px-wide viewport, and the note explicitly states pages do not scroll horizontally, so no ordinary scroll can bring it into view.\n\nANSWER: root>sideways\n",
+  "ms": 7161
+}

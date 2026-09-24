@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With `display: flex` and `gap: 10px`, the flex items are laid out from the left edge of the flex container (default `justify-content: flex-start`) and there’s no indication of any padding/margin affecting the x origin. The first child is 100px wide, so after it comes the 10px gap. Therefore, `root>second`’s left edge starts at `0 + 100 + 10 = 110` CSS pixels.\n\nANSWER: 110\n",
+  "ms": 9818
+}

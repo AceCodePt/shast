@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the grid layout:\n\n- `root` is a grid container with `grid-template-columns: 200px 300px` and `gap: 20px`\n- `root>left` is the first column item, which starts at x = 0 and spans 200px\n- The gap is 20px wide\n- `root>right` is the second column item, which starts after the first column and the gap\n\nTherefore, `root>right`'s left edge renders at: 200px (first column) + 20px (gap) = 220px\n\nANSWER: 220\n",
+  "ms": 6963
+}

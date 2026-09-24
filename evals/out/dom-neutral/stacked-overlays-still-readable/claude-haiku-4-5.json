@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Let me analyze the layout information provided.\n\nThe `root>line` div contains the text \"Still readable\" and is positioned at y=0 with height=19.1875px, so it occupies the vertical range from 0 to ~19.\n\nTwo boxes paint over it:\n1. `root>glass` - positioned absolutely at y=0, height=100px, z-index=1 (covers y range 0-100)\n2. `root>panel` - positioned absolutely at y=40, height=60px, z-index=2 (covers y range 40-100)\n\nThe `root>line` text is in the range y=0 to y≈19. The `root>glass` box (z-index=1) covers this entire range. Even though `root>panel` (z-index=2) has a higher z-index, it only starts at y=40, which is below the text.\n\nThe critical issue is `root>glass`: it has a z-index of 1, which is higher than the default z-index of `root>line` (auto/0), and it completely covers the vertical space where the text appears (0-19px). However, `root>glass` has `background-color: rgba(0, 0, 0, 0)`, meaning it's fully transparent.\n\nSince `root>glass` is transparent, the text underneath remains visible even though it's layered on top. The `root>panel` with its dark background (rgb(48, 48, 48)) doesn't overlap the text area (which ends at y≈19, while panel starts at y=40).\n\nANSWER: YES\n",
+  "ms": 9851
+}

@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "blue",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the two screenshots provided:\n\n1. **Rest state (first image)**: Shows a \"Continue\" button with a blue background\n2. **Hover state (second image)**: Shows the same \"Continue\" button, also with a blue background\n\nThe question asks for the background colour of `root>cta` when the page is first painted and the pointer is elsewhere - this is the rest state.\n\nFrom the first screenshot (rest state), the \"Continue\" button clearly has a **blue background**. The blue appears to be a standard medium to bright blue color.\n\nANSWER: blue\n",
+  "ms": 7726
+}

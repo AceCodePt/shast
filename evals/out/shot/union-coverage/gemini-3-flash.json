@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows two black rectangular boxes positioned side-by-side at the top of the viewport, which correspond to the `leftHalf` and `rightHalf` nodes. While neither box spans the entire width on its own, their union completely obscures the area where the text \"Hidden by two\" from the `root>line` node would be rendered. Since no text is visible in the provided image, the viewer cannot read the words.\n\nANSWER: NO\n",
+  "ms": 12323
+}

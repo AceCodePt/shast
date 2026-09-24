@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 800 pixels. The node `root>main>r17` has a `getBoundingClientRect` Y-coordinate (top) of 484 pixels and a height of 26 pixels, which means its bottom edge is at 510 pixels. Since the entire vertical range of the element (484px to 510px) is well within the 0 to 800px range of the initial viewport, the text is visible without scrolling.\n\nANSWER: YES\n",
+  "ms": 11823
+}

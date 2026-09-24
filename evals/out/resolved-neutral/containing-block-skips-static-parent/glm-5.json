@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "## Reasoning\n\nThe element `root>plain>pin` has `position: absolute` with `top: 10px` and `left: 10px`. The key point is that `root>plain` (its DOM parent) is **not positioned**, so it is skipped when establishing the containing block. The containing block falls back to the nearest positioned ancestor, which is `root` (it has `position: relative`).\n\nFor an absolutely positioned element, the containing block is the **padding box** of that positioned ancestor. `root`'s border box is at x=0, y=0 with no border, so its padding box origin is also at x=0, y=0. Thus `top: 10px; left: 10px` resolves to an offset of (10, 10) from that origin, yielding x=10, y=10. This matches the rendered `@` coordinates.\n\nANSWER: 10,10\n",
+  "ms": 33035
+}

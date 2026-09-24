@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the browser data provided:\n\nThe `root>line` div (containing \"Still readable\") is positioned at y=0 with height 19.1875px, so it occupies the top ~19px of the viewport.\n\nTwo boxes paint over it:\n1. `root>glass` - positioned at y=0, z-index: 1, height 100px (covers y=0 to y=100)\n2. `root>panel` - positioned at y=40, z-index: 2, height 60px (covers y=40 to y=100)\n\nSince `root>glass` has z-index: 1 and `root>panel` has z-index: 2, the panel is on top. However, the panel only starts at y=40, so it doesn't cover the text which ends at y≈19.\n\nThe glass div (z-index: 1) does cover the text area (y=0 to y≈19), but critically, its `background-color: rgba(0, 0, 0, 0)` means it's completely transparent. A transparent overlay doesn't obscure text readability.\n\nThe screenshot confirms the text \"Still readable\" is clearly visible at the top, above both overlays.\n\nANSWER: YES\n",
+  "ms": 8420
+}

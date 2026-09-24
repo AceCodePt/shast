@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>front",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Because the three boxes overlap at the same screen point, the one that is visually on top is the one rendered last in the stacking order. The node paths indicate relative layering: `back` is behind `middle`, and `front` is on top of both. Therefore, a viewer would see the `front` box at point 120,120.\n\nANSWER: root>front\n",
+  "ms": 8091
+}

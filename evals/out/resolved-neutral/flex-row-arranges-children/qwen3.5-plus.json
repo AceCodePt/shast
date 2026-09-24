@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered layout data:\n\n- `root` is a flex container with `flex-direction: row` and `gap: 10px`\n- `root>first` starts at `x=0` with `width=100px`, so it ends at x=100\n- The 10px gap occupies the space from x=100 to x=110\n- `root>second` therefore starts at x=110\n\nThis is confirmed by the rendered data which shows `root>second` at `@ x=110 y=0`.\n\nANSWER: 110\n",
+  "ms": 13305
+}

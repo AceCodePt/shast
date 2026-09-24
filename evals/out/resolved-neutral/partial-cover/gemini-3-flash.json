@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The information provided for `root>row` explicitly states that while `root>chip` paints over approximately 9% of its box, the node's one text line stays fully visible. Since the text line remains fully visible despite the partial overlap of the chip, no text is hidden.\n\nANSWER: NO\n",
+  "ms": 9716
+}

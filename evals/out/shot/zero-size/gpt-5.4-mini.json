@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The screenshot shows `Important warning` painted at the top-left of the page, even though `root>ghost` has a 0x0 box. Since the rendered image is authoritative, the text is visibly present on screen.\n\nANSWER: YES\n",
+  "ms": 9861
+}

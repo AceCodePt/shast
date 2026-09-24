@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report states `root>plain` has no `position` set, so it's `static` and cannot serve as the containing block for the absolutely-positioned `pin`. Instead, the containing block is the nearest positioned ancestor, `root` (`position: relative`). Absolute offsets are measured from the padding box of that containing block. `root`'s padding box starts at (0, 0) (border box with no border), so `top: 10px; left: 10px` places `pin` at (10, 10) — not relative to `plain`'s content box at (20+30, 20+30). This matches the measured box.\n\nANSWER: 10,10\n",
+  "ms": 16101
+}

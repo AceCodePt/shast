@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report for `root>row`:\n\n- It states that `root>chip` paints over 9% of the box\n- However, it explicitly notes: **\"this node's 1 text line(s) stay fully visible\"**\n\nThis means that while `root>chip` does overlap with part of `root>row`'s border box (covering 9% of the area), the overlap region does not contain any of the actual text content. The text remains fully visible.\n\nANSWER: NO\n",
+  "ms": 13730
+}

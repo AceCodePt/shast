@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>second` renders at `x = 110` because the first child starts at `x = 0`, takes `100px` width, and the flex `gap` adds `10px` before the second item. The browser data also reports `x=110` for `root>second`, matching that layout.\n\nANSWER: 110\n",
+  "ms": 8383
+}

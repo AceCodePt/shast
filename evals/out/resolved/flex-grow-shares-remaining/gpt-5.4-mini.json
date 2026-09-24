@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is 600px wide and its two flex items split that width in a 1:2 ratio. That means `root>b` gets 2 parts out of 3 total, so `600 * 2/3 = 400px`, which also matches the measured box in the report.\n\nANSWER: 400\n",
+  "ms": 7569
+}

@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "`root>mid",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The leaf’s own `:hover` block is dead because the hover is being caught by its parent box, not by the leaf element itself. To make the leaf grow on hover, you need to put the hover rule on the node that is actually hovered and then style the leaf from there.\n\nANSWER: `root>mid`\n",
+  "ms": 31513
+}

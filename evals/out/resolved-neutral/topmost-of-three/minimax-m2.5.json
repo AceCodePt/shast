@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The point (120,120) lies inside all three boxes. Paint order is determined by z-index (higher paints later, on top): back=1, front=2, middle=3. Middle paints last with an opaque background, and the notes confirm it covers 100% of front and 64% of back, so it wins at that pixel.\n\nANSWER: root>middle\n",
+  "ms": 7715
+}

@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report for `root>lede`:\n\n1. The paragraph contains 72 characters of text that wraps onto **2 lines**\n2. The report explicitly states it is **covered** by `root>banner` (an absolute positioned div with z-index 5 and opaque background `#222222`)\n3. The coverage is **100% of the box**\n4. Most critically: **\"2 of 2 text line(s) completely hidden\"**\n\nSince the banner paints later (higher z-index) with an opaque background over the entire lede paragraph, all text is completely obscured.\n\nANSWER: NO\n",
+  "ms": 18236
+}

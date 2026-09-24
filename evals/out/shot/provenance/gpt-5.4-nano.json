@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The only node in the provided (authoritative) rendering tree that corresponds to the visible rounded element is `root>body>panel` (the `section` containing the text `\"Panel\"`). Since no other node paths (like `root` or `root>body`) are identified as matching that element, the `border-radius` affecting what `root>body>panel` renders must come from the CSS block for that same node.\n\nANSWER: root>body>panel\n",
+  "ms": 9357
+}

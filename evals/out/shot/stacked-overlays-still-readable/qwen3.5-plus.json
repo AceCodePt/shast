@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows the text \"Still readable\" clearly visible at the top of the rendered page. While two boxes (`root>glass` and `root>panel`) paint over the area, the text from `root>line` remains unobscured and legible. The visual evidence confirms the text can be read.\n\nANSWER: YES\n",
+  "ms": 10484
+}

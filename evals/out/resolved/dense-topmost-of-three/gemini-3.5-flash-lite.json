@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At the coordinate x=500, y=400, all three absolute divs (`alpha`, `gamma`, and `beta`) overlap. Among them, `root>beta` has the highest z-index (`z-index: 4`), meaning it paints last and sits on top of the other elements. Therefore, its background color is the one visible to the viewer at that point.\n\nANSWER: root>beta\n",
+  "ms": 8842
+}

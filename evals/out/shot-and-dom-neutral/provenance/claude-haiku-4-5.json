@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered data provided, I need to identify which node's CSS block declares the `border-radius: 12px` that the `root>body>panel` element renders with.\n\nFrom the getBoundingClientRect() and getComputedStyle() data:\n- `root` has `border-radius: 0px`\n- `root>body` has `border-radius: 0px`\n- `root>body>panel` has `border-radius: 12px`\n\nThe `root>body>panel` element is rendering with `border-radius: 12px`. This value comes from the CSS block that applies to `root>body>panel` itself, as the parent elements (`root` and `root>body`) both have `border-radius: 0px`, which would not produce the 12px value seen on the panel element.\n\nANSWER: root>body>panel\n",
+  "ms": 7326
+}

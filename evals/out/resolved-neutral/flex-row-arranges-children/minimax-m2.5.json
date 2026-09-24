@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In a flex row with `gap: 10px`, the first child occupies x=0 to x=100. The gap adds 10px of spacing, so the second child's left edge starts at x=100+10=110. This matches the rendered `@ x=110`.\n\nANSWER: 110\n",
+  "ms": 14797
+}

@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "All three boxes are positioned absolutely within the same stacking context (root, which is relative). At point 120,120 each box covers it, so the winner is determined by z-index. The values are: back=1, front=2, middle=3. The highest z-index wins, so the viewer sees **middle**.\n\nANSWER: root>middle\n",
+  "ms": 8499
+}

@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The leaf’s own `:hover` rule isn’t taking effect, so the hover-triggered padding has to be defined from its parent context instead. The immediate parent `root>mid` is the block that can react to the hover and style `root>mid>leaf`.\n\nANSWER: root>mid\n",
+  "ms": 69442
+}

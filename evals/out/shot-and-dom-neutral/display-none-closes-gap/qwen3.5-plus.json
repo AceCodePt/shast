@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding box data:\n\n- `root>first`: y=0, height=40 → occupies y=0 to y=40\n- `root>gone`: `display: none` with width=0, height=0 → **removed from layout flow entirely**\n- `root>third`: y=40, height=40 → occupies y=40 to y=80\n\n`root>third` starts exactly where `root>first` ends (y=40). When an element has `display: none`, it takes up **zero space** in the layout — it doesn't leave a gap. The bounding rect of `root>gone` confirms this: 0×0 dimensions.\n\nANSWER: NO\n",
+  "ms": 17866
+}

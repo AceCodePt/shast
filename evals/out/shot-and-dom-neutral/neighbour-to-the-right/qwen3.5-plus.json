@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding box data:\n\n- `root>leftBottom` has `y=120px` (vertical position) and `x=0px` (horizontal position)\n- `root>rightBottom` has `y=120px` (same vertical position) and `x=340px` (further right horizontally)\n\nBoth nodes share the same `top` value of 120px, placing them on the same horizontal row. The `rightBottom` node is positioned at x=340px, which is directly to the right of `leftBottom` at x=0px.\n\nANSWER: root>rightBottom\n",
+  "ms": 11715
+}

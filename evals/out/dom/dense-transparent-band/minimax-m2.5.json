@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence:\n\n`root>main>r09` contains the text \"09. Currency hedging\" and is positioned at x=244, y=276, width=1012, height=26.\n\n`root>banner` is a div positioned absolutely at x=244, y=276, width=700, height=26 with z-index: 5, which sits directly on top of r09's left portion (covering x=244 to x=944). However, the banner has a transparent background (rgba(0,0,0,0)) and no text content listed in the node tree.\n\nSince the banner is transparent and empty, it does not visually obscure the text underneath, so the \"09. Currency hedging\" text remains visible to a viewer.\n\nANSWER: YES\n",
+  "ms": 9593
+}

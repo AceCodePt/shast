@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding box data:\n\n- The viewport height is 800 pixels (1280x800)\n- `root>main>r17` has `getBoundingClientRect: x=244 y=484 width=1012 height=26`\n- This means the element spans from y=484 to y=510 (484 + 26)\n\nSince the element's vertical position (y=484 to y=510) falls entirely within the viewport height of 800 pixels, it is visible without scrolling.\n\nANSWER: YES\n",
+  "ms": 14483
+}

@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "`root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence provided:\n\n1. The HTML structure shows a chain: `root` > `root>mid` > `root>mid>leaf`\n2. The problem states that `:hover { padding: 40px }` has already been added to `root>mid>leaf`'s CSS block, but hovering produces no visual change\n3. Comparing the two rendered states (rest vs hover), the computed styles for all three nodes are identical - nothing changes on hover\n4. The issue is that `root>mid>leaf` has `display: block`, which means it takes up the full width (500px). When you add padding to a block element, the padding is applied but doesn't cause the element to grow visually in width - it just compresses the content area\n\nThe real problem is that `root>mid` is the parent container that needs to be aware of changes to its child's padding. Since `root>mid>leaf` is already styled with the hover rule but it's not working, the issue is that the parent `root>mid` is not responding to layout changes in its child, or there's a constraint preventing the growth.\n\nHowever, looking more carefully: if `:hover { padding: 40px }` is already in `root>mid>leaf`'s CSS and nothing is happening, the most likely issue is that either `root>mid` or `root` needs to have their CSS modified to allow the child to grow, or there's a `width` constraint somewhere.\n\nSince the question asks which node's CSS block to edit, and the hover rule is already on `root>mid>leaf` but not working, the answer must be to edit the parent that's constraining it.\n\nANSWER: `root>mid`\n",
+  "ms": 10126
+}

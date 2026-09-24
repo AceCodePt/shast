@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `root>main>r17` has a bounding box at `y=484` with height `26`, so it falls well within the 800px viewport on initial load. Nothing in the provided data indicates it is hidden or clipped.  \nANSWER: YES\n",
+  "ms": 7606
+}

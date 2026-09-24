@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided browser data, the node `root>outer>tall` has a height of **19.1875px** according to its `getBoundingClientRect` and `getComputedStyle` values. In contrast, its sibling `root>outer>filler` has a height of **60px**. Since 19.1875 is less than 60, the \"tall\" node is actually shorter than the \"filler\" node.\n\nANSWER: NO\n",
+  "ms": 8638
+}

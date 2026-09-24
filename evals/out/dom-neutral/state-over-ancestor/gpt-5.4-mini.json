@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "2px 2px 2px 2px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The `:hover` comparison shows no change in `padding` for `root>mid>leaf`. Its computed padding remains `2px 2px 2px 2px` while hovered, so it renders with 2px on all sides.\n\nANSWER: 2px 2px 2px 2px\n",
+  "ms": 7757
+}

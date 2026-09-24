@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The flex container lays out children along the main axis with `gap: 10px` between them. The first child occupies x=0 to x=100 (width 100px), then the 10px gap pushes the next child to x=110. The bounding rect confirms `root>second`'s left edge is at x=110.\n\nANSWER: 110\n",
+  "ms": 7572
+}

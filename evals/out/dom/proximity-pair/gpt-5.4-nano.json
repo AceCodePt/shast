@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "From the authoritative on-screen geometry (`getBoundingClientRect()`), `root>alpha` is at `y=20` and `root>beta` is at `y=64`, so they are close together vertically. `root>gamma` is at `y=200`, which is far below both of them, making it visually separated from the other two.  \n\nANSWER: root>gamma\n",
+  "ms": 7746
+}

@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` container has `display: flex` with `flex-direction: row` and `gap: 10px`. The first child (`root>first`) is 100px wide and starts at x=0, so it ends at x=100. The gap of 10px is placed after the first child, meaning the second child starts at 100 + 10 = 110px. This is confirmed by the browser's `getBoundingClientRect` data for `root>second`, which shows `x=110`.\n\nANSWER: 110\n",
+  "ms": 12702
+}

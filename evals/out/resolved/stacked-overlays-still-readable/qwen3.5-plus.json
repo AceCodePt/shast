@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report:\n\n1. `root>glass` (z-index 1) paints over `root>line` but explicitly \"has no background, so what is behind it still shows through\" — meaning the text remains visible through it.\n\n2. `root>panel` (z-index 2) has an opaque background (`#303030`) but only covers 60% of `root>glass`'s box, not the full area where the text is.\n\n3. The report explicitly states for `root>line`: \"! covered: this node's 1 text line(s) stay fully visible\"\n\nSince the glass overlay is transparent and the panel only partially overlaps, the text remains readable.\n\nANSWER: YES\n",
+  "ms": 15488
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The evidence shows `root>body>panel`’s **computed** `padding` is `4px 4px 4px 4px`, not `32px`. In Chromium, computed styles reflect what actually affects layout; if a `padding: 32px` declaration were in effect, the computed padding would be 32px (unless overridden). Since the rendered result uses 4px padding, that `padding: 32px` declaration does not have a net effect on what was displayed.\n\nANSWER: NO\n",
+  "ms": 10759
+}

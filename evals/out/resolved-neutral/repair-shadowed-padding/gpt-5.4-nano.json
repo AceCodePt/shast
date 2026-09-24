@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The evidence explicitly states that the `padding: 32px` is “declared by `root>body>panel` itself, at the top of its css block.” Since the rendering did not change after this padding was added, the only css block that controls that 32px padding is `root>body>panel`’s own css block. Therefore, you must edit that node’s css block to ensure it renders with 32px padding.\n\nANSWER: root>body>panel\n",
+  "ms": 7729
+}

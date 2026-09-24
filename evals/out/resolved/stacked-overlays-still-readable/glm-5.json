@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>glass` covers 100% of `root>line` but has no background, so the text shows through it (the report explicitly notes the text lines stay fully visible). `root>panel` has an opaque background but sits at y=40–100, while `root>line` only occupies y=0–19.19, so the panel never actually overlaps the line's box. Neither box obscures the text.\n\nANSWER: YES\n",
+  "ms": 22148
+}

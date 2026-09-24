@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "In the provided screenshot, \"alpha\" and \"beta\" are positioned close to each other at the top of the page. There is a significantly larger vertical gap between \"beta\" and \"gamma,\" placing \"gamma\" much further down the viewport. This makes \"gamma\" the visually separated node compared to the relatively tight pairing of \"alpha\" and \"beta.\"\n\nANSWER: root>gamma\n",
+  "ms": 7829
+}

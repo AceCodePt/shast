@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The report says the text “wrapped overflows” and that the content is painted outside the box rather than cut off (“overflow is visible”). Since the last line extends below `root>card`’s bottom edge, it is still part of the visible painted overflow content, so a person could read it on the page.\n\nANSWER: YES\n",
+  "ms": 8888
+}

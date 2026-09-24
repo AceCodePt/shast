@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The screenshot shows the line area is fully obscured by the two covering boxes, so there are no readable letters left exposed. Even though each box alone does not span the whole line, their combined coverage blocks the text from view.\n\nANSWER: NO\n",
+  "ms": 19740
+}

@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data:\n\n1. The `root>card` element is only **180px wide** but contains the text \"Payment failed because the card on file expired last month.\" — this long sentence will wrap to multiple lines at that width.\n\n2. The element height is **48px** with a **line-height of 19.2px**, meaning only about 2-3 lines can fit within the box (48 ÷ 19.2 ≈ 2.5).\n\n3. The text content would require roughly 5-6 lines at 180px width, so the last lines extend beyond the 48px height.\n\n4. Critically, `overflow: visible` on `root>card` means content extending beyond the element's bounds is **still painted** and not clipped.\n\nANSWER: YES\n",
+  "ms": 17411
+}

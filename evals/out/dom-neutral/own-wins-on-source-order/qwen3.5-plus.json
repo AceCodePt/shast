@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "64px 64px 64px 64px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The browser's `getComputedStyle()` data for `root>child` shows the final resolved values after all CSS cascade rules (specificity, source order, importance) have been applied. According to the provided evidence, the computed padding is `64px 64px 64px 64px`, meaning 64 pixels on all four sides. This is what actually renders on screen, regardless of what the three different CSS blocks declare.\n\nANSWER: 64px 64px 64px 64px\n",
+  "ms": 12557
+}

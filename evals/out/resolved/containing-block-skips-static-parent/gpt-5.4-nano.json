@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "60,60",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>plain` is a `div` with `padding: 30px`, and it is located at `@ x=20 y=20`. Since `root>plain` is not positioned, its padding establishes the content box offset for its children. The `root>plain>pin` element is `position: absolute` with `top: 10px` and `left: 10px`, so its top-left corner is offset from `root>plain`’s padding edge by `(10, 10)`.\n\nTherefore, its page coordinates are:\n- x = 20 + 30 + 10 = 60\n- y = 20 + 30 + 10 = 60\n\nANSWER: 60,60\n",
+  "ms": 9289
+}

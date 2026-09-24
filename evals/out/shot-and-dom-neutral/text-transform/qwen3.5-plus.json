@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text in `root>title` is \"Annual review\", but the computed styles show `text-transform: uppercase`. This CSS property transforms the text to uppercase for display purposes. The screenshot confirms this — it shows \"ANNUAL REVIEW\" in all capital letters. The question asks what a **viewer sees**, which is the rendered output, not the source text.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 11930
+}

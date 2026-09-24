@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "At the point (120, 120), all three boxes overlap. Since all three are positioned elements without opacity tricks or stacking contexts that would alter paint order, the browser uses z-index to determine stacking: `back` has z-index 1, `front` has z-index 2, and `middle` has z-index 3. The element with the highest z-index paints on top, so `middle` (z-index 3) is visible at that point.\n\nANSWER: root>middle\n",
+  "ms": 11670
+}

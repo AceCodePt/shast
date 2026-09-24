@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided information:\n\n1. `root>chip` does paint over part of `root>row`'s box (9% of it, as noted)\n2. However, the information explicitly states: \"this node's 1 text line(s) stay fully visible\"\n\nThis means that while the chip's opaque background covers part of the `root>row` element's box area, the actual text content (\"Short label\") is positioned in a way that remains visible and is not obscured by the chip.\n\nANSWER: NO\n",
+  "ms": 14569
+}

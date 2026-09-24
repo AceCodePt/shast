@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\n`root>outer>tall` declares `height: 100%`, but percentage heights only resolve against the parent's height when that height is **explicitly set** (not determined by content).\n\nHere, `root>outer` has no explicit height — its 79.19px is the *sum of its children's rendered heights* (auto-sized by content). Because the parent height is content-driven, the `100%` on `tall` cannot resolve against it and instead falls back to `auto`, meaning `tall`'s height is determined by its own content (the text \"b\").\n\nThat content is a single line of text at the inherited 16px font-size with the default line-height (~1.2), yielding 16 × 1.2 ≈ 19.2px — which matches the measured 19.19px.\n\nSo:\n- `root>outer>filler`: **60px**\n- `root>outer>tall`: **19.19px**\n\n19.19 < 60, so `tall` is shorter than its sibling, not taller.\n\nANSWER: NO\n",
+  "ms": 19318
+}

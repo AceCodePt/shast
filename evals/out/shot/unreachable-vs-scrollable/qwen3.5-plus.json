@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the node names and their text content:\n\n- `root>lower` contains \"further down\" — this indicates **vertical** overflow, which ordinary (vertical) scrolling can reach\n- `root>sideways` contains \"runs off sideways\" — this indicates **horizontal** overflow, which ordinary vertical scrolling cannot reach\n\nThe screenshot confirms \"runs off sideways\" is visible, meaning it extends horizontally beyond the viewport. Ordinary scrolling (vertical) cannot bring horizontally overflowed content fully into view.\n\nANSWER: root>sideways\n",
+  "ms": 12638
+}

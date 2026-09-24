@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence:\n\n1. `root>body>panel` currently renders with `padding: 4px 4px 4px 4px` (as shown in its computed style)\n2. The problem states that `padding: 32px` has already been added to `root>body>panel`'s own CSS block in the source\n3. Since the rendering still shows 4px instead of 32px, something with higher specificity is overriding it\n\nThe key insight is that the panel's own CSS already contains `padding: 32px`, but it's being overridden. To make the 32px padding actually render, you need to edit the CSS block of the panel itself—either by adding `!important` or increasing the selector specificity—because that's where the desired value already exists but is being overridden by external styles.\n\nANSWER: root>body>panel\n",
+  "ms": 20297
+}

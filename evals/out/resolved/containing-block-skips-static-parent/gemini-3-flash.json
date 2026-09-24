@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report explicitly states that the `@` line provides resolved absolute coordinates from the top-left of the page. For the element `root>plain>pin`, the report lists `@ x=10 y=10`. This is consistent with CSS logic because `root>plain>pin` is absolutely positioned relative to its nearest positioned ancestor, `root` (which is at `0,0`), ignoring the unpositioned `root>plain`.\n\nANSWER: 10,10\n",
+  "ms": 20109
+}

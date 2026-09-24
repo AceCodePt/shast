@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided information, I need to determine if the text in `root>main>r09` (which contains \"09. Currency hedging\") is readable.\n\nFrom the bounding client rect data for `root>main>r09`:\n- Position: x=244, y=276\n- Dimensions: width=1012, height=26\n- It's positioned within the viewport (1280x800)\n- The element has `display: block`, `opacity: 1`, and `overflow: visible`\n- Text color is `rgb(0, 0, 0)` (black) on a background of `rgba(0, 0, 0, 0)` (transparent), which inherits the white background from the root\n\nAdditionally, from the screenshot shown at the top, I can visually confirm that the list items including item 09 are clearly visible and readable in the main content area.\n\nThe element is positioned within the viewport bounds, has full opacity, uses readable black text on a white background, and is part of the normal document flow with no visibility restrictions.\n\nANSWER: YES\n",
+  "ms": 9750
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r36` has `@ x=244 y=978 height=26` (so it appears starting at y=978 from the top of the page). The viewport is `1280x800`, meaning only content up to about `y=800` is initially visible without scrolling. Since `978 > 800`, `r36` is marked `below-fold` and will not be visible on first load.\n\nANSWER: NO\n",
+  "ms": 8928
+}

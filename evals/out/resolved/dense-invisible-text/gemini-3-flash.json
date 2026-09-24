@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>main>r21` is set to `color: #ffffff` (white). The `root` element, which serves as the backdrop for the main section, has a `background-color: #ffffff` (white). Because the text color and the background color are identical, the text is invisible to the viewer.\n\nANSWER: NO\n",
+  "ms": 10119
+}

@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Ordinary vertical scrolling allows users to scroll down to view content located below the fold, making `root>lower` accessible. However, because pages do not scroll horizontally and the viewport width is only 500px while `root>sideways` extends to 900px wide, `root>sideways` cannot be brought into view via ordinary scrolling.\n\nANSWER: root>sideways\n",
+  "ms": 7819
+}

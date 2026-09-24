@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the layout information provided:\n\nThe viewport is 500x300 CSS pixels. The `root>footer` div has:\n- `getBoundingClientRect: y=700` (positioned 700px from the top)\n- `height: 60px`\n\nThis means the footer spans from y=700 to y=760 pixels vertically.\n\nSince the viewport is only 300 pixels tall, the footer at y=700 is far below the visible area. The viewer would only see content from y=0 to y=300 when the page first loads before any scrolling.\n\nThe footer at y=700 is well below this visible range, so it is not visible without scrolling.\n\nANSWER: NO\n",
+  "ms": 8271
+}

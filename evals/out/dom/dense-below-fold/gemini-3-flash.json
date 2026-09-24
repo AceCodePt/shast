@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport dimensions are 1280x800, meaning only content with a y-coordinate less than 800 is visible without scrolling. The node `root>main>r36` has a `getBoundingClientRect` y-coordinate of 978, placing it 178 pixels below the bottom edge of the initial viewport. Therefore, the text is not visible when the page first loads.\n\nANSWER: NO\n",
+  "ms": 9340
+}

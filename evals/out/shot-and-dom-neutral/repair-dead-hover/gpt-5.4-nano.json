@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Hovering `root>mid>leaf` does not change its computed `padding` (it stays `2px` before and during hover), which means the `root>mid>leaf` block’s `:hover { padding: 40px }` rule is not taking effect in the cascade. Since some other CSS must be winning and keeping `padding: 2px` on that element, you need to edit the CSS block of the node whose styles are overriding the leaf’s padding—here, that’s `root>mid`.  \n\nANSWER: root>mid\n",
+  "ms": 15693
+}

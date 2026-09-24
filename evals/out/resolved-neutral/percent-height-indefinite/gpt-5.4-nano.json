@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The sibling `root>outer>filler` has a computed height of **60px**. The `root>outer>tall` element is positioned from **y=60** with a computed height of **19.19px** (ending at y=79.19), so it is clearly shorter than **60px**.  \n\nANSWER: NO\n",
+  "ms": 8897
+}

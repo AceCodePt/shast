@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, I need to determine the computed line-height for `root>big`.\n\nThe `root` element declares `line-height: 2`, which is a unitless value. According to CSS spec, unitless line-height values are multipliers that get inherited as-is to child elements.\n\nSo `root>big` inherits `line-height: 2` from its parent. Since `root>big` declares `font-size: 32px`, the computed line-height becomes: `2 × 32px = 64px`.\n\nThis matches the measured height in the report: `root>big` has `height=64`.\n\nANSWER: 64\n",
+  "ms": 7238
+}

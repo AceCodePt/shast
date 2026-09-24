@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first column is 200px wide ending at x=200. The gap of 20px occupies the space from x=200 to x=220. The second column begins immediately after the gap, at x=220. The report confirms `root>right @ x=220`.\n\nANSWER: 220\n",
+  "ms": 6788
+}

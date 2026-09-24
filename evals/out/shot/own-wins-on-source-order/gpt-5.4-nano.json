@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "0px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The only authoritative evidence provided is the actual rendered node tree and the screenshot; the screenshot shows the `Child` text at essentially the start of the `root>child` box with no visible inset. That means the computed/visible padding applied to `root>child` is effectively none. So among the three competing `padding` declarations, the one that wins results in zero padding on screen.\n\nANSWER: 0px\n",
+  "ms": 8366
+}

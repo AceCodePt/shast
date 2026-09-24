@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first child occupies x=0 to x=100. With `gap: 10px`, the second child's left edge starts at 100 + 10 = 110.\n\nANSWER: 110\n",
+  "ms": 6738
+}

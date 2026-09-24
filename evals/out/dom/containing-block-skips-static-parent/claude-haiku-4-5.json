@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the `getBoundingClientRect()` data provided, the `root>plain>pin` element has:\n- x=10\n- y=10\n\nThe element uses `position: absolute` with `left: 10px` and `top: 10px`. Since its parent `root>plain` has `position: static` (not positioned), the absolutely positioned child establishes its position relative to the nearest positioned ancestor, which is `root` with `position: relative`.\n\nThe `root` element itself starts at x=0, y=0 in the viewport. The absolute positioning of `root>plain>pin` with `left: 10px` and `top: 10px` places it 10 pixels from the left and 10 pixels from the top of the `root` element, resulting in coordinates (10, 10) in viewport space.\n\nANSWER: 10,10\n",
+  "ms": 12708
+}

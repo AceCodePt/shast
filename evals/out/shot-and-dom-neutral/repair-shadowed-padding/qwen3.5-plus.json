@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence:\n\n- `root>body>panel` shows `padding: 4px 4px 4px 4px` in its computed style\n- The question states `padding: 32px` was already added to `root>body>panel`'s own CSS block, but the rendering didn't change\n- This means something with higher specificity or priority is overriding the 32px value\n\nSince the 32px was added to the panel's CSS block but is being overridden, you need to edit **the same node's CSS block** (`root>body>panel`) and increase the rule's priority (e.g., add `!important` or increase selector specificity) to make it take effect over whatever is currently winning the cascade.\n\nANSWER: root>body>panel\n",
+  "ms": 41640
+}

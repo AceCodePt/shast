@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "All three boxes overlap the point (120, 120) according to their bounding rects. The visibility is determined by the stacking order, which is dictated by the `z-index` property for these absolutely positioned elements. `root>back` has a `z-index` of 1, `root>front` has 2, and `root>middle` has 3. Because `root>middle` has the highest `z-index`, it is rendered on top of the others at the point of overlap, completely obscuring `root>front` and partially obscuring `root>back`.\n\nANSWER: root>middle\n",
+  "ms": 14864
+}

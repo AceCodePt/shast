@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding client rect data for `root>main>r36`, which contains the text \"36. Royalty accruals\":\n\n- The element has `getBoundingClientRect: x=244 y=978 width=1012 height=26`\n- This means it's positioned at y=978 pixels from the top of the page\n- The viewport is `1280x800` (width x height in CSS pixels)\n\nThe element starts at y=978, which is well below the visible viewport height of 800px. The visible area only extends from y=0 to y=800. Since the element begins at y=978, it is positioned below the fold and would not be visible without scrolling down.\n\nANSWER: NO\n",
+  "ms": 8839
+}

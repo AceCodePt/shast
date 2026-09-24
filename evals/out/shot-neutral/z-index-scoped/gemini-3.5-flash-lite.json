@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the attached screenshot, the red box labeled \"high\" is positioned over the blue box labeled \"inner\", completely covering the overlapping region. Therefore, a viewer sees the red box in that area.\n\nANSWER: root>high\n",
+  "ms": 7113
+}

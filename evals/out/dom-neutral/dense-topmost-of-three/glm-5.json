@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "All three boxes cover (500, 400): alpha spans x[300,700] y[300,420], beta x[340,740] y[340,460], gamma x[380,780] y[380,500]. They are all positioned absolute with z-indexes alpha=2, beta=4, gamma=3. The highest z-index wins, so beta is on top.\n\nANSWER: root>beta\n",
+  "ms": 9047
+}

@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the node tree provided, I can see that `root>title` is a `<div>` element with the text content \"Annual review\" as written in the source.\n\nThe CSS styling shows `text-transform: uppercase`, which transforms how the text is rendered visually. This means the text \"Annual review\" will be displayed in all uppercase letters on screen.\n\nTherefore, a viewer sees the characters transformed to uppercase by the CSS property.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 8553
+}

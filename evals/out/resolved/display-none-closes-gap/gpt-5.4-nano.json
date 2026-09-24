@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>gone` has `display: none`, and the report shows its box has `width=0 height=0` at `x=0 y=0`, so it does not occupy any space in layout. `root>first` is measured as `height=40` ending at `y=40`, and `root>third` starts exactly at `y=40` with `height=40`. Therefore there is no 40px vertical gap between them.\n\nANSWER: NO\n",
+  "ms": 7118
+}

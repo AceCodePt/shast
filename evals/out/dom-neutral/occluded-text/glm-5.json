@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\nThe `root>lede` paragraph sits at y=0–54.375px (600px wide, 2 lines of text at 16px/19.2px line-height plus 8px padding), which comfortably holds the 72-character sentence.\n\nHowever, `root>banner` is **absolutely positioned** at top:0/left:0, is 600×70px, has **z-index:5**, and—critically—an **opaque** background (`rgb(34, 34, 34)`, no alpha). Because the banner is positioned (and the lede is `position: static`), the banner paints on top of the lede. Since the banner spans y=0–70 and the lede only spans y=0–54.375, the banner completely covers every pixel of the lede with an opaque dark fill. The sentence is fully occluded and unreadable.\n\nANSWER: NO\n",
+  "ms": 32443
+}

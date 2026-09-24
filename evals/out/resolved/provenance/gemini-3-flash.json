@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report for the `root>body>panel` node explicitly traces the source of its `border-radius` property. The line `← border-radius: 12px declared by root, inside its \"> body > panel\" block (adds)` indicates that while the style applies to the panel, the declaration itself is contained within the CSS block of the `root` node.\n\nANSWER: root\n",
+  "ms": 12135
+}

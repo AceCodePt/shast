@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "An element with `position: fixed` is positioned relative to the viewport. Since `root>inner` has `top: 15px` and `left: 25px`, and its `getBoundingClientRect()` explicitly confirms its top-left coordinates are `x=25, y=15`, it renders at that location in the viewport.\n\nANSWER: 25,15\n",
+  "ms": 7220
+}

@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding boxes:\n\n- `root>row` (containing \"Short label\"): x=0, y=0, width=600, height=120\n- `root>chip`: x=400, y=60, width=160, height=40 (so it spans x=400-560, y=60-100)\n\nThe chip does overlap the row's bounding box area. However, the text \"Short label\" is short text that would render at the beginning of the paragraph (left side, near x=0 with 4px padding). At 16px font size, \"Short label\" would only occupy roughly 100-150px horizontally, placing it well to the left of the chip which starts at x=400.\n\nANSWER: NO\n",
+  "ms": 20966
+}

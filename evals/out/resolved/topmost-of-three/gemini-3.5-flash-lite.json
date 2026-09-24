@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Point (120, 120) falls within the coordinates of all three boxes. `root>middle` has the highest stacking order with `z-index: 3`, an opaque background, and paints later than both `root>back` and `root>front`. As explicitly confirmed by the report, `root>middle` completely covers `root>front` and partially covers `root>back` at this overlapping location.\n\nANSWER: root>middle\n",
+  "ms": 8970
+}

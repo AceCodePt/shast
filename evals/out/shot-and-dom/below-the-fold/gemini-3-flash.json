@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport is 500x300, meaning the viewer initially sees the area from y=0 to y=300. The `root>footer` element has a `getBoundingClientRect` starting at y=700, which is well below the 300px limit of the initial view. Therefore, the footer is not visible before scrolling.\n\nANSWER: NO\n",
+  "ms": 8182
+}

@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The screenshot/Chromium evidence shows the computed styles for `root>body>panel` include `padding: 4px 4px 4px 4px`, meaning whatever padding rules are currently applied are coming from that node’s own CSS block. Since you specifically want `root>body>panel` to render with `32px` padding, you need to change the CSS rules that apply to that same node. The `root` and `root>body` blocks both show `padding: 0px`, so they’re not the source of the `panel` padding.\n\nANSWER: root>body>panel\n",
+  "ms": 7012
+}

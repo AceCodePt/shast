@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the provided information:\n\nThe `root>lede` element is a `<p>` tag with the text \"The quarterly results are in and every region beat its targ…\" (72 chars). The ellipsis (\"…\") at the end indicates the text is truncated in the display.\n\nAccording to the getBoundingClientRect data, `root>lede` has:\n- width: 600px\n- height: 54.375px\n- It's positioned at the top of the root div (y=0)\n\nThe `root>banner` div is positioned absolutely with `top: 0px`, `z-index: 5`, and `height: 70px`. This means the banner overlays the top 70 pixels of the viewport, which completely covers the `root>lede` paragraph (which only extends to y=54.375px).\n\nAdditionally, even if the banner didn't obscure it, the text itself is truncated with an ellipsis, meaning the full sentence is not fully visible on the screen.\n\nA person reading this page would neither be able to see the complete text due to truncation, nor would they be able to read what is visible due to the absolutely-positioned banner covering it.\n\nANSWER: NO\n",
+  "ms": 10243
+}

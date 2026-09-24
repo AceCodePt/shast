@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree indicates that `root>main>r09` contains the text \"09. Currency hedging.\" However, in the rendered screenshot, there is a solid red rectangular banner positioned exactly between row 08 and row 10, where row 09 should appear. This element completely occludes the text, making it impossible for a viewer to read it.\n\nANSWER: NO\n",
+  "ms": 9626
+}

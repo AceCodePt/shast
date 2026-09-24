@@ -1,0 +1,10 @@
+{
+  "case": "inherited-font-size",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "root>heading",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot and the node tree information provided:\n\nThe screenshot shows \"Quarterly report\" rendered larger than \"Draft\" below it. According to the node tree, \"Quarterly report\" corresponds to `root>heading` and \"Draft\" corresponds to `root>caption`.\n\nThe visual evidence clearly shows that `root>heading` is rendered with significantly larger text than `root>caption`. This makes sense given the semantic naming - the heading element is displayed prominently while the caption is shown in smaller text.\n\nANSWER: root>heading\n",
+  "ms": 5639
+}

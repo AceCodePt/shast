@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding client rect data for `root>main>r17`:\n\n- `getBoundingClientRect: x=244 y=484 width=1012 height=26`\n\nThe element is positioned at y=484, which is 484 pixels from the top of the viewport.\n\nThe viewport is 800 pixels tall (1280x800).\n\nSince 484 < 800, the element is within the visible viewport height. The element starts at y=484 and has a height of 26 pixels, so it spans from y=484 to y=510, which is entirely within the 800-pixel viewport.\n\nANSWER: YES\n",
+  "ms": 6763
+}

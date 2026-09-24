@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The stacking context of `root>low` (which contains `root>low>inner` with a local z-index of 999) has a root-level z-index of 1. Meanwhile, `root>high` has a root-level z-index of 2 and paints later with an opaque background over `root>low` and its descendants, so `root>high` appears on top in the overlapping region.\n\nANSWER: root>high\n",
+  "ms": 10776
+}

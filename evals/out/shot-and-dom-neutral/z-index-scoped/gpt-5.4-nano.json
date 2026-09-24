@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>low>inner",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Both elements overlap because `root>low>inner` spans from `(10,10)` to `(290,190)` and `root>high` spans from `(50,50)` to `(350,150)`, so the intersection is non-empty. In the overlapping region, the viewer sees the element with the higher effective stacking order: `root>low>inner` has `position: absolute` with `z-index: 999`, while `root>high` has `z-index: 2`. Since `999 > 2`, `root>low>inner` is on top.\n\nANSWER: root>low>inner\n",
+  "ms": 10117
+}

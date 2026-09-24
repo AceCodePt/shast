@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The computed styles show `root>mid>leaf` has `padding: 2px 2px 2px 2px` both before and during hover (the `getComputedStyle`/computed padding value does not change). Also, the bounding rect height stays the same between rest and hover, consistent with unchanged padding. Therefore, despite the hypothetical `:hover { padding: 40px; }`, the measured `:hover` state does not alter its padding.  \n\nANSWER: NO\n",
+  "ms": 7901
+}

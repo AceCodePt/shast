@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe root element is a grid with `grid-template-columns: 200px 300px` and `gap: 20px`. This means:\n- The first column (root>left) is 200px wide\n- There's a 20px gap between columns\n- The second column (root>right) starts after the first column and gap\n\nThe `getBoundingClientRect()` for `root>right` confirms this: `x=220`. This is calculated as 200px (first column width) + 20px (gap) = 220px.\n\nANSWER: 220\n",
+  "ms": 6304
+}

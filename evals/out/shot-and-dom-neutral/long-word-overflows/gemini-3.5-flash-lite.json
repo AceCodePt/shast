@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The URL consists of a single unbroken string that exceeds the 120px width of `root>cell`. Because there are no spaces or wrapping properties applied, the text overflows the boundaries of the box and extends across the viewport.\n\nANSWER: NO\n",
+  "ms": 10029
+}

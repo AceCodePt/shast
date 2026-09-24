@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>line` occupies the vertical space from y=0 to y=19.1875. While `root>glass` (z-index: 1) overlaps this area completely, its `background-color` is `rgba(0, 0, 0, 0)` (fully transparent), which does not obscure the text. `root>panel` (z-index: 2) is opaque, but its top edge begins at y=40, placing it entirely below the bounds of `root>line`.\n\nANSWER: YES\n",
+  "ms": 11969
+}

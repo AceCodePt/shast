@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At `120,120`, all three boxes contain the point, but stacking order decides visibility. `root>middle` has the highest `z-index` (`3`), so it paints on top of `root>front` (`2`) and `root>back` (`1`). That means the viewer sees `root>middle` there.\n\nANSWER: root>middle\n",
+  "ms": 7690
+}

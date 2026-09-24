@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\nThe text in `root>main>r09` (\"09. Currency hedging\") is located at **x=244, y=276** with a width of 1012px. The `root>banner` element is positioned absolutely at the exact same coordinates (**x=244, y=276**) with a width of 700px, height of 26px, and a solid opaque red background (`rgb(204, 34, 34)`, no alpha transparency).\n\nThe banner has **z-index: 5**, while r09 has **z-index: auto**, so the banner paints on top of r09. Since the banner's opaque red background covers the leftmost 700px of r09 — exactly where the short text \"09. Currency hedging\" would render (far less than 700px wide at 15px font size) — the black text of r09 is completely obscured by the banner.\n\nANSWER: NO\n",
+  "ms": 44551
+}

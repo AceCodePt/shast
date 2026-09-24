@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>main>r21` has a text color of white (`rgb(255, 255, 255)`) and is rendered against a white background (`rgb(255, 255, 255)` from the root element, with transparent intermediate containers). Because white text on a white background lacks any contrast, the text is invisible and cannot be read by a viewer.\n\nANSWER: NO\n",
+  "ms": 7312
+}

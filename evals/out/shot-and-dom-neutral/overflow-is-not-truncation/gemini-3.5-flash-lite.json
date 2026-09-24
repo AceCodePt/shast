@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Since `root>card` has `overflow: visible`, content that exceeds its 48px height is not clipped. As seen in both the node data and the screenshot, the overflowing lines extend past the bottom border of the card container and are fully rendered and legible on the page.\n\nANSWER: YES\n",
+  "ms": 8408
+}

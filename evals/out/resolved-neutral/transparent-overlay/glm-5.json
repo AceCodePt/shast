@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The `root>lede` paragraph wrapped onto 2 lines, and the report explicitly states that \"this node's 2 text line(s) stay fully visible.\" Although `root>banner` paints over 100% of the lede's box, it has no background, so the text behind it remains visible through the transparent overlay.\n\nANSWER: YES\n",
+  "ms": 18160
+}

@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` container has a total width of 600px and uses `display: flex`. Its children, `root>a` and `root>b`, have `flex` values of `1` and `2` respectively with a `flex-basis` of `0%`, meaning the available space is distributed in a 1:2 ratio. According to the `getBoundingClientRect` data provided, `root>b` has a width of 400 pixels, which corresponds to its 2/3 share of the parent's width.\n\nANSWER: 400\n",
+  "ms": 8198
+}

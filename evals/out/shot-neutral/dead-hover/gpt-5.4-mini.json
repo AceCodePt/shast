@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No visible change occurs between the rest and hover screenshots. Since `root>mid>leaf` looks the same in both states, the `:hover { padding: 40px; }` rule is not taking effect in a way that changes the rendered padding.\n\nANSWER: NO\n",
+  "ms": 6554
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report, I need to determine if the element `root>main>r36` (which contains \"36. Royalty accruals\") is visible in the viewport when the page first loads.\n\nThe viewport dimensions are 1280x800 (width x height in CSS pixels). The element `root>main>r36` is positioned at y=978, which means its top edge is 978 pixels from the top of the page. Since the viewport only shows content from y=0 to y=800, and 978 is beyond 800, this element is below the visible area. The report even explicitly marks this element with the `below-fold` label, confirming it requires scrolling to be visible.\n\nANSWER: NO\n",
+  "ms": 8148
+}

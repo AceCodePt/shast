@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The information for `root>card` explicitly indicates that it overflows, noting that the content measures 153.61x76.75px inside a 162x30px content box and is painted outside the box rather than being cut off. Because the content height exceeds the box's available space, the text does not fit inside the 48px-tall border box.\n\nANSWER: NO\n",
+  "ms": 8403
+}

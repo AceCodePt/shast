@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, the text \"one two three four five six seven eight nine ten\" inside the `root>card` div is rendered as:\n\n```\none two three\nfour five six\nseven eight\nnine ten\n```\n\nCounting each line of wrapped text, I can see there are 4 distinct lines.\n\nANSWER: 4\n",
+  "ms": 17415
+}

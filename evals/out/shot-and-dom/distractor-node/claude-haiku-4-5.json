@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>second` paragraph contains \"Second paragraph here\" and is positioned at y=19.1875 with a height of 19.1875px. \n\nHowever, there is a `root>cover` div that is absolutely positioned at the top of the page (top: 0px) with a height of 19px and a black background (rgb(0, 0, 0)). This cover div has a width of 500px and z-index of auto, which means it will stack above elements in normal flow.\n\nThe cover div's black background extends from y=0 to y=19px, which completely overlaps with the first paragraph (y=0 to y=19.1875). The second paragraph starts at y=19.1875, which is just below the cover div's bottom edge at y=19px. Since the cover div is only 19px tall and the second paragraph starts at 19.1875px, the second paragraph is not obscured by the cover div.\n\nBased on the screenshot image provided, the text \"Second paragraph here\" is clearly visible and readable on the page.\n\nANSWER: YES\n",
+  "ms": 7713
+}

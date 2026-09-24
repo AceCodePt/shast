@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "At `120,120`, all three boxes are present, so stacking order decides visibility. Their `z-index` values are `1` for `back`, `2` for `front`, and `3` for `middle`, so `middle` is painted on top of the others.\n\nANSWER: root>middle\n",
+  "ms": 6512
+}

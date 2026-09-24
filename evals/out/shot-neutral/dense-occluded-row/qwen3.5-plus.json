@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided information, the node tree shows that `root>main>r09` contains the text \"09. Currency hedging\". However, examining the screenshot description, there is a prominent red horizontal bar positioned between items 08 (\"Deferred costs\") and 10 (\"Accrual adjustments\") — exactly where row 09 would be displayed. This red bar visually occludes that row.\n\nWhile the text exists in the DOM and is noted in the node tree, the question asks whether a **viewer can read** the text as rendered on screen. The red bar blocks the visual presentation of that row's content.\n\nANSWER: NO\n",
+  "ms": 15285
+}

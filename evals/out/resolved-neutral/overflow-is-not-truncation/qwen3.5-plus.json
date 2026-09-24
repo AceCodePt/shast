@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has a content box of 162x30px (after subtracting 8px padding and 1px border from each side of the 180x48px total). The text content measures 153.61x76.75px, which is much taller than the 30px content box. However, the annotation explicitly states `overflow is visible`, meaning content that exceeds the box boundaries is painted outside the box rather than being clipped or hidden.\n\nANSWER: YES\n",
+  "ms": 14662
+}

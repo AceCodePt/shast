@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `height: 100%` on `root>outer>tall` resolves to 100% of its parent's height. The parent `root>outer` is 79.19px tall, but `tall` is positioned after `filler` (which takes 60px), so the remaining height resolves to 19.19px. Since 19.19px < 60px, `tall` is shorter than its sibling `filler`.\n\nANSWER: NO\n",
+  "ms": 8270
+}

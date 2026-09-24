@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "Annual review",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The evidence shows a node at `root>title` with a `div` whose text content is explicitly given as `\"Annual review\"`. Those quotation marks are just part of how the text is reported in the node tree; the actual characters a viewer sees are the text itself. Therefore, the viewer sees `Annual review`.\n\nANSWER: Annual review\n",
+  "ms": 7798
+}

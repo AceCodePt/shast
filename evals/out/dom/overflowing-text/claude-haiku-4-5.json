@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the computed styles and layout information:\n\nThe `root>card` element has:\n- Height: 48px\n- Padding: 8px on all sides\n- Line-height: 19.2px\n- Font-size: 16px\n\nThis means the content area available for text is 48px (height) - 8px (top padding) - 8px (bottom padding) = 32px tall.\n\nThe text \"Payment failed because the card on file expired last month.\" has a line-height of 19.2px. Since this is a single line of text and the line-height (19.2px) is less than the available content height (32px), the text does fit within the border box.\n\nThe element's `getBoundingClientRect` shows width of 180px with 8px padding on each side, leaving 164px for content, which is sufficient for this text to fit on a single line or wrap appropriately.\n\nANSWER: YES\n",
+  "ms": 8509
+}

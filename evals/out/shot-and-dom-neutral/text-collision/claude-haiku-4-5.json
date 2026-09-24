@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the browser data provided:\n\nThe `root>ghost` node has dimensions of `width=0 height=0` (0 pixels), meaning it occupies no space on the screen and its text cannot be rendered or drawn at all.\n\nThe `root>visible` node occupies the same position (`x=0 y=0`) and has the same dimensions as the root (`width=400 height=19.1875`). The screenshot shows \"Everything is fine\" is visible at the top of the page, which corresponds to the `root>visible` node.\n\nSince `root>ghost` has zero dimensions, its text is not actually drawn on any pixels. However, if we interpret the question as asking which node's text appears in the same visual space where `root>ghost`'s text would theoretically be (had it been rendered), that would be `root>visible`, which occupies the exact same bounding box position and overlaps completely with where the ghost element would be.\n\nANSWER: root>visible\n",
+  "ms": 8634
+}

@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "All three boxes contain the point (120,120):\n- `root>back` (z-index 1)\n- `root>front` (z-index 2)\n- `root>middle` (z-index 3)\n\nPainting order follows z-index when siblings share a stacking context, so higher z-index is drawn on top. The reported coverage confirms this: `front` is \"covered 100%\" by `middle`, and `back` is covered 64% by `middle`. Since `middle` (z-index 3) is the highest among the three and has an opaque background, it occludes the other two at that point.\n\nANSWER: root>middle\n",
+  "ms": 10524
+}

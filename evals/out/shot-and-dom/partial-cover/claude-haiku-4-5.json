@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles provided:\n\n- `root>row` (the `<p>` element) occupies the region from x=0 to x=600, y=0 to y=120\n- `root>chip` (the `<div>` element) occupies the region from x=400 to x=560, y=60 to y=100\n\nThe chip element overlaps with the row element in the region x=400 to x=560, y=60 to y=100. However, the row element contains only the text \"Short label\", which according to the visual rendering is positioned in the upper-left area of the paragraph (within the padding and initial line-height). The overlap occurs in the right-center area of the row's bounding box, where there is whitespace, not the text itself.\n\nThe text \"Short label\" is rendered on the first line of the paragraph and does not extend into the region where the chip is positioned (x=400-560, y=60-100).\n\nANSWER: NO\n",
+  "ms": 6421
+}

@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The element `root>inner` has `position: fixed`, which means it is positioned relative to the viewport and ignores the padding or relative positioning of its parent `root`. The CSS properties `top: 15px` and `left: 25px` specify its offset from the viewport edges, and this is confirmed by the `getBoundingClientRect` data which explicitly shows the node at x=25 and y=15.\n\nANSWER: 25,15\n",
+  "ms": 17036
+}

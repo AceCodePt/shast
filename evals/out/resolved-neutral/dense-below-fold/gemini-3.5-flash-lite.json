@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the rendered page information, the viewport height is 800px, but `root>main>r36` is positioned at y=978 with a height of 26px and is explicitly marked as `below-fold`. Therefore, it is not visible when the page first loads without scrolling.\n\nANSWER: NO\n",
+  "ms": 7180
+}

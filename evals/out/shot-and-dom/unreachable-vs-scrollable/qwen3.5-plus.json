@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the data:\n\n**Viewport:** 500x300 CSS pixels\n\n**Node analysis:**\n\n1. **`root>lower`** - `getBoundingClientRect: x=0 y=700 width=400 height=40`\n   - Positioned at y=700 with height 40, so it spans from y=700 to y=740\n   - The root has height=900, so the scrollable area extends to y=900\n   - This element is within the scrollable bounds (740 < 900)\n\n2. **`root>sideways`** - `getBoundingClientRect: x=0 y=40 width=900 height=40`\n   - Positioned at x=0 with width=900, so it spans from x=0 to x=900\n   - The viewport width is only 500px\n   - This element extends **horizontally** beyond the viewport (900 > 500)\n\n**Key distinction:** Ordinary scrolling moves vertically (up/down). The `root>lower` element is further down the page (y=700) and can be scrolled into view. The `root>sideways` element extends horizontally off the page (width=900 in a 500px viewport), which cannot be reached by vertical scrolling—horizontal overflow would require horizontal scrolling, but the root has `overflow: visible`, meaning the content simply renders off-screen without a scroll mechanism.\n\nANSWER: root>sideways\n",
+  "ms": 12825
+}

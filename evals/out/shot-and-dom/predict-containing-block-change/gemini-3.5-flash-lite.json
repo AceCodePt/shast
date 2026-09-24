@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Adding `position: relative` to `root>plain` makes it the nearest positioned ancestor for `root>plain>pin`, shifting its containing block from `root` to `root>plain`. Since `root>plain`'s padding edge starts at viewport coordinates x=20, y=20, applying `left: 10px` and `top: 10px` places the top-left corner of `root>plain>pin` at `20 + 10 = 30` for both x and y.\n\nANSWER: 30,30\n",
+  "ms": 17258
+}

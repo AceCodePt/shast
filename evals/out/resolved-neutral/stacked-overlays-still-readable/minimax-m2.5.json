@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>line` sits at y=0–19.19 (the top text line). `root>glass` paints over it but has no background, so it doesn't obscure anything. `root>panel` has an opaque background but is positioned at y=40–100, which is entirely below the text line, so it doesn't cover the text. The coverage note for `root>line` also confirms \"this node's 1 text line(s) stay fully visible.\"\n\nANSWER: YES\n",
+  "ms": 7761
+}

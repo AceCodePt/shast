@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>lede` paragraph is completely obscured by the `root>banner` `<div>`, which is absolutely positioned with `z-index: 5` and an opaque `background-color: #222222`, painting later and covering 100% of the lede's box. The report explicitly notes \"2 of 2 text line(s) completely hidden,\" so every line of the sentence is invisible to a reader.\n\nANSWER: NO\n",
+  "ms": 10556
+}

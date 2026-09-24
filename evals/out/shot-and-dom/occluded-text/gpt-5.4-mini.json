@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>lede` paragraph occupies `y=0` to about `54px`, but the banner is absolutely positioned at the top with height `70px` and higher `z-index`, so it covers the entire lede text. In the screenshot, only the lower page text is visible below the dark banner, not the full sentence in `root>lede`.\n\nANSWER: NO\n",
+  "ms": 6438
+}

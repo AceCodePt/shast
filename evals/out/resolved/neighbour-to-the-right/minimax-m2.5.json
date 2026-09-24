@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Both `leftBottom` (x=0, y=120) and `rightBottom` (x=340, y=120) share the same y-coordinate and height, placing them on the same row. `rightBottom` starts at x=340, directly to the right of `leftBottom`'s right edge at x=300.\n\nANSWER: root>rightBottom\n",
+  "ms": 6899
+}

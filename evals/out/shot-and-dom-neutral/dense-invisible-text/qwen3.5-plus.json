@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data for `root>main>r21`:\n\n- Text content: `\"21. Treasury positions\"`\n- `color: rgb(255, 255, 255)` (white text)\n- `background-color: rgba(0, 0, 0, 0)` (transparent)\n\nThe parent `root>main` also has a transparent background, so the effective background is the root's `rgb(255, 255, 255)` (white). This means the text is **white on white** — there is zero contrast between the text color and the visible background.\n\nThis is confirmed by the screenshot, which shows items 1-20, then skips directly to item 22 — item 21 is not visible.\n\nANSWER: NO\n",
+  "ms": 17853
+}

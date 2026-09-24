@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>cover` element has a black background and is positioned at `y=0` with a height of `19px`, effectively covering most of the first paragraph. However, the `root>second` element is positioned starting at `y=19.1875`, which is entirely below the bottom edge of the cover element. Since `root>second` is within the viewport and not obscured by the cover or any other elements, its text is readable.\n\nANSWER: YES\n",
+  "ms": 11682
+}

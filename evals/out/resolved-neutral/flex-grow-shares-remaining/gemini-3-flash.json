@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` container has a total width of 600px. The two child elements, `root>a` and `root>b`, have flex factors of 1 and 2 respectively, meaning the space is divided into 3 equal parts (600px / 3 = 200px per unit). `root>b` receives 2 units, resulting in a width of 400px, which matches the rendered dimensions provided in the snippet.\n\nANSWER: 400\n",
+  "ms": 8218
+}

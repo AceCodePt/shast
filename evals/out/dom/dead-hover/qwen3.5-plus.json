@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Comparing the `getComputedStyle()` data for `root>mid>leaf` between the non-hover and hover states:\n\n- **Before hover:** `padding: 2px 2px 2px 2px`\n- **During hover:** `padding: 2px 2px 2px 2px`\n\nThe padding values are identical in both states. Additionally, the `getBoundingClientRect()` shows the same dimensions (width=500, height=23.1875) in both cases, confirming no layout change occurred. Despite the CSS `:hover` block ostensibly setting `padding: 40px`, the actual rendered/computed style shows no change.\n\nANSWER: NO\n",
+  "ms": 13633
+}

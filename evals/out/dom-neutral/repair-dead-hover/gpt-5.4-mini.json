@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "`root>mid>leaf:hover` isn’t taking effect, so the hovered box is the ancestor that actually owns the rendered area. Edit the middle node’s block so the hover rule applies there.\n\nANSWER: root>mid\n",
+  "ms": 40277
+}

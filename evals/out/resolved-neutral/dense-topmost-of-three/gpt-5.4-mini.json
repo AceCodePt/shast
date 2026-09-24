@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "At `x=500, y=400`, the point lies inside `alpha`, `gamma`, and `beta`. Since `beta` has the highest `z-index` (`4`), it paints on top of the others, so its background is the one a viewer sees there.\n\nANSWER: root>beta\n",
+  "ms": 9789
+}

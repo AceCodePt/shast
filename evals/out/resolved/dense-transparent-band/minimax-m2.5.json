@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The banner overlays 69% of `root>main>r09`, but the report explicitly notes two things: the banner has no background, so what is behind it shows through, and \"this node's 1 text line(s) stay fully visible.\" The text is not occluded.\n\nANSWER: YES\n",
+  "ms": 7394
+}

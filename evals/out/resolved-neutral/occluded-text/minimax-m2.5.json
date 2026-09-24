@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` paragraph is fully obscured by the absolutely-positioned `root>banner` div, which paints later (z-index 5) with an opaque background (#222222) covering 100% of the lede's box. Both lines of text in the lede are completely hidden.\n\nANSWER: NO\n",
+  "ms": 8981
+}

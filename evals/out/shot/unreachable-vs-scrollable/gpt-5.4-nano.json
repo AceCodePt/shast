@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows only `root>sideways` (“runs off sideways”) within the 500x300 viewport, while `root>lower` (“further down”) is not visible. Since `root>lower` is described as sitting lower (vertically), ordinary vertical scrolling should be able to move it into view. `root>sideways` is described as running off to the side (horizontally), so ordinary scrolling cannot bring it fully into the viewport.\n\nANSWER: root>sideways\n",
+  "ms": 7518
+}

@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "rgb(0, 0, 0)",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The browser's computed style data for `root>label` explicitly shows:\n\n```\ncolor: rgb(0, 0, 0)\n```\n\nThis is the authoritative value from `getComputedStyle()`, which tells us the actual rendered text color.\n\nANSWER: rgb(0, 0, 0)\n",
+  "ms": 10318
+}

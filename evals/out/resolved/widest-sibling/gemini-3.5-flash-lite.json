@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The width of `root>rail` is 240 pixels and the width of `root>panel` is 600 pixels according to their layout measurements. Dividing the width of the panel by the width of the rail (600 / 240) gives 2.5.\n\nANSWER: 2.5\n",
+  "ms": 11495
+}

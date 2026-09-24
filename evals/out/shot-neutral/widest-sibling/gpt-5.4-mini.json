@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "2.3",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>panel` starts at about 274 px into the 900 px viewport, so `root>rail` is about 274 px wide and `root>panel` about 626 px wide. `626 / 274 ≈ 2.3`.\n\nANSWER: 2.3\n",
+  "ms": 20115
+}

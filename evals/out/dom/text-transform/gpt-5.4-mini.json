@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text in `root>title` is `Annual review`, but the computed style includes `text-transform: uppercase`, so Chromium renders it in uppercase. That means the viewer sees the transformed characters, not the original casing.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7528
+}

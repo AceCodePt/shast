@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>plain>pin` element has `position: absolute` with `left: 10px` and `top: 10px`. Since its parent `root>plain` is `position: static`, the containing block for the absolutely positioned `pin` is the nearest positioned ancestor, which is `root` (with `position: relative`). The browser's `getBoundingClientRect()` directly reports the rendered position as `x=10 y=10`, which represents the top-left corner of the element in viewport coordinates.\n\nANSWER: 10,10\n",
+  "ms": 15571
+}

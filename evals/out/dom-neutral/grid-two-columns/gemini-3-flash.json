@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element is a grid container starting at x=0 with two columns defined as 200px and 300px and a 20px gap. The first child, `root>left`, occupies the first column (x=0 to x=200), followed by the 20px gap (x=200 to x=220). Consequently, the second child, `root>right`, begins at the start of the second column at x=220, which is also confirmed by its `getBoundingClientRect` data.\n\nANSWER: 220\n",
+  "ms": 10653
+}

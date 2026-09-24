@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>second` paragraph is located at a vertical position starting at y=19.19 and extending to y=38.38. The `root>cover` element, which has an opaque background, only occupies the space from y=0 to y=19. Because the cover ends before the second paragraph begins, the text in `root>second` is not obscured and remains visible within the viewport.\n\nANSWER: YES\n",
+  "ms": 9503
+}

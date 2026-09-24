@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the browser data provided, the height of `root>outer>tall` is **19.1875px**, while the height of its sibling `root>outer>filler` is **60px**. Since 19.1875px is significantly less than 60px, `root>outer>tall` is actually much shorter than `root>outer>filler`. The `height: 100%` declaration on `tall` likely resolved to its content height because its parent `outer` has an indefinite (auto) height.\n\nANSWER: NO\n",
+  "ms": 10316
+}

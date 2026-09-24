@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows the page rendered within a 1280x800 viewport. The list of items in the main section begins at the top with \"01. Ledger reconciliation\" and ends at the bottom edge of the image with \"28. Warranty reserves\". Since \"36. Royalty accruals\" (node `root>main>r36`) occurs numerically after the last visible item, it is located below the fold and is not visible without scrolling.\n\nANSWER: NO\n",
+  "ms": 10749
+}

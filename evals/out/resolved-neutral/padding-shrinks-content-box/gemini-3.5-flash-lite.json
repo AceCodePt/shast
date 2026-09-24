@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The provided Chromium render information explicitly specifies under the `root>card` element properties that the text wrapped onto 4 lines. Specifically, the annotation states `wrapped: text broke onto 4 lines at 152px content width`. Therefore, the text breaks onto 4 lines.\n\nANSWER: 4\n",
+  "ms": 6966
+}

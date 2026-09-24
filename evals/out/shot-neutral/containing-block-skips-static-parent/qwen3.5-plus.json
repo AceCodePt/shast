@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "0,0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Based on the information provided:\n\n1. The viewport is 600x400 CSS pixels\n2. The node tree shows `root>plain>pin` contains the text \"pinned\"\n3. The screenshot shows \"pinned\" rendered at the top-left corner of the page\n4. Since `root>plain` is not positioned, it doesn't create a new containing block, but this doesn't affect where the element renders visually\n5. The screenshot clearly shows the text starting at the very top-left of the viewport with no visible offset\n\nANSWER: 0,0\n",
+  "ms": 15686
+}

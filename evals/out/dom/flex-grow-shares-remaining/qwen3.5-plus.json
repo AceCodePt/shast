@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser data explicitly shows `root>b` has `getBoundingClientRect: x=200 y=0 width=400 height=19.1875`. This matches the flex calculation: with a 600px container, `flex: 1` and `flex: 2` distribute space in a 1:2 ratio, giving `root>b` two-thirds of the width (400px).\n\nANSWER: 400\n",
+  "ms": 12896
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendering information provided:\n\nThe `root>ghost` div has `width: 0px` and `height: 0px`, but the critical detail is in the \"overflows\" note: \"content is 86.41x38.38px inside a 0x0px content box, so it is painted outside the box rather than cut off (overflow is visible).\"\n\nThis means the text content of \"Important warning\" exceeds the bounds of its 0x0px container. Since the overflow property is set to visible (the default), the text is painted outside the box boundaries rather than being clipped. Additionally, the collision note confirms that the text from `root>ghost` is actually drawn on the page, overlapping with the `root>visible` div's text by over 56% of its glyphs.\n\nANSWER: YES\n",
+  "ms": 7573
+}

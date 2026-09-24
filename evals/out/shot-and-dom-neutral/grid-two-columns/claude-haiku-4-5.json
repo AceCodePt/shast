@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the provided data:\n\nThe `root` element is a grid with `grid-template-columns: 200px 300px` and `gap: 20px`.\n\nThe first column is 200px wide. The gap is 20px. Therefore, the second column (`root>right`) starts at position 200px (first column) + 20px (gap) = 220px.\n\nThis is confirmed by the `getBoundingClientRect()` data for `root>right`, which shows `x=220`.\n\nANSWER: 220\n",
+  "ms": 6369
+}

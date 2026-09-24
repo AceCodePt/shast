@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered screenshot and the node tree:\n\nThe four boxes form a 2×2 grid:\n- Top row: `leftTop` (left) and `rightTop` (right)\n- Bottom row: `leftBottom` (left) and `rightBottom` (right)\n\nThe node `root>leftBottom` is on the bottom-left. The node directly to its right on the same (bottom) row is `root>rightBottom`, which contains the text \"right bottom\".\n\nANSWER: root>rightBottom\n",
+  "ms": 14552
+}

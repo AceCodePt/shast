@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Comparing the two screenshots, the text \"Leaf\" remains in the exact same position at the top-left corner of the viewport in both the rest and hover states. If the padding had changed to 40px during the hover, the text would have been displaced 40px from the top and left edges of the div. Since there is no visual difference between the screenshots, the padding did not change.\n\nANSWER: NO\n",
+  "ms": 8831
+}

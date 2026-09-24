@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "All three bands cover (500, 400): alpha (z=2), gamma (z=3), and beta (z=4). Higher z-index paints later, so beta sits on top of both alpha and gamma at that point. The coverage notes confirm it — alpha and gamma are each partly obscured by beta, while beta itself is unobstructed. So the viewer sees beta's background (#445566).\n\nANSWER: root>beta\n",
+  "ms": 7993
+}

@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The absolute-positioned `root>banner` div has a height of 70px and a higher z-index, placing a solid dark banner directly over the top of the page. Because the `root>lede` paragraph is located at `y=0` to `y=54.375`, it is completely covered and occluded by this banner, making its text unreadable.\n\nANSWER: NO\n",
+  "ms": 10345
+}

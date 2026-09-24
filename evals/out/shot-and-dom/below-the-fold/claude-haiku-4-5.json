@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided browser data:\n\n- The viewport is 500x300 CSS pixels\n- The `root>footer` element has a `getBoundingClientRect` with `y=700` and `height=60`, meaning it spans from y=700 to y=760\n- Since the viewport only shows from y=0 to y=300, the footer at y=700 is far below the visible area\n\nThe footer element is positioned absolutely at top: 700px, which places it well below the initial viewport. A user would need to scroll down significantly to see this content.\n\nANSWER: NO\n",
+  "ms": 5882
+}

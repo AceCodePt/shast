@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The provided information lists the computed styles for the `root>cta` node in two distinct states: the initial render and while the mouse is hovering over it. In the first section, which describes the browser's data for each node before the hover state is triggered, the `background-color` for `root>cta` is explicitly stated as `rgb(51, 85, 255)`.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 8338
+}

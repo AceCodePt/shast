@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>cell` element has a specified width of 120px, but it contains a very long URL string that cannot wrap or break. Because `overflow` is set to `visible`, the overflowing text extends past the 120px boundary of the element's box. Therefore, the URL does not stay inside `root>cell`'s 120px-wide box.\n\nANSWER: NO\n",
+  "ms": 6985
+}

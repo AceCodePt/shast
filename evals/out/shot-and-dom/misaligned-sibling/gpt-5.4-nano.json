@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Three rows (`first`, `second`, and `fourth`) have the same `getBoundingClientRect().left` value of `24px`. The `third` row has a different left edge at `40px`, meaning it is shifted horizontally relative to the others. Therefore, `third` is out of alignment.\n\nANSWER: root>third\n",
+  "ms": 9192
+}

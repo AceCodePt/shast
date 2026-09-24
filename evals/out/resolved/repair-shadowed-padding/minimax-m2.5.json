@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The padding: 4px declared in `root>body`'s css block (inside its `\"> panel\"` nested rule) is currently shadowing the `padding: 32px` declared directly on `root>body>panel`. To make 32px take effect, I need to remove or override that shadowing declaration, which lives in `root>body`'s css block.\n\nANSWER: root>body\n",
+  "ms": 6951
+}

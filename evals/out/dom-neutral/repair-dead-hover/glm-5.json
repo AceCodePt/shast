@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Reasoning:\n\nThe leaf already shows `padding: 2px` in both the resting and hover states, yet root and mid show `0px`. So whatever sets that `2px` is targeting the leaf specifically — and it is clearly active (it survives hover). Meanwhile the `:hover { padding: 40px }` rule sitting in the leaf's own block does nothing at all.\n\nThe only model consistent with that evidence is that a node's CSS block styles that node's **children**, not the node itself. Under that model:\n- The leaf's `2px` padding is produced by **mid's** block (mid styling its child, the leaf). That's why it's stable and present.\n- The `:hover { padding: 40px }` in the **leaf's** block would style the leaf's children — but the leaf has no children, so it never touches the leaf. That's exactly why hovering changes nothing.\n- To make the leaf grow on hover, the rule must live in the block that owns styling the leaf, i.e. its parent's block. And hovering the leaf also hovers mid (hover propagates to ancestors), so a `:hover` rule in mid's block fires when the leaf is hovered and applies its child-styling to the leaf.\n\nANSWER: root>mid\n",
+  "ms": 56283
+}

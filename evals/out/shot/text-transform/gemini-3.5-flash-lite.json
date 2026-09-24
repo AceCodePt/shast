@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text `\"Annual review\"` is rendered with CSS text-transform (uppercase), making all letters appear capitalized on the screen. As shown in the attached screenshot and rendered view, the text is displayed as uppercase.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 9304
+}

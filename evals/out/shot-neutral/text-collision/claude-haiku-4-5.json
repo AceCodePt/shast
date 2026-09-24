@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence provided:\n\nThe node tree shows:\n- `root>ghost` contains the text \"Important warning\"\n- `root>visible` contains the text \"Everything is fine\"\n\nThe screenshot shows the rendered page displays:\n- \"Everything is fine\" at the top\n- \"warning\" below it\n\nThe text \"Important warning\" from `root>ghost` is not visually shown in the screenshot, but based on the question asking which node's text is drawn on the same pixels, and given that \"warning\" appears in the visible output while \"Important\" does not, this suggests that the word \"warning\" (part of `root>ghost`'s text \"Important warning\") is being rendered on top of or overlapping with text from another node.\n\nSince \"Everything is fine\" is the only other text node visible, and we can see \"warning\" displayed below \"Everything is fine\", the text collision is occurring between `root>ghost` and `root>visible`. The word \"warning\" from `root>ghost` is drawn on the same pixels where `root>visible`'s text would be rendered.\n\nANSWER: root>visible\n",
+  "ms": 6896
+}

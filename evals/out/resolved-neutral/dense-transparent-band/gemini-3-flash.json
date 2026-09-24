@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Although `root>main>r09` is covered by `root>banner` (which has a higher z-index and paints later), the information states that the banner has no background, allowing what is behind it to show through. Furthermore, the entry for `root>main>r09` explicitly confirms that its text line stays fully visible.\n\nANSWER: YES\n",
+  "ms": 9854
+}

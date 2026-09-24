@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The evidence shows the rendered page (viewport `400x300`) with the full message text visible on screen, even though the last line is said to lie below the bottom edge of the `root>card` element’s box. In Chromium, text can still be painted outside an element’s border/box when the element does not clip overflow (the default is `overflow: visible`). Since the screenshot indicates that last line is readable within the viewport, a person could read it.\n\nANSWER: YES\n",
+  "ms": 11132
+}

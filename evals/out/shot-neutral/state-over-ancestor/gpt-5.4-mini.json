@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "0px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The hovered screenshot looks the same as the resting one: the `Leaf` text sits flush at the top-left of the viewport with no visible inset around it. That means `root>mid>leaf` is rendering with no padding while hovered.\n\nANSWER: 0px\n",
+  "ms": 8605
+}

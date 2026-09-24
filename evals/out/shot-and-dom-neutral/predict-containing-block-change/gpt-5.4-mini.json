@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>plain>pin` will move to the top-left of `root>plain`’s containing block, which becomes `root>plain` itself once `position: relative` is added.\n\n`root>plain` starts at `x=20, y=20`, and the absolutely positioned child is offset `10px` from that containing block, so it renders at:\n\nANSWER: 30,30\n",
+  "ms": 10033
+}

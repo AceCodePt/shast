@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At `x=500, y=400`, all three absolutely positioned bands cover the point. Their `z-index` values decide stacking order, and `root>beta` has the highest `z-index` (`4`), above `root>gamma` (`3`) and `root>alpha` (`2`). So the viewer sees `root>beta`’s background color there.\n\nANSWER: root>beta\n",
+  "ms": 8439
+}

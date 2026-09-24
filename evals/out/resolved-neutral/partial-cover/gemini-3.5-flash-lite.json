@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The information explicitly states that `root>row`'s single text line stays fully visible despite the chip covering part of its border box. Therefore, none of `root>row`'s text is hidden.\n\nANSWER: NO\n",
+  "ms": 6962
+}

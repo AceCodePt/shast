@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Three rows share a left edge at `x=24` (first, second, and fourth), while the third row sits at `x=40`, which is 16px farther to the right. That offset is consistent with its resolved `left: 40px` versus the others' `left: 24px`. Therefore the third row is the one out of alignment.\n\nANSWER: root>third\n",
+  "ms": 8678
+}

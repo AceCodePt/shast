@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `root>main>r09` is rendered at `x=244 y=276` with a visible 26px-tall row, and the screenshot shows the list item text `09. Currency hedging` clearly on screen. There’s no clipping or overlap that would prevent reading it.\n\nANSWER: YES\n",
+  "ms": 8148
+}

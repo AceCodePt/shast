@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text `root>line` is located at y=0 to y=19.18, whereas the grey panel (`root>panel`) is positioned further down at y=40 to y=100. Although the glass layer covers the top area, its background is transparent, so it does not obscure the text, making it fully readable.\n\nANSWER: YES\n",
+  "ms": 8998
+}

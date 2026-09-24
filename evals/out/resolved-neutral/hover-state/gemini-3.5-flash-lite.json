@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When the page is first painted and the pointer is elsewhere, the `root>cta` element is in its default state rather than the `:hover` state. According to the provided styles, the default background color for `root>cta` is `#3355ff`. \n\nANSWER: #3355ff\n",
+  "ms": 7521
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `:hover` rule on the `leaf` would normally change `padding` to `40px`, but the rendered result shows that the `padding: 2px` declared by `root` inside the more specific selector block (`root > mid > leaf`) has higher priority and therefore wins. As a result, when `:hover` is entered, Chromium does not apply the `40px` padding change, and the computed padding remains `2px`.  \n\nANSWER: NO\n",
+  "ms": 6778
+}

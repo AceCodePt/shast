@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows the text \"Still readable\" at the top left of the viewport, completely unobstructed. Although the node tree indicates that `glass` and `panel` are siblings that follow `line` and could potentially paint over it, the visual evidence confirms that the text is not obscured and remains fully legible.\n\nANSWER: YES\n",
+  "ms": 9573
+}

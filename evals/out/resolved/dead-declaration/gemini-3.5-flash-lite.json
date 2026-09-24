@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states that `padding: 4px` declared by root shadows `padding: 32px` declared by `root>body>panel` itself. Because the `32px` declaration is shadowed and overridden, it has no effect on the rendered page.\n\nANSWER: NO\n",
+  "ms": 9537
+}

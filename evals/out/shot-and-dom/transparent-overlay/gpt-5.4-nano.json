@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>lede` element is a `<p>` with a computed `width` of 600px and a `height` of about 54.4px. With a `line-height` of 19.2px, that height can accommodate roughly 2–3 lines of wrapped text, and there’s no indication of clipping/overflow limiting the text. Since the sentence fits within the visible area of the `lede` paragraph, a person should be able to read the whole sentence.\n\nANSWER: YES\n",
+  "ms": 9860
+}

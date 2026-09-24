@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report:\n\n- `root>leftBottom` is positioned at x=0, y=120 with width=300, height=80\n- This means it spans from x=0 to x=300 horizontally, and y=120 to y=200 vertically\n\nFor a node to be \"directly to the right on the same row\", it needs to share the same y-coordinate (y=120) and have a greater x value.\n\n- `root>rightBottom` is at x=340, y=120 — same y position (same row), and x=340 is to the right of where `leftBottom` ends (x=300)\n\nANSWER: root>rightBottom\n",
+  "ms": 14394
+}

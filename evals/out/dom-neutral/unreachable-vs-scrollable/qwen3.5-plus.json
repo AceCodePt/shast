@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the viewport (500x300) and the node positions:\n\n**root>lower**: Positioned at y=700 with height 40 (spans y=700-740), width 400. The root has height 900px, so vertical scrolling can bring this into view (scroll down ~400px to see y=700-740 within the 300px tall viewport). Width 400 fits within the 500px viewport.\n\n**root>sideways**: Positioned at y=40 with height 40, but **width 900px**. The viewport is only 500px wide. This element extends 400px beyond the right edge of the viewport. Ordinary vertical scrolling cannot reveal content that overflows horizontally.\n\nANSWER: root>sideways\n",
+  "ms": 18762
+}

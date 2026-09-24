@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The page data explicitly says `wrapped: text broke onto 4 lines at 152px content width`, so the text inside `root>card` wraps onto 4 lines.\n\nANSWER: 4\n",
+  "ms": 7600
+}

@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The information states that the content (the URL text) is 518.41px wide inside a 120px-wide content box, and explicitly notes that \"it is painted outside the box rather than cut off (overflow is visible)\". This means the URL text extends well beyond the 120px boundary of `root>cell`'s box.\n\nANSWER: NO\n",
+  "ms": 14386
+}

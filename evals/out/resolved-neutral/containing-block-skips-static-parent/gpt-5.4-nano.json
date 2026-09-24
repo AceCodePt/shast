@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The layout dump states that the `pin` element’s `@ x` and `@ y` are already resolved absolute coordinates from the top-left of the page (in CSS pixels). For `root>plain>pin`, the dump explicitly shows `@ x=10 y=10`. Since the question asks where its top-left corner renders, we use those values directly.\n\nANSWER: 10,10\n",
+  "ms": 13560
+}

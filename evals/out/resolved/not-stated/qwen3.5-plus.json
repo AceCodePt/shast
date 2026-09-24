@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report provides layout and box model information (position, dimensions, font-size, padding) for the `root>label` element, but it does not include any color properties. While the report states that \"every style is already resolved,\" the excerpt shown simply doesn't list a `color` property for this element.\n\nANSWER: NOT STATED\n",
+  "ms": 15586
+}

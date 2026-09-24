@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 1280x800, so only content with y < 800 is visible without scrolling. `root>main>r36` is at y=978 with height=26, extending to y=1004, well past the 800px viewport bottom. The report also explicitly tags it as \"below-fold\".\n\nANSWER: NO\n",
+  "ms": 7473
+}

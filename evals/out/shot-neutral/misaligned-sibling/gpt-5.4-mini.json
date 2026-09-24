@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`third` is the one shifted to the right. In the screenshot, `first`, `second`, and `fourth` share the same left margin, while `third` starts noticeably farther in, so it is the misaligned row.\n\nANSWER: root>third\n",
+  "ms": 8042
+}

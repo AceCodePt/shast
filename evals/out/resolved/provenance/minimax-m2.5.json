@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states that `border-radius: 12px` is \"declared by root, inside its `> body > panel` block.\" Since declarations live in the css block of the node that contains them, the declaration belongs to the `root` node.\n\nANSWER: root\n",
+  "ms": 9948
+}

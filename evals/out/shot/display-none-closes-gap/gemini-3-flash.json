@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `display: none` property removes an element from the document flow, meaning it occupies no space in the layout. The screenshot confirms this, showing \"third\" rendered immediately below \"first\" without the large vertical gap that would be present if `root>gone` still occupied its 40px space.\n\nANSWER: NO\n",
+  "ms": 15743
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence:\n\n- `root>ghost` has `width: 0px` and `height: 0px`, so its content box has no area.\n- The root element itself is exactly `400px × 19.1875px`, which precisely matches `root>visible` (one line of \"Everything is fine\"). There is no extra height, no overflow region, and no second line of text indicated anywhere.\n- Even though `overflow: visible` is set (the default), with a zero-width *and* zero-height box there is no rendered line box to host the text, and the parent shows no sign of accommodating any painted glyphs.\n\nSince the bounding rect of the root is fully accounted for by `root>visible`, and `root>ghost` has zero dimensions with no evidence of content escaping its box, the words \"Important warning\" are not painted anywhere on the page.\n\nANSWER: NO\n",
+  "ms": 18446
+}

@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>first` has a height of 40px and `root>third` starts at `y=40`, exactly where `root>first` ends, so there is no visible 40px gap left by `root>gone`. A `display: none` element takes up no layout space, and the screenshot shows the two visible items touching vertically.\n\nANSWER: NO\n",
+  "ms": 8316
+}

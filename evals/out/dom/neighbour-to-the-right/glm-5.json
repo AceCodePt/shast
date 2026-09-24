@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>leftBottom` is at y=120, x=0. The node on the same row (y=120) and to the right (x=340) is `root>rightBottom`.\n\nANSWER: root>rightBottom\n",
+  "ms": 7353
+}

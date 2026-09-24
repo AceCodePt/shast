@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The root container has a total width of 600px and uses flex layout with two children having flex factors of 1 and 2, respectively (totaling 3). Item `root>b` receives 2/3 of the available width, which calculates to 400px, matching its rendered dimension.\n\nANSWER: 400\n",
+  "ms": 6756
+}

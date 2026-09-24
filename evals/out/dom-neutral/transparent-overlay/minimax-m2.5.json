@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at this carefully:\n\n**Lede visibility**: The `root>lede` paragraph is 600px wide and 54.375px tall. At 16px font with 19.2px line-height, that's roughly 2.8 lines of vertical space. The text is 72 characters total (the \"…\" is just a dump-display truncation marker, not CSS clipping). At ~70–90 characters per line on a 600px-wide paragraph, the full sentence fits in roughly two lines — well within the 54.375px height.\n\n**Banner overlap**: The `root>banner` does sit on top of the lede (position absolute, y=0, height=70, z-index 5), but its background is `rgba(0, 0, 0, 0)` (fully transparent) and no text content is listed for it. There is no opacity, filter, mask, or non-transparent background that would block the lede text beneath it. Nothing in the provided style data indicates the banner paints anything opaque over the lede.\n\nSince the sentence fits in the rendered box and nothing opaque is layered on top of it, a reader can see and read the full sentence.\n\nANSWER: YES\n",
+  "ms": 28170
+}

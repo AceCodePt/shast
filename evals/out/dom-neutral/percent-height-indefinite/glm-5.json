@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. Although `tall` declares `height: 100%`, that percentage can only resolve against a *definite* containing-block height. Its parent `root>outer` has `position: static` and an `auto` (content-derived) height — the reported 79.1875px is just the sum of the two children, not an explicit height. With no definite height to resolve against, `height: 100%` falls back to `auto`, so `tall` simply sizes to its content (the single line of text \"b\" at line-height 19.2px → 19.1875px). Since `filler` is 60px and `tall` is only 19.1875px, `tall` is much shorter, not taller.\n\nANSWER: NO\n",
+  "ms": 17793
+}

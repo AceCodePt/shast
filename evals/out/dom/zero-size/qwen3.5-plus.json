@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The `root>ghost` element has `width=0px` and `height=0px` according to both `getBoundingClientRect()` and `getComputedStyle()`. When an element has zero dimensions, the browser has no area in which to paint its text content. Even though \"Important warning\" exists in the DOM tree, it occupies no visual space and therefore is not rendered on the page.\n\nANSWER: NO\n",
+  "ms": 11584
+}

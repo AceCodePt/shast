@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `p` text “Short label” is fully visible at the top left, and the `chip` sits separately to the right with whitespace between them. Since there is no visible overlap with the row’s text, nothing from `root>row` is hidden.\n\nANSWER: NO\n",
+  "ms": 6836
+}

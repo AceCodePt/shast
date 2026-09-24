@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the `getBoundingClientRect()` data provided:\n\n- `root>outer>filler` has **height=60px**\n- `root>outer>tall` has **height=19.1875px**\n\nEven though `root>outer>tall` declares `height: 100%`, its actual rendered height (19.1875px) is significantly smaller than its sibling's height (60px). This happens because percentage heights in CSS resolve against the parent's explicit height, and the parent (`root>outer`) has a defined height of 79.1875px, but the percentage calculation doesn't make the tall element exceed its sibling.\n\nANSWER: NO\n",
+  "ms": 12499
+}

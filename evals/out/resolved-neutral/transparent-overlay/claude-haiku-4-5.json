@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>lede` paragraph contains the text \"The quarterly results are in and every region beat its targ…\" (72 chars). According to the details:\n- The text wrapped onto 2 lines at 584px content width\n- The `root>banner` div (absolute, z-index 5) covers part of this node\n- However, the key detail states: \"this node's 2 text line(s) stay fully visible\"\n\nThis explicitly indicates that both lines of the text remain fully visible to the reader, despite the banner element painting over the box. Since both text lines are fully visible, a person can read the whole sentence.\n\nANSWER: YES\n",
+  "ms": 8319
+}

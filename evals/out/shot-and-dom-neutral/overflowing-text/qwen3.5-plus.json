@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence:\n\n1. The `root>card` element has a height of **48px** with `line-height: 19.2px`\n2. The text \"Payment failed because the card on file expired last month.\" renders across **4 lines** (visible in the screenshot)\n3. Four lines at 19.2px line-height requires approximately **76.8px** of vertical space (4 × 19.2px)\n4. The element's content area is even smaller than 48px once padding (8px top + 8px bottom) is accounted for: 48px - 16px = 32px\n\nThe text clearly overflows the 48px-tall border box, which is why `overflow: visible` is set (allowing the overflow to be visible rather than clipped).\n\nANSWER: NO\n",
+  "ms": 17630
+}

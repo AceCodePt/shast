@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Comparing the dimensions and proportions of the three boxes, the square box typically has equal side lengths that exceed the height of the wide box and the width of the tall box, resulting in a larger total surface area ($width \\times height$). \n\nANSWER: root>square\n",
+  "ms": 13527
+}

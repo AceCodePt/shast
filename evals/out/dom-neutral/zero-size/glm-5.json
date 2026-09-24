@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "## Reasoning\n\n`root>ghost` has `display: block` (not `none`), `overflow: visible`, and `opacity: 1`. Its box collapses to 0×0, but with `overflow: visible` the text content overflows the zero-size box and is still painted by the browser — it is not clipped. The \"Important warning\" text would render starting at the box's origin (x=0, y=0), overlapping with the \"Everything is fine\" text from `root>visible`, which occupies the same position. Nothing in the computed style (`visibility` defaults to `visible`, `opacity` is 1, `color` is black) suppresses painting.\n\nANSWER: YES\n",
+  "ms": 22814
+}

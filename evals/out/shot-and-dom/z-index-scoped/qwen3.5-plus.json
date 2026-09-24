@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the stacking context:\n\n- `root>low` has `z-index: 1` and `position: absolute`, which creates a new stacking context\n- `root>low>inner` has `z-index: 999`, but this is scoped **within** its parent's stacking context\n- `root>high` has `z-index: 2` at the root stacking context level\n\nSince `root>low` (z-index: 1) is lower than `root>high` (z-index: 2), the entire `root>low` stacking context—including its child `root>low>inner`—renders beneath `root>high`. The high z-index of 999 on `inner` doesn't escape its parent's stacking context.\n\nThe screenshot confirms this: the red \"high\" div appears on top of the blue \"inner\" div in the overlap region.\n\nANSWER: root>high\n",
+  "ms": 16352
+}

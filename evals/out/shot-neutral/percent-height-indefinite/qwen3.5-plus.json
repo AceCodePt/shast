@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, element \"b\" (which is `root>outer>tall`) has significant white space extending below it, indicating its container is quite tall. Element \"a\" (`root>outer>filler`) appears as just the text with no extra vertical space.\n\nSince `root>outer>tall` has `height: 100%`, it takes up the full height of its parent container, making it much taller than `root>outer>filler` which only has its natural text height.\n\nANSWER: YES\n",
+  "ms": 15157
+}

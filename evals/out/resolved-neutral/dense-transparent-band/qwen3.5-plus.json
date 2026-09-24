@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information for `root>main>r09` (which contains \"09. Currency hedging\"):\n\nThe element is marked as \"covered\" by `root>banner`, which paints over 69% of the box. However, the coverage note explicitly states the banner \"has no background, so what is behind it still shows through.\" Additionally, there's a specific note that \"this node's 1 text line(s) stay fully visible.\"\n\nSince the covering element has no background and the text lines remain fully visible, the text can be read.\n\nANSWER: YES\n",
+  "ms": 13831
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendered node tree shows that `root>main>r09` contains the text “09. Currency hedging”. However, in the provided screenshot the region covering the 09 row is obscured by a large red highlight bar, so the viewer cannot actually see/read the “09. Currency hedging” text on screen.  \n\nANSWER: NO\n",
+  "ms": 11034
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The browser's data for `root>body>panel` shows that its computed padding is `4px 4px 4px 4px`. If the `padding: 32px` declaration were having an effect on the rendered page, the computed padding would be `32px` rather than `4px`. Since the actual rendered padding differs from the declaration, it is not being applied.\n\nANSWER: NO\n",
+  "ms": 11557
+}

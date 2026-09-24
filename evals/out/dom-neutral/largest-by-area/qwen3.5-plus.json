@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "To find which box covers the largest area, I need to multiply width × height for each box using the `getBoundingClientRect()` data:\n\n- **wide**: 600px × 60px = 36,000 px²\n- **tall**: 120px × 300px = 36,000 px²\n- **square**: 220px × 220px = 48,400 px²\n\nThe square box has the largest area at 48,400 square pixels.\n\nANSWER: root>square\n",
+  "ms": 13136
+}

@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>line` box occupies the vertical space from $y=0$ to $y=19.19$. While `root>glass` paints over it, that element has no background and is transparent. The opaque `root>panel` element starts at $y=40$, which is well below the bottom edge of `root>line`, meaning it does not obstruct the text. Furthermore, the data explicitly states that the node's text line stays fully visible.\n\nANSWER: YES\n",
+  "ms": 9943
+}

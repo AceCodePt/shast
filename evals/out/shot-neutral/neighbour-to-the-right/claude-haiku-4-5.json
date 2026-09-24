@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the node tree provided:\n\n- `root>leftTop` and `root>rightTop` are on the top row\n- `root>leftBottom` and `root>rightBottom` are on the bottom row\n\nThe question asks which node sits directly to the right of `root>leftBottom` on the same row. Since `root>leftBottom` is on the bottom row on the left side, the node directly to its right on the same row is `root>rightBottom`.\n\nThis is confirmed by the screenshot, which shows a two-by-two grid with \"left bottom\" on the bottom-left and \"right bottom\" on the bottom-right.\n\nANSWER: root>rightBottom\n",
+  "ms": 6314
+}

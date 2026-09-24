@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>ghost` node has a `collides` annotation stating that `root>visible <div>` draws its text on the same pixels, covering 56% of `root>ghost`'s glyphs. The other direction is also annotated on `root>visible`, confirming the overlap.\n\nANSWER: root>visible\n",
+  "ms": 6624
+}

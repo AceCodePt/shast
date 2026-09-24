@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node `root>body>panel` contains the text \"Panel\". If the `padding: 32px` declaration had any effect, the text would be pushed at least 32 pixels away from the top and left boundaries of the panel's content area. However, the screenshot shows the text \"Panel\" rendered in the extreme top-left corner of the viewport, indicating that no such padding is being applied.\n\nANSWER: NO\n",
+  "ms": 9996
+}

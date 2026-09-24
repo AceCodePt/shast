@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The node `root>row` contains the text \"Short label,\" which is rendered in the top-left corner of the viewport. While `root>chip` (the yellow box) may overlap the bounding box of the `root>row` element, the screenshot shows that the characters \"Short label\" are fully visible and unobstructed. The yellow chip is positioned to the right of the text, leaving all characters of `root>row` clearly legible.\n\nANSWER: NO\n",
+  "ms": 10469
+}

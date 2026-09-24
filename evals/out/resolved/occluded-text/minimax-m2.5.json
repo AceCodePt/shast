@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>lede` paragraph is positioned at x=0, y=0 with dimensions 600×54.38, and contains wrapped text across 2 lines. However, the `root>banner` div is an absolutely positioned element at the same location (x=0, y=0, 600×70) with a higher z-index (5) and an opaque background color (#222222). The report explicitly states the banner covers 100% of the lede's box, hiding both of its 2 text lines completely. Therefore, a reader cannot see any of the sentence.\n\nANSWER: NO\n",
+  "ms": 11333
+}

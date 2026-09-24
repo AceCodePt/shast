@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The two covering boxes overlap to fully occlude the text.\n\n`leftHalf` spans x=0–70 and `rightHalf` spans x=60–140; their union covers x=0–140. The text \"Hidden by two\" at 16px is only ~100–130px wide, so it fits entirely within that union. Critically, the render info explicitly states \"1 of 1 text line(s) completely hidden\" — neither box alone spans the whole line, but together they cover every pixel of the actual text.\n\nANSWER: NO\n",
+  "ms": 15818
+}

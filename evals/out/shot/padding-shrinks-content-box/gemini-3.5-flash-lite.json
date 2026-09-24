@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the provided screenshot and viewport render information, the text inside `root>card` wraps across four separate lines (\"one two three\", \"four five six\", \"seven eight\", and \"nine ten\"). \n\nANSWER: 4\n",
+  "ms": 15929
+}

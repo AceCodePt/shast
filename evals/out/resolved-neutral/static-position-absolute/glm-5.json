@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When an absolutely positioned element declares no `top`/`right`/`bottom`/`left`, it is placed at its **static position** — the spot it would occupy in normal flow. Here `root` contains a `spacer` that is 50px tall sitting at the top (y=0–50). `floaty` follows it in source order, so its static position is right after the spacer, at y=50. The container itself is only 50px tall and overflows, but that doesn't matter: the static position is computed from the in-flow content above it, which is the 50px spacer. This matches the rendered y=50.\n\nANSWER: 50\n",
+  "ms": 16884
+}

@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding box data:\n\n- `root>ghost` has `x=0 y=0 width=0 height=0` — it occupies no pixels on screen\n- `root>visible` has `x=0 y=0 width=400 height=19.1875` — it starts at the same origin point (0,0)\n\nBoth nodes share the same top-left position coordinates (x=0, y=0). Even though `root>ghost` has zero dimensions (meaning its text isn't visibly rendered), the question asks which node's text would be drawn at the same pixel location. Since both elements are positioned at the identical origin point, `root>visible` is the node that occupies the same starting position.\n\nANSWER: root>visible\n",
+  "ms": 19895
+}

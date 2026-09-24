@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>cell`’s bounding box is only `120px` wide (`getBoundingClientRect width=120`), while the URL in that same element is extremely long and appears as an unbroken text node (a full URL string). The cell also has `overflow: visible` and no evidence of wrapping/truncation being applied, so Chromium would paint the long URL beyond the 120px box rather than constrain it within that width. Therefore, the URL does not stay inside the `root>cell` 120px-wide box.\n\nANSWER: NO\n",
+  "ms": 9561
+}

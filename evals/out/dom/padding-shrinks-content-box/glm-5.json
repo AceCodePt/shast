@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "## Reasoning\n\nThe card's total height is 124.75px, with 24px padding on top and bottom, leaving a content height of 124.75 − 48 = 76.75px. The line-height is 19.2px, so the number of text lines is 76.75 ÷ 19.2 ≈ 4. This aligns with the card's content width of 200 − 48 = 152px being too narrow to fit all ten words on fewer lines.\n\nANSWER: 4\n",
+  "ms": 19519
+}

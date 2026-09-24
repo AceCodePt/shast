@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text is `Annual review`, but the screenshot shows it rendered in uppercase. So the viewer sees the transformed characters, not the original casing.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 7798
+}

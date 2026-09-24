@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendered width of `root>panel` is 600px and the rendered width of `root>rail` is 240px, as shown by their `getBoundingClientRect` data. Dividing 600 by 240 gives exactly 2.5.\n\nANSWER: 2.5\n",
+  "ms": 13806
+}

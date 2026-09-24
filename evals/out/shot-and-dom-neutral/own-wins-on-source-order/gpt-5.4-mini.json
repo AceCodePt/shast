@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The element actually renders with `64px` padding on all sides. The browser-reported computed style for `root>child` shows `padding: 64px 64px 64px 64px`, which already reflects the cascade result, and the screenshot matches that spacing. Since the declarations have the same specificity, the one later in source order wins.\n\nANSWER: 64px\n",
+  "ms": 6708
+}

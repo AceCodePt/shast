@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles for each node:\n\n- `root>leftBottom`: x=0, y=120, width=300, height=80 (occupies left side, row starting at y=120)\n- `root>rightBottom`: x=340, y=120, width=300, height=80 (occupies right side, row starting at y=120)\n\nBoth nodes are on the same row (y=120) in a two-by-two grid. The `root>rightBottom` node is positioned to the right of `root>leftBottom` (x=340 vs x=0), making it the node directly to the right on the same row.\n\nANSWER: root>rightBottom\n",
+  "ms": 8152
+}

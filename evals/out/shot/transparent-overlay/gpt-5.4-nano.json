@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "No. The evidence shows the `root>lede` paragraph text as `“The quarterly results are in and every region beat its targ…“`, which includes an ellipsis/truncation rather than the full sentence. The screenshot likewise displays only the beginning of the sentence ending at `targ…`, and the next line starts the following paragraph.  \n\nANSWER: NO\n",
+  "ms": 13868
+}

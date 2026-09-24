@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the card's height and line-height, I can deduce the number of text lines:\n\n- The card has `padding: 24px` on all sides, so vertical padding = 48px\n- The card height is 124.75px, so the text content area = 124.75 − 48 = 76.75px\n- Each line is 19.2px tall (line-height)\n- 76.75px ÷ 19.2px ≈ 4 lines (76.8px for exactly 4 lines)\n\nTesting this against the text \"one two three four five six seven eight nine ten\" (10 short words) in a content width of 152px (200px − 48px padding) at 16px font: 4 lines also fits naturally, since the words distribute roughly evenly across ~4 lines.\n\nA 3-line layout would produce ~105.6px total height, and a 5-line layout ~144px — neither matches the observed 124.75px.\n\nANSWER: 4\n",
+  "ms": 18936
+}

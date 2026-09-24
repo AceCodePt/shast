@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "I need to determine which box is visible at point (120, 120) by checking which box is on top based on z-index values.\n\nLet me verify which boxes contain the point (120, 120):\n\n- **root>back**: x=40, y=40, width=200, height=200 → covers 40-240 horizontally and 40-240 vertically. ✓ Contains (120, 120)\n- **root>middle**: x=80, y=80, width=200, height=200 → covers 80-280 horizontally and 80-280 vertically. ✓ Contains (120, 120)\n- **root>front**: x=100, y=100, width=60, height=60 → covers 100-160 horizontally and 100-160 vertically. ✓ Contains (120, 120)\n\nAll three boxes overlap at point (120, 120). The z-index values determine stacking order:\n- root>back: z-index = 1\n- root>front: z-index = 2\n- root>middle: z-index = 3\n\nHigher z-index values appear on top. Since root>middle has z-index = 3 (the highest), it will be the visible box at point (120, 120).\n\nANSWER: root>middle\n",
+  "ms": 8368
+}

@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "In the rendered page, `alpha` and `beta` are positioned close together near the top, forming a visual proximity pair. In contrast, `gamma` is located further down with a noticeable vertical gap separating it from the other two.\n\nANSWER: root>gamma\n",
+  "ms": 7103
+}

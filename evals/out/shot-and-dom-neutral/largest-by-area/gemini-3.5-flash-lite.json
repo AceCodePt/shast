@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "To find the box with the largest area, we calculate width multiplied by height for each:\n- `root>wide`: 600 × 60 = 36,000\n- `root>tall`: 120 × 300 = 36,000\n- `root>square`: 220 × 220 = 48,400\n\nThe square box has the largest area at 48,400 square pixels.\n\nANSWER: root>square\n",
+  "ms": 6980
+}

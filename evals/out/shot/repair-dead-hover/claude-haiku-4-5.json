@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence:\n\n1. The CSS rule `:hover { padding: 40px }` has already been added to `root>mid>leaf`'s own css block\n2. The two screenshots show that hovering on `root>mid>leaf` produces no visible change\n3. This means the `:hover` rule on `root>mid>leaf` itself is not working\n\nThe most likely reason is that a parent element (specifically `root>mid`) is preventing the hover state from being detected or applied to the child. In CSS, if a parent element doesn't have `pointer-events: auto` or similar settings, or if there's a positioning/overflow issue, the child's hover state may not trigger properly.\n\nSince the `:hover` rule is already correctly placed on `root>mid>leaf` but isn't working, the problem must be in the parent container's CSS. The parent `root>mid` needs to be configured to allow hover events to properly reach and affect its child.\n\nANSWER: root>mid\n",
+  "ms": 6396
+}

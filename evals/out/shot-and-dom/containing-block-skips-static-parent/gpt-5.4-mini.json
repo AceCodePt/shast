@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>plain>pin` is `position: absolute`, so it looks for the nearest positioned ancestor. `root>plain` is `static`, so it is skipped. The positioned ancestor is `root`, and `left: 10px; top: 10px` place the element 10px from `root`'s padding box origin, which is at the viewport origin here.\n\nANSWER: 10,10\n",
+  "ms": 12953
+}

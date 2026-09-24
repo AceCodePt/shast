@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding client rect data for `root>main>r17`:\n\n- The element's vertical position (y coordinate) is 484 pixels from the top\n- The viewport height is 800 CSS pixels\n- The header (`root>masthead`) occupies the top 56 pixels\n- The element itself has a height of 26 pixels\n\nSince the element starts at y=484 and the viewport extends to y=800, the element is positioned well within the visible viewport area. There is no scrolling required to see it when the page first loads.\n\nANSWER: YES\n",
+  "ms": 11954
+}

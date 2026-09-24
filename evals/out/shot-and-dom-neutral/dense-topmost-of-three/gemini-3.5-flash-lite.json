@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "At the coordinates (500, 400), all three overlapping divs (`alpha`, `beta`, and `gamma`) cover the point. Their stacking order is determined by their respective `z-index` properties: `alpha` has z-index 2, `gamma` has z-index 3, and `beta` has z-index 4. Since `beta` has the highest z-index value, it renders on top of the others.\n\nANSWER: root>beta\n",
+  "ms": 9444
+}

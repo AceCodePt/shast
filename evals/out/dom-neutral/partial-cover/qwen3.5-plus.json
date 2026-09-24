@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding boxes:\n\n- `root>row` occupies (0, 0) to (600, 120) and contains the text \"Short label\"\n- `root>chip` occupies (400, 60) to (560, 100) with absolute positioning\n\nThe chip does overlap the paragraph's bounding box. However, \"Short label\" is a short text string that at 16px font size would typically render to approximately 80-100px wide. Since the paragraph starts at x=0, the text would occupy roughly x=0 to x=100. The chip starts at x=400, which is well beyond where the short text label would end.\n\nANSWER: NO\n",
+  "ms": 17446
+}

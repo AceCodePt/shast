@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>main>r09` sits at the same vertical position as the red `root>banner`, which is absolutely positioned above it with `z-index: 5`, so it overlays the row. Since the row’s text starts at the same left edge and is short enough to fit well within the banner’s covered area, the viewer would not be able to read it.\n\nANSWER: NO\n",
+  "ms": 8411
+}

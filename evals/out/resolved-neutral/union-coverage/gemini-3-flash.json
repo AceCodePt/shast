@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The provided information explicitly states that \"1 of 1 text line(s) [are] completely hidden.\" While neither the `leftHalf` nor `rightHalf` covering boxes span the entire 400px width of the line, their combined range covers the area from x=0 to x=140 (overlapping between x=60 and x=70). This combined coverage is sufficient to obscure the short text string \"Hidden by two\" located at the start of the line.\n\nANSWER: NO\n",
+  "ms": 12954
+}

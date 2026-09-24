@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, the `root>body>panel` node shows its resolved styles with annotations indicating where each style was declared. The line for border-radius explicitly states:\n\n`← border-radius: 12px   declared by root, inside its \"> body > panel\" block   (adds)`\n\nThis clearly indicates that the `border-radius` declaration comes from the `root` node's CSS block (specifically from a selector targeting `> body > panel` within root's styles).\n\nANSWER: root\n",
+  "ms": 13874
+}

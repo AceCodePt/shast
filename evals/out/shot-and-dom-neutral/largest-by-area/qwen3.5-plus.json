@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the `getBoundingClientRect()` data provided:\n\n- **wide**: 600 × 60 = 36,000 square pixels\n- **tall**: 120 × 300 = 36,000 square pixels  \n- **square**: 220 × 220 = 48,400 square pixels\n\nThe \"square\" box covers the largest area at 48,400 square pixels, even though \"wide\" has the greatest width and \"tall\" has the greatest height.\n\nANSWER: root>square\n",
+  "ms": 12397
+}

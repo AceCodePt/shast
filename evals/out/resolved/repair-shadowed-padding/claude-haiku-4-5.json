@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, the key evidence is in this line:\n\n```\n← padding: 4px   declared by root>body, inside its \"> panel\" block   — shadows padding: 32px declared by root>body>panel itself\n```\n\nThis tells us that:\n1. `root>body>panel` has `padding: 32px` declared in its own css block\n2. However, `root>body` has a rule targeting `> panel` (its direct child panel) that declares `padding: 4px`\n3. This `4px` rule is **shadowing** (overriding) the `32px` rule\n\nThe panel is currently rendering with 4px of padding (as shown by the measured box), even though 32px is declared in its own block. This happens because the rule from `root>body`'s css block takes precedence — it's more specific as a child combinator rule, or it comes later in the cascade.\n\nTo make the panel render with 32px of padding, you need to remove or modify the conflicting rule in `root>body`'s css block that targets `> panel`. That's the rule that's preventing the 32px padding from taking effect.\n\nANSWER: root>body\n",
+  "ms": 8293
+}

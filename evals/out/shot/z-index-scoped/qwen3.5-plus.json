@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, I can see two overlapping rectangles:\n- A blue rectangle with \"inner\" text in the top-left corner\n- A red/pink rectangle with \"high\" text\n\nIn the region where they overlap, the red/pink rectangle is clearly visible on top of the blue rectangle. Since the node tree shows that `root>high` contains the text \"high\", and the red/pink area (which displays \"high\") is rendered above the blue area in the overlap region, `root>high` is the one a viewer sees.\n\nANSWER: root>high\n",
+  "ms": 13430
+}

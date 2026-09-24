@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The rendered info explicitly states that the overflow is **visible**, not hidden or clipped: \"it is painted outside the box rather than cut off (overflow is visible).\" Since the content (76.75px tall) exceeds the 30px content box but `overflow` defaults to `visible`, the overflowing text — including the last line below the bottom edge — is still painted on the page and readable.\n\nANSWER: YES\n",
+  "ms": 16424
+}

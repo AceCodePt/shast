@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>gone` is `display: none`, and elements with `display: none` are not part of the layout flow, so they do not contribute any height/margins/padding (or reserve space) where they would otherwise render. The authoritative rendered DOM evidence shows only the nodes `first` and `third` as visible siblings in the page; nothing indicates that an empty 40px region was left open between them.  \n\nANSWER: NO\n",
+  "ms": 11207
+}

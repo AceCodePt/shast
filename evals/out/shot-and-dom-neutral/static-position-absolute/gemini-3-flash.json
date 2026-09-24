@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>floaty` element is `position: absolute` but does not specify any offsets (`top`, `left`, etc.), so it renders at its \"static position\" within the document flow. Since it follows a `root>spacer` element that is 50px tall and starts at `y=0`, the next available vertical position is `y=50`. This is confirmed by the provided `getBoundingClientRect` data for `root>floaty`, which explicitly shows `y=50`.\n\nANSWER: 50\n",
+  "ms": 9437
+}

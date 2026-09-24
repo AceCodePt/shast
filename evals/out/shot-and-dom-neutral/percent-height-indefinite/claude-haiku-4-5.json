@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the getBoundingClientRect() data provided:\n\n- `root>outer>filler` has a height of 60px\n- `root>outer>tall` has a height of 19.1875px\n\nThe question asks if `root>outer>tall` (which declares `height: 100%`) is taller than its sibling `root>outer>filler`.\n\nSince `root>outer>tall` has a computed height of 19.1875px and `root>outer>filler` has a height of 60px, `root>outer>tall` is actually shorter than its sibling. The `height: 100%` declaration on `root>outer>tall` resolves to 19.1875px, which appears to be the height of the line content (matching the line-height of 19.2px), not a percentage of the parent's height.\n\nANSWER: NO\n",
+  "ms": 7246
+}

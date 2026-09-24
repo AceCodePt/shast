@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>big` renders with a `line-height` of `2`, inherited as a multiplier, so its used line height is `2 × 32px = 64px`. Since it contains a single line of text, its box height is 64px.\n\nANSWER: 64\n",
+  "ms": 8710
+}

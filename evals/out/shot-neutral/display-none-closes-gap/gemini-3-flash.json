@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `display: none` property removes an element from the document's layout flow, meaning it occupies no space. As a result, the subsequent element (`root>third`) moves up to immediately follow the preceding element (`root>first`). The screenshot confirms that \"third\" is positioned directly below \"first\" without the 40px gap that would exist if the element were merely invisible (like `visibility: hidden`).\n\nANSWER: NO\n",
+  "ms": 9317
+}

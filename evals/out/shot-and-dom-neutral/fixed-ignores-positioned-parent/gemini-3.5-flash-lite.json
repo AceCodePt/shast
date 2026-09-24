@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "A `position: fixed` element is positioned relative to the viewport rather than its parent container. Given `top: 15px` and `left: 25px`, its top-left corner renders at x=25 and y=15, which is also confirmed by its `getBoundingClientRect` data.\n\nANSWER: 25,15\n",
+  "ms": 7942
+}

@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 500x300 pixels, and the provided screenshot represents the content visible within this area upon initial load. While the node tree confirms that `root>footer` exists and contains the text \"footer note,\" this text does not appear anywhere in the screenshot. Therefore, the element is positioned outside the initial viewport.\n\nANSWER: NO\n",
+  "ms": 9898
+}

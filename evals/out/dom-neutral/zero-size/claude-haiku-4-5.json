@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Based on the browser data provided, I can analyze what's actually rendered:\n\nThe `root>ghost` element has a bounding rectangle of `x=0 y=0 width=0 height=0`. This means the element occupies zero space on the page. The computed styles show `width: 0px` and `height: 0px`, confirming that the element has collapsed to nothing.\n\nWhen an element has zero width and zero height, the text content within it cannot be painted on the page. Text rendering requires the element to have some dimensional space. Even though the element has `display: block` and `opacity: 1`, these properties are overridden by the fact that the element's dimensions are zero.\n\nThe words \"Important warning\" exist in the DOM (as shown in the node tree), but they have no visual space in which to render, so they cannot appear anywhere on the page.\n\nANSWER: NO\n",
+  "ms": 7368
+}

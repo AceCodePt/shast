@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. In the screenshot, `root>main>r17` (\"17. Inventory valuation\") is visible in the main list area without any scrolling. It appears well within the 1280x800 viewport on initial load.\n\nANSWER: YES\n",
+  "ms": 7986
+}

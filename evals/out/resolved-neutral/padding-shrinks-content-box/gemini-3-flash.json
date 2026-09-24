@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The provided information for the `root>card` element contains a specific diagnostic note prefixed by `!`. This note explicitly states that the text \"broke onto 4 lines\" at a content width of 152px.\n\nANSWER: 4\n",
+  "ms": 8185
+}

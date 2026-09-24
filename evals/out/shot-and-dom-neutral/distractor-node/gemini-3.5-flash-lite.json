@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>cover` element has an absolute position covering the top 19 pixels (from y=0 to y=19), which obscures `root>first`. However, `root>second` starts at y=19.1875 and is positioned entirely below the cover element, making its text fully visible and readable as confirmed by both the bounding rectangles and the screenshot.\n\nANSWER: YES\n",
+  "ms": 9561
+}

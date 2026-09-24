@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>card` is only 48px tall, so if the last text line is positioned below its bottom edge, it would normally be clipped *only if* the element (or an ancestor) had `overflow: hidden/clip`. Here, both `root` and `root>card` have `overflow: visible`, which means content is allowed to paint outside the element’s bounding box. Therefore, that last line should still be painted on the page and readable.\n\nANSWER: YES\n",
+  "ms": 7972
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>ghost` has a measured border box of `0x0` at `x=0,y=0` (so its own box size is zero), but the report explicitly says its text overflows a `0x0` content box and that overflow is **visible**, meaning the glyphs are still painted outside the zero-sized box rather than clipped. It also states that `root>ghost` draws its text on the same pixels as `root>visible`, confirming the words are rendered somewhere on the page.  \n\nANSWER: YES\n",
+  "ms": 9400
+}

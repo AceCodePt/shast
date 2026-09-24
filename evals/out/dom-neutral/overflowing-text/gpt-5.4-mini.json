@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The card’s border box is only 48px tall, and after subtracting 8px top/bottom padding and 1px borders, there’s only about 30px of content height available. The sentence is long enough to wrap to multiple lines at 180px width, so its rendered text would need more vertical space than that.\n\nANSWER: NO\n",
+  "ms": 15576
+}

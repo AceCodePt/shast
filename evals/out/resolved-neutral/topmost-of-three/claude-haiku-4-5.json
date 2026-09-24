@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values and paint order:\n\n- **root>back**: z-index 1 (paints first)\n- **root>front**: z-index 2 (paints second)\n- **root>middle**: z-index 3 (paints last)\n\nAll three boxes contain the point 120,120. The point falls within:\n- root>back (x=40-240, y=40-240)\n- root>front (x=100-160, y=100-160)\n- root>middle (x=80-280, y=80-280)\n\nSince elements with higher z-index values paint on top of elements with lower z-index values, **root>middle** (z-index 3) paints last and therefore appears on top at the point 120,120, obscuring the boxes beneath it.\n\nANSWER: root>middle\n",
+  "ms": 8106
+}

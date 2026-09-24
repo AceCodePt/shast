@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>chip` overlaps `root>row`’s box, but the only text in `root>row` is `\"Short label\"` and it would render near the top of the paragraph. The chip sits lower (`y=60` to `100`), so it does not cover that text.\n\nANSWER: NO\n",
+  "ms": 7726
+}

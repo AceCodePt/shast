@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the `root>card` element:\n\n- **Total height**: 124.75px\n- **Padding**: 24px top + 24px bottom = 48px\n- **Content height**: 124.75px - 48px = 76.75px\n- **Line height**: 19.2px\n\nNumber of lines = Content height / Line height = 76.75 / 19.2 ≈ 4 lines\n\nThe text \"one two three four five six seven eight nine ten\" (10 words) fits within a 152px content width (200px - 48px padding), causing it to wrap across approximately 4 lines.\n\nANSWER: 4\n",
+  "ms": 16607
+}

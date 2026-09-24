@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element uses `display: grid` with two columns of `200px` and `300px` and a `gap` of `20px`. The first child (`root>left`) occupies the first column (width 200px), and the second child (`root>right`) occupies the second column. The left edge of the second column is positioned after the first column's width plus the gap ($200\\text{px} + 20\\text{px} = 220\\text{px}$), which is confirmed by the `getBoundingClientRect` data for `root>right`.\n\nANSWER: 220\n",
+  "ms": 12685
+}

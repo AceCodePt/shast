@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>mid>leaf",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "When `:hover` is nested inside `root>mid>leaf`'s CSS block without an ampersand, it compiles to a descendant selector (`root > mid > leaf :hover`), which matches hovered children inside the leaf rather than the leaf itself. To apply the hover state to the leaf element when it is hovered, its own CSS block must be edited to use `&:hover`.\n\nANSWER: root>mid>leaf\n",
+  "ms": 8784
+}

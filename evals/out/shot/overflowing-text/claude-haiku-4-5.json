@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, I can see the text \"Payment failed because the card on file expired last month.\" is displayed in the `root>card` div element.\n\nThe text spans 4 lines in the rendered output:\n- \"Payment failed\"\n- \"because the card\"\n- \"on file expired\"\n- \"last month.\"\n\nThe `root>card` element has a 48px-tall border box. With typical line height for text (usually around 1.2-1.5x font size), 4 lines of text would require approximately 48-60px of vertical space depending on font size. Looking at the screenshot, the text appears to fill most or all of the available height, and there is minimal whitespace below the last line.\n\nGiven that the text spans 4 lines and the container is only 48px tall, it appears the text is either tightly constrained or may be overflowing the bottom of the border box.\n\nANSWER: NO\n",
+  "ms": 8540
+}

@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>body` is the node whose CSS block you need to change.\n\n`root>body>panel` already has `padding: 32px`, but the screenshot shows no visual change, which means that element’s own box is not the one controlling the visible layout here. Adding padding to the parent `div` will inset the panel’s content and produce the visible 32px spacing.\n\nANSWER: root>body\n",
+  "ms": 12860
+}

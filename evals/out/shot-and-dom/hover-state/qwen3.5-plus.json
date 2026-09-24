@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided browser data, I can see two states for `root>cta`:\n\n1. **At rest** (first state, pointer elsewhere): `background-color: rgb(51, 85, 255)`\n2. **On hover**: `background-color: rgb(0, 34, 204)` (a darker blue)\n\nThe question asks for the background color when the page is first painted and the pointer is elsewhere, which corresponds to the first (rest) state.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 13862
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report says `root>mid>leaf` is in a `dead-state` where `:hover` would set `padding: 40px`, but that effect does not apply because the `padding: 2px` declared by `root` inside its `> mid > leaf` block outranks it. Since entering `:hover` does not change the padding, the computed padding remains `2px`.  \nANSWER: NO\n",
+  "ms": 6542
+}

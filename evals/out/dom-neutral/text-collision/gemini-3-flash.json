@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Both `root>ghost` and `root>visible` are positioned at the same coordinates (x=0, y=0). Although `root>ghost` has a width and height of 0, its `overflow` property is `visible`, meaning the text \"Important warning\" will still be rendered starting from its origin. Since `root>visible` also starts at (0,0) and contains the text \"Everything is fine\", the glyphs from both nodes are drawn starting at the same pixel location and will overlap.\n\nANSWER: root>visible\n",
+  "ms": 11889
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the three overlapping bands (alpha, beta, gamma) and their z-index values:\n\n- **root>alpha**: z-index: 2, positioned at x=300, y=300, width=400, height=120 (covers x=300-700, y=300-420)\n- **root>beta**: z-index: 4, positioned at x=340, y=340, width=400, height=120 (covers x=340-740, y=340-460)\n- **root>gamma**: z-index: 3, positioned at x=380, y=380, width=400, height=120 (covers x=380-780, y=380-500)\n\nAt the point x=500, y=400:\n- alpha covers it (z-index: 2)\n- beta covers it (z-index: 4)\n- gamma covers it (z-index: 3)\n\nThe element with the highest z-index value is rendered on top, so the viewer sees the background color of **root>beta**, which has z-index: 4 (the highest of the three overlapping elements at that point). Its background color is rgb(68, 85, 102).\n\nANSWER: root>beta\n",
+  "ms": 7857
+}

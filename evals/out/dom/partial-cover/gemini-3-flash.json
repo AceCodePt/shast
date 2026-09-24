@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>row` has a width of 600px and contains the text \"Short label\" with a 4px padding, meaning the text starts at (x=4, y=4). With a font-size of 16px and a short string, the text stays within the top-left region of the element (likely within x < 200 and y < 30). `root>chip` is positioned at x=400 and y=60, which places it both to the right of and below the region where the text is rendered, so it does not obscure any of the text.\n\nANSWER: NO\n",
+  "ms": 14314
+}

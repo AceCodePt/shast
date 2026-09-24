@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With `display: grid`, the first column (root>left) is 200px wide. The gap between columns is 20px, so the start of the second column is offset by `200 + 20 = 220` from the grid container’s left edge. Therefore, `root>right`’s left edge renders at x = 220px.\n\nANSWER: 220\n",
+  "ms": 7587
+}

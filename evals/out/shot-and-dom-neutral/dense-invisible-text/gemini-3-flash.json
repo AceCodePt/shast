@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>main>r21` has a `color` of `rgb(255, 255, 255)` (white) and a transparent background. Since the overall page background (`root`) is also `rgb(255, 255, 255)` (white), the text is rendered as white-on-white, making it invisible to the viewer. This is confirmed by the screenshot, which shows a blank space between items \"20.\" and \"22.\"\n\nANSWER: NO\n",
+  "ms": 10707
+}

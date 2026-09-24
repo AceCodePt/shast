@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendered result is what `getComputedStyle()` reports for `root>body>panel`. In the provided data, that node’s computed `padding` is `4px 4px 4px 4px`, not `32px`. Since the browser’s authoritative computed style does not reflect the `padding: 32px` declaration, that declaration has no effect on the page as rendered (it’s overridden or not applied).  \n\nANSWER: NO\n",
+  "ms": 6685
+}

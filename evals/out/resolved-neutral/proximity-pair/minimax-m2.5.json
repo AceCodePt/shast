@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the y-coordinates:\n- alpha: y=20 to y=60 (height 40)\n- beta: y=64 to y=104 (height 40)\n- gamma: y=200 to y=240 (height 40)\n\nalpha and beta are adjacent with only a 4px gap between them, while gamma sits much further down with a large 96px gap from beta.\n\nANSWER: root>gamma\n",
+  "ms": 6815
+}

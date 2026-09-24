@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>card` element has a bounding box height of `124.75px` and `padding: 24px` on the top and bottom, so the usable text area height is `124.75 - 48 = 76.75px`. The computed `line-height` is `19.2px`, so the number of wrapped text lines is `76.75 / 19.2 ≈ 4`. That indicates the text wraps onto 4 lines.\n\nANSWER: 4\n",
+  "ms": 7901
+}

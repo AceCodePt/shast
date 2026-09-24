@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>second` starts after the first 100px child plus the 10px gap, so its left edge is at `x = 110`.\n\nANSWER: 110\n",
+  "ms": 9217
+}

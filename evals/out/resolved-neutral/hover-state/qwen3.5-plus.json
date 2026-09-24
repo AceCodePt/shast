@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>cta` element has a default `background-color: #3355ff` specified. The `:hover` state with `background-color: #0022cc` only applies when the pointer is hovering over the element. Since the question asks for the color when \"the page is first painted and the pointer is elsewhere\" (not hovering), the default background color applies.\n\nANSWER: #3355ff\n",
+  "ms": 10703
+}

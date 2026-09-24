@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element starts at `x=0`. Its first grid column has a width of `200px`, occupying the space from `x=0` to `x=200`. Since there is a `20px` gap between the columns, the second column (`root>right`) begins immediately after this gap at `200 + 20 = 220`. This is also explicitly confirmed in the provided report.\n\nANSWER: 220\n",
+  "ms": 10039
+}

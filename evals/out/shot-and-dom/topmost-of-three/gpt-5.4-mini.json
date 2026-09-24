@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At `120,120`, all three boxes overlap, so the one with the highest `z-index` is on top. `root>middle` has `z-index: 3`, which is higher than `root>front` (`2`) and `root>back` (`1`), so that is what the viewer sees there.\n\nANSWER: root>middle\n",
+  "ms": 8275
+}

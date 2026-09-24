@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "19",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "`root>child` declares three different `padding` values in the source, but the authoritative Chromium evidence is the node’s `getComputedStyle()` output. For `root>child`, Chromium reports `padding: 64px 64px 64px 64px`, meaning it actually renders with 64px on top/right/bottom/left.  \n\nANSWER: 19\n",
+  "ms": 8436
+}

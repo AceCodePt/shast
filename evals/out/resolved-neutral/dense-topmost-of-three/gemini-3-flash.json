@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The point x=500, y=400 falls within the boundaries of three absolutely positioned nodes: `root>alpha` (x: 300–700, y: 300–420), `root>gamma` (x: 380–780, y: 380–500), and `root>beta` (x: 340–740, y: 340–460). In CSS stacking order, when elements overlap, the one with the highest z-index in the same stacking context is painted on top. Comparing their z-indices—`alpha` (2), `gamma` (3), and `beta` (4)—`root>beta` has the highest value and therefore its background color is visible at that coordinate.\n\nANSWER: root>beta\n",
+  "ms": 18046
+}

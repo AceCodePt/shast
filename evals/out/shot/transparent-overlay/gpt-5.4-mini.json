@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The screenshot shows the full lede sentence rendered across two lines, and there’s no evidence of clipping or hidden overflow. So a person can read the entire sentence in the browser.\n\nANSWER: YES\n",
+  "ms": 9791
+}

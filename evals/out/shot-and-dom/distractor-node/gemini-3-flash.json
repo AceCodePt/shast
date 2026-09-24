@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>second` element is positioned at `y=19.1875` with a height of `19.1875`. While the `root>cover` element is a solid black rectangle, its height is only `19` and it is positioned at `y=0`. Consequently, `root>cover` only obscures the area from `y=0` to `y=19` (where the first paragraph is located), leaving the text in `root>second` starting at `y=19.1875` completely unobstructed. The screenshot confirms that \"Second paragraph here\" is clearly visible against the background.\n\nANSWER: YES\n",
+  "ms": 10439
+}

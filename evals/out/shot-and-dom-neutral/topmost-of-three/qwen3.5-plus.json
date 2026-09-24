@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values for each box:\n- root>back: z-index: 1\n- root>middle: z-index: 3\n- root>front: z-index: 2\n\nAll three boxes cover the point (120, 120), but the one with the highest z-index will be painted on top. The `root>middle` box has z-index: 3, which is higher than both `root>back` (z-index: 1) and `root>front` (z-index: 2).\n\nANSWER: root>middle\n",
+  "ms": 14971
+}

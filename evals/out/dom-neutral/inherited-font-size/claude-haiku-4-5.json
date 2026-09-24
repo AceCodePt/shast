@@ -1,0 +1,10 @@
+{
+  "case": "inherited-font-size",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>heading",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the computed styles provided:\n\n- `root>heading` has `font-size: 30px`\n- `root>caption` has `font-size: 22px`\n\nThe heading element uses a larger font size (30px vs 22px), so it renders with larger text.\n\nANSWER: root>heading\n",
+  "ms": 8002
+}

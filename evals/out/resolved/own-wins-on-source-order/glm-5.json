@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Three blocks declare `padding` for `root>child`: 4px (from `root`'s `> child` block), 32px (from `root>child`'s own top-level block), and 64px (from `root>child`'s `&.big` block). The report marks the 64px declaration with the arrow `←` and says it \"shadows\" the other two, and the resolved computed style line (`= ... padding: 64px`) confirms the winning value. The `&.big` selector compiles to a compound class like `.child.big`, which is at least as specific as the parent-child rule and wins by specificity/source order, so it overrides both the 4px and 32px declarations.\n\nANSWER: 64px\n",
+  "ms": 25122
+}

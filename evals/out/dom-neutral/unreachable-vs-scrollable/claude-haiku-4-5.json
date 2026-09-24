@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the viewport and the positioning of these elements:\n\nThe viewport is 500x300 (width × height). The root div is 500x900, so vertical scrolling is possible. Let me analyze each element:\n\n**root>lower**: positioned at y=700 with height=40, so it spans from y=700 to y=740. Since the root container is 900px tall and the viewport is 300px tall, you can scroll down to bring this element into view (scrolling to y=700 would show it at the bottom of the viewport).\n\n**root>sideways**: positioned at y=40 with width=900 and height=40. It spans from y=40 to y=80 vertically, which is within the scrollable range. However, it's 900px wide in a 500px wide viewport. Horizontal scrolling isn't mentioned as an option (\"ordinary scrolling\" typically means vertical scrolling on a vertically-scrollable page), and the root element has `overflow: visible` rather than `overflow: auto` or `overflow: scroll`, so the element extends beyond the viewport width with no horizontal scrollbar available.\n\nSince only vertical scrolling is available through ordinary means, the sideways element cannot be fully brought into view due to its horizontal overflow.\n\nANSWER: root>sideways\n",
+  "ms": 8246
+}

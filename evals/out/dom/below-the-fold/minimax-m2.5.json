@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 500x300 pixels, meaning only the area from y=0 to y=300 is visible without scrolling. The `root>footer` element has a `getBoundingClientRect` with y=700 and height=60, placing it at y=700 to y=760 — well below the 300px viewport boundary. Additionally, the root container is 800px tall, confirming the page extends beyond the fold.\n\nANSWER: NO\n",
+  "ms": 7341
+}

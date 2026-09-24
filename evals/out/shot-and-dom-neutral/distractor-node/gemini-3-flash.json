@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>second` paragraph is positioned at `y=19.1875` with a height of `19.1875`, meaning it occupies the space from `y=19.1875` to `y=38.375`. The `root>cover` element is a solid black div positioned at `y=0` with a height of `19`, so it only covers the area above the second paragraph (specifically overlapping the first paragraph). The screenshot confirms that the text \"Second paragraph here\" is fully visible and unobstructed below the black bar.\n\nANSWER: YES\n",
+  "ms": 13658
+}

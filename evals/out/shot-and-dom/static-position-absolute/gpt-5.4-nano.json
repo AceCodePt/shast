@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Because `root>floaty` is `position: absolute`, its rendered position is given directly by its `getBoundingClientRect()` output. The Chromium data shows `root>floaty getBoundingClientRect: x=0 y=50 width=90 height=20`, so its top edge is at **y = 50** CSS pixels.  \n\nANSWER: 50\n",
+  "ms": 6772
+}

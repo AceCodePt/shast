@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `getBoundingClientRect()` data shows the actual rendered position of the element. For `root>floaty`, it reports `y=50`, which means the top edge of the element is positioned at 50 CSS pixels from the top of the viewport.\n\nEven though `root>floaty` is `position: absolute` with no explicit `top`/`left` values, it renders at its static position (where it would have been in normal document flow). Since `root>spacer` occupies y=0 to y=50 (height=50), the `floaty` element's static position starts at y=50, and that's where it renders.\n\nANSWER: 50\n",
+  "ms": 12086
+}

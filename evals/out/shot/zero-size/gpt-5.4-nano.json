@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The authoritative evidence is what Chromium actually rendered, and the node tree shows `root>ghost` contains the text `\"Important warning\"` but that node has a rendered size of `0x0`, meaning it has no drawable area. Since a `0x0` layout box has no pixels to paint, the screenshot evidence would not show that text. Therefore, the words are not painted anywhere on the page.\n\nANSWER: NO\n",
+  "ms": 8180
+}

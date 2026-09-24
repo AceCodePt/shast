@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "60,60",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>plain` becomes the containing block, so `root>plain>pin` is positioned from `plain`’s padding box. `plain`’s border box starts at `(20,20)`, and its `padding-left/top` is `30`, so the padding box starts at `(50,50)`. Adding `left: 10px; top: 10px` puts `pin` at `(60,60)`.\n\nANSWER: 60,60\n",
+  "ms": 10368
+}

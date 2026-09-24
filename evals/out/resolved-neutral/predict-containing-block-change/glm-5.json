@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "## Reasoning\n\nCurrently `root>plain` is **statically** positioned, so the absolutely-positioned `root>plain>pin` uses the next positioned ancestor up the tree — `root` (which has `position: relative`). For an absolutely positioned element, the containing block is the **padding box** of that positioned ancestor.\n\n- `root`'s padding box origin is at (0,0). With `top: 10px; left: 10px`, the pin lands at (10,10) — exactly the rendered evidence. This confirms the containing block is `root`.\n\nAfter adding `position: relative` to `root>plain`, it becomes the nearest positioned ancestor, so it becomes the containing block instead. `root>plain`'s border box (and thus its padding box, since there's no border) sits at **x=20, y=20** (it lives inside `root`'s 20px padding). Adding `top: 10px; left: 10px` to that origin:\n\n- x = 20 + 10 = 30\n- y = 20 + 10 = 30\n\nANSWER: 30,30\n",
+  "ms": 23907
+}

@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the coordinates provided, `root>leftBottom` is positioned at `y=120` and `x=0`. The node `root>rightBottom` also has a y-coordinate of `120`, placing it on the same horizontal row, but its x-coordinate is `340`, which puts it directly to the right of `root>leftBottom`.\n\nANSWER: root>rightBottom\n",
+  "ms": 11414
+}

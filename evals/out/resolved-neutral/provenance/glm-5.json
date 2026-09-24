@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `border-radius: 12px` declaration is applied to `root>body>panel`, but it is **declared** in a CSS block belonging to `root` — specifically the block `root` defines for its `> body > panel` descendant. In other words, the style rule is written from `root`'s perspective targeting the nested `body > panel` path, so the node that owns that CSS block is `root`.\n\nANSWER: root\n",
+  "ms": 8241
+}

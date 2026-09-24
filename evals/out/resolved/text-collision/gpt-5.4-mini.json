@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "`root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>visible` is the other node whose text overlaps `root>ghost`'s text.\n\nThe report explicitly says `root>visible <div> draws its text on the same pixels` as `root>ghost`, with over 50% glyph overlap. That makes it the node in question.\n\nANSWER: `root>visible`\n",
+  "ms": 9224
+}

@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "No. A `0x0` `getBoundingClientRect()` means the element does not occupy any painted area, and there’s no other evidence here that its text was laid out or overflowed into a visible region. The safe conclusion from the provided rendering data is that `\"Important warning\"` is not painted on the page.\n\nANSWER: NO\n",
+  "ms": 8353
+}

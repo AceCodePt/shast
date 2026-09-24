@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The provided browser data for `root>mid>leaf` shows that its padding is `2px 2px 2px 2px` in the initial state. When the mouse is hovering over that same node, the authoritative data explicitly shows that the padding remains `2px 2px 2px 2px`. Because the actual rendered values do not reflect any change in padding during the hover state, the hypothetical `:hover` block did not take effect.\n\nANSWER: NO\n",
+  "ms": 9282
+}

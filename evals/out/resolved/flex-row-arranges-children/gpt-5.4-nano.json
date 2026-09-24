@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is a flex row with `gap: 10px`. The `first` child starts at `x=0` and is `100px` wide, so its right edge is at `0 + 100 = 100`. Flex gap then adds `10px` before the next item, so `second` starts at `100 + 10 = 110`.  \n\nANSWER: 110\n",
+  "ms": 5557
+}

@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Adding `position: relative` to `root>plain` makes it the nearest positioned ancestor for the absolutely positioned `root>plain>pin`. An absolute element's `left` and `top` properties are measured from the padding edge of its containing block. Since `root>plain`'s bounding box starts at viewport coordinates (20, 20), applying `left: 10px` and `top: 10px` positions its top-left corner at x = 20 + 10 = 30 and y = 20 + 10 = 30.\n\nANSWER: 30,30\n",
+  "ms": 9359
+}

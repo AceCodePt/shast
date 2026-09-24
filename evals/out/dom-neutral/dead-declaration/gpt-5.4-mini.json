@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The rendered `panel` element has `padding: 4px` in the computed style, and its height matches 4px top and bottom padding plus the text line box. Since the computed padding is not `32px`, that declaration is not affecting the rendered page.\n\nANSWER: NO\n",
+  "ms": 7568
+}

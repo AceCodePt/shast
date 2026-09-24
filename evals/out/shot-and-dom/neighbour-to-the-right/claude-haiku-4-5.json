@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangle data for each node:\n\n- `root>leftBottom`: x=0, y=120, width=300, height=80 (occupies row from y=120 to y=200)\n- `root>rightBottom`: x=340, y=120, width=300, height=80 (occupies row from y=120 to y=200)\n\nBoth nodes share the same y-coordinate (y=120) and height (80px), meaning they're on the same row. The `root>rightBottom` node is positioned at x=340, which is to the right of `root>leftBottom` (which starts at x=0). The gap between them (from x=300 to x=340) indicates they're positioned side-by-side in a two-by-two grid arrangement.\n\nANSWER: root>rightBottom\n",
+  "ms": 8036
+}

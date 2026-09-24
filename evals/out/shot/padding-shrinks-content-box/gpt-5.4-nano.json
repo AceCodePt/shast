@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The text content inside `root>card` is `one two three four five six seven eight nine ten`. On the rendered screenshot, those words are broken into four separate visual lines: `one two three`, `four five six`, `seven eight`, and `nine ten`. Therefore the text wraps onto 4 lines.\n\nANSWER: 4\n",
+  "ms": 18282
+}

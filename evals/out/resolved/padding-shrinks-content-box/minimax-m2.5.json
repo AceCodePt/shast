@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly notes that the text inside `root>card` broke onto 4 lines at a 152px content width.\n\nANSWER: 4\n",
+  "ms": 5856
+}

@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states that root>row's 1 text line(s) stay fully visible despite the chip painting over 9% of its box. This means the chip covers background/padding area only, not any of the text content.\n\nANSWER: NO\n",
+  "ms": 6589
+}

@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>first` has a width of 100px starting at x=0. With a `gap` of 10px on the flex container `root`, `root>second` is positioned immediately after the first child plus the gap, placing its left edge at x=110.\n\nANSWER: 110\n",
+  "ms": 7269
+}

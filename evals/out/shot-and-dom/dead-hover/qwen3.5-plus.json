@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the computed style data:\n\n**At rest:**\n- `root>mid>leaf` padding: `2px 2px 2px 2px`\n\n**While hovering:**\n- `root>mid>leaf` padding: `2px 2px 2px 2px`\n\nThe padding values are identical in both states. Additionally, the `getBoundingClientRect` shows the same dimensions (width=500, height=23.1875) in both cases, and the two screenshots appear identical. Despite the `:hover` CSS block specifying `padding: 40px`, the actual rendered padding does not change on hover.\n\nANSWER: NO\n",
+  "ms": 15533
+}

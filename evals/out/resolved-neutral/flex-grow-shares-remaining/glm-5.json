@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>b` is 400 CSS pixels wide.\n\nThe flex container `root` has a total width of 600px. With `root>a` having `flex: 1` and `root>b` having `flex: 2`, the available space is split in a 1:2 ratio. So `root>b` gets 2/3 of 600px = 400px.\n\nANSWER: 400\n",
+  "ms": 7009
+}

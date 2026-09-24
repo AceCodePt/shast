@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "black",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The report explicitly lists `root>label`’s computed `color` as `rgb(0, 0, 0)`, so the text renders black. The screenshot is consistent with that as well.\n\nANSWER: black\n",
+  "ms": 7736
+}

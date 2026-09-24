@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the layout information provided:\n\nThe `root>line` div contains text and has a height of 19.19px. It's covered by two absolutely positioned divs:\n- `root>leftHalf`: positioned at x=0, width=70px (covers left portion)\n- `root>rightHalf`: positioned at x=60, width=80px (covers right portion, from x=60 to x=140)\n\nThe `root>line` div spans the full width of 400px. While neither covering box individually spans the whole line, together they create significant coverage:\n- `root>leftHalf` covers x=0 to x=70 (left 17.5%)\n- `root>rightHalf` covers x=60 to x=140 (overlapping in the middle, covering roughly x=60 to x=140, which is 20% of the 400px width)\n\nMost importantly, the information explicitly states: \"! covered: 1 of 1 text line(s) completely hidden\"\n\nThis means the entire text line is completely hidden by the covering boxes. Even though the two boxes don't individually span the full width, together they completely obscure all the text content.\n\nANSWER: NO\n",
+  "ms": 7292
+}

@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\nThe `root>lede` element is a `<p>` tag containing the text \"The quarterly results are in and every region beat its targ…\" (72 chars total, truncated in the display).\n\nAccording to the bounding rect data, `root>lede` has:\n- y position: 0px\n- height: 54.375px\n- The viewport is 600x400\n\nHowever, the `root>banner` div is positioned absolutely at the top with:\n- y position: 0px\n- height: 70px\n- z-index: 5 (which places it above content with auto z-index)\n\nThis means the banner (height 70px) completely overlaps and occludes the lede paragraph (which starts at y=0 and is only 54.375px tall). The banner's dark background (rgb(34, 34, 34)) would cover the text in the lede paragraph, making it unreadable. Additionally, the text is truncated with \"…\" indicating the full sentence is not even displayed.\n\nA person reading this page in a browser would not be able to read the whole sentence because it is both occluded by the banner and truncated.\n\nANSWER: NO\n",
+  "ms": 6339
+}

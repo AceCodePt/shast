@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided layout information and border box coordinates, the first column spans from x=0 to x=200, and the 20px gap places the second column (`root>right`) starting at x=220. This is also explicitly given by its border box x-coordinate (`x=220`).\n\nANSWER: 220\n",
+  "ms": 8423
+}

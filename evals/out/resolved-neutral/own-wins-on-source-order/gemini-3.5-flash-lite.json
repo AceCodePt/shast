@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The rendered element's computed style explicitly shows `padding: 64px`. The layout information explains that this `64px` padding value successfully shadows the other competing declarations (`padding: 4px` from the root block and `padding: 32px` from the top of the child's block). Therefore, the element renders with 64px padding.\n\nANSWER: 64px\n",
+  "ms": 8567
+}

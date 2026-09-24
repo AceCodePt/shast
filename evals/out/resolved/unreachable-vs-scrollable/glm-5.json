@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>lower` sits at y=700, below the 300px-tall viewport, so ordinary vertical scrolling brings it into view. `root>sideways` sits at y=40 (within the initial viewport vertically) but extends 900px wide, running 400px past the right edge. Pages only scroll vertically, not horizontally, so the offscreen right portion can never be reached by scrolling.\n\nANSWER: root>sideways\n",
+  "ms": 8616
+}

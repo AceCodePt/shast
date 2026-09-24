@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "black",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The computed style for `root>label` lists `color: rgb(0, 0, 0)`, which corresponds to black.\n\nANSWER: black\n",
+  "ms": 7430
+}

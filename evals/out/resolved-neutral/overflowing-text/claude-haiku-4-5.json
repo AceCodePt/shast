@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>card` element has a border box height of 48px. However, the overflow information states that the content is 153.61x76.75px inside a 162x30px content box. This means the content height is 76.75px, which exceeds the available space.\n\nThe border box height of 48px includes padding (8px) and border (1px), leaving approximately 30px of content space (48 - 8 - 8 - 1 - 1 = 30px). Since the actual content is 76.75px tall and overflows are visible (not hidden), the text does not fit within the border box—it overflows and is painted outside the box.\n\nANSWER: NO\n",
+  "ms": 7888
+}

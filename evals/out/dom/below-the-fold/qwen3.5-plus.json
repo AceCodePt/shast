@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 500x300 pixels, meaning the visible area spans from y=0 to y=300 when the page loads. The footer's `getBoundingClientRect()` shows it starts at y=700px and extends to y=760px (700 + 60 height). Since 700px is well beyond the 300px viewport height, the footer is positioned below the initially visible area and would require scrolling to see.\n\nANSWER: NO\n",
+  "ms": 12891
+}

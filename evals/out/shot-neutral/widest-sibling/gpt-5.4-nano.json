@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "8.0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "From the rendered 900px-wide viewport, `root>rail` occupies a narrow left region while `root>panel` spans the much larger remaining width. Visually, the rail region is about one-eighth of the viewport, with the panel taking about the other seven-eighths, so the width ratio is approximately \\(7/1 = 7\\) to \\(8\\) depending on the exact boundary; using the screenshot’s apparent proportions gives about an 8.0× difference.  \n\nANSWER: 8.0\n",
+  "ms": 12758
+}

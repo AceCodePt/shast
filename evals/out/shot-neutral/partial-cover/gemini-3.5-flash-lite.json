@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text \"Short label\" from `root>row` is positioned on the top left, while the yellow box `root>chip` containing \"chip\" is located on the top right. Inspection of the screenshot and layout shows that `root>chip` does not overlap or cover any portion of `root>row`'s text.\n\nANSWER: NO\n",
+  "ms": 7771
+}

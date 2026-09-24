@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "`root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>leftBottom` is at `y=120`, so the node on the same row directly to its right is the other box with the same `y` value and a larger `x` position. That node is `root>rightBottom`.\n\nANSWER: `root>rightBottom`\n",
+  "ms": 8408
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 1280x800, meaning only content within the vertical range of 0 to 800 pixels is visible without scrolling. According to the `getBoundingClientRect` for `root>main>r36`, its vertical position (`y`) starts at 978 pixels. Since 978 is greater than the viewport height of 800, the element is located below the fold and is not visible upon initial load.\n\nANSWER: NO\n",
+  "ms": 8186
+}

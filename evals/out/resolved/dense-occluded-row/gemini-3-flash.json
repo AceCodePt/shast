@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report for `root>main>r09` explicitly states that it is \"covered\" by the `root>banner` element, which has an opaque background and a higher z-index. Crucially, the report notes that \"1 of 1 text line(s) [are] completely hidden,\" meaning the content \"09. Currency hedging\" is not visible to the viewer.\n\nANSWER: NO\n",
+  "ms": 9592
+}

@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has `overflow: visible` set, which means any content that exceeds the element's 48px height will not be clipped and will instead be rendered outside its boundaries. Since the parent `root` element also has `overflow: visible` and the entire area is well within the 400x300 viewport, the overflowing text remains visible and readable on the page.\n\nANSWER: YES\n",
+  "ms": 10721
+}

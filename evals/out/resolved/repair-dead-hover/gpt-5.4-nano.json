@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report says `:hover { padding: 40px }` is already present in `root>mid>leaf`’s own CSS block, but hovering changes nothing because a different rule wins: `padding: 2px` declared by `root` inside its `\"> mid > leaf\"` block outranks the hover rule. To make the hover padding of 40px take effect, you must remove or lower the specificity/priority of that overriding `padding: 2px` rule from the `root` node’s CSS block.\n\nANSWER: root\n",
+  "ms": 8575
+}

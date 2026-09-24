@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly states that while `:hover` sets `padding: 40px`, the `padding: 2px` declared by root inside its `\"> mid > leaf\"` block **outranks** the hover rule. This is a CSS specificity issue — the more specific selector wins over the `:hover` pseudo-class. The report directly confirms that \"entering `:hover` does not change padding.\"\n\nANSWER: NO\n",
+  "ms": 11729
+}

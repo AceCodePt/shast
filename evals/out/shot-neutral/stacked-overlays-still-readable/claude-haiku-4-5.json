@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the information provided:\n\nThe screenshot shows \"Still readable\" text at the top of the page, which corresponds to the `root>line` div element. Despite the presence of two boxes (`root>glass` and `root>panel`) that paint over this element, the text is clearly visible and legible in the rendered output. The text appears in dark color against a light background with sufficient contrast for reading.\n\nThe question asks whether a viewer can still read the text of `root>line` when two boxes paint over it, and the evidence from the screenshot directly confirms that the text remains readable.\n\nANSWER: YES\n",
+  "ms": 7492
+}

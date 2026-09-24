@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report:\n\n1. `root>line` contains 1 text line with the words \"Hidden by two\"\n2. Two absolutely-positioned divs with opaque backgrounds paint over it:\n   - `root>leftHalf` covers 18% of the box (x=0 to x=70)\n   - `root>rightHalf` covers 20% of the box (x=60 to x=140)\n3. Critically, the report explicitly states: **\"1 of 1 text line(s) completely hidden\"**\n\nEven though neither covering box spans the full 400px width of the container, the text content itself is positioned entirely within the covered region (approximately 0-140px with a 10px overlap between the two divs). The report confirms all text lines are completely hidden.\n\nANSWER: NO\n",
+  "ms": 19022
+}

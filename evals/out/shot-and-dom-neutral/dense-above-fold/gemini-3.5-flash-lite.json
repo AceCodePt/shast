@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 800 pixels, and `root>main>r17` has a `getBoundingClientRect` with a vertical position from y=484 to y=510. Since this range falls entirely within the 0 to 800 pixel window, the element is rendered within the visible area without requiring any scrolling.\n\nANSWER: YES\n",
+  "ms": 8429
+}

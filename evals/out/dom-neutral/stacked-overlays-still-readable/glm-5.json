@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>line` sits at y=0–19.2px. `root>glass` overlaps it (y=0–100) but has a fully transparent background (`rgba(0,0,0,0)`), so it doesn't obscure anything. `root>panel` (y=40–100, opaque dark gray) starts well below where the line's text ends, so it never covers the text either. With nothing opaque painting over those ~19px, the black text remains visible.\n\nANSWER: YES\n",
+  "ms": 13402
+}

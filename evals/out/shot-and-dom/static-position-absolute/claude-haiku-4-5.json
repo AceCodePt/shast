@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangle data provided:\n\nThe `root>floaty` element has `getBoundingClientRect: x=0 y=50 width=90 height=20`. This means its top edge is positioned at y=50.\n\nEven though `root>floaty` is `position: absolute` with no explicit `top`, `right`, `bottom`, or `left` properties set, it still renders at a specific position. According to the browser's computed layout, the element's top edge is at y=50 CSS pixels.\n\nThe reason this occurs is that when an absolutely positioned element doesn't have explicit positioning properties, it defaults to the position where it would have been in the normal flow. Since `root>floaty` comes after `root>spacer` (which is 50px tall), the absolutely positioned element renders at y=50.\n\nANSWER: 50\n",
+  "ms": 5916
+}

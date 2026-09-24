@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree shows text \"Hidden by two\" in `root>line`, with two additional divs (`leftHalf` and `rightHalf`) that act as covering elements. The key insight is that while neither covering box individually spans the entire line, **together** they can still fully obscure the text by each covering a portion of it. The screenshot confirms this — it shows mostly blank space where the text would be, with dark elements at the top. The text content itself (\"Hidden by two\") is also a strong hint about what's happening.\n\nANSWER: NO\n",
+  "ms": 15819
+}

@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>leftBottom` has a `getBoundingClientRect` of `x=0` and `y=120`, which places it on the bottom row. The node on that same row with `y=120` and directly to the right is `root>rightBottom`, which has `x=340` and `y=120`.  \nANSWER: root>rightBottom\n",
+  "ms": 7077
+}

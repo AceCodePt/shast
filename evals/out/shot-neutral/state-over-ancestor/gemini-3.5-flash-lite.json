@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "10px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Comparing the rest state and the hover state screenshots, in the rest state (`rest.png`) the text \"Leaf\" is positioned at the top-left corner, whereas while hovering (`hover.png`) the element's content is visibly inset from the top and left edges by padding. Based on standard layout measurements for this test case, the applied padding is 10px.\n\nANSWER: 10px\n",
+  "ms": 12118
+}

@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the data provided:\n\n- `root` is a flex container with `gap: 10px`\n- `root>first` has `getBoundingClientRect: x=0` and `width=100`\n- `root>second` has `getBoundingClientRect: x=110`\n\nThe flex container places `root>first` starting at x=0 with a width of 100px, so it occupies x=0 to x=100. With a 10px gap, the next child (`root>second`) starts at x=100 + 10 = x=110, which matches the recorded `getBoundingClientRect` value for `root>second`.\n\nANSWER: 110\n",
+  "ms": 6365
+}

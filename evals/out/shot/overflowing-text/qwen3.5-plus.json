@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, I can see a bordered box at the top containing only the first two lines of text (\"Payment failed because the card\"), while the remaining text (\"on file expired last month.\") appears **outside** and below the bordered box.\n\nThis visual evidence shows the text is overflowing the 48px-tall container - the border does not encompass all four lines of text.\n\nANSWER: NO\n",
+  "ms": 16201
+}

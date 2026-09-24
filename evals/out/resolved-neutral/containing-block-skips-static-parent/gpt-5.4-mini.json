@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "30,30",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>plain>pin` is `position: absolute`, and `root>plain` is not positioned, so its containing block is the nearest positioned ancestor: `root`.  \nFor a relatively positioned element with `padding: 20px`, the padding box starts at `(20,20)` from the page origin. Adding `top: 10px` and `left: 10px` places the pinned box at `(30,30)`.\n\nANSWER: 30,30\n",
+  "ms": 9997
+}

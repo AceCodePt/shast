@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 1280x800, and the screenshot shows the visible list items starting at “01. Ledger reconciliation” and continuing down to “28. Warranty reserves” within the initial view. Since `root>main>r36` corresponds to item “36. Royalty accruals”, it would appear below item 28 and therefore would require scrolling to reach.  \nANSWER: NO\n",
+  "ms": 9042
+}

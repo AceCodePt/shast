@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With `position: absolute` and no `top/right/bottom/left`, the element uses its static position within the containing block. Here the containing block is `root` because it is `position: relative`, and the browser reports `root>floaty` at `y=50`.\n\nSo its top edge renders at `50px` from the viewport top.\n\nANSWER: 50\n",
+  "ms": 15657
+}

@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>card` element has `padding: 24px` top and bottom, and a computed `line-height` of `19.2px`. Its total bounding height is `124.75px`, so subtracting padding gives `124.75 - 48 = 76.75px`, which is closest to `4 * 19.2 = 76.8px`. The screenshot likewise shows the text split into 4 visible lines.\n\nANSWER: 4\n",
+  "ms": 11821
+}

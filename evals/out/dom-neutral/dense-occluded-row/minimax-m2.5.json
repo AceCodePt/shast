@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The banner (`root>banner`) sits exactly on top of `root>main>r09`: both start at x=244, y=276, and both are 26px tall. The banner extends 700px wide (red background, z-index 5) and overlaps the left portion of r09's 1012px width. Since the banner has a solid red fill with no text content of its own and a higher z-index than r09 (which has z-index auto), it visually obscures the text \"09. Currency hedging\" underneath it.\n\nANSWER: NO\n",
+  "ms": 8638
+}

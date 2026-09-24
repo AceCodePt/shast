@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered output provided:\n\nThe `root>big` element has a border box height of 64px, as shown in the layout information: `@ x=0 y=32 width=600 height=64`.\n\nThe reasoning is straightforward: `root>big` declares `font-size: 32px` but doesn't declare a `line-height`. Since it doesn't explicitly set `line-height`, it inherits the value from its parent (`root`), which has `line-height: 2`. A unitless `line-height` value is multiplied by the element's own `font-size`, so `line-height: 2 × 32px = 64px`. This matches the rendered height shown in the layout data.\n\nANSWER: 64\n",
+  "ms": 9449
+}

@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "When `root>plain` is given `position: relative`, it becomes the nearest positioned ancestor and thus the containing block for `root>plain>pin`. Absolute positioning is calculated relative to the padding edge of the containing block, which starts at `root>plain`'s top-left coordinates of `x=20, y=20`. Adding `top: 10px` and `left: 10px` to this origin places the top-left corner of `root>plain>pin` at `20 + 10 = 30` for both x and y.\n\nANSWER: 30,30\n",
+  "ms": 18398
+}

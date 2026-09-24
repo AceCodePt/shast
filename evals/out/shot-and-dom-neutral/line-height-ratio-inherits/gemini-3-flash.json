@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element defines a unitless `line-height` of `2`, which is inherited by its children as a ratio rather than a fixed pixel value. For the `root>big` element, which has a `font-size` of `32px`, the inherited ratio results in a computed `line-height` of `64px` (`32px * 2`). The browser's `getBoundingClientRect` data confirms that the element renders with a height of 64px.\n\nANSWER: 64\n",
+  "ms": 10893
+}

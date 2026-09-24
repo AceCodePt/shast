@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With `grid-template-columns: 200px 300px` and `gap: 20px`, the second column’s left edge should start at `0 + 200 + 20 = 220px` from the grid container’s left edge. This matches the Chromium `getBoundingClientRect()` evidence, which reports `root>right` at `x=220`.  \nANSWER: 220\n",
+  "ms": 8006
+}

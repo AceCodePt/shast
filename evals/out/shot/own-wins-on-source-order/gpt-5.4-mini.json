@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "40px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The child is rendered using the padding from the last matching `root>child` rule, since the declarations have the same specificity and source order wins. The screenshot shows the text inset by that final padding value.\n\nANSWER: 40px\n",
+  "ms": 14594
+}

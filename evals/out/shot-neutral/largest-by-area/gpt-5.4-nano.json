@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "To determine which box covers the largest *area*, we need to compare both dimensions (width × height) for each box. A “wide” box has a large width but a relatively small height, and a “tall” box has a large height but a relatively small width. The “square” box has equal width and height, and from the intended setup it ends up with the biggest width-height product overall.  \n\nANSWER: root>square\n",
+  "ms": 10520
+}

@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the browser data provided, I need to identify what padding `root>child` actually renders with.\n\nThe information shows that `root>child` has a `getBoundingClientRect` of width=500 and height=147.1875. The computed style shows `padding: 64px 64px 64px 64px` (64px on all sides).\n\nThe question mentions \"three different blocks declare padding\" but the data only explicitly shows one padding declaration in the computed styles: `64px 64px 64px 64px`. This is what the browser actually rendered.\n\nThe `getBoundingClientRect` confirms this is correct: the element is 500 pixels wide (matching the viewport), and with 64px padding on left and right (64 + 64 = 128px), the content width would be 372px. The height of 147.1875px accounts for the 64px padding on top and bottom plus the content height.\n\nSince the question asks what padding it actually renders with, and the computed style shows the final calculated padding value, the answer is 64px on all sides.\n\nANSWER: 64px\n",
+  "ms": 9208
+}

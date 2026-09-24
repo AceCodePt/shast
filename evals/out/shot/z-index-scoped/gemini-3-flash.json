@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows a red rectangle labeled \"high\" overlapping a blue rectangle labeled \"inner\". The red rectangle is rendered on top of the blue rectangle, obscuring it in the overlapping region. Based on the node tree, the text \"high\" corresponds to `root>high` and the text \"inner\" corresponds to `root>low>inner`.\n\nANSWER: root>high\n",
+  "ms": 10366
+}

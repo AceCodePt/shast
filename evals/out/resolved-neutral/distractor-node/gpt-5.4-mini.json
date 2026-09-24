@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The black absolute `cover` only spans from `y=0` to `y=19`, while `root>second` starts at `y=19.19`, so it sits just below the covered area and is not obscured. The second paragraph’s text should be readable.\n\nANSWER: YES\n",
+  "ms": 7502
+}

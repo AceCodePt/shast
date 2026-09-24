@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data provided:\n\nThe `root>inner` element has `position: fixed` with `top: 15px` and `left: 25px`. When an element is `position: fixed`, its positioning is relative to the viewport, not to its parent container. The `top` and `left` CSS properties directly define the position from the top and left edges of the viewport.\n\nThe `getBoundingClientRect()` data confirms this: `root>inner` has `x=25 y=15`, which matches the `left: 25px` and `top: 15px` values. The parent's `position: relative` and padding are irrelevant for a fixed-positioned element, as fixed positioning removes the element from the normal document flow and positions it relative to the viewport instead.\n\nANSWER: 25,15\n",
+  "ms": 7087
+}

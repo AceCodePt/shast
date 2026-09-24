@@ -1,0 +1,10 @@
+{
+  "case": "fixed-ignores-positioned-parent",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "25,15",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Elements with `position: fixed` are positioned relative to the initial containing block, which is the viewport, rather than their parent element (unless an ancestor has a specific property like `transform`). Since `root>inner` is `position: fixed` with `top: 15px` and `left: 25px`, it ignores the 40px padding and relative positioning of `root` and aligns itself directly to the viewport's origin.\n\nANSWER: 25,15\n",
+  "ms": 9306
+}

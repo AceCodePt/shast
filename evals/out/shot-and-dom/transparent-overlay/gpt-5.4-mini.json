@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The `root>lede` paragraph is fully visible in the screenshot: the sentence appears across two lines, with the first line ending at “its” and the second line continuing “target this time.” Nothing cuts it off or hides part of it.\n\nANSWER: YES\n",
+  "ms": 9287
+}

@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is a flex container 600px wide with no padding/border/margin, so all 600px is distributable. `root>a` has `flex: 1` (flex-grow 1) and `root>b` has `flex: 2` (flex-grow 2). The space is split in a 1:2 ratio: A gets 200px and B gets 400px. This matches the measured `getBoundingClientRect` widths.\n\nANSWER: 400\n",
+  "ms": 15039
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The computed style data shows that `root>body>panel` has `padding: 4px 4px 4px 4px`, not 32px. The rendered height of 27.1875px is consistent with 4px padding (line-height 19.2px + 8px vertical padding ≈ 27.2px), not the 83px+ height that would result from 32px padding. Therefore, the `padding: 32px` declaration is being overridden or not applied.\n\nANSWER: NO\n",
+  "ms": 17630
+}

@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With all four offsets `auto`, an absolutely positioned element uses its static position. Here, `root>floaty` is placed after the 50px-tall `spacer`, so its top edge starts at `y = 50`.\n\nANSWER: 50\n",
+  "ms": 7767
+}

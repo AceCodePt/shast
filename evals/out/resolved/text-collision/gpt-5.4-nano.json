@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>ghost`’s text overlaps significantly with the text of the other node that is positioned at the same location. The report explicitly says that `root>visible` draws its text on the same pixels as `root>ghost`, with “over 50% of this node’s glyphs” overlapping. No other node is described as drawing on the same pixels as `root>ghost`.\n\nANSWER: root>visible\n",
+  "ms": 8354
+}

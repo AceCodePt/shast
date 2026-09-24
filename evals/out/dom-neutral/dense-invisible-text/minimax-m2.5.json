@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r21` has `color: rgb(255, 255, 255)` (white text) but its `background-color` is transparent, which falls through to the root's white background (`rgb(255, 255, 255)`). White-on-white makes the text effectively invisible.\n\nANSWER: NO\n",
+  "ms": 6366
+}

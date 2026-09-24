@@ -1,0 +1,10 @@
+{
+  "case": "inherited-font-size",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>heading",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the browser's `getComputedStyle()` data, `root>heading` has a `font-size` of 30px, whereas `root>caption` has a `font-size` of 22px. This difference is also clearly visible in the provided screenshot, where the \"Quarterly report\" text is significantly larger than the \"Draft\" text.\n\nANSWER: root>heading\n",
+  "ms": 8186
+}

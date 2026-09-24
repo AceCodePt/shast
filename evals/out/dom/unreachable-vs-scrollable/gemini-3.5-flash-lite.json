@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>lower` is positioned at y=700, which can be brought into view by vertical scrolling. In contrast, `root>sideways` extends horizontally to 900px in a 500px-wide viewport, and ordinary vertical scrolling cannot bring its off-screen horizontal overflow into view.\n\nANSWER: root>sideways\n",
+  "ms": 17826
+}

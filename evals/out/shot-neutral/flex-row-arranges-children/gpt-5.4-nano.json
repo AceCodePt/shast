@@ -1,0 +1,10 @@
+{
+  "case": "flex-row-arranges-children",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "110",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Because `root` is a flex container and `gap: 10px` adds 10px between flex items, the first child occupies the leftmost 100px (from x=0 to x=100). The second child’s left edge is therefore placed immediately after the gap: \\(100px + 10px = 110px\\).  \nANSWER: 110\n",
+  "ms": 9437
+}

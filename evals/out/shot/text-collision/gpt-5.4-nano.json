@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The authoritative rendered evidence shows two distinct text-bearing nodes: `root>ghost` with `\"Important warning\"` and `root>visible` with `\"Everything is fine\"`. In a “text collision” scenario, the question asks which other node’s glyphs overlap the same pixels as the `root>ghost` text. Since the only other text node present is `root>visible`, its text is the one that overlaps on-screen with `root>ghost`.\n\nANSWER: root>visible\n",
+  "ms": 9591
+}

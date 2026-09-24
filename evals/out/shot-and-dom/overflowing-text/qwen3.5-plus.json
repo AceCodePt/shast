@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data:\n\n- `root>card` has a height of 48px with 8px padding on top and bottom, leaving 32px for content\n- The text \"Payment failed because the card on file expired last month.\" wraps to 4 lines\n- With a line-height of 19.2px, 4 lines need approximately 76.8px of vertical space\n- The screenshot shows the text clearly extending beyond the bordered box (the border only covers roughly the first two lines)\n\nThe text overflows vertically beyond the element's 48px border box.\n\nANSWER: NO\n",
+  "ms": 15016
+}

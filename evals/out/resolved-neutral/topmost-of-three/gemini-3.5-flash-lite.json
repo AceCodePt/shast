@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In CSS stacking order, elements are painted according to their z-index, where higher z-index values paint later and appear on top of lower ones. Here, `root>middle` has a z-index of 3, which is higher than `root>front` (z-index 2) and `root>back` (z-index 1). Since the point (120, 120) falls within the bounds of `root>middle` and it has the highest z-index with an opaque background, it completely covers the other boxes at that location.\n\nANSWER: root>middle\n",
+  "ms": 8657
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 800px, and `root>main>r17` is positioned at y=484 with a height of 26px (extending to y=510), placing it entirely within the initial viewport above the fold. Furthermore, although the sidebar occupies x=0 to 220, `root>main>r17` begins at x=244, avoiding any overlap or covering by the sidebar. \n\nANSWER: YES\n",
+  "ms": 8500
+}

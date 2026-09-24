@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report:\n\n1. **root>back** (z-index: 1) - covers (40,40) to (240,240), includes (120,120)\n2. **root>middle** (z-index: 3) - covers (80,80) to (280,280), includes (120,120)\n3. **root>front** (z-index: 2) - covers (100,100) to (160,160), includes (120,120)\n\nThe z-index determines painting order: higher values paint on top. The report explicitly states that root>middle (z-index 3) \"paints later\" than both root>back and root>front, and covers 100% of the front box. Since root>middle has the highest z-index (3), it will be visible at point (120,120).\n\nANSWER: root>middle\n",
+  "ms": 18305
+}

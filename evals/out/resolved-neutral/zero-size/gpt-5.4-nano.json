@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The `root>ghost` div has a 0×0 box (`width=0 height=0`), but Chromium reports that the text’s content “overflows” a 0×0 content box with visible overflow (`overflow is visible`), so it is still painted outside the box rather than clipped away. It also notes glyph collision where the `ghost` node draws its text on the same pixels as `root>visible`, indicating the words are rendered somewhere on the page despite the 0×0 layout box.\n\nANSWER: YES\n",
+  "ms": 6961
+}

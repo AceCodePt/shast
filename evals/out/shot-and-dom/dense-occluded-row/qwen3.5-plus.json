@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the data:\n\n1. `root>main>r09` contains the text \"09. Currency hedging\" and is positioned at x=244, y=276 with dimensions 1012x26.\n\n2. However, there's a `root>banner` element that:\n   - Has the same position (x=244, y=276)\n   - Has a red background color (rgb(204, 34, 34))\n   - Has `position: absolute` and `z-index: 5`\n   - Overlaps the same area (width=700, height=26)\n\n3. The banner's higher z-index (5) means it renders on top of `r09`, and its red background would obscure the black text underneath.\n\n4. This matches the screenshot showing a red horizontal bar where item 09 should appear.\n\nANSWER: NO\n",
+  "ms": 20569
+}

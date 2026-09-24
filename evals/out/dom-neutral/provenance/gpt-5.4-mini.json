@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "`root>body>panel` is the node whose own computed styles show `border-radius: 12px`, and the other nodes show `0px`. So the declaration that produces the rendered rounded corners belongs to the panel node itself.\n\nANSWER: root>body>panel\n",
+  "ms": 8542
+}

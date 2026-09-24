@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report only provides box geometry and a couple of resolved style hints (font-size and padding) for `root>label`. It does not include any resolved value for the `color` property, so we cannot know the text colour from this report alone.\n\nANSWER: NOT STATED\n",
+  "ms": 10154
+}

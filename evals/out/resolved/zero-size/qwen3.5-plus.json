@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report explicitly states that `root>ghost` has `overflow: visible` (implied by the note \"it is painted outside the box rather than cut off\"). Even though the box dimensions are 0x0, the text content measuring 86.41x38.38px is painted outside the box boundaries. The report confirms this by noting the text \"broke onto 2 lines\" and that it \"collides\" with `root>visible`, meaning the glyphs occupy the same pixel space.\n\nANSWER: YES\n",
+  "ms": 15061
+}

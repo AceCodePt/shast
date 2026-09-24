@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>outer>tall` has `height: 100%`, which would only make it taller than its sibling if the parent (`root>outer`) had a definite height for the percentage to resolve against. From the rendered result, there’s no indication that `tall` expands vertically relative to `filler`; both labels appear near the top with no visible extra height for the `tall` sibling.  \n\nANSWER: NO\n",
+  "ms": 8237
+}

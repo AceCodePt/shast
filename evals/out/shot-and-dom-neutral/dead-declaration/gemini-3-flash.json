@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The browser's computed style for `root>body>panel` shows a padding of `4px 4px 4px 4px`, not `32px`. Additionally, the element's total height is `27.1875px`, which aligns with the `line-height` of `19.2px` plus the computed `4px` top and bottom padding ($19.2 + 4 + 4 = 27.2$); if the `32px` padding were active, the height would be at least `83.2px`. Therefore, the `32px` declaration is being overridden or is not in effect.\n\nANSWER: NO\n",
+  "ms": 11529
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The element `root>banner` has `position: absolute` and `z-index: 5`, placing it directly on top of `root>main>r09` which is in the normal static flow. Because `root>banner` overlaps the same coordinates (x=244, y=276 with width 700 and height 26), it visually obscures the text of `root>main>r09` underneath it.\n\nANSWER: NO\n",
+  "ms": 9763
+}

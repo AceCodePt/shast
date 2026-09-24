@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `pin` element has `position: absolute`, so its containing block is the nearest **positioned** ancestor. `root>plain` is not positioned, so it doesn't form a containing block — instead, `root` (which is `position: relative`) does.\n\nFor absolute positioning, offsets are measured from the padding edge of the containing block. `root` has no border, so its padding edge coincides with its border edge at (0, 0). Therefore `top: 10px` and `left: 10px` place the pin's top-left at (0 + 10, 0 + 10) = (10, 10). The bounding box confirms this. `root>plain`'s padding is irrelevant because it's not positioned.\n\nANSWER: 10,10\n",
+  "ms": 9637
+}

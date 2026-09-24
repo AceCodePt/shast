@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The information provided for `root>ghost` includes a `collides` alert, which explicitly states that `root>visible` draws its text on the same pixels, overlapping more than 56% of its glyphs. This is further confirmed in the entry for `root>visible`, which identifies `root>ghost` as the colliding node.\n\nANSWER: root>visible\n",
+  "ms": 8753
+}

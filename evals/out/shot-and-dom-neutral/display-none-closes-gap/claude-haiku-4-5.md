@@ -1,0 +1,108 @@
+# display-none-closes-gap — opencode/claude-haiku-4-5
+
+- arm: `shot+dom`
+- probes: whether a `display: none` box still occupies space in the flow
+- expected: NO — `display: none` removes the box from the flow entirely, so `root>third` starts at y=40
+- parsed answer: `NO`
+- verdict: **PASS**
+- elapsed: 8354ms
+- attached: `page.png`
+
+## Question
+
+`root>gone` sits between `root>first` and `root>third` and is `display: none`. Is there a 40px vertical gap between `root>first` and `root>third` where it would have been?
+
+## Context shown to the model
+
+![page.png](page.png)
+
+```
+The node tree, one line per node — path, tag, and the text as written in the source. CSS can change how that text renders, so treat the evidence below as authoritative for what is actually on screen:
+
+viewport 600x400
+
+root        div
+root>first  div  "first"
+root>gone   div  "gone"
+root>third  div  "third"
+
+Below is the browser's own data for each node — `getBoundingClientRect()` and `getComputedStyle()`:
+
+root <div>
+  getBoundingClientRect: x=0 y=0 width=600 height=80
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 80px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: static
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>first <div>
+  getBoundingClientRect: x=0 y=0 width=600 height=40
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 40px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: static
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>gone <div>
+  getBoundingClientRect: x=0 y=0 width=0 height=0
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: none
+  font-size: 16px
+  height: 40px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: static
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>third <div>
+  getBoundingClientRect: x=0 y=40 width=600 height=40
+  background-color: rgba(0, 0, 0, 0)
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 40px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: static
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+Attached is a screenshot of the rendered page at 600x400 CSS px, at 1 device pixel per CSS px.
+```
+
+## Model reply
+
+Looking at the `getBoundingClientRect()` data provided:
+
+- `root>first` is positioned at y=0 with height=40, so it occupies y=0 to y=40
+- `root>third` is positioned at y=40 with height=40, so it occupies y=40 to y=80
+- `root>gone` has `display: none`, so it takes up no space in the layout (getBoundingClientRect shows width=0 height=0)
+
+Since `root>third` starts immediately at y=40 (where `root>first` ends), there is no gap between them. The `display: none` element is completely removed from the document flow, so no space is reserved for it. The third element closes the gap that would have existed if the middle element were visible.
+
+ANSWER: NO

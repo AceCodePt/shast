@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>line` (the one containing the text “Still readable”) occupies the top region (`y=0` to `height≈19.19px`). The two overlapping boxes are `root>glass` and `root>panel`: `root>panel` starts at `y=40px`, so it does not cover the text area at the top. `root>glass` covers `y=0` to `y=100px`, but its `background-color` is fully transparent (`rgba(0, 0, 0, 0)`), so it does not obscure the text.\n\nANSWER: YES\n",
+  "ms": 10180
+}

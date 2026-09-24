@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>alpha` and `root>beta` are positioned at y ranges 20–60 and 64–104 respectively, so they appear close together with only a small vertical gap between them. `root>gamma` is positioned much lower at y range 200–240, leaving a large empty space between it and the other two. Therefore, `root>gamma` is the one visually separated from the other siblings.\n\nANSWER: root>gamma\n",
+  "ms": 8263
+}

@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The evidence states that the `padding: 2px` declaration resides within the `root` node's CSS block (specifically inside a `> mid > leaf` selector) and that this declaration is outranking the `:hover` state defined in the leaf's own block. To allow the padding to change to 40px, the overriding rule in the `root` node must be modified or removed.\n\nANSWER: root\n",
+  "ms": 13603
+}

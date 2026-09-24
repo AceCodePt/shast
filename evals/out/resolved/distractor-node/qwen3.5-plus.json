@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report:\n\n- `root>cover` is an absolute positioned div at y=0 with height=19px, so it covers from y=0 to y=19\n- `root>second` is positioned at y=19.19, which is **below** where the cover div ends (y=19)\n\nThe cover div only obscures the first paragraph (`root>first` at y=0), while the second paragraph starts at y=19.19, just below the black overlay. There is no other element covering `root>second`.\n\nANSWER: YES\n",
+  "ms": 17123
+}

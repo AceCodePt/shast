@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values for each box:\n- `root>back`: z-index: 1\n- `root>middle`: z-index: 3\n- `root>front`: z-index: 2\n\nIn CSS stacking, higher z-index values render on top of lower ones. Even though the node is named \"front\", the actual stacking order is determined by the z-index values, not the names. The point (120, 120) falls within all three boxes, but the one with the highest z-index will be visible.\n\nANSWER: root>middle\n",
+  "ms": 15374
+}

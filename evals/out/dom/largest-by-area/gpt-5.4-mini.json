@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `wide` and `tall` boxes both cover `600 × 60 = 36,000` and `120 × 300 = 36,000` square pixels, respectively. The `square` box covers `220 × 220 = 48,400` square pixels, which is larger than both of the others.\n\nANSWER: root>square\n",
+  "ms": 8880
+}

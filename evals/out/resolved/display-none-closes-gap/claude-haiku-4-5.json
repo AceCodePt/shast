@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report:\n\n- `root>first` occupies y=0 to y=40 (height: 40px)\n- `root>gone` has `display: none` and is hidden (@ shows width=0 height=0)\n- `root>third` occupies y=40 to y=80 (height: 40px)\n\nSince `root>gone` has `display: none`, it is removed from the document flow entirely and takes up no space. The `root>third` div is positioned immediately after `root>first` with no gap between them (third starts at y=40, which is where first ends). There is no 40px vertical gap where the hidden element would have been—the hidden element simply doesn't affect the layout at all.\n\nANSWER: NO\n",
+  "ms": 7091
+}

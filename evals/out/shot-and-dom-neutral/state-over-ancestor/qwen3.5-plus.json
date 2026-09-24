@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "2px 2px 2px 2px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the hover state data for `root>mid>leaf`:\n\n```\nroot>mid>leaf <div>\n  ...\n  padding: 2px 2px 2px 2px\n  ...\n```\n\nThe computed style data shows the padding is `2px 2px 2px 2px` (2px on all four sides) while hovering. This is identical to the rest state, and the screenshots confirm no visual change occurs on hover.\n\nANSWER: 2px 2px 2px 2px\n",
+  "ms": 14900
+}

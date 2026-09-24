@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport is only `500x300` CSS pixels, and the provided evidence of what’s actually visible corresponds to the top area showing the `\"masthead\"`. While `root>footer` exists in the DOM, there’s no indication that it appears within the initial viewport region before scrolling; instead, the screenshot content suggests only the top portion is in view.\n\nANSWER: NO\n",
+  "ms": 8586
+}

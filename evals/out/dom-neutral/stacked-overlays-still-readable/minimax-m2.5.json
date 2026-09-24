@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>line` text occupies y=0 to y=19.1875. The `root>glass` box covers y=0 to y=100 (overlapping the text), but its background is `rgba(0, 0, 0, 0)` — fully transparent — so it does not obscure the text beneath it. The `root>panel` box (y=40 to y=100) does not reach the line's text region at all. Since glass is transparent and panel sits below the text, the text remains visible.\n\nANSWER: YES\n",
+  "ms": 8595
+}

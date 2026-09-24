@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Because `root` is a flex container with `viewport` width 600px, the flex items split the available width proportionally to their `flex` values (ignoring the details of `flex: 0 1 auto` on the container since the items’ `flex` governs the distribution). With `root>a` having `flex: 1` and `root>b` having `flex: 2`, `root>b` gets \\( \\frac{2}{1+2} = \\frac{2}{3} \\) of 600px = 400px. This matches the provided `getBoundingClientRect()` for `root>b` (width 400px).  \n\nANSWER: 400\n",
+  "ms": 10366
+}

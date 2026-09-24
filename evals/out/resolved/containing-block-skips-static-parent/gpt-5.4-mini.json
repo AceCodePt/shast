@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "30,30",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "`root>plain>pin` is absolutely positioned, but `root>plain` is not positioned, so it does not establish the containing block. The nearest positioned ancestor is `root`, which is `position: relative`. For absolute positioning, `top: 10px` and `left: 10px` are measured from `root`’s padding box, which starts at `20,20`.\n\nSo the top-left corner renders at `30,30`.\n\nANSWER: 30,30\n",
+  "ms": 9358
+}

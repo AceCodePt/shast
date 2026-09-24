@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the layout information provided:\n\n- `root>outer>filler` has a height of 60px (explicitly set)\n- `root>outer>tall` has a height of 19.19px (the rendered result)\n\nThe `root>outer>tall` element declares `height: 100%`, which resolves to 100% of its parent `root>outer`. The parent `root>outer` has a total height of 79.19px. However, since `root>outer>tall` is a sibling that comes after `root>outer>filler`, the `100%` refers to the parent's full height (79.19px), but the element only renders at 19.19px. This discrepancy occurs because `root>outer>filler` takes up 60px of the parent's height, leaving only 19.19px of available space for the tall element (likely due to the parent not expanding or layout constraints).\n\nComparing the actual rendered heights:\n- `root>outer>filler`: 60px\n- `root>outer>tall`: 19.19px\n\nThe filler is taller than the tall element.\n\nANSWER: NO\n",
+  "ms": 9018
+}

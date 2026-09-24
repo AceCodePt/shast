@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>line` element contains the text \"Hidden by two\" starting at x=0 and y=0. The elements `root>leftHalf` (x=0 to 70) and `root>rightHalf` (x=60 to 140) are siblings that appear later in the DOM tree with the same z-index, meaning they are rendered on top of the text. Together, they create a continuous opaque coverage from x=0 to x=140, which completely obscures the text \"Hidden by two\" (which, at 16px font size, is well under 140px wide).\n\nANSWER: NO\n",
+  "ms": 17951
+}

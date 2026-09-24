@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The screenshot shows `Second paragraph here` clearly rendered at the top left, so a viewer can read `root>second`. The other nodes do not obscure it in the visible output.\n\nANSWER: YES\n",
+  "ms": 7958
+}

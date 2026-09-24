@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The element `root>ghost` has a width and height of 0px, resulting in a 0x0 bounding box. However, its `overflow` property is set to `visible`, which means the browser does not clip content that extends beyond the element's dimensions. Because the text \"Important warning\" exists within this node and there are no properties hiding it (such as `display: none` or `opacity: 0`), the words will be painted on the page, overflowing the zero-sized container.\n\nANSWER: YES\n",
+  "ms": 10960
+}

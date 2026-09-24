@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the visual evidence from the screenshot and the computed style information:\n\nThe text \"one two three four five six seven eight nine ten\" is displayed inside the `root>card` div, which has:\n- Width: 200px\n- Padding: 24px on all sides (reducing the available content width to 152px)\n- Line height: 19.2px\n- Font size: 16px\n\nFrom the screenshot, I can count the text wrapping visually:\n1. \"one two three\"\n2. \"four five six\"\n3. \"seven eight\"\n4. \"nine ten\"\n\nThe `root>card` element has a `getBoundingClientRect` height of 124.75px. With a line-height of 19.2px, this accommodates approximately 124.75 / 19.2 ≈ 6.5 lines of space, but the actual text only uses 4 lines before ending.\n\nANSWER: 4\n",
+  "ms": 7517
+}

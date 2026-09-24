@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "When the page is first painted and the pointer is not hovering `root>cta`, the browser’s reported `getComputedStyle().background-color` for `root>cta` is `rgb(51, 85, 255)`. The hover comparison shows only that background color changes on `:hover`, while padding etc. stay the same, so the initial background is the first value.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 7616
+}

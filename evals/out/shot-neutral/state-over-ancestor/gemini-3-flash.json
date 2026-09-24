@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "0px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Comparing the provided screenshots, `rest.png` and `hover.png` are identical. In both images, the text \"Leaf\" is positioned at the top-left corner of the viewport. Since there is no change in the position of the text when the pointer hovers over the `root>mid>leaf` element, and the text remains flush against the top-left (accounting for standard font rendering), the element is not rendering with any padding.\n\nANSWER: 0px\n",
+  "ms": 24797
+}

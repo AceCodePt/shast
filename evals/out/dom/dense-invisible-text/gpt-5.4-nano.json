@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "In `root>main>r21`, the computed text `color` is `rgb(255, 255, 255)` (white). For that same element, the `background-color` is `rgba(0, 0, 0, 0)` (fully transparent), and the `root` page background is `rgb(255, 255, 255)` (white). That means the white text is rendered on a white background, so it would not be readable.  \nANSWER: NO\n",
+  "ms": 8147
+}

@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport is 500x300, meaning the visible area without scrolling spans from y=0 to y=300. The `root>footer` element is positioned at y=700 with height 60, placing it entirely below y=300. The report also explicitly marks it as \"below-fold\", confirming it's not in the initial visible area.\n\nANSWER: NO\n",
+  "ms": 14590
+}

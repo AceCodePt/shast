@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Let me analyze the layout information provided.\n\nFrom the getBoundingClientRect() data:\n- `root>outer>filler` has a height of 60px\n- `root>outer>tall` has a height of 19.1875px\n\nThe question states that `root>outer>tall` declares `height: 100%`. In normal CSS, `height: 100%` on an element means it takes 100% of its parent's height. The parent is `root>outer`, which has a height of 79.1875px.\n\nHowever, the actual computed height shown for `root>outer>tall` is 19.1875px, not 79.1875px. This discrepancy suggests that `height: 100%` is not being applied as expected, or there's something unusual about how the height is being calculated (perhaps it's being constrained by content, or there's a different CSS property taking precedence).\n\nRegardless of the declaration, the actual rendered height of `root>outer>tall` is 19.1875px, while `root>outer>filler` is 60px.\n\nTherefore, `root>outer>tall` is **not** taller than its sibling `root>outer>filler`.\n\nANSWER: NO\n",
+  "ms": 5758
+}

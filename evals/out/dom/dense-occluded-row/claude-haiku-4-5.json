@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the layout data provided:\n\nThe `root>main>r09` div is positioned at `x=244 y=276` with `width=1012 height=26`.\n\nHowever, there is also a `root>banner` div that is positioned at `x=244 y=276` (the exact same top-left coordinates) with `width=700 height=26` and `z-index: 5`. The banner has a background color of `rgb(204, 34, 34)` (dark red) and is positioned absolutely.\n\nSince both elements start at the same y-coordinate (276px) and have the same height (26px), and the banner has a higher z-index (5 vs auto), the banner will appear on top of `root>main>r09`. The banner covers the leftmost 700 pixels of the row, which overlaps with the text in `root>main>r09` (which spans from x=244 to x=1256). While the text to the right of x=944 might be visible, the banner obscures most of the content that would normally be readable.\n\nANSWER: NO\n",
+  "ms": 9395
+}

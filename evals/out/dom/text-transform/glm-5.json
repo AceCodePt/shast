@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text in `root>title` is `\"Annual review\"`, but its computed style sets `text-transform: uppercase`, which causes the browser to render the text in all capital letters. CSS `text-transform` changes how the text is displayed on screen without altering the underlying source characters. The measured box height (19.1875px) is consistent with a single line of normal-weight 16px text.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 8756
+}

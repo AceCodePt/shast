@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The first column is 200px wide starting at x=0, ending at x=200. The 20px gap places the second column's left edge at x=200+20=220, which matches the report.\n\nANSWER: 220\n",
+  "ms": 8625
+}

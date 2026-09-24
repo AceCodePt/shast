@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "r36 is located at y=978 with height 26, placing its bottom edge at y=1004. The viewport is 1280x800, so only y=0 to y=800 is visible on first load. Since 978 > 800, r36 is below the fold.\n\nANSWER: NO\n",
+  "ms": 9152
+}

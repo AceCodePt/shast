@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the rendered information for `root>body>panel`, the annotation explicitly states:\n\n`← border-radius: 12px   declared by root, inside its \"> body > panel\" block   (adds)`\n\nThis indicates that the `border-radius` property is declared by the **root** node's CSS block (specifically in a selector targeting `> body > panel`).\n\nANSWER: root\n",
+  "ms": 9044
+}

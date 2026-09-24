@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the report, the `root>ghost` div has a 0x0 content box, but the report explicitly states:\n\n\"! overflows: content is 86.41x38.38px inside a 0x0px content box, so it is painted outside the box rather than cut off (overflow is visible)\"\n\nThis means the text content (86.41x38.38px) overflows the 0x0px box and is painted outside it due to `overflow: visible`. The report also confirms there's a collision with `root>visible`, noting that `root>ghost` \"draws its text on the same pixels\" over 56% of the visible div's glyphs.\n\nSo despite the element having zero dimensions, the text is indeed painted on the page due to overflow being visible.\n\nANSWER: YES\n",
+  "ms": 10176
+}

@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The information provided states that `root>child` has a resolved padding of `64px`. It explicitly notes that the `64px` declaration within the `&.big` block shadows the other two declarations (`4px` from the parent and `32px` from its own top-level block). Additionally, the rendered height of `147.19px` is consistent with a `16px` font-size and `64px` padding on both the top and bottom.\n\nANSWER: 64px\n",
+  "ms": 9957
+}

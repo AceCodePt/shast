@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>row` is a block `<p>` containing the short text \"Short label\". Block text flows from the top-left of the content box, which (after the 4px padding) starts at roughly x=4, y=4, with the first line occupying about y=4 to y=23 at a 16px font / 19.2px line-height. The text \"Short label\" is short, so it ends well before x=400.\n\n`root>chip` covers the region x=400–560, y=60–100. That is far below the text's line (y≈4–23) and to the right of where the short text ends. So none of `root>row`'s own text is hidden.\n\nANSWER: NO\n",
+  "ms": 13709
+}

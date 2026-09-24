@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Let me analyze the dimensions and text rendering:\n\nThe `root>card` element has:\n- Height: 48px\n- Padding: 8px on all sides\n- Line-height: 19.2px\n- Font-size: 16px\n\nThe text content is: \"Payment failed because the card on file expired last month.\"\n\nWith 8px padding on top and bottom, the available vertical space inside the border box is: 48px - 8px - 8px = 32px.\n\nThe line-height is 19.2px, which means a single line of text will take up 19.2px of vertical space. Since 19.2px < 32px, a single line of text will fit within the available space.\n\nThe element has `display: block`, `width: 180px` (with 8px horizontal padding = 164px of content width), and `overflow: visible`. The text appears to be rendered on a single line based on the DOM structure showing it as continuous text in one element.\n\nSince one line of text (19.2px) fits comfortably within the available height (32px), all of the text fits inside the border box.\n\nANSWER: YES\n",
+  "ms": 7324
+}

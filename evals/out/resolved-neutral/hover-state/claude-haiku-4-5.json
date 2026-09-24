@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided about the rendered web page:\n\nThe `root>cta` div element has a `background-color: #3355ff` declared in its CSS style. This is the baseline background color that applies when the element is in its normal state.\n\nThe `:hover` pseudo-class rule specifies `background-color: #0022cc`, but this only applies when the pointer is hovering over the element. Since the question asks about when \"the pointer is elsewhere,\" the `:hover` state is not active, so the element displays its default background color.\n\nANSWER: #3355ff\n",
+  "ms": 7410
+}

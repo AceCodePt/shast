@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided data, I need to determine if the last line of text in `root>card` extends below its container and whether it's visible.\n\nFrom the `getBoundingClientRect()` data:\n- `root>card` has height: 48px and y position: 0, so its bottom edge is at y=48px\n- The computed styles show: font-size: 16px, line-height: 19.2px, padding: 8px on all sides\n- With 8px top and bottom padding, the available content height is 48px - 16px = 32px\n\nThe text \"Payment failed because the card on file expired last month.\" is described as having a last line that sits below the bottom edge of `root>card`. However, the critical detail is the `overflow: visible` property on `root>card`. This means content that extends beyond the container's boundaries is not clipped—it will still be painted and visible on the page. The container itself may end at y=48px, but overflowing content renders beyond that boundary.\n\nTherefore, even though the last line extends below the container's bottom edge, it is still painted and readable because overflow is set to visible rather than hidden or auto.\n\nANSWER: YES\n",
+  "ms": 10799
+}

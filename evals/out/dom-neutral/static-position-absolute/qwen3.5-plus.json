@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `getBoundingClientRect()` data for `root>floaty` explicitly shows `y=50`, which represents the y-coordinate of the element's top edge in the viewport. This is the browser's authoritative measurement of where the element actually renders on screen. Since the element is `position: absolute` with no `top`, `right`, `bottom`, or `left` specified, it remains at its default static position, which places it at y=50 (right after the 50px-tall root/spacer content).\n\nANSWER: 50\n",
+  "ms": 13273
+}

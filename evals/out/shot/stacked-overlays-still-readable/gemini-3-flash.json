@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The screenshot shows the text \"Still readable\" clearly visible at the top left of the viewport. Although the node tree contains two elements (`glass` and `panel`) that follow the text node and could potentially overlap it, the rendered image confirms that these elements do not obstruct the text. The only visible box is a dark horizontal bar positioned below the text, leaving the characters fully legible against the white background.\n\nANSWER: YES\n",
+  "ms": 11297
+}

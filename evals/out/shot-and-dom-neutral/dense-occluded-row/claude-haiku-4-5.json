@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the provided information, I need to determine if the text in `root>main>r09` (\"09. Currency hedging\") is readable to a viewer.\n\nFrom the browser data, I can see that:\n1. `root>main>r09` is a `<div>` element positioned at `y=276` with a height of `26px`\n2. There is a `root>banner` element (a red overlay div) positioned at `top: 276px` with a height of `26px` and `z-index: 5`\n3. The banner's `background-color` is `rgb(204, 34, 34)` (a dark red color), and it has `opacity: 1` (fully opaque)\n4. The banner's positioning exactly overlaps with `root>main>r09` - both start at y=276 and are 26px tall\n\nSince the banner element has a higher z-index (5) than the main content and is fully opaque, it completely occludes the text in `root>main>r09` from view. The text is still in the DOM, but it's visually hidden behind the red banner.\n\nANSWER: NO\n",
+  "ms": 9159
+}

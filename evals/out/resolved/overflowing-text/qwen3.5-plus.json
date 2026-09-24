@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report:\n\n- `root>card` has a border box of **180x48px**\n- With `padding: 8px` and `border-width: 1px`, the content box is **162x30px** (48 - 2×8 - 2×1 = 30)\n- The report explicitly states the text content is **153.61x76.75px**\n- The text height (76.75px) exceeds the content box height (30px) by more than double\n- The report confirms: \"overflows: content is 153.61x76.75px inside a 162x30px content box, so it is painted outside the box\"\n\nThe text clearly does not fit within the 48px-tall border box.\n\nANSWER: NO\n",
+  "ms": 16364
+}

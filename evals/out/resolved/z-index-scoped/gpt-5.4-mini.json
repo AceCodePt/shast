@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>high` is visible in the overlap. `root>low>inner` has a higher `z-index` only within the stacking context created by `root>low`, but that entire context is painted below `root>high` because `root>low` has `z-index: 1` and `root>high` has `z-index: 2`. So `root>high` covers the overlapping region.\n\nANSWER: root>high\n",
+  "ms": 11261
+}

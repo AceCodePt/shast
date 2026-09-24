@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `root>main>r09` is a `<div>` with `getBoundingClientRect` x=244, y=276, width=1012, height=26, and it has `color: rgb(0, 0, 0)` with `opacity: 1` and a transparent background, so the text should render normally within the visible page area. The node tree also shows the text content “09. Currency hedging”, indicating there is readable text at that location.  \nANSWER: YES\n",
+  "ms": 9960
+}

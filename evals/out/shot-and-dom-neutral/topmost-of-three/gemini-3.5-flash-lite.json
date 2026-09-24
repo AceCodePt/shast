@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "All three boxes cover the point 120,120. Comparing their `z-index` values within the same stacking context, `root>middle` has a `z-index` of 3, which is higher than `root>front` (2) and `root>back` (1). Consequently, `root>middle` is rendered on top of the others at this coordinate.\n\nANSWER: root>middle\n",
+  "ms": 9020
+}

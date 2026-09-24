@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When an element is `position: absolute` without any offset properties (`top`, `right`, `bottom`, or `left`), it is placed at its static position in normal flow. Since `root>spacer` occupies the first 50px of height (`y=0` to `50`), the static position of `root>floaty` places its top edge right below it at `y=50`.\n\nANSWER: 50\n",
+  "ms": 7940
+}

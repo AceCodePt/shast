@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot, I can count the visible lines of text:\n\n1. \"one two three\"\n2. \"four five six\"\n3. \"seven eight\"\n4. \"nine ten\"\n\nThe text content \"one two three four five six seven eight nine ten\" is wrapped across 4 distinct lines within the card element.\n\nANSWER: 4\n",
+  "ms": 10411
+}

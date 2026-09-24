@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` sets `line-height: 2` as a unitless multiplier, which is inherited and then applied to the element’s own `font-size`. `root>big` overrides `font-size` to `32px`, so its effective line-height becomes `2 × 32px = 64px`. Therefore, `root>big` renders with a line box height of 64 CSS pixels.\n\nANSWER: 64\n",
+  "ms": 8299
+}

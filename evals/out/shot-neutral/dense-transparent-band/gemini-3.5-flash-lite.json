@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text `09. Currency hedging` corresponding to `root>main>r09` is clearly visible and legible in the rendered screenshot within the main content area. The characters are sharp and unobstructed against the background, making them fully readable to a viewer.\n\nANSWER: YES\n",
+  "ms": 8248
+}

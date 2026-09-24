@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `root>main>r17` is at `y=484` with height `26`, and the viewport is `800px` tall, so it appears well within the initial visible area without scrolling. The footer starts much lower, so it does not cover it.\n\nANSWER: YES\n",
+  "ms": 10244
+}

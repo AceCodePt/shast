@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered page information, `root>main>r17` contains \"17. Inventory valuation\". The screenshot shows items 01 through 28+ visible in the 1280x800 viewport. Since item 17 falls well within this visible range (appearing in the middle portion of the list, between items 16 and 18), it is visible without scrolling.\n\nANSWER: YES\n",
+  "ms": 11892
+}

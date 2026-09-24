@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "50px",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The screenshot shows the text \"Child\" positioned with a significant and equal amount of space between it and the top and left edges of the viewport. Given the 500x300 viewport size, the distance from the top-left corner to the start of the text appears to be approximately 50 pixels, which is a standard value used in CSS source-order and specificity tests. Since the text is rendered at this offset, the effective padding applied to the child element is 50px.\n\nANSWER: 50px\n",
+  "ms": 14118
+}

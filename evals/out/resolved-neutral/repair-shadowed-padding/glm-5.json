@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The evidence shows that `root>body>panel` already declares `padding: 32px` in its own CSS block, but it is being **shadowed** by `padding: 4px` declared in `root>body`'s `> panel` block. Since the parent's `> panel` rule wins (it overrides the child's own declaration), adding more padding to the child's own block won't help — the problem lives in the parent. You must edit `root>body`'s CSS block (the `> panel` sub-block within it) to remove or change the `padding: 4px` declaration.\n\nANSWER: root>body\n",
+  "ms": 12974
+}

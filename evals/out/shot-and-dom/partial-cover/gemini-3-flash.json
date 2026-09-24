@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>row` spans the top of the page from `y=0` to `y=120`, containing the text \"Short label\" which renders near the top-left (starting at `y=4` due to padding). `root>chip` is an absolute-positioned yellow box located at `x=400, y=60` with a height of `40px`. While `root>chip` overlaps the bounding box of `root>row`, it is positioned vertically below the single line of text and horizontally to the right of it, leaving the text \"Short label\" completely unobstructed.\n\nANSWER: NO\n",
+  "ms": 13514
+}

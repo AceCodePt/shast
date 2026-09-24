@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>low` is a positioned element with `z-index: 1`, which means it creates its own stacking context. `root>high` is also positioned, with `z-index: 2`, so the entire stacking context of `root>low` (including `root>low>inner`) is painted behind `root>high`. Even though `root>low>inner` has `z-index: 999`, it cannot rise above the stacking context boundary established by `root>low`.\n\nANSWER: root>high\n",
+  "ms": 8899
+}

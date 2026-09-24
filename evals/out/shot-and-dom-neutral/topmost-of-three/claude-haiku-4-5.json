@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the z-index values for each box and their positions:\n\n- **root>back**: z-index: 1, positioned at x=40, y=40\n- **root>middle**: z-index: 3, positioned at x=80, y=80\n- **root>front**: z-index: 2, positioned at x=100, y=100\n\nAt point 120,120:\n- root>back (x=40 to 240, y=40 to 240) covers this point\n- root>middle (x=80 to 280, y=80 to 280) covers this point\n- root>front (x=100 to 160, y=100 to 160) covers this point\n\nAll three boxes overlap at 120,120. The z-index determines which is visible on top. Since root>middle has z-index: 3 (the highest), it will be rendered on top and visible to the viewer at that point.\n\nANSWER: root>middle\n",
+  "ms": 7227
+}

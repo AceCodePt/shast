@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>lower` node is located at `y=700` with a height of `40px`. Since the `root` element has a total height of `900px`, ordinary vertical scrolling will allow the viewer to reach the area between `y=600` and `y=900`, bringing `root>lower` fully into view. In contrast, `root>sideways` has a width of `900px`, which exceeds the `500px` width of both the viewport and the `root` element; because ordinary scrolling typically moves the viewport vertically, and there is no horizontal room within the `root` container to scroll sideways, the viewer cannot reach the rightmost portion of this node.\n\nANSWER: root>sideways\n",
+  "ms": 16969
+}

@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The rects show `root>first` occupies `y=0..40` and `root>third` starts at `y=40`, so they are adjacent. Since `root>gone` is `display: none`, it takes no space in layout and leaves no 40px gap.\n\nANSWER: NO\n",
+  "ms": 6264
+}

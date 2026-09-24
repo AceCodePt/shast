@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot provided, I can count the text lines as they appear on the rendered page:\n\n1. \"one two three\"\n2. \"four five six\"\n3. \"seven eight\"\n4. \"nine ten\"\n\nThe text wraps across 4 distinct lines in the rendered output. This is visible in the screenshot where the content inside the `root>card` div breaks into these four separate lines due to the 600px width constraint.\n\nANSWER: 4\n",
+  "ms": 14026
+}

@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The line sits at the top-left where two absolutely positioned boxes overlap, and together they cover roughly the first 140 CSS px of that line. The text `Hidden by two` is short enough that it falls entirely under those boxes, so a viewer cannot read it.\n\nANSWER: NO\n",
+  "ms": 9861
+}

@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root>lede` node’s text as actually rendered in the source is shown with an ellipsis: `\"The quarterly results are in and every region beat its targ…\"` rather than the full sentence. The evidence also doesn’t indicate that the missing remainder exists elsewhere; it’s presented as truncated. So a reader would only see the truncated version from what’s actually on the page.\n\nANSWER: NO\n",
+  "ms": 8933
+}

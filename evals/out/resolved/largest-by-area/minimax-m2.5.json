@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Wide is 600×60 = 36,000. Tall is 120×300 = 36,000. Square is 220×220 = 48,400, which is the largest.\n\nANSWER: root>square\n",
+  "ms": 6801
+}

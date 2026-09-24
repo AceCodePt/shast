@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the browser data provided:\n\nThe `root>plain>pin` element has `position: absolute` and `getBoundingClientRect: x=10 y=10`. The `getBoundingClientRect()` method returns coordinates in viewport/document space.\n\nSince `root>plain` has `position: static` (not positioned), it does not establish a positioning context. Therefore, the absolutely positioned `root>plain>pin` element is positioned relative to the nearest ancestor with a positioning context, which is `root` with `position: relative`.\n\nThe `getBoundingClientRect()` gives us the absolute position in viewport coordinates: x=10, y=10. Since the viewport starts at (0,0), these coordinates directly represent where the top-left corner of `root>plain>pin` renders on the page.\n\nANSWER: 10,10\n",
+  "ms": 9141
+}

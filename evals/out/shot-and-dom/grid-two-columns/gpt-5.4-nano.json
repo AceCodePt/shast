@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is a grid with `grid-template-columns: 200px 300px` and `gap: 20px`. The first column occupies 200px from the grid’s left edge, and then the gap of 20px comes before the second column. So the left edge of `root>right` (the second grid item) renders at `0 + 200 + 20 = 220` CSS pixels, matching the reported bounding box `x=220`.\n\nANSWER: 220\n",
+  "ms": 9118
+}

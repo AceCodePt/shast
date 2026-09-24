@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The authoritative evidence shows `root>row` is the `<p>` containing the text `\"Short label\"`, and `root>chip` is a separate `<div>` containing `\"chip\"`. In the rendered screenshot, `\"chip\"` appears in a yellow box on the upper right, while `\"Short label\"` remains visible on the upper left. Since there is no indication that the yellow `root>chip` overlay covers the `\"Short label\"` text region, `root>row`’s own text is not hidden.\n\nANSWER: NO\n",
+  "ms": 7308
+}

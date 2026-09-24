@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text is \"Annual review\", but both `root` and `root>title` have `text-transform: uppercase` applied, so the text renders in uppercase.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 14401
+}

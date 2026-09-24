@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "#3355ff",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The default background colour is `#3355ff`. The `:hover` rule only applies when the pointer is over the element, so on initial paint without hover, the element uses its default `background-color`.\n\nANSWER: #3355ff\n",
+  "ms": 6751
+}

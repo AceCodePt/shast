@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "- alpha ends at y=60, beta starts at y=64 → 4px gap (adjacent)\n- beta ends at y=104, gamma starts at y=200 → 96px gap (large separation)\n\nANSWER: root>gamma\n",
+  "ms": 12832
+}

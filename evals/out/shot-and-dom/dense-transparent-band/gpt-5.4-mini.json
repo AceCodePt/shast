@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. `root>main>r09` sits at the same position as `root>banner`, but the banner is fully transparent (`background-color: rgba(0, 0, 0, 0)` and `opacity: 1`), so it does not visually cover the text. The screenshot also shows `09. Currency hedging` clearly in the list.\n\nANSWER: YES\n",
+  "ms": 8870
+}

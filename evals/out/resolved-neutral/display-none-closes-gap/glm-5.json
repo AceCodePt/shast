@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `display: none` elements are removed from the layout entirely and take up no space. This is confirmed by the rendered positions: `root>first` ends at y=40 (y=0 + height=40), and `root>third` begins at exactly y=40. They are adjacent with no gap between them. The `root>gone` element has width=0, height=0 and contributes nothing to the layout flow.\n\nANSWER: NO\n",
+  "ms": 14725
+}

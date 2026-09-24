@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>panel` is 600px wide and `root>rail` is 240px wide. Dividing 600 by 240 gives exactly 2.5.\n\nANSWER: 2.5\n",
+  "ms": 8192
+}

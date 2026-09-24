@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>main>r09` is at the same position as `root>banner`, and the banner sits on top with `z-index: 5`, so it obscures the row where the text would appear. Since the overlay starts at the same left edge as the item, the text is not readable from the viewer’s perspective.\n\nANSWER: NO\n",
+  "ms": 7145
+}

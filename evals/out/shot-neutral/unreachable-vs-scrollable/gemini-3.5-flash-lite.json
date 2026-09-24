@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Ordinary scrolling scrolls vertically. While `root>lower` (\"further down\") is positioned vertically below the viewport and can be brought into view by scrolling down, `root>sideways` (\"runs off sideways\") overflows horizontally and cannot be reached by standard vertical scrolling.\n\nANSWER: root>sideways\n",
+  "ms": 9325
+}

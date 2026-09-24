@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The `root` element has a height of 900px, which is significantly larger than the 300px viewport height, enabling vertical scrolling that allows the viewer to reach `root>lower` located at `y=700`. However, the `root` element's width is only 500px, matching the viewport width; because its width is constrained and it does not have horizontal overflow enabled, the 900px wide `root>sideways` node extends beyond the viewable area with no way for the viewer to scroll horizontally to see the hidden portion.\n\nANSWER: root>sideways\n",
+  "ms": 25798
+}

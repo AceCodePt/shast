@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "59",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered page information provided:\n\nThe node tree shows:\n- `root` (a div)\n- `root>spacer` (a div with text \"spacer\")\n- `root>floaty` (a div with text \"floaty\")\n\nFrom the screenshot, I can see \"spacer\" appears near the top of the viewport, and \"floaty\" appears below it.\n\nWhen an element is `position: absolute` and doesn't declare `top`, `right`, `bottom`, or `left` properties, it uses the default positioning. In this case, the element is taken out of the normal flow but positioned at its \"natural\" location as if it were still in the flow. Since there's a preceding `spacer` div above it, the `floaty` element's top edge renders below the spacer text.\n\nFrom the screenshot, the \"floaty\" text appears to start at approximately y=59 (after the \"spacer\" text which occupies roughly the first 59 pixels).\n\nANSWER: 59\n",
+  "ms": 15625
+}

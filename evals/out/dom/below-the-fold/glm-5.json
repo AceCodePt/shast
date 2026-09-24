@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport height is 300px, so the initially visible area spans y=0 to y=300. The `root>footer` element is positioned absolutely at y=700 with a height of 60px, placing it well below the visible region. Therefore it is not visible on first load.\n\nANSWER: NO\n",
+  "ms": 11191
+}

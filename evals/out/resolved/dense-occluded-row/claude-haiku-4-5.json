@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report for `root>main>r09` (\"09. Currency hedging\"):\n\nThe element is located at `x=244 y=276 width=1012 height=26`. The report explicitly states:\n\n- \"covered: root>banner <div> (absolute, z-index 5) paints later than this node, with an opaque background, over 69% of the box\"\n- \"! covered: 1 of 1 text line(s) completely hidden\"\n\nThe banner element (which has `z-index: 5` and `background-color: #cc2222`) is positioned at the same y-coordinate (276px) and overlaps this row with its opaque red background, covering 69% of the box. More critically, the report explicitly notes that the single text line in this element is \"completely hidden\" by the overlapping banner.\n\nTherefore, a viewer cannot read the text in `root>main>r09` because it is completely obscured by the banner overlay.\n\nANSWER: NO\n",
+  "ms": 8759
+}

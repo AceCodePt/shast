@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>outer>tall` has a rendered height of 19.1875px (a single line of text), while `root>outer>filler` has a rendered height of 60px. The `height: 100%` on `tall` doesn't actually resolve to a tall value here because its parent `root>outer` has no explicit height and sizes to its content, creating a circular dependency that resolves to intrinsic content height. So `tall` is shorter than `filler`.\n\nANSWER: NO\n",
+  "ms": 6287
+}

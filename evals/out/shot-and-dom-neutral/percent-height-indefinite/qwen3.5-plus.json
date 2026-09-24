@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the rendered data:\n\n- `root>outer>filler` has `height: 60px`\n- `root>outer>tall` has `height: 19.1875px`\n\nEven though `tall` declares `height: 100%`, it only renders at 19.1875px (its content height), while `filler` is 60px tall. The percentage height doesn't resolve properly because the parent's height is not explicitly constrained—it's determined by content.\n\nANSWER: NO\n",
+  "ms": 16595
+}

@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the provided screenshot and node tree, the text from `root>ghost` (\"Important warning\") and `root>visible` (\"Everything is fine\") collide and overlap on the same screen pixels. Therefore, the node whose text is drawn on the same pixels is `root>visible`.\n\nANSWER: root>visible\n",
+  "ms": 8274
+}

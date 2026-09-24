@@ -1,0 +1,10 @@
+{
+  "case": "inherited-font-size",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>heading",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the rendered information provided, `root>heading` has a font-size of 30px (inherited from the root node), whereas `root>caption` has a font-size of 22px. Since 30px is larger than 22px, `root>heading` renders with larger text.\n\nANSWER: root>heading\n",
+  "ms": 7764
+}

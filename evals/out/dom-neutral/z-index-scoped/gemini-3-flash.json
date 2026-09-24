@@ -1,0 +1,10 @@
+{
+  "case": "z-index-scoped",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>high",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Both `root>low` and `root>high` have `position: absolute` and a numerical `z-index`, which creates a new stacking context for each. Because they are siblings, their relative depth is determined by their `z-index` values: `root>high` (z-index: 2) is higher than `root>low` (z-index: 1). Although `root>low>inner` has a very high `z-index` (999), it is contained within the stacking context of `root>low` and cannot appear above a higher-indexed sibling of its parent.\n\nANSWER: root>high\n",
+  "ms": 9267
+}

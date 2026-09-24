@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>chip` div is positioned absolutely at `x=400 y=60` with dimensions `width=160 height=40`, giving it a bounding box from x=400 to x=560 and y=60 to y=100.\n\nThe `root>row` p element spans from `x=0 y=0 width=600 height=120`, covering the full width and y=0 to y=120.\n\nWhile `root>chip` does paint over part of `root>row` (the overlap region is x=400-560, y=60-100), the documentation explicitly states: \"this node's 1 text line(s) stay fully visible\". This means that although `root>chip` covers 9% of the `root>row` box's area, none of the actual text content of `root>row` is hidden by it.\n\nANSWER: NO\n",
+  "ms": 8937
+}

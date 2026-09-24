@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "At (500, 400) all three bands overlap: alpha spans x[300–700] y[300–420] with z-index 2; beta spans x[340–740] y[340–460] with z-index 4; gamma spans x[380–780] y[380–500] with z-index 3. All three are positioned absolute within the same stacking context (root, position relative), so the highest z-index wins. Beta's z-index of 4 is highest and its rectangle contains the point.\n\nANSWER: root>beta\n",
+  "ms": 21218
+}

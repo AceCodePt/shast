@@ -1,0 +1,10 @@
+{
+  "case": "predict-containing-block-change",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "30,30",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The pin is absolutely positioned with `top: 10px, left: 10px`, so its position is measured from the padding-box top-left of its nearest positioned ancestor (the containing block).\n\nCurrently `root>plain` is not positioned, so the containing block is `root` (position: relative). Root's padding box starts at (0,0) (no border), giving the pin at (10,10) — matching the evidence.\n\nAfter adding `position: relative` to `root>plain`, it becomes the containing block. `root>plain` has border box at (20,20) with no border, so its padding box also starts at (20,20). Adding top:10, left:10 → (20+10, 20+10) = (30,30).\n\nANSWER: 30,30\n",
+  "ms": 24350
+}

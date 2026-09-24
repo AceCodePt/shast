@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The card's content area (inside the 8px padding on all sides) is 164px wide and only 32px tall. With a 16px font and 19.2px line-height, that vertical space fits fewer than 2 lines of text. However, \"Payment failed because the card on file expired last month.\" is roughly 58 characters, which at typical character widths would require ~3 lines (~57.6px) to render within the 164px width — exceeding the 32px content height. Additionally, `overflow: visible` means any overflowing text would still render outside the box, confirming it doesn't fit.\n\nANSWER: NO\n",
+  "ms": 11270
+}

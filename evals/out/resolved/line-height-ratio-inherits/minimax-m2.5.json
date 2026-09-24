@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` sets `line-height: 2`, a unitless multiplier. Unitless line-heights are inherited and recomputed against each element's own font-size, so `root>big` gets a computed line-height of `2 × 32px = 64px`. That matches the measured height of 64 in the report.\n\nANSWER: 64\n",
+  "ms": 6500
+}

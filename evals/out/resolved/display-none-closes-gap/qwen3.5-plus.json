@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report:\n\n- `root>first` is positioned at y=0 with height=40, so it occupies the vertical space from y=0 to y=40\n- `root>gone` has `display: none` and measures 0x0 — it is completely removed from the layout flow\n- `root>third` is positioned at y=40, which is exactly where `root>first` ends\n\nSince `display: none` removes an element from the layout entirely (it takes no space), `root>third` sits directly after `root>first` with no gap.\n\nANSWER: NO\n",
+  "ms": 12310
+}

@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The border box is 48px tall, but the rendered text content is 76.75px tall (breaking onto 4 lines). Since 76.75px exceeds 48px, and overflow is visible (so it's painted outside rather than clipped), the text spills beyond `root>card`'s own 48px border box.\n\nANSWER: NO\n",
+  "ms": 19068
+}

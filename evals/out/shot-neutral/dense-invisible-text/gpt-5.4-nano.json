@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Yes. The provided Chromium-rendered node tree explicitly shows `root>main>r21` as `div \"21. Treasury positions\"`, meaning the text is present in the rendered DOM. The screenshot further indicates that this numbered entry is part of the visible list in the main content area.\n\nANSWER: YES\n",
+  "ms": 7214
+}

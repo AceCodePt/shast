@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Let me analyze the viewport and positioning data:\n\nThe viewport is 500x300 (width × height).\n\n**root>sideways**: \n- Positioned at `top: 40px`, `left: 0px`\n- Dimensions: 900 width × 40 height\n- Vertically within view (40px down, well within 300px viewport height)\n- Horizontally extends to 900px, but viewport is only 500px wide\n- Can be brought into view by **horizontal scrolling** (not ordinary vertical scrolling)\n\n**root>lower**:\n- Positioned at `top: 700px`, `left: 0px`\n- Dimensions: 400 width × 40 height\n- Vertically positioned at 700px, which is beyond the initial 300px viewport\n- Can be brought into view by **vertical scrolling** (ordinary scrolling down)\n\nThe question asks which node cannot be reached by \"ordinary scrolling\" — which typically means vertical scrolling in a web context.\n\n`root>sideways` requires horizontal scrolling to bring into view (its content extends 900px horizontally but the viewport is only 500px wide). While it's already at a visible vertical position, the horizontal overflow means it cannot be fully brought into view by vertical scrolling alone.\n\n`root>lower` can be brought fully into view simply by scrolling down (vertical/ordinary scrolling).\n\nANSWER: root>sideways\n",
+  "ms": 9117
+}

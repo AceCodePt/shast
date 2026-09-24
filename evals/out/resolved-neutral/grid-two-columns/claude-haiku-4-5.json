@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the layout information provided:\n\nThe `root` element is a grid with:\n- `grid-template-columns: 200px 300px` (first column 200px, second column 300px)\n- `gap: 20px` (space between columns)\n\nThe `root>left` div occupies the first grid column, which spans from x=0 to x=200 (width: 200px).\n\nThe `root>right` div occupies the second grid column. Its left edge starts after the first column (200px) plus the gap (20px), which places it at x=220.\n\nThis matches the rendering data shown: `root>right @ x=220 y=0 width=300 height=19.19`\n\nANSWER: 220\n",
+  "ms": 8283
+}

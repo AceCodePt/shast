@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The element is explicitly marked `overflows` with `overflow is visible`, which means the text beyond the bottom edge is still painted instead of clipped. So the last line would remain visible and readable on the page.\n\nANSWER: YES\n",
+  "ms": 11759
+}

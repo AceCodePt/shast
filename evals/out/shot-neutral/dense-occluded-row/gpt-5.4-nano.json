@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The rendered page’s node tree explicitly includes `root>main>r09  div  \"09. Currency hedging\"`, which indicates that this text is present in the main content section as it appears on screen. Since the screenshot evidence shows the navigation items and the main list entries up through `r10`, a viewer can read the text corresponding to `r09`.\n\nANSWER: YES\n",
+  "ms": 7972
+}

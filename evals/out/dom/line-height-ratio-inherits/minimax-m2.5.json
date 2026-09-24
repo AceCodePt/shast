@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`line-height` is inherited. When a parent declares `line-height: 2` (unitless), children inherit the unitless number rather than a pre-computed length, and each child computes its own line-height as `number × own font-size`.\n\nFor `root>big`: font-size is 32px, inherited line-height is 2, so computed line-height = 2 × 32px = 64px. This is confirmed by the rendered data: its bounding rect is height 64 and computed line-height is 64px.\n\nANSWER: 64\n",
+  "ms": 13377
+}

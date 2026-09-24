@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>outer` has no explicit height stated in the evidence, so `root>outer>tall`’s `height: 100%` cannot resolve to a definite computed height. In Chromium’s rendered output, both sibling nodes appear to occupy only their content-sized height (the screenshot shows `b` not stretched beyond what `filler` would naturally do). Therefore, `tall` is not taller than `filler` on the rendered page.\n\nANSWER: NO\n",
+  "ms": 12213
+}

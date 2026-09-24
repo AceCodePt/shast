@@ -1,0 +1,10 @@
+{
+  "case": "stacked-overlays-still-readable",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report indicates that `root>line` occupies the vertical space from `y=0` to `y=19.19`. While `root>glass` paints over 100% of this area, it has no background, meaning the text remains visible through it. The opaque `root>panel` starts at `y=40`, which is well below the bottom of `root>line`, so it does not obstruct the text at all.\n\nANSWER: YES\n",
+  "ms": 10003
+}

@@ -1,0 +1,10 @@
+{
+  "case": "occluded-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The `root>lede` paragraph’s box is fully covered by the later-painted, opaque, absolutely positioned `root>banner <div>` (z-index 5), and Chromium reports that 2 of 2 text lines are completely hidden. Since the lede text is not visible at all, a reader cannot read the whole sentence from that node.  \n\nANSWER: NO\n",
+  "ms": 9561
+}

@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the browser data provided:\n\nThe `root>floaty` element has `position: absolute` with no explicit `top`, `right`, `bottom`, or `left` properties declared. According to the `getBoundingClientRect()` data, its bounding rectangle shows `y=50`.\n\nWhen an absolutely positioned element has no positioning properties specified, it renders at the position it would naturally occupy in the document flow. The `root>spacer` div takes up the full width (600px) and height (50px) of its container, occupying y=0 to y=50. The `root>floaty` element would naturally come after it in flow, so its top edge renders at y=50.\n\nANSWER: 50\n",
+  "ms": 6927
+}

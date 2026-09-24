@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "According to the browser's computed style data, `root>child` has a resolved padding of `64px` on all four sides (`64px 64px 64px 64px`) resulting from the cascade and source order resolution.\n\nANSWER: 64px\n",
+  "ms": 8525
+}

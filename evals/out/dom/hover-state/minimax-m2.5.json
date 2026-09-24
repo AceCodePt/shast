@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The initial state (before hover) shows `root>cta` with `background-color: rgb(51, 85, 255)`, while the hovered state changes it to `rgb(0, 34, 204)`. Since the pointer is elsewhere, the non-hover colour applies.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 5839
+}

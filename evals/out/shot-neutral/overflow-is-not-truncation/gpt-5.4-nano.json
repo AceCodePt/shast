@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The evidence says Chromium actually rendered the full text string inside `root>card`, and the attached screenshot shows the lines of the message (including the final “last month.”) visible within the 400x300 viewport. Since the screenshot is authoritative for what is painted on screen, the last line is still being rendered in a readable location even if it would be positioned below the card’s bottom edge.  \n\nANSWER: YES\n",
+  "ms": 9287
+}

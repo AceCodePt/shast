@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The bounding box for `root>main>r17` has a `y` coordinate of 484 and a height of 26 pixels, placing it between `y=484` and `y=510`. Since the viewport height is 800 pixels, this element is located entirely within the initial viewport and is visible without scrolling.\n\nANSWER: YES\n",
+  "ms": 8612
+}

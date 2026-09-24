@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` element has a fixed border box height of 48px. After subtracting the top and bottom padding (8px each) and borders (1px each), only 30px of vertical space remains for the content. The text \"Payment failed because the card on file expired last month.\" must fit into a content width of 162px (180px width - 16px padding - 2px border), which will cause the text to wrap into at least two or three lines. Since each line has a height of 19.2px, two lines (38.4px) already exceed the available 30px of content height, meaning the text will overflow the 48px border box.\n\nANSWER: NO\n",
+  "ms": 15631
+}

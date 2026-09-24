@@ -1,0 +1,10 @@
+{
+  "case": "overflowing-text",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>card` has a 48px-tall border box with `padding: 8px` on top and bottom and `border-width: 1px` on top and bottom, leaving only `48 - (2*1) - (2*8) = 30px` for the text content box. The computed `line-height` is `19.2px`, so only one line (19.2px) fits; two lines would need `2 * 19.2 = 38.4px`, which exceeds the available 30px. Since the text wraps to multiple lines, it does not all fit inside the 48px border box.  \n\nANSWER: NO\n",
+  "ms": 10724
+}

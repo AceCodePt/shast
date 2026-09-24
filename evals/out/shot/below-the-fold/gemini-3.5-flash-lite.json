@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewport height is 300 pixels, and as shown in the screenshot and indicated by the test case name (`below-the-fold`), the footer element is positioned outside the initial visible viewport area. Therefore, it is not visible before scrolling.\n\nANSWER: NO\n",
+  "ms": 9917
+}

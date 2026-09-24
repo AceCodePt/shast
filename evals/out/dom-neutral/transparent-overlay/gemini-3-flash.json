@@ -1,0 +1,10 @@
+{
+  "case": "transparent-overlay",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The `root>lede` element cannot be fully read for two primary reasons based on the information provided:\n\n1.  **Occlusion by Overlay**: The `root>banner` element is positioned absolutely at the same coordinates (`x=0, y=0`) as the lede, but it has a higher `z-index` (5 vs. `auto`). With a height of 70px, the banner completely covers the vertical space occupied by the 54.375px-tall lede. Even though the banner's computed `background-color` is transparent, in this layout context, it acts as a superior stacking layer that obscures the content beneath it.\n2.  **Text Truncation**: The \"authoritative\" evidence for what is actually on screen shows the lede's text as `\"The quarterly results are in and every region beat its targ…\"`. The use of the ellipsis (`…`) and the cut-off word \"targ\" indicates that the full sentence (which is noted to be 72 characters long) is not being fully rendered or displayed.\n\nANSWER: NO\n",
+  "ms": 92459
+}

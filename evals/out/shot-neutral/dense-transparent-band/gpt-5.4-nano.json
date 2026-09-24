@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The rendered page evidence explicitly shows `root>main>r09  div  \"09. Currency hedging\"`, meaning that text is present in the DOM and shown on screen in that section. Since the screenshot/page tree confirms the content, a viewer can read it.\n\nANSWER: YES\n",
+  "ms": 8610
+}

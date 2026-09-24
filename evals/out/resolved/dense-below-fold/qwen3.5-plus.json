@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report:\n\n1. The viewport height is **800px**\n2. `root>main>r36` (\"36. Royalty accruals\") has **y=978** and **height=26**\n3. This means the element starts at 978px from the top, which is beyond the 800px viewport\n4. The report also explicitly marks this element as **below-fold**\n\nSince the element's y-position (978px) exceeds the viewport height (800px), it is not visible without scrolling.\n\nANSWER: NO\n",
+  "ms": 12463
+}

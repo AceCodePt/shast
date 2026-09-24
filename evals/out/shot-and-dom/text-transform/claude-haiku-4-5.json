@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided, I need to identify what characters are actually visible in the `root>title` element.\n\nThe node tree shows:\n```\nroot>title  div  \"Annual review\"\n```\n\nThis tells me the source text is \"Annual review\". However, the key detail is that the computed style shows `text-transform: uppercase` is applied to both the root and root>title elements.\n\nThe CSS `text-transform: uppercase` property transforms the text to uppercase characters for display, so \"Annual review\" would be rendered as \"ANNUAL REVIEW\" on the screen.\n\nThe screenshot confirms this - the visible text at the top of the page shows \"ANNUAL REVIEW\" in all caps.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 6446
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the viewport and element positioning:\n\n- Viewport height is 800px (visible area from y=0 to y=800)\n- `root>main>r17` (\"17. Inventory valuation\") is positioned at y=484 with height=26, so it spans from y=484 to y=510\n- This range is well within the visible viewport (0-800)\n- The element is not marked as \"below-fold\" (unlike r30-r40 and footer)\n- The sidebar (x=0, width=220) doesn't overlap with r17 (x=244)\n\nANSWER: YES\n",
+  "ms": 15874
+}

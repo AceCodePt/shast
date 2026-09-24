@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With `display: flex`, the children’s main-axis widths are determined by their flex-grow values when `flex-basis` is `0` (which it is for the shorthand `flex: <number>`). Here, `root>a` has `flex: 1` and `root>b` has `flex: 2`, so the total grow factor is `1 + 2 = 3`. The container’s width is the viewport width, `600px`, so `root>b` takes `2/3` of that: `(2/3) * 600 = 400`.\n\nANSWER: 400\n",
+  "ms": 11358
+}

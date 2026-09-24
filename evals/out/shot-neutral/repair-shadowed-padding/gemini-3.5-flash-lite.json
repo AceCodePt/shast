@@ -1,0 +1,10 @@
+{
+  "case": "repair-shadowed-padding",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>body",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When `padding: 32px` is added to `root>body>panel`'s CSS block but has no effect on the rendering, it indicates that the padding rule is being shadowed (overridden) by a conflicting CSS rule defined in an ancestor node's block. Since `root>body` is the immediate parent container whose styles cascade down and shadow the child element's padding, its CSS block must be edited to remove or resolve the conflicting rule.\n\nANSWER: root>body\n",
+  "ms": 33113
+}

@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly notes on the `root>ghost` node that `root>visible <div>` draws its text on the same pixels, overlapping over 56% of `root>ghost`'s glyphs. This is a direct collision relationship, not an inference.\n\nANSWER: root>visible\n",
+  "ms": 8807
+}

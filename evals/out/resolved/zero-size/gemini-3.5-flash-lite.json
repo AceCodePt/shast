@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report explicitly states that although `root>ghost` has a 0x0 size, its content overflows the box and is painted outside rather than being cut off because overflow is visible. It also notes that it draws its text on the same pixels as the visible div. Therefore, the words \"Important warning\" are painted on the page.\n\nANSWER: YES\n",
+  "ms": 9655
+}

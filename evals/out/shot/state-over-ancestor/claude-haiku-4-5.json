@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "0",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the two screenshots provided:\n\n**Rest state (first image):** The \"Leaf\" text appears in the upper left of the viewport with minimal spacing around it.\n\n**Hover state (second image):** The \"Leaf\" text appears in the same position with the same spacing around it.\n\nComparing the two screenshots, there is no visible difference in the padding around the \"Leaf\" text between the rest state and the hover state. The text maintains the same position and spacing in both images, indicating that the hover state does not apply any padding changes to the `root>mid>leaf` element.\n\nANSWER: 0\n",
+  "ms": 5511
+}

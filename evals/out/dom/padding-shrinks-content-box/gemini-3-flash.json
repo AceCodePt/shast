@@ -1,0 +1,10 @@
+{
+  "case": "padding-shrinks-content-box",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "4",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The total height of `root>card` is 124.75px. Subtracting the top and bottom padding of 24px each (48px total) leaves a content height of 76.75px. Dividing this content height by the `line-height` of 19.2px results in approximately 4 ($76.75 \\div 19.2 \\approx 3.997$), indicating the text has wrapped onto 4 lines.\n\nANSWER: 4\n",
+  "ms": 9852
+}

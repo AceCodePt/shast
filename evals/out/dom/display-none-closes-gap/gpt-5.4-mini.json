@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `root>first` ends at `y=40`, and `root>third` starts at `y=40`, so they touch directly. Since `root>gone` is `display: none`, it takes up no layout space and does not create a 40px gap.\n\nANSWER: NO\n",
+  "ms": 12539
+}

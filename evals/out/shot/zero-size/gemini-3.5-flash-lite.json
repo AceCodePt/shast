@@ -1,0 +1,10 @@
+{
+  "case": "zero-size",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the screenshot and the provided node tree, the text from `root>ghost` (\"Important warning\") is visibly rendered on the page, with \"warning\" appearing on the second line below \"Everything is fine\". Therefore, despite having a 0x0 bounding box, the words are indeed painted on the page.\n\nANSWER: YES\n",
+  "ms": 9508
+}

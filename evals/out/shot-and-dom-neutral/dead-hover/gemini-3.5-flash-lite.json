@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The computed styles for `root>mid>leaf` show that its padding remains `2px 2px 2px 2px` both at rest and while the mouse hovers over it. Additionally, the rendered screenshots for both states are identical. Therefore, hovering does not change its padding.\n\nANSWER: NO\n",
+  "ms": 12775
+}

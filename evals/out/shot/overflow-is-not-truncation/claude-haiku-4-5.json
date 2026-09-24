@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot and the provided information:\n\nThe screenshot shows the text \"Payment failed because the card on file expired last month.\" displayed in a box. The text wraps across multiple lines, and the final line \"last month.\" appears to be positioned at or near the bottom edge of the visible card container.\n\nAccording to the question, the last line sits below the bottom edge of `root>card`. The screenshot clearly shows that the text \"last month.\" is visible and readable within the rendered page. Even though it may be at the bottom boundary, it is painted on the page and a person could read it.\n\nThe key distinction here is between text that overflows beyond the visible boundary (which would not be readable if clipped) versus text that is still rendered on screen. The screenshot evidence shows the text is actually visible on the page.\n\nANSWER: YES\n",
+  "ms": 9162
+}

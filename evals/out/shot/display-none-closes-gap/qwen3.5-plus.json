@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows \"first\" and \"third\" text rendered on the page. The key CSS principle here is that `display: none` completely removes an element from the document flow—it doesn't just hide the element visually, it removes it from layout entirely as if it never existed. This means adjacent elements collapse together with no space preserved for the removed element.\n\nANSWER: NO\n",
+  "ms": 19249
+}

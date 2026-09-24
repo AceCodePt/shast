@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the three overlapping elements at point x=500, y=400:\n\n1. **root>alpha**: Covers x=300-700, y=300-420, z-index=2\n2. **root>beta**: Covers x=340-740, y=340-460, z-index=4\n3. **root>gamma**: Covers x=380-780, y=380-500, z-index=3\n\nThe point (500, 400) falls within all three elements' bounding boxes. In CSS stacking, higher z-index values appear on top. Beta has z-index=4, gamma has z-index=3, and alpha has z-index=2. Therefore, beta's background color will be visible at that point.\n\nANSWER: root>beta\n",
+  "ms": 19767
+}

@@ -1,0 +1,10 @@
+{
+  "case": "widest-sibling",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "2.5",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the border box dimensions provided:\n\n- `root>rail` has a width of 240px\n- `root>panel` has a width of 600px\n\nTo find how many times wider `root>panel` is than `root>rail`, I divide:\n600 ÷ 240 = 2.5\n\n`root>panel` is 2.5 times wider than `root>rail`.\n\nANSWER: 2.5\n",
+  "ms": 6597
+}

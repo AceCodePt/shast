@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot+dom",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>leftBottom` is located at `y=120` with a height of 80px. Looking at the other nodes, `root>rightBottom` also has the exact same `y` coordinate of 120px and height of 80px, placing it on the same horizontal row. Since `root>leftBottom` has an `x` coordinate of 0 and `root>rightBottom` has an `x` coordinate of 340, `root>rightBottom` sits directly to its right.\n\nANSWER: root>rightBottom\n",
+  "ms": 9510
+}

@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Ordinary scrolling typically moves the viewport in one direction (here, effectively vertical “down the page”). The node labeled `root>lower` (“further down”) suggests it is positioned below the initially visible area, so vertical scrolling can bring it into view. The node labeled `root>sideways` (“runs off sideways”) suggests it is shifted horizontally out of the initial viewport, so without sideways (horizontal) scrolling it cannot be brought fully into view.\n\nANSWER: root>sideways\n",
+  "ms": 8627
+}

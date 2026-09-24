@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The text in `root>main>r17` is located at a vertical position starting at y=484 with a height of 26px, meaning its bottom edge is at y=510. Since the viewport height is 800px, the node is well within the visible vertical area when the page first loads. Furthermore, its horizontal position (x=244) places it to the right of the sidebar (width=220), and its styles (opacity: 1, display: block) indicate it is rendered normally.\n\nANSWER: YES\n",
+  "ms": 11205
+}

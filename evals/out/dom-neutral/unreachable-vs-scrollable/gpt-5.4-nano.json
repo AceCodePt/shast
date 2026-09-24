@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "With a viewport of `500x300`, the node `root>lower` is located at `y=700` with height `40`, so vertical scrolling can move the viewport down until the entire `y=700..740` range is visible.\n\nIn contrast, `root>sideways` is at `x=0` but has `width=900`, so it extends across `x=0..900` while the viewport only spans `x=0..500`. Ordinary (vertical) scrolling cannot change the horizontal span, so it cannot be brought fully into view that way.\n\nANSWER: root>sideways\n",
+  "ms": 14616
+}

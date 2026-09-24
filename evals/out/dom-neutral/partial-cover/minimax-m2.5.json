@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the bounding rects:\n- `root>row` (a `<p>` with text \"Short label\") spans x: 0–600, y: 0–120.\n- `root>chip` (a yellow `<div>`) spans x: 400–560, y: 60–100.\n\nThe row's text \"Short label\" renders as a single line at the top of the `<p>`, well above the chip. With 4px padding and ~19.2px line-height, the text sits roughly at y ≈ 4–24, which is above the chip's y range of 60–100. Horizontally, \"Short label\" is a short string (~100px wide) starting near the left edge, nowhere near the chip's x range of 400–560. The chip paints over empty whitespace within the row, not over any text glyphs.\n\nANSWER: NO\n",
+  "ms": 8449
+}

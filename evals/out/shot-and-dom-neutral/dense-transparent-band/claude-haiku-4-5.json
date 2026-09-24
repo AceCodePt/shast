@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided, I need to determine if the text in `root>main>r09` is readable.\n\nFrom the node tree, `root>main>r09` contains the text \"09. Currency hedging\".\n\nExamining the computed styles for this element:\n- It has `display: block`\n- `color: rgb(0, 0, 0)` (black text)\n- `background-color: rgba(0, 0, 0, 0)` (transparent background)\n- `opacity: 1` (fully opaque)\n- `font-size: 15px`\n- `line-height: 20px`\n\nThe element is positioned at `x=244 y=276 width=1012 height=26` within a viewport of `1280x800`. This places it well within the visible viewport area.\n\nThe text is displayed in black (rgb(0,0,0)) on a transparent background, which should render against the white background of the root element (rgb(255,255,255)), creating good contrast. There are no CSS properties that would hide or obscure the text (no `display: none`, `visibility: hidden`, `opacity: 0`, or similar).\n\nThe screenshot confirms this - the text \"09. Currency hedging\" is clearly visible in the rendered page.\n\nANSWER: YES\n",
+  "ms": 10174
+}

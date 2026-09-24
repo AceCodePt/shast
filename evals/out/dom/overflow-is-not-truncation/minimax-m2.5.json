@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `root>card` div has `overflow: visible` (its default), and its parent `root` also has `overflow: visible` with no clipping applied. Although the text content's height exceeds the 48px box (given a 19.2px line-height and a content area of only ~30px after padding and border), the overflow being visible means the rendered text is not clipped by either container. The page viewport (400x300) is also well below where the overflow occurs, so the text remains in the rendered area of the page and is painted where a reader could see it.\n\nANSWER: YES\n",
+  "ms": 12625
+}

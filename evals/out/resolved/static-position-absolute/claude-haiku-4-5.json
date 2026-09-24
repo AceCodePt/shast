@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, the `root>floaty` element is positioned absolutely but has no explicit `top`, `right`, `bottom`, or `left` properties declared.\n\nAccording to CSS positioning rules, when an absolutely positioned element has no offset properties specified, it renders at the position it would have occupied in the normal flow. Since `root>floaty` appears after `root>spacer` (which has height 50px and is at y=0), the floaty element would naturally follow at y=50 in the normal document flow.\n\nThe report confirms this: the border box shows `@ x=0 y=50 width=90 height=20`, meaning the top edge of `root>floaty` renders at y=50.\n\nANSWER: 50\n",
+  "ms": 6830
+}

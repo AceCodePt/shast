@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>main>r17` corresponds to \"17. Inventory valuation\". Based on the provided screenshot and node tree, rows 01 through 28 are displayed within the initial 1280x800 viewport without needing to scroll, making row 17 fully visible.\n\nANSWER: YES\n",
+  "ms": 6979
+}

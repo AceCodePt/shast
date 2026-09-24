@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the page structure and screenshot provided:\n\nThe viewport is 1280x800 CSS pixels. The page contains a header (\"Quarterly operations review\"), a left sidebar navigation, and a main section with 40 numbered items (r01 through r40).\n\nFrom the screenshot, I can see items 01-28 are visible on the initial page load. Item r36 (\"36. Royalty accruals\") is the 36th item in the list, which appears well below the visible fold of the 1280x800 viewport.\n\nThe question asks specifically about r36, which is beyond what's shown in the screenshot. Since only items up to approximately r28 are visible in the viewport, and r36 comes after that, it would require scrolling to see it.\n\nANSWER: NO\n",
+  "ms": 6001
+}

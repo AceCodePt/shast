@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>ghost` has a `0x0` bounding box, so its text doesn’t get a visible area of its own. The only other text node shown is `root>visible`, and it occupies the same top-left painted region, so that is the text overlapping those pixels.\n\nANSWER: root>visible\n",
+  "ms": 14435
+}

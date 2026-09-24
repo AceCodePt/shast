@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "To determine if `root>main>r17` is visible without scrolling, I need to check if its bounding box falls within the viewport.\n\nThe viewport is 1280x800, meaning the visible area spans from y=0 to y=800.\n\nThe element `root>main>r17` (which contains \"17. Inventory valuation\") has:\n- `getBoundingClientRect: x=244 y=484 width=1012 height=26`\n\nThis means the element spans from y=484 to y=510 (484 + 26). Since this range (484-510) is well within the viewport's visible area (0-800), the element is visible without scrolling.\n\nANSWER: YES\n",
+  "ms": 15548
+}

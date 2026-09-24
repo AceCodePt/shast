@@ -1,0 +1,10 @@
+{
+  "case": "state-over-ancestor",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "2px 2px 2px 2px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the computed style data provided for `root>mid>leaf` in the hover state:\n\nThe data shows `padding: 2px 2px 2px 2px` for the `root>mid>leaf` element when the mouse is hovering over it. This is identical to the padding shown in the rest state, indicating that the `:hover` pseudo-class does not change the padding value for this element.\n\nThe padding remains 2px on all four sides (top, right, bottom, left) during the hover state.\n\nANSWER: 2px 2px 2px 2px\n",
+  "ms": 7307
+}

@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>outer>tall` declares `height: 100%`, but CSS percentage heights only resolve against an explicitly sized parent. Since `root>outer`'s height is itself determined by its children (no explicit height set), the percentage is essentially ignored and `tall` gets only the remaining space after `filler` is laid out: 79.19 − 60 = 19.19px.\n\nSo `tall` is 19.19px tall, which is much shorter than `filler`'s 60px.\n\nANSWER: NO\n",
+  "ms": 7727
+}

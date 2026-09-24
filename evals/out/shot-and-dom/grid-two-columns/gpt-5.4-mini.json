@@ -1,0 +1,10 @@
+{
+  "case": "grid-two-columns",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "220",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>right` starts after the first 200px column plus the 20px gap, so its left edge renders at `x = 220px`. That matches the reported bounding rect.\n\nANSWER: 220\n",
+  "ms": 8174
+}

@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "64px",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The resolved styles for `root>child` explicitly show that its padding is evaluated to `64px`. This value is declared by `root>child` within its `&.big` block, which takes precedence by shadowing the `4px` padding declared by `root` and the `32px` padding declared at the top of `root>child`'s CSS block.\n\nANSWER: 64px\n",
+  "ms": 7926
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "NO. The viewport is 1280×800, so only content with y between 0 and 800 is visible on first load. `root>main>r36` has `getBoundingClientRect` y=978, which is below the 800px viewport bottom, so it requires scrolling to be seen.\n\nANSWER: NO\n",
+  "ms": 12868
+}

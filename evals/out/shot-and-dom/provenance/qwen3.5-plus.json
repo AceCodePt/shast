@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the computed styles for each node:\n\n- `root` has `border-radius: 0px`\n- `root>body` has `border-radius: 0px`\n- `root>body>panel` has `border-radius: 12px`\n\nThe screenshot shows the panel with rounded corners, which matches the 12px border-radius. Since the parent nodes both have 0px border-radius, the rounded corners must come from the panel node's own CSS block.\n\nANSWER: root>body>panel\n",
+  "ms": 13700
+}

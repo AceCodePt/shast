@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the viewport and element positioning:\n\n1. The viewport is **1280x800**, meaning the visible area extends from y=0 to y=800 without scrolling.\n\n2. The element `root>main>r36` (containing \"36. Royalty accruals\") has `getBoundingClientRect: x=244 y=978 width=1012 height=26`, meaning it starts at **y=978**.\n\n3. Since y=978 is greater than the viewport height of 800, this element is positioned **178 pixels below** the visible area when the page first loads.\n\nANSWER: NO\n",
+  "ms": 14387
+}

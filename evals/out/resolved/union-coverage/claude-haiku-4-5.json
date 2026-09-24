@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Let me analyze the coverage information provided in the report.\n\nThe `root>line` element has a width of 400px and contains text. Two absolute-positioned divs are covering it:\n\n1. `root>leftHalf`: positioned at x=0, width=70px, covering 18% of the box\n2. `root>rightHalf`: positioned at x=60, width=80px, covering 20% of the box\n\nThe key information is in the report: \"! covered: 1 of 1 text line(s) completely hidden\"\n\nThis explicitly states that the single text line in `root>line` is completely hidden. Even though neither covering box spans the whole line individually, together they cover the entire line, hiding all the text.\n\nAdditionally, the report notes that `root>line` is marked as \"covered\" overall, indicating that the text content is not visible to a viewer.\n\nANSWER: NO\n",
+  "ms": 7389
+}

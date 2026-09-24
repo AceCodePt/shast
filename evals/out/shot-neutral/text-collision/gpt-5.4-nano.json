@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree shows two distinct text nodes on screen: `root>ghost` contains the text `\"Important warning\"`, and `root>visible` contains the text `\"Everything is fine\"`. Since the question is specifically asking for the *other* node whose glyphs overlap on the same pixels as `root>ghost`, the only plausible candidate among the provided nodes is `root>visible` (there are no other text nodes listed).\n\nANSWER: root>visible\n",
+  "ms": 8999
+}

@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "16",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, I can see two elements rendered:\n1. \"spacer\" at the top of the viewport\n2. \"floaty\" positioned directly below it\n\nWhen an element has `position: absolute` but no `top`, `right`, `bottom`, or `left` properties specified, those properties default to `auto`. This means the element renders at its **static position** - exactly where it would have been in the normal document flow.\n\nFrom the image, \"spacer\" appears first (at y=0), and \"floaty\" appears below it. With default browser styling (16px font-size, ~1.2 line-height), the \"spacer\" div would occupy approximately 16-20px of vertical space. The \"floaty\" element's top edge renders immediately after \"spacer\".\n\nLooking at the spacing in the screenshot, \"floaty\" appears to start at approximately y=16 CSS pixels (one line of text below the top edge).\n\nANSWER: 16\n",
+  "ms": 19831
+}

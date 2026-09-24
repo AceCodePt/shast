@@ -1,0 +1,10 @@
+{
+  "case": "display-none-closes-gap",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the bounding client rectangles, `root>first` ends at `y=40` and `root>third` begins immediately at `y=40`. Because `root>gone` has `display: none`, it is completely removed from the document layout and leaves no empty space or gap between the surrounding elements.\n\nANSWER: NO\n",
+  "ms": 5529
+}

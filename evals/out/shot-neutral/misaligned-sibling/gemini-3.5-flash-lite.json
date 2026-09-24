@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "In the rendered page and node tree, \"first\", \"second\", and \"fourth\" align along the same left edge, while \"third\" is indented to the right. Therefore, \"third\" is out of alignment.\n\nANSWER: root>third\n",
+  "ms": 7476
+}

@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "rgb(0, 0, 0)",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "The computed style report for `root>label` lists `color: rgb(0, 0, 0)`, which explicitly sets the text color of the element.\n\nANSWER: rgb(0, 0, 0)\n",
+  "ms": 8131
+}

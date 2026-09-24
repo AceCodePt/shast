@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot, the `section` element (labeled \"Panel\") clearly displays rounded corners, which is the visual effect of the `border-radius` CSS property.\n\nIn CSS, the `border-radius` property is declared on the element that should display the rounded corners. Since the panel section is the element rendering with rounded corners, its own CSS block must contain the `border-radius` declaration.\n\nANSWER: root>body>panel\n",
+  "ms": 15174
+}

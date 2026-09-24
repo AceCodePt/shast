@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text for the `root>title` node is \"Annual review\". However, the provided screenshot shows the text rendered in all uppercase letters as \"ANNUAL REVIEW\". This indicates that a CSS property like `text-transform: uppercase` has been applied to the element, changing its visual representation.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 9559
+}

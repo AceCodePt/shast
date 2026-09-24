@@ -1,0 +1,10 @@
+{
+  "case": "partial-cover",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly says `root>row` is partially covered by `root>chip`, but it also states that `root>row`’s own text line(s) “stay fully visible.” Therefore, even though some of the box area is overlapped, the text itself is not hidden.  \n\nANSWER: NO\n",
+  "ms": 9335
+}

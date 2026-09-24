@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the vertical positions of the three sibling elements:\n\n- **alpha**: y=20, height=40 → occupies y range 20-60\n- **beta**: y=64, height=40 → occupies y range 64-104\n- **gamma**: y=200, height=40 → occupies y range 200-240\n\nThe gap between alpha and beta is only 4px (64-60), while the gap between beta and gamma is 96px (200-104). This means alpha and beta are positioned close together, while gamma is positioned far below them with a much larger visual separation.\n\nANSWER: root>gamma\n",
+  "ms": 13698
+}

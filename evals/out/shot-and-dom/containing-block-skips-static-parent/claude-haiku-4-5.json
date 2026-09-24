@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "30,30",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the browser data provided:\n\nThe `root>plain>pin` element has `position: absolute` with `left: 10px` and `top: 10px`. Since its parent `root>plain` has `position: static` (not positioned), the containing block for the absolutely positioned element is not `root>plain`, but rather the next ancestor with a non-static position, which is `root` with `position: relative`.\n\nThe `root` element has padding of `20px 20px 20px 20px`. For an absolutely positioned element, the coordinates are relative to the padding edge of its containing block. Therefore, the top-left corner of `root>plain>pin` is positioned at:\n- x = root's left padding (20px) + left offset (10px) = 30px\n- y = root's top padding (20px) + top offset (10px) = 30px\n\nThis matches the `getBoundingClientRect` data shown, which indicates the element renders at `x=10 y=10` in viewport coordinates, but that's relative to the containing block's content box. The absolute position values are `left: 10px` and `top: 10px` relative to the containing block (`root`).\n\nANSWER: 30,30\n",
+  "ms": 6576
+}

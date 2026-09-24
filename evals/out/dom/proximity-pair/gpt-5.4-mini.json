@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>gamma` is the outlier. `alpha` and `beta` are positioned near each other vertically: `alpha` ends at `y=60` and `beta` starts at `y=64`, so they are only 4px apart. `gamma` starts at `y=200`, far below `beta`, so it is visually separated from the other two.\n\nANSWER: root>gamma\n",
+  "ms": 8116
+}

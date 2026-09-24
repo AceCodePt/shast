@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided:\n\n1. The node tree shows that `root>main>r21` contains the text \"21. Treasury positions\"\n2. The screenshot shows the rendered page with a navigation sidebar on the left and main content on the right\n3. Examining the visible text in the screenshot, I can see items numbered from 01 through 28, with item 21 (\"Treasury positions\") visible in the lower portion of the main content area\n4. The text appears to be rendered in a readable monospace font with sufficient contrast against the background\n\nThe text \"21. Treasury positions\" is clearly visible in the rendered page screenshot and can be read by a viewer.\n\nANSWER: YES\n",
+  "ms": 7553
+}

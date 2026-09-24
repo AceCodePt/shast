@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "64px 64px 64px 64px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the information provided, I need to identify what padding is actually being rendered on the `root>child` element.\n\nThe key data point is from `getBoundingClientRect()` and `getComputedStyle()` for `root>child`, which shows:\n- `padding: 64px 64px 64px 64px`\n\nThis is the computed style that the browser has actually applied and is using for rendering. This represents the final, resolved value after CSS specificity, cascade, and inheritance rules have been applied.\n\nThe question mentions that three different blocks declare padding for `root>child`, but the actual rendered padding is determined by CSS's specificity and source order rules. The computed style shows that 64px padding on all sides is what won in this case.\n\nANSWER: 64px 64px 64px 64px\n",
+  "ms": 8857
+}

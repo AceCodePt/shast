@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport is 1280×800, meaning only content with y < 800 is visible on first load. `root>main>r36` is positioned at y=978, which is well below the 800px viewport boundary, and it's explicitly annotated as `below-fold`.\n\nANSWER: NO\n",
+  "ms": 18673
+}

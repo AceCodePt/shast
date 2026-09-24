@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The panel's own `padding: 32px` declaration has no effect. The computed padding renders as `4px 4px 4px 4px`, not 32px, which means another rule with equal or higher specificity (or one appearing later in the cascade) is overriding it. Since the rendered value doesn't match the declared value, the panel's own padding rule contributes nothing to the final layout.\n\nANSWER: NO\n",
+  "ms": 8533
+}

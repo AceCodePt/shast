@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report for `root>label` lists only two CSS properties: `font-size: 16px (inherited)` and `padding: 8px`. No `color` or text-colour property is included in the report, so there is no basis to determine the rendered text colour from the information provided.\n\nANSWER: NOT STATED\n",
+  "ms": 13635
+}

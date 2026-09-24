@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`alpha` (y=20–60) and `beta` (y=64–104) sit right next to each other with only a 4px gap, while `gamma` sits at y=200–240, roughly 96px below `beta`. The large vertical gap places `gamma` clearly apart from the adjacent cluster of `alpha` and `beta`.\n\nANSWER: root>gamma\n",
+  "ms": 10562
+}

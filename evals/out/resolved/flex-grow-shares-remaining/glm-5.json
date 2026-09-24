@@ -1,0 +1,10 @@
+{
+  "case": "flex-grow-shares-remaining",
+  "model": "opencode/glm-5",
+  "arm": "resolved",
+  "answer": "400",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root` is a flex container 600px wide. With `flex: 1` and `flex: 2` on its two children, the available space is split in a 1:2 ratio (3 total parts). 600 / 3 = 200 per part, so `root>b` gets 2 × 200 = 400px. This matches the measured box in the report (`width=400`).\n\nANSWER: 400\n",
+  "ms": 10175
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information for `root>main>r09`:\n\n1. The element contains \"09. Currency hedging\" at position x=244 y=276\n2. It is marked as **covered** by `root>banner` - an absolutely positioned div with z-index 5 and opaque background (#cc2222)\n3. The banner covers **69% of the box**\n4. Critically, the annotation states: **\"1 of 1 text line(s) completely hidden\"**\n\nSince the only text line in this element is completely hidden by the opaque banner that paints on top of it, a viewer cannot read the text.\n\nANSWER: NO\n",
+  "ms": 15579
+}

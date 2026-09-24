@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the bounding rectangles:\n\n- `root>ghost` has `getBoundingClientRect: x=0 y=0 width=0 height=0` — it occupies zero pixels\n- `root>visible` has `getBoundingClientRect: x=0 y=0 width=400 height=19.1875` — it occupies the full width and height\n\nSince `root>ghost` has zero dimensions (width=0, height=0), it doesn't actually render any visible text on the screen at all. No pixels are consumed by this node. However, if we interpret the question as asking which node's text would occupy the same pixel space *if* `root>ghost` were visible, that would be `root>visible`, since both start at the same position (x=0, y=0) and `root>visible` fills the available space where `root>ghost` would have rendered if it had non-zero dimensions.\n\nANSWER: root>visible\n",
+  "ms": 9039
+}

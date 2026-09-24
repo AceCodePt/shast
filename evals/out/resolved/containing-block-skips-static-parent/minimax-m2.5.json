@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `pin` element is absolutely positioned, so it positions relative to its nearest positioned ancestor. Since `root>plain` is not positioned, the lookup skips it and uses `root` (which is `position: relative`). Therefore `pin`'s `left: 10px` and `top: 10px` are measured from `root`'s content-box origin at (0, 0).\n\nANSWER: 10,10\n",
+  "ms": 6599
+}

@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The screenshots show that hovering over `root>mid>leaf` produces no change in the rendered output, despite the node having a `:hover` rule for padding. This \"dead hover\" occurs because the node is not receiving pointer events, which is typically caused by a parent node having `pointer-events: none` applied. To resolve this and allow the hover state to trigger, the CSS block of the parent node `root>mid` must be edited to remove or override the property blocking interaction.\n\nANSWER: root>mid\n",
+  "ms": 14745
+}

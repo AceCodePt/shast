@@ -1,0 +1,10 @@
+{
+  "case": "containing-block-skips-static-parent",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "10,10",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `pin` element is `position: absolute` with `left: 10px` and `top: 10px`. Since `root>plain` is `position: static` (not positioned), it is skipped as a containing block, and the containing block becomes `root` (which is `position: relative`). The absolute element is offset from the padding box of `root`. Root has a 0-width border, so its padding box origin is at (0, 0); adding the 10px offsets gives (10, 10), confirmed by the rect data.\n\nANSWER: 10,10\n",
+  "ms": 18395
+}

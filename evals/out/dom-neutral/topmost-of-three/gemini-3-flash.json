@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "All three boxes are children of the same parent (`root`) and are absolutely positioned, meaning they are compared within the same stacking context. The browser determines which element is visible at the overlapping point (120, 120) by comparing their `z-index` values. Since `root>middle` has a `z-index` of 3, which is higher than both `root>front` (2) and `root>back` (1), it is rendered on top of the others.\n\nANSWER: root>middle\n",
+  "ms": 10608
+}

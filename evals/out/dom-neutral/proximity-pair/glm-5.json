@@ -1,0 +1,10 @@
+{
+  "case": "proximity-pair",
+  "model": "opencode/glm-5",
+  "arm": "dom",
+  "answer": "root>gamma",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`alpha` ends at y=60 and `beta` starts at y=64, so they sit adjacent with only a 4px gap. `gamma` sits at y=200, over 90px below `beta`'s bottom edge (y=104), making it visually separated from the other two which cluster together.\n\nANSWER: root>gamma\n",
+  "ms": 8571
+}

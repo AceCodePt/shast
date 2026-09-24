@@ -1,0 +1,10 @@
+{
+  "case": "dense-transparent-band",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Based on the information provided, `root>main>r09` is a `div` element containing the text `\"09. Currency hedging\"`. The node tree shows this element exists in the rendered DOM, and the accompanying screenshot displays the numbered list clearly with all items visible and legible, including item 09.\n\nANSWER: YES\n",
+  "ms": 12560
+}

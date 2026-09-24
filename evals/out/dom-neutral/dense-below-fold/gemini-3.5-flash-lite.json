@@ -1,0 +1,10 @@
+{
+  "case": "dense-below-fold",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 800px, meaning any element with a `y` coordinate greater than 800 is positioned below the fold. Since `root>main>r36` has a `getBoundingClientRect` top coordinate of `y=978`, it is outside the initial visible area of the page.\n\nANSWER: NO\n",
+  "ms": 6397
+}

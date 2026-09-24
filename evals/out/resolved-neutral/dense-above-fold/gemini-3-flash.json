@@ -1,0 +1,10 @@
+{
+  "case": "dense-above-fold",
+  "model": "opencode/gemini-3-flash",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The viewport height is 1280x800, meaning only elements with a y-coordinate and height totaling less than 800 pixels are visible without scrolling. `root>main>r17` is located at y=484 with a height of 26 pixels, placing its bottom edge at y=510, which is well within the viewport. Additionally, while the sidebar covers a portion of the main section, `root>main>r17` starts at x=244, which is to the right of the sidebar's 220px width, ensuring it is not obscured.\n\nANSWER: YES\n",
+  "ms": 10067
+}

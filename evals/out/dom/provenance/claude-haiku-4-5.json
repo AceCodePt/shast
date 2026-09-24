@@ -1,0 +1,10 @@
+{
+  "case": "provenance",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "dom",
+  "answer": "root>body>panel",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the browser's computed style data for `root>body>panel`, I can see it has a `border-radius: 12px`.\n\nNow, tracing back through the node hierarchy to find where this declaration comes from:\n\n- `root` has `border-radius: 0px`\n- `root>body` has `border-radius: 0px`\n- `root>body>panel` has `border-radius: 12px`\n\nThe `root>body>panel` node itself is the only one in this tree with a non-zero `border-radius` value. Since CSS properties are either explicitly declared on an element or inherited from a parent (and all parents in this chain have `border-radius: 0px`), the `12px` value must be declared directly on the `root>body>panel` element's own CSS block.\n\nANSWER: root>body>panel\n",
+  "ms": 7841
+}

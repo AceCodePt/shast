@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/minimax-m2.5",
+  "arm": "dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The card's `overflow` is `visible`, so content extending past its bottom edge is not clipped by the card. The parent `root` also has `overflow: visible` and the viewport is 300px tall, leaving plenty of room below the card's 48px bottom edge. So the overflowing last line is still painted within the page where it can be read.\n\nANSWER: YES\n",
+  "ms": 8945
+}

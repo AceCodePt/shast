@@ -1,0 +1,10 @@
+{
+  "case": "distractor-node",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>second` is a `<p>` with a bounding box starting at `y=19.1875` and height `19.1875`, so it appears just below the `root>cover` element. The `root>cover` `<div>` is `position: absolute` at `top: 0` with height `19px` and a black background, which would only cover content up to about `y=19`. Since `root>second` begins slightly after `y=19` (at `y≈19.19`), it is not covered by the black overlay and its text is therefore readable.\n\nANSWER: YES\n",
+  "ms": 9724
+}

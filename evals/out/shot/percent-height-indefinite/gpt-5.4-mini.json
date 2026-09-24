@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. `height: 100%` does not make `root>outer>tall` taller here because its containing block has an indefinite height, so the percentage resolves like `auto`. In the screenshot, it renders at about the same intrinsic height as the `filler` sibling, not taller.\n\nANSWER: NO\n",
+  "ms": 10620
+}

@@ -1,0 +1,10 @@
+{
+  "case": "long-word-overflows",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the browser data provided:\n\n- `root>cell` has a width of 120px\n- The text content is \"https://example.com/a/very/long/path/that/never/breaks\"\n- The `root>cell` div has `overflow: visible` (not `overflow: hidden` or `overflow: auto`)\n- The `getBoundingClientRect()` shows the element is only 120px wide\n\nThe URL text is significantly longer than 120 pixels at 16px font size. With `overflow: visible`, the text would overflow outside the 120px-wide box visually, even though the box itself remains 120px wide. The screenshot shows the URL extending beyond the left boundary of the visible area, confirming the text overflows the container.\n\nANSWER: NO\n",
+  "ms": 6462
+}

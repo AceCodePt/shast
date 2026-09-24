@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The node tree shows the source text for `root>title` is `\"Annual review\"`. However, the computed styles show `text-transform: uppercase`, which means the browser renders the text in uppercase. Since the question asks what a viewer *sees* (not the source), the CSS transformation must be applied.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 11870
+}

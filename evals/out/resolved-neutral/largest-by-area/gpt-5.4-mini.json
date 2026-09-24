@@ -1,0 +1,10 @@
+{
+  "case": "largest-by-area",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "root>square",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The `square` box covers the largest area. Its area is `220 × 220 = 48,400` square pixels, which is larger than both `wide` (`600 × 60 = 36,000`) and `tall` (`120 × 300 = 36,000`).\n\nANSWER: root>square\n",
+  "ms": 8965
+}

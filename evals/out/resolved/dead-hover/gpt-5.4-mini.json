@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The report explicitly marks the element as `dead-state`, meaning the `:hover` rule does not take effect. It says `:hover` sets `padding: 40px`, but the existing `padding: 2px` declaration from `root` inside the `> mid > leaf` block outranks it, so hovering does not change the padding.\n\nANSWER: NO\n",
+  "ms": 6712
+}

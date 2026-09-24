@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the report, the `root>big` element's border box is explicitly measured as `@ x=0 y=32 width=600 height=64`. The height value in this measurement is already the final rendered height in CSS pixels.\n\nThe element starts at y=32 (right after `root>small` which is 32px tall) and has a measured height of 64px. While `root` declares `line-height: 2`, the actual rendered height is determined by the measurement provided in the report.\n\nANSWER: 64\n",
+  "ms": 12711
+}

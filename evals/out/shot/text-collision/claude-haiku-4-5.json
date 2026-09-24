@@ -1,0 +1,10 @@
+{
+  "case": "text-collision",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot",
+  "answer": "root>visible",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the screenshot and the node tree information:\n\nThe screenshot shows two text elements rendered on the page:\n- \"Important warning\" (appears at the top)\n- \"Everything is fine\" (appears below it)\n\nAccording to the node tree:\n- `root>ghost` contains \"Important warning\"\n- `root>visible` contains \"Everything is fine\"\n\nFrom the rendered screenshot, I can see that the text \"Everything is fine\" is visually positioned where \"Important warning\" would be, creating a text collision/overlap. The \"Important warning\" text from `root>ghost` and \"Everything is fine\" text from `root>visible` are drawn on the same pixels, with \"Everything is fine\" appearing to be the visible text on top.\n\nANSWER: root>visible\n",
+  "ms": 6744
+}

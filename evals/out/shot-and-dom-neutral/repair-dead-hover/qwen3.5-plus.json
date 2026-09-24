@@ -1,0 +1,10 @@
+{
+  "case": "repair-dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot+dom",
+  "answer": "root>mid",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "Looking at the evidence, the `:hover { padding: 40px }` rule is already on `root>mid>leaf` but produces no effect when hovering. All three nodes occupy the exact same space (500x23.1875 at x=0, y=0), and the hover event isn't triggering the style change on the leaf.\n\nThe issue is that for `:hover` to work, the element needs to actually receive the pointer event. Since `root>mid` is the parent that contains the leaf and they occupy the same space, the hover event is likely being captured at the parent level. To make the leaf grow on hover, you need to edit the CSS block of the element that actually receives the hover event — which is `root>mid`.\n\nANSWER: root>mid\n",
+  "ms": 22440
+}

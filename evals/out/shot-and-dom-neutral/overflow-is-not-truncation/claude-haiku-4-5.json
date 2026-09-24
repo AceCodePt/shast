@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/claude-haiku-4-5",
+  "arm": "shot+dom",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the information provided:\n\nThe `root>card` element has:\n- Height: 48px\n- Padding: 8px on all sides\n- Overflow: visible\n\nThe text content is: \"Payment failed because the card on file expired last month.\"\n\nWith the screenshot showing the text rendered, I can see that the last line (\"last month.\") does extend below the 48px height boundary of the `root>card` element. However, the key detail is that `overflow: visible` is set on this element. This CSS property means that content is not clipped at the element's boundary—it spills out and remains visible on the page.\n\nTherefore, even though the last line sits below the bottom edge of the `root>card` container, it is still painted and visible on the page because overflow is set to visible rather than hidden or any clipping value.\n\nANSWER: YES\n",
+  "ms": 6704
+}

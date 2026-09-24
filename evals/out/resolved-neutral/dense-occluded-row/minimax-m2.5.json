@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The banner div is positioned with absolute coordinates (x=244, y=276, width=700) that overlap exactly with `r09`'s box, and it has an opaque red background with z-index 5, painting on top. The information explicitly states that 69% of `r09` is covered and that all 1 of 1 text lines is completely hidden by the banner.\n\nANSWER: NO\n",
+  "ms": 7348
+}

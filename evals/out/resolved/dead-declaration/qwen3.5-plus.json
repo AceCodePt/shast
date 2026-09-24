@@ -1,0 +1,10 @@
+{
+  "case": "dead-declaration",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Based on the report, the `padding: 32px` declaration on `root>body>panel` is explicitly **shadowed** by `padding: 4px` which is declared by `root` inside its `\"> body > panel\"` block. The report shows the resolved padding is `4px`, not `32px`, and the annotation uses the word \"shadows\" to indicate the parent's rule overrides the element's own declaration.\n\nANSWER: NO\n",
+  "ms": 16767
+}

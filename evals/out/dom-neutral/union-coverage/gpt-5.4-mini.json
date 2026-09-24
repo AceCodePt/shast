@@ -1,0 +1,10 @@
+{
+  "case": "union-coverage",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "No. The text in `root>line` sits at the same top position as both absolutely positioned boxes, and the boxes together cover the horizontal span from `x=0` to `x=140`. Since the line’s text starts at `x=0` and there is no uncovered gap over the text area, the words are obscured on screen.\n\nANSWER: NO\n",
+  "ms": 12821
+}

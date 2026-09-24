@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/minimax-m2.5",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The report explicitly states that `root>card` has overflow set to visible (\"overflow is visible\"), and that its content \"is painted outside the box rather than cut off.\" The text extends to roughly y=85.75px (9px top padding/border + 76.75px content height), which sits well below the card's bottom edge at y=48, but still within the 300px viewport height. There is no indication that the `root` element (or any other ancestor) applies `overflow: hidden` or `clip`, so the overflowing content is rendered onto the page rather than clipped.\n\nANSWER: YES\n",
+  "ms": 18003
+}

@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "20",
+  "pass": false,
+  "proseAgrees": false,
+  "reply": "Looking at the screenshot and the information provided:\n\nThe `floaty` element is `position: absolute` with no `top`, `right`, `bottom`, or `left` properties specified. When an absolutely positioned element has none of these offset properties, it renders at its **static position** — the position where it would have appeared in normal document flow.\n\nFrom the screenshot, we can see:\n- \"spacer\" renders at the top (y=0)\n- \"floaty\" renders below it\n\nSince `floaty` comes after `spacer` in the DOM and there are no margins/padding mentioned, the `floaty` element's top edge renders at the y-position corresponding to where it would sit in normal flow — which is immediately after the \"spacer\" div's content.\n\nLooking at the screenshot, \"floaty\" appears to start at approximately y=20px (accounting for the default line-height of the \"spacer\" text, which is typically around 16-20px for default browser font settings).\n\nANSWER: 20\n",
+  "ms": 20615
+}

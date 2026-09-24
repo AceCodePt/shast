@@ -1,0 +1,10 @@
+{
+  "case": "neighbour-to-the-right",
+  "model": "opencode/gemini-3-flash",
+  "arm": "shot",
+  "answer": "root>rightBottom",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The screenshot shows a two-by-two grid of text labels. The label \"left bottom\" is located in the bottom-left position. Directly to its right on the same horizontal row is the label \"right bottom\". According to the node tree, the text \"right bottom\" corresponds to the node path `root>rightBottom`.\n\nANSWER: root>rightBottom\n",
+  "ms": 7627
+}

@@ -1,0 +1,10 @@
+{
+  "case": "dense-occluded-row",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The report explicitly indicates that `root>main>r09` is covered by `root>banner`, which features an opaque background and a higher z-index (5) painting later than the node. Furthermore, the report specifies that \"1 of 1 text line(s) completely hidden,\" meaning the text is completely obscured and cannot be read by a viewer.\n\nANSWER: NO\n",
+  "ms": 8295
+}

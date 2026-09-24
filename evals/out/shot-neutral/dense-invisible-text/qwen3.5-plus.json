@@ -1,0 +1,10 @@
+{
+  "case": "dense-invisible-text",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "Looking at the evidence:\n\n1. The DOM tree shows `root>main>r21 div \"21. Treasury positions\"` exists in the source\n2. However, in the screenshot, items 01-20 are visible, then there's a blank gap, and items 22-28 appear at the bottom\n3. Item 21 (\"Treasury positions\") is **not visible** in the rendered screenshot - there's clearly empty space between items 20 and 22 where item 21 should appear\n\nThis indicates that while the element exists in the DOM, CSS styling has made the text invisible to viewers (possibly through `visibility: hidden`, `opacity: 0`, `color: transparent`, or similar techniques).\n\nANSWER: NO\n",
+  "ms": 13827
+}

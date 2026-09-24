@@ -1,0 +1,10 @@
+{
+  "case": "static-position-absolute",
+  "model": "opencode/gemini-3-flash",
+  "arm": "dom",
+  "answer": "50",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "An absolutely positioned element with no specified offsets (`top`, `right`, `bottom`, or `left`) renders at its **static position**, which is where it would be if it were `position: static` in the normal document flow. In this case, `root>floaty` follows `root>spacer`, a block-level element with a height of 50px starting at the top of the `root` container (y=0). Therefore, the top edge of `floaty` renders immediately below the spacer.\n\nANSWER: 50\n",
+  "ms": 17592
+}

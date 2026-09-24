@@ -1,0 +1,10 @@
+{
+  "case": "overflow-is-not-truncation",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "resolved",
+  "answer": "YES",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Yes. The report explicitly says the content “is painted outside the box rather than cut off” because `overflow` is visible, so the last line below the card’s bottom edge should still appear on the page and be readable.\n\nANSWER: YES\n",
+  "ms": 12174
+}

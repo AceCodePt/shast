@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at the viewport (500x300) and the two nodes:\n\n- **`root>lower`** is at y=700, below the initial viewport. Since the root has height 900px and overflows vertically, the user can scroll down to bring this element into view. Its width (400px) fits within the 500px viewport.\n\n- **`root>sideways`** is at y=40 (within initial viewport vertically) but has width=900px, extending 400px past the right edge of the 500px viewport. The note explicitly states \"pages do not scroll horizontally\", so this overflow cannot be reached by scrolling.\n\nANSWER: root>sideways\n",
+  "ms": 15195
+}

@@ -1,0 +1,10 @@
+{
+  "case": "not-stated",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "NOT STATED",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "The provided machine-generated report lists the resolved styles for `root>label` as `font-size: 16px (inherited)` and `padding: 8px`. It does not contain any information or mention regarding the text color. Therefore, the text color cannot be determined from the report.\n\nANSWER: NOT STATED\n",
+  "ms": 7213
+}

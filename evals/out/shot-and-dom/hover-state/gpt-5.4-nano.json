@@ -1,0 +1,10 @@
+{
+  "case": "hover-state",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "rgb(51, 85, 255)",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "From the “at rest” measurements (pointer elsewhere), `root>cta` has `background-color: rgb(51, 85, 255)`. In the hover state the background changes to `rgb(0, 34, 204)`, confirming that the initial painted background is the first value.\n\nANSWER: rgb(51, 85, 255)\n",
+  "ms": 10737
+}

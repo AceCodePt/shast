@@ -1,0 +1,10 @@
+{
+  "case": "misaligned-sibling",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "resolved",
+  "answer": "root>third",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Comparing the absolute horizontal positions (x-coordinates) of the four rows, `root>first`, `root>second`, and `root>fourth` all share a left edge at `x = 24`. In contrast, `root>third` is located at `x = 40`, making it out of alignment with the rest.\n\nANSWER: root>third\n",
+  "ms": 7202
+}

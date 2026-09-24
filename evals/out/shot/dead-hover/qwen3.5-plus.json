@@ -1,0 +1,10 @@
+{
+  "case": "dead-hover",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "shot",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Looking at both screenshots, they appear completely identical. The \"Leaf\" text is in the exact same position with no visible change in spacing, size, or layout between the rest state and the hover state.\n\nIf the `:hover` block's `padding: 40px` were being applied, I would expect to see the element grow larger or the text shift position due to the added padding. Since there's no visual difference between the two screenshots, the padding is not changing on hover.\n\nANSWER: NO\n",
+  "ms": 11113
+}

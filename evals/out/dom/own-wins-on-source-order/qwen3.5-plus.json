@@ -1,0 +1,10 @@
+{
+  "case": "own-wins-on-source-order",
+  "model": "opencode/qwen3.5-plus",
+  "arm": "dom",
+  "answer": "64px 64px 64px 64px",
+  "pass": false,
+  "proseAgrees": true,
+  "reply": "The browser's `getComputedStyle()` data for `root>child` explicitly shows `padding: 64px 64px 64px 64px`. This is the final computed value after CSS cascade and inheritance resolution, representing what actually renders. The `getBoundingClientRect()` confirms the element occupies the full 500px width and 147.1875px height including this padding.\n\nANSWER: 64px 64px 64px 64px\n",
+  "ms": 14861
+}

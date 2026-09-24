@@ -1,0 +1,10 @@
+{
+  "case": "unreachable-vs-scrollable",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "resolved",
+  "answer": "root>sideways",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "`root>lower` is positioned at `y=700` with width `400`, so it lies below the initial `500x300` viewport. Ordinary scrolling (vertical) can move the page down until that `y=700` region is within the viewport, bringing the whole `400px`-wide element into view.\n\n`root>sideways` sits at `top=40` but has `width=900`, meaning it extends `400px` past the right edge of the viewport (`500px` wide). Since pages do not scroll horizontally, vertical scrolling cannot shift it into fully visible range.\n\nANSWER: root>sideways\n",
+  "ms": 7679
+}

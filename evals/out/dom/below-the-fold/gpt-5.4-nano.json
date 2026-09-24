@@ -1,0 +1,10 @@
+{
+  "case": "below-the-fold",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The viewer initially sees the top portion of the page within the 500×300 viewport. The `root>footer` element’s bounding box starts at `y=700` and has `height=60`, so it occupies the region from `y=700` to `y=760`, which is entirely below the viewport’s visible range (0 to 300). Therefore it is not inside the area visible before scrolling.  \nANSWER: NO\n",
+  "ms": 13482
+}

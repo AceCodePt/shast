@@ -1,0 +1,35 @@
+root <div>
+  getBoundingClientRect: x=0 y=0 width=400 height=48
+  background-color: rgba(0, 0, 0, 0)
+  border-style: solid
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 48px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: static
+  width: 400px
+  z-index: auto
+  padding: 0px 0px 0px 0px
+  border-width: 0px 0px 0px 0px
+  margin: 0px 0px 0px 0px
+
+root>card <div>
+  getBoundingClientRect: x=0 y=0 width=180 height=48
+  background-color: rgba(0, 0, 0, 0)
+  border-style: solid
+  color: rgb(0, 0, 0)
+  display: block
+  font-size: 16px
+  height: 48px
+  line-height: 19.2px
+  opacity: 1
+  overflow: visible
+  position: static
+  width: 180px
+  z-index: auto
+  padding: 8px 8px 8px 8px
+  border-width: 1px 1px 1px 1px
+  margin: 0px 0px 0px 0px

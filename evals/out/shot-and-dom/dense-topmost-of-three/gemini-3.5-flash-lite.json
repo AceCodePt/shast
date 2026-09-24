@@ -1,0 +1,10 @@
+{
+  "case": "dense-topmost-of-three",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot+dom",
+  "answer": "root>beta",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "At the point (500, 400), all three elements (`root>alpha`, `root>beta`, and `root>gamma`) overlap as their bounding boxes all encompass this coordinate. Since they are positioned elements sharing the same stacking context, they are rendered according to their `z-index` values (`2`, `4`, and `3` respectively). `root>beta` has the highest `z-index` of 4, placing it on top of the stack and making its background visible.\n\nANSWER: root>beta\n",
+  "ms": 9594
+}

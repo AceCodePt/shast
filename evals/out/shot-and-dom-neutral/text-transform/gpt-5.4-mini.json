@@ -1,0 +1,10 @@
+{
+  "case": "text-transform",
+  "model": "opencode/gpt-5.4-mini",
+  "arm": "shot+dom",
+  "answer": "ANNUAL REVIEW",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "The source text is `Annual review`, but the computed style on `root>title` is `text-transform: uppercase`, so the browser renders it in all caps. The screenshot matches that rendering.\n\nANSWER: ANNUAL REVIEW\n",
+  "ms": 8854
+}

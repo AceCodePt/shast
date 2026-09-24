@@ -1,0 +1,10 @@
+{
+  "case": "line-height-ratio-inherits",
+  "model": "opencode/gemini-3.5-flash-lite",
+  "arm": "shot",
+  "answer": "64",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "When a unitless number is used for `line-height` (such as `line-height: 2`), the scaling factor is inherited by child elements rather than a fixed pixel value. Therefore, `root>big` inherits the ratio `2` and applies it to its own `font-size` of `32px`, resulting in a line-height of `32px * 2 = 64px`. Since a single line of text renders with a height equal to its line-height, `root>big` renders 64 pixels tall.\n\nANSWER: 64\n",
+  "ms": 9042
+}

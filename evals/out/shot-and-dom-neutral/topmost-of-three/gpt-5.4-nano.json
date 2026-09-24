@@ -1,0 +1,10 @@
+{
+  "case": "topmost-of-three",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "root>middle",
+  "pass": true,
+  "proseAgrees": true,
+  "reply": "Point `(120,120)` lies inside all three absolutely-positioned boxes’ `getBoundingClientRect()` areas:  \n- `root>back`: `(40..240, 40..240)`  \n- `root>middle`: `(80..280, 80..280)`  \n- `root>front`: `(100..160, 100..160)`  \n\nWhen multiple positioned elements overlap, the one with the highest `z-index` is painted on top. Their computed `z-index` values are: back `1`, front `2`, middle `3`, so `root>middle` is what a viewer sees at that point.\n\nANSWER: root>middle\n",
+  "ms": 8551
+}

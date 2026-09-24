@@ -1,0 +1,10 @@
+{
+  "case": "percent-height-indefinite",
+  "model": "opencode/gpt-5.4-nano",
+  "arm": "shot+dom",
+  "answer": "NO",
+  "pass": true,
+  "proseAgrees": false,
+  "reply": "`root>outer>tall` has `height: 100%`, but the browser’s actual rendered box shows `getBoundingClientRect()` for `root>outer>tall` is `height=19.1875` and for its sibling `root>outer>filler` is `height=60`. Since `19.1875 < 60`, `root>outer>tall` is not taller than `root>outer>filler`.\n\nANSWER: NO\n",
+  "ms": 9172
+}
