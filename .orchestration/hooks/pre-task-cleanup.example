@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# pre-task-cleanup.example - before the task worktree is removed at teardown.
+# Copy this file to .orchestration/hooks/pre-task-cleanup, make it executable, and commit
+# it to enable. Fired with TASK_NAME  BRANCH_NAME  WORKTREE_PATH  WORKTREE_NAME
+# BASE_BRANCH. Exit 0 lets the event proceed; non-zero aborts it and the failure
+# is logged.
+
+set -uo pipefail
+echo "pre-task-cleanup (example): no-op"
+exit 0

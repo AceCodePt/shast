@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# post-task-cleanup.example - after the worktree and branch are gone.
+# Copy this file to .orchestration/hooks/post-task-cleanup, make it executable, and commit
+# it to enable. Fired with TASK_NAME  BRANCH_NAME  WORKTREE_PATH  WORKTREE_NAME
+# BASE_BRANCH. Exit 0 lets the event proceed; non-zero aborts it and the failure
+# is logged.
+
+set -uo pipefail
+echo "post-task-cleanup (example): no-op"
+exit 0

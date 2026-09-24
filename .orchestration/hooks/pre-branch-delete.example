@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# pre-branch-delete.example - before the task branch is deleted.
+# Copy this file to .orchestration/hooks/pre-branch-delete, make it executable, and commit
+# it to enable. Fired with TASK_NAME  BRANCH_NAME  WORKTREE_PATH  WORKTREE_NAME
+# BASE_BRANCH. Exit 0 lets the event proceed; non-zero aborts it and the failure
+# is logged.
+
+set -uo pipefail
+echo "pre-branch-delete (example): no-op"
+exit 0

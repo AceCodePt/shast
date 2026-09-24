@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# session-skill-activated.example - opencode server event "session.skill.activated".
+# The daemon's SSE consumer fires this when the server emits "session.skill.activated": copy this
+# file to .orchestration/hooks/session-skill-activated, make it executable, and commit it. The
+# event arrives as JSON on stdin, with ORCH_EVENT=session-skill-activated (plus session/project env
+# when one applies).
+# Fire-and-forget: a non-zero exit is logged to ~/.local/state/orch, never
+# blocking the stream.
+# Properties: the event JSON is on stdin (V2 puts them under `data`)
+
+set -uo pipefail
+read -r payload
+echo "session-skill-activated (opencode event): $payload"
+exit 0

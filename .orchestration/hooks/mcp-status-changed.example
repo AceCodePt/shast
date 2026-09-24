@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# mcp-status-changed.example - opencode server event "mcp.status.changed".
+# The daemon's SSE consumer fires this when the server emits "mcp.status.changed": copy this
+# file to .orchestration/hooks/mcp-status-changed, make it executable, and commit it. The
+# event arrives as JSON on stdin, with ORCH_EVENT=mcp-status-changed (plus session/project env
+# when one applies).
+# Fire-and-forget: a non-zero exit is logged to ~/.local/state/orch, never
+# blocking the stream.
+# Properties: the event JSON is on stdin (V2 puts them under `data`)
+
+set -uo pipefail
+read -r payload
+echo "mcp-status-changed (opencode event): $payload"
+exit 0

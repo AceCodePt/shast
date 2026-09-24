@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# pre-task-create.example - before the task worktree is created, from the dispatching worktree; non-zero refuses the dispatch.
+# Copy this file to .orchestration/hooks/pre-task-create, make it executable, and commit
+# it to enable. Fired with TASK_NAME  BRANCH_NAME  WORKTREE_PATH  WORKTREE_NAME
+# BASE_BRANCH. Exit 0 lets the event proceed; non-zero aborts it and the failure
+# is logged.
+
+set -uo pipefail
+echo "pre-task-create (example): no-op"
+exit 0

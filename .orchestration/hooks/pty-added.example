@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# pty-added.example - opencode server event "pty.added".
+# The daemon's SSE consumer fires this when the server emits "pty.added": copy this
+# file to .orchestration/hooks/pty-added, make it executable, and commit it. The
+# event arrives as JSON on stdin, with ORCH_EVENT=pty-added (plus session/project env
+# when one applies).
+# Fire-and-forget: a non-zero exit is logged to ~/.local/state/orch, never
+# blocking the stream.
+# Properties: the event JSON is on stdin (V2 puts them under `data`)
+
+set -uo pipefail
+read -r payload
+echo "pty-added (opencode event): $payload"
+exit 0

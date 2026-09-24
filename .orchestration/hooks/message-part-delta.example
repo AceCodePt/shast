@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# message-part-delta.example - opencode server event "message.part.delta".
+# The daemon's SSE consumer fires this when the server emits "message.part.delta": copy this
+# file to .orchestration/hooks/message-part-delta, make it executable, and commit it. The
+# event arrives as JSON on stdin, with ORCH_EVENT=message-part-delta (plus session/project env
+# when one applies).
+# Fire-and-forget: a non-zero exit is logged to ~/.local/state/orch, never
+# blocking the stream.
+# Properties: the event JSON is on stdin (V2 puts them under `data`)
+
+set -uo pipefail
+read -r payload
+echo "message-part-delta (opencode event): $payload"
+exit 0

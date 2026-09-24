@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# session-idle.example - what "verify" means for this project.
+#
+# Copy this file to .orchestration/hooks/session-idle, make it executable, and
+# commit it to enable verification. Only the version committed on the base branch
+# runs - edit, then commit, before dispatching.
+#
+# Contract (full version in .orchestration/README.md): the agent declares a task
+# done by committing its work to the branch. This hook verifies that committed
+# work; exit 0 passes and commits anything the agent left uncommitted, non-zero
+# fails and everything written to stdout/stderr is fed back to the agent as its
+# next instructions.
+
+set -euo pipefail
+cd "${WORKTREE_PATH:-$(git rev-parse --show-toplevel)}" || exit 1
+
+# Put this project's real checks above the commit block, e.g. `pnpm check && pnpm test`.
+# `set -e` aborts on the first failing command, and the output becomes the agent's
+# next instructions, so keep it useful and bounded.
+echo "no verification configured yet - edit .orchestration/hooks/session-idle" >&2
+exit 1
+
+# Verification passed: commit the work (idempotent - the agent usually committed
+# already, so an empty tree has nothing to commit, and it still passes so the
+# daemon can re-run it safely).
+if [ -n "$(git status --porcelain)" ]; then
+  git add -A
+  git -c user.name=orch -c user.email=orch@localhost \
+      commit -q -m "orch: session-idle verification passed"
+fi
+exit 0
