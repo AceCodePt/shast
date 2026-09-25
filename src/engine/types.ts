@@ -570,12 +570,16 @@ type HTMLFlatAttributeBag<
 type HTMLGateKeyBag<
   Keywords extends SupportedKeywordsConfig,
   C extends BaseHTMLAttributesConfig,
+  Source,
 > = {
-  [K in HTMLGateKeys<C> & string]: ResolveComplexValue<
-    Keywords,
-    {},
-    keyof C[K] & string
-  >;
+  [K in HTMLGateKeys<C> & string]: K extends keyof Source
+    ? true extends GateOverlaps<GateTable<Keywords, {}, C, "self">[K], Source[K]>
+      ? | (`Value '${Source[K] &
+          string}' matches more than one pattern key; overlapping keys are not allowed` &
+          Locked)
+        | ("undefined" extends keyof C[K] ? undefined : never)
+      : ResolveComplexValue<Keywords, {}, keyof C[K] & string>
+    : ResolveComplexValue<Keywords, {}, keyof C[K] & string>;
 };
 
 type HTMLSelfUnlocks<
@@ -589,28 +593,6 @@ type HTMLChildrenUnlocks<
   C extends BaseHTMLAttributesConfig,
   Source,
 > = DependentProps<Keywords, {}, C, "children", AsRecord<Source>>;
-
-type HTMLOverlappingGates<
-  Keywords extends SupportedKeywordsConfig,
-  C extends BaseHTMLAttributesConfig,
-  Source,
-> = {
-  [K in HTMLGateKeys<C> & string]: K extends keyof Source
-    ? true extends GateOverlaps<GateTable<Keywords, {}, C, "self">[K], Source[K]>
-      ? K
-      : never
-    : never;
-}[HTMLGateKeys<C> & string];
-
-type HTMLOverlapDiagnostics<
-  Keywords extends SupportedKeywordsConfig,
-  C extends BaseHTMLAttributesConfig,
-  Source,
-> = {
-  [K in HTMLOverlappingGates<Keywords, C, Source> & string]?: `Value '${Source[K] &
-    string}' matches more than one pattern key; overlapping keys are not allowed` &
-    Locked;
-};
 
 // Every attribute a gate can unlock somewhere, that the author wrote but no
 // written gate (on this element or its parent) unlocked. This is the locked
@@ -648,10 +630,9 @@ type HTMLAttributesBag<
   OwnWritten,
   ParentChildrenBag extends Record<string, any>,
 > = MakeUndefinedOptional<HTMLFlatAttributeBag<Keywords, C>> &
-  MakeUndefinedOptional<HTMLGateKeyBag<Keywords, C>> &
+  MakeUndefinedOptional<HTMLGateKeyBag<Keywords, C, AsRecord<OwnWritten>>> &
   HTMLSelfUnlocks<Keywords, C, OwnWritten> &
   ParentChildrenBag &
-  HTMLOverlapDiagnostics<Keywords, C, AsRecord<OwnWritten>> &
   HTMLLockedDiagnostics<
     C,
     AsRecord<OwnWritten>,

@@ -69,11 +69,12 @@ patterns matched and unlocks nothing. Instantiations on top:
 
 - `HTMLGateKeyBag` - each gate key writable with the union of its value types
   (`undefined` included for the `undefined` arm), passed through
-  `MakeUndefinedOptional` for `?`.
+  `MakeUndefinedOptional` for `?`. When the *written* value matches two pattern
+  keys the key's type is replaced by a branded message naming the written
+  value, never the key.
 - `HTMLSelfUnlocks` / `ParentChildrenBag` - `DependentProps` intersected per
   written gate.
 - `AllLockableKeys` / `LockedMessage` - the branded "requires" half.
-- `HTMLOverlapDiagnostics` - names the written value, never the key.
 - `ComponentIds<T, Keywords, Global, TagConfig>` - union of
   `{ [literalId]: declared self bag }`; widened `string` and no-id components
   resolve to `never`; duplicates merge. Called without a registry it falls back
