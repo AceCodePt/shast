@@ -193,7 +193,7 @@
   - [x] Object reference identity preserved
   - [x] Invalid DSL string throws error
 
-- [x] **Conditional attributes** - an attribute value gates `self` / `children` unlocks, exactly as a CSS gate does
+- [x] **Conditional attributes** - an attribute value gates `self` unlocks on the same element, exactly as a CSS gate gates its own properties
   - [x] Type Validation - locked unlocks branded naming what unlocks them; unknown attributes stay stock
   - [x] Type Inference - complex values infer their per-value variants
   - [x] Runtime Validation - the same accept/reject decisions as the type wall

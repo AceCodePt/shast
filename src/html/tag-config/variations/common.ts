@@ -218,20 +218,51 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   input: {
     display: "inline-block",
     attributes: {
-      type: "'text' | 'number' | 'password' | 'checkbox' | 'radio' | 'submit' | 'button' | 'email' | 'hidden'",
+      // `type` gates the attributes that are only meaningful for that input
+      // type. `checked` exists for checkbox/radio, `min`/`max`/`step` for the
+      // numeric and date-like types, `maxlength`/`minlength`/`pattern` for the
+      // text-like types.
+      type: {
+        text: {
+          self: {
+            maxlength: "number | undefined",
+            minlength: "number | undefined",
+            pattern: "string | undefined",
+          },
+        },
+        number: {
+          self: {
+            min: "string | number | undefined",
+            max: "string | number | undefined",
+            step: "string | number | undefined",
+          },
+        },
+        password: {
+          self: {
+            maxlength: "number | undefined",
+            minlength: "number | undefined",
+            pattern: "string | undefined",
+          },
+        },
+        checkbox: { self: { checked: "boolean | undefined" } },
+        radio: { self: { checked: "boolean | undefined" } },
+        email: {
+          self: {
+            maxlength: "number | undefined",
+            minlength: "number | undefined",
+            pattern: "string | undefined",
+          },
+        },
+        submit: { self: {} },
+        button: { self: {} },
+        hidden: { self: {} },
+      },
       value: "string | undefined",
-      checked: "boolean | undefined",
       name: "string | undefined",
       placeholder: "string | undefined",
       disabled: "boolean | undefined",
       required: "boolean | undefined",
       readonly: "boolean | undefined",
-      maxlength: "number | undefined",
-      minlength: "number | undefined",
-      max: "string | number | undefined",
-      min: "string | number | undefined",
-      step: "string | number | undefined",
-      pattern: "string | undefined",
       hidden: "boolean | undefined",
     },
     innerHTML: [],

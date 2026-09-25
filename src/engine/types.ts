@@ -93,7 +93,6 @@ type ValidateComponentInnerHTMLItemStructure<
   AllowedTags extends keyof HTMLTagConfig | "#text",
   T extends BaseComponentStructure | string,
   CurrentTag extends keyof HTMLTagConfig,
-  ParentChildrenBag extends Record<string,any>,
 > = T extends string
   ? true extends IsTagAllowText<HTMLTagConfig, CurrentTag>
     ? T
@@ -115,8 +114,7 @@ type ValidateComponentInnerHTMLItemStructure<
             : AllowedTags
           : AllowedTags,
         T,
-        GetAllowedTags<HTMLTagConfig, AllowedTags, CurrentTag>,
-        ParentChildrenBag
+        GetAllowedTags<HTMLTagConfig, AllowedTags, CurrentTag>
       >
     : never;
 
@@ -132,7 +130,6 @@ type ValidateComponentInnerHTMLStructure<
   AllowedTags extends keyof HTMLTagConfig | "#text",
   T extends BaseComponentInnerHTMLStructure,
   CurrentTag extends keyof HTMLTagConfig,
-  ParentChildrenBag extends Record<string,any>,
 > =
   T extends Record<string, any>
     ? {
@@ -149,8 +146,7 @@ type ValidateComponentInnerHTMLStructure<
                 CSSQueriesConfig,
                 AllowedTags,
                 T[K],
-                CurrentTag,
-                ParentChildrenBag
+                CurrentTag
               >
             : T[K] extends (string | BaseComponentStructure)[]
               ? ValidateComponentInnerHTMLItemStructure<
@@ -164,8 +160,7 @@ type ValidateComponentInnerHTMLStructure<
                   CSSQueriesConfig,
                   AllowedTags,
                   T[K][number],
-                  CurrentTag,
-                  ParentChildrenBag
+                  CurrentTag
                 >[]
               : never
           : T[K];
@@ -541,11 +536,12 @@ type CSSNonSelfConfig<
 // ---------------------------------------------------------------------------
 // HTML attribute gates.
 //
-// Identical mechanism to the CSS gates above, instantiated with the HTML
-// vocabulary. HTML DSL strings are validated against `Keywords` alone, so the
-// syntax-config slot is the empty object; everything else is shared, including
-// the pattern-key resolution and the two-key overlap signal in `GateLookup` /
-// `GateOverlaps`.
+// Same mechanism as the CSS gates above, but an HTML attribute only unlocks
+// further attributes on the same element (`self`). A parent's attribute is not
+// a fact a child inherits, so there is no `children` slot. HTML DSL strings are
+// validated against `Keywords` alone, so the syntax-config slot is the empty
+// object; the pattern-key resolution and the two-key overlap signal in
+// `GateLookup` / `GateOverlaps` are shared with CSS.
 // ---------------------------------------------------------------------------
 
 type HTMLGateKeys<C extends BaseHTMLAttributesConfig> = KeysMatching<
@@ -556,6 +552,35 @@ type HTMLGateKeys<C extends BaseHTMLAttributesConfig> = KeysMatching<
 type HTMLFlatKeys<C extends BaseHTMLAttributesConfig> = KeysMatching<C, string>;
 
 type AsRecord<T> = T extends Record<string, any> ? T : {};
+
+type InferHTMLPropBag<
+  Keywords extends SupportedKeywordsConfig,
+  Bag extends Record<string, string>,
+> = {
+  [P in keyof Bag]?: DSLInfer<Keywords, Bag[P]>;
+};
+
+// Registry-only table. Value keys are remapped through `ResolveComplexValue`,
+// so a `<token>` or backtick key becomes a pattern type a concrete literal
+// matches; each entry is wrapped in a `GateEntry` so two matching patterns
+// collapse `__gateKey` to `never`.
+type HTMLGateTable<
+  Keywords extends SupportedKeywordsConfig,
+  C extends BaseHTMLAttributesConfig,
+> = {
+  [K in HTMLGateKeys<C>]: {
+    [
+      V in keyof C[K] & string as ResolveComplexValue<
+        Keywords,
+        {},
+        V
+      > &
+        PropertyKey
+    ]: C[K][V] extends BaseHTMLAttributeComplexValue[string]
+      ? GateEntry<V, InferHTMLPropBag<Keywords, C[K][V]["self"]>>
+      : GateEntry<V, {}>;
+  };
+};
 
 // A literal `undefined` value key is how a complex attribute declares itself
 // optional, exactly as `| undefined` does for a flat one. `MakeUndefinedOptional`
@@ -573,7 +598,7 @@ type HTMLGateKeyBag<
   Source,
 > = {
   [K in HTMLGateKeys<C> & string]: K extends keyof Source
-    ? true extends GateOverlaps<GateTable<Keywords, {}, C, "self">[K], Source[K]>
+    ? true extends GateOverlaps<HTMLGateTable<Keywords, C>[K], Source[K]>
       ? | (`Value '${Source[K] &
           string}' matches more than one pattern key; overlapping keys are not allowed` &
           Locked)
@@ -582,62 +607,98 @@ type HTMLGateKeyBag<
     : ResolveComplexValue<Keywords, {}, keyof C[K] & string>;
 };
 
-type HTMLSelfUnlocks<
+// Every attribute unlocked by the gates actually written in `Source`. Each
+// owner keeps its own props: the contributions are INTERSECTED, so an
+// unrelated owner cannot widen another owner's prop to `string`.
+type DependentHTMLProps<
   Keywords extends SupportedKeywordsConfig,
   C extends BaseHTMLAttributesConfig,
   Source,
-> = DependentProps<Keywords, {}, C, "self", AsRecord<Source>>;
+  Table extends Record<string, any> = HTMLGateTable<Keywords, C>,
+  Owners extends string = HTMLGateKeys<C> & keyof AsRecord<Source> & string,
+> = [Owners] extends [never]
+  ? {}
+  : UnionToIntersection<
+      {
+        [K in Owners]: GateLookup<
+          Table[K],
+          AsRecord<Source>[K & keyof AsRecord<Source>]
+        >;
+      }[Owners]
+    >;
 
-type HTMLChildrenUnlocks<
-  Keywords extends SupportedKeywordsConfig,
+// Every attribute any gate can unlock, on this registry.
+type HTMLGateAllKeys<
   C extends BaseHTMLAttributesConfig,
-  Source,
-> = DependentProps<Keywords, {}, C, "children", AsRecord<Source>>;
+  G extends keyof C,
+> = {
+  [V in keyof C[G]]: C[G][V] extends BaseHTMLAttributeComplexValue[string]
+    ? keyof C[G][V]["self"]
+    : never;
+}[keyof C[G]];
 
-// Every attribute a gate can unlock somewhere, that the author wrote but no
-// written gate (on this element or its parent) unlocked. This is the locked
-// half; the unknown half is deliberately left to TypeScript's stock TS2353.
+type HTMLAllLockableKeys<C extends BaseHTMLAttributesConfig> = {
+  [G in HTMLGateKeys<C>]: HTMLGateAllKeys<C, G>;
+}[HTMLGateKeys<C>];
+
+type HTMLValuesUnlocking<
+  C extends BaseHTMLAttributesConfig,
+  G extends keyof C,
+  P,
+> = {
+  [V in keyof C[G] & string]: P extends (C[G][V] extends BaseHTMLAttributeComplexValue[string]
+    ? keyof C[G][V]["self"]
+    : never)
+    ? V
+    : never;
+}[keyof C[G] & string];
+
+type HTMLUnlockedBy<C extends BaseHTMLAttributesConfig, P> = {
+  [G in HTMLGateKeys<C>]: [
+    HTMLValuesUnlocking<C, G, P>,
+  ] extends [never]
+    ? never
+    : `${G & string}: ${JoinUnion<HTMLValuesUnlocking<C, G, P>>}`;
+}[HTMLGateKeys<C>];
+
+type HTMLLockedMessage<C extends BaseHTMLAttributesConfig, P extends string> =
+  `'${P}' requires ${JoinUnion<HTMLUnlockedBy<C, P>, ", or ">}`;
+
+// Every attribute a gate can unlock that the author wrote but no written gate
+// unlocked. This is the locked half; the unknown half is deliberately left to
+// TypeScript's stock TS2353.
 type HTMLLockedAttributeKeys<
   C extends BaseHTMLAttributesConfig,
   OwnWritten,
   SelfUnlocks,
-  ChildrenUnlocks,
 > = Exclude<
-  Extract<keyof OwnWritten, AllLockableKeys<C>>,
-  | keyof SelfUnlocks
-  | keyof ChildrenUnlocks
-  | HTMLFlatKeys<C>
-  | HTMLGateKeys<C>
+  Extract<keyof OwnWritten, HTMLAllLockableKeys<C>>,
+  keyof SelfUnlocks | HTMLFlatKeys<C> | HTMLGateKeys<C>
 >;
 
 type HTMLLockedDiagnostics<
   C extends BaseHTMLAttributesConfig,
   OwnWritten,
   SelfUnlocks,
-  ChildrenUnlocks,
 > = {
   [P in HTMLLockedAttributeKeys<
     C,
     OwnWritten,
-    SelfUnlocks,
-    ChildrenUnlocks
-  > & string]?: LockedMessage<C, P> & Locked;
+    SelfUnlocks
+  > & string]?: HTMLLockedMessage<C, P> & Locked;
 };
 
 type HTMLAttributesBag<
   Keywords extends SupportedKeywordsConfig,
   C extends BaseHTMLAttributesConfig,
   OwnWritten,
-  ParentChildrenBag extends Record<string, any>,
 > = MakeUndefinedOptional<HTMLFlatAttributeBag<Keywords, C>> &
   MakeUndefinedOptional<HTMLGateKeyBag<Keywords, C, AsRecord<OwnWritten>>> &
-  HTMLSelfUnlocks<Keywords, C, OwnWritten> &
-  ParentChildrenBag &
+  DependentHTMLProps<Keywords, C, AsRecord<OwnWritten>> &
   HTMLLockedDiagnostics<
     C,
     AsRecord<OwnWritten>,
-    HTMLSelfUnlocks<Keywords, C, OwnWritten>,
-    ParentChildrenBag
+    DependentHTMLProps<Keywords, C, AsRecord<OwnWritten>>
   >;
 
 // Tag attributes shadow same-named global attributes.
@@ -661,12 +722,10 @@ type ValidateComponentHTMLAttributes<
   HTMLTagConfig extends BaseHTMLTagConfig,
   Tag extends keyof HTMLTagConfig,
   OwnWritten,
-  ParentChildrenBag extends Record<string, any>,
 > = HTMLAttributesBag<
   Keywords,
   MergedHTMLAttributesConfig<HTMLGlobalAttributesConfig, HTMLTagConfig, Tag>,
-  OwnWritten,
-  ParentChildrenBag
+  OwnWritten
 >;
 
 // ---------------------------------------------------------------------------
@@ -702,7 +761,7 @@ type IdGateRow<
   C extends BaseHTMLAttributesConfig,
 > = C extends { id: infer IdDef }
   ? IdDef extends BaseHTMLAttributeComplexValue
-    ? GateTable<Keywords, {}, { id: IdDef }, "self">["id"]
+    ? HTMLGateTable<Keywords, { id: IdDef }>["id"]
     : never
   : never;
 
@@ -1040,7 +1099,6 @@ export type ValidateComponentStructure<
   AllowedTags extends keyof HTMLTagConfig,
   T extends BaseComponentStructure,
   CurrentAllowedTags extends keyof HTMLTagConfig,
-  ParentChildrenBag extends Record<string,any> = {},
 > = T["tag"] extends CurrentAllowedTags
   ? {
       [K in keyof T]: K extends string
@@ -1067,8 +1125,7 @@ export type ValidateComponentStructure<
                   HTMLGlobalAttributesConfig,
                   HTMLTagConfig,
                   T["tag"] & keyof HTMLTagConfig,
-                  T["attributes"],
-                  ParentChildrenBag
+                  T["attributes"]
                 >
               : K extends "innerHTML"
                 ? HTMLTagConfig[T["tag"]]["innerHTML"] extends []
@@ -1085,16 +1142,7 @@ export type ValidateComponentStructure<
                         CSSQueriesConfig,
                         AllowedTags,
                         T[K],
-                        T["tag"],
-                        HTMLChildrenUnlocks<
-                          Keywords,
-                          MergedHTMLAttributesConfig<
-                            HTMLGlobalAttributesConfig,
-                            HTMLTagConfig,
-                            T["tag"]
-                          >,
-                          AsRecord<T["attributes"]>
-                        >
+                        T["tag"]
                       >
                     : never
                 : never

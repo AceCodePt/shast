@@ -176,16 +176,17 @@ usual TypeScript moves all work.
 ## Conditional attributes and ids
 
 Just as `display: flex` unlocks `gap` in CSS, an HTML attribute value can
-unlock further attributes - on the same element (`self`) and on its direct
-children (`children`). In the registry an attribute is either a DSL string
-(unconditional) or a map from each possible value to what that value unlocks:
+unlock further attributes on the **same element**. (An HTML attribute is not a
+fact a child element inherits, so there is no `children` slot.) In the registry
+an attribute is either a DSL string (unconditional) or a map from each possible
+value to what that value unlocks:
 
 ```ts
 htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
   id: {
-    undefined: { self: {}, children: {} }, // id is optional
-    "todo-42": { self: { "data-kind": "'literal'" }, children: {} },
-    "`todo-${number}`": { self: { "data-kind": "'pattern'" }, children: {} },
+    undefined: { self: {} }, // id is optional
+    "todo-42": { self: { "data-kind": "'literal'" } },
+    "`todo-${number}`": { self: { "data-kind": "'pattern'" } },
   },
 }),
 ```

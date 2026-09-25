@@ -10,13 +10,12 @@ export interface BaseHTMLAttributeSimpleConfig {
 }
 
 // The conditional case: an attribute name maps each possible value to what
-// that value unlocks on the same element (`self`) and on its direct children
-// (`children`). Structurally identical to `BaseCSSAttributeComplexValue`, so
-// the shared gate machinery in `engine/types.ts` serves both layers.
+// that value unlocks on the same element (`self`). HTML attributes do not
+// unlock anything on child elements - a parent's attribute is not a fact a
+// child inherits - so unlike a CSS gate there is no `children` slot.
 export interface BaseHTMLAttributeComplexValue {
   [value: string]: {
     self: BaseHTMLAttributeSimpleConfig;
-    children: BaseHTMLAttributeSimpleConfig;
   };
 }
 
@@ -46,10 +45,6 @@ export type ValidateHTMLAttributesConfig<
                 self: ValidateHTMLAttributesSimpleConfig<
                   Keywords,
                   T[K][V]["self"]
-                >;
-                children: ValidateHTMLAttributesSimpleConfig<
-                  Keywords,
-                  T[K][V]["children"]
                 >;
               };
             }

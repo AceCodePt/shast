@@ -2,12 +2,12 @@
 
 ## What shipped
 
-Any HTML attribute key may hold a complex value of the same
-`{ [value]: { self, children } }` shape as `BaseCSSAttributeComplexValue`.
-The mechanism is generic and vocabulary-free: the test-only registry in
-`tests/html/conditional-attributes.test.ts` supplies an `input` whose `type`
-gates `checked` / `min` / `max` / `accept`, a `div` whose `mode` unlocks a child
-attribute, and an `id` with one literal and one patterned key.
+Any HTML attribute key may hold a complex value of the shape
+`{ [value]: { self } }`. HTML attributes only unlock further attributes on the
+**same element**: a parent's attribute is not a fact a child inherits, so unlike
+`BaseCSSAttributeComplexValue` there is no `children` slot. The mechanism is
+generic and vocabulary-free in `src/`; the shipped `input` variations are the
+first real vocabulary to use it.
 
 - `src/html/attribute-config/types.ts` - `BaseHTMLAttributeComplexValue`,
   `ValidateHTMLAttributesConfig` / `InferHTMLAttributesConfig` handling both
@@ -17,47 +17,52 @@ attribute, and an `id` with one literal and one patterned key.
   literal-first, patterns parsed with `parseValueAgainstDSL`, two matching keys
   an error, no match a message about the value. Also hosts the shared
   `valuesUnlocking` / `lockedMessageFor` / `slotDSL` helpers.
-- `src/engine/types.ts` - HTML attribute gates built on the shared `GateTable` /
-  `GateLookup`; branded locked messages (`'checked' requires type: checkbox |
-  radio`); `undefined`-arm optionality through `MaybeAttributes`; `ComponentIds`.
+- `src/engine/types.ts` - HTML attribute gates (`HTMLGateTable` / `GateLookup`);
+  branded locked messages (`'checked' requires type: checkbox | radio`);
+  `undefined`-arm optionality through `MaybeAttributes`; `ComponentIds`.
 - `src/engine/index.ts` - runtime conformance: own-gate pre-pass, self unlocks,
-  precomputed children bag, branded locked messages, required-attribute check.
+  branded locked messages, required-attribute check.
 - `src/engine/render/render-component.ts` - fills in a single-literal `self`
   unlock when omitted, using the same resolver.
+- `src/html/tag-config/variations/{common,full,minimal}.ts` - the shipped
+  `input` now expresses `type` as a gate: `checked` for checkbox/radio,
+  `min`/`max`/`step` for the numeric/date-like types,
+  `maxlength`/`minlength`/`pattern`/`size` for the text-like types,
+  `accept`/`capture`/`multiple` for file, `multiple` for email, the
+  form-override group for submit-like types, and `src`/`alt`/`height`/`width`
+  for image.
 - `README.md`, `TASK.md` - documented as the third structural binding.
 
 ## Predicted gaps - which materialised
 
-1. **Threading unlocked attributes through the three validation types** -
-   materialised, but not as predicted. The child cannot see the parent's tag
-   config, so raw parent attributes were insufficient for `children` unlocks.
-   Instead the parent precomputes a `ParentChildrenBag`
-   (`HTMLChildrenUnlocks<...>`) from its merged config and written gates and
-   threads that alongside `AllowedTags` / `CurrentTag`. The runtime mirrors this
-   with a precomputed `childrenBag`, so `forwardAllowed` was not touched.
+1. **Threading unlocked attributes through the three validation types** - did
+   not materialise in the final shape. Because HTML unlocks are self-only, the
+   only extra context a node needs is its own written attributes; no parent
+   config or `ParentChildrenBag` is threaded through
+   `ValidateComponentInnerHTMLStructure` / `ItemStructure` at all.
 2. **Type-level pattern resolution and the overlap second pass** - materialised.
-   `ResolveComplexValue` now maps `<token>` and backtick keys to their
+   `ResolveComplexValue` maps `<token>` and backtick keys to their
    template-literal types. Overlap is detected by wrapping each resolved value
    in `GateEntry<V, Props>`: two matching patterns make the intersection's
    `__gateKey` reduce to `never`, which is the overlap signal. It costs no
    `UnionToTuple` and is a plain indexed-access + conditional.
-3. **`children` unlocks crossing `GetAllowedTags`** - did not cross it.
-   Tag-permission logic is untouched; children unlocks are a separate bag.
+3. **`children` unlocks crossing `GetAllowedTags`** - no longer applicable;
+   `children` was removed from the HTML shape.
 4. **Render-time fill-in and `skipValidation: true`** - materialised as
-   expected. `renderComponent` now receives the global attribute config and the
+   expected. `renderComponent` receives the global attribute config and the
    merged keywords (the engine binds them). `skipValidation` remains a full
    pass-through of `createComponent`; fill-in is render-only and still runs.
 
 ## Shape of the per-registry unlocked table
 
-`GateTable<Keywords, SyntaxConfig, Config, Slot>` is parameterised only by the
-registry, so it is instantiated once per program:
+`HTMLGateTable<Keywords, Config>` is parameterised only by the registry, so it
+is instantiated once per program:
 
 ```ts
 {
   [K in complex keys]: {
     [V in value keys as ResolveComplexValue<DSL, V>]:
-      GateEntry<V, { [P in keyof Config[K][V][Slot]]?: DSLInfer<...> }>
+      GateEntry<V, { [P in keyof Config[K][V]["self"]]?: DSLInfer<...> }>
   }
 }
 ```
@@ -65,16 +70,17 @@ registry, so it is instantiated once per program:
 `GateEntry` is nominal: `{ __gateKey: V; __gateProps: Bag }`. A lookup
 (`GateLookup`) is literal-first because TypeScript's own index lookup prefers a
 literal key; `__gateProps` is unwrapped, and a `__gateKey` of `never` means two
-patterns matched and unlocks nothing. Instantiations on top:
+patterns matched and unlocks nothing. The CSS `GateTable` keeps its `Slot`
+parameter; the shared row helpers (`GateEntry`, `GateKeyOf`, `GatePropsOf`,
+`GateLookup`, `GateOverlaps`) are config-agnostic. Instantiations on top:
 
 - `HTMLGateKeyBag` - each gate key writable with the union of its value types
   (`undefined` included for the `undefined` arm), passed through
   `MakeUndefinedOptional` for `?`. When the *written* value matches two pattern
   keys the key's type is replaced by a branded message naming the written
   value, never the key.
-- `HTMLSelfUnlocks` / `ParentChildrenBag` - `DependentProps` intersected per
-  written gate.
-- `AllLockableKeys` / `LockedMessage` - the branded "requires" half.
+- `DependentHTMLProps` - the `self` bags of the written gates, intersected.
+- `HTMLAllLockableKeys` / `HTMLLockedMessage` - the branded "requires" half.
 - `ComponentIds<T, Keywords, Global, TagConfig>` - union of
   `{ [literalId]: declared self bag }`; widened `string` and no-id components
   resolve to `never`; duplicates merge. Called without a registry it falls back
@@ -85,14 +91,13 @@ patterns matched and unlocks nothing. Instantiations on top:
 - `pnpm check`: passes (exit 0). The browser-backed eval harness
   (`resolved-format/`, `tests/resolved-format/`, `evals/`) needs `playwright`
   and a generated `evals/cases.ts` that are not part of this package's
-  dependencies; it was already failing on `main` and is now excluded from the
+  dependencies; it was already failing on `main` and is excluded from the
   library typecheck in `tsconfig.json`.
-- `node --test tests/css tests/html tests/render tests/engine.test.ts`: 433 pass
+- `node --test tests/css tests/html tests/render tests/engine.test.ts`: 431 pass
   / 8 fail. The 8 are pre-existing rendering failures in
-  `tests/css/queries-integration.test.ts` (verified by stashing `src/` and
-  re-running); baseline was 425 pass / 8 fail, so +8 new tests, no new failures.
-- `tests/html/conditional-attributes.test.ts`: 19/19, exercising every
-  Verification bullet: `type="range" min` accepted, `type="range" checked`
-  rejected naming `type: checkbox | radio`, patterned `id` resolution, overlap
-  rejected at both walls, single-literal fill-in (omitted == written), a wrong
-  literal rejected at both walls, and `ComponentIds` exactness.
+  `tests/css/queries-integration.test.ts`, unrelated to this work.
+- `tests/html/conditional-attributes.test.ts`: 17/17 mechanism tests
+  (test-only registry).
+- `tests/html/input-conditional.test.ts`: 9/9 against the shipped `common`
+  registry - `checked`/`min`/`max`/`step`/`maxlength` unlocked by the right
+  `type`, and the branded locked message for the wrong one.

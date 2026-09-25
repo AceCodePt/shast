@@ -64,7 +64,6 @@ export function validateComponentNode(
   cssQueriesConfig: readonly string[],
   inheritedAllowed: AllowedTagSet,
   mergedKeywords: Record<string, string>,
-  parentChildrenBag: Record<string, string>,
 ): void {
   if (node === null || typeof node !== "object" || Array.isArray(node)) {
     throw new Error(
@@ -97,8 +96,7 @@ export function validateComponentNode(
   const providedAttributes = attributes ?? {};
 
   // Resolve every gate written on this element first. Its value unlocks
-  // attributes here (`self`) and on the direct children (`children`), exactly
-  // as a CSS gate does.
+  // further attributes on the same element (`self`).
   const ownGates: Record<string, string> = {};
   for (const [attributeKey, value] of Object.entries(providedAttributes)) {
     const def = allAttributeDefs[attributeKey];
@@ -110,22 +108,6 @@ export function validateComponentNode(
         value,
         "Attribute",
       );
-    }
-  }
-
-  // What this element's written gates unlock on its direct children. The child
-  // cannot see the parent's tag config, so the bag is precomputed here and
-  // passed down, mirroring the type-level `ParentChildrenBag`.
-  const childrenBag: Record<string, string> = {};
-  for (const gate of Object.keys(ownGates)) {
-    const gateDef = allAttributeDefs[gate];
-    if (!isGateDefinition(gateDef)) continue;
-    const bag = gateDef[ownGates[gate]!]?.children;
-    if (isGateDefinition(bag)) {
-      for (const key of Object.keys(bag)) {
-        const dsl = bag[key];
-        if (typeof dsl === "string") childrenBag[key] = dsl;
-      }
     }
   }
 
@@ -141,11 +123,6 @@ export function validateComponentNode(
     const selfDsl = slotDSL(allAttributeDefs, ownGates, attributeKey, "self");
     if (selfDsl !== undefined) {
       parseValueAgainstDSL(keywords, selfDsl, value);
-      continue;
-    }
-    const childrenDsl = parentChildrenBag[attributeKey];
-    if (childrenDsl !== undefined) {
-      parseValueAgainstDSL(keywords, childrenDsl, value);
       continue;
     }
     if (def !== undefined) {
@@ -545,7 +522,6 @@ export function validateComponentNode(
       cssQueriesConfig,
       forwardAllowed,
       mergedKeywords,
-      childrenBag,
     );
   };
 
@@ -625,7 +601,6 @@ export default function engine<
         config.cssQueriesConfig,
         null,
         mergedKeywords,
-        {},
       );
     }
     return componentStructure as T;

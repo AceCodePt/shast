@@ -21,24 +21,16 @@ import { assertType, type Equal } from "../type-utils.ts";
 
 const GLOBAL_ATTRIBUTES = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
   id: {
-    undefined: { self: {}, children: {} },
-    "todo-1": { self: { "data-kind": "'literal'" }, children: {} },
-    "`todo-${number}`": { self: { "data-kind": "'pattern'" }, children: {} },
+    undefined: { self: {} },
+    "todo-1": { self: { "data-kind": "'literal'" } },
+    "`todo-${number}`": { self: { "data-kind": "'pattern'" } },
   },
 });
 
 const TAGS = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   div: {
     display: "block",
-    attributes: {
-      mode: {
-        undefined: { self: {}, children: {} },
-        card: {
-          self: { "data-mode": "'card'" },
-          children: { "data-slot": "'card-slot'" },
-        },
-      },
-    },
+    attributes: {},
     innerHTML: "*",
     cssPseudoClass: [],
     cssPseudoElement: [],
@@ -54,22 +46,13 @@ const TAGS = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
     display: "inline-block",
     attributes: {
       type: {
-        text: {
-          self: { maxlength: "number", pattern: "string" },
-          children: {},
-        },
-        number: {
-          self: { min: "number", max: "number", step: "number" },
-          children: {},
-        },
-        range: {
-          self: { min: "number", max: "number", step: "number" },
-          children: {},
-        },
-        checkbox: { self: { checked: "boolean" }, children: {} },
-        radio: { self: { checked: "boolean" }, children: {} },
-        file: { self: { accept: "string", multiple: "boolean" }, children: {} },
-        submit: { self: {}, children: {} },
+        text: { self: { maxlength: "number", pattern: "string" } },
+        number: { self: { min: "number", max: "number", step: "number" } },
+        range: { self: { min: "number", max: "number", step: "number" } },
+        checkbox: { self: { checked: "boolean" } },
+        radio: { self: { checked: "boolean" } },
+        file: { self: { accept: "string", multiple: "boolean" } },
+        submit: { self: {} },
       },
       value: "string | undefined",
     },
@@ -97,8 +80,8 @@ const { createComponent, renderComponent } = engine({
 // A second registry whose id keys overlap: `todo-42` matches both.
 const OVERLAP_GLOBAL_ATTRIBUTES = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
   id: {
-    "`todo-${string}`": { self: { "data-kind": "'s'" }, children: {} },
-    "`todo-${number}`": { self: { "data-kind": "'n'" }, children: {} },
+    "`todo-${string}`": { self: { "data-kind": "'s'" } },
+    "`todo-${number}`": { self: { "data-kind": "'n'" } },
   },
 });
 
@@ -238,42 +221,6 @@ describe("HTML conditional attributes", () => {
     });
   });
 
-  describe("children unlocks", () => {
-    test("accepts a child attribute unlocked by the parent's gate", () => {
-      assert.doesNotThrow(() =>
-        createComponent({
-          tag: "div",
-          attributes: { mode: "card" },
-          innerHTML: {
-            slot: {
-              tag: "span",
-              attributes: { "data-slot": "card-slot" },
-            },
-          },
-        }),
-      );
-    });
-
-    test("rejects a child attribute whose parent gate does not unlock it", () => {
-      assert.throws(
-        () =>
-          createComponent({
-            tag: "div",
-            innerHTML: {
-              slot: {
-                tag: "span",
-                attributes: {
-                  // @ts-expect-error data-slot is not a valid attribute without mode: card
-                  "data-slot": "card-slot",
-                },
-              },
-            },
-          }),
-        /not a valid attribute/,
-      );
-    });
-  });
-
   describe("optionality via the undefined arm", () => {
     test("an optional complex attribute can be omitted", () => {
       assert.doesNotThrow(() => createComponent({ tag: "span" }));
@@ -288,8 +235,8 @@ describe("HTML conditional attributes", () => {
             SupportedKeywords,
             {
               type: {
-                text: { self: { maxlength: "number" }; children: {} };
-                range: { self: { min: "number" }; children: {} };
+                text: { self: { maxlength: "number" } };
+                range: { self: { min: "number" } };
               };
             }
           >,

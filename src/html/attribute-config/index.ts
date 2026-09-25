@@ -16,9 +16,9 @@ const isPatternKey = (key: string): boolean =>
   (key.startsWith("`") && key.endsWith("`"));
 
 // Walks an attributes config, validating every DSL string it contains -
-// including the `self` / `children` bags of complex values and any pattern
-// key. Shared by `htmlAttributeConfig` (global attributes) and `htmlTagConfig`
-// (per-tag attributes) so both walls parse the same strings.
+// including the `self` bag of each complex value and any pattern key. Shared
+// by `htmlAttributeConfig` (global attributes) and `htmlTagConfig` (per-tag
+// attributes) so both walls parse the same strings.
 export const validateHTMLAttributes = (
   supportedKeywords: SupportedKeywordsConfig,
   config: Record<string, unknown>,
@@ -40,10 +40,6 @@ export const validateHTMLAttributes = (
       if (!slot) continue;
       for (const attribute in slot.self) {
         const inner = slot.self[attribute];
-        if (inner !== undefined) dslString(supportedKeywords, inner);
-      }
-      for (const attribute in slot.children) {
-        const inner = slot.children[attribute];
         if (inner !== undefined) dslString(supportedKeywords, inner);
       }
     }

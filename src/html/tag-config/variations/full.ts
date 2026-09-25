@@ -2522,40 +2522,179 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   input: {
     display: "inline-block",
     attributes: {
-      type: "'text' | 'number' | 'password' | 'checkbox' | 'radio' | 'submit' | 'button' | 'email' | 'hidden' | 'file' | 'date' | 'time' | 'datetime-local' | 'month' | 'week' | 'color' | 'range' | 'search' | 'tel' | 'url' | 'image' | 'reset'",
+      // `type` gates the attributes that only mean something for that input
+      // type: `checked` for checkbox/radio, `min`/`max`/`step` for the numeric
+      // and date-like types, `maxlength`/`minlength`/`pattern`/`size` for the
+      // text-like types, `accept`/`capture`/`multiple` for file, `multiple`
+      // for email, the form-override group for the submit-like types, and
+      // `src`/`alt`/`height`/`width` for image.
+      type: {
+        text: {
+          self: {
+            maxlength: "number | undefined",
+            minlength: "number | undefined",
+            pattern: "string | undefined",
+            size: "number | undefined",
+          },
+        },
+        number: {
+          self: {
+            min: "string | number | undefined",
+            max: "string | number | undefined",
+            step: "string | number | undefined",
+          },
+        },
+        password: {
+          self: {
+            maxlength: "number | undefined",
+            minlength: "number | undefined",
+            pattern: "string | undefined",
+            size: "number | undefined",
+          },
+        },
+        checkbox: { self: { checked: "boolean | undefined" } },
+        radio: { self: { checked: "boolean | undefined" } },
+        submit: {
+          self: {
+            formaction: "string | undefined",
+            formenctype:
+              "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
+            formmethod: "'get' | 'post' | 'dialog' | undefined",
+            formnovalidate: "boolean | undefined",
+            formtarget: "'_self' | '_blank' | '_parent' | '_top' | undefined",
+          },
+        },
+        button: {
+          self: {
+            formaction: "string | undefined",
+            formenctype:
+              "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
+            formmethod: "'get' | 'post' | 'dialog' | undefined",
+            formnovalidate: "boolean | undefined",
+            formtarget: "'_self' | '_blank' | '_parent' | '_top' | undefined",
+          },
+        },
+        email: {
+          self: {
+            maxlength: "number | undefined",
+            minlength: "number | undefined",
+            pattern: "string | undefined",
+            size: "number | undefined",
+            multiple: "boolean | undefined",
+          },
+        },
+        hidden: { self: {} },
+        file: {
+          self: {
+            accept: "string | undefined",
+            capture: "'user' | 'environment' | undefined",
+            multiple: "boolean | undefined",
+          },
+        },
+        date: {
+          self: {
+            min: "string | number | undefined",
+            max: "string | number | undefined",
+            step: "string | number | undefined",
+          },
+        },
+        time: {
+          self: {
+            min: "string | number | undefined",
+            max: "string | number | undefined",
+            step: "string | number | undefined",
+          },
+        },
+        "datetime-local": {
+          self: {
+            min: "string | number | undefined",
+            max: "string | number | undefined",
+            step: "string | number | undefined",
+          },
+        },
+        month: {
+          self: {
+            min: "string | number | undefined",
+            max: "string | number | undefined",
+            step: "string | number | undefined",
+          },
+        },
+        week: {
+          self: {
+            min: "string | number | undefined",
+            max: "string | number | undefined",
+            step: "string | number | undefined",
+          },
+        },
+        color: { self: {} },
+        range: {
+          self: {
+            min: "string | number | undefined",
+            max: "string | number | undefined",
+            step: "string | number | undefined",
+          },
+        },
+        search: {
+          self: {
+            maxlength: "number | undefined",
+            minlength: "number | undefined",
+            pattern: "string | undefined",
+            size: "number | undefined",
+          },
+        },
+        tel: {
+          self: {
+            maxlength: "number | undefined",
+            minlength: "number | undefined",
+            pattern: "string | undefined",
+            size: "number | undefined",
+          },
+        },
+        url: {
+          self: {
+            maxlength: "number | undefined",
+            minlength: "number | undefined",
+            pattern: "string | undefined",
+            size: "number | undefined",
+          },
+        },
+        image: {
+          self: {
+            src: "string | undefined",
+            alt: "string | undefined",
+            height: "number | undefined",
+            width: "number | undefined",
+            formaction: "string | undefined",
+            formenctype:
+              "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
+            formmethod: "'get' | 'post' | 'dialog' | undefined",
+            formnovalidate: "boolean | undefined",
+            formtarget: "'_self' | '_blank' | '_parent' | '_top' | undefined",
+          },
+        },
+        reset: {
+          self: {
+            formaction: "string | undefined",
+            formenctype:
+              "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
+            formmethod: "'get' | 'post' | 'dialog' | undefined",
+            formnovalidate: "boolean | undefined",
+            formtarget: "'_self' | '_blank' | '_parent' | '_top' | undefined",
+          },
+        },
+      },
       value: "string | undefined",
-      checked: "boolean | undefined",
       name: "string | undefined",
       placeholder: "string | undefined",
       disabled: "boolean | undefined",
       required: "boolean | undefined",
       readonly: "boolean | undefined",
-      maxlength: "number | undefined",
-      minlength: "number | undefined",
-      max: "string | number | undefined",
-      min: "string | number | undefined",
-      step: "string | number | undefined",
-      pattern: "string | undefined",
       hidden: "boolean | undefined",
       autocomplete: "string | undefined",
       autofocus: "boolean | undefined",
       form: "string | undefined",
       list: "string | undefined",
-      multiple: "boolean | undefined",
-      size: "number | undefined",
-      accept: "string | undefined",
-      capture: "'user' | 'environment' | undefined",
       dirname: "string | undefined",
-      formaction: "string | undefined",
-      formenctype:
-        "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
-      formmethod: "'get' | 'post' | 'dialog' | undefined",
-      formnovalidate: "boolean | undefined",
-      formtarget: "'_self' | '_blank' | '_parent' | '_top' | undefined",
-      height: "number | undefined",
-      width: "number | undefined",
-      src: "string | undefined",
-      alt: "string | undefined",
       popovertarget: "string | undefined",
       popovertargetaction: "'show' | 'hide' | 'toggle' | undefined",
     },
