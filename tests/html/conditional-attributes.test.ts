@@ -22,7 +22,7 @@ import { assertType, type Equal } from "../type-utils.ts";
 const GLOBAL_ATTRIBUTES = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
   id: {
     undefined: { self: {}, children: {} },
-    "todo-42": { self: { "data-kind": "'literal'" }, children: {} },
+    "todo-1": { self: { "data-kind": "'literal'" }, children: {} },
     "`todo-${number}`": { self: { "data-kind": "'pattern'" }, children: {} },
   },
 });
@@ -197,13 +197,13 @@ describe("HTML conditional attributes", () => {
       assert.doesNotThrow(() =>
         createComponent({
           tag: "span",
-          attributes: { id: "todo-42", "data-kind": "literal" },
+          attributes: { id: "todo-42", "data-kind": "pattern" },
         }),
       );
       assert.doesNotThrow(() =>
         createComponent({
           tag: "span",
-          attributes: { id: "todo-7", "data-kind": "pattern" },
+          attributes: { id: "todo-1", "data-kind": "literal" },
         }),
       );
     });
@@ -312,7 +312,7 @@ describe("HTML conditional attributes", () => {
     const fixture = createComponent({
       tag: "div",
       innerHTML: {
-        a: { tag: "span", attributes: { id: "todo-42" } },
+        a: { tag: "span", attributes: { id: "todo-1" } },
         b: { tag: "span", attributes: { id: "todo-7" } },
       },
     });
@@ -322,7 +322,7 @@ describe("HTML conditional attributes", () => {
       assertType<
         Equal<
           Simplify<FixtureIds>,
-          | { "todo-42": { readonly "data-kind"?: "literal" } }
+          | { "todo-1": { readonly "data-kind"?: "literal" } }
           | { "todo-7": { readonly "data-kind"?: "pattern" } }
         >
       >();
@@ -351,7 +351,7 @@ describe("HTML conditional attributes", () => {
       const { html } = renderComponent(
         createComponent({
           tag: "span",
-          attributes: { id: "todo-42" },
+          attributes: { id: "todo-1" },
         }),
       );
       assert.match(html, /data-kind="literal"/);
@@ -361,13 +361,13 @@ describe("HTML conditional attributes", () => {
       const filled = renderComponent(
         createComponent({
           tag: "span",
-          attributes: { id: "todo-42" },
+          attributes: { id: "todo-1" },
         }),
       );
       const written = renderComponent(
         createComponent({
           tag: "span",
-          attributes: { id: "todo-42", "data-kind": "literal" },
+          attributes: { id: "todo-1", "data-kind": "literal" },
         }),
       );
       assert.strictEqual(filled.html, written.html);
@@ -379,7 +379,7 @@ describe("HTML conditional attributes", () => {
           createComponent({
             tag: "span",
             attributes: {
-              id: "todo-42",
+              id: "todo-1",
               // @ts-expect-error data-kind is the single literal "literal"
               "data-kind": "wrong",
             },
