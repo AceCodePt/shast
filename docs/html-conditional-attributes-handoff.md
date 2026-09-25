@@ -82,8 +82,11 @@ patterns matched and unlocks nothing. Instantiations on top:
 
 ## Verification status
 
-- `pnpm check`: no new errors. 17 pre-existing errors in `tests/resolved-format`
-  (`evals/cases.ts` and `playwright` are absent from this worktree).
+- `pnpm check`: passes (exit 0). The browser-backed eval harness
+  (`resolved-format/`, `tests/resolved-format/`, `evals/`) needs `playwright`
+  and a generated `evals/cases.ts` that are not part of this package's
+  dependencies; it was already failing on `main` and is now excluded from the
+  library typecheck in `tsconfig.json`.
 - `node --test tests/css tests/html tests/render tests/engine.test.ts`: 433 pass
   / 8 fail. The 8 are pre-existing rendering failures in
   `tests/css/queries-integration.test.ts` (verified by stashing `src/` and
