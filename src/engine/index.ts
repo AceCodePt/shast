@@ -17,7 +17,6 @@ import {
 } from "tsyntax";
 import type {
   BaseHTMLAttributesConfig,
-  InferHTMLAttributesConfig,
   ValidateHTMLAttributesConfig,
 } from "@/html/attribute-config/types.ts";
 import type {
@@ -27,7 +26,12 @@ import type {
 import { renderCSSPropertiesConfig } from "@/engine/render/properties-config.ts";
 import { renderComponent } from "@/engine/render/render-component.ts";
 import { CSS_IDENTIFIER_REGEX as CSS_CLASS_NAME } from "@/css/ident.ts";
-import type { MakeUndefinedOptional } from "@/types.ts";
+import {
+  isGateDefinition,
+  lockedMessageFor,
+  resolveGateValue,
+  slotDSL,
+} from "@/engine/gate-resolution.ts";
 import type {
   BaseComponentStructure,
   ValidateComponentStructure,
@@ -60,6 +64,7 @@ export function validateComponentNode(
   cssQueriesConfig: readonly string[],
   inheritedAllowed: AllowedTagSet,
   mergedKeywords: Record<string, string>,
+  parentChildrenBag: Record<string, string>,
 ): void {
   if (node === null || typeof node !== "object" || Array.isArray(node)) {
     throw new Error(
@@ -84,29 +89,86 @@ export function validateComponentNode(
   }
 
   const attributes = record.attributes;
-  if (attributes !== undefined && attributes !== null) {
-    const tagAttributes = tagDefinition.attributes ?? {};
-    for (const [attributeKey, value] of Object.entries(attributes)) {
-      const dsl = tagAttributes[attributeKey] ?? globalAttributes[attributeKey];
-      if (dsl === undefined) {
-        throw new Error(
-          `Attribute Error: Property '${attributeKey}' is not a valid attribute for <${tag}> or the Global configuration registry`,
-        );
-      }
-      parseValueAgainstDSL(keywords, dsl, value);
+  const tagAttributes = tagDefinition.attributes ?? {};
+  const allAttributeDefs = {
+    ...globalAttributes,
+    ...tagAttributes,
+  };
+  const providedAttributes = attributes ?? {};
+
+  // Resolve every gate written on this element first. Its value unlocks
+  // attributes here (`self`) and on the direct children (`children`), exactly
+  // as a CSS gate does.
+  const ownGates: Record<string, string> = {};
+  for (const [attributeKey, value] of Object.entries(providedAttributes)) {
+    const def = allAttributeDefs[attributeKey];
+    if (isGateDefinition(def)) {
+      ownGates[attributeKey] = resolveGateValue(
+        keywords,
+        attributeKey,
+        def,
+        value,
+        "Attribute",
+      );
     }
   }
 
-  const providedAttributes = attributes ?? {};
-  const allAttributeDefs = {
-    ...globalAttributes,
-    ...(tagDefinition.attributes ?? {}),
-  };
-  for (const [attrKey, dsl] of Object.entries(allAttributeDefs)) {
-    if (typeof dsl !== "string") continue;
-    const isOptional = dsl
-      .split("|")
-      .some((part) => part.trim() === "undefined");
+  // What this element's written gates unlock on its direct children. The child
+  // cannot see the parent's tag config, so the bag is precomputed here and
+  // passed down, mirroring the type-level `ParentChildrenBag`.
+  const childrenBag: Record<string, string> = {};
+  for (const gate of Object.keys(ownGates)) {
+    const gateDef = allAttributeDefs[gate];
+    if (!isGateDefinition(gateDef)) continue;
+    const bag = gateDef[ownGates[gate]!]?.children;
+    if (isGateDefinition(bag)) {
+      for (const key of Object.keys(bag)) {
+        const dsl = bag[key];
+        if (typeof dsl === "string") childrenBag[key] = dsl;
+      }
+    }
+  }
+
+  for (const [attributeKey, value] of Object.entries(providedAttributes)) {
+    const def = allAttributeDefs[attributeKey];
+    if (typeof def === "string") {
+      parseValueAgainstDSL(keywords, def, value);
+      continue;
+    }
+    if (isGateDefinition(def)) {
+      continue; // resolved and validated in the pre-pass
+    }
+    const selfDsl = slotDSL(allAttributeDefs, ownGates, attributeKey, "self");
+    if (selfDsl !== undefined) {
+      parseValueAgainstDSL(keywords, selfDsl, value);
+      continue;
+    }
+    const childrenDsl = parentChildrenBag[attributeKey];
+    if (childrenDsl !== undefined) {
+      parseValueAgainstDSL(keywords, childrenDsl, value);
+      continue;
+    }
+    if (def !== undefined) {
+      throw new Error(
+        `Attribute Error: Property '${attributeKey}' is not a valid attribute for <${tag}> or the Global configuration registry`,
+      );
+    }
+    const locked = lockedMessageFor(allAttributeDefs, attributeKey);
+    if (locked !== null) {
+      throw new Error(`Attribute Error: ${locked}`);
+    }
+    throw new Error(
+      `Attribute Error: Property '${attributeKey}' is not a valid attribute for <${tag}> or the Global configuration registry`,
+    );
+  }
+
+  for (const [attrKey, def] of Object.entries(allAttributeDefs)) {
+    const isOptional =
+      typeof def === "string"
+        ? def.split("|").some((part) => part.trim() === "undefined")
+        : isGateDefinition(def)
+          ? "undefined" in def
+          : false;
     if (!isOptional && !(attrKey in providedAttributes)) {
       throw new Error(
         `Attribute Error: Required attribute '${attrKey}' is missing on <${tag}>`,
@@ -137,111 +199,9 @@ export function validateComponentNode(
 
     // A complex CSS attribute (`display`, `position`, ...) is a *gate*: the
     // value the author writes unlocks further props on the node itself (`self`)
-    // and on its direct children (`children`). These helpers mirror the
-    // type-level gate tables in `engine/types.ts` so the two walls agree.
-    const isGate = (def: unknown): def is Record<string, any> =>
-      def !== null && typeof def === "object" && !Array.isArray(def);
-
-    const gateNames = (cssAttrs: Record<string, any>): string[] =>
-      Object.keys(cssAttrs).filter((key) => isGate(cssAttrs[key]));
-
-    // Resolve the value a gate was written with to its key: a literal
-    // (`"flex"`) or a DSL pattern key (`"<length>"`).
-    const resolveGateValue = (
-      cssAttrs: Record<string, any>,
-      gate: string,
-      writtenValue: unknown,
-    ): string => {
-      const gateDef = cssAttrs[gate];
-      if (typeof writtenValue !== "string") {
-        throw new Error(
-          `CSS Error: Invalid value type for '${gate}'. Expected a string`,
-        );
-      }
-      if (writtenValue in gateDef) return writtenValue;
-      for (const valueKey of Object.keys(gateDef)) {
-        if (valueKey.startsWith("<") && valueKey.endsWith(">")) {
-          try {
-            parseValueAgainstDSL(mergedKeywords, valueKey, writtenValue);
-            return valueKey;
-          } catch {}
-        }
-      }
-      throw new Error(
-        `CSS Error: Invalid value '${String(writtenValue)}' for '${gate}'. Expected one of: ${Object.keys(gateDef).join(", ")}`,
-      );
-    };
-
-    // The values of `gate` that unlock `prop` in `slot`.
-    const valuesUnlocking = (
-      cssAttrs: Record<string, any>,
-      gate: string,
-      prop: string,
-      slot: "self" | "children",
-    ): string[] => {
-      const gateDef = cssAttrs[gate];
-      if (!isGate(gateDef)) return [];
-      const values: string[] = [];
-      for (const valueKey of Object.keys(gateDef)) {
-        const bag = gateDef[valueKey]?.[slot];
-        if (isGate(bag) && prop in bag) {
-          values.push(valueKey);
-        }
-      }
-      return values;
-    };
-
-    // One clause per gate that can unlock `prop`, matching the type-level
-    // `UnlockedBy`: `display: flex | inline-flex` (self) or
-    // `display: flex | inline-flex on the parent` (children).
-    const unlockedByClauses = (
-      cssAttrs: Record<string, any>,
-      prop: string,
-    ): string[] => {
-      const clauses: string[] = [];
-      for (const gate of gateNames(cssAttrs)) {
-        const selfValues = valuesUnlocking(cssAttrs, gate, prop, "self");
-        if (selfValues.length > 0) {
-          clauses.push(`${gate}: ${selfValues.join(" | ")}`);
-        }
-        const childrenValues = valuesUnlocking(cssAttrs, gate, prop, "children");
-        if (childrenValues.length > 0) {
-          clauses.push(`${gate}: ${childrenValues.join(" | ")} on the parent`);
-        }
-      }
-      return clauses;
-    };
-
-    // `'gap' requires display: flex | grid | inline-flex | inline-grid`, or
-    // `null` when no gate can unlock `prop` (i.e. it is truly unknown).
-    const lockedMessageFor = (
-      cssAttrs: Record<string, any>,
-      prop: string,
-    ): string | null => {
-      const clauses = unlockedByClauses(cssAttrs, prop);
-      return clauses.length > 0
-        ? `'${prop}' requires ${clauses.join(", or ")}`
-        : null;
-    };
-
-    // The DSL for `prop` under the gate values in `gates` for `slot`, if the
-    // written gate value unlocks it.
-    const slotDSL = (
-      cssAttrs: Record<string, any>,
-      gates: Record<string, string>,
-      prop: string,
-      slot: "self" | "children",
-    ): string | undefined => {
-      for (const gate of Object.keys(gates)) {
-        const matchedValue = gates[gate];
-        if (matchedValue === undefined) continue;
-        const bag = cssAttrs[gate]?.[matchedValue]?.[slot];
-        if (isGate(bag) && prop in bag) {
-          return bag[prop];
-        }
-      }
-      return undefined;
-    };
+    // and on its direct children (`children`). The shared helpers in
+    // `engine/gate-resolution.ts` mirror the type-level gate tables in
+    // `engine/types.ts` so the two walls agree, and serve the HTML layer too.
 
     // The distinct tags in an array of children; used to seed the implicit
     // `display` inside a `> child` block that targets an array. When the
@@ -279,15 +239,21 @@ export function validateComponentNode(
 
       for (const key of Object.keys(block)) {
         if (key.startsWith("> ") || key.startsWith("&.")) continue;
-        if (isGate(cssAttrs[key])) {
-          explicitGates[key] = resolveGateValue(cssAttrs, key, block[key]);
+        if (isGateDefinition(cssAttrs[key])) {
+          explicitGates[key] = resolveGateValue(
+            mergedKeywords,
+            key,
+            cssAttrs[key],
+            block[key],
+            "CSS",
+          );
         }
       }
       const defaultDisplay =
         nodeTag !== undefined && tagConfig[nodeTag] !== undefined
           ? tagConfig[nodeTag].display
           : undefined;
-      if (defaultDisplay !== undefined && isGate(cssAttrs["display"])) {
+      if (defaultDisplay !== undefined && isGateDefinition(cssAttrs["display"])) {
         selfGates["display"] = defaultDisplay;
       }
       Object.assign(selfGates, explicitGates);
@@ -455,7 +421,7 @@ export function validateComponentNode(
             parseValueAgainstDSL(mergedKeywords, attrDef, value as any);
             continue;
           }
-          if (isGate(attrDef)) {
+          if (isGateDefinition(attrDef)) {
             continue; // gate already resolved (and validated) in the pre-pass
           }
           if (propDef !== undefined) {
@@ -579,6 +545,7 @@ export function validateComponentNode(
       cssQueriesConfig,
       forwardAllowed,
       mergedKeywords,
+      childrenBag,
     );
   };
 
@@ -630,9 +597,7 @@ export default function engine<
   const createComponent = <const T extends BaseComponentStructure>(
     componentStructure: ValidateComponentStructure<
       SupportedKeywords,
-      MakeUndefinedOptional<
-        InferHTMLAttributesConfig<SupportedKeywords, HTMLGlobalAttributesConfig>
-      >,
+      HTMLGlobalAttributesConfig,
       HTMLTagConfig,
       CSSSyntaxConfig,
       CSSAttributesConfig,
@@ -660,6 +625,7 @@ export default function engine<
         config.cssQueriesConfig,
         null,
         mergedKeywords,
+        {},
       );
     }
     return componentStructure as T;
@@ -668,7 +634,16 @@ export default function engine<
   const renderComponentBound = <const T extends BaseComponentStructure>(
     componentStructure: T,
   ) => {
-    return renderComponent(config.htmlTagConfig, componentStructure);
+    return renderComponent(
+      config.htmlTagConfig,
+      componentStructure,
+      config.htmlAttributesConfig,
+      Object.assign(
+        {},
+        config.cssSyntaxConfig,
+        config.supportedKeywords,
+      ),
+    );
   };
 
   return {

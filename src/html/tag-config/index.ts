@@ -1,6 +1,7 @@
 import type { BaseCSSAttributesComplexConfig } from "@/css/attribute-config/types.ts";
 import type { BaseHTMLTagConfig, ValidateHTMLTagConfig } from "./types.ts";
-import { dslString, type SupportedKeywordsConfig } from "tsyntax";
+import type { SupportedKeywordsConfig } from "tsyntax";
+import { validateHTMLAttributes } from "@/html/attribute-config/index.ts";
 
 export const htmlTagConfig = <
   const Keywords extends SupportedKeywordsConfig,
@@ -21,12 +22,7 @@ export const htmlTagConfig = <
       throw new Error("The tag isn't one of the allowed displays");
     }
     const attributes = config[tag].attributes;
-    for (const attributeKey in attributes) {
-      const attribute = attributes[attributeKey];
-      if (attribute) {
-        dslString(supportedKeywords, attribute);
-      }
-    }
+    validateHTMLAttributes(supportedKeywords, attributes);
 
     const innerHTML = config[tag].innerHTML;
     if (typeof innerHTML === "string") {
