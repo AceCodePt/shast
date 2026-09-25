@@ -8,6 +8,14 @@ import COMMON_QUERIES from "@/css/queries-config/variations/common.ts";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
 import engine from "@/engine/index.ts";
 
+export type { ComponentIds } from "@/engine/types.ts";
+export type {
+  BaseHTMLAttributeComplexValue,
+  BaseHTMLAttributesConfig,
+  InferHTMLAttributesConfig,
+  ValidateHTMLAttributesConfig,
+} from "@/html/attribute-config/types.ts";
+
 export const CSS_GLOBAL_PROPERTIES = cssPropertiesConfig(
   SUPPORTED_KEYWORDS,
   CSS_SYNTAX_CONFIG,

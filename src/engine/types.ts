@@ -13,7 +13,7 @@ import type {
 import type { DSLInfer, SupportedKeywordsConfig } from "tsyntax";
 import type {
   BaseHTMLAttributesConfig,
-  InferHTMLAttributesConfig,
+  BaseHTMLAttributeComplexValue,
 } from "@/html/attribute-config/types.ts";
 import type { BaseHTMLTagConfig } from "@/html/tag-config/types.ts";
 import type {
@@ -65,17 +65,25 @@ type GetAllowedTags<
       : HTMLTagConfig[Tag]["innerHTML"][number]
     : never;
 
-type MaybeAttributes<HTMLAttributesConfig extends Record<string, any>> = {
-  [K in keyof HTMLAttributesConfig]: K extends string
-    ? HTMLAttributesConfig[K] extends `${string}undefined${string}`
+type IsOptionalAttribute<T> = T extends string
+  ? T extends `${string}undefined${string}`
+    ? never
+    : "attributes"
+  : T extends BaseHTMLAttributeComplexValue
+    ? "undefined" extends keyof T
       ? never
       : "attributes"
-    : never;
+    : "attributes";
+
+type MaybeAttributes<HTMLAttributesConfig extends Record<string, any>> = {
+  [K in keyof HTMLAttributesConfig]: IsOptionalAttribute<
+    HTMLAttributesConfig[K]
+  >;
 }[keyof HTMLAttributesConfig];
 
 type ValidateComponentInnerHTMLItemStructure<
   Keywords extends SupportedKeywordsConfig,
-  HTMLInferedAttributesConfig extends Record<string, any>,
+  HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
@@ -85,6 +93,7 @@ type ValidateComponentInnerHTMLItemStructure<
   AllowedTags extends keyof HTMLTagConfig | "#text",
   T extends BaseComponentStructure | string,
   CurrentTag extends keyof HTMLTagConfig,
+  ParentChildrenBag extends Record<string,any>,
 > = T extends string
   ? true extends IsTagAllowText<HTMLTagConfig, CurrentTag>
     ? T
@@ -92,7 +101,7 @@ type ValidateComponentInnerHTMLItemStructure<
   : T extends BaseComponentStructure
     ? ValidateComponentStructure<
         Keywords,
-        HTMLInferedAttributesConfig,
+        HTMLGlobalAttributesConfig,
         HTMLTagConfig,
         CSSSyntaxConfig,
         CSSAttributesConfig,
@@ -106,13 +115,14 @@ type ValidateComponentInnerHTMLItemStructure<
             : AllowedTags
           : AllowedTags,
         T,
-        GetAllowedTags<HTMLTagConfig, AllowedTags, CurrentTag>
+        GetAllowedTags<HTMLTagConfig, AllowedTags, CurrentTag>,
+        ParentChildrenBag
       >
     : never;
 
 type ValidateComponentInnerHTMLStructure<
   Keywords extends SupportedKeywordsConfig,
-  HTMLInferedAttributesConfig extends Record<string, any>,
+  HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
@@ -122,6 +132,7 @@ type ValidateComponentInnerHTMLStructure<
   AllowedTags extends keyof HTMLTagConfig | "#text",
   T extends BaseComponentInnerHTMLStructure,
   CurrentTag extends keyof HTMLTagConfig,
+  ParentChildrenBag extends Record<string,any>,
 > =
   T extends Record<string, any>
     ? {
@@ -129,7 +140,7 @@ type ValidateComponentInnerHTMLStructure<
           ? T[K] extends string | BaseComponentStructure
             ? ValidateComponentInnerHTMLItemStructure<
                 Keywords,
-                HTMLInferedAttributesConfig,
+                HTMLGlobalAttributesConfig,
                 HTMLTagConfig,
                 CSSSyntaxConfig,
                 CSSAttributesConfig,
@@ -138,12 +149,13 @@ type ValidateComponentInnerHTMLStructure<
                 CSSQueriesConfig,
                 AllowedTags,
                 T[K],
-                CurrentTag
+                CurrentTag,
+                ParentChildrenBag
               >
             : T[K] extends (string | BaseComponentStructure)[]
               ? ValidateComponentInnerHTMLItemStructure<
                   Keywords,
-                  HTMLInferedAttributesConfig,
+                  HTMLGlobalAttributesConfig,
                   HTMLTagConfig,
                   CSSSyntaxConfig,
                   CSSAttributesConfig,
@@ -152,7 +164,8 @@ type ValidateComponentInnerHTMLStructure<
                   CSSQueriesConfig,
                   AllowedTags,
                   T[K][number],
-                  CurrentTag
+                  CurrentTag,
+                  ParentChildrenBag
                 >[]
               : never
           : T[K];
@@ -213,6 +226,21 @@ type InferPropBag<
   [P in keyof Bag]?: DSLInfer<Keywords & CSSSyntaxConfig, Bag[P]>;
 };
 
+// Each value of a gate is wrapped in a nominal entry. Two overlapping pattern
+// keys both match the written value, so the intersection of their entries has
+// `__gateKey: "P1" & "P2"` -> `never`. That is the overlap signal: a lookup
+// whose `__gateKey` is `never` matched more than one pattern key, and unlocks
+// nothing (the caller can report it). A literal key, which always wins over any
+// pattern, yields a single entry whose `__gateKey` is that key.
+type GateEntry<V extends string, Props> = {
+  __gateKey: V;
+  __gateProps: Props;
+};
+
+type GateKeyOf<T> = T extends { __gateKey: infer V } ? V : never;
+
+type GatePropsOf<T> = T extends { __gateProps: infer B } ? B : never;
+
 // `{ display: { flex: {...}, block: {...} }, perspective: { `${number}px`: {...} } }`
 // Value keys written as DSL tokens (`"<length>"`) are resolved through the key
 // remap, so a token becomes a *pattern* key that a concrete literal matches.
@@ -231,8 +259,11 @@ type GateTable<
       > &
         PropertyKey
     ]: CSSAttributesConfig[K][V] extends BaseCSSAttributeComplexValue[string]
-      ? InferPropBag<Keywords, CSSSyntaxConfig, CSSAttributesConfig[K][V][Slot]>
-      : {};
+      ? GateEntry<
+          V,
+          InferPropBag<Keywords, CSSSyntaxConfig, CSSAttributesConfig[K][V][Slot]>
+        >
+      : GateEntry<V, {}>;
   };
 };
 
@@ -257,10 +288,24 @@ type GateTable<
 type GateLookup<Row, Written> = [Written] extends [never]
   ? {}
   : [Written] extends [keyof Row]
-    ? Row[Extract<Written, keyof Row>] extends infer Bag
-      ? { [P in keyof Bag]: Bag[P] }
+    ? Row[Extract<Written, keyof Row>] extends infer Entry
+      ? [GateKeyOf<Entry>] extends [never]
+        ? {}
+        : GatePropsOf<Entry> extends infer Bag
+          ? { [P in keyof Bag]: Bag[P] }
+          : {}
       : {}
     : {};
+
+// True when a written gate value matches more than one pattern key. Literal
+// keys win outright, so only the pattern (key-remapped) half can overlap.
+type GateOverlaps<Row, Written> = [Written] extends [never]
+  ? false
+  : [Written] extends [keyof Row]
+    ? [GateKeyOf<Row[Extract<Written, keyof Row>]>] extends [never]
+      ? true
+      : false
+    : false;
 
 // ---------------------------------------------------------------------------
 // Locked props.
@@ -493,6 +538,289 @@ type CSSNonSelfConfig<
   >;
 };
 
+// ---------------------------------------------------------------------------
+// HTML attribute gates.
+//
+// Identical mechanism to the CSS gates above, instantiated with the HTML
+// vocabulary. HTML DSL strings are validated against `Keywords` alone, so the
+// syntax-config slot is the empty object; everything else is shared, including
+// the pattern-key resolution and the two-key overlap signal in `GateLookup` /
+// `GateOverlaps`.
+// ---------------------------------------------------------------------------
+
+type HTMLGateKeys<C extends BaseHTMLAttributesConfig> = KeysMatching<
+  C,
+  BaseHTMLAttributeComplexValue
+>;
+
+type HTMLFlatKeys<C extends BaseHTMLAttributesConfig> = KeysMatching<C, string>;
+
+type AsRecord<T> = T extends Record<string, any> ? T : {};
+
+// A literal `undefined` value key is how a complex attribute declares itself
+// optional, exactly as `| undefined` does for a flat one. `MakeUndefinedOptional`
+// then adds the `?`.
+type HTMLFlatAttributeBag<
+  Keywords extends SupportedKeywordsConfig,
+  C extends BaseHTMLAttributesConfig,
+> = {
+  [K in HTMLFlatKeys<C> & string]: DSLInfer<Keywords, C[K] & string>;
+};
+
+type HTMLGateKeyBag<
+  Keywords extends SupportedKeywordsConfig,
+  C extends BaseHTMLAttributesConfig,
+  Source,
+> = {
+  [K in HTMLGateKeys<C> & string]: K extends keyof Source
+    ? true extends GateOverlaps<GateTable<Keywords, {}, C, "self">[K], Source[K]>
+      ? | (`Value '${Source[K] &
+          string}' matches more than one pattern key; overlapping keys are not allowed` &
+          Locked)
+        | ("undefined" extends keyof C[K] ? undefined : never)
+      : ResolveComplexValue<Keywords, {}, keyof C[K] & string>
+    : ResolveComplexValue<Keywords, {}, keyof C[K] & string>;
+};
+
+type HTMLSelfUnlocks<
+  Keywords extends SupportedKeywordsConfig,
+  C extends BaseHTMLAttributesConfig,
+  Source,
+> = DependentProps<Keywords, {}, C, "self", AsRecord<Source>>;
+
+type HTMLChildrenUnlocks<
+  Keywords extends SupportedKeywordsConfig,
+  C extends BaseHTMLAttributesConfig,
+  Source,
+> = DependentProps<Keywords, {}, C, "children", AsRecord<Source>>;
+
+// Every attribute a gate can unlock somewhere, that the author wrote but no
+// written gate (on this element or its parent) unlocked. This is the locked
+// half; the unknown half is deliberately left to TypeScript's stock TS2353.
+type HTMLLockedAttributeKeys<
+  C extends BaseHTMLAttributesConfig,
+  OwnWritten,
+  SelfUnlocks,
+  ChildrenUnlocks,
+> = Exclude<
+  Extract<keyof OwnWritten, AllLockableKeys<C>>,
+  | keyof SelfUnlocks
+  | keyof ChildrenUnlocks
+  | HTMLFlatKeys<C>
+  | HTMLGateKeys<C>
+>;
+
+type HTMLLockedDiagnostics<
+  C extends BaseHTMLAttributesConfig,
+  OwnWritten,
+  SelfUnlocks,
+  ChildrenUnlocks,
+> = {
+  [P in HTMLLockedAttributeKeys<
+    C,
+    OwnWritten,
+    SelfUnlocks,
+    ChildrenUnlocks
+  > & string]?: LockedMessage<C, P> & Locked;
+};
+
+type HTMLAttributesBag<
+  Keywords extends SupportedKeywordsConfig,
+  C extends BaseHTMLAttributesConfig,
+  OwnWritten,
+  ParentChildrenBag extends Record<string, any>,
+> = MakeUndefinedOptional<HTMLFlatAttributeBag<Keywords, C>> &
+  MakeUndefinedOptional<HTMLGateKeyBag<Keywords, C, AsRecord<OwnWritten>>> &
+  HTMLSelfUnlocks<Keywords, C, OwnWritten> &
+  ParentChildrenBag &
+  HTMLLockedDiagnostics<
+    C,
+    AsRecord<OwnWritten>,
+    HTMLSelfUnlocks<Keywords, C, OwnWritten>,
+    ParentChildrenBag
+  >;
+
+// Tag attributes shadow same-named global attributes.
+type MergeAttributesConfig<
+  Global extends BaseHTMLAttributesConfig,
+  Tag extends BaseHTMLAttributesConfig,
+> = Omit<Global, keyof Tag> & Tag;
+
+type MergedHTMLAttributesConfig<
+  HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig,
+  HTMLTagConfig extends BaseHTMLTagConfig,
+  Tag extends keyof HTMLTagConfig,
+> = MergeAttributesConfig<
+  HTMLGlobalAttributesConfig,
+  HTMLTagConfig[Tag]["attributes"]
+>;
+
+type ValidateComponentHTMLAttributes<
+  Keywords extends SupportedKeywordsConfig,
+  HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig,
+  HTMLTagConfig extends BaseHTMLTagConfig,
+  Tag extends keyof HTMLTagConfig,
+  OwnWritten,
+  ParentChildrenBag extends Record<string, any>,
+> = HTMLAttributesBag<
+  Keywords,
+  MergedHTMLAttributesConfig<HTMLGlobalAttributesConfig, HTMLTagConfig, Tag>,
+  OwnWritten,
+  ParentChildrenBag
+>;
+
+// ---------------------------------------------------------------------------
+// ComponentIds.
+//
+// Every literal `id` written anywhere in a component, mapped to the value its
+// resolved key declares. With a registry supplied, that is the `self` bag of
+// the id key the value resolved to (literal first, then pattern keys; a value
+// matching two keys contributes nothing). Without a registry it falls back to
+// the attributes the element itself carries. A non-literal (widened `string`,
+// or a component with no ids at all) contributes `never`; duplicate ids merge.
+// ---------------------------------------------------------------------------
+
+type NodeTagOf<T> = T extends { tag: infer G extends string } ? G : never;
+
+type NodeAttributesOf<T> = T extends { attributes: infer A } ? AsRecord<A> : {};
+
+type NodeInnerOf<T> = T extends { innerHTML: infer I } ? I : never;
+
+type MergedConfigForTag<
+  HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig,
+  HTMLTagConfig extends BaseHTMLTagConfig,
+  Tag,
+> = Tag extends keyof HTMLTagConfig
+  ? MergeAttributesConfig<
+      HTMLGlobalAttributesConfig,
+      HTMLTagConfig[Tag]["attributes"]
+    >
+  : HTMLGlobalAttributesConfig;
+
+type IdGateRow<
+  Keywords extends SupportedKeywordsConfig,
+  C extends BaseHTMLAttributesConfig,
+> = C extends { id: infer IdDef }
+  ? IdDef extends BaseHTMLAttributeComplexValue
+    ? GateTable<Keywords, {}, { id: IdDef }, "self">["id"]
+    : never
+  : never;
+
+type IdDeclaredBag<
+  Keywords extends SupportedKeywordsConfig,
+  C extends BaseHTMLAttributesConfig,
+  Id extends string,
+> = IdGateRow<Keywords, C> extends infer Row
+  ? [Row] extends [never]
+    ? never
+    : Id extends keyof Row
+      ? [GateKeyOf<Row[Id]>] extends [never]
+        ? never
+        : GatePropsOf<Row[Id]> extends infer Bag
+          ? { [P in keyof Bag]: Bag[P] }
+          : never
+      : never
+  : never;
+
+type IdEntryForNode<
+  Keywords extends SupportedKeywordsConfig,
+  Global extends BaseHTMLAttributesConfig,
+  TagConfig extends BaseHTMLTagConfig,
+  T,
+  WithRegistry extends boolean,
+> = NodeAttributesOf<T> extends { id: infer Id }
+  ? string extends Id
+    ? never
+    : Id extends string
+      ? {
+          [K in Id]: WithRegistry extends true
+            ? IdDeclaredBag<
+                Keywords,
+                MergedConfigForTag<Global, TagConfig, NodeTagOf<T>>,
+                K
+              >
+            : Omit<NodeAttributesOf<T>, "id">;
+        }
+      : never
+  : never;
+
+type ChildIdEntries<
+  Keywords extends SupportedKeywordsConfig,
+  Global extends BaseHTMLAttributesConfig,
+  TagConfig extends BaseHTMLTagConfig,
+  V,
+  WithRegistry extends boolean,
+> = V extends string
+  ? never
+  : V extends readonly unknown[]
+    ? {
+        [I in keyof V]: ChildIdEntries<
+          Keywords,
+          Global,
+          TagConfig,
+          V[I],
+          WithRegistry
+        >;
+      }[number]
+    : V extends BaseComponentStructure
+      ? ComponentIdEntries<Keywords, Global, TagConfig, V, WithRegistry>
+      : never;
+
+type InnerIdEntries<
+  Keywords extends SupportedKeywordsConfig,
+  Global extends BaseHTMLAttributesConfig,
+  TagConfig extends BaseHTMLTagConfig,
+  Inner,
+  WithRegistry extends boolean,
+> = Inner extends Record<string, any>
+  ? {
+      [K in keyof Inner]: ChildIdEntries<
+        Keywords,
+        Global,
+        TagConfig,
+        Inner[K],
+        WithRegistry
+      >;
+    }[keyof Inner]
+  : never;
+
+type ComponentIdEntries<
+  Keywords extends SupportedKeywordsConfig,
+  Global extends BaseHTMLAttributesConfig,
+  TagConfig extends BaseHTMLTagConfig,
+  T,
+  WithRegistry extends boolean,
+> = [T] extends [never]
+  ? never
+  : T extends BaseComponentStructure
+    ?
+        | IdEntryForNode<Keywords, Global, TagConfig, T, WithRegistry>
+        | InnerIdEntries<
+            Keywords,
+            Global,
+            TagConfig,
+            NodeInnerOf<T>,
+            WithRegistry
+          >
+    : never;
+
+export type ComponentIds<
+  T,
+  Keywords extends SupportedKeywordsConfig = SupportedKeywordsConfig,
+  HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig = never,
+  HTMLTagConfig extends BaseHTMLTagConfig = never,
+> = ComponentIdEntries<
+  Keywords,
+  HTMLGlobalAttributesConfig,
+  HTMLTagConfig,
+  T,
+  [HTMLGlobalAttributesConfig] extends [never]
+    ? [HTMLTagConfig] extends [never]
+      ? false
+      : true
+    : true
+>;
+
 type ValidateComponentCSSStructure<
   Keywords extends SupportedKeywordsConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
@@ -702,7 +1030,7 @@ type ValidateComponentCSSStructure<
 
 export type ValidateComponentStructure<
   Keywords extends SupportedKeywordsConfig,
-  HTMLInferedAttributesConfig extends Record<string, any>,
+  HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
@@ -712,6 +1040,7 @@ export type ValidateComponentStructure<
   AllowedTags extends keyof HTMLTagConfig,
   T extends BaseComponentStructure,
   CurrentAllowedTags extends keyof HTMLTagConfig,
+  ParentChildrenBag extends Record<string,any> = {},
 > = T["tag"] extends CurrentAllowedTags
   ? {
       [K in keyof T]: K extends string
@@ -733,22 +1062,21 @@ export type ValidateComponentStructure<
                 >
               : T["css"]
             : K extends "attributes"
-              ? HTMLInferedAttributesConfig &
-                  (HTMLTagConfig[T["tag"]]["attributes"] extends BaseHTMLAttributesConfig
-                    ? MakeUndefinedOptional<
-                        InferHTMLAttributesConfig<
-                          Keywords,
-                          HTMLTagConfig[T["tag"]]["attributes"]
-                        >
-                      >
-                    : {})
+              ? ValidateComponentHTMLAttributes<
+                  Keywords,
+                  HTMLGlobalAttributesConfig,
+                  HTMLTagConfig,
+                  T["tag"] & keyof HTMLTagConfig,
+                  T["attributes"],
+                  ParentChildrenBag
+                >
               : K extends "innerHTML"
                 ? HTMLTagConfig[T["tag"]]["innerHTML"] extends []
                   ? `No innerHTML for void elements` & { _err: true }
                   : T[K] extends BaseComponentInnerHTMLStructure
                     ? ValidateComponentInnerHTMLStructure<
                         Keywords,
-                        HTMLInferedAttributesConfig,
+                        HTMLGlobalAttributesConfig,
                         HTMLTagConfig,
                         CSSSyntaxConfig,
                         CSSAttributesConfig,
@@ -757,7 +1085,16 @@ export type ValidateComponentStructure<
                         CSSQueriesConfig,
                         AllowedTags,
                         T[K],
-                        T["tag"]
+                        T["tag"],
+                        HTMLChildrenUnlocks<
+                          Keywords,
+                          MergedHTMLAttributesConfig<
+                            HTMLGlobalAttributesConfig,
+                            HTMLTagConfig,
+                            T["tag"]
+                          >,
+                          AsRecord<T["attributes"]>
+                        >
                       >
                     : never
                 : never

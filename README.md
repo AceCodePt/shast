@@ -173,6 +173,55 @@ dumber. If you want a dynamic-but-checked class, give it a type: a `const`
 map, an `as const` array, a helper with a literal-union return type - the
 usual TypeScript moves all work.
 
+## Conditional attributes and ids
+
+Just as `display: flex` unlocks `gap` in CSS, an HTML attribute value can
+unlock further attributes - on the same element (`self`) and on its direct
+children (`children`). In the registry an attribute is either a DSL string
+(unconditional) or a map from each possible value to what that value unlocks:
+
+```ts
+htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
+  id: {
+    undefined: { self: {}, children: {} }, // id is optional
+    "todo-42": { self: { "data-kind": "'literal'" }, children: {} },
+    "`todo-${number}`": { self: { "data-kind": "'pattern'" }, children: {} },
+  },
+}),
+```
+
+With `input` declaring `checked` under `type: checkbox | radio`, writing
+`<input type="range" checked>` fails at both walls with
+`'checked' requires type: checkbox | radio`, while `<input type="checkbox"
+checked>` is accepted. A value key written as DSL - a `<token>` or a backtick
+template such as `` `todo-${number}` `` - is a **pattern key**: resolution is
+literal first, a value matching two keys is an error, and a value matching none
+reports a message about the value. Optionality is declared with an `undefined`
+arm, exactly as `| undefined` does for a flat attribute. Where an unlocked
+`self` attribute's declared type is exactly one literal, `renderComponent`
+fills it in when omitted; writing it is allowed, writing a different value is
+an error at both walls.
+
+This is the third structural binding, alongside `> title` (a named child) and
+`&.active` (a class declared on the element). `ComponentIds<T>` is the
+structural binding for ids - the receivers the behaviour layer dispatches on,
+which do not move when a node is re-nested:
+
+```ts
+type Ids = ComponentIds<
+  typeof component,
+  typeof SUPPORTED_KEYWORDS,
+  typeof HTML_GLOBAL_ATTRIBUTES_CONFIG,
+  typeof HTML_TAGS_CONFIG
+>;
+// { "todo-42": { "data-kind"?: "literal" } }
+//   | { "todo-7": { "data-kind"?: "pattern" } }
+```
+
+It collects every literal `id` written in the component with the values its
+resolved key declares; a widened `string` id contributes nothing, duplicate ids
+merge, and a component with no ids resolves to `never`.
+
 ## What gets validated
 
 Everything is defined in **closed-world config registries** - tags, allowed

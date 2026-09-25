@@ -193,6 +193,30 @@
   - [x] Object reference identity preserved
   - [x] Invalid DSL string throws error
 
+- [x] **Conditional attributes** - an attribute value gates `self` / `children` unlocks, exactly as a CSS gate does
+  - [x] Type Validation - locked unlocks branded naming what unlocks them; unknown attributes stay stock
+  - [x] Type Inference - complex values infer their per-value variants
+  - [x] Runtime Validation - the same accept/reject decisions as the type wall
+  - [x] Test - `@ts-expect-error` paired with `assert.throws` per negative case
+
+- [x] **Pattern keys** - value keys written as DSL (`<token>` or backtick template) match a written value
+  - [x] Type Validation - literal first, then patterns; two matching keys is an error
+  - [x] Type Inference - a matched pattern key resolves to its `self` bag
+  - [x] Runtime Validation - one shared resolver for CSS and HTML; overlap throws
+  - [x] Test - a value matching no key reports the value, never the key
+
+- [x] **Render fill-in** - a single-literal `self` unlock renders when omitted
+  - [x] Type Validation - writing a different value fails
+  - [x] Type Inference - `undefined`-arm optionality through `MaybeAttributes`
+  - [x] Runtime Validation - the literal is filled in if absent
+  - [x] Test - omitted and correctly-written render identically
+
+- [x] **`ComponentIds<T>`** - every literal id written in a component with its resolved key's declared values
+  - [x] Type Validation - a widened `string` id contributes nothing
+  - [x] Type Inference - literal and patterned ids resolve; duplicates merge
+  - [x] Runtime Validation - the component validates under its id gate
+  - [x] Test - `Equal` against the exact written literal ids
+
 ## HTML Tags
 
 - [x] **`htmlTagConfig` builder** - validates tag definitions, cross-references, and attribute DSL

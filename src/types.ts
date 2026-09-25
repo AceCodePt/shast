@@ -113,12 +113,19 @@ export type KeysMatching<Obj extends Record<string, any>, T> = {
 }[keyof Obj];
 
 // A value key of a complex attribute is either a literal (`"flex"`) or a DSL
-// pattern (`"<length>"`). Turn it into the type a user may actually write.
+// pattern (`"<length>"` or a backtick template such as `` "`todo-${number}`" ``).
+// Turn it into the type a user may actually write.
 export type ResolveComplexValue<
   Keywords extends SupportedKeywordsConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
   V extends string,
-> = V extends `<${string}>` ? DSLInfer<Keywords & CSSSyntaxConfig, V> : V;
+> = V extends "undefined"
+  ? undefined
+  : V extends `<${string}>`
+    ? DSLInfer<Keywords & CSSSyntaxConfig, V>
+    : V extends `\`${string}\``
+      ? DSLInfer<Keywords & CSSSyntaxConfig, V>
+      : V;
 
 export function uniqueArray<const T extends readonly string[]>(
   items: HasDuplicate<T> extends true ? `duplicate items in array` : T,
