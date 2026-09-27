@@ -5,6 +5,7 @@ import type {
 import type { BaseCSSPropertiesConfig } from "@/css/properties-config/types.ts";
 import type { BaseCSSPseudoClassConfig } from "@/css/pseudo-class-config/types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { CSSWideKeyword } from "@/css/wide-keyword.ts";
 import type {
   CSSIdentifierCharacter,
   CSSIdentifierDigit,
@@ -218,7 +219,9 @@ type InferPropBag<
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
   Bag extends Record<string, string>,
 > = {
-  [P in keyof Bag]?: DSLInfer<Keywords & CSSSyntaxConfig, Bag[P]>;
+  [P in keyof Bag]?:
+    | DSLInfer<Keywords & CSSSyntaxConfig, Bag[P]>
+    | CSSWideKeyword;
 };
 
 // Each value of a gate is wrapped in a nominal entry. Two overlapping pattern
@@ -526,11 +529,13 @@ type CSSNonSelfConfig<
 > = {
   [
     K in KeysMatching<CSSAttributesConfig, BaseCSSAttributeComplexValue>
-  ]?: ResolveComplexValue<
-    Keywords,
-    CSSSyntaxConfig,
-    keyof CSSAttributesConfig[K] & string
-  >;
+  ]?:
+    | ResolveComplexValue<
+        Keywords,
+        CSSSyntaxConfig,
+        keyof CSSAttributesConfig[K] & string
+      >
+    | CSSWideKeyword;
 };
 
 // ---------------------------------------------------------------------------
@@ -966,10 +971,9 @@ type ValidateComponentCSSStructure<
         // intersection members it removes -- the same reason the
         // cheap-shape-test-first `as` remap was reverted earlier. Keep them
         // separate: each is a trivial mapped type cached once for the program.
-        [K in KeysMatching<CSSAttributesConfig, string>]?: DSLInfer<
-          CSSSyntaxConfig & Keywords,
-          CSSAttributesConfig[K] & string
-        >;
+        [K in KeysMatching<CSSAttributesConfig, string>]?:
+          | DSLInfer<CSSSyntaxConfig & Keywords, CSSAttributesConfig[K] & string>
+          | CSSWideKeyword;
       } & CSSNonSelfConfig<Keywords, CSSSyntaxConfig, CSSAttributesConfig> &
         DependentChildrenProps<
           Keywords,
@@ -1014,10 +1018,12 @@ type ValidateComponentCSSStructure<
         } & {
           [K in keyof CSSPropertiesConfig]?: K extends `--${string}`
             ? CSSPropertiesConfig[K]["syntax"] extends string
-              ? DSLInfer<
-                  Keywords & CSSSyntaxConfig,
-                  CSSPropertiesConfig[K]["syntax"]
-                >
+              ?
+                  | DSLInfer<
+                      Keywords & CSSSyntaxConfig,
+                      CSSPropertiesConfig[K]["syntax"]
+                    >
+                  | CSSWideKeyword
               : never
             : CSSPropertiesConfig[K];
         } & {
