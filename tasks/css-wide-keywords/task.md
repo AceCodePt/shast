@@ -18,11 +18,11 @@ The five CSS-wide keywords (inherit, initial, unset, revert, revert-layer) are v
 
 ## Requirements
 
-- [ ] inherit, initial, unset, revert, revert-layer valid as a value for ANY property (type level + runtime)
-- [ ] Implemented at the value-validation seam: inferred property value type becomes DSLInfer<...> | CSSWideKeyword; runtime accepts the keywords before property-specific matching
-- [ ] Existing property-specific syntax still validates unchanged (keywords don't mask bad values)
-- [ ] Tests cover a representative spread of properties (colors, lengths, custom properties, shorthands)
-- [ ] Type Validation, Type Inference, Runtime Validation, Test
+- [x] inherit, initial, unset, revert, revert-layer valid as a value for ANY property (type level + runtime)
+- [x] Implemented at the value-validation seam: inferred property value type becomes DSLInfer<...> | CSSWideKeyword; runtime accepts the keywords before property-specific matching
+- [x] Existing property-specific syntax still validates unchanged (keywords don't mask bad values)
+- [x] Tests cover a representative spread of properties (colors, lengths, custom properties, shorthands)
+- [x] Type Validation, Type Inference, Runtime Validation, Test
 
 ## Verification
 

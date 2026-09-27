@@ -26,6 +26,7 @@ import type {
 import { renderCSSPropertiesConfig } from "@/engine/render/properties-config.ts";
 import { renderComponent } from "@/engine/render/render-component.ts";
 import { CSS_IDENTIFIER_REGEX as CSS_CLASS_NAME } from "@/css/ident.ts";
+import { isCSSWideKeyword } from "@/css/wide-keyword.ts";
 import {
   htmlSlotDSL,
   isGateDefinition,
@@ -221,11 +222,19 @@ export function validateComponentNode(
       for (const key of Object.keys(block)) {
         if (key.startsWith("> ") || key.startsWith("&.")) continue;
         if (isGateDefinition(cssAttrs[key])) {
+          const written = block[key];
+          if (isCSSWideKeyword(written)) {
+            // A CSS-wide keyword is valid on every property, but it matches no
+            // gate variant, so it unlocks nothing. Recording it still counts as
+            // writing the gate, which suppresses the tag's implicit default.
+            explicitGates[key] = written;
+            continue;
+          }
           explicitGates[key] = resolveGateValue(
             mergedKeywords,
             key,
             cssAttrs[key],
-            block[key],
+            written,
             "CSS",
           );
         }
@@ -398,27 +407,43 @@ export function validateComponentNode(
           const attrDef = cssAttrs[key];
           const propDef = cssProps[key];
 
+          // CSS-wide keywords are valid on every property. They are accepted
+          // before property-specific matching, at the one seam every value
+          // flows through; the property's own syntax is still enforced for
+          // every other value.
+          const isKeyword = isCSSWideKeyword(value);
+
           if (typeof attrDef === "string") {
-            parseValueAgainstDSL(mergedKeywords, attrDef, value as any);
+            if (!isKeyword) {
+              parseValueAgainstDSL(mergedKeywords, attrDef, value as any);
+            }
             continue;
           }
           if (isGateDefinition(attrDef)) {
             continue; // gate already resolved (and validated) in the pre-pass
           }
           if (propDef !== undefined) {
-            if (typeof propDef === "object" && typeof propDef.syntax === "string") {
+            if (
+              !isKeyword &&
+              typeof propDef === "object" &&
+              typeof propDef.syntax === "string"
+            ) {
               parseValueAgainstDSL(mergedKeywords, propDef.syntax, value as any);
             }
             continue;
           }
           const selfDSL = slotDSL(cssAttrs, selfGates, key, "self");
           if (selfDSL !== undefined) {
-            parseValueAgainstDSL(mergedKeywords, selfDSL, value as any);
+            if (!isKeyword) {
+              parseValueAgainstDSL(mergedKeywords, selfDSL, value as any);
+            }
             continue;
           }
           const childrenDSL = slotDSL(cssAttrs, parentGates, key, "children");
           if (childrenDSL !== undefined) {
-            parseValueAgainstDSL(mergedKeywords, childrenDSL, value as any);
+            if (!isKeyword) {
+              parseValueAgainstDSL(mergedKeywords, childrenDSL, value as any);
+            }
             continue;
           }
           const locked = lockedMessageFor(cssAttrs, key);
