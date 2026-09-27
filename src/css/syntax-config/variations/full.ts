@@ -7,14 +7,19 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   "<integer>": "`${bigint}`",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/number
-  "<number>": "`${number}`",
+  "<number>": "`${number}` | <calc>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/percentage
-  "<percentage>": "`${number}%`",
+  "<percentage>": "`${number}%` | <calc>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length
   "<length>":
-    "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'rlh' | 'ex' | 'rex' | 'cap' | 'rcap' | 'ic' | 'ric' | 'dvh' | 'dvw' | 'dvmin' | 'dvmax' | 'svh' | 'svw' | 'svmin' | 'svmax' | 'lvh' | 'lvw' | 'lvmin' | 'lvmax' | 'cqw' | 'cqh' | 'cqi' | 'cqb' | 'cqmin' | 'cqmax' | 'in' | 'pt' | 'pc' | 'cm' | 'mm' | 'Q'}`",
+    "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'rlh' | 'ex' | 'rex' | 'cap' | 'rcap' | 'ic' | 'ric' | 'dvh' | 'dvw' | 'dvmin' | 'dvmax' | 'svh' | 'svw' | 'svmin' | 'svmax' | 'lvh' | 'lvw' | 'lvmin' | 'lvmax' | 'cqw' | 'cqh' | 'cqi' | 'cqb' | 'cqmin' | 'cqmax' | 'in' | 'pt' | 'pc' | 'cm' | 'mm' | 'Q'}` | <calc>",
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/calc
+  // Shallow at the DSL level; `CalcConstraint` in the engine parses the
+  // written value against the real grammar (src/css/calc.ts).
+  "<calc>": "`calc(${string})`",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
   "<length-percentage>": "<length> | <percentage>",

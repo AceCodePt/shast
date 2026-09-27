@@ -7,14 +7,20 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   "<integer>": "`${bigint}`",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/number
-  "<number>": "`${number}`",
+  "<number>": "`${number}` | <calc>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/percentage
-  "<percentage>": "`${number}%`",
+  "<percentage>": "`${number}%` | <calc>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length
   "<length>":
-    "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'dvh' | 'dvw' | 'svh' | 'svw' | 'in' | 'pt' | 'pc' | 'cm' | 'mm'}`",
+    "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'dvh' | 'dvw' | 'svh' | 'svw' | 'in' | 'pt' | 'pc' | 'cm' | 'mm'}` | <calc>",
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/calc
+  // The token resolves to a shallow `calc(${string})` at the DSL level so the
+  // registry surface stays a plain union; the engine's `CalcConstraint` then
+  // parses the written value against the real calc grammar (src/css/calc.ts).
+  "<calc>": "`calc(${string})`",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
   // Cross-reference — cannot be expressed in the DSL without token references
