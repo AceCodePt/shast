@@ -174,7 +174,7 @@ export function validateComponentNode(
           ? (attrs as Record<string, unknown>)["class"]
           : undefined;
       return typeof classValue === "string" && classValue.length > 0
-        ? classValue.split(/\s+/)
+        ? classValue.split(/\s+/).filter((name) => name !== "")
         : [];
     };
 
@@ -262,6 +262,17 @@ export function validateComponentNode(
           if (!CSS_CLASS_NAME.test(className)) {
             throw new Error(
               `CSS Error: Class selector '${key}' has an invalid class name '${className}'`,
+            );
+          }
+          // The class must be one the element declares, mirroring the type
+          // wall's `&.${K}` keys derived from `T["attributes"]["class"]`.
+          // `contextClasses` is the declaring scope's class list: the element
+          // itself, or the `> child` target when this block is nested under a
+          // child selector. Query blocks pass it through unchanged, so this
+          // composes with them exactly as with pseudo-class/element blocks.
+          if (!contextClasses.includes(className)) {
+            throw new Error(
+              `CSS Error: Class selector '${key}' references class '${className}' which is not declared on the element`,
             );
           }
         }
