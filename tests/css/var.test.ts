@@ -92,9 +92,12 @@ describe("var", () => {
       assertType<Valid<"var(--scale)">>();
     });
 
-    test("rejects an unknown property without a fallback", () => {
+    test("rejects an unknown property, unconditionally", () => {
       assertType<Invalid<"var(--unknown)">>();
       assertType<Invalid<"var(--space-big)">>();
+      // A fallback is no longer an escape hatch for an unknown name.
+      assertType<Invalid<"var(--unknown, 2px)">>();
+      assertType<Invalid<"var(--unknown, var(--spacing))">>();
     });
 
     test("rejects a name without the -- prefix", () => {
@@ -102,24 +105,38 @@ describe("var", () => {
       assertType<Invalid<"var(spacing)">>();
     });
 
-    test("accepts fallbacks: literal, nested var and calc", () => {
-      // Literal fallback matching the property's syntax type.
-      assertType<Valid<"var(--spacing, 2px)">>();
-      // Unknown name is rescued by a fallback matching the context.
-      assertType<Valid<"var(--unknown, 2px)">>();
-      // Fallback is another var() (same resolved type).
-      assertType<Valid<"var(--spacing, var(--a))">>();
-      assertType<Valid<"var(--unknown, var(--spacing))">>();
-      // Fallback is a calc().
-      assertType<Valid<"var(--spacing, calc(1px + 2px))">>();
+    test("rejects every fallback form: literal, nested var and calc", () => {
+      // A literal fallback, even one matching the property's syntax type.
+      assertType<Invalid<"var(--spacing, 2px)">>();
+      assertType<Invalid<"var(--brand, #ff0000)">>();
+      // A fallback that is another var().
+      assertType<Invalid<"var(--spacing, var(--a))">>();
+      assertType<Invalid<"var(--unknown, var(--spacing))">>();
+      // A fallback that is a calc().
+      assertType<Invalid<"var(--spacing, calc(1px + 2px))">>();
       // Arbitrary nesting.
-      assertType<Valid<"var(--a, var(--b, var(--c, 4px)))">>();
+      assertType<Invalid<"var(--a, var(--b, var(--c, 4px)))">>();
+      // Empty and excess arguments.
+      assertType<Invalid<"var(--a, )">>();
+      assertType<Invalid<"var(--a, x, y)">>();
+      assertType<Invalid<"var(--spacing, 2px, 3px)">>();
     });
 
-    test("rejects a fallback that does not match the property's syntax", () => {
-      assertType<Invalid<"var(--spacing, red)">>();
-      assertType<Invalid<"var(--brand, 2px)">>();
-      assertType<Invalid<"var(--scale, 2px)">>();
+    test("rejects every fallback form with the same message", () => {
+      // `1px`, ` )` and `x, y` are three arities of the same mistake; the type
+      // wall reports them as one identical error, not three arity-specific ones.
+      assertType<
+        Equal<
+          ValidateVar<"var(--a, 1px)", Props, SupportedKeywords, CommonSyntax>,
+          ValidateVar<"var(--a, )", Props, SupportedKeywords, CommonSyntax>
+        >
+      >();
+      assertType<
+        Equal<
+          ValidateVar<"var(--a, x, y)", Props, SupportedKeywords, CommonSyntax>,
+          ValidateVar<"var(--a, 1px)", Props, SupportedKeywords, CommonSyntax>
+        >
+      >();
     });
 
     test("rejects malformed var() forms", () => {
@@ -244,33 +261,45 @@ describe("var", () => {
       );
     });
 
-    test("accepts fallbacks: literal, nested var and calc", () => {
-      assert.doesNotThrow(() =>
-        createComponent({
-          tag: "box",
-          innerHTML: "x",
-          css: {
-            width: "var(--spacing, 2px)",
-            height: "var(--unknown, var(--spacing))",
-            "margin-top": "var(--spacing, calc(1px + 2px))",
-          },
-        }),
-      );
-    });
-
-    test("rejects a fallback that does not match the property syntax", () => {
+    test("rejects an unknown property regardless of anything else in the value", () => {
       assert.throws(
         () =>
           createComponent({
             tag: "box",
             innerHTML: "x",
             css: {
-              // @ts-expect-error red is not a length
-              width: "var(--spacing, red)",
+              // @ts-expect-error unknown custom property inside calc()
+              width: "calc(var(--nope) * 2)",
             },
           }),
-        /Invalid DSL|does not match/,
+        /unknown custom property '--nope'/,
       );
+    });
+
+    test("rejects every fallback form at runtime", () => {
+      const cases = [
+        "var(--spacing, 2px)",
+        "var(--spacing, )",
+        "var(--spacing, 2px, 3px)",
+        "var(--unknown, var(--spacing))",
+        "var(--spacing, calc(1px + 2px))",
+        "var(--a, var(--b, var(--c, 4px)))",
+      ] as const;
+      for (const value of cases) {
+        assert.throws(
+          () =>
+            createComponent({
+              tag: "box",
+              innerHTML: "x",
+              css: {
+                // @ts-expect-error every fallback form is rejected
+                width: value,
+              },
+            }),
+          /takes no fallback/,
+          `expected '${value}' to be rejected`,
+        );
+      }
     });
 
     test("validates var() inside calc()", () => {
@@ -333,8 +362,8 @@ describe("var", () => {
       const cases = [
         ["var()", /requires a custom property name/],
         ["var( )", /requires a custom property name/],
-        ["var(--spacing, 2px, 3px)", /at most one fallback/],
-        ["var(--spacing, )", /empty var\(\) fallback/],
+        ["var(--spacing, 2px, 3px)", /takes no fallback/],
+        ["var(--spacing, )", /takes no fallback/],
         ["var(--spacing", /unclosed var\(\) call|does not match/],
       ] as const;
       for (const [value, pattern] of cases) {
@@ -356,8 +385,6 @@ describe("var", () => {
 
     test("validateVars is exposed for direct use", () => {
       const ctx = {
-        dslConfig: COMMON_SYNTAX as unknown as Record<string, string>,
-        dsl: "<length>",
         properties: PROPS as unknown as Record<
           string,
           { syntax: string; inherits: boolean; "initial-value": string }
@@ -366,6 +393,10 @@ describe("var", () => {
       };
       assert.doesNotThrow(() => validateVars("var(--spacing)", ctx));
       assert.throws(() => validateVars("var(--nope)", ctx), VarSyntaxError);
+      assert.throws(
+        () => validateVars("var(--spacing, 2px)", ctx),
+        /takes no fallback/,
+      );
     });
   });
 

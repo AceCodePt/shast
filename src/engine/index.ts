@@ -86,11 +86,13 @@ function gridAreasOf(block: Record<string, unknown>): string | undefined {
   return value;
 }
 
-// A CSS value passes the shallow DSL first. When the value is a `calc()`
-// expression the deep calc grammar parser runs on top, exactly as the type-level
-// `CalcConstraint` does. When the value contains any `var()` reference the deep
-// var parser resolves it against the CSS Properties registry, exactly as the
-// type-level `VarConstraint` does. Non-calc, non-var values are untouched.
+// A CSS value passes the shallow DSL first. This is the one place that
+// dispatches the deep grammars, so neither `calc.ts` nor `var.ts` has to know
+// about the other: a calc-shaped value is handed to calc's parser, and any
+// value containing a `var(` call is handed to var's resolver. The two are not
+// exclusive -- a `calc()` may contain `var()` operands, and both walls run, so
+// `calc(var(--x) * 2)` validates the expression *and* resolves `--x` against
+// the registry. Non-calc, non-var values are untouched.
 function parseCSSValueAgainstDSL(
   keywords: SupportedKeywordsConfig,
   dsl: string,
@@ -106,8 +108,6 @@ function parseCSSValueAgainstDSL(
   }
   if (varContext !== undefined && containsVar(value)) {
     validateVars(value, {
-      dslConfig: keywords as unknown as Record<string, string>,
-      dsl,
       properties: varContext.properties,
       defined: varContext.defined,
     });

@@ -61,7 +61,6 @@ export const cssPropertiesConfig = <
       string,
       { syntax: string; inherits: boolean; "initial-value": string }
     >,
-    mergedConfig,
   );
 
   return config as P;

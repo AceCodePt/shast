@@ -1088,8 +1088,8 @@ type CalcConstraint<
 // The syntax config admits var() shallowly (`<var>` resolves to
 // `var(${string})`), which is what lets a written var() clear the shallow DSL
 // wall. This member then resolves each reference against the CSS Properties
-// registry and validates its fallback, exactly as `CalcConstraint` does for
-// calc.
+// registry, exactly as `CalcConstraint` does for calc. There is no fallback:
+// see `src/css/var.ts` for why one can never be read.
 //
 // Like calc, it maps over the *known* CSS value keys and reads the written
 // value back out of `CSSValue`, so it never declares an excess-property key.
@@ -1097,9 +1097,9 @@ type CalcConstraint<
 // The expected type (`Context`) is only known for top-level string attributes
 // and registered custom properties. For every context-dependent slot -- a
 // gate-unlocked shorthand, a gate value itself -- it is `unknown`, which turns
-// the compatibility half off: the reference and its fallback grammar are still
-// checked, but the resolved-type match is left to runtime. That is the spec's
-// "one-level resolution + runtime for the rest".
+// the compatibility half off: the reference grammar is still checked, but the
+// resolved-type match is left to runtime. That is the spec's "one-level
+// resolution + runtime for the rest".
 // ---------------------------------------------------------------------------
 type VarContextType<
   Keywords extends SupportedKeywordsConfig,
