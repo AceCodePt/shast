@@ -84,6 +84,13 @@ export type Frame = {
   origin: BaseComponentStructure;
   declarations: [string, string][];
   children: Frame[];
+  /**
+   * When set, this frame is a query block (`@media ...` / `@container ...`)
+   * rather than a selector. It continues the enclosing selector: its body is
+   * printed inside the at-rule header, so declarations and nested `&` rules
+   * still resolve against the same element scope.
+   */
+  atRule?: string;
 };
 
 export function stableStringify(value: unknown): string {
@@ -244,18 +251,21 @@ function buildFrame(
   matches: Match[],
   origin: BaseComponentStructure,
   targeted: Set<BaseComponentStructure>,
+  atRule?: string,
 ): Frame {
   const frame: Frame = {
     selector:
-      segments.length === 1
+      atRule ??
+      (segments.length === 1
         ? segmentText(segments[0]!, true)
-        : localSelector(segments[segments.length - 1]!),
+        : localSelector(segments[segments.length - 1]!)),
     segments,
     matches,
     origin,
     declarations: [],
     children: [],
   };
+  if (atRule !== undefined) frame.atRule = atRule;
 
   for (const [key, value] of Object.entries(block)) {
     if (key.startsWith("> ")) {
@@ -290,6 +300,21 @@ function buildFrame(
           matches,
           origin,
           targeted,
+        ),
+      );
+    } else if (key.startsWith("@")) {
+      // A query block (`@media ...` / `@container ...`). The query does not
+      // change the target element, so it continues the current scope with the
+      // same segment list and matches; it only wraps its body in the at-rule.
+      if (!isComponent(value)) continue;
+      frame.children.push(
+        buildFrame(
+          value as Record<string, unknown>,
+          segments,
+          matches,
+          origin,
+          targeted,
+          key,
         ),
       );
     } else {
@@ -336,8 +361,16 @@ function prune(frame: Frame): Frame | null {
   return { ...frame, children };
 }
 
-/** Pre-order walk, which is the textual order of the printed stylesheet. */
+/**
+ * Pre-order walk, which is the textual order of the printed stylesheet.
+ *
+ * Query blocks (`atRule`) are skipped along with their whole subtree: their
+ * rules only apply under the query, and `EmittedRule` has no way to carry that
+ * condition, so folding them into the unconditional rule list would describe a
+ * page that does not exist. The printer still emits them.
+ */
 function flatten(frame: Frame, out: Frame[]): void {
+  if (frame.atRule !== undefined) return;
   out.push(frame);
   for (const child of frame.children) flatten(child, out);
 }
@@ -418,7 +451,8 @@ export function printBlock(frame: Frame, indent = 0): string {
     ...frame.declarations.map(([key, value]) => `${innerPad}${key}: ${value};`),
     ...frame.children.map((child) => printBlock(child, indent + 1)),
   ].join("\n");
-  return `${pad}${frame.selector} {\n${body}\n${pad}}`;
+  const header = frame.atRule ?? frame.selector;
+  return `${pad}${header} {\n${body}\n${pad}}`;
 }
 
 export function printStylesheet(blocks: readonly Frame[]): string {
