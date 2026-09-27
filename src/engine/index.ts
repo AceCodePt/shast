@@ -33,6 +33,7 @@ import { renderComponent } from "@/engine/render/render-component.ts";
 import { CSS_IDENTIFIER_REGEX as CSS_CLASS_NAME } from "@/css/ident.ts";
 import { isCSSWideKeyword } from "@/css/wide-keyword.ts";
 import { isCalcString, parseCalc } from "@/css/calc.ts";
+import { containsVar, validateVars } from "@/css/var.ts";
 import {
   htmlSlotDSL,
   isGateDefinition,
@@ -87,15 +88,29 @@ function gridAreasOf(block: Record<string, unknown>): string | undefined {
 
 // A CSS value passes the shallow DSL first. When the value is a `calc()`
 // expression the deep calc grammar parser runs on top, exactly as the type-level
-// `CalcConstraint` does. Non-calc values are untouched.
+// `CalcConstraint` does. When the value contains any `var()` reference the deep
+// var parser resolves it against the CSS Properties registry, exactly as the
+// type-level `VarConstraint` does. Non-calc, non-var values are untouched.
 function parseCSSValueAgainstDSL(
   keywords: SupportedKeywordsConfig,
   dsl: string,
   value: unknown,
+  varContext?: {
+    properties: Record<string, any>;
+    defined: Record<string, string>;
+  },
 ): void {
   parseValueAgainstDSL(keywords, dsl, value as never);
   if (isCalcString(value)) {
     parseCalc(value);
+  }
+  if (varContext !== undefined && containsVar(value)) {
+    validateVars(value, {
+      dslConfig: keywords as unknown as Record<string, string>,
+      dsl,
+      properties: varContext.properties,
+      defined: varContext.defined,
+    });
   }
 }
 
@@ -256,9 +271,23 @@ export function validateComponentNode(
       nodeTag: string | undefined,
       parentGates: Record<string, string>,
       registeredQueries: Set<string>,
+      inheritedVars: Record<string, string>,
       inPseudoElement?: boolean,
       parentGridAreas?: string,
     ): void => {
+      // Custom properties defined in this scope, layered over the ones
+      // inherited from enclosing scopes. CSS custom properties inherit, so a
+      // `var()` may reference either. Component-written values shadow the
+      // registry; cycle detection walks this map together with it.
+      const definedVars: Record<string, string> = { ...inheritedVars };
+      for (const key of Object.keys(block)) {
+        if (key.startsWith("--") && cssProps[key] !== undefined) {
+          const definition = block[key];
+          if (typeof definition === "string") definedVars[key] = definition;
+        }
+      }
+      const varContext = { properties: cssProps, defined: definedVars };
+
       // Gates the author wrote in this scope, in any order, plus the tag's
       // default `display` when they did not write one (implicit display).
       const explicitGates: Record<string, string> = {};
@@ -359,6 +388,7 @@ export function validateComponentNode(
             nodeTag,
             parentGates,
             registeredQueries,
+            definedVars,
             nextInPseudoElement,
             parentGridAreas,
           );
@@ -466,6 +496,7 @@ export function validateComponentNode(
             // the parent gates through unchanged.
             key.startsWith("> ") ? explicitGates : parentGates,
             registeredQueries,
+            definedVars,
             nextInPseudoElement,
             nextGridAreas,
           );
@@ -481,7 +512,7 @@ export function validateComponentNode(
 
           if (typeof attrDef === "string") {
             if (!isKeyword) {
-              parseCSSValueAgainstDSL(mergedKeywords, attrDef, value);
+              parseCSSValueAgainstDSL(mergedKeywords, attrDef, value, varContext);
               // `animation-name` / `animation` must reference a registered
               // keyframe. The base DSL above still validates the value's shape;
               // this is the closed-world reference check on top.
@@ -504,21 +535,36 @@ export function validateComponentNode(
               typeof propDef === "object" &&
               typeof propDef.syntax === "string"
             ) {
-              parseCSSValueAgainstDSL(mergedKeywords, propDef.syntax, value);
+              parseCSSValueAgainstDSL(
+                mergedKeywords,
+                propDef.syntax,
+                value,
+                varContext,
+              );
             }
             continue;
           }
           const selfDSL = slotDSL(cssAttrs, selfGates, key, "self");
           if (selfDSL !== undefined) {
             if (!isKeyword) {
-              parseCSSValueAgainstDSL(mergedKeywords, selfDSL, value);
+              parseCSSValueAgainstDSL(
+                mergedKeywords,
+                selfDSL,
+                value,
+                varContext,
+              );
             }
             continue;
           }
           const childrenDSL = slotDSL(cssAttrs, parentGates, key, "children");
           if (childrenDSL !== undefined) {
             if (!isKeyword) {
-              parseCSSValueAgainstDSL(mergedKeywords, childrenDSL, value);
+              parseCSSValueAgainstDSL(
+                mergedKeywords,
+                childrenDSL,
+                value,
+                varContext,
+              );
               // `grid-area` names an area the parent's `grid-template-areas`
               // must define. The DSL above only checks the value's shape
               // (`<custom-ident>` is any string); this is the closed-world
@@ -554,6 +600,7 @@ export function validateComponentNode(
       tag,
       {},
       new Set(cssQueriesConfig),
+      {},
     );
   }
 

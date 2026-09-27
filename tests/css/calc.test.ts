@@ -52,7 +52,11 @@ const { createComponent, renderComponent } = engine({
   cssSyntaxConfig: COMMON_SYNTAX,
   cssAttributesConfig: COMMON_ATTRIBUTES,
   cssPseudoClassConfig: [":hover"],
-  cssPropertiesConfig: cssPropertiesConfig(SUPPORTED_KEYWORDS, COMMON_SYNTAX, {}),
+  // `calc(var(--spacing) * 2)` is exercised below; now that var() references
+  // are resolved by the `css-var` slice, the referenced property must exist.
+  cssPropertiesConfig: cssPropertiesConfig(SUPPORTED_KEYWORDS, COMMON_SYNTAX, {
+    "--spacing": { syntax: "<length>", inherits: false, "initial-value": "1rem" },
+  }),
   cssQueriesConfig: [],
 });
 

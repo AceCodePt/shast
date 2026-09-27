@@ -4,46 +4,51 @@ import { cssSyntaxConfig } from "@/css/syntax-config/index.ts";
 export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // ── Numeric / dimension types ──────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/integer
-  "<integer>": "`${bigint}`",
+  "<integer>": "`${bigint}` | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/number
-  "<number>": "`${number}` | <calc>",
+  "<number>": "`${number}` | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/percentage
-  "<percentage>": "`${number}%` | <calc>",
+  "<percentage>": "`${number}%` | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length
   "<length>":
-    "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'rlh' | 'ex' | 'rex' | 'cap' | 'rcap' | 'ic' | 'ric' | 'dvh' | 'dvw' | 'dvmin' | 'dvmax' | 'svh' | 'svw' | 'svmin' | 'svmax' | 'lvh' | 'lvw' | 'lvmin' | 'lvmax' | 'cqw' | 'cqh' | 'cqi' | 'cqb' | 'cqmin' | 'cqmax' | 'in' | 'pt' | 'pc' | 'cm' | 'mm' | 'Q'}` | <calc>",
+    "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'rlh' | 'ex' | 'rex' | 'cap' | 'rcap' | 'ic' | 'ric' | 'dvh' | 'dvw' | 'dvmin' | 'dvmax' | 'svh' | 'svw' | 'svmin' | 'svmax' | 'lvh' | 'lvw' | 'lvmin' | 'lvmax' | 'cqw' | 'cqh' | 'cqi' | 'cqb' | 'cqmin' | 'cqmax' | 'in' | 'pt' | 'pc' | 'cm' | 'mm' | 'Q'}` | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/calc
   // Shallow at the DSL level; `CalcConstraint` in the engine parses the
   // written value against the real grammar (src/css/calc.ts).
   "<calc>": "`calc(${string})`",
 
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/var
+  // Shallow at the DSL level; `VarConstraint` in the engine resolves the
+  // reference against the CSS Properties registry (src/css/var.ts).
+  "<var>": "`var(${string})`",
+
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
   "<length-percentage>": "<length> | <percentage>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/angle
-  "<angle>": "`${number}${'deg' | 'rad' | 'turn' | 'grad'}`",
+  "<angle>": "`${number}${'deg' | 'rad' | 'turn' | 'grad'}` | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
   "<angle-percentage>": "<angle> | <percentage>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time
-  "<time>": "`${number}${'s' | 'ms'}`",
+  "<time>": "`${number}${'s' | 'ms'}` | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
-  "<frequency>": "`${number}${'Hz' | 'kHz'}`",
+  "<frequency>": "`${number}${'Hz' | 'kHz'}` | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
-  "<resolution>": "`${number}${'dpi' | 'dpcm' | 'dppx' | 'x'}`",
+  "<resolution>": "`${number}${'dpi' | 'dpcm' | 'dppx' | 'x'}` | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/ratio
-  "<ratio>": "`${number} / ${number}`",
+  "<ratio>": "`${number} / ${number}` | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/flex_value
-  "<flex>": "`${number}${'fr'}`",
+  "<flex>": "`${number}${'fr'}` | <var>",
 
   // ── Textual types ──────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/string
@@ -61,20 +66,20 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // ── Color types ────────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
   "<color>":
-    "`#${string}` | `rgb(${number} ${number} ${number})` | `rgb(${number} ${number} ${number} / ${number})` | `rgba(${number}, ${number}, ${number}, ${number})` | `hsl(${number} ${number}% ${number}%)` | `hsl(${number} ${number}% ${number}% / ${number})` | `hsla(${number}, ${number}%, ${number}%, ${number})` | `hwb(${number} ${number}% ${number}%)` | `hwb(${number} ${number}% ${number}% / ${number})` | `lab(${number} ${number} ${number})` | `lab(${number} ${number} ${number} / ${number})` | `lch(${number} ${number} ${number})` | `lch(${number} ${number} ${number} / ${number})` | `oklch(${number} ${number} ${number})` | `oklch(${number} ${number} ${number} / ${number})` | `oklab(${number} ${number} ${number})` | `oklab(${number} ${number} ${number} / ${number})` | `color(display-p3 ${number} ${number} ${number})` | `color(srgb ${number} ${number} ${number})` | `color(a98-rgb ${number} ${number} ${number})` | `color(prophoto-rgb ${number} ${number} ${number})` | `color(rec2020 ${number} ${number} ${number})` | 'transparent' | 'currentColor' | 'inherit' | 'initial' | 'unset'",
+    "`#${string}` | `rgb(${number} ${number} ${number})` | `rgb(${number} ${number} ${number} / ${number})` | `rgba(${number}, ${number}, ${number}, ${number})` | `hsl(${number} ${number}% ${number}%)` | `hsl(${number} ${number}% ${number}% / ${number})` | `hsla(${number}, ${number}%, ${number}%, ${number})` | `hwb(${number} ${number}% ${number}%)` | `hwb(${number} ${number}% ${number}% / ${number})` | `lab(${number} ${number} ${number})` | `lab(${number} ${number} ${number} / ${number})` | `lch(${number} ${number} ${number})` | `lch(${number} ${number} ${number} / ${number})` | `oklch(${number} ${number} ${number})` | `oklch(${number} ${number} ${number} / ${number})` | `oklab(${number} ${number} ${number})` | `oklab(${number} ${number} ${number} / ${number})` | `color(display-p3 ${number} ${number} ${number})` | `color(srgb ${number} ${number} ${number})` | `color(a98-rgb ${number} ${number} ${number})` | `color(prophoto-rgb ${number} ${number} ${number})` | `color(rec2020 ${number} ${number} ${number})` | 'transparent' | 'currentColor' | 'inherit' | 'initial' | 'unset' | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/alpha-value
-  "<alpha-value>": "`${number}` | `${number}%`",
+  "<alpha-value>": "`${number}` | `${number}%` | <var>",
 
   // ── Image types ────────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/image
   "<image>":
-    "`url(${string})` | `linear-gradient(${string})` | `radial-gradient(${string})` | `conic-gradient(${string})` | `repeating-linear-gradient(${string})` | `repeating-radial-gradient(${string})` | `repeating-conic-gradient(${string})`",
+    "`url(${string})` | `linear-gradient(${string})` | `radial-gradient(${string})` | `conic-gradient(${string})` | `repeating-linear-gradient(${string})` | `repeating-radial-gradient(${string})` | `repeating-conic-gradient(${string})` | <var>",
 
   // ── Position / geometry types ──────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/position_value
   "<position>":
-    "'center' | 'top' | 'bottom' | 'left' | 'right' | 'top left' | 'top center' | 'top right' | 'center left' | 'center center' | 'center right' | 'bottom left' | 'bottom center' | 'bottom right'",
+    "'center' | 'top' | 'bottom' | 'left' | 'right' | 'top left' | 'top center' | 'top right' | 'center left' | 'center center' | 'center right' | 'bottom left' | 'bottom center' | 'bottom right' | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape
   "<basic-shape>": "string",
@@ -91,7 +96,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // ── Border types ───────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/line-style
   "<line-style>":
-    "'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset'",
+    "'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/line-width
   "<line-width>": "<length> | 'thin' | 'medium' | 'thick'",

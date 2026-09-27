@@ -8,6 +8,7 @@ import type {
   BaseCSSPropertiesConfig,
   ValidateCSSPropertiesConfig,
 } from "./types.ts";
+import { assertNoVarCycles } from "@/css/var.ts";
 
 export const cssPropertiesConfig = <
   const K extends SupportedKeywordsConfig,
@@ -38,6 +39,16 @@ export const cssPropertiesConfig = <
       parseValueAgainstDSL(mergedConfig, entry.syntax, entry["initial-value"]);
     }
   }
+
+  // A `var()` in an initial-value can chain into another property; a cycle
+  // would never terminate, so reject it where the registry is declared.
+  assertNoVarCycles(
+    entries as Record<
+      string,
+      { syntax: string; inherits: boolean; "initial-value": string }
+    >,
+    mergedConfig,
+  );
 
   return config as P;
 };
