@@ -5,6 +5,11 @@ import type {
 import type { BaseCSSPropertiesConfig } from "@/css/properties-config/types.ts";
 import type { BaseCSSPseudoClassConfig } from "@/css/pseudo-class-config/types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { BaseKeyframesConfig } from "@/css/keyframes-config/types.ts";
+import type {
+  AnimationShorthandValue,
+  KeyframeNames,
+} from "@/engine/animation.ts";
 import type { CSSWideKeyword } from "@/css/wide-keyword.ts";
 import type {
   CSSIdentifierCharacter,
@@ -91,6 +96,7 @@ type ValidateComponentInnerHTMLItemStructure<
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   CSSQueriesConfig extends readonly string[],
+  CSSKeyframesConfig extends BaseKeyframesConfig,
   AllowedTags extends keyof HTMLTagConfig | "#text",
   T extends BaseComponentStructure | string,
   CurrentTag extends keyof HTMLTagConfig,
@@ -108,6 +114,7 @@ type ValidateComponentInnerHTMLItemStructure<
         CSSPseudoClassConfig,
         CSSPropertiesConfig,
         CSSQueriesConfig,
+        CSSKeyframesConfig,
         HTMLTagConfig[CurrentTag]["innerHTML"] extends any[]
           ? // This is the check for when
             "#text" extends HTMLTagConfig[CurrentTag]["innerHTML"][number]
@@ -128,6 +135,7 @@ type ValidateComponentInnerHTMLStructure<
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   CSSQueriesConfig extends readonly string[],
+  CSSKeyframesConfig extends BaseKeyframesConfig,
   AllowedTags extends keyof HTMLTagConfig | "#text",
   T extends BaseComponentInnerHTMLStructure,
   CurrentTag extends keyof HTMLTagConfig,
@@ -145,6 +153,7 @@ type ValidateComponentInnerHTMLStructure<
                 CSSPseudoClassConfig,
                 CSSPropertiesConfig,
                 CSSQueriesConfig,
+                CSSKeyframesConfig,
                 AllowedTags,
                 T[K],
                 CurrentTag
@@ -159,6 +168,7 @@ type ValidateComponentInnerHTMLStructure<
                   CSSPseudoClassConfig,
                   CSSPropertiesConfig,
                   CSSQueriesConfig,
+                  CSSKeyframesConfig,
                   AllowedTags,
                   T[K][number],
                   CurrentTag
@@ -903,6 +913,41 @@ export type ComponentIds<
     : true
 >;
 
+// The registered keyframes constrain the two longhands that name one. Names are
+// global, so this depends only on the registry, never on the node's context.
+//
+// `animation-name` narrows to the literal names (`none` and the CSS-wide
+// keywords stay legal). The shorthand cannot be expressed as a union of valid
+// strings -- "contains a registered name" is not a type TypeScript can build --
+// so it validates the author's own value, exactly as the *Config builders do:
+// a valid value passes through, an invalid one becomes a diagnostic literal the
+// author cannot produce. Both are gated on the property existing in the
+// registry, so a registry without animation support gains nothing.
+type AnimationKeyframeConstraints<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  CSSKeyframesConfig extends BaseKeyframesConfig,
+  CSSValue extends Record<string, any>,
+> = [KeyframeNames<CSSKeyframesConfig>] extends [never]
+  ? {}
+  : ("animation-name" extends keyof CSSAttributesConfig
+      ? {
+          "animation-name"?:
+            | KeyframeNames<CSSKeyframesConfig>
+            | "none"
+            | CSSWideKeyword;
+        }
+      : {}) &
+      ("animation" extends keyof CSSAttributesConfig
+        ? "animation" extends keyof CSSValue
+          ? {
+              animation?: AnimationShorthandValue<
+                CSSValue["animation"],
+                KeyframeNames<CSSKeyframesConfig>
+              >;
+            }
+          : {}
+        : {});
+
 type ValidateComponentCSSStructure<
   Keywords extends SupportedKeywordsConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
@@ -911,6 +956,7 @@ type ValidateComponentCSSStructure<
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   CSSQueriesConfig extends readonly string[],
+  CSSKeyframesConfig extends BaseKeyframesConfig,
   T extends BaseComponentStructure,
   CSSValue extends Record<string, any> | undefined,
   IsInPseudoElement extends boolean,
@@ -936,6 +982,7 @@ type ValidateComponentCSSStructure<
                   CSSPseudoClassConfig,
                   CSSPropertiesConfig,
                   CSSQueriesConfig,
+                  CSSKeyframesConfig,
                   UnionToIntersection<
                     Extract<T["innerHTML"][K][number], BaseComponentStructure>
                   >,
@@ -952,6 +999,7 @@ type ValidateComponentCSSStructure<
                     CSSPseudoClassConfig,
                     CSSPropertiesConfig,
                     CSSQueriesConfig,
+                    CSSKeyframesConfig,
                     T["innerHTML"][K],
                     CSSValue[`> ${K & string}`],
                     IsInPseudoElement,
@@ -974,7 +1022,12 @@ type ValidateComponentCSSStructure<
         [K in KeysMatching<CSSAttributesConfig, string>]?:
           | DSLInfer<CSSSyntaxConfig & Keywords, CSSAttributesConfig[K] & string>
           | CSSWideKeyword;
-      } & CSSNonSelfConfig<Keywords, CSSSyntaxConfig, CSSAttributesConfig> &
+      } & AnimationKeyframeConstraints<
+        CSSAttributesConfig,
+        CSSKeyframesConfig,
+        CSSValue
+      > &
+        CSSNonSelfConfig<Keywords, CSSSyntaxConfig, CSSAttributesConfig> &
         DependentChildrenProps<
           Keywords,
           CSSSyntaxConfig,
@@ -1043,6 +1096,7 @@ type ValidateComponentCSSStructure<
             CSSPseudoClassConfig,
             CSSPropertiesConfig,
             CSSQueriesConfig,
+            CSSKeyframesConfig,
             T,
             CSSValue[K],
             IsInPseudoElement,
@@ -1060,6 +1114,7 @@ type ValidateComponentCSSStructure<
                 CSSPseudoClassConfig,
                 CSSPropertiesConfig,
                 CSSQueriesConfig,
+                CSSKeyframesConfig,
                 T,
                 CSSValue[K],
                 IsInPseudoElement,
@@ -1082,6 +1137,7 @@ type ValidateComponentCSSStructure<
                 CSSPseudoClassConfig,
                 CSSPropertiesConfig,
                 CSSQueriesConfig,
+                CSSKeyframesConfig,
                 T,
                 CSSValue[K],
                 true,
@@ -1100,6 +1156,7 @@ type ValidateComponentCSSStructure<
                       CSSPseudoClassConfig,
                       CSSPropertiesConfig,
                       CSSQueriesConfig,
+                      CSSKeyframesConfig,
                       T,
                       CSSValue[`&.${K}`],
                       false,
@@ -1120,6 +1177,7 @@ export type ValidateComponentStructure<
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   CSSQueriesConfig extends readonly string[],
+  CSSKeyframesConfig extends BaseKeyframesConfig,
   AllowedTags extends keyof HTMLTagConfig,
   T extends BaseComponentStructure,
   CurrentAllowedTags extends keyof HTMLTagConfig,
@@ -1138,6 +1196,7 @@ export type ValidateComponentStructure<
                   CSSPseudoClassConfig,
                   CSSPropertiesConfig,
                   CSSQueriesConfig,
+                  CSSKeyframesConfig,
                   T,
                   T["css"],
                   false
@@ -1164,6 +1223,7 @@ export type ValidateComponentStructure<
                         CSSPseudoClassConfig,
                         CSSPropertiesConfig,
                         CSSQueriesConfig,
+                        CSSKeyframesConfig,
                         AllowedTags,
                         T[K],
                         T["tag"]

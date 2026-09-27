@@ -11,6 +11,11 @@ import type {
   BaseCSSSyntaxConfig,
   ValidateCSSSyntaxConfig,
 } from "@/css/syntax-config/types.ts";
+import type { BaseKeyframesConfig } from "@/css/keyframes-config/types.ts";
+import {
+  animationReferenceError,
+  referencesRegisteredKeyframe,
+} from "@/engine/animation.ts";
 import {
   parseValueAgainstDSL,
   type SupportedKeywordsConfig,
@@ -64,6 +69,7 @@ export function validateComponentNode(
   cssAttributesConfig: Record<string, any>,
   cssPropertiesConfig: Record<string, any>,
   cssQueriesConfig: readonly string[],
+  cssKeyframesConfig: BaseKeyframesConfig,
   inheritedAllowed: AllowedTagSet,
   mergedKeywords: Record<string, string>,
 ): void {
@@ -427,6 +433,16 @@ export function validateComponentNode(
           if (typeof attrDef === "string") {
             if (!isKeyword) {
               parseValueAgainstDSL(mergedKeywords, attrDef, value as any);
+              // `animation-name` / `animation` must reference a registered
+              // keyframe. The base DSL above still validates the value's shape;
+              // this is the closed-world reference check on top.
+              if (
+                !referencesRegisteredKeyframe(key, value, cssKeyframesConfig)
+              ) {
+                throw new Error(
+                  animationReferenceError(key, value, cssKeyframesConfig),
+                );
+              }
             }
             continue;
           }
@@ -560,6 +576,7 @@ export function validateComponentNode(
       cssAttributesConfig,
       cssPropertiesConfig,
       cssQueriesConfig,
+      cssKeyframesConfig,
       forwardAllowed,
       mergedKeywords,
     );
@@ -579,6 +596,7 @@ export default function engine<
   const CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   const CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   const CSSQueriesConfig extends readonly string[],
+  const CSSKeyframesConfig extends BaseKeyframesConfig = {},
 >(
   config: {
     supportedKeywords: SupportedKeywords;
@@ -607,6 +625,10 @@ export default function engine<
       CSSPropertiesConfig
     >;
     cssQueriesConfig: CSSQueriesConfig;
+    // Registered @keyframes. Optional so a registry that does not animate
+    // gains nothing; when present, `animation-name` / `animation` are
+    // constrained to the registered names at both walls.
+    cssKeyframesConfig?: CSSKeyframesConfig;
   },
   options?: { skipValidation?: boolean },
 ) {
@@ -620,6 +642,7 @@ export default function engine<
       CSSPseudoClassConfig,
       CSSPropertiesConfig,
       CSSQueriesConfig,
+      CSSKeyframesConfig,
       keyof HTMLTagConfig | "#text",
       T,
       keyof HTMLTagConfig | "#text"
@@ -639,6 +662,7 @@ export default function engine<
         config.cssAttributesConfig,
         config.cssPropertiesConfig,
         config.cssQueriesConfig,
+        config.cssKeyframesConfig ?? {},
         null,
         mergedKeywords,
       );
@@ -658,6 +682,7 @@ export default function engine<
         config.cssSyntaxConfig,
         config.supportedKeywords,
       ),
+      config.cssKeyframesConfig ?? {},
     );
   };
 
