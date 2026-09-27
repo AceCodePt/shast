@@ -3,6 +3,7 @@ import assert from "node:assert";
 import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
 import { cssPropertiesConfig } from "@/css/properties-config/index.ts";
 import type { ValidateCSSPropertiesConfig } from "@/css/properties-config/types.ts";
+import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
 import { assertType, type Equal } from "../type-utils.ts";
 
 const SYNTAX = {
@@ -11,6 +12,7 @@ const SYNTAX = {
   "<number>": "`${number}`",
   "<integer>": "`${bigint}`",
   "<percentage>": "`${number}%`",
+  "<length-percentage>": "<length> | <percentage>",
 } as const;
 
 describe("cssPropertiesConfig", () => {
@@ -175,15 +177,22 @@ describe("cssPropertiesConfig", () => {
     test("partially invalid syntax union throws at runtime", () => {
       assert.throws(
         () =>
-          cssPropertiesConfig(SUPPORTED_KEYWORDS, SYNTAX, {
-            "--a": {
-              // @ts-expect-error
-              syntax: "<length> | xyz",
-              inherits: false,
-              // @ts-expect-error
-              "initial-value": "asdf",
+          // `allowUnions: true` lets the union through the no-union gate so
+          // this still exercises the underlying DSL validation.
+          cssPropertiesConfig(
+            SUPPORTED_KEYWORDS,
+            SYNTAX,
+            {
+              "--a": {
+                // @ts-expect-error
+                syntax: "<length> | xyz",
+                inherits: false,
+                // @ts-expect-error
+                "initial-value": "asdf",
+              },
             },
-          }),
+            { allowUnions: true },
+          ),
         /Invalid DSL string/,
       );
     });
@@ -227,6 +236,136 @@ describe("cssPropertiesConfig", () => {
           }),
         /does not match/,
       );
+    });
+  });
+
+  describe("Union syntax restriction", () => {
+    test("rejects a spaced union by default at both walls", () => {
+      assert.throws(
+        () =>
+          cssPropertiesConfig(SUPPORTED_KEYWORDS, SYNTAX, {
+            "--size": {
+              // @ts-expect-error - union syntax is forbidden by default
+              syntax: "<length> | <number>",
+              inherits: false,
+              "initial-value": "1px",
+            },
+          }),
+        /Property "--size".*allowUnions/s,
+      );
+    });
+
+    test("rejects an unspaced union by default at both walls", () => {
+      assert.throws(
+        () =>
+          cssPropertiesConfig(SUPPORTED_KEYWORDS, SYNTAX, {
+            "--size": {
+              // @ts-expect-error - union syntax is forbidden by default
+              syntax: "<length>|<number>",
+              inherits: false,
+              "initial-value": "1px",
+            },
+          }),
+        /Property "--size".*allowUnions/s,
+      );
+    });
+
+    test("rejects a union when allowUnions is explicitly false", () => {
+      assert.throws(
+        () =>
+          cssPropertiesConfig(
+            SUPPORTED_KEYWORDS,
+            SYNTAX,
+            {
+              "--size": {
+                // @ts-expect-error - union syntax is forbidden by default
+                syntax: "<length> | <number>",
+                inherits: false,
+                "initial-value": "1px",
+              },
+            },
+            { allowUnions: false },
+          ),
+        /allowUnions/,
+      );
+    });
+
+    test("accepts a union when allowUnions is true at both walls", () => {
+      const config = cssPropertiesConfig(
+        SUPPORTED_KEYWORDS,
+        SYNTAX,
+        {
+          "--size": {
+            syntax: "<length> | <number>",
+            inherits: false,
+            "initial-value": "1px",
+          },
+        },
+        { allowUnions: true },
+      );
+      assert.deepStrictEqual(config, {
+        "--size": {
+          syntax: "<length> | <number>",
+          inherits: false,
+          "initial-value": "1px",
+        },
+      });
+    });
+
+    test("accepts an unspaced union when allowUnions is true", () => {
+      const config = cssPropertiesConfig(
+        SUPPORTED_KEYWORDS,
+        SYNTAX,
+        {
+          "--size": {
+            syntax: "<length>|<number>",
+            inherits: false,
+            "initial-value": "1px",
+          },
+        },
+        { allowUnions: true },
+      );
+      assert.deepStrictEqual(config, {
+        "--size": {
+          syntax: "<length>|<number>",
+          inherits: false,
+          "initial-value": "1px",
+        },
+      });
+    });
+
+    test("accepts a named percentage-family type with the flag off", () => {
+      const config = cssPropertiesConfig(SUPPORTED_KEYWORDS, SYNTAX, {
+        "--size": {
+          syntax: "<length-percentage>",
+          inherits: true,
+          "initial-value": "1px",
+        },
+      });
+      assert.deepStrictEqual(config, {
+        "--size": {
+          syntax: "<length-percentage>",
+          inherits: true,
+          "initial-value": "1px",
+        },
+      });
+    });
+
+    test("accepts <length-percentage> from the shipped common syntax config", () => {
+      const config = cssPropertiesConfig(SUPPORTED_KEYWORDS, COMMON_SYNTAX, {
+        "--size": {
+          syntax: "<length-percentage>",
+          inherits: true,
+          "initial-value": "1px",
+        },
+      });
+      assert.deepStrictEqual(config, {
+        "--size": {
+          syntax: "<length-percentage>",
+          inherits: true,
+          "initial-value": "1px",
+        },
+      });
     });
   });
 

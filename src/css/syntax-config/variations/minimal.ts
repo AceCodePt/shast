@@ -14,6 +14,9 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length
   "<length>": "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh'}` | <calc> | <var>",
 
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
+  "<length-percentage>": "<length> | <percentage>",
+
   // https://developer.mozilla.org/en-US/docs/Web/CSS/calc
   // Shallow at the DSL level; `CalcConstraint` in the engine parses the
   // written value against the real grammar (src/css/calc.ts).
@@ -44,6 +47,9 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time
   "<time>": "`${number}${'s' | 'ms'}` | <var>",
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
+  "<time-percentage>": "<time> | <percentage>",
 
   "<easing-function>":
     "'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | 'linear' | `cubic-bezier(${number}, ${number}, ${number}, ${number})` | `steps(${number})` | `steps(${number}, ${'start' | 'end' | 'jump-start' | 'jump-end' | 'jump-none' | 'jump-both'})`",

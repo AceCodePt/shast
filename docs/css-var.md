@@ -66,6 +66,79 @@ The deep grammar is applied on top by:
   the custom properties defined in scope (and inherited through nested blocks)
   so cycles are detected.
 
+## Registered properties reject unions in `syntax`
+
+A registered property's `syntax` may **not contain a `|`** by default. This is
+shast's policy, not tsyntax's: tsyntax still accepts unions in every other
+syntax slot, and nothing in `DSLValidate` changed. The rule exists because a
+union operand cannot be classified — `var(--x)` where `--x` is
+`<length> | <number>` is neither definitely dimensional nor definitely
+unitless, which defeats any rule that needs to know (see
+`css-calc-multiplication-units`). A union across unit families
+(`<length> | <angle>`) is additionally almost always an authoring mistake: no
+value is both a distance and a rotation.
+
+Because a registered `syntax` admits **no string interpolation** — no quoted
+literals, no backtick templates — a `|` can only ever be a union separator. The
+check is therefore a presence test for the character, not a parse: the type
+wall is ``Syntax extends `${string}|${string}` `` → a branded
+`PropertySyntaxUnionError`, and the runtime wall is
+`syntax.includes("|")` → a throw that names the property and points at the
+flag. There is no splitting, no depth tracking, and nothing to drift out of
+step with tsyntax.
+
+```ts
+cssPropertiesConfig(SUPPORTED_KEYWORDS, SYNTAX, {
+  "--size": { syntax: "<length>", inherits: false, "initial-value": "1px" },
+});
+```
+
+The default is the strict wall; `allowUnions: true` is the escape hatch and
+must be passed as the fourth argument:
+
+```ts
+cssPropertiesConfig(
+  SUPPORTED_KEYWORDS,
+  SYNTAX,
+  {
+    "--lh": {
+      syntax: "<number> | <length-percentage>",
+      inherits: true,
+      "initial-value": "1.5",
+    },
+  },
+  { allowUnions: true },
+);
+```
+
+The `-percentage` family is **not** a union: `<length-percentage>`,
+`<angle-percentage>`, `<time-percentage>`, and `<frequency-percentage>` are
+single named CSS data types, documented by MDN in their own right and used by
+the CSSWG's own `@property` examples. They contain no pipe, so they pass the
+check as written. All four are defined in the `full` syntax config, and
+`common` ships all four as well; `minimal` ships `<length-percentage>` and
+`<time-percentage>` alongside the base types it already has. (One open
+question: whether every browser's `CSS.registerProperty` accepts
+`"<length-percentage>"` — MDN, the CSSWG examples, and
+`postcss-register-property` all treat it as valid, but it has not been
+spot-checked in a live console from this repo. shast accepts it; the browser is
+the browser.)
+
+### Stricter than the spec, deliberately
+
+This is the first place shast knowingly rejects CSS a browser accepts. The case
+given up is a genuine one: a line-height token declared
+`@property --lh { syntax: '<number> | <length-percentage>' }`. The escape
+hatch is `allowUnions: true`, or two registered properties. The trade is a rare
+valid pattern for a **total** (not best-effort) unit rule everywhere else. It
+is documented here rather than hidden, and the default can be flipped per
+registry without touching tsyntax or any other syntax slot.
+
+The presence test is near zero cost: measured with
+`tsc --noEmit --extendedDiagnostics` over the whole repo, it adds ~33K
+instantiations on a ~2.82M baseline (+1.2%) and leaves the file count
+unchanged. There is no per-character recursion, because nothing is parsed.
+
 ## Typecheck benchmark
 
 Measured with `tsc --noEmit --extendedDiagnostics` (TypeScript 7.0.2) over the

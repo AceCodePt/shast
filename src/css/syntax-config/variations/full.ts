@@ -38,8 +38,14 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time
   "<time>": "`${number}${'s' | 'ms'}` | <var>",
 
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
+  "<time-percentage>": "<time> | <percentage>",
+
   // https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
   "<frequency>": "`${number}${'Hz' | 'kHz'}` | <var>",
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
+  "<frequency-percentage>": "<frequency> | <percentage>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
   "<resolution>": "`${number}${'dpi' | 'dpcm' | 'dppx' | 'x'}` | <var>",

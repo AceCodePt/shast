@@ -728,10 +728,15 @@ export default function engine<
       CSSAttributesConfig
     >;
     cssPseudoClassConfig: CSSPseudoClassConfig;
+    // The registry builder (`cssPropertiesConfig`) is where the no-union
+    // policy is enforced, and it is the only supported way to build one. The
+    // engine trusts that already-validated registry, so it permits unions here
+    // rather than re-deciding against the flag it cannot see.
     cssPropertiesConfig: ValidateCSSPropertiesConfig<
       SupportedKeywords,
       CSSSyntaxConfig,
-      CSSPropertiesConfig
+      CSSPropertiesConfig,
+      true
     >;
     cssQueriesConfig: CSSQueriesConfig;
     // Registered @keyframes. Optional so a registry that does not animate

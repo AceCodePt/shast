@@ -38,8 +38,20 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // https://developer.mozilla.org/en-US/docs/Web/CSS/angle
   "<angle>": "`${number}${'deg' | 'rad' | 'turn' | 'grad'}` | <var>",
 
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
+  "<angle-percentage>": "<angle> | <percentage>",
+
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time
   "<time>": "`${number}${'s' | 'ms'}` | <var>",
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
+  "<time-percentage>": "<time> | <percentage>",
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
+  "<frequency>": "`${number}${'Hz' | 'kHz'}` | <var>",
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
+  "<frequency-percentage>": "<frequency> | <percentage>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/ratio
   "<ratio>": "`${number} / ${number}` | <var>",

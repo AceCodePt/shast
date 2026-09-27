@@ -2,6 +2,9 @@ import test, { describe } from "node:test";
 import assert from "node:assert";
 import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
 import { cssSyntaxConfig } from "@/css/syntax-config/index.ts";
+import MINIMAL_SYNTAX from "@/css/syntax-config/variations/minimal.ts";
+import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
+import FULL_SYNTAX from "@/css/syntax-config/variations/full.ts";
 import type {
   InferCSSSyntax,
   InferCSSSyntaxConfig,
@@ -302,6 +305,36 @@ describe("cssSyntaxConfig", () => {
         "<length-percentage>": "<length> | <percentage>",
       });
       assert.ok(config);
+    });
+  });
+
+  describe("Percentage-family types", () => {
+    test("common defines the named percentage-family types", () => {
+      for (const name of [
+        "<length-percentage>",
+        "<angle-percentage>",
+        "<time-percentage>",
+        "<frequency-percentage>",
+      ]) {
+        assert.ok(name in COMMON_SYNTAX, `${name} should be defined`);
+      }
+    });
+
+    test("full defines the named percentage-family types", () => {
+      for (const name of [
+        "<length-percentage>",
+        "<angle-percentage>",
+        "<time-percentage>",
+        "<frequency-percentage>",
+      ]) {
+        assert.ok(name in FULL_SYNTAX, `${name} should be defined`);
+      }
+    });
+
+    test("minimal defines the percentage-family types whose bases it ships", () => {
+      for (const name of ["<length-percentage>", "<time-percentage>"]) {
+        assert.ok(name in MINIMAL_SYNTAX, `${name} should be defined`);
+      }
     });
   });
 
