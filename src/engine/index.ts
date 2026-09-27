@@ -32,7 +32,7 @@ import { renderCSSPropertiesConfig } from "@/engine/render/properties-config.ts"
 import { renderComponent } from "@/engine/render/render-component.ts";
 import { CSS_IDENTIFIER_REGEX as CSS_CLASS_NAME } from "@/css/ident.ts";
 import { isCSSWideKeyword } from "@/css/wide-keyword.ts";
-import { isCalcString, parseCalc } from "@/css/calc.ts";
+import { isCalcString, parseCalc, slotDimensionsOf } from "@/css/calc.ts";
 import { containsVar, validateVars } from "@/css/var.ts";
 import {
   htmlSlotDSL,
@@ -94,20 +94,34 @@ function gridAreasOf(block: Record<string, unknown>): string | undefined {
 // untouched. Kept separate from the shallow DSL check so a gate value, whose
 // shallow check already ran during gate resolution, can still reach the deep
 // walls.
+//
+// `dsl` is the syntax the value matched: when it is a named numeric token,
+// calc's slot check confirms the expression's result dimension is one the
+// property accepts (`calc(2Hz * 2)` on `<length-percentage>` fails). An
+// unrecognised DSL leaves the check off.
 function deepValidateCSSValue(
   value: unknown,
   varContext?: {
     properties: Record<string, any>;
     defined: Record<string, string>;
   },
+  dsl?: string,
 ): void {
   if (isCalcString(value)) {
-    parseCalc(
-      value,
-      varContext === undefined
-        ? undefined
-        : { properties: varContext.properties },
-    );
+    const expected = dsl === undefined ? undefined : slotDimensionsOf(dsl);
+    if (varContext === undefined) {
+      parseCalc(
+        value,
+        expected === undefined ? undefined : { properties: {}, expected },
+      );
+    } else {
+      parseCalc(
+        value,
+        expected === undefined
+          ? { properties: varContext.properties }
+          : { properties: varContext.properties, expected },
+      );
+    }
   }
   if (varContext !== undefined && containsVar(value)) {
     validateVars(value, {
@@ -128,7 +142,7 @@ function parseCSSValueAgainstDSL(
   },
 ): void {
   parseValueAgainstDSL(keywords, dsl, value as never);
-  deepValidateCSSValue(value, varContext);
+  deepValidateCSSValue(value, varContext, dsl);
 }
 
 export function validateComponentNode(
@@ -332,8 +346,9 @@ export function validateComponentNode(
           // Gate resolution only ran the shallow pattern match; a calc- or
           // var-shaped gate value still needs the deep walls. Without this,
           // `opacity: "calc(2px * 3px)"` would pass the runtime while the type
-          // wall rejected it.
-          deepValidateCSSValue(written, varContext);
+          // wall rejected it. The matched key is the slot DSL (`<alpha-value>`
+          // for opacity), so calc's dimension check applies too.
+          deepValidateCSSValue(written, varContext, matched);
         }
       }
       const defaultDisplay =

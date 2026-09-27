@@ -17,7 +17,7 @@ import type {
   ContainsIllegalCharacter,
 } from "@/css/ident.ts";
 import type { DSLInfer, SupportedKeywordsConfig } from "tsyntax";
-import type { IsCalcString, ValidateCalc } from "@/css/calc.ts";
+import type { CalcSlotAtoms, IsCalcString, ValidateCalc } from "@/css/calc.ts";
 import type { ContainsVar, ValidateVar } from "@/css/var.ts";
 import type {
   BaseHTMLAttributesConfig,
@@ -1065,6 +1065,63 @@ type CalcValueKeys<
   | AllLockableKeys<CSSAttributesConfig>
   | (keyof CSSPropertiesConfig & string);
 
+// Every DSL a gate can unlock key `P` with, as a union. A key unlocked by
+// several gates contributes each gate's DSL; the union is classified by
+// `CalcSlotAtoms`, which turns an unrecognised member into `unknown` (check
+// off). For the shipped configs a key's dimension is the same under every gate
+// (`width` is always `<length-percentage>`), so this is exact there.
+type GateSlotDSLUnion<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  P,
+> = {
+  [G in GateKeys<CSSAttributesConfig>]: {
+    [V in keyof CSSAttributesConfig[G] & string]: P extends keyof SlotOf<
+      CSSAttributesConfig,
+      G,
+      V,
+      "self"
+    >
+      ? SlotOf<CSSAttributesConfig, G, V, "self">[P]
+      : P extends keyof SlotOf<CSSAttributesConfig, G, V, "children">
+        ? SlotOf<CSSAttributesConfig, G, V, "children">[P]
+        : never;
+  }[keyof CSSAttributesConfig[G] & string];
+}[GateKeys<CSSAttributesConfig>];
+
+// The token-shaped value keys of a gate (`<alpha-value>` for `opacity`). A
+// gate value is a calc() only when it was matched by one of these; a literal
+// value key (`none`, `block`) can never be one.
+type GateValueTokenDSLs<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  K extends keyof CSSAttributesConfig,
+> = {
+  [V in keyof CSSAttributesConfig[K] & string]: V extends `<${string}>`
+    ? V
+    : never;
+}[keyof CSSAttributesConfig[K] & string];
+
+// The dimension(s) a value written for key `K` must have. Registered custom
+// properties and top-level string attributes read their syntax directly; a
+// gate value reads its token-shaped value keys; a gate-unlocked key reads the
+// union of its gates' DSLs. `unknown` turns the check off.
+type CalcSlotAtomsForKey<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  CSSPropertiesConfig extends BaseCSSPropertiesConfig,
+  K extends string,
+> = K extends `--${string}`
+  ? K extends keyof CSSPropertiesConfig
+    ? CSSPropertiesConfig[K] extends { syntax: infer S extends string }
+      ? CalcSlotAtoms<S>
+      : "unknown"
+    : "unknown"
+  : K extends KeysMatching<CSSAttributesConfig, string>
+    ? CalcSlotAtoms<CSSAttributesConfig[K] & string>
+    : K extends GateKeys<CSSAttributesConfig>
+      ? CalcSlotAtoms<GateValueTokenDSLs<CSSAttributesConfig, K> & string>
+      : K extends AllLockableKeys<CSSAttributesConfig>
+        ? CalcSlotAtoms<GateSlotDSLUnion<CSSAttributesConfig, K> & string>
+        : "unknown";
+
 type CalcConstraint<
   Keywords extends SupportedKeywordsConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
@@ -1082,7 +1139,14 @@ type CalcConstraint<
             CSSValue[K] & string,
             CSSPropertiesConfig,
             Keywords,
-            CSSSyntaxConfig
+            CSSSyntaxConfig,
+            K extends string
+              ? CalcSlotAtomsForKey<
+                  CSSAttributesConfig,
+                  CSSPropertiesConfig,
+                  K
+                >
+              : "unknown"
           >
         : unknown
       : unknown

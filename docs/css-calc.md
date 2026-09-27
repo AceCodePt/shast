@@ -15,29 +15,39 @@ op              := `+` | `-` | `*` | `/`
 ```
 
 - `+` and `-` must be surrounded by whitespace (`calc(100%-20px)` is invalid).
-- `/` requires a unitless `<number>` on its right (`calc(100% / 2px)` is
-  invalid; dividing by a dimension is not a thing). Parsing continues after the
-  right operand, so `calc(10px / 2 + 10px)` is legal.
-- For every top-level `*`, at least one operand in the multiplicative **run**
-  must be unitless (`calc(2px * 3px)`, `calc(100% * 50%)`, `calc(2rem * 3em)`
-  are invalid: the product of two units is a squared unit no property accepts).
-  Multiplication is commutative, so either side may be the unitless one
-  (`calc(2 * 3px)` and `calc(3px * 2)` are both legal).
-- Runs, not pairs. Consecutive `*` form one run, delimited by `+`, `-` and `/`;
-  at most one operand in a run may carry a unit. So `calc(2px * 3 * 4px)` is
-  rejected even though every adjacent pair passes, while `calc(2px * 3 + 4px)`
-  is accepted because `+` ends the run.
-- Mixed units are legal for `+` and `-` (`calc(100% - 20px)`,
-  `calc(50vw + 2rem)`, `calc(2s + 500ms)`); unit compatibility is the cascade's
-  problem, not this parser's.
-- `var()` operands are classified through their registered syntax: `<number>`
-  and `<integer>` are unitless, every other registered syntax carries a unit.
-  `calc(var(--len) * 3)` and `calc(var(--num) * var(--len))` pass;
-  `calc(var(--len-a) * var(--len-b))` (both `<length>`) fails. An unregistered
-  name is left to var's own wall, which rejects it.
+- `+` and `-` require both sides to have the same dimension, or one side to be
+  a percentage (which resolves against the other and acts as the wildcard).
+  `calc(100% - 20px)`, `calc(50vw + 2rem)`, `calc(2s + 500ms)`,
+  `calc(50% + 45deg)` and `calc(2s + 3s)` stand; `calc(2s + 3px)`,
+  `calc(45deg + 3px)`, `calc(2Hz + 3s)` and `calc(1 + 2px)` do not.
+- `/` allows a unitless `<number>` on its right (the result keeps the left
+  operand's dimension) or a right operand of the **same dimension** (the units
+  cancel and the result is a number). So `calc(10px / 2)`, `calc(10px / 2px)`,
+  `calc(1s / 100ms)` and `calc(45deg / 15deg)` are legal; `calc(100% / 2px)`
+  and `calc(10px / 2s)` are not.
+- For every `*`, at most one operand in the multiplicative **run** may carry a
+  unit (`calc(2px * 3px)`, `calc(100% * 50%)`, `calc(2rem * 3em)` are invalid:
+  the product of two units is a squared unit no property accepts). Multiplication
+  is commutative, so either side may be the unitless one (`calc(2 * 3px)` and
+  `calc(3px * 2)` are both legal). The run is left-associative, so the result of
+  a `/` feeds the next `*`: `calc(10px / 2px * 3px)` is a length (the quotient is
+  a number) while `calc(10px / 2 * 3px)` is a squared unit and is rejected.
+- `var()` operands are classified through their registered syntax. `varUnitKind`
+  decides whether an operand carries a unit (the multiplication rule);
+  `varDimensions` decides which dimension (+/- , `/`, and the slot check). `<number>`
+  and `<integer>` are unitless; `<alpha-value>` is `number | percentage`; the
+  named dimension and percentage tokens are placed exactly. `calc(var(--len) * 3)`
+  and `calc(var(--num) * var(--len))` pass; `calc(var(--len-a) * var(--len-b))`
+  (both `<length>`) fails. An unregistered name is left to var's own wall, which
+  rejects it.
+- The result must match the slot: the dimension(s) the property's syntax accepts
+  are checked, so `calc(2Hz * 2)` on `width` (`<length-percentage>`) fails and
+  `calc(45deg * 2)` on `rotate` (`<angle>`) passes. The check is off when the
+  slot is not a single named numeric token (an inline union such as
+  `line-height: <number> | <length-percentage>`) or the result is unknown.
 - Nesting is just call nesting: `calc(calc(100% - 20px) * 2)`. A nested
   `calc()` result is not recomputed by this flat parser, so it is treated as an
-  unknown unit and passes the run rule.
+  unknown dimension and passes every rule and the slot check.
 
 ### Which syntaxes admit `calc()`
 
@@ -80,17 +90,19 @@ registry-as-source-of-truth ruling applied consistently.
 
 `src/css/calc.ts` holds both walls so they cannot drift:
 
-- **Type wall** (`ValidateCalc<S, Props, Keywords, Syntax>`): a recursive
-  template-literal parser. A depth counter (a tuple, `[...Depth, unknown]` is
-  one deeper) finds the matching close parenthesis and splits the sequence at
-  its top-level operators. A second pass over the flat tuple enforces the `*`
-  run rule, reading `var()` units from `Props`. The entry point returns the
-  written value on success or a branded `CalcError` the author cannot produce
-  on failure.
+- **Type wall** (`ValidateCalc<S, Props, Keywords, Syntax, Expected>`): a
+  recursive template-literal parser. A depth counter (a tuple, `[...Depth,
+  unknown]` is one deeper) finds the matching close parenthesis and splits the
+  sequence at its top-level operators. Two further passes run over the flat
+  tuple: operand/operator validation, then the dimension algebra (`+`/`-`, `/`
+  and `*`) reading `var()` units from `Props`, with the slot check against
+  `Expected` last. The entry point returns the written value on success or a
+  branded `CalcError` the author cannot produce on failure.
 - **Runtime wall** (`parseCalc(value, ctx?)`): a small tokenizer/parser with the
-  same depth tracking, plus the same run rule. `ctx` supplies the registry so a
-  `var()` operand classifies with a single lookup. No regex soup; balanced
-  parens are enforced by the scanner.
+  same depth tracking, plus the same algebra. `ctx.properties` supplies the
+  registry so a `var()` operand classifies with a lookup, and `ctx.expected`
+  supplies the dimensions the slot accepts. No regex soup; balanced parens are
+  enforced by the scanner.
 
 The syntax config defines `<calc>` **shallowly** as `` `calc(${string})` ``.
 That keeps every inferred property type a plain union and keeps the registry
@@ -101,18 +113,25 @@ deep grammar is applied on top by:
   value keys (top-level string attributes, every gate-unlockable key, registered
   custom properties) that reads the written value back out of the component and
   narrows calc-shaped values to `ValidateCalc`, passing the registry so `var()`
-  operands classify. Mapping over the *written* keys instead would declare every
-  typo, disabling the registry's key rejection.
+  operands classify and the key's slot dimensions so the result is checked. The
+  slot dimensions come from `CalcSlotAtomsForKey`: a custom property reads its
+  `syntax`, a top-level attribute reads its DSL, a gate value reads its
+  token-shaped value keys (`<alpha-value>` for `opacity`), and a gate-unlocked
+  key reads the union of the DSLs its gates declare. Mapping over the *written*
+  keys instead would declare every typo, disabling the registry's key rejection.
 - `parseCSSValueAgainstDSL` in `src/engine/index.ts` — runs `parseCalc(value,
-  { properties })` after the shallow DSL check whenever the written value is
-  calc-shaped. Gate values (`opacity`, `display`, ...) resolve through a
-  shallow pattern match first; the engine then runs the deep half on the
-  written value too, so a gate cannot bypass the calc or var walls while the
-  type wall applies them.
+  { properties, expected })` after the shallow DSL check whenever the written
+  value is calc-shaped, where `expected` is `slotDimensionsOf(dsl)`. Gate values
+  (`opacity`, `display`, ...) resolve through a shallow pattern match first; the
+  engine then runs the deep half on the written value too, using the matched
+  pattern (`<alpha-value>`) as the slot, so a gate cannot bypass the calc or var
+  walls while the type wall applies them.
 
-`var()` resolution lives in `src/css/var.ts` (`VarUnitKind` at the type level,
-`varUnitKind` at runtime). calc imports var, never the reverse: var's own
-dependency on calc was removed when fallbacks were removed
+`var()` resolution lives in `src/css/var.ts` (`VarUnitKind` / `VarDimensions` at
+the type level, `varUnitKind` / `varDimensions` at runtime). The unit-bearing
+classifier answers the multiplication rule; the dimension classifier answers the
+`+`/`-` and `/` rules and the slot check. calc imports var, never the reverse:
+var's own dependency on calc was removed when fallbacks were removed
 (`docs/css-var.md`), so the edge is one-directional and acyclic.
 
 `<calc>` is wired into `<number>`, `<percentage>`, `<length>`, `<angle>`,
@@ -144,13 +163,13 @@ expressions (a few hundred characters) compile; a pathological expression in the
 kilobyte range raises `TS2589` rather than silently passing, which is the safe
 direction for a wall to fail.
 
-### Multiplication rule (this slice)
+### Multiplication rule
 
 The multiplicative-run rule (together with the `/`-continuation fix and the
 added angle/time/frequency/alpha coverage) was measured over `src` only (284
 files — the benchmark config named in the task brief) with `tsc
 --singleThreaded --noEmit --extendedDiagnostics`, "before" restored via `git
-stash`. Instantiations are deterministic.
+worktree` at the parent commit. Instantiations are deterministic.
 
 | Metric         | Before    | After     | Delta  |
 | -------------- | --------- | --------- | ------ |
@@ -162,8 +181,29 @@ Literal operands cost nothing new: they classify on the string, reusing
 `IsPlainNumber` / `IsNumberDimensionOrPercentage`. The only added work is
 reading `var()` operands from the registry, and only when they appear in a
 multiplicative run; that resolution is a single keyed lookup
-(`VarUnitKind` / `varUnitKind`), never a walk of the property's value. Well
-under the "few thousand" fold threshold.
+(`VarUnitKind` / `varUnitKind`), never a walk of the property's value.
+
+### Dimension algebra and slot check (this slice)
+
+Same `src`-only config, same method, "before" = the parent commit above (which
+already carries the multiplication rule).
+
+| Metric         | Before    | After     | Delta  |
+| -------------- | --------- | --------- | ------ |
+| Instantiations | 535,401   | 543,908   | +8,507 |
+| Types          | 65,115    | 66,769    | +1,654 |
+| Files          | 284       | 284       | 0      |
+| Check time     | 0.532 s   | 0.553 s   | +4 %   |
+| Total time     | 0.844 s   | 0.804 s   | noise  |
+| Memory used    | 99,933 K  | 102,680 K | +2.7 % |
+
+The algebra itself (`+`/`-` same-dimension, `/` same-dimension, `*` carried
+through a division result) costs about +3,000 instantiation, the `CalcSlotAtoms`
+slot check the rest. The slot map is defined over the registry, so it is a
+bounded, one-per-(attributes, properties) cost, not per node; only a written
+calc value reaches `ValidateCalc` with a concrete slot. It is a single-digit
+percentage over the deep parser, well inside the "roughly 2×" threshold the
+fallback note sets.
 
 ## Fallback (not taken)
 

@@ -12,6 +12,7 @@ import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
 import {
   parseCalc,
   isCalcString,
+  type CalcDimension,
   type ValidateCalc,
 } from "@/css/calc.ts";
 import { assertType, type Equal } from "../type-utils.ts";
@@ -38,6 +39,24 @@ type InvalidP<S extends string> = Equal<
     Props,
     SupportedKeywords,
     typeof COMMON_SYNTAX
+  > extends string
+    ? true
+    : false,
+  false
+>;
+
+// The wall with the slot's accepted dimensions supplied.
+type ValidSlot<S extends string, E extends CalcDimension> = Equal<
+  ValidateCalc<S, Props, SupportedKeywords, typeof COMMON_SYNTAX, E>,
+  S
+>;
+type InvalidSlot<S extends string, E extends CalcDimension> = Equal<
+  ValidateCalc<
+    S,
+    Props,
+    SupportedKeywords,
+    typeof COMMON_SYNTAX,
+    E
   > extends string
     ? true
     : false,
@@ -194,8 +213,10 @@ describe("calc", () => {
       // right operand, so `+` was misread as an operand.
       assertType<Valid<"calc(10px / 2 + 10px)">>();
       assertType<Valid<"calc(10px / 2 - 10px)">>();
-      assertType<Valid<"calc(10px / 2 * 3px)">>();
       assertType<Valid<"calc(10px + 10px / 2)">>();
+      // `10px / 2` is a length, so `* 3px` is a squared unit: the division
+      // result feeds the multiplication run.
+      assertType<Invalid<"calc(10px / 2 * 3px)">>();
     });
 
     test("accepts time, angle and frequency units", () => {
@@ -207,6 +228,44 @@ describe("calc", () => {
       // Two unit-bearing operands in one run still fail.
       assertType<Invalid<"calc(150ms * 2s)">>();
       assertType<Invalid<"calc(45deg * 2rad)">>();
+    });
+
+    test("rejects mixed-dimension addition", () => {
+      assertType<Valid<"calc(2s + 500ms)">>();
+      assertType<Valid<"calc(45deg + 1turn)">>();
+      assertType<Valid<"calc(2Hz + 3kHz)">>();
+      assertType<Valid<"calc(2rem + 3px)">>();
+      assertType<Invalid<"calc(2s + 3px)">>();
+      assertType<Invalid<"calc(45deg + 3px)">>();
+      assertType<Invalid<"calc(2Hz + 3s)">>();
+      assertType<Invalid<"calc(1 + 2px)">>();
+      // A percentage resolves against the other side, so it is the wildcard.
+      assertType<Valid<"calc(100% - 40px)">>();
+      assertType<Valid<"calc(50% + 45deg)">>();
+    });
+
+    test("accepts same-dimension division, which cancels to a number", () => {
+      assertType<Valid<"calc(10px / 2px)">>();
+      assertType<Valid<"calc(1s / 100ms)">>();
+      assertType<Valid<"calc(45deg / 15deg)">>();
+      assertType<Valid<"calc(10px / 2)">>();
+      assertType<Invalid<"calc(100% / 2px)">>();
+      assertType<Invalid<"calc(10px / 2s)">>();
+      // The quotient is a number, so it feeds the next factor as unitless.
+      assertType<Valid<"calc(10px / 2px * 3px)">>();
+      assertType<Invalid<"calc(10px / 2 * 3px)">>();
+    });
+
+    test("rejects a result dimension the slot does not accept", () => {
+      assertType<ValidSlot<"calc(100% - 40px)", "length" | "percentage">>();
+      assertType<ValidSlot<"calc(2 * 3px)", "length">>();
+      assertType<ValidSlot<"calc(45deg * 2)", "angle">>();
+      assertType<ValidSlot<"calc(0.5 * 0.5)", "number" | "percentage">>();
+      assertType<InvalidSlot<"calc(2Hz * 2)", "length" | "percentage">>();
+      assertType<InvalidSlot<"calc(45deg * 2)", "length" | "percentage">>();
+      assertType<InvalidSlot<"calc(2s / 500ms)", "angle">>();
+      // `unknown` (nested calc, unplaced var syntax) turns the check off.
+      assertType<ValidSlot<"calc(calc(1px) * 2)", "length">>();
     });
 
     test("rejects malformed calc", () => {
@@ -253,6 +312,38 @@ describe("calc", () => {
           css: {
             // @ts-expect-error unclosed parenthesis
             width: "calc(100% - 40px",
+          },
+        }),
+      );
+    });
+
+    test("createComponent applies the slot dimension", () => {
+      createComponent({
+        tag: "box",
+        innerHTML: "x",
+        css: {
+          width: "calc(100% - 40px)",
+          rotate: "calc(45deg * 2)",
+          "animation-duration": "calc(150ms * 2)",
+        },
+      });
+      assert.throws(() =>
+        createComponent({
+          tag: "box",
+          innerHTML: "x",
+          css: {
+            // @ts-expect-error a frequency result on a length slot
+            width: "calc(2Hz * 2)",
+          },
+        }),
+      );
+      assert.throws(() =>
+        createComponent({
+          tag: "box",
+          innerHTML: "x",
+          css: {
+            // @ts-expect-error mixed-dimension addition
+            width: "calc(2s + 3px)",
           },
         }),
       );
@@ -316,16 +407,29 @@ describe("calc", () => {
       assert.throws(() => parseCalc("calc()"), /empty calc/);
       assert.throws(() => parseCalc("calc( )"), /empty calc/);
       assert.throws(() => parseCalc("calc(100% -)"), /space|trailing operator|no right operand/);
+      assert.throws(() => parseCalc("calc(100% /)"), /trailing operator/);
+      assert.throws(() => parseCalc("calc(100% *)"), /trailing operator/);
       assert.throws(() => parseCalc("calc(100% - 40px"), /not a calc/);
       assert.throws(() => parseCalc("calc(100% - 40px))"), /unexpected '\)'/);
       assert.throws(() => parseCalc("calc(* 2px)"), /no left operand/);
       assert.throws(() => parseCalc("calc(100% + 2px"), /not a calc|unbalanced/);
       assert.throws(() => parseCalc("calc(100% ^ 2px)"), /invalid operand/);
       assert.throws(() => parseCalc("calc(100% / 2px)"), /must be a number/);
-      assert.throws(() => parseCalc("calc(100% / abc)"), /must be a number/);
+      assert.throws(
+        () => parseCalc("calc(100% / abc)"),
+        /invalid operand|must be a number/,
+      );
       assert.throws(() => parseCalc("calc(nope)"), /invalid operand/);
       assert.throws(() => parseCalc("calc(100%+2px)"), /space/);
       assert.throws(() => parseCalc("calc(100%-2px)"), /space/);
+    });
+
+    test("accepts same-dimension division", () => {
+      assert.doesNotThrow(() => parseCalc("calc(10px / 2px)"));
+      assert.doesNotThrow(() => parseCalc("calc(1s / 100ms)"));
+      assert.doesNotThrow(() => parseCalc("calc(10px / 2px * 3px)"));
+      assert.throws(() => parseCalc("calc(100% / 2px)"), /must be a number/);
+      assert.throws(() => parseCalc("calc(10px / 2s)"), /must be a number/);
     });
 
     test("isCalcString only flags calc() values", () => {
@@ -546,6 +650,57 @@ describe("calc", () => {
             opacity: "calc(0.5 * 0.5)",
           },
         }),
+      );
+    });
+
+    test("enforces the slot dimension at runtime", () => {
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "box",
+          innerHTML: "x",
+          css: {
+            width: "calc(100% - 40px)",
+            rotate: "calc(45deg * 2)",
+            "animation-duration": "calc(150ms * 2)",
+            opacity: "calc(2s / 500ms)",
+          },
+        }),
+      );
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error a frequency result on a length slot
+              width: "calc(2Hz * 2)",
+            },
+          }),
+        /result type 'frequency'/,
+      );
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error mixed-dimension addition
+              width: "calc(2s + 3px)",
+            },
+          }),
+        /addition operands '2s' and '3px'/,
+      );
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error the quotient is a number, not a length
+              width: "calc(10px / 2px)",
+            },
+          }),
+        /result type 'number'/,
       );
     });
 

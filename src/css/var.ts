@@ -162,6 +162,67 @@ export type VarUnitKind<
     : "unit-bearing"
   : "invalid";
 
+// The dimension a registered custom property's value carries, read from its
+// declared syntax. This is a finer answer than `VarUnitKind`: `calc()`'s
+// `+`/`-` and `/` rules and its slot check need to know *which* dimension, not
+// merely whether there is one.
+//
+// Only the named numeric tokens are placed; a syntax the classifier does not
+// recognise (a named union like `<line-width>`, or `<color>`) is `unknown` --
+// no rule can fire on it and calc leaves the value alone. `unknown` is also an
+// unregistered name, which var's own wall reports.
+export type VarDimensionAtom =
+  | "number"
+  | "percentage"
+  | "length"
+  | "angle"
+  | "time"
+  | "frequency"
+  | "flex";
+
+type SyntaxDimensions<S extends string> = UnitlessSyntax<S> extends true
+  ? "number"
+  : TrimVar<S> extends "<percentage>"
+    ? "percentage"
+    : TrimVar<S> extends "<length>"
+      ? "length"
+      : TrimVar<S> extends "<angle>"
+        ? "angle"
+        : TrimVar<S> extends "<time>"
+          ? "time"
+          : TrimVar<S> extends "<frequency>"
+            ? "frequency"
+            : TrimVar<S> extends "<flex>"
+              ? "flex"
+              : TrimVar<S> extends "<alpha-value>"
+                ? "number" | "percentage"
+                : TrimVar<S> extends
+                      | "<length-percentage>"
+                      | "<length> | <percentage>"
+                  ? "length" | "percentage"
+                  : TrimVar<S> extends
+                        | "<angle-percentage>"
+                        | "<angle> | <percentage>"
+                    ? "angle" | "percentage"
+                    : TrimVar<S> extends
+                          | "<time-percentage>"
+                          | "<time> | <percentage>"
+                      ? "time" | "percentage"
+                      : TrimVar<S> extends
+                            | "<frequency-percentage>"
+                            | "<frequency> | <percentage>"
+                        ? "frequency" | "percentage"
+                        : "unknown";
+
+export type VarDimensions<
+  Props extends BaseCSSPropertiesConfig,
+  Name extends string,
+> = Name extends keyof Props
+  ? Props[Name] extends { syntax: infer S extends string }
+    ? SyntaxDimensions<S>
+    : "unknown"
+  : "unknown";
+
 // Resolve a `var(...)` argument list to its resulting type, or a `VarError`.
 //
 // `var()` takes exactly one argument: a dashed-ident. Any top-level comma is a
@@ -315,6 +376,43 @@ export function varUnitKind(
   if (UNITLESS_SYNTAXES.has(syntax)) return "unitless";
   if (syntax !== "" && !Number.isNaN(+syntax)) return "unitless";
   return "unit-bearing";
+}
+
+// The dimension(s) a declared syntax accepts, when it is one of the named
+// numeric tokens. Mirrors the type-level `SyntaxDimensions`; `undefined` means
+// "cannot tell" and turns calc's dimension rules off for that operand.
+const SYNTAX_DIMENSIONS: Record<string, readonly VarDimensionAtom[]> = {
+  "<percentage>": ["percentage"],
+  "<length>": ["length"],
+  "<angle>": ["angle"],
+  "<time>": ["time"],
+  "<frequency>": ["frequency"],
+  "<flex>": ["flex"],
+  "<alpha-value>": ["number", "percentage"],
+  "<length-percentage>": ["length", "percentage"],
+  "<length> | <percentage>": ["length", "percentage"],
+  "<angle-percentage>": ["angle", "percentage"],
+  "<angle> | <percentage>": ["angle", "percentage"],
+  "<time-percentage>": ["time", "percentage"],
+  "<time> | <percentage>": ["time", "percentage"],
+  "<frequency-percentage>": ["frequency", "percentage"],
+  "<frequency> | <percentage>": ["frequency", "percentage"],
+};
+
+// The dimension(s) a registered (or locally defined) custom property carries.
+// `undefined` when the syntax is not one the classifier can place; the caller
+// treats that as unknown rather than guessing.
+export function varDimensions(
+  name: string,
+  properties: Record<string, { syntax: string }>,
+): Set<VarDimensionAtom> | undefined {
+  const entry = properties[name];
+  if (entry === undefined) return undefined;
+  const syntax = entry.syntax.trim();
+  if (UNITLESS_SYNTAXES.has(syntax)) return new Set(["number"]);
+  if (syntax !== "" && !Number.isNaN(+syntax)) return new Set(["number"]);
+  const dimensions = SYNTAX_DIMENSIONS[syntax];
+  return dimensions === undefined ? undefined : new Set(dimensions);
 }
 
 // Resolve a registered (or locally defined) custom property for cycle

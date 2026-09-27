@@ -110,8 +110,8 @@ The deep grammar is applied on top by:
 Neither module calls the other: `var.ts` has no import of `calc.ts` (the
 verifiable outcome of this slice), and the engine decides which wall sees the
 value. calc is now free to import var's name resolution in one direction,
-without a cycle, when its multiplication rules need to know whether a `var()`
-operand is dimensional.
+without a cycle, when its arithmetic needs to know whether a `var()` operand is
+dimensional and which dimension it carries.
 
 ## Registered properties reject unions in `syntax`
 
