@@ -18,6 +18,7 @@ import type {
 } from "@/css/ident.ts";
 import type { DSLInfer, SupportedKeywordsConfig } from "tsyntax";
 import type { IsCalcString, ValidateCalc } from "@/css/calc.ts";
+import type { ContainsVar, ValidateVar } from "@/css/var.ts";
 import type {
   BaseHTMLAttributesConfig,
   BaseHTMLAttributeComplexValue,
@@ -1081,6 +1082,70 @@ type CalcConstraint<
     : unknown;
 };
 
+// ---------------------------------------------------------------------------
+// var() deep validation.
+//
+// The syntax config admits var() shallowly (`<var>` resolves to
+// `var(${string})`), which is what lets a written var() clear the shallow DSL
+// wall. This member then resolves each reference against the CSS Properties
+// registry and validates its fallback, exactly as `CalcConstraint` does for
+// calc.
+//
+// Like calc, it maps over the *known* CSS value keys and reads the written
+// value back out of `CSSValue`, so it never declares an excess-property key.
+//
+// The expected type (`Context`) is only known for top-level string attributes
+// and registered custom properties. For every context-dependent slot -- a
+// gate-unlocked shorthand, a gate value itself -- it is `unknown`, which turns
+// the compatibility half off: the reference and its fallback grammar are still
+// checked, but the resolved-type match is left to runtime. That is the spec's
+// "one-level resolution + runtime for the rest".
+// ---------------------------------------------------------------------------
+type VarContextType<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  CSSPropertiesConfig extends BaseCSSPropertiesConfig,
+  K,
+> = K extends KeysMatching<CSSAttributesConfig, string>
+  ? DSLInfer<Keywords & CSSSyntaxConfig, CSSAttributesConfig[K] & string>
+  : K extends keyof CSSPropertiesConfig
+    ? CSSPropertiesConfig[K] extends { syntax: infer S extends string }
+      ? DSLInfer<Keywords & CSSSyntaxConfig, S>
+      : unknown
+    : unknown;
+
+type VarConstraint<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  CSSPropertiesConfig extends BaseCSSPropertiesConfig,
+  CSSValue extends Record<string, any>,
+> = {
+  [K in CalcValueKeys<
+    CSSAttributesConfig,
+    CSSPropertiesConfig
+  >]?: K extends keyof CSSValue
+    ? CSSValue[K] extends string
+      ? ContainsVar<CSSValue[K]> extends true
+        ? ValidateVar<
+            CSSValue[K] & string,
+            CSSPropertiesConfig,
+            Keywords,
+            CSSSyntaxConfig,
+            VarContextType<
+              Keywords,
+              CSSSyntaxConfig,
+              CSSAttributesConfig,
+              CSSPropertiesConfig,
+              K
+            >
+          >
+        : unknown
+      : unknown
+    : unknown;
+};
+
 type ValidateComponentCSSStructure<
   Keywords extends SupportedKeywordsConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
@@ -1161,6 +1226,13 @@ type ValidateComponentCSSStructure<
         CSSValue
       > &
         CalcConstraint<
+          CSSAttributesConfig,
+          CSSPropertiesConfig,
+          CSSValue
+        > &
+        VarConstraint<
+          Keywords,
+          CSSSyntaxConfig,
           CSSAttributesConfig,
           CSSPropertiesConfig,
           CSSValue
