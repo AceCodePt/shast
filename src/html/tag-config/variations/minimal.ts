@@ -106,15 +106,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   input: {
     display: "inline-block",
     attributes: {
-      // `checked` is only meaningful for checkbox / radio.
       type: {
-        text: { self: {} },
-        number: { self: {} },
-        password: { self: {} },
-        checkbox: { self: { checked: "boolean | undefined" } },
-        radio: { self: { checked: "boolean | undefined" } },
-        submit: { self: {} },
-        hidden: { self: {} },
+        text: {},
+        number: {},
+        password: {},
+        checkbox: { checked: "boolean | undefined" },
+        radio: { checked: "boolean | undefined" },
+        submit: {},
+        hidden: {},
       },
       value: "string | undefined",
       disabled: "boolean | undefined",

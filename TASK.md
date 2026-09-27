@@ -193,7 +193,7 @@
   - [x] Object reference identity preserved
   - [x] Invalid DSL string throws error
 
-- [x] **Conditional attributes** - an attribute value gates `self` unlocks on the same element, exactly as a CSS gate gates its own properties
+- [x] **Conditional attributes** - an attribute value unlocks further attributes on the same element, exactly as a CSS gate unlocks properties
   - [x] Type Validation - locked unlocks branded naming what unlocks them; unknown attributes stay stock
   - [x] Type Inference - complex values infer their per-value variants
   - [x] Runtime Validation - the same accept/reject decisions as the type wall
@@ -201,11 +201,11 @@
 
 - [x] **Pattern keys** - value keys written as DSL (`<token>` or backtick template) match a written value
   - [x] Type Validation - literal first, then patterns; two matching keys is an error
-  - [x] Type Inference - a matched pattern key resolves to its `self` bag
+  - [x] Type Inference - a matched pattern key resolves to its unlocked bag
   - [x] Runtime Validation - one shared resolver for CSS and HTML; overlap throws
   - [x] Test - a value matching no key reports the value, never the key
 
-- [x] **Render fill-in** - a single-literal `self` unlock renders when omitted
+- [x] **Render fill-in** - a single-literal unlock renders when omitted
   - [x] Type Validation - writing a different value fails
   - [x] Type Inference - `undefined`-arm optionality through `MaybeAttributes`
   - [x] Runtime Validation - the literal is filled in if absent

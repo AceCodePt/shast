@@ -120,9 +120,9 @@ export function validateComponentNode(
     if (isGateDefinition(def)) {
       continue; // resolved and validated in the pre-pass
     }
-    const selfDsl = slotDSL(allAttributeDefs, ownGates, attributeKey, "self");
-    if (selfDsl !== undefined) {
-      parseValueAgainstDSL(keywords, selfDsl, value);
+    const unlockedDsl = slotDSL(allAttributeDefs, ownGates, attributeKey);
+    if (unlockedDsl !== undefined) {
+      parseValueAgainstDSL(keywords, unlockedDsl, value);
       continue;
     }
     if (def !== undefined) {
@@ -130,7 +130,7 @@ export function validateComponentNode(
         `Attribute Error: Property '${attributeKey}' is not a valid attribute for <${tag}> or the Global configuration registry`,
       );
     }
-    const locked = lockedMessageFor(allAttributeDefs, attributeKey);
+    const locked = lockedMessageFor(allAttributeDefs, attributeKey, [undefined]);
     if (locked !== null) {
       throw new Error(`Attribute Error: ${locked}`);
     }

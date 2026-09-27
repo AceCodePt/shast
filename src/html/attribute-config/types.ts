@@ -9,14 +9,12 @@ export interface BaseHTMLAttributeSimpleConfig {
   [attribute: string]: string;
 }
 
-// The conditional case: an attribute name maps each possible value to what
-// that value unlocks on the same element (`self`). HTML attributes do not
-// unlock anything on child elements - a parent's attribute is not a fact a
-// child inherits - so unlike a CSS gate there is no `children` slot.
+// The conditional case: an attribute name maps each possible value directly to
+// the attributes that value unlocks. Unlike a CSS gate there is no `self` /
+// `children` split: an HTML attribute unlocks siblings on the same element, and
+// naming a slot `self` would imply a `children` counterpart that does not exist.
 export interface BaseHTMLAttributeComplexValue {
-  [value: string]: {
-    self: BaseHTMLAttributeSimpleConfig;
-  };
+  [value: string]: BaseHTMLAttributeSimpleConfig;
 }
 
 export interface BaseHTMLAttributesConfig {
@@ -41,12 +39,10 @@ export type ValidateHTMLAttributesConfig<
         ? DSLValidate<Keywords, T[K]>
         : T[K] extends BaseHTMLAttributeComplexValue
           ? {
-              [V in keyof T[K]]: {
-                self: ValidateHTMLAttributesSimpleConfig<
-                  Keywords,
-                  T[K][V]["self"]
-                >;
-              };
+              [V in keyof T[K]]: ValidateHTMLAttributesSimpleConfig<
+                Keywords,
+                T[K][V]
+              >;
             }
           : never;
     }
@@ -62,8 +58,8 @@ type ComplexHTMLAttributeKeys<A> = {
 
 // All-flat configs keep the historical merged-object shape (one property per
 // attribute). As soon as one attribute is complex the shape mirrors the CSS
-// inference: a union of value variants, each carrying the gate literal plus its
-// `self` bag.
+// inference: a union of value variants, each carrying the gate literal plus the
+// attributes it unlocks.
 export type InferHTMLAttributesConfig<
   Keywords extends SupportedKeywordsConfig,
   A extends BaseHTMLAttributesConfig,
@@ -81,10 +77,10 @@ export type InferHTMLAttributesConfig<
           : A[K] extends BaseHTMLAttributeComplexValue
             ? {
                 [V in keyof A[K]]: {
-                  [K1 in K | keyof A[K][V]["self"]]?: K1 extends K
+                  [K1 in K | keyof A[K][V]]?: K1 extends K
                     ? V
-                    : K1 extends keyof A[K][V]["self"]
-                      ? DSLInfer<Keywords, A[K][V]["self"][K1]>
+                    : K1 extends keyof A[K][V]
+                      ? DSLInfer<Keywords, A[K][V][K1]>
                       : never;
                 };
               }[keyof A[K]]

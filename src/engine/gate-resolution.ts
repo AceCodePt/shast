@@ -63,18 +63,28 @@ export const gateNames = (definitions: Record<string, any>): string[] =>
     isGateDefinition(definitions[key]),
   );
 
-// The values of `gate` that unlock `key` in `slot`.
+// The unlocked-attribute bag of a gate value. CSS nests it under `self` /
+// `children`; HTML has no such slots - the value maps straight to the bag.
+const bagOf = (
+  gateDefinition: Record<string, any>,
+  valueKey: string,
+  slot?: "self" | "children",
+): unknown =>
+  slot === undefined ? gateDefinition[valueKey] : gateDefinition[valueKey]?.[slot];
+
+// The values of `gate` that unlock `key` in `slot` (undefined = the value maps
+// straight to the bag, as HTML does).
 export function valuesUnlocking(
   definitions: Record<string, any>,
   gate: string,
   key: string,
-  slot: "self" | "children",
+  slot?: "self" | "children",
 ): string[] {
   const gateDefinition = definitions[gate];
   if (!isGateDefinition(gateDefinition)) return [];
   const values: string[] = [];
   for (const valueKey of Object.keys(gateDefinition)) {
-    const bag = gateDefinition[valueKey]?.[slot];
+    const bag = bagOf(gateDefinition, valueKey, slot);
     if (isGateDefinition(bag) && key in bag) {
       values.push(valueKey);
     }
@@ -84,20 +94,24 @@ export function valuesUnlocking(
 
 // One clause per gate that can unlock `key`, matching the type-level
 // `UnlockedBy`: `display: flex | inline-flex` (self) or
-// `display: flex | inline-flex on the parent` (children).
+// `display: flex | inline-flex on the parent` (children). HTML passes a single
+// `undefined` slot because its bags are not nested.
 export function unlockedByClauses(
   definitions: Record<string, any>,
   key: string,
+  slots: readonly (("self" | "children") | undefined)[] = [
+    "self",
+    "children",
+  ],
 ): string[] {
   const clauses: string[] = [];
   for (const gate of gateNames(definitions)) {
-    const selfValues = valuesUnlocking(definitions, gate, key, "self");
-    if (selfValues.length > 0) {
-      clauses.push(`${gate}: ${selfValues.join(" | ")}`);
-    }
-    const childrenValues = valuesUnlocking(definitions, gate, key, "children");
-    if (childrenValues.length > 0) {
-      clauses.push(`${gate}: ${childrenValues.join(" | ")} on the parent`);
+    for (const slot of slots) {
+      const values = valuesUnlocking(definitions, gate, key, slot);
+      if (values.length > 0) {
+        const suffix = slot === "children" ? " on the parent" : "";
+        clauses.push(`${gate}: ${values.join(" | ")}${suffix}`);
+      }
     }
   }
   return clauses;
@@ -108,25 +122,27 @@ export function unlockedByClauses(
 export function lockedMessageFor(
   definitions: Record<string, any>,
   key: string,
+  slots?: readonly (("self" | "children") | undefined)[],
 ): string | null {
-  const clauses = unlockedByClauses(definitions, key);
+  const clauses = unlockedByClauses(definitions, key, slots);
   return clauses.length > 0
     ? `'${key}' requires ${clauses.join(", or ")}`
     : null;
 }
 
 // The DSL for `key` under the resolved gate values in `gates` for `slot`, if a
-// written gate value unlocks it.
+// written gate value unlocks it. `slot` is omitted when the value maps straight
+// to the bag.
 export function slotDSL(
   definitions: Record<string, any>,
   gates: Record<string, string>,
   key: string,
-  slot: "self" | "children",
+  slot?: "self" | "children",
 ): string | undefined {
   for (const gate of Object.keys(gates)) {
     const matchedValue = gates[gate];
     if (matchedValue === undefined) continue;
-    const bag = definitions[gate]?.[matchedValue]?.[slot];
+    const bag = bagOf(definitions[gate], matchedValue, slot);
     if (isGateDefinition(bag) && key in bag) {
       return bag[key];
     }

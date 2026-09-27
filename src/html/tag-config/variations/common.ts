@@ -218,44 +218,32 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   input: {
     display: "inline-block",
     attributes: {
-      // `type` gates the attributes that are only meaningful for that input
-      // type. `checked` exists for checkbox/radio, `min`/`max`/`step` for the
-      // numeric and date-like types, `maxlength`/`minlength`/`pattern` for the
-      // text-like types.
       type: {
         text: {
-          self: {
-            maxlength: "number | undefined",
-            minlength: "number | undefined",
-            pattern: "string | undefined",
-          },
+          maxlength: "number | undefined",
+          minlength: "number | undefined",
+          pattern: "string | undefined",
         },
         number: {
-          self: {
-            min: "string | number | undefined",
-            max: "string | number | undefined",
-            step: "string | number | undefined",
-          },
+          min: "string | number | undefined",
+          max: "string | number | undefined",
+          step: "string | number | undefined",
         },
         password: {
-          self: {
-            maxlength: "number | undefined",
-            minlength: "number | undefined",
-            pattern: "string | undefined",
-          },
+          maxlength: "number | undefined",
+          minlength: "number | undefined",
+          pattern: "string | undefined",
         },
-        checkbox: { self: { checked: "boolean | undefined" } },
-        radio: { self: { checked: "boolean | undefined" } },
+        checkbox: { checked: "boolean | undefined" },
+        radio: { checked: "boolean | undefined" },
         email: {
-          self: {
-            maxlength: "number | undefined",
-            minlength: "number | undefined",
-            pattern: "string | undefined",
-          },
+          maxlength: "number | undefined",
+          minlength: "number | undefined",
+          pattern: "string | undefined",
         },
-        submit: { self: {} },
-        button: { self: {} },
-        hidden: { self: {} },
+        submit: {},
+        button: {},
+        hidden: {},
       },
       value: "string | undefined",
       name: "string | undefined",

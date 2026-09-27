@@ -536,12 +536,13 @@ type CSSNonSelfConfig<
 // ---------------------------------------------------------------------------
 // HTML attribute gates.
 //
-// Same mechanism as the CSS gates above, but an HTML attribute only unlocks
-// further attributes on the same element (`self`). A parent's attribute is not
-// a fact a child inherits, so there is no `children` slot. HTML DSL strings are
-// validated against `Keywords` alone, so the syntax-config slot is the empty
-// object; the pattern-key resolution and the two-key overlap signal in
-// `GateLookup` / `GateOverlaps` are shared with CSS.
+// Same mechanism as the CSS gates above, but an HTML attribute value maps
+// straight to the attributes it unlocks - there is no `self` / `children`
+// split. An HTML attribute unlocks siblings on the same element, and naming a
+// slot `self` would imply a `children` counterpart that does not exist. HTML
+// DSL strings are validated against `Keywords` alone, so the syntax-config slot
+// is the empty object; the pattern-key resolution and the two-key overlap
+// signal in `GateLookup` / `GateOverlaps` are shared with CSS.
 // ---------------------------------------------------------------------------
 
 type HTMLGateKeys<C extends BaseHTMLAttributesConfig> = KeysMatching<
@@ -576,8 +577,8 @@ type HTMLGateTable<
         V
       > &
         PropertyKey
-    ]: C[K][V] extends BaseHTMLAttributeComplexValue[string]
-      ? GateEntry<V, InferHTMLPropBag<Keywords, C[K][V]["self"]>>
+    ]: C[K][V] extends Record<string, string>
+      ? GateEntry<V, InferHTMLPropBag<Keywords, C[K][V]>>
       : GateEntry<V, {}>;
   };
 };
@@ -632,8 +633,8 @@ type HTMLGateAllKeys<
   C extends BaseHTMLAttributesConfig,
   G extends keyof C,
 > = {
-  [V in keyof C[G]]: C[G][V] extends BaseHTMLAttributeComplexValue[string]
-    ? keyof C[G][V]["self"]
+  [V in keyof C[G]]: C[G][V] extends Record<string, string>
+    ? keyof C[G][V]
     : never;
 }[keyof C[G]];
 
@@ -646,8 +647,8 @@ type HTMLValuesUnlocking<
   G extends keyof C,
   P,
 > = {
-  [V in keyof C[G] & string]: P extends (C[G][V] extends BaseHTMLAttributeComplexValue[string]
-    ? keyof C[G][V]["self"]
+  [V in keyof C[G] & string]: P extends (C[G][V] extends Record<string, string>
+    ? keyof C[G][V]
     : never)
     ? V
     : never;
@@ -670,21 +671,21 @@ type HTMLLockedMessage<C extends BaseHTMLAttributesConfig, P extends string> =
 type HTMLLockedAttributeKeys<
   C extends BaseHTMLAttributesConfig,
   OwnWritten,
-  SelfUnlocks,
+  Unlocked,
 > = Exclude<
   Extract<keyof OwnWritten, HTMLAllLockableKeys<C>>,
-  keyof SelfUnlocks | HTMLFlatKeys<C> | HTMLGateKeys<C>
+  keyof Unlocked | HTMLFlatKeys<C> | HTMLGateKeys<C>
 >;
 
 type HTMLLockedDiagnostics<
   C extends BaseHTMLAttributesConfig,
   OwnWritten,
-  SelfUnlocks,
+  Unlocked,
 > = {
   [P in HTMLLockedAttributeKeys<
     C,
     OwnWritten,
-    SelfUnlocks
+    Unlocked
   > & string]?: HTMLLockedMessage<C, P> & Locked;
 };
 
@@ -732,11 +733,11 @@ type ValidateComponentHTMLAttributes<
 // ComponentIds.
 //
 // Every literal `id` written anywhere in a component, mapped to the value its
-// resolved key declares. With a registry supplied, that is the `self` bag of
-// the id key the value resolved to (literal first, then pattern keys; a value
-// matching two keys contributes nothing). Without a registry it falls back to
-// the attributes the element itself carries. A non-literal (widened `string`,
-// or a component with no ids at all) contributes `never`; duplicate ids merge.
+// resolved key declares. With a registry supplied, that is the bag the id key
+// the value resolved to (literal first, then pattern keys; a value matching two
+// keys contributes nothing). Without a registry it falls back to the attributes
+// the element itself carries. A non-literal (widened `string`, or a component
+// with no ids at all) contributes `never`; duplicate ids merge.
 // ---------------------------------------------------------------------------
 
 type NodeTagOf<T> = T extends { tag: infer G extends string } ? G : never;

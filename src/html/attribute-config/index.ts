@@ -36,10 +36,10 @@ export const validateHTMLAttributes = (
       if (isPatternKey(subKey)) {
         dslString(supportedKeywords, subKey);
       }
-      const slot = value[subKey];
-      if (!slot) continue;
-      for (const attribute in slot.self) {
-        const inner = slot.self[attribute];
+      const bag = value[subKey];
+      if (!isComplex(bag)) continue;
+      for (const attribute in bag) {
+        const inner = bag[attribute];
         if (inner !== undefined) dslString(supportedKeywords, inner);
       }
     }

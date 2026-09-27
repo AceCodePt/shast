@@ -21,9 +21,9 @@ import { assertType, type Equal } from "../type-utils.ts";
 
 const GLOBAL_ATTRIBUTES = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
   id: {
-    undefined: { self: {} },
-    "todo-1": { self: { "data-kind": "'literal'" } },
-    "`todo-${number}`": { self: { "data-kind": "'pattern'" } },
+    undefined: {},
+    "todo-1": { "data-kind": "'literal'" },
+    "`todo-${number}`": { "data-kind": "'pattern'" },
   },
 });
 
@@ -46,13 +46,13 @@ const TAGS = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
     display: "inline-block",
     attributes: {
       type: {
-        text: { self: { maxlength: "number", pattern: "string" } },
-        number: { self: { min: "number", max: "number", step: "number" } },
-        range: { self: { min: "number", max: "number", step: "number" } },
-        checkbox: { self: { checked: "boolean" } },
-        radio: { self: { checked: "boolean" } },
-        file: { self: { accept: "string", multiple: "boolean" } },
-        submit: { self: {} },
+        text: { maxlength: "number", pattern: "string" },
+        number: { min: "number", max: "number", step: "number" },
+        range: { min: "number", max: "number", step: "number" },
+        checkbox: { checked: "boolean" },
+        radio: { checked: "boolean" },
+        file: { accept: "string", multiple: "boolean" },
+        submit: {},
       },
       value: "string | undefined",
     },
@@ -80,8 +80,8 @@ const { createComponent, renderComponent } = engine({
 // A second registry whose id keys overlap: `todo-42` matches both.
 const OVERLAP_GLOBAL_ATTRIBUTES = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
   id: {
-    "`todo-${string}`": { self: { "data-kind": "'s'" } },
-    "`todo-${number}`": { self: { "data-kind": "'n'" } },
+    "`todo-${string}`": { "data-kind": "'s'" },
+    "`todo-${number}`": { "data-kind": "'n'" },
   },
 });
 
@@ -101,7 +101,7 @@ const overlapEngine = engine({
 });
 
 describe("HTML conditional attributes", () => {
-  describe("self unlocks", () => {
+  describe("value unlocks", () => {
     test("accepts an attribute unlocked by the written gate value", () => {
       assert.doesNotThrow(() =>
         createComponent({
@@ -235,8 +235,8 @@ describe("HTML conditional attributes", () => {
             SupportedKeywords,
             {
               type: {
-                text: { self: { maxlength: "number" } };
-                range: { self: { min: "number" } };
+                text: { maxlength: "number" };
+                range: { min: "number" };
               };
             }
           >,
@@ -294,7 +294,7 @@ describe("HTML conditional attributes", () => {
   });
 
   describe("render fill-in", () => {
-    test("fills in a single-literal self unlock when absent", () => {
+    test("fills in a single-literal unlock when absent", () => {
       const { html } = renderComponent(
         createComponent({
           tag: "span",

@@ -3,9 +3,11 @@
 ## What shipped
 
 Any HTML attribute key may hold a complex value of the shape
-`{ [value]: { self } }`. HTML attributes only unlock further attributes on the
-**same element**: a parent's attribute is not a fact a child inherits, so unlike
-`BaseCSSAttributeComplexValue` there is no `children` slot. The mechanism is
+`{ [value]: UnlockedAttributes }`. HTML attributes only unlock further attributes
+on the **same element**: a parent's attribute is not a fact a child inherits, so
+unlike `BaseCSSAttributeComplexValue` there is no `children` slot - and no `self`
+slot either, because a slot named `self` would imply a `children` counterpart.
+The value maps straight to the bag of attributes it unlocks. The mechanism is
 generic and vocabulary-free in `src/`; the shipped `input` variations are the
 first real vocabulary to use it.
 
@@ -20,10 +22,10 @@ first real vocabulary to use it.
 - `src/engine/types.ts` - HTML attribute gates (`HTMLGateTable` / `GateLookup`);
   branded locked messages (`'checked' requires type: checkbox | radio`);
   `undefined`-arm optionality through `MaybeAttributes`; `ComponentIds`.
-- `src/engine/index.ts` - runtime conformance: own-gate pre-pass, self unlocks,
-  branded locked messages, required-attribute check.
-- `src/engine/render/render-component.ts` - fills in a single-literal `self`
-  unlock when omitted, using the same resolver.
+- `src/engine/index.ts` - runtime conformance: own-gate pre-pass, unlocked
+  attributes, branded locked messages, required-attribute check.
+- `src/engine/render/render-component.ts` - fills in a single-literal unlock
+  when omitted, using the same resolver.
 - `src/html/tag-config/variations/{common,full,minimal}.ts` - the shipped
   `input` now expresses `type` as a gate: `checked` for checkbox/radio,
   `min`/`max`/`step` for the numeric/date-like types,
@@ -36,9 +38,9 @@ first real vocabulary to use it.
 ## Predicted gaps - which materialised
 
 1. **Threading unlocked attributes through the three validation types** - did
-   not materialise in the final shape. Because HTML unlocks are self-only, the
-   only extra context a node needs is its own written attributes; no parent
-   config or `ParentChildrenBag` is threaded through
+   not materialise in the final shape. Because HTML unlocks stay on the same
+   element, the only extra context a node needs is its own written attributes;
+   no parent config or `ParentChildrenBag` is threaded through
    `ValidateComponentInnerHTMLStructure` / `ItemStructure` at all.
 2. **Type-level pattern resolution and the overlap second pass** - materialised.
    `ResolveComplexValue` maps `<token>` and backtick keys to their
@@ -47,7 +49,7 @@ first real vocabulary to use it.
    `__gateKey` reduce to `never`, which is the overlap signal. It costs no
    `UnionToTuple` and is a plain indexed-access + conditional.
 3. **`children` unlocks crossing `GetAllowedTags`** - no longer applicable;
-   `children` was removed from the HTML shape.
+   the HTML shape never had a `children` slot.
 4. **Render-time fill-in and `skipValidation: true`** - materialised as
    expected. `renderComponent` receives the global attribute config and the
    merged keywords (the engine binds them). `skipValidation` remains a full
@@ -62,7 +64,7 @@ is instantiated once per program:
 {
   [K in complex keys]: {
     [V in value keys as ResolveComplexValue<DSL, V>]:
-      GateEntry<V, { [P in keyof Config[K][V]["self"]]?: DSLInfer<...> }>
+      GateEntry<V, { [P in keyof Config[K][V]]?: DSLInfer<...> }>
   }
 }
 ```
@@ -79,12 +81,12 @@ parameter; the shared row helpers (`GateEntry`, `GateKeyOf`, `GatePropsOf`,
   `MakeUndefinedOptional` for `?`. When the *written* value matches two pattern
   keys the key's type is replaced by a branded message naming the written
   value, never the key.
-- `DependentHTMLProps` - the `self` bags of the written gates, intersected.
+- `DependentHTMLProps` - the unlocked bags of the written gates, intersected.
 - `HTMLAllLockableKeys` / `HTMLLockedMessage` - the branded "requires" half.
 - `ComponentIds<T, Keywords, Global, TagConfig>` - union of
-  `{ [literalId]: declared self bag }`; widened `string` and no-id components
-  resolve to `never`; duplicates merge. Called without a registry it falls back
-  to the element's own attributes.
+  `{ [literalId]: declared unlocked bag }`; widened `string` and no-id
+  components resolve to `never`; duplicates merge. Called without a registry it
+  falls back to the element's own attributes.
 
 ## Verification status
 
@@ -93,7 +95,7 @@ parameter; the shared row helpers (`GateEntry`, `GateKeyOf`, `GatePropsOf`,
   and a generated `evals/cases.ts` that are not part of this package's
   dependencies; it was already failing on `main` and is excluded from the
   library typecheck in `tsconfig.json`.
-- `node --test tests/css tests/html tests/render tests/engine.test.ts`: 431 pass
+- `node --test tests/css tests/html tests/render tests/engine.test.ts`: 440 pass
   / 8 fail. The 8 are pre-existing rendering failures in
   `tests/css/queries-integration.test.ts`, unrelated to this work.
 - `tests/html/conditional-attributes.test.ts`: 17/17 mechanism tests

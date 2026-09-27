@@ -177,16 +177,18 @@ usual TypeScript moves all work.
 
 Just as `display: flex` unlocks `gap` in CSS, an HTML attribute value can
 unlock further attributes on the **same element**. (An HTML attribute is not a
-fact a child element inherits, so there is no `children` slot.) In the registry
-an attribute is either a DSL string (unconditional) or a map from each possible
-value to what that value unlocks:
+fact a child element inherits, so there is no `children` slot - and no `self`
+slot either, since a slot named `self` would imply a `children` counterpart. The
+value maps straight to the attributes it unlocks.) In the registry an attribute
+is either a DSL string (unconditional) or a map from each possible value to what
+that value unlocks:
 
 ```ts
 htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
   id: {
-    undefined: { self: {} }, // id is optional
-    "todo-42": { self: { "data-kind": "'literal'" } },
-    "`todo-${number}`": { self: { "data-kind": "'pattern'" } },
+    undefined: {}, // id is optional
+    "todo-42": { "data-kind": "'literal'" },
+    "`todo-${number}`": { "data-kind": "'pattern'" },
   },
 }),
 ```
@@ -199,9 +201,9 @@ template such as `` `todo-${number}` `` - is a **pattern key**: resolution is
 literal first, a value matching two keys is an error, and a value matching none
 reports a message about the value. Optionality is declared with an `undefined`
 arm, exactly as `| undefined` does for a flat attribute. Where an unlocked
-`self` attribute's declared type is exactly one literal, `renderComponent`
-fills it in when omitted; writing it is allowed, writing a different value is
-an error at both walls.
+attribute's declared type is exactly one literal, `renderComponent` fills it in
+when omitted; writing it is allowed, writing a different value is an error at
+both walls.
 
 This is the third structural binding, alongside `> title` (a named child) and
 `&.active` (a class declared on the element). `ComponentIds<T>` is the

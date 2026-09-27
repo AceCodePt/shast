@@ -77,7 +77,7 @@ function withFilledAttributes(
     } catch {
       continue;
     }
-    const bag = def[matched]?.self;
+    const bag = def[matched];
     if (!isGateDefinition(bag)) continue;
     for (const unlocked of Object.keys(bag)) {
       if (unlocked in attributes) continue;
