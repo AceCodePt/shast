@@ -27,6 +27,7 @@ import { renderCSSPropertiesConfig } from "@/engine/render/properties-config.ts"
 import { renderComponent } from "@/engine/render/render-component.ts";
 import { CSS_IDENTIFIER_REGEX as CSS_CLASS_NAME } from "@/css/ident.ts";
 import {
+  htmlSlotDSL,
   isGateDefinition,
   lockedMessageFor,
   resolveGateValue,
@@ -96,11 +97,14 @@ export function validateComponentNode(
   const providedAttributes = attributes ?? {};
 
   // Resolve every gate written on this element first. Its value unlocks
-  // further attributes on the same element (`self`).
+  // further attributes on the same element. A gate written as `undefined` is
+  // treated as omitted, so it contributes its declared default (`undefined`
+  // arm) exactly as the type wall's `DependentHTMLProps` does.
   const ownGates: Record<string, string> = {};
   for (const [attributeKey, value] of Object.entries(providedAttributes)) {
     const def = allAttributeDefs[attributeKey];
     if (isGateDefinition(def)) {
+      if (value === undefined) continue;
       ownGates[attributeKey] = resolveGateValue(
         keywords,
         attributeKey,
@@ -120,7 +124,7 @@ export function validateComponentNode(
     if (isGateDefinition(def)) {
       continue; // resolved and validated in the pre-pass
     }
-    const unlockedDsl = slotDSL(allAttributeDefs, ownGates, attributeKey);
+    const unlockedDsl = htmlSlotDSL(allAttributeDefs, ownGates, attributeKey);
     if (unlockedDsl !== undefined) {
       parseValueAgainstDSL(keywords, unlockedDsl, value);
       continue;

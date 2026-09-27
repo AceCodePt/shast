@@ -27,13 +27,27 @@ first real vocabulary to use it.
 - `src/engine/render/render-component.ts` - fills in a single-literal unlock
   when omitted, using the same resolver.
 - `src/html/tag-config/variations/{common,full,minimal}.ts` - the shipped
-  `input` now expresses `type` as a gate: `checked` for checkbox/radio,
-  `min`/`max`/`step` for the numeric/date-like types,
-  `maxlength`/`minlength`/`pattern`/`size` for the text-like types,
-  `accept`/`capture`/`multiple` for file, `multiple` for email, the
-  form-override group for submit-like types, and `src`/`alt`/`height`/`width`
-  for image.
+  vocabulary now uses gates:
+  - `input[type]` - `checked` for checkbox/radio, `min`/`max`/`step` for the
+    numeric/date-like types, `maxlength`/`minlength`/`pattern`/`size` for the
+    text-like types, `accept`/`capture`/`multiple` for file, `multiple` for
+    email, the form-override group for submit-like types, and
+    `src`/`alt`/`height`/`width` for image.
+  - `button[type]` (full) - the form-override group
+    (`formaction`/`formenctype`/`formmethod`/`formnovalidate`/`formtarget`) is
+    unlocked by `submit` (and by omitting `type`, whose default is submit).
+  - `form[method]` (common, full) - `enctype` is unlocked by `post`; `target`
+    and `novalidate` by `get`/`post`; `dialog` unlocks none.
+  - `track[kind]` (full) - `srclang` by `subtitles`; `label`/`default` by every
+    kind except `metadata`.
 - `README.md`, `TASK.md` - documented as the third structural binding.
+
+An **omitted gate** (or one explicitly written as `undefined`) contributes its
+`undefined` arm's bag. This is what makes `type`/`kind` optional while still
+unlocking the attributes their default value implies: a `button` without `type`
+is a submit button, a `track` without `kind` is a subtitles track. The type wall
+does it in `DependentHTMLProps`; the runtime does it in `htmlSlotDSL`, which
+treats a written `undefined` as absent.
 
 ## Predicted gaps - which materialised
 
@@ -95,7 +109,7 @@ parameter; the shared row helpers (`GateEntry`, `GateKeyOf`, `GatePropsOf`,
   and a generated `evals/cases.ts` that are not part of this package's
   dependencies; it was already failing on `main` and is excluded from the
   library typecheck in `tsconfig.json`.
-- `node --test tests/css tests/html tests/render tests/engine.test.ts`: 440 pass
+- `node --test tests/css tests/html tests/render tests/engine.test.ts`: 449 pass
   / 8 fail. The 8 are pre-existing rendering failures in
   `tests/css/queries-integration.test.ts`, unrelated to this work.
 - `tests/html/conditional-attributes.test.ts`: 17/17 mechanism tests
@@ -103,3 +117,6 @@ parameter; the shared row helpers (`GateEntry`, `GateKeyOf`, `GatePropsOf`,
 - `tests/html/input-conditional.test.ts`: 9/9 against the shipped `common`
   registry - `checked`/`min`/`max`/`step`/`maxlength` unlocked by the right
   `type`, and the branded locked message for the wrong one.
+- `tests/html/tag-conditional.test.ts`: 9/9 against the shipped `common`/`full`
+  registries - `form[method]`, `button[type]` (including the omitted-`type`
+  default) and `track[kind]`, at both walls.

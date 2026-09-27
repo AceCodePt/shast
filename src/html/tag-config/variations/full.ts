@@ -2372,11 +2372,32 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   track: {
     display: "inline",
     attributes: {
-      kind: "'subtitles' | 'captions' | 'descriptions' | 'chapters' | 'metadata' | undefined",
+      kind: {
+        subtitles: {
+          srclang: "string | undefined",
+          label: "string | undefined",
+          default: "boolean | undefined",
+        },
+        captions: {
+          label: "string | undefined",
+          default: "boolean | undefined",
+        },
+        descriptions: {
+          label: "string | undefined",
+          default: "boolean | undefined",
+        },
+        chapters: {
+          label: "string | undefined",
+          default: "boolean | undefined",
+        },
+        metadata: {},
+        undefined: {
+          srclang: "string | undefined",
+          label: "string | undefined",
+          default: "boolean | undefined",
+        },
+      },
       src: "string",
-      srclang: "string | undefined",
-      label: "string | undefined",
-      default: "boolean | undefined",
     },
     innerHTML: [],
     cssPseudoClass: [],
@@ -2413,17 +2434,30 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   button: {
     display: "inline-block",
     attributes: {
-      type: "'submit' | 'reset' | 'button' | undefined",
+      type: {
+        submit: {
+          formaction: "string | undefined",
+          formenctype:
+            "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
+          formmethod: "'get' | 'post' | 'dialog' | undefined",
+          formnovalidate: "boolean | undefined",
+          formtarget: "'_self' | '_blank' | '_parent' | '_top' | undefined",
+        },
+        reset: {},
+        button: {},
+        undefined: {
+          formaction: "string | undefined",
+          formenctype:
+            "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
+          formmethod: "'get' | 'post' | 'dialog' | undefined",
+          formnovalidate: "boolean | undefined",
+          formtarget: "'_self' | '_blank' | '_parent' | '_top' | undefined",
+        },
+      },
       disabled: "boolean | undefined",
       name: "string | undefined",
       value: "string | undefined",
       form: "string | undefined",
-      formaction: "string | undefined",
-      formenctype:
-        "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
-      formmethod: "'get' | 'post' | 'dialog' | undefined",
-      formnovalidate: "boolean | undefined",
-      formtarget: "'_self' | '_blank' | '_parent' | '_top' | undefined",
       popovertarget: "string | undefined",
       popovertargetaction: "'show' | 'hide' | 'toggle' | undefined",
     },
@@ -2500,11 +2534,19 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
     display: "block",
     attributes: {
       action: "string | undefined",
-      method: "'get' | 'post' | 'dialog'",
-      enctype:
-        "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
-      novalidate: "boolean | undefined",
-      target: "'_self' | '_blank' | '_parent' | '_top' | undefined",
+      method: {
+        get: {
+          target: "'_self' | '_blank' | '_parent' | '_top' | undefined",
+          novalidate: "boolean | undefined",
+        },
+        post: {
+          enctype:
+            "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
+          target: "'_self' | '_blank' | '_parent' | '_top' | undefined",
+          novalidate: "boolean | undefined",
+        },
+        dialog: {},
+      },
       autocomplete: "'on' | 'off' | undefined",
       name: "string | undefined",
       rel: "string | undefined",

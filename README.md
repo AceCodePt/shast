@@ -196,14 +196,19 @@ htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
 With `input` declaring `checked` under `type: checkbox | radio`, writing
 `<input type="range" checked>` fails at both walls with
 `'checked' requires type: checkbox | radio`, while `<input type="checkbox"
-checked>` is accepted. A value key written as DSL - a `<token>` or a backtick
-template such as `` `todo-${number}` `` - is a **pattern key**: resolution is
-literal first, a value matching two keys is an error, and a value matching none
-reports a message about the value. Optionality is declared with an `undefined`
-arm, exactly as `| undefined` does for a flat attribute. Where an unlocked
-attribute's declared type is exactly one literal, `renderComponent` fills it in
-when omitted; writing it is allowed, writing a different value is an error at
-both walls.
+checked>` is accepted. The shipped vocabulary gates other elements the same way:
+`button[type]` unlocks the form-override group for `submit` (and for an omitted
+`type`, which defaults to submit), `form[method]` unlocks `enctype` only for
+`post`, and `track[kind]` unlocks `srclang`/`label`/`default` for the subtitle
+kinds. An omitted gate contributes its `undefined` arm, so omitting a gate still
+unlocks whatever its default value implies. A value key written as DSL - a
+`<token>` or a backtick template such as `` `todo-${number}` `` - is a **pattern
+key**: resolution is literal first, a value matching two keys is an error, and a
+value matching none reports a message about the value. Optionality is declared
+with an `undefined` arm, exactly as `| undefined` does for a flat attribute.
+Where an unlocked attribute's declared type is exactly one literal,
+`renderComponent` fills it in when omitted; writing it is allowed, writing a
+different value is an error at both walls.
 
 This is the third structural binding, alongside `> title` (a named child) and
 `&.active` (a class declared on the element). `ComponentIds<T>` is the

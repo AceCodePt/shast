@@ -608,24 +608,41 @@ type HTMLGateKeyBag<
     : ResolveComplexValue<Keywords, {}, keyof C[K] & string>;
 };
 
-// Every attribute unlocked by the gates actually written in `Source`. Each
-// owner keeps its own props: the contributions are INTERSECTED, so an
-// unrelated owner cannot widen another owner's prop to `string`.
+// The bag a gate unlocks when it is omitted (or written as `undefined`), taken
+// from the gate's `undefined` value key. An omitted gate still contributes its
+// declared default - e.g. a `button` without `type` is a submit button.
+type HTMLUndefinedBag<
+  Keywords extends SupportedKeywordsConfig,
+  C extends BaseHTMLAttributesConfig,
+  K extends keyof C,
+> = C[K] extends BaseHTMLAttributeComplexValue
+  ? "undefined" extends keyof C[K]
+    ? C[K]["undefined"] extends Record<string, string>
+      ? InferHTMLPropBag<Keywords, C[K]["undefined"]>
+      : {}
+    : {}
+  : {};
+
+// Every attribute unlocked by the gates on the node. Each owner keeps its own
+// props: the contributions are INTERSECTED, so an unrelated owner cannot widen
+// another owner's prop to `string`. A gate that is absent (or explicitly
+// `undefined`) contributes its `undefined` arm instead.
 type DependentHTMLProps<
   Keywords extends SupportedKeywordsConfig,
   C extends BaseHTMLAttributesConfig,
   Source,
   Table extends Record<string, any> = HTMLGateTable<Keywords, C>,
-  Owners extends string = HTMLGateKeys<C> & keyof AsRecord<Source> & string,
-> = [Owners] extends [never]
+  GateKeys extends string = HTMLGateKeys<C> & string,
+> = [GateKeys] extends [never]
   ? {}
   : UnionToIntersection<
       {
-        [K in Owners]: GateLookup<
-          Table[K],
-          AsRecord<Source>[K & keyof AsRecord<Source>]
-        >;
-      }[Owners]
+        [K in GateKeys]: K extends keyof AsRecord<Source>
+          ? [AsRecord<Source>[K & keyof AsRecord<Source>]] extends [undefined]
+            ? HTMLUndefinedBag<Keywords, C, K>
+            : GateLookup<Table[K], AsRecord<Source>[K & keyof AsRecord<Source>]>
+          : HTMLUndefinedBag<Keywords, C, K>;
+      }[GateKeys]
     >;
 
 // Every attribute any gate can unlock, on this registry.

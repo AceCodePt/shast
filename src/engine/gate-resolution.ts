@@ -149,3 +149,27 @@ export function slotDSL(
   }
   return undefined;
 }
+
+// HTML unlocks have no slots: a written gate maps straight to its bag, and a
+// gate that is omitted (or written as `undefined`) contributes its `undefined`
+// arm - the declared default, e.g. a `button` without `type` is a submit
+// button. Mirrors the type-level `DependentHTMLProps`.
+export function htmlSlotDSL(
+  definitions: Record<string, any>,
+  gates: Record<string, string>,
+  key: string,
+): string | undefined {
+  for (const gate of Object.keys(definitions)) {
+    const gateDefinition = definitions[gate];
+    if (!isGateDefinition(gateDefinition)) continue;
+    const matchedValue = gates[gate];
+    const bag =
+      matchedValue !== undefined
+        ? gateDefinition[matchedValue]
+        : gateDefinition["undefined"];
+    if (isGateDefinition(bag) && key in bag) {
+      return bag[key];
+    }
+  }
+  return undefined;
+}

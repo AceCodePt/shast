@@ -197,6 +197,8 @@
   - [x] Type Validation - locked unlocks branded naming what unlocks them; unknown attributes stay stock
   - [x] Type Inference - complex values infer their per-value variants
   - [x] Runtime Validation - the same accept/reject decisions as the type wall
+  - [x] Omitted gate - a gate absent (or written as `undefined`) contributes its `undefined` arm, so defaults still unlock their attributes
+  - [x] Shipped vocabulary - `input[type]`, `button[type]`, `form[method]`, `track[kind]` across the common/full/minimal registries
   - [x] Test - `@ts-expect-error` paired with `assert.throws` per negative case
 
 - [x] **Pattern keys** - value keys written as DSL (`<token>` or backtick template) match a written value
