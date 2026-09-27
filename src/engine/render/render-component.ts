@@ -1,6 +1,8 @@
 import type { BaseComponentStructure } from "@/engine/types.ts";
 import type { BaseHTMLAttributesConfig } from "@/html/attribute-config/types.ts";
 import type { BaseHTMLTagConfig } from "@/html/tag-config/types.ts";
+import type { BaseKeyframesConfig } from "@/css/keyframes-config/types.ts";
+import { renderReferencedKeyframes } from "@/engine/animation.ts";
 import {
   isGateDefinition,
   resolveGateValue,
@@ -186,8 +188,15 @@ export function renderComponent(
   node: BaseComponentStructure,
   globalAttributes: BaseHTMLAttributesConfig = {},
   keywords: SupportedKeywordsConfig = {},
+  keyframes: BaseKeyframesConfig = {},
 ): { html: string; css: string } {
   const { targeted, blocks } = collectRules(node);
+  // Keyframe names are global, so the referenced `@keyframes` rules are
+  // emitted once each, independent of the cid-scoped blocks. They follow the
+  // scoped stylesheet; a render that references none is byte-identical to
+  // before.
+  const scoped = printStylesheet(blocks);
+  const referenced = renderReferencedKeyframes(node, keyframes);
   return {
     html: renderHTMLNode(
       tagConfig,
@@ -197,6 +206,6 @@ export function renderComponent(
       globalAttributes,
       keywords,
     ),
-    css: printStylesheet(blocks),
+    css: [scoped, referenced].filter((part) => part !== "").join("\n\n"),
   };
 }

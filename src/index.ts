@@ -5,6 +5,7 @@ import CSS_SYNTAX_CONFIG from "@/css/syntax-config/variations/common.ts";
 import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/common.ts";
 import CSS_GLOBAL_PSEUDO_CLASSES_CONFIG from "@/css/pseudo-class-config/variations/common.ts";
 import COMMON_QUERIES from "@/css/queries-config/variations/common.ts";
+import COMMON_KEYFRAMES from "@/css/keyframes-config/variations/common.ts";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
 import engine from "@/engine/index.ts";
 
@@ -47,6 +48,7 @@ const { createComponent, renderComponent } = engine({
   cssPseudoClassConfig: CSS_GLOBAL_PSEUDO_CLASSES_CONFIG,
   cssPropertiesConfig: CSS_GLOBAL_PROPERTIES,
   cssQueriesConfig: COMMON_QUERIES,
+  cssKeyframesConfig: COMMON_KEYFRAMES,
 });
 
 const list = createComponent({

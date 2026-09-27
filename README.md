@@ -55,6 +55,7 @@ const { createComponent, renderComponent } = engine({
   cssPseudoClassConfig: CSS_GLOBAL_PSEUDO_CLASSES_CONFIG,
   cssPropertiesConfig: CSS_GLOBAL_PROPERTIES,
   cssQueriesConfig: ["@media (width < 768px)"], // exact registered query strings
+  cssKeyframesConfig: COMMON_KEYFRAMES, // registered @keyframes, referenced by animation
 });
 
 const card = createComponent({
