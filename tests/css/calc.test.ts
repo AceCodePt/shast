@@ -66,6 +66,8 @@ const PROPS = cssPropertiesConfig(SUPPORTED_KEYWORDS, COMMON_SYNTAX, {
   "--len-b": { syntax: "<length>", inherits: false, "initial-value": "2rem" },
   "--len": { syntax: "<length>", inherits: false, "initial-value": "1rem" },
   "--num": { syntax: "<number>", inherits: false, "initial-value": "2" },
+  "--alpha-a": { syntax: "<alpha-value>", inherits: false, "initial-value": "1" },
+  "--alpha-b": { syntax: "<alpha-value>", inherits: false, "initial-value": "1" },
 });
 
 type Props = typeof PROPS;
@@ -174,6 +176,17 @@ describe("calc", () => {
       assertType<InvalidP<"calc(var(--len-a) * var(--len-b))">>();
       assertType<InvalidP<"calc(var(--len) * var(--len))">>();
       assertType<InvalidP<"calc(2px * var(--len))">>();
+    });
+
+    test("holds the author to a named syntax that may hold a percentage", () => {
+      // `<alpha-value>` is number | percentage. The classifier is unit-bearing,
+      // so a two-reference product is rejected even though a number*number
+      // would be legal: the value is only known at computed-value time, and an
+      // accepted expression could silently go IACVT. The escape hatch is to
+      // declare `<number>` when the property only ever holds numbers.
+      assertType<InvalidP<"calc(var(--alpha-a) * var(--alpha-b))">>();
+      assertType<ValidP<"calc(var(--alpha-a) * 3)">>();
+      assertType<ValidP<"calc(3 * var(--alpha-a))">>();
     });
 
     test("accepts a division whose right side continues into addition", () => {
@@ -326,6 +339,7 @@ describe("calc", () => {
         properties: {
           "--len": { syntax: "<length>" },
           "--num": { syntax: "<number>" },
+          "--alpha": { syntax: "<alpha-value>" },
         },
       };
       assert.doesNotThrow(() => parseCalc("calc(var(--len) * 2)", ctx));
@@ -334,6 +348,13 @@ describe("calc", () => {
         () => parseCalc("calc(var(--len) * var(--len))", ctx),
         /multiplication operands 'var\(--len\)' and 'var\(--len\)'/,
       );
+      // `<alpha-value>` may hold a percentage, so it is unit-bearing: a
+      // two-reference product is rejected, a reference times a number passes.
+      assert.throws(
+        () => parseCalc("calc(var(--alpha) * var(--alpha))", ctx),
+        /multiplication operands 'var\(--alpha\)' and 'var\(--alpha\)'/,
+      );
+      assert.doesNotThrow(() => parseCalc("calc(var(--alpha) * 3)", ctx));
     });
   });
 

@@ -59,12 +59,22 @@ unit, `CalcUnit` in `src/css/calc.ts`.
 The no-unions rule (`css-properties-no-unions`) is a presence test for `|` in a
 property's `syntax` string, so a named token that *expands* to a union —
 `<alpha-value>` is `` `${number}` | `${number}%` ``, `<length-percentage>` is
-`<length> | <percentage>` — passes it without containing a pipe. For the
-`*` rule the classifier treats any such named syntax as unit-bearing, which is
-the conservative call: it rejects `calc(var(--a) * var(--b))` when both are
-`<alpha-value>` even though the two numbers would multiply legally. It never
-accepts an invalid product. A precise answer would need the classification to
-understand each named token's expansion; that is a deliberate non-goal here.
+`<length> | <percentage>` — passes it without containing a pipe. The `*`
+classifier treats any such named syntax as unit-bearing. That is the right
+call, and the reason is what the declaration means, not merely that some
+product would be a squared unit:
+
+- Registering `--a` as `<alpha-value>` declares that it **may hold a
+  percentage**. `var(--a) * var(--b)` is then legal for some values of `--a`
+  and invalid at computed-value time for others.
+- Neither wall can tell which: the value is known only in the browser. An
+  accepted expression can therefore silently go invalid-at-computed-value-time
+  (IACVT) — exactly the failure the walls exist to catch.
+- Rejecting holds the author to their own declaration.
+
+The escape hatch is not a workaround, it is a **more accurate declaration**: if
+`--a` only ever holds numbers, register it as `<number>`. That is the
+registry-as-source-of-truth ruling applied consistently.
 
 ## The two walls
 
