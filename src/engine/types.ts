@@ -210,6 +210,92 @@ type SplitSpace<S extends string> = string extends S
         : ValidateClassName<Trim<S>>;
 
 // ---------------------------------------------------------------------------
+// grid-area cross-reference.
+//
+// `grid-template-areas` is a plain CSS string on the parent; `grid-area` names
+// one of its areas on a child. Neither DSL constrains the other (both are just
+// `string`), so the membership check lives here, in the structural validator,
+// which already threads the parent's css through `CSSParent` for `> child`
+// blocks. The parent's literal is split into its area-name union exactly the
+// way the runtime parses it: whitespace (spaces, newlines, tabs) separates
+// cells, each cell is an optionally quoted token, and `.` marks an empty cell
+// (no name).
+// ---------------------------------------------------------------------------
+
+type StripAreaQuotes<S extends string> = S extends `"${infer R}"`
+  ? R
+  : S extends `'${infer R}'`
+    ? R
+    : S extends `"${infer R}`
+      ? R
+      : S extends `'${infer R}`
+        ? R
+        : S extends `${infer R}"`
+          ? R
+          : S extends `${infer R}'`
+            ? R
+            : S;
+
+type NormalizeAreaWhitespace<S extends string> =
+  S extends `${infer H}\n${infer T}`
+    ? NormalizeAreaWhitespace<`${H} ${T}`>
+    : S extends `${infer H}\r${infer T}`
+      ? NormalizeAreaWhitespace<`${H} ${T}`>
+      : S extends `${infer H}\t${infer T}`
+        ? NormalizeAreaWhitespace<`${H} ${T}`>
+        : S;
+
+type SplitAreaTokens<S extends string> =
+  Trim<S> extends infer T extends string
+    ? T extends ""
+      ? never
+      : T extends `${infer Head} ${infer Tail}`
+        ? Trim<Head> | SplitAreaTokens<Tail>
+        : T
+    : never;
+
+// The area-name union a parent's `grid-template-areas` literal defines. A
+// widened `string` (no literal to read) yields `string`, constraining nothing.
+type GridAreaNames<S extends string> = string extends S
+  ? string
+  : SplitAreaTokens<
+        NormalizeAreaWhitespace<S>
+      > extends infer Token extends string
+    ? Token extends "."
+      ? never
+      : StripAreaQuotes<Token> extends infer Name extends string
+        ? Name extends ""
+          ? never
+          : Name
+        : never
+    : never;
+
+// Constrains the written `grid-area` to the parent's area names. Applies only
+// when the parent's `grid-template-areas` is a literal this node's `CSSParent`
+// actually carries (a `> child` block); an unknown or widened parent adds
+// nothing, so the check never rejects what it cannot see.
+type GridAreaConstraint<
+  CSSValue extends Record<string, any>,
+  CSSParent extends Record<string, any>,
+> = "grid-area" extends keyof CSSValue
+  ? "grid-template-areas" extends keyof CSSParent
+    ? CSSParent["grid-template-areas"] extends infer Areas
+      ? [Areas] extends [never]
+        ? {}
+        : [Areas] extends [string]
+          ? string extends Areas
+            ? {}
+            : {
+                "grid-area"?:
+                  | GridAreaNames<Areas & string>
+                  | CSSWideKeyword;
+              }
+          : {}
+      : {}
+    : {}
+  : {};
+
+// ---------------------------------------------------------------------------
 // Gate tables.
 //
 // A "gate" is a complex attribute (`display`, `position`, ...): the value the
@@ -1034,6 +1120,7 @@ type ValidateComponentCSSStructure<
           CSSAttributesConfig,
           CSSParent
         > &
+        GridAreaConstraint<CSSValue, CSSParent> &
         DependentSelfProps<
           Keywords,
           CSSSyntaxConfig,

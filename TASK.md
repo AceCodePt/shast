@@ -734,7 +734,7 @@
 
 - [x] **Tier B — one-level parent → child threading**
   - [x] Flex/grid item props require flex/grid parent (`flex` / `order` / `align-self` / `grid-column` / `grid-row`)
-  - [-] `grid-area` name validated against parent's `grid-template-areas`
+  - [x] `grid-area` name validated against parent's `grid-template-areas`
 
 - [ ] **Tier C — ancestor-chain boolean threading**
   - [ ] `position: absolute` needs a positioned ancestor

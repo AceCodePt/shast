@@ -61,6 +61,29 @@ function intersectAllowed(
   return new Set(list.filter((entry) => inheritedAllowed.has(entry)));
 }
 
+// The area names a `grid-template-areas` value defines, parsed the same way the
+// type-level `GridAreaNames` splits the literal: whitespace (spaces, newlines,
+// tabs) separates cells, each cell is an optionally quoted token, and `.` marks
+// an empty cell and contributes no name. A CSS-wide keyword names no areas.
+function parseGridAreaNames(areas: string): Set<string> {
+  const names = new Set<string>();
+  for (const rawToken of areas.split(/\s+/)) {
+    const token = rawToken.replace(/^["']+/, "").replace(/["']+$/, "");
+    if (token === "" || token === ".") continue;
+    names.add(token);
+  }
+  return names;
+}
+
+// The parent's own `grid-template-areas`, or `undefined` when it did not write
+// a literal (absent, or a CSS-wide keyword): an unknown parent must constrain
+// nothing.
+function gridAreasOf(block: Record<string, unknown>): string | undefined {
+  const value = block["grid-template-areas"];
+  if (typeof value !== "string" || isCSSWideKeyword(value)) return undefined;
+  return value;
+}
+
 export function validateComponentNode(
   node: unknown,
   keywords: SupportedKeywordsConfig,
@@ -219,6 +242,7 @@ export function validateComponentNode(
       parentGates: Record<string, string>,
       registeredQueries: Set<string>,
       inPseudoElement?: boolean,
+      parentGridAreas?: string,
     ): void => {
       // Gates the author wrote in this scope, in any order, plus the tag's
       // default `display` when they did not write one (implicit display).
@@ -321,6 +345,7 @@ export function validateComponentNode(
             parentGates,
             registeredQueries,
             nextInPseudoElement,
+            parentGridAreas,
           );
           continue;
         }
@@ -406,6 +431,14 @@ export function validateComponentNode(
             }
           }
           const nextInPseudoElement = key.startsWith("::") || !!inPseudoElement;
+          // A `> child` block and a `::` pseudo-element block resolve their
+          // grid-area against this scope's own grid-template-areas (mirroring
+          // CSSParent = CSSValue at the type level); every other nested block
+          // passes the enclosing scope's areas through unchanged.
+          const nextGridAreas =
+            key.startsWith("> ") || key.startsWith("::")
+              ? gridAreasOf(block)
+              : parentGridAreas;
           validateCSS(
             value as Record<string, unknown>,
             nextContext,
@@ -419,6 +452,7 @@ export function validateComponentNode(
             key.startsWith("> ") ? explicitGates : parentGates,
             registeredQueries,
             nextInPseudoElement,
+            nextGridAreas,
           );
         } else if (!key.startsWith("> ") && !key.startsWith("&.")) {
           const attrDef = cssAttrs[key];
@@ -470,6 +504,19 @@ export function validateComponentNode(
           if (childrenDSL !== undefined) {
             if (!isKeyword) {
               parseValueAgainstDSL(mergedKeywords, childrenDSL, value as any);
+              // `grid-area` names an area the parent's `grid-template-areas`
+              // must define. The DSL above only checks the value's shape
+              // (`<custom-ident>` is any string); this is the closed-world
+              // cross-reference on top, mirroring the type-level
+              // `GridAreaConstraint`.
+              if (key === "grid-area" && parentGridAreas !== undefined) {
+                const areaNames = parseGridAreaNames(parentGridAreas);
+                if (typeof value !== "string" || !areaNames.has(value)) {
+                  throw new Error(
+                    `CSS Error: grid-area '${String(value)}' does not match any area defined by the parent's grid-template-areas (${areaNames.size > 0 ? [...areaNames].join(", ") : "none"})`,
+                  );
+                }
+              }
             }
             continue;
           }
