@@ -105,7 +105,10 @@ deep grammar is applied on top by:
   typo, disabling the registry's key rejection.
 - `parseCSSValueAgainstDSL` in `src/engine/index.ts` — runs `parseCalc(value,
   { properties })` after the shallow DSL check whenever the written value is
-  calc-shaped.
+  calc-shaped. Gate values (`opacity`, `display`, ...) resolve through a
+  shallow pattern match first; the engine then runs the deep half on the
+  written value too, so a gate cannot bypass the calc or var walls while the
+  type wall applies them.
 
 `var()` resolution lives in `src/css/var.ts` (`VarUnitKind` at the type level,
 `varUnitKind` at runtime). calc imports var, never the reverse: var's own

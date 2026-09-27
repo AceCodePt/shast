@@ -86,23 +86,21 @@ function gridAreasOf(block: Record<string, unknown>): string | undefined {
   return value;
 }
 
-// A CSS value passes the shallow DSL first. This is the one place that
-// dispatches the deep grammars, so neither `calc.ts` nor `var.ts` has to know
-// about the other: a calc-shaped value is handed to calc's parser, and any
-// value containing a `var(` call is handed to var's resolver. The two are not
-// exclusive -- a `calc()` may contain `var()` operands, and both walls run, so
-// `calc(var(--x) * 2)` validates the expression *and* resolves `--x` against
-// the registry. Non-calc, non-var values are untouched.
-function parseCSSValueAgainstDSL(
-  keywords: SupportedKeywordsConfig,
-  dsl: string,
+// The deep half of CSS value validation: calc-shaped values are handed to
+// calc's parser, and any value containing a `var(` call is handed to var's
+// resolver. The two are not exclusive -- a `calc()` may contain `var()`
+// operands, and both run, so `calc(var(--x) * 2)` validates the expression
+// *and* resolves `--x` against the registry. Non-calc, non-var values are
+// untouched. Kept separate from the shallow DSL check so a gate value, whose
+// shallow check already ran during gate resolution, can still reach the deep
+// walls.
+function deepValidateCSSValue(
   value: unknown,
   varContext?: {
     properties: Record<string, any>;
     defined: Record<string, string>;
   },
 ): void {
-  parseValueAgainstDSL(keywords, dsl, value as never);
   if (isCalcString(value)) {
     parseCalc(
       value,
@@ -117,6 +115,20 @@ function parseCSSValueAgainstDSL(
       defined: varContext.defined,
     });
   }
+}
+
+// A CSS value passes the shallow DSL first, then the deep grammars.
+function parseCSSValueAgainstDSL(
+  keywords: SupportedKeywordsConfig,
+  dsl: string,
+  value: unknown,
+  varContext?: {
+    properties: Record<string, any>;
+    defined: Record<string, string>;
+  },
+): void {
+  parseValueAgainstDSL(keywords, dsl, value as never);
+  deepValidateCSSValue(value, varContext);
 }
 
 export function validateComponentNode(
@@ -309,13 +321,19 @@ export function validateComponentNode(
             explicitGates[key] = written;
             continue;
           }
-          explicitGates[key] = resolveGateValue(
+          const matched = resolveGateValue(
             mergedKeywords,
             key,
             cssAttrs[key],
             written,
             "CSS",
           );
+          explicitGates[key] = matched;
+          // Gate resolution only ran the shallow pattern match; a calc- or
+          // var-shaped gate value still needs the deep walls. Without this,
+          // `opacity: "calc(2px * 3px)"` would pass the runtime while the type
+          // wall rejected it.
+          deepValidateCSSValue(written, varContext);
         }
       }
       const defaultDisplay =

@@ -448,6 +448,44 @@ describe("calc", () => {
           }),
         /multiplication operands 'var\(--len-a\)' and 'var\(--len-b\)'/,
       );
+      // A gate value (`opacity`) now reaches the deep wall too, so it cannot
+      // quietly accept a bad product through the shallow `<alpha-value>` match.
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error two dimensions as an opacity gate value
+              opacity: "calc(2px * 3px)",
+            },
+          }),
+        /multiplication operands '2px' and '3px'/,
+      );
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error <alpha-value> may hold a percentage
+              opacity: "calc(var(--alpha-a) * var(--alpha-b))",
+            },
+          }),
+        /multiplication operands 'var\(--alpha-a\)' and 'var\(--alpha-b\)'/,
+      );
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error unknown custom property in a gate value
+              opacity: "var(--nope)",
+            },
+          }),
+        /unknown custom property '--nope'/,
+      );
     });
 
     test("accepts a unitless operand in a multiplicative run at runtime", () => {
