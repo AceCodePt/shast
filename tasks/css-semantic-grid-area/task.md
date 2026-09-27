@@ -1,6 +1,6 @@
 ---
 wait_human_start: true
-wait_human_merge: true
+wait_human_merge: false
 dependencies: []
 ---
 
