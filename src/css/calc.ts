@@ -19,11 +19,23 @@
 //
 // `+` and `-` must be surrounded by whitespace (CSS `calc(100%-20px)` is
 // invalid, `calc(100% - 20px)` is not). `/` requires a unitless `<number>` on
-// its right (CSS forbids dividing by a dimension). `var()` is accepted opaquely
-// in this slice; full `var()` typing is the next slice.
+// its right (CSS forbids dividing by a dimension). For every top-level `*`,
+// at least one operand in the multiplicative run must be unitless: multiplying
+// two dimensions yields a squared unit no property accepts. Consecutive `*`
+// form one run, delimited by `+`, `-` and `/`; at most one operand in a run
+// may carry a unit.
+//
+// Literal operands are classified from their written shape (`IsPlainNumber`
+// vs `IsNumberDimensionOrPercentage`). `var()` operands are classified through
+// the CSS Properties registry via `varUnitKind`, which is why this module
+// imports `var.ts` (one direction: var no longer imports calc).
 //
 // See docs/css-calc.md for the benchmark that backs the recursion depth chosen
 // here.
+
+import type { BaseCSSPropertiesConfig } from "@/css/properties-config/types.ts";
+import { varUnitKind, type VarUnitKind } from "@/css/var.ts";
+import type { SupportedKeywordsConfig } from "tsyntax";
 
 // ---------------------------------------------------------------------------
 // Shared vocabulary.
@@ -209,29 +221,104 @@ type CalcTokens<
       : [...Acc, TrimCalc<Current>]
     : CalcError<"unbalanced parentheses: unclosed '('">;
 
-type ValidateCalcOperand<S extends string> =
-  TrimCalc<S> extends infer T extends string
-    ? T extends `calc(${string})`
-      ? ValidateCalcOuter<T>
-      : T extends `var(${string})`
-        ? IsVarOperand<T> extends true
-          ? CalcOk
-          : CalcError<`invalid var() operand '${T}'`>
-        : IsNumberDimensionOrPercentage<T> extends true
-          ? CalcOk
-          : CalcError<`invalid operand '${T}'`>
-    : CalcError<"invalid operand">;
+type ValidateCalcOperand<
+  S extends string,
+  Keywords extends SupportedKeywordsConfig,
+  Syntax extends Record<string, string>,
+  Props extends BaseCSSPropertiesConfig,
+> = TrimCalc<S> extends infer T extends string
+  ? T extends `calc(${string})`
+    ? ValidateCalcOuter<T, Props, Keywords, Syntax>
+    : T extends `var(${string})`
+      ? IsVarOperand<T> extends true
+        ? CalcOk
+        : CalcError<`invalid var() operand '${T}'`>
+      : IsNumberDimensionOrPercentage<T> extends true
+        ? CalcOk
+        : CalcError<`invalid operand '${T}'`>
+  : CalcError<"invalid operand">;
 
-type ValidateCalcTokens<T extends readonly string[]> = T extends readonly []
+// The unit an operand carries, for the multiplicative-run rule. A nested
+// `calc()` has a result the flat parser does not compute, so it is `unknown`
+// and passes. A `var()` reads its registered syntax; an unregistered name is
+// `invalid` (var's own wall reports it) and also passes here. Anything else is
+// classified from its written shape, exactly as the validator does.
+type OperandUnitKind<
+  Operand extends string,
+  Props extends BaseCSSPropertiesConfig,
+> = TrimCalc<Operand> extends infer T extends string
+  ? T extends `calc(${string})`
+    ? "unknown"
+    : T extends `var(${infer Name})`
+      ? VarUnitKind<Props, TrimCalc<Name>>
+      : IsPlainNumber<T> extends true
+        ? "unitless"
+        : IsNumberDimensionOrPercentage<T> extends true
+          ? "unit-bearing"
+          : "invalid"
+  : "invalid";
+
+// One operand's contribution to its multiplicative run. `SeenUnit` is the
+// first unit-bearing operand in the run (since the last `+`, `-`, or `/`), or
+// `null`. A second unit-bearing operand fails and names both operands, in the
+// style of the division message. `unknown` and `invalid` never count as units.
+type RunStep<
+  Operand extends string,
+  Props extends BaseCSSPropertiesConfig,
+  SeenUnit extends string | null,
+> = OperandUnitKind<Operand, Props> extends "unit-bearing"
+  ? SeenUnit extends string
+    ? CalcError<`multiplication operands '${SeenUnit}' and '${TrimCalc<Operand>}' cannot both carry units; at least one must be unitless`>
+    : TrimCalc<Operand>
+  : SeenUnit;
+
+// Walk the flat operand/operator tuple and enforce the `*` rule over whole
+// runs. Runs are delimited by `+`, `-` and `/`; only consecutive `*` carry the
+// state forward, which is what makes `2px * 3 * 4px` fail even though every
+// adjacent pair passes.
+type ValidateProductRuns<
+  T extends readonly string[],
+  Props extends BaseCSSPropertiesConfig,
+  SeenUnit extends string | null = null,
+> = T extends readonly []
   ? CalcOk
   : T extends readonly [infer Only extends string]
-    ? ValidateCalcOperand<Only>
+    ? RunStep<Only, Props, SeenUnit> extends infer Step
+      ? [Step] extends [CalcError<string>]
+        ? Step
+        : CalcOk
+      : never
     : T extends readonly [
           infer Left extends string,
           infer Op extends string,
           ...infer Rest extends string[],
         ]
-      ? ValidateCalcOperand<Left> extends infer ValidLeft
+      ? RunStep<Left, Props, SeenUnit> extends infer Step
+        ? [Step] extends [CalcError<string>]
+          ? Step
+          : ValidateProductRuns<
+              Rest,
+              Props,
+              Op extends "*" ? Extract<Step, string | null> : null
+            >
+        : never
+      : CalcOk;
+
+type ValidateCalcTokens<
+  T extends readonly string[],
+  Keywords extends SupportedKeywordsConfig,
+  Syntax extends Record<string, string>,
+  Props extends BaseCSSPropertiesConfig,
+> = T extends readonly []
+  ? CalcOk
+  : T extends readonly [infer Only extends string]
+    ? ValidateCalcOperand<Only, Keywords, Syntax, Props>
+    : T extends readonly [
+          infer Left extends string,
+          infer Op extends string,
+          ...infer Rest extends string[],
+        ]
+      ? ValidateCalcOperand<Left, Keywords, Syntax, Props> extends infer ValidLeft
         ? [ValidLeft] extends [CalcOk]
           ? Op extends "/"
             ? Rest extends readonly [
@@ -239,37 +326,53 @@ type ValidateCalcTokens<T extends readonly string[]> = T extends readonly []
                 ...infer Rest2 extends string[],
               ]
               ? IsPlainNumber<Right> extends true
-                ? ValidateCalcTokens<Rest2>
+                ? ValidateCalcTokens<Rest2, Keywords, Syntax, Props>
                 : CalcError<`division right operand '${Right}' must be a number`>
               : CalcError<"division is missing a right operand">
             : Op extends "+" | "-" | "*"
               ? Rest extends readonly []
                 ? CalcError<"trailing operator with no right operand">
-                : ValidateCalcTokens<Rest>
+                : ValidateCalcTokens<Rest, Keywords, Syntax, Props>
               : CalcError<`unsupported operator '${Op}'`>
           : ValidLeft
         : never
       : CalcError<"malformed calc() expression">;
 
-type ValidateCalcOuter<S extends string> =
-  TrimCalc<S> extends `calc(${infer Inner})`
-    ? CalcTokens<Inner> extends infer Tokens
-      ? Tokens extends readonly []
-        ? CalcError<"empty calc() expression">
-        : Tokens extends readonly string[]
-          ? ValidateCalcTokens<Tokens>
-          : Tokens
-      : never
-    : CalcError<`'${TrimCalc<S>}' is not a calc() expression`>;
+type ValidateCalcOuter<
+  S extends string,
+  Props extends BaseCSSPropertiesConfig,
+  Keywords extends SupportedKeywordsConfig,
+  Syntax extends Record<string, string>,
+> = TrimCalc<S> extends `calc(${infer Inner})`
+  ? CalcTokens<Inner> extends infer Tokens
+    ? Tokens extends readonly []
+      ? CalcError<"empty calc() expression">
+      : Tokens extends readonly string[]
+        ? ValidateCalcTokens<Tokens, Keywords, Syntax, Props> extends infer Valid
+          ? [Valid] extends [CalcOk]
+            ? ValidateProductRuns<Tokens, Props>
+            : Valid
+          : never
+        : Tokens
+    : never
+  : CalcError<`'${TrimCalc<S>}' is not a calc() expression`>;
 
 // The type wall entry point. Returns the written value on success, or a
 // `CalcError` diagnostic the author cannot produce (so the assignment fails).
-export type ValidateCalc<S extends string> =
-  ValidateCalcOuter<S> extends infer Result
-    ? [Result] extends [CalcOk]
-      ? S
-      : Result
-    : never;
+//
+// `Props` / `Keywords` / `Syntax` are only needed to classify `var()` operands
+// inside a multiplicative run; they default to empty so the literal grammar can
+// be checked on its own (as the tests do).
+export type ValidateCalc<
+  S extends string,
+  Props extends BaseCSSPropertiesConfig = {},
+  Keywords extends SupportedKeywordsConfig = {},
+  Syntax extends Record<string, string> = {},
+> = ValidateCalcOuter<S, Props, Keywords, Syntax> extends infer Result
+  ? [Result] extends [CalcOk]
+    ? S
+    : Result
+  : never;
 
 // Whether a written value is a `calc()` expression at all. Used to decide when
 // the deep parser should run.
@@ -379,30 +482,62 @@ function tokenizeCalc(inner: string): string[] {
   return tokens;
 }
 
-function validateCalcOperand(token: string): void {
+// The registry slice calc needs to classify a `var()` operand. Only the
+// declared syntax is read -- a lookup, never a walk of the property's value.
+export interface CalcVarContext {
+  properties: Record<string, { syntax: string }>;
+}
+
+// Validate one operand and return the unit it carries, for the run rule. A
+// nested `calc()` result is `unknown`; an unregistered `var()` name is
+// `unknown` too, so var's own wall reports it rather than a guessed unit.
+// Throws on a malformed operand, exactly as `validateCalcOperand` did.
+function classifyCalcOperand(
+  token: string,
+  ctx?: CalcVarContext,
+): "unitless" | "unit-bearing" | "unknown" {
   const t = token.trim();
   if (isCalcOperand(t)) {
-    parseCalc(t);
-    return;
+    parseCalc(t, ctx);
+    return "unknown";
   }
   if (t.startsWith("var(")) {
     if (!isVarOperand(t)) {
       throw new CalcSyntaxError(`invalid var() operand '${t}'`);
     }
-    return;
+    if (ctx === undefined) return "unknown";
+    const name = t.slice("var(".length, -1).trim();
+    const kind = varUnitKind(name, ctx.properties);
+    return kind === "invalid" ? "unknown" : kind;
   }
-  if (isPercentage(t) || isDimension(t) || isPlainNumber(t)) return;
+  if (isPlainNumber(t)) return "unitless";
+  if (isPercentage(t) || isDimension(t)) return "unit-bearing";
   throw new CalcSyntaxError(`invalid operand '${t}'`);
 }
 
-function validateCalcTokens(tokens: readonly string[]): void {
+function validateCalcTokens(
+  tokens: readonly string[],
+  ctx?: CalcVarContext,
+): void {
   if (tokens.length === 0) {
     throw new CalcSyntaxError("empty calc() expression");
   }
+  // The first unit-bearing operand in the current multiplicative run, or null.
+  // `+`, `-` and `/` start a new run; `*` carries the state forward, so a
+  // second unit-bearing operand anywhere in the run fails and names both.
+  let seenUnit: string | null = null;
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i]!;
     if (i % 2 === 0) {
-      validateCalcOperand(token);
+      const kind = classifyCalcOperand(token, ctx);
+      if (kind === "unit-bearing") {
+        if (seenUnit !== null) {
+          throw new CalcSyntaxError(
+            `multiplication operands '${seenUnit}' and '${token.trim()}' cannot both carry units; at least one must be unitless`,
+          );
+        }
+        seenUnit = token.trim();
+      }
       continue;
     }
     if (token !== "+" && token !== "-" && token !== "*" && token !== "/") {
@@ -416,18 +551,20 @@ function validateCalcTokens(tokens: readonly string[]): void {
         `division right operand '${tokens[i + 1]}' must be a number`,
       );
     }
+    if (token !== "*") seenUnit = null;
   }
 }
 
 // Parse and validate a `calc()` value. Returns the value unchanged on success
-// so it can be threaded straight into the render pipeline.
-export function parseCalc(value: string): string {
+// so it can be threaded straight into the render pipeline. `ctx` supplies the
+// registry used to classify `var()` operands inside a multiplicative run.
+export function parseCalc(value: string, ctx?: CalcVarContext): string {
   const trimmed = value.trim();
   if (!trimmed.startsWith("calc(") || !trimmed.endsWith(")")) {
     throw new CalcSyntaxError(`'${value}' is not a calc() expression`);
   }
   const inner = trimmed.slice("calc(".length, -1);
-  validateCalcTokens(tokenizeCalc(inner));
+  validateCalcTokens(tokenizeCalc(inner), ctx);
   return value;
 }
 

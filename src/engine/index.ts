@@ -104,7 +104,12 @@ function parseCSSValueAgainstDSL(
 ): void {
   parseValueAgainstDSL(keywords, dsl, value as never);
   if (isCalcString(value)) {
-    parseCalc(value);
+    parseCalc(
+      value,
+      varContext === undefined
+        ? undefined
+        : { properties: varContext.properties },
+    );
   }
   if (varContext !== undefined && containsVar(value)) {
     validateVars(value, {

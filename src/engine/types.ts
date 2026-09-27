@@ -1066,6 +1066,8 @@ type CalcValueKeys<
   | (keyof CSSPropertiesConfig & string);
 
 type CalcConstraint<
+  Keywords extends SupportedKeywordsConfig,
+  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   CSSValue extends Record<string, any>,
@@ -1076,7 +1078,12 @@ type CalcConstraint<
   >]?: K extends keyof CSSValue
     ? CSSValue[K] extends string
       ? IsCalcString<CSSValue[K]> extends true
-        ? ValidateCalc<CSSValue[K] & string>
+        ? ValidateCalc<
+            CSSValue[K] & string,
+            CSSPropertiesConfig,
+            Keywords,
+            CSSSyntaxConfig
+          >
         : unknown
       : unknown
     : unknown;
@@ -1226,6 +1233,8 @@ type ValidateComponentCSSStructure<
         CSSValue
       > &
         CalcConstraint<
+          Keywords,
+          CSSSyntaxConfig,
           CSSAttributesConfig,
           CSSPropertiesConfig,
           CSSValue

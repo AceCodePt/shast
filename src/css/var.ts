@@ -131,6 +131,37 @@ type PropertySyntaxType<
 // accepts anything, matching the spec's "one-level resolution + runtime".
 type ContextOk<Resolved, Context> = [Resolved] extends [Context] ? true : false;
 
+// The unit a registered custom property's value carries.
+//
+// With css-properties-no-unions a registered property declares exactly one
+// syntax type. `<number>` and `<integer>` (and a bare numeric literal) are
+// unitless; every other registered syntax -- dimensions, percentages, and
+// anything built from them -- carries a unit. `invalid` is an unregistered
+// name, which var() itself already rejects.
+//
+// Classification is a lookup on the declared syntax STRING, not a walk of the
+// property's value and not a DSL expansion. That keeps it a constant-time
+// lookup for `calc()`'s multiplicative-run rule (see src/css/calc.ts).
+export type VarSyntaxUnit = "unitless" | "unit-bearing" | "invalid";
+
+type UnitlessSyntax<S extends string> =
+  TrimVar<S> extends "<number>" | "<integer>"
+    ? true
+    : TrimVar<S> extends `${number}`
+      ? true
+      : false;
+
+export type VarUnitKind<
+  Props extends BaseCSSPropertiesConfig,
+  Name extends string,
+> = Name extends keyof Props
+  ? Props[Name] extends { syntax: infer S extends string }
+    ? UnitlessSyntax<S> extends true
+      ? "unitless"
+      : "unit-bearing"
+    : "unit-bearing"
+  : "invalid";
+
 // Resolve a `var(...)` argument list to its resulting type, or a `VarError`.
 //
 // `var()` takes exactly one argument: a dashed-ident. Any top-level comma is a
@@ -263,6 +294,27 @@ export interface VarRuntimeContext {
 
 export function containsVar(value: unknown): value is string {
   return typeof value === "string" && value.includes("var(");
+}
+
+// The syntax strings that declare a unitless value. Mirrors the type-level
+// `UnitlessSyntax`; kept as data so the runtime classification is a Set lookup
+// for the common case and a numeric test for a literal syntax.
+const UNITLESS_SYNTAXES = new Set(["<number>", "<integer>"]);
+
+// The unit a registered (or locally defined) custom property carries. Used by
+// `calc()`'s multiplicative-run rule to classify a `var()` operand. An
+// unregistered name is `invalid`; calc lets the var wall report it, so it is
+// treated as unknown there rather than guessed at.
+export function varUnitKind(
+  name: string,
+  properties: Record<string, { syntax: string }>,
+): VarSyntaxUnit {
+  const entry = properties[name];
+  if (entry === undefined) return "invalid";
+  const syntax = entry.syntax.trim();
+  if (UNITLESS_SYNTAXES.has(syntax)) return "unitless";
+  if (syntax !== "" && !Number.isNaN(+syntax)) return "unitless";
+  return "unit-bearing";
 }
 
 // Resolve a registered (or locally defined) custom property for cycle

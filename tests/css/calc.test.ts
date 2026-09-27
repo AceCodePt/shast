@@ -8,7 +8,7 @@ import { htmlTagConfig } from "@/html/tag-config/index.ts";
 import { cssPropertiesConfig } from "@/css/properties-config/index.ts";
 import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
 import COMMON_ATTRIBUTES from "@/css/attribute-config/variations/common.ts";
-import { SUPPORTED_KEYWORDS } from "tsyntax";
+import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
 import {
   parseCalc,
   isCalcString,
@@ -23,6 +23,24 @@ import { assertType, type Equal } from "../type-utils.ts";
 type Valid<S extends string> = Equal<ValidateCalc<S>, S>;
 type Invalid<S extends string> = Equal<
   ValidateCalc<S> extends string ? true : false,
+  false
+>;
+
+// The same wall with the registry supplied, so `var()` operands classify
+// through their registered syntax.
+type ValidP<S extends string> = Equal<
+  ValidateCalc<S, Props, SupportedKeywords, typeof COMMON_SYNTAX>,
+  S
+>;
+type InvalidP<S extends string> = Equal<
+  ValidateCalc<
+    S,
+    Props,
+    SupportedKeywords,
+    typeof COMMON_SYNTAX
+  > extends string
+    ? true
+    : false,
   false
 >;
 
@@ -42,6 +60,16 @@ const TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, COMMON_ATTRIBUTES, {
   },
 });
 
+const PROPS = cssPropertiesConfig(SUPPORTED_KEYWORDS, COMMON_SYNTAX, {
+  "--spacing": { syntax: "<length>", inherits: false, "initial-value": "1rem" },
+  "--len-a": { syntax: "<length>", inherits: false, "initial-value": "1rem" },
+  "--len-b": { syntax: "<length>", inherits: false, "initial-value": "2rem" },
+  "--len": { syntax: "<length>", inherits: false, "initial-value": "1rem" },
+  "--num": { syntax: "<number>", inherits: false, "initial-value": "2" },
+});
+
+type Props = typeof PROPS;
+
 const { createComponent, renderComponent } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,
   htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
@@ -52,11 +80,7 @@ const { createComponent, renderComponent } = engine({
   cssSyntaxConfig: COMMON_SYNTAX,
   cssAttributesConfig: COMMON_ATTRIBUTES,
   cssPseudoClassConfig: [":hover"],
-  // `calc(var(--spacing) * 2)` is exercised below; now that var() references
-  // are resolved by the `css-var` slice, the referenced property must exist.
-  cssPropertiesConfig: cssPropertiesConfig(SUPPORTED_KEYWORDS, COMMON_SYNTAX, {
-    "--spacing": { syntax: "<length>", inherits: false, "initial-value": "1rem" },
-  }),
+  cssPropertiesConfig: PROPS,
   cssQueriesConfig: [],
 });
 
@@ -123,6 +147,33 @@ describe("calc", () => {
       assertType<Valid<"calc(calc(100% - 20px) * 2)">>();
       assertType<Valid<"calc(var(--spacing) * 2)">>();
       assertType<Valid<"calc(var(--a) + var(--b))">>();
+    });
+
+    test("rejects multiplying two unit-bearing operands", () => {
+      assertType<Invalid<"calc(2px * 3px)">>();
+      assertType<Invalid<"calc(100% * 50%)">>();
+      assertType<Invalid<"calc(2rem * 3em)">>();
+      // Runs, not adjacent pairs: the run carries the first unit to the last.
+      assertType<Invalid<"calc(2px * 3 * 4px)">>();
+    });
+
+    test("accepts a unitless operand anywhere in a multiplicative run", () => {
+      assertType<Valid<"calc(2 * 3px)">>();
+      assertType<Valid<"calc(3px * 2)">>();
+      assertType<Valid<"calc(2px * 3 * 4)">>();
+      assertType<Valid<"calc(100% * 2)">>();
+      // `+` delimits the run, so the earlier `2px` does not constrain `4px`.
+      assertType<Valid<"calc(2px * 3 + 4px)">>();
+    });
+
+    test("classifies var() operands through the registry", () => {
+      assertType<ValidP<"calc(var(--len) * 3)">>();
+      assertType<ValidP<"calc(3 * var(--len))">>();
+      assertType<ValidP<"calc(var(--num) * var(--len))">>();
+      assertType<ValidP<"calc(var(--num) * var(--num))">>();
+      assertType<InvalidP<"calc(var(--len-a) * var(--len-b))">>();
+      assertType<InvalidP<"calc(var(--len) * var(--len))">>();
+      assertType<InvalidP<"calc(2px * var(--len))">>();
     });
 
     test("rejects malformed calc", () => {
@@ -249,6 +300,21 @@ describe("calc", () => {
       assert.strictEqual(isCalcString("1px"), false);
       assert.strictEqual(isCalcString(42), false);
     });
+
+    test("classifies var() operands when given a registry", () => {
+      const ctx = {
+        properties: {
+          "--len": { syntax: "<length>" },
+          "--num": { syntax: "<number>" },
+        },
+      };
+      assert.doesNotThrow(() => parseCalc("calc(var(--len) * 2)", ctx));
+      assert.doesNotThrow(() => parseCalc("calc(var(--num) * var(--len))", ctx));
+      assert.throws(
+        () => parseCalc("calc(var(--len) * var(--len))", ctx),
+        /multiplication operands 'var\(--len\)' and 'var\(--len\)'/,
+      );
+    });
   });
 
   describe("Runtime Validation", () => {
@@ -278,6 +344,102 @@ describe("calc", () => {
       const { css } = renderComponent(comp);
       assert.ok(css.includes("width: calc(calc(100% - 20px) * 2);"));
       assert.ok(css.includes("height: calc(var(--spacing) * 2);"));
+    });
+
+    test("rejects multiplying two unit-bearing operands at runtime", () => {
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error two dimensions
+              width: "calc(2px * 3px)",
+            },
+          }),
+        /multiplication operands .* cannot both carry units/,
+      );
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error two percentages
+              width: "calc(100% * 50%)",
+            },
+          }),
+        /multiplication operands .* cannot both carry units/,
+      );
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error two dimensions
+              width: "calc(2rem * 3em)",
+            },
+          }),
+        /multiplication operands .* cannot both carry units/,
+      );
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error two dimensions in one run
+              width: "calc(2px * 3 * 4px)",
+            },
+          }),
+        /multiplication operands '2px' and '4px'/,
+      );
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error two registered <length> vars
+              width: "calc(var(--len-a) * var(--len-b))",
+            },
+          }),
+        /multiplication operands 'var\(--len-a\)' and 'var\(--len-b\)'/,
+      );
+    });
+
+    test("accepts a unitless operand in a multiplicative run at runtime", () => {
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "box",
+          innerHTML: "x",
+          css: {
+            width: "calc(2 * 3px)",
+            height: "calc(3px * 2)",
+          },
+        }),
+      );
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "box",
+          innerHTML: "x",
+          css: {
+            width: "calc(2px * 3 * 4)",
+            height: "calc(100% * 2)",
+          },
+        }),
+      );
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "box",
+          innerHTML: "x",
+          css: {
+            width: "calc(2px * 3 + 4px)",
+            height: "calc(var(--len) * 3)",
+          },
+        }),
+      );
     });
 
     test("malformed calc values are rejected at runtime", () => {
