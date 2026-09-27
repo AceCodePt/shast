@@ -30,19 +30,19 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   "<length-percentage>": "<length> | <percentage>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/angle
-  "<angle>": "`${number}${'deg' | 'rad' | 'turn' | 'grad'}` | <var>",
+  "<angle>": "`${number}${'deg' | 'rad' | 'turn' | 'grad'}` | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
   "<angle-percentage>": "<angle> | <percentage>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time
-  "<time>": "`${number}${'s' | 'ms'}` | <var>",
+  "<time>": "`${number}${'s' | 'ms'}` | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
   "<time-percentage>": "<time> | <percentage>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
-  "<frequency>": "`${number}${'Hz' | 'kHz'}` | <var>",
+  "<frequency>": "`${number}${'Hz' | 'kHz'}` | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
   "<frequency-percentage>": "<frequency> | <percentage>",
@@ -75,7 +75,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
     "`#${string}` | `rgb(${number} ${number} ${number})` | `rgb(${number} ${number} ${number} / ${number})` | `rgba(${number}, ${number}, ${number}, ${number})` | `hsl(${number} ${number}% ${number}%)` | `hsl(${number} ${number}% ${number}% / ${number})` | `hsla(${number}, ${number}%, ${number}%, ${number})` | `hwb(${number} ${number}% ${number}%)` | `hwb(${number} ${number}% ${number}% / ${number})` | `lab(${number} ${number} ${number})` | `lab(${number} ${number} ${number} / ${number})` | `lch(${number} ${number} ${number})` | `lch(${number} ${number} ${number} / ${number})` | `oklch(${number} ${number} ${number})` | `oklch(${number} ${number} ${number} / ${number})` | `oklab(${number} ${number} ${number})` | `oklab(${number} ${number} ${number} / ${number})` | `color(display-p3 ${number} ${number} ${number})` | `color(srgb ${number} ${number} ${number})` | `color(a98-rgb ${number} ${number} ${number})` | `color(prophoto-rgb ${number} ${number} ${number})` | `color(rec2020 ${number} ${number} ${number})` | 'transparent' | 'currentColor' | 'inherit' | 'initial' | 'unset' | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/alpha-value
-  "<alpha-value>": "`${number}` | `${number}%` | <var>",
+  "<alpha-value>": "`${number}` | `${number}%` | <calc> | <var>",
 
   // ── Image types ────────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/image

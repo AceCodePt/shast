@@ -1,9 +1,9 @@
 # `calc()` support: design and typecheck benchmark
 
 This slice makes `calc()` a validated CSS value: parsed at the type level, then
-parsed again at runtime, and rendered verbatim. Operands are `<number><unit>?`,
-`<percentage>`, nested `calc()`, and `var()` references resolved through the
-CSS Properties registry.
+parsed again at runtime, and rendered verbatim. Operands are `<number><unit>?`
+(length, angle, time, frequency), `<percentage>`, nested `calc()`, and `var()`
+references resolved through the CSS Properties registry.
 
 ## Grammar
 
@@ -16,7 +16,8 @@ op              := `+` | `-` | `*` | `/`
 
 - `+` and `-` must be surrounded by whitespace (`calc(100%-20px)` is invalid).
 - `/` requires a unitless `<number>` on its right (`calc(100% / 2px)` is
-  invalid; dividing by a dimension is not a thing).
+  invalid; dividing by a dimension is not a thing). Parsing continues after the
+  right operand, so `calc(10px / 2 + 10px)` is legal.
 - For every top-level `*`, at least one operand in the multiplicative **run**
   must be unitless (`calc(2px * 3px)`, `calc(100% * 50%)`, `calc(2rem * 3em)`
   are invalid: the product of two units is a squared unit no property accepts).
@@ -27,8 +28,8 @@ op              := `+` | `-` | `*` | `/`
   rejected even though every adjacent pair passes, while `calc(2px * 3 + 4px)`
   is accepted because `+` ends the run.
 - Mixed units are legal for `+` and `-` (`calc(100% - 20px)`,
-  `calc(50vw + 2rem)`); unit compatibility is the cascade's problem, not this
-  parser's.
+  `calc(50vw + 2rem)`, `calc(2s + 500ms)`); unit compatibility is the cascade's
+  problem, not this parser's.
 - `var()` operands are classified through their registered syntax: `<number>`
   and `<integer>` are unitless, every other registered syntax carries a unit.
   `calc(var(--len) * 3)` and `calc(var(--num) * var(--len))` pass;
@@ -37,6 +38,33 @@ op              := `+` | `-` | `*` | `/`
 - Nesting is just call nesting: `calc(calc(100% - 20px) * 2)`. A nested
   `calc()` result is not recomputed by this flat parser, so it is treated as an
   unknown unit and passes the run rule.
+
+### Which syntaxes admit `calc()`
+
+`calc()` is admitted on every dotted-arithmetic numeric type the shipped syntax
+configs define: `<number>`, `<percentage>`, `<length>`, `<angle>`, `<time>`,
+`<frequency>`, and `<alpha-value>` (the opacity slot). `<calc>` is a shallow
+token (`calc(${string})`); the deep parser then accepts the same dimension
+units those types declare, so the two walls never disagree on a unit.
+
+Deliberately **without** `calc()`: `<integer>` (the spec rounds a calc result to
+an integer, which this parser does not model), `<resolution>` and `<flex>`
+(neither has a `<percentage>`-composed form that could smuggle a unit into the
+deep parser, so leaving them out is consistent rather than a silent gap). Adding
+one is a one-line change to the syntax variation plus, if it introduces a new
+unit, `CalcUnit` in `src/css/calc.ts`.
+
+### Named unions and the multiplication classifier
+
+The no-unions rule (`css-properties-no-unions`) is a presence test for `|` in a
+property's `syntax` string, so a named token that *expands* to a union —
+`<alpha-value>` is `` `${number}` | `${number}%` ``, `<length-percentage>` is
+`<length> | <percentage>` — passes it without containing a pipe. For the
+`*` rule the classifier treats any such named syntax as unit-bearing, which is
+the conservative call: it rejects `calc(var(--a) * var(--b))` when both are
+`<alpha-value>` even though the two numbers would multiply legally. It never
+accepts an invalid product. A precise answer would need the classification to
+understand each named token's expansion; that is a deliberate non-goal here.
 
 ## The two walls
 
@@ -74,9 +102,11 @@ deep grammar is applied on top by:
 dependency on calc was removed when fallbacks were removed
 (`docs/css-var.md`), so the edge is one-directional and acyclic.
 
-`<calc>` is wired into `<number>`, `<percentage>`, and `<length>` across the
-`common`, `full`, and `minimal` syntax variations, so `<length-percentage>`
-(and everything built on it, e.g. `width`) admits calc.
+`<calc>` is wired into `<number>`, `<percentage>`, `<length>`, `<angle>`,
+`<time>`, `<frequency>`, and `<alpha-value>` across the `common` and `full`
+syntax variations (`minimal` has no angle/frequency/alpha tokens), so
+`<length-percentage>`, `<time-percentage>`, and everything built on them admit
+calc.
 
 ## Typecheck benchmark
 
@@ -103,15 +133,16 @@ direction for a wall to fail.
 
 ### Multiplication rule (this slice)
 
-The multiplicative-run rule was measured on its own, over `src` only (284 files —
-the benchmark config named in the task brief) with `tsc --singleThreaded --noEmit
---extendedDiagnostics`, "before" restored via `git stash`. Instantiations are
-deterministic.
+The multiplicative-run rule (together with the `/`-continuation fix and the
+added angle/time/frequency/alpha coverage) was measured over `src` only (284
+files — the benchmark config named in the task brief) with `tsc
+--singleThreaded --noEmit --extendedDiagnostics`, "before" restored via `git
+stash`. Instantiations are deterministic.
 
 | Metric         | Before    | After     | Delta  |
 | -------------- | --------- | --------- | ------ |
-| Instantiations | 535,099   | 535,423   | +324   |
-| Types          | 64,964    | 65,094    | +130   |
+| Instantiations | 535,099   | 535,401   | +302   |
+| Types          | 64,964    | 65,112    | +148   |
 | Files          | 284       | 284       | 0      |
 
 Literal operands cost nothing new: they classify on the string, reusing

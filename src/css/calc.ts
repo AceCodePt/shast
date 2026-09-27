@@ -41,10 +41,11 @@ import type { SupportedKeywordsConfig } from "tsyntax";
 // Shared vocabulary.
 // ---------------------------------------------------------------------------
 
-// Length/dimension units `calc()` may produce in this slice. The list is the
-// union of the units the `common`, `full`, and `minimal` syntax-config
-// `<length>` tokens allow, so the deep parser never rejects a unit the shallow
-// DSL accepted. `fr` covers `<flex>`.
+// Dimension units `calc()` may produce. The list covers every unit the
+// `common`, `full`, and `minimal` syntax-config numeric tokens allow (length,
+// angle, time, frequency), so the deep parser never rejects a unit the shallow
+// DSL accepted. `fr` covers `<flex>`. `<resolution>` is deliberately absent:
+// nothing wires `<calc>` into it, so its units cannot reach this parser.
 export type CalcUnit =
   | "px"
   | "rem"
@@ -87,7 +88,15 @@ export type CalcUnit =
   | "mm"
   | "Q"
   | "q"
-  | "fr";
+  | "fr"
+  | "deg"
+  | "rad"
+  | "turn"
+  | "grad"
+  | "s"
+  | "ms"
+  | "Hz"
+  | "kHz";
 
 export const CALC_UNITS: readonly CalcUnit[] = [
   "px",
@@ -132,6 +141,14 @@ export const CALC_UNITS: readonly CalcUnit[] = [
   "Q",
   "q",
   "fr",
+  "deg",
+  "rad",
+  "turn",
+  "grad",
+  "s",
+  "ms",
+  "Hz",
+  "kHz",
 ];
 
 // A diagnostic string that no author can write as a CSS value. It is a branded
@@ -326,7 +343,16 @@ type ValidateCalcTokens<
                 ...infer Rest2 extends string[],
               ]
               ? IsPlainNumber<Right> extends true
-                ? ValidateCalcTokens<Rest2, Keywords, Syntax, Props>
+                ? // Validate the right operand as an operand (it is a plain
+                  // number), then continue from the operator that follows it.
+                  // Recursing on `Rest2` here would start the next call on an
+                  // operator and misread it as an operand.
+                  ValidateCalcTokens<
+                    [Right, ...Rest2],
+                    Keywords,
+                    Syntax,
+                    Props
+                  >
                 : CalcError<`division right operand '${Right}' must be a number`>
               : CalcError<"division is missing a right operand">
             : Op extends "+" | "-" | "*"

@@ -176,6 +176,26 @@ describe("calc", () => {
       assertType<InvalidP<"calc(2px * var(--len))">>();
     });
 
+    test("accepts a division whose right side continues into addition", () => {
+      // Regression: the `/` branch used to resume on the operator after the
+      // right operand, so `+` was misread as an operand.
+      assertType<Valid<"calc(10px / 2 + 10px)">>();
+      assertType<Valid<"calc(10px / 2 - 10px)">>();
+      assertType<Valid<"calc(10px / 2 * 3px)">>();
+      assertType<Valid<"calc(10px + 10px / 2)">>();
+    });
+
+    test("accepts time, angle and frequency units", () => {
+      assertType<Valid<"calc(150ms * 2)">>();
+      assertType<Valid<"calc(2s + 500ms)">>();
+      assertType<Valid<"calc(45deg * 2)">>();
+      assertType<Valid<"calc(1turn + 90deg)">>();
+      assertType<Valid<"calc(2kHz * 2)">>();
+      // Two unit-bearing operands in one run still fail.
+      assertType<Invalid<"calc(150ms * 2s)">>();
+      assertType<Invalid<"calc(45deg * 2rad)">>();
+    });
+
     test("rejects malformed calc", () => {
       assertType<Invalid<"calc()">>();
       assertType<Invalid<"calc( )">>();
@@ -437,6 +457,34 @@ describe("calc", () => {
           css: {
             width: "calc(2px * 3 + 4px)",
             height: "calc(var(--len) * 3)",
+          },
+        }),
+      );
+    });
+
+    test("accepts a division continued by addition at runtime", () => {
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "box",
+          innerHTML: "x",
+          css: {
+            width: "calc(10px / 2 + 10px)",
+            height: "calc(10px / 2 - 10px)",
+          },
+        }),
+      );
+    });
+
+    test("accepts time and angle calc values at runtime", () => {
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "box",
+          innerHTML: "x",
+          css: {
+            "animation-duration": "calc(150ms * 2)",
+            "transition-delay": "calc(2s + 500ms)",
+            rotate: "calc(45deg * 2)",
+            opacity: "calc(0.5 * 0.5)",
           },
         }),
       );

@@ -36,19 +36,19 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   "<resolution>": "`${number}${'dpi' | 'dpcm' | 'dppx' | 'x'}` | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/angle
-  "<angle>": "`${number}${'deg' | 'rad' | 'turn' | 'grad'}` | <var>",
+  "<angle>": "`${number}${'deg' | 'rad' | 'turn' | 'grad'}` | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
   "<angle-percentage>": "<angle> | <percentage>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time
-  "<time>": "`${number}${'s' | 'ms'}` | <var>",
+  "<time>": "`${number}${'s' | 'ms'}` | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
   "<time-percentage>": "<time> | <percentage>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
-  "<frequency>": "`${number}${'Hz' | 'kHz'}` | <var>",
+  "<frequency>": "`${number}${'Hz' | 'kHz'}` | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
   "<frequency-percentage>": "<frequency> | <percentage>",
@@ -75,7 +75,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
     "`#${string}` | `rgb(${number} ${number} ${number})` | `rgb(${number} ${number} ${number} / ${number})` | `hsl(${number} ${number}% ${number}%)` | `hsl(${number} ${number}% ${number}% / ${number})` | `oklch(${number} ${number} ${number})` | `oklch(${number} ${number} ${number} / ${number})` | `color(display-p3 ${number} ${number} ${number})` | 'transparent' | 'currentColor' | 'inherit' | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/alpha-value
-  "<alpha-value>": "`${number}` | `${number}%` | <var>",
+  "<alpha-value>": "`${number}` | `${number}%` | <calc> | <var>",
 
   // ── MDN image type ─────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/image

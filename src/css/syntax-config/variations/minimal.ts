@@ -46,7 +46,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
     "'normal' | 'bold' | 'bolder' | 'lighter' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time
-  "<time>": "`${number}${'s' | 'ms'}` | <var>",
+  "<time>": "`${number}${'s' | 'ms'}` | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
   "<time-percentage>": "<time> | <percentage>",
