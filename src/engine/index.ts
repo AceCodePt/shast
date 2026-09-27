@@ -32,6 +32,7 @@ import { renderCSSPropertiesConfig } from "@/engine/render/properties-config.ts"
 import { renderComponent } from "@/engine/render/render-component.ts";
 import { CSS_IDENTIFIER_REGEX as CSS_CLASS_NAME } from "@/css/ident.ts";
 import { isCSSWideKeyword } from "@/css/wide-keyword.ts";
+import { isCalcString, parseCalc } from "@/css/calc.ts";
 import {
   htmlSlotDSL,
   isGateDefinition,
@@ -82,6 +83,20 @@ function gridAreasOf(block: Record<string, unknown>): string | undefined {
   const value = block["grid-template-areas"];
   if (typeof value !== "string" || isCSSWideKeyword(value)) return undefined;
   return value;
+}
+
+// A CSS value passes the shallow DSL first. When the value is a `calc()`
+// expression the deep calc grammar parser runs on top, exactly as the type-level
+// `CalcConstraint` does. Non-calc values are untouched.
+function parseCSSValueAgainstDSL(
+  keywords: SupportedKeywordsConfig,
+  dsl: string,
+  value: unknown,
+): void {
+  parseValueAgainstDSL(keywords, dsl, value as never);
+  if (isCalcString(value)) {
+    parseCalc(value);
+  }
 }
 
 export function validateComponentNode(
@@ -466,7 +481,7 @@ export function validateComponentNode(
 
           if (typeof attrDef === "string") {
             if (!isKeyword) {
-              parseValueAgainstDSL(mergedKeywords, attrDef, value as any);
+              parseCSSValueAgainstDSL(mergedKeywords, attrDef, value);
               // `animation-name` / `animation` must reference a registered
               // keyframe. The base DSL above still validates the value's shape;
               // this is the closed-world reference check on top.
@@ -489,21 +504,21 @@ export function validateComponentNode(
               typeof propDef === "object" &&
               typeof propDef.syntax === "string"
             ) {
-              parseValueAgainstDSL(mergedKeywords, propDef.syntax, value as any);
+              parseCSSValueAgainstDSL(mergedKeywords, propDef.syntax, value);
             }
             continue;
           }
           const selfDSL = slotDSL(cssAttrs, selfGates, key, "self");
           if (selfDSL !== undefined) {
             if (!isKeyword) {
-              parseValueAgainstDSL(mergedKeywords, selfDSL, value as any);
+              parseCSSValueAgainstDSL(mergedKeywords, selfDSL, value);
             }
             continue;
           }
           const childrenDSL = slotDSL(cssAttrs, parentGates, key, "children");
           if (childrenDSL !== undefined) {
             if (!isKeyword) {
-              parseValueAgainstDSL(mergedKeywords, childrenDSL, value as any);
+              parseCSSValueAgainstDSL(mergedKeywords, childrenDSL, value);
               // `grid-area` names an area the parent's `grid-template-areas`
               // must define. The DSL above only checks the value's shape
               // (`<custom-ident>` is any string); this is the closed-world

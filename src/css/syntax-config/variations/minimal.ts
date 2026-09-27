@@ -6,13 +6,18 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   "<integer>": "`${bigint}`",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/number
-  "<number>": "`${number}`",
+  "<number>": "`${number}` | <calc>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/percentage
-  "<percentage>": "`${number}%`",
+  "<percentage>": "`${number}%` | <calc>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length
-  "<length>": "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh'}`",
+  "<length>": "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh'}` | <calc>",
+
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/calc
+  // Shallow at the DSL level; `CalcConstraint` in the engine parses the
+  // written value against the real grammar (src/css/calc.ts).
+  "<calc>": "`calc(${string})`",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
   "<color>":

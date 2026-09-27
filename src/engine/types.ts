@@ -17,6 +17,7 @@ import type {
   ContainsIllegalCharacter,
 } from "@/css/ident.ts";
 import type { DSLInfer, SupportedKeywordsConfig } from "tsyntax";
+import type { IsCalcString, ValidateCalc } from "@/css/calc.ts";
 import type {
   BaseHTMLAttributesConfig,
   BaseHTMLAttributeComplexValue,
@@ -1034,6 +1035,52 @@ type AnimationKeyframeConstraints<
           : {}
         : {});
 
+// ---------------------------------------------------------------------------
+// calc() deep validation.
+//
+// The syntax config admits calc() shallowly (`<calc>` resolves to
+// `calc(${string})`), which keeps the inferred property types a plain union but
+// would accept malformed expressions. This member narrows a written calc()
+// value to the real grammar via `ValidateCalc`.
+//
+// It maps over the *known* CSS value keys -- top-level string attributes, every
+// key a gate can unlock on `self`/`children`, and registered custom properties
+// -- and reads the written value back out of `CSSValue`. Mapping over the
+// written keys instead would turn every excess-property key (a typo, an
+// undeclared pseudo-class) into a declared one and silently disable the
+// registry's key rejection; all of these key sets are already declared by the
+// other members, so this adds no new key.
+//
+// A malformed value yields a branded `CalcError`, which no string is assignable
+// to, so the deep check fails where the shallow one passed. Non-calc values
+// contribute `unknown` and change no decision.
+// ---------------------------------------------------------------------------
+type CalcValueKeys<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  CSSPropertiesConfig extends BaseCSSPropertiesConfig,
+> =
+  | KeysMatching<CSSAttributesConfig, string>
+  | GateKeys<CSSAttributesConfig>
+  | AllLockableKeys<CSSAttributesConfig>
+  | (keyof CSSPropertiesConfig & string);
+
+type CalcConstraint<
+  CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
+  CSSPropertiesConfig extends BaseCSSPropertiesConfig,
+  CSSValue extends Record<string, any>,
+> = {
+  [K in CalcValueKeys<
+    CSSAttributesConfig,
+    CSSPropertiesConfig
+  >]?: K extends keyof CSSValue
+    ? CSSValue[K] extends string
+      ? IsCalcString<CSSValue[K]> extends true
+        ? ValidateCalc<CSSValue[K] & string>
+        : unknown
+      : unknown
+    : unknown;
+};
+
 type ValidateComponentCSSStructure<
   Keywords extends SupportedKeywordsConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
@@ -1113,6 +1160,11 @@ type ValidateComponentCSSStructure<
         CSSKeyframesConfig,
         CSSValue
       > &
+        CalcConstraint<
+          CSSAttributesConfig,
+          CSSPropertiesConfig,
+          CSSValue
+        > &
         CSSNonSelfConfig<Keywords, CSSSyntaxConfig, CSSAttributesConfig> &
         DependentChildrenProps<
           Keywords,
