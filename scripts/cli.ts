@@ -63,13 +63,6 @@ const COPY_FILES = ["types.ts", "index.ts"] as const;
 // tsyntax files vendored under `<dest>/tsyntax/`.
 const TSYNTAX_FILES = ["index.ts", "types.ts"] as const;
 
-// The vendored tree is raw `.ts` resolved with NodeNext-style rules, which pick
-// ESM vs CommonJS from the nearest `package.json`. A destination without one is
-// read as CommonJS, so `verbatimModuleSyntax` consumers get a wall of TS1295
-// errors on every vendored file. This marker makes the tree self-describing.
-const DEST_PACKAGE_JSON = "package.json";
-const DEST_PACKAGE_JSON_CONTENT = `${JSON.stringify({ type: "module" }, null, 2)}\n`;
-
 const REPO_ROOT = fileURLToPath(new URL("..", import.meta.url));
 
 interface PlannedFile {
@@ -81,21 +74,60 @@ interface PlannedFile {
   sourceRel: string | null;
 }
 
-/** A planned file whose contents are generated rather than copied. */
-interface GeneratedFile {
-  destRel: string;
-  content: string;
+/** Thrown when the destination would be resolved as CommonJS. */
+export class CommonJSDestinationError extends Error {
+  readonly dest: string;
+  readonly nearestPackageJson: string | null;
+
+  constructor(dest: string, nearestPackageJson: string | null) {
+    super(
+      `The vendored tree is ESM, but ${dest} would be resolved as CommonJS.\n` +
+        (nearestPackageJson === null
+          ? `  No package.json was found above ${dest}.\n`
+          : `  The nearest package.json is ${nearestPackageJson}, which has no "type": "module".\n`) +
+        `  Vendoring there gives every vendored file a TS1295 "cannot be written in\n` +
+        `  a CommonJS file under 'verbatimModuleSyntax'" error when you run tsc.\n` +
+        `\n` +
+        `  Either vendor into an ESM subtree, or add {\n` +
+        `    "type": "module"\n` +
+        `  } to that package.json yourself.`,
+    );
+    this.name = "CommonJSDestinationError";
+    this.dest = dest;
+    this.nearestPackageJson = nearestPackageJson;
+  }
+}
+
+/** The nearest `package.json` at or above `dir`, if any. */
+function nearestPackageJson(dir: string): string | null {
+  let current = path.resolve(dir);
+  for (;;) {
+    const candidate = path.join(current, "package.json");
+    if (existsSync(candidate)) return candidate;
+    const parent = path.dirname(current);
+    if (parent === current) return null;
+    current = parent;
+  }
+}
+
+/** Whether `dir` is resolved as ESM by the nearest `package.json`. */
+export function resolvesAsESM(dir: string): boolean {
+  const nearest = nearestPackageJson(dir);
+  if (nearest === null) return false;
+  try {
+    const parsed: unknown = JSON.parse(readFileSync(nearest, "utf8"));
+    return (
+      typeof parsed === "object" &&
+      parsed !== null &&
+      (parsed as { type?: unknown }).type === "module"
+    );
+  } catch {
+    return false;
+  }
 }
 
 function toPosix(value: string): string {
   return value.split(path.sep).join("/");
-}
-
-/** The generated `package.json` that pins the destination to ESM. */
-export function generatedFiles(): GeneratedFile[] {
-  return [
-    { destRel: DEST_PACKAGE_JSON, content: DEST_PACKAGE_JSON_CONTENT },
-  ];
 }
 
 /**
@@ -198,23 +230,24 @@ export function rewriteImports(source: string, fromDestRel: string): string {
 /**
  * Vendor the engine, every config variation and tsyntax into `dest`.
  *
- * Throws {@link ExistingDestinationError} when any planned file already exists
- * and `force` is not set. Returns the sorted list of written files.
+ * Throws {@link CommonJSDestinationError} when `dest` would be resolved as
+ * CommonJS, and {@link ExistingDestinationError} when any planned file already
+ * exists and `force` is not set. Returns the sorted list of written files.
  */
 export function add(options: AddOptions): AddResult {
   const force = options.force ?? false;
   const dest = path.resolve(options.dest);
   const planned = planVendor(options);
-  const generated = generatedFiles();
+
+  if (!resolvesAsESM(dest)) {
+    throw new CommonJSDestinationError(dest, nearestPackageJson(dest));
+  }
 
   const copiedRels = planned.map((file) => file.destRel);
-  const generatedRels = generated.map((file) => file.destRel);
 
-  // A `package.json` the consumer already had is their file; it never counts as
-  // a collision and is never overwritten, `--force` included.
-  const collisions = copiedRels.concat(
-    generatedRels.filter((rel) => rel !== DEST_PACKAGE_JSON),
-  ).filter((rel) => existsSync(path.join(dest, rel)));
+  const collisions = copiedRels.filter((rel) =>
+    existsSync(path.join(dest, rel)),
+  );
 
   if (collisions.length > 0 && !force) {
     throw new ExistingDestinationError(collisions);
@@ -230,27 +263,21 @@ export function add(options: AddOptions): AddResult {
     writeFileSync(target, content);
   }
 
-  const written = [...copiedRels];
-  for (const file of generated) {
-    const target = path.join(dest, file.destRel);
-    if (existsSync(target)) continue;
-    mkdirSync(path.dirname(target), { recursive: true });
-    writeFileSync(target, file.content);
-    written.push(file.destRel);
-  }
-
   return {
     dest,
-    written: written.sort((a, b) => (a < b ? -1 : 1)),
+    written: copiedRels.sort((a, b) => (a < b ? -1 : 1)),
   };
 }
 
-const USAGE = `Usage: pnpm shast add [dest] [--force]
+const USAGE = `Usage: shast add [dest] [--force]
 
 Vendor shast's engine, config variations and tsyntax into a consumer tree.
 
   dest      destination directory (default: src/shast)
-  --force   overwrite files that already exist in the destination`;
+  --force   overwrite files that already exist in the destination
+
+The destination must resolve as ESM (its nearest package.json needs
+"type": "module"); vendoring into a CommonJS subtree is rejected.`;
 
 interface ParsedArgs {
   dest: string;
@@ -308,7 +335,10 @@ export function main(argv: readonly string[]): number {
     );
     return 0;
   } catch (error) {
-    if (error instanceof ExistingDestinationError) {
+    if (
+      error instanceof ExistingDestinationError ||
+      error instanceof CommonJSDestinationError
+    ) {
       console.error(error.message);
       return 1;
     }

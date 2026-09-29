@@ -1,9 +1,14 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
-import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
+import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { add, ExistingDestinationError, main } from "../../scripts/cli.ts";
+import {
+  add,
+  CommonJSDestinationError,
+  ExistingDestinationError,
+  main,
+} from "../../scripts/cli.ts";
 
 const VARIANTS = ["minimal", "common", "full"] as const;
 
@@ -17,10 +22,19 @@ const VARIATION_DIRS = [
   "css/keyframes-config/variations",
 ] as const;
 
+/**
+ * A scratch destination under an ESM package root, mirroring a real consumer
+ * (`shast add` refuses to vendor into a CommonJS subtree).
+ */
 function tempDest(): string {
   const root = mkdtempSync(path.join(os.tmpdir(), "shast-vendor-test-"));
   process.on("exit", () => rmSync(root, { recursive: true, force: true }));
-  return root;
+  const dest = path.join(root, "shast");
+  writeFileSync(
+    path.join(root, "package.json"),
+    JSON.stringify({ type: "module" }),
+  );
+  return dest;
 }
 
 function read(dest: string, rel: string): string {
@@ -50,13 +64,9 @@ describe("shast add: copy set", () => {
       assert.ok(existsSync(path.join(dest, rel)), `expected ${rel} to exist`);
     }
 
-    // The tree is vendored as ESM: the entry is side-effect free and the
-    // package's own type augmentation is gone, so the tree depends on nothing
-    // outside `tsyntax` and `@total-typescript/ts-reset` must not be needed.
-    assert.deepStrictEqual(
-      JSON.parse(read(dest, "package.json")),
-      { type: "module" },
-    );
+    // The tree carries no generated package.json: the module format is the
+    // consumer's to declare, and `add` refuses a CommonJS destination outright.
+    assert.ok(!existsSync(path.join(dest, "package.json")));
     assert.ok(!existsSync(path.join(dest, "env.d.ts")));
 
     // No docs, tests, evals or resolved-format leakage.
@@ -182,6 +192,72 @@ describe("shast add: usage", () => {
       console.error = originalError;
     }
     assert.ok(!existsSync(path.join(dest, "index.ts")));
+  });
+});
+
+describe("shast add: CommonJS destination", () => {
+  test("a destination with no package.json above it is rejected, nothing written", () => {
+    const root = mkdtempSync(path.join(os.tmpdir(), "shast-cjs-test-"));
+    process.on("exit", () => rmSync(root, { recursive: true, force: true }));
+    const dest = path.join(root, "shast");
+
+    assert.throws(
+      () => add({ dest }),
+      (error: unknown) => {
+        assert.ok(error instanceof CommonJSDestinationError);
+        assert.strictEqual(error.dest, dest);
+        assert.strictEqual(error.nearestPackageJson, null);
+        assert.ok(error.message.includes('"type": "module"'));
+        return true;
+      },
+    );
+    assert.ok(!existsSync(path.join(dest, "index.ts")));
+  });
+
+  test("a CommonJS package.json above the destination is rejected", () => {
+    const root = mkdtempSync(path.join(os.tmpdir(), "shast-cjs-test-"));
+    process.on("exit", () => rmSync(root, { recursive: true, force: true }));
+    const pkg = path.join(root, "package.json");
+    writeFileSync(pkg, JSON.stringify({ name: "app" }));
+    const dest = path.join(root, "src", "shast");
+
+    assert.throws(
+      () => add({ dest }),
+      (error: unknown) => {
+        assert.ok(error instanceof CommonJSDestinationError);
+        assert.strictEqual(error.nearestPackageJson, pkg);
+        return true;
+      },
+    );
+  });
+
+  test("an ESM package.json above the destination is accepted", () => {
+    const root = mkdtempSync(path.join(os.tmpdir(), "shast-esm-test-"));
+    process.on("exit", () => rmSync(root, { recursive: true, force: true }));
+    writeFileSync(
+      path.join(root, "package.json"),
+      JSON.stringify({ name: "app", type: "module" }),
+    );
+    const dest = path.join(root, "src", "shast");
+
+    const result = add({ dest });
+    assert.ok(result.written.includes("index.ts"));
+  });
+
+  test("main reports the CommonJS destination and exits 1", () => {
+    const root = mkdtempSync(path.join(os.tmpdir(), "shast-cjs-test-"));
+    process.on("exit", () => rmSync(root, { recursive: true, force: true }));
+    const originalError = console.error;
+    let message = "";
+    console.error = (value: unknown) => {
+      message = String(value);
+    };
+    try {
+      assert.strictEqual(main(["add", path.join(root, "shast")]), 1);
+    } finally {
+      console.error = originalError;
+    }
+    assert.ok(message.includes("CommonJS"));
   });
 });
 

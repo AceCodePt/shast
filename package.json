@@ -24,7 +24,8 @@
 		"shast": "npx tsx scripts/cli.ts",
 		"test": "tsc --noEmit && node --import=tsx/esm --test",
 		"test:watch": "node --import=tsx/esm --test --watch",
-		"example": "npx tsx examples/basic.ts"
+		"example": "npx tsx examples/basic.ts",
+		"playground": "npx tsx examples/playground.ts"
 	},
 	"keywords": [
 		"html",
