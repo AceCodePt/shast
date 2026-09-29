@@ -31,9 +31,10 @@ and to make the report precise. Two words carry the whole idea:
   the parent's grid-template-areas (a, b)`. Diagnostic quality is treated as
   an interface, not an accident.
 
-The rest of this README is that claim, demonstrated. Every snippet in it is a
-runnable excerpt of [`examples/playground.ts`](examples/playground.ts); run
-`pnpm playground` to see all of it, output included.
+The rest of this README is that claim, demonstrated. The worked component and
+every failure example below are excerpts of
+[`examples/playground.ts`](examples/playground.ts); run `pnpm playground` to
+see all of it, output included.
 
 ## Install
 
@@ -297,6 +298,9 @@ it is computed), and `grid-area: "heading"` (a name the parent's literal
 `grid-template-areas` declares). Break any of them and the component does not
 compile - and if the types are bypassed, it does not render.
 
+(The playground registers two further tokens so the `var()` cycle demo below
+has something to point at each other; they are omitted from the output above.)
+
 ## Every mistake, and what the two walls say
 
 Each row is a mistake plain CSS accepts and the browser reveals only at
@@ -348,25 +352,33 @@ img without src                            a required attribute omitted
 
 ```
 tag: "foo"                                 a tag outside the registry
-  tsc     Type '"foo"' is not assignable to type '"a" | "article" | ... | "ul"'
+  tsc     Type '"foo"' is not assignable to type
+          '"a" | "article" | "br" | … | "ul"'.
   server  Structural Error: '<foo>' is not a recognized configuration tag in your registry
 
-onclick="..."                              an attribute outside the registry
-  tsc     'onclick' does not exist in type '{ readonly class?: string | undefined; ... }'
+onclick="…"                                an attribute outside the registry
+  tsc     Object literal may only specify known properties, and 'onclick'
+          does not exist in type '{ readonly class?: string | undefined; … }'.
   server  Attribute Error: Property 'onclick' is not a valid attribute for <div>
           or the Global configuration registry
 
 colr                                       a CSS property outside the registry
-  tsc     'colr' does not exist in type '{ ... }'. Did you mean to write 'color'?
+  tsc     Object literal may only specify known properties, but 'colr' does not
+          exist in type '{ … }'. Did you mean to write 'color'?
   server  CSS Error: 'colr' is not a recognized CSS attribute or property
 
 target: "_blah"                            a value outside an attribute's DSL
-  tsc     Type '"_blah"' is not assignable to type '"_blank" | "_parent" | "_self" | "_top" | undefined'
-  server  Value of type "string" does not match DSL "'_self' | '_blank' | '_parent' | '_top' | undefined"
+  tsc     Type '"_blah"' is not assignable to type
+          '"_blank" | "_parent" | "_self" | "_top" | undefined'.
+  server  Value of type "string" does not match DSL
+          "'_self' | '_blank' | '_parent' | '_top' | undefined"
 
 text-transform: "capitilize"               a value outside a property's DSL
-  tsc     Type '"capitilize"' is not assignable ... . Did you mean '"capitalize"'?
-  server  Value of type "string" does not match DSL "'none' | 'uppercase' | 'lowercase' | 'capitalize'"
+  tsc     Type '"capitilize"' is not assignable to type
+          '"capitalize" | "lowercase" | "none" | "uppercase" | CSSWideKeyword'.
+          Did you mean '"capitalize"'?
+  server  Value of type "string" does not match DSL
+          "'none' | 'uppercase' | 'lowercase' | 'capitalize'"
 ```
 
 ### Conditional disclosure (what unlocks what)
@@ -374,11 +386,12 @@ text-transform: "capitilize"               a value outside a property's DSL
 ```
 gap without display                        a property nothing in context unlocks
   tsc     Type '"1rem"' is not assignable to type
-          '"'gap' requires display: flex | grid | inline-flex | inline-grid" & Locked'
+          '"'gap' requires display: flex | grid | inline-flex | inline-grid" & Locked'.
   server  CSS Error: 'gap' requires display: flex | inline-flex | grid | inline-grid
 
 input[type=text] + checked                 an attribute nothing on the element unlocks
-  tsc     Type 'true' is not assignable to type '"'checked' requires type: checkbox | radio" & Locked'
+  tsc     Type 'true' is not assignable to type
+          '"'checked' requires type: checkbox | radio" & Locked'.
   server  Attribute Error: 'checked' requires type: checkbox | radio
 ```
 
@@ -387,17 +400,19 @@ input[type=text] + checked                 an attribute nothing on the element u
 ```
 width: "calc(2s + 3px)"                    operands of incompatible dimensions
   tsc     Type '"calc(2s + 3px)"' is not assignable to type
-          'CalcError<"addition operands '2s' and '3px' have incompatible types; ...">'
+          'CalcError<"addition operands '2s' and '3px' have incompatible types;
+          both must have the same type, or one must be a percentage">'.
   server  Invalid calc() value: addition operands '2s' and '3px' have incompatible
           types; both must have the same type, or one must be a percentage
 
 width: "calc(2Hz * 2)"                     a legal calc whose result misses the property's slot
   tsc     Type '"calc(2Hz * 2)"' is not assignable to type
-          'CalcError<"calc() result type 'frequency' is not valid for this property">'
+          'CalcError<"calc() result type 'frequency' is not valid for this property">'.
   server  Invalid calc() value: calc() result type 'frequency' is not valid for this property
 
 color: "var(--spacng)"                     an unregistered custom property
-  tsc     Type '"var(--spacng)"' is not assignable to type '("currentColor" | ... )'
+  tsc     Type '"var(--spacng)"' is not assignable to type
+          '("currentColor" | "transparent" | `#${string}` | … )'.
   server  Invalid var() value: unknown custom property '--spacng';
           register it in the CSS Properties config
 
@@ -409,13 +424,15 @@ color: "var(--spacng)"                     an unregistered custom property
 
 ```
 "@media (width < 700px)"                   an unregistered query never applies
-  tsc     '"@media (width < 700px)"' does not exist in type '{ ... }'
+  tsc     Object literal may only specify known properties, and
+          '"@media (width < 700px)"' does not exist in type '{ … }'.
   server  CSS Error: Query '@media (width < 700px)' is not registered in the
-          cssQueriesConfig. Registered queries are: @media (width < 768px), ...
+          cssQueriesConfig. Registered queries are: @media (width < 768px), …
 
 animation: "fadeIn 1s"                     a keyframe that does not exist
   tsc     Type '"fadeIn 1s linear"' is not assignable to type
-          '"Invalid animation shorthand 'fadeIn 1s linear': must reference a registered keyframe (fade | pulse | slide)"'
+          '"Invalid animation shorthand 'fadeIn 1s linear': must reference a
+          registered keyframe (fade | pulse | slide)"'.
   server  CSS Error: 'animation' value 'fadeIn 1s linear' does not reference a
           registered keyframe. Registered keyframes are: fade, pulse, slide
 ```
@@ -424,7 +441,8 @@ animation: "fadeIn 1s"                     a keyframe that does not exist
 
 ```
 child grid-area not in the parent's grid-template-areas
-  tsc     Type '"header"' is not assignable to type '"a" | "b" | "inherit" | ...'
+  tsc     Type '"header"' is not assignable to type
+          '"a" | "b" | "inherit" | … | undefined'.
   server  CSS Error: grid-area 'header' does not match any area defined by the
           parent's grid-template-areas (a, b)
 ```
@@ -473,10 +491,10 @@ dimension, and a multiplicative run may carry at most one unit. The result
 must match the property's slot.
 
 ```ts
-display: "block";
-width: "calc(100% - var(--space))";  // percentage is the + / - wildcard; the slot is <length-percentage>
+display: "grid";
+width: "calc(100% - var(--space))";  // <length-percentage> slot; percentage is the + / - wildcard
 gap: "calc(var(--space) * 2)";       // <length> * <number> -> <length>
-font-size: "calc(var(--space) * 3)"; // fed into a <length-percentage> slot
+font-size: "calc(var(--space) * 3)"; // <length-percentage> slot
 ```
 
 ### Registered queries and keyframes
@@ -541,8 +559,9 @@ known, validity is narrowed there.
 walls. Components are JSON-shaped (which models emit far more reliably than
 JSX), and every emission is validated against a registry *you* define. A
 model cannot invent a tag, attribute, design token, or custom property -
-`tsc` rejects it with a pointed message (`'colr' is not supported`, `'<p>'
-is not a permitted child of <ul>`), and a runtime backstop catches anything
+`tsc` rejects it with a pointed message (`'colr' is not a recognized CSS
+attribute or property`, `'<p>' is not a permitted child of <ul>`), and a
+runtime backstop catches anything
 that slips past the types (`as any`, generated code, no `tsc` in the loop).
 Because rendering is server-side, that backstop runs exactly where it
 matters: invalid generated components fail **on your server, before HTML is
