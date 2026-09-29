@@ -13,6 +13,7 @@
 		"test": "tsc --noEmit && node --import=tsx/esm --test",
 		"test:watch": "node --import=tsx/esm --test --watch",
 		"test:conformance": "CONFORMANCE=1 node --import=tsx/esm --test tests/text-renderer/conformance.test.ts",
+		"example": "npx tsx examples/basic.ts",
 		"tr:grid": "npx tsx text-renderer/example.ts",
 		"tr:compare": "npx tsx text-renderer/compare.ts",
 		"tr:html": "npx tsx text-renderer/emit-html.ts",

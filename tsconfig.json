@@ -20,11 +20,11 @@
       "node"
     ],
     // Other Outputs
+    // Raw TypeScript is the distribution format: the package is consumed as
+    // source (and vendored into a consumer tree via `pnpm shast add`), so there
+    // is no emit step. `allowImportingTsExtensions` requires `noEmit`.
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
     // Stricter Typechecking Options
     "strictBindCallApply": true,
     "pretty": true,
