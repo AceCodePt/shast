@@ -15,7 +15,7 @@ import {
   scopeAttribute,
   semanticAttribute,
 } from "./collect-rules.ts";
-import { escapeAttributeValue } from "./escape.ts";
+import { escapeAttributeValue, escapeText } from "./escape.ts";
 
 function isRecordInnerHTML(
   innerHTML: unknown,
@@ -145,16 +145,18 @@ function renderHTMLNode(
     "innerHTML" in node && node["innerHTML"] ? node["innerHTML"] : undefined;
   let childrenHTML = "";
 
+  // Every string below is a text node and is encoded; only nested components
+  // emit markup. See `escapeText` for why there is no raw escape hatch.
   if (typeof innerHTML === "string") {
-    childrenHTML = innerHTML;
+    childrenHTML = escapeText(innerHTML);
   } else if (isRecordInnerHTML(innerHTML)) {
     for (const [key, child] of Object.entries(innerHTML)) {
       if (typeof child === "string") {
-        childrenHTML += child;
+        childrenHTML += escapeText(child);
       } else if (Array.isArray(child)) {
         for (const item of child) {
           if (typeof item === "string") {
-            childrenHTML += item;
+            childrenHTML += escapeText(item);
           } else if (item !== null && typeof item === "object") {
             childrenHTML += renderHTMLNode(
               tagConfig,

@@ -790,6 +790,24 @@ What that means concretely:
   would reject correct code and breed escape hatches; permitting
   optimistically would quietly weaken the guarantee. shast chooses to not
   check what it cannot check honestly.
+- **Out of scope, permanently: raw HTML strings.** Every string you write is
+  text. `innerHTML: "<b>hi</b>"` renders the literal characters `<b>hi</b>`,
+  not bold text - because a string is a *text node*, and the registry enforces
+  that a string child is only legal where the tag declares `"#text"`. Markup is
+  expressed by nesting: `innerHTML: { b: { tag: "b", innerHTML: "hi" } }`.
+  There is no raw/unescaped mode.
+
+  This is not a missing feature, it is the premise. Every guarantee here -
+  permitted children, `> child` selectors, cascade resolution, the resolved
+  page description the conformance harness checks against the browser - is
+  derived from walking the component tree. A raw string is a subtree the
+  renderer emits but the tree cannot see, so selectors could not target it,
+  the structure checker could not validate it, and "the description matches
+  the DOM" would stop being provable. Supporting raw HTML would mean shipping
+  a hole in exactly the thing this format exists to make impossible.
+
+  If you are porting existing HTML, that is the work: convert each element
+  into a nested component. The type system will walk you through it.
 
 If you adopt shast, you will still ship visual regressions that depend on
 facts outside the component tree. The claim is narrower and therefore

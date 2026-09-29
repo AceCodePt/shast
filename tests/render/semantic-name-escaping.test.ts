@@ -3,6 +3,7 @@ import assert from "node:assert";
 import { renderComponent } from "@/engine/render/render-component.ts";
 import {
   escapeAttributeValue,
+  escapeText,
   semanticAttribute,
 } from "@/engine/render/escape.ts";
 import type { BaseHTMLTagConfig } from "@/html/tag-config/types.ts";
@@ -77,6 +78,28 @@ describe("escapeAttributeValue escaping", () => {
   test("values needing no encoding are byte-identical", () => {
     assert.strictEqual(escapeAttributeValue("/x?y=1"), "/x?y=1");
     assert.strictEqual(escapeAttributeValue(""), "");
+  });
+});
+
+describe("escapeText escaping", () => {
+  test("encodes the characters that would start a tag or a reference", () => {
+    assert.strictEqual(escapeText("<b>&</b>"), "&lt;b&gt;&amp;&lt;/b&gt;");
+  });
+
+  test("quotes and apostrophes are left alone", () => {
+    // Encoding them would turn every apostrophe in prose into `&#39;`, and
+    // neither character can change how a text node parses.
+    assert.strictEqual(escapeText(`it's "fine"`), `it's "fine"`);
+  });
+
+  test("the ampersand of an entity is not double-encoded", () => {
+    assert.strictEqual(escapeText("<"), "&lt;");
+    assert.strictEqual(escapeText("&lt;"), "&amp;lt;");
+  });
+
+  test("plain text is byte-identical", () => {
+    assert.strictEqual(escapeText("hello world"), "hello world");
+    assert.strictEqual(escapeText(""), "");
   });
 });
 

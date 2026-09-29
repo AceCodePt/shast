@@ -159,13 +159,38 @@ describe("renderComponent", () => {
       assert.strictEqual(html, `<a title="&amp;amp;"></a>`);
     });
 
-    test("innerHTML text is not encoded (it carries markup)", () => {
+    test("innerHTML text is encoded, not emitted as markup", () => {
+      // A string under `innerHTML` is a text node: markup is expressed by
+      // nesting a component, never by a raw string. See `escapeText`.
       const { html } = render({
         tag: "div",
         innerHTML: { bold: { tag: "h1", innerHTML: "<em>hi</em>" } },
       });
-      assert.ok(html.includes("<h1><em>hi</em></h1>"), html);
-      assert.ok(!html.includes("&lt;em&gt;"));
+      assert.ok(html.includes("<h1>&lt;em&gt;hi&lt;/em&gt;</h1>"), html);
+      assert.ok(!html.includes("<h1><em>"));
+      // The element the author did nest still renders as an element.
+      assert.ok(html.includes("<h1>"));
+    });
+
+    test("a text node cannot inject a tag or a child component", () => {
+      const { html } = render({
+        tag: "div",
+        innerHTML: { p: { tag: "h1", innerHTML: '<img src=x onerror="alert(1)">' } },
+      });
+      assert.ok(!html.includes("<img"), html);
+      assert.ok(html.includes("&lt;img"), html);
+    });
+
+    test("an ampersand in text becomes an entity, quotes do not", () => {
+      const { html } = render({ tag: "h1", innerHTML: "a & b it's" });
+      assert.strictEqual(html, `<h1>a &amp; b it's</h1>`);
+    });
+
+    test("an already-encoded text value is encoded again", () => {
+      // Consistent with attribute values: the DSL value is a string whose
+      // characters are data, so `"&amp;"` renders as the text `&amp;`.
+      const { html } = render({ tag: "h1", innerHTML: "&amp;" });
+      assert.strictEqual(html, `<h1>&amp;amp;</h1>`);
     });
   });
 

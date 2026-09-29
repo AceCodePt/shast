@@ -1,21 +1,23 @@
 // The escaping seam.
 //
-// Everything the renderer writes into markup passes through here. There are two
-// policies, and they are here together because they answer the same question —
-// "may this author string be pasted into the output verbatim?" — with the same
-// answer, no:
+// Everything the renderer writes into markup passes through here. There is one
+// invariant behind all three functions: a string the author writes is *data*,
+// never markup. Only the characters that would change how a parser reads the
+// output are encoded, and which those are depends on where the string lands:
 //
-//   - `escapeAttributeValue` covers HTML *syntax*. An attribute value is data,
-//     so the five HTML-significant characters are written as entities.
-//   - `semanticAttribute` covers HTML *identity*. A child name becomes an
+//   - `escapeAttributeValue` covers an attribute value, where a quote would end
+//     the attribute early.
+//   - `escapeText` covers a text node, where `<` or `&` would start a tag or a
+//     reference.
+//   - `semanticAttribute` covers HTML *identity*: a child name becomes an
 //     attribute that a `> name` selector also emits, so it must be encoded
-//     injectively — distinct names must never collide onto one attribute.
+//     injectively -- distinct names must never collide onto one attribute.
 //
 // They are separate functions rather than one because their alphabets differ:
-// an attribute value only needs to survive a parser, while a semantic name also
-// has to be a valid CSS identifier and to round-trip. Keeping the policy in one
-// file makes that difference visible instead of implied by whichever module
-// happened to own each function.
+// a text node needs no quote handling, an attribute value needs no `_XXXX`
+// injectivity, and a semantic name also has to be a valid CSS identifier and to
+// round-trip. Keeping the policy in one file makes those differences visible
+// instead of implied by whichever module happened to own each function.
 
 const PREFIX = "cid-";
 
@@ -29,10 +31,6 @@ const PREFIX = "cid-";
  *
  * `&` is encoded first, or the `&` of every later entity would be encoded again
  * (`&lt;` would become `&amp;lt;`, rendering as a literal `&lt;`).
- *
- * This is deliberately *not* applied to `innerHTML` text: the DSL's `innerHTML`
- * carries markup, so encoding it would render tags as visible text. Attribute
- * values carry no markup, so here encoding is unconditional.
  */
 export function escapeAttributeValue(value: string): string {
   return value
@@ -41,6 +39,33 @@ export function escapeAttributeValue(value: string): string {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+/**
+ * HTML-encode a text node.
+ *
+ * A string anywhere under `innerHTML` is a *text node*, not markup: the DSL has
+ * no way to write a raw HTML string, and the registry enforces it -- a string
+ * child is only legal where the tag declares `"#text"` in its `innerHTML`, which
+ * is how the validator and this renderer agree on what a string means. So the
+ * characters that would otherwise start a tag (`<`) or a reference (`&`) are
+ * data and are written as entities.
+ *
+ * There is deliberately no raw/unescaped escape hatch. Markup is expressed by
+ * nesting a component (`{ tag: "b", innerHTML: "bold" }`), which keeps the tree
+ * the single source of truth that every structural guarantee in this format --
+ * permitted children, `> child` selectors, cascade resolution -- is derived
+ * from. A raw string would be a subtree the renderer emits but cannot see,
+ * which is exactly the state this format exists to make impossible.
+ *
+ * `"` and `'` are left alone: they are harmless in text content, and encoding
+ * them would turn every apostrophe in prose into `&#39;`.
+ */
+export function escapeText(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
 }
 
 /**
