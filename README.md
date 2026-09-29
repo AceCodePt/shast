@@ -73,13 +73,10 @@ Run it with anything that executes TypeScript directly (`tsx`, `node --import
 tsx`, `vitest`, a bundler).
 
 **`shast add` is the only supported way to consume shast. Do not import
-`"@ace-code/shast"` directly.** The package ships raw TypeScript whose internal
-imports use a `@/` path alias that the repo's `tsconfig.json` resolves; that
-config is not part of the published package. `add` rewrites those imports to
-relative paths as it vendors, so the tree you get is self-contained - the
-package itself is not importable. `main` is deliberately absent so a direct
-import fails immediately, rather than resolving into an alias error three
-levels deep inside the vendored source.
+`"@ace-code/shast"` directly.** The package ships the CLI as a bundled
+`scripts/cli.mjs` and nothing importable; there is no `main`, so a direct import
+fails immediately rather than resolving into an alias error three levels deep.
+The vendored tree `add` writes is the API surface you actually use.
 
 ## Where the walls are
 

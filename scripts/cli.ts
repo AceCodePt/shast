@@ -12,6 +12,7 @@ import {
   mkdirSync,
   readdirSync,
   readFileSync,
+  realpathSync,
   writeFileSync,
 } from "node:fs";
 import { createRequire } from "node:module";
@@ -349,9 +350,13 @@ export function main(argv: readonly string[]): number {
   }
 }
 
+// npm links `bin` into node_modules/.bin, so argv[1] is a symlink while
+// `import.meta.url` is the real file. Compare real paths so the CLI still runs
+// when invoked through the link - a plain string compare silently does nothing.
 const entrypoint =
   process.argv[1] !== undefined &&
-  fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
+  realpathSync(fileURLToPath(import.meta.url)) ===
+    realpathSync(path.resolve(process.argv[1]));
 
 if (entrypoint) {
   process.exit(main(process.argv.slice(2)));

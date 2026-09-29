@@ -8,17 +8,19 @@
 	"type": "module",
 	"files": [
 		"src",
-		"scripts",
+		"scripts/cli.mjs",
 		"README.md",
 		"LICENSE"
 	],
 	"bin": {
-		"shast": "./scripts/shast.mjs"
+		"shast": "./scripts/cli.mjs"
 	},
 	"engines": {
 		"node": ">=20"
 	},
 	"scripts": {
+		"build": "rolldown scripts/cli.ts -f esm -p node -o scripts/cli.mjs && chmod +x scripts/cli.mjs",
+		"prepublishOnly": "pnpm build",
 		"check": "tsc --noEmit",
 		"shast": "npx tsx scripts/cli.ts",
 		"test": "tsc --noEmit && node --import=tsx/esm --test",
@@ -42,10 +44,11 @@
 	"packageManager": "pnpm@11.17.0",
 	"devDependencies": {
 		"@types/node": "^26.1.2",
+		"rolldown": "^1.2.11",
+		"tsx": "^4.23.1",
 		"typescript": "^7.0.2"
 	},
 	"dependencies": {
-		"tsx": "^4.23.1",
 		"tsyntax": "^1.0.1"
 	}
 }
