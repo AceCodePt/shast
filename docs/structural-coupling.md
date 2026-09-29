@@ -61,10 +61,12 @@ Key consequences:
   cannot be embedded at all — the type system refuses rather than trusting it.
   Safe, but it imposes the constraint below.
 
-## Performance envelope (measured)
+## Performance envelope (indicative)
 
-Structural typing at this depth is only viable if it stays cheap. Measured
-against the `common` and `full` config variations:
+Structural typing at this depth is only viable if it stays cheap. The figures
+below were produced by a local benchmark harness that is **not included in
+this repository**, so treat them as indicative rather than reproducible.
+Measured against the `common` and `full` config variations:
 
 - `tsc` cost is **linear**: ~4.8K instantiations / ~5ms check time per
   component (1 → 400 components: 124K → 2.05M instantiations, 0.36s → 2.4s).

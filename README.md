@@ -388,7 +388,10 @@ your editor's way.
 You already know the DSL if you know TypeScript: `"'ltr' | 'rtl' |
 undefined"` means exactly what it looks like.
 
-## Performance (measured, not promised)
+## Performance (indicative)
+
+The figures below come from a local benchmark harness that is **not part of
+this repository**, so they are indicative, not reproducible here:
 
 - `tsc` cost is **linear**: ~4.8K instantiations / ~5ms per component
   (400 components: 2.4s full check).
@@ -396,7 +399,7 @@ undefined"` means exactly what it looks like.
   recheck for a typical component file.
 
 Keep files to a handful of components each and the type machinery is
-imperceptible. Details in
+imperceptible. The same harness produced the fuller numbers in
 [docs/structural-coupling.md](docs/structural-coupling.md).
 
 ## Limitations

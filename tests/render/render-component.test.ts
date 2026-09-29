@@ -84,6 +84,20 @@ describe("renderComponent", () => {
       assert.strictEqual(html, `<a href="/x"></a>`);
     });
 
+    test("array attributes render space-separated, not comma-joined", () => {
+      const { html } = render({
+        tag: "a",
+        attributes: { class: ["foo", "bar"] },
+      });
+      assert.ok(html.includes('class="foo bar"'));
+      assert.ok(!html.includes("foo,bar"));
+    });
+
+    test("number attributes render via String", () => {
+      const { html } = render({ tag: "a", attributes: { tabindex: 3 } });
+      assert.ok(html.includes('tabindex="3"'));
+    });
+
     test("boolean true renders bare, false is omitted", () => {
       const { html } = render({
         tag: "a",
