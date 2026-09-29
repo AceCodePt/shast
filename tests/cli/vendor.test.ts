@@ -82,7 +82,8 @@ describe("shast add: copy set", () => {
       }
     }
 
-    // The source typo is normalized on the way out.
+    // The source tree spells the pseudo-class variant `minimal`; the vendored
+    // tree must carry that exact name (the copied entry imports it by name).
     assert.ok(
       existsSync(
         path.join(dest, "css/pseudo-class-config/variations/minimal.ts"),
@@ -91,6 +92,14 @@ describe("shast add: copy set", () => {
     assert.ok(
       !existsSync(
         path.join(dest, "css/pseudo-class-config/variations/mimimal.ts"),
+      ),
+    );
+
+    // The entry imports the variant by name, so a rename on either side would
+    // be a broken vendored tree rather than a missing file.
+    assert.ok(
+      read(dest, "index.ts").includes(
+        'from "./css/pseudo-class-config/variations/minimal.ts"',
       ),
     );
   });

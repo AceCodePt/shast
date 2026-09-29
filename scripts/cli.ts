@@ -55,15 +55,6 @@ export class ExistingDestinationError extends Error {
 // properties, which have no shipped minimal/common/full form); the copied
 // entry exports the `cssPropertiesConfig` builder for exactly that.
 
-// `css/pseudo-class-config/variations/mimimal.ts` is a typo in the source tree.
-// Vendoring normalizes it so the consumer gets a clean `minimal.ts`. Nothing in
-// the engine imports it, but the copied `index.ts` does, so its import path
-// changes with the rename.
-const DEST_RENAMES: Readonly<Record<string, string>> = {
-  "css/pseudo-class-config/variations/mimimal.ts":
-    "css/pseudo-class-config/variations/minimal.ts",
-};
-
 // Directories under `src/` copied wholesale.
 const COPY_DIRS = ["engine", "css", "html"] as const;
 // Root-level `src/` files copied too. `index.ts` is the package's public entry
@@ -71,6 +62,13 @@ const COPY_DIRS = ["engine", "css", "html"] as const;
 const COPY_FILES = ["types.ts", "env.d.ts", "index.ts"] as const;
 // tsyntax files vendored under `<dest>/tsyntax/`.
 const TSYNTAX_FILES = ["index.ts", "types.ts"] as const;
+
+// The vendored tree is raw `.ts` resolved with NodeNext-style rules, which pick
+// ESM vs CommonJS from the nearest `package.json`. A destination without one is
+// read as CommonJS, so `verbatimModuleSyntax` consumers get a wall of TS1295
+// errors on every vendored file. This marker makes the tree self-describing.
+const DEST_PACKAGE_JSON = "package.json";
+const DEST_PACKAGE_JSON_CONTENT = `${JSON.stringify({ type: "module" }, null, 2)}\n`;
 
 const REPO_ROOT = fileURLToPath(new URL("..", import.meta.url));
 
@@ -83,12 +81,21 @@ interface PlannedFile {
   sourceRel: string | null;
 }
 
+/** A planned file whose contents are generated rather than copied. */
+interface GeneratedFile {
+  destRel: string;
+  content: string;
+}
+
 function toPosix(value: string): string {
   return value.split(path.sep).join("/");
 }
 
-function destRelOf(sourceRel: string): string {
-  return DEST_RENAMES[sourceRel] ?? sourceRel;
+/** The generated `package.json` that pins the destination to ESM. */
+export function generatedFiles(): GeneratedFile[] {
+  return [
+    { destRel: DEST_PACKAGE_JSON, content: DEST_PACKAGE_JSON_CONTENT },
+  ];
 }
 
 /**
@@ -114,7 +121,7 @@ export function planVendor(options: AddOptions): PlannedFile[] {
       const sourceRel = `${dir}/${rel}`;
       planned.push({
         source: path.join(absDir, entry),
-        destRel: destRelOf(sourceRel),
+        destRel: sourceRel,
         sourceRel,
       });
     }
@@ -123,7 +130,7 @@ export function planVendor(options: AddOptions): PlannedFile[] {
   for (const file of COPY_FILES) {
     planned.push({
       source: path.join(srcRoot, file),
-      destRel: destRelOf(file),
+      destRel: file,
       sourceRel: file,
     });
   }
@@ -153,16 +160,12 @@ function relativeSpecifier(fromDestRel: string, toDestRel: string): string {
   return rel;
 }
 
-function rewriteSpecifier(
-  specifier: string,
-  fromDestRel: string,
-  destRelOfTarget: (sourceRel: string) => string,
-): string {
+function rewriteSpecifier(specifier: string, fromDestRel: string): string {
   if (specifier === "tsyntax") {
     return relativeSpecifier(fromDestRel, "tsyntax/index.ts");
   }
   if (specifier.startsWith("@/")) {
-    let targetRel = destRelOfTarget(specifier.slice(2));
+    let targetRel = specifier.slice(2);
     if (path.posix.extname(targetRel) === "") targetRel += ".ts";
     return relativeSpecifier(fromDestRel, targetRel);
   }
@@ -175,13 +178,9 @@ function rewriteSpecifier(
  * relative, or external packages such as `@total-typescript/ts-reset`) are
  * left untouched.
  */
-export function rewriteImports(
-  source: string,
-  fromDestRel: string,
-  destRelOfTarget: (sourceRel: string) => string = destRelOf,
-): string {
+export function rewriteImports(source: string, fromDestRel: string): string {
   const rewrite = (specifier: string): string =>
-    rewriteSpecifier(specifier, fromDestRel, destRelOfTarget);
+    rewriteSpecifier(specifier, fromDestRel);
 
   return source
     .replace(
@@ -206,10 +205,16 @@ export function add(options: AddOptions): AddResult {
   const force = options.force ?? false;
   const dest = path.resolve(options.dest);
   const planned = planVendor(options);
+  const generated = generatedFiles();
 
-  const collisions = planned
-    .filter((file) => existsSync(path.join(dest, file.destRel)))
-    .map((file) => file.destRel);
+  const copiedRels = planned.map((file) => file.destRel);
+  const generatedRels = generated.map((file) => file.destRel);
+
+  // A `package.json` the consumer already had is their file; it never counts as
+  // a collision and is never overwritten, `--force` included.
+  const collisions = copiedRels.concat(
+    generatedRels.filter((rel) => rel !== DEST_PACKAGE_JSON),
+  ).filter((rel) => existsSync(path.join(dest, rel)));
 
   if (collisions.length > 0 && !force) {
     throw new ExistingDestinationError(collisions);
@@ -219,16 +224,24 @@ export function add(options: AddOptions): AddResult {
     const content = rewriteImports(
       readFileSync(file.source, "utf8"),
       file.destRel,
-      destRelOf,
     );
     const target = path.join(dest, file.destRel);
     mkdirSync(path.dirname(target), { recursive: true });
     writeFileSync(target, content);
   }
 
+  const written = [...copiedRels];
+  for (const file of generated) {
+    const target = path.join(dest, file.destRel);
+    if (existsSync(target)) continue;
+    mkdirSync(path.dirname(target), { recursive: true });
+    writeFileSync(target, file.content);
+    written.push(file.destRel);
+  }
+
   return {
     dest,
-    written: planned.map((file) => file.destRel),
+    written: written.sort((a, b) => (a < b ? -1 : 1)),
   };
 }
 
