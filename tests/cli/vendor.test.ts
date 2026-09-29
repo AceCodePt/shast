@@ -3,15 +3,9 @@ import assert from "node:assert";
 import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import {
-  add,
-  ExistingDestinationError,
-  generateEntry,
-  main,
-  type ConfigVariant,
-} from "../../scripts/cli.ts";
+import { add, ExistingDestinationError, main } from "../../scripts/cli.ts";
 
-const VARIANTS: readonly ConfigVariant[] = ["minimal", "common", "full"];
+const VARIANTS = ["minimal", "common", "full"] as const;
 
 const VARIATION_DIRS = [
   "html/attribute-config/variations",
@@ -34,9 +28,9 @@ function read(dest: string, rel: string): string {
 }
 
 describe("shast add: copy set", () => {
-  test("copies engine, css, html, types, env and tsyntax, excluding the demo entry", () => {
+  test("copies engine, css, html, types, env and tsyntax, including the entry", () => {
     const dest = tempDest();
-    add({ dest, config: "common" });
+    add({ dest });
 
     for (const rel of [
       "engine/index.ts",
@@ -57,17 +51,29 @@ describe("shast add: copy set", () => {
       assert.ok(existsSync(path.join(dest, rel)), `expected ${rel} to exist`);
     }
 
-    // The demo entry is not copied verbatim anywhere.
-    assert.ok(!read(dest, "index.ts").includes("const list = createComponent"));
     // No docs, tests, evals or resolved-format leakage.
-    for (const absent of ["docs", "tests", "evals", "resolved-format"]) {
+    for (const absent of ["docs", "tests", "evals", "resolved-format", "examples"]) {
       assert.ok(!existsSync(path.join(dest, absent)), `expected no ${absent}/`);
     }
   });
 
+  test("the vendored entry is the package's public entry, not a demo", () => {
+    const dest = tempDest();
+    add({ dest });
+    const entry = read(dest, "index.ts");
+
+    assert.ok(entry.includes('export { default as engine } from "./engine/index.ts"'));
+    assert.ok(entry.includes('from "./engine/render/render-component.ts"'));
+    assert.ok(entry.includes('/// <reference path="./env.d.ts" />'));
+    // Side-effect free: no engine wiring, no demo component, no logging.
+    assert.ok(!entry.includes("engine({"));
+    assert.ok(!entry.includes("const list = createComponent"));
+    assert.ok(!entry.includes("console.log"));
+  });
+
   test("copies every variation for every family that ships them", () => {
     const dest = tempDest();
-    add({ dest, config: "common" });
+    add({ dest });
 
     for (const dir of VARIATION_DIRS) {
       for (const variant of VARIANTS) {
@@ -93,7 +99,7 @@ describe("shast add: copy set", () => {
 describe("shast add: import rewriting", () => {
   test("no vendored file keeps a @/ or bare tsyntax specifier", () => {
     const dest = tempDest();
-    add({ dest, config: "common" });
+    add({ dest });
 
     const offenders: string[] = [];
     const walk = (dir: string): void => {
@@ -116,7 +122,7 @@ describe("shast add: import rewriting", () => {
 
   test("rewrites @/ and tsyntax specifiers to mirrored relative paths", () => {
     const dest = tempDest();
-    add({ dest, config: "common" });
+    add({ dest });
 
     const engineIndex = read(dest, "engine/index.ts");
     assert.ok(
@@ -137,42 +143,21 @@ describe("shast add: import rewriting", () => {
     assert.ok(calC.includes('from "./properties-config/types.ts"'));
     assert.ok(calC.includes('from "../tsyntax/index.ts"'));
     assert.ok(!calC.includes('from "tsyntax"'));
+
+    // The entry's exported variations resolve relative to the root.
+    const entry = read(dest, "index.ts");
+    assert.ok(entry.includes('from "./html/tag-config/variations/common.ts"'));
+    assert.ok(entry.includes('from "./css/pseudo-class-config/variations/minimal.ts"'));
   });
 });
 
-describe("shast add: generated entry", () => {
-  for (const variant of VARIANTS) {
-    test(`wires the ${variant} variation`, () => {
-      const dest = tempDest();
-      add({ dest, config: variant });
-      const entry = read(dest, "index.ts");
-
-      for (const dir of VARIATION_DIRS) {
-        assert.ok(
-          entry.includes(`from "./${dir}/${variant}.ts"`),
-          `entry should import${variant} from ${dir}`,
-        );
-      }
-      assert.ok(entry.includes("engine({"));
-      assert.ok(entry.includes("cssPropertiesConfig("));
-      assert.ok(entry.includes('/// <reference path="./env.d.ts" />'));
-      assert.ok(!entry.includes('"@/'));
-      assert.ok(!entry.includes('"tsyntax"'));
-      assert.ok(!entry.includes("const list = createComponent"));
-    });
-  }
-
-  test("the generator is deterministic", () => {
-    assert.strictEqual(generateEntry("common"), generateEntry("common"));
-    assert.ok(generateEntry("full").includes("/full.ts"));
-  });
-
-  test("an unknown --config is rejected before anything is written", () => {
+describe("shast add: usage", () => {
+  test("an unknown option is rejected before anything is written", () => {
     const dest = tempDest();
     const originalError = console.error;
     console.error = () => {};
     try {
-      assert.strictEqual(main(["add", dest, "--config", "bogus"]), 2);
+      assert.strictEqual(main(["add", dest, "--bogus"]), 2);
     } finally {
       console.error = originalError;
     }
@@ -183,10 +168,10 @@ describe("shast add: generated entry", () => {
 describe("shast add: no clobber without --force", () => {
   test("second run without --force reports the existing files", () => {
     const dest = tempDest();
-    add({ dest, config: "common" });
+    add({ dest });
 
     assert.throws(
-      () => add({ dest, config: "common" }),
+      () => add({ dest }),
       (error: unknown) => {
         assert.ok(error instanceof ExistingDestinationError);
         assert.ok(error.collisions.includes("index.ts"));
@@ -201,9 +186,10 @@ describe("shast add: no clobber without --force", () => {
 
   test("--force overwrites and succeeds", () => {
     const dest = tempDest();
-    add({ dest, config: "common" });
-    const result = add({ dest, config: "full", force: true });
-    assert.strictEqual(result.config, "full");
-    assert.ok(read(dest, "index.ts").includes("/full.ts"));
+    add({ dest });
+    const result = add({ dest, force: true });
+    assert.ok(result.written.includes("index.ts"));
+    // The rewrite still applies on overwrite.
+    assert.ok(!read(dest, "index.ts").includes('"@/'));
   });
 });
