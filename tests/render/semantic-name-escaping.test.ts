@@ -1,7 +1,10 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
 import { renderComponent } from "@/engine/render/render-component.ts";
-import { semanticAttribute } from "@/engine/render/collect-rules.ts";
+import {
+  escapeAttributeValue,
+  semanticAttribute,
+} from "@/engine/render/escape.ts";
 import type { BaseHTMLTagConfig } from "@/html/tag-config/types.ts";
 import type { BaseComponentStructure } from "@/engine/types.ts";
 
@@ -49,6 +52,33 @@ function cssChildAttribute(css: string): string {
   assert.ok(match, `expected a child selector in: ${css}`);
   return match[1]!;
 }
+
+describe("escapeAttributeValue escaping", () => {
+  test("encodes the five HTML-significant characters", () => {
+    assert.strictEqual(
+      escapeAttributeValue(`&<>"'`),
+      "&amp;&lt;&gt;&quot;&#39;",
+    );
+  });
+
+  test("a quote can no longer close the attribute early", () => {
+    assert.strictEqual(
+      escapeAttributeValue('say "hi"'),
+      "say &quot;hi&quot;",
+    );
+  });
+
+  test("the ampersand of an entity is not double-encoded", () => {
+    // Encoding `&` after the others would turn `&lt;` into `&amp;lt;`.
+    assert.strictEqual(escapeAttributeValue("<"), "&lt;");
+    assert.strictEqual(escapeAttributeValue("&lt;"), "&amp;lt;");
+  });
+
+  test("values needing no encoding are byte-identical", () => {
+    assert.strictEqual(escapeAttributeValue("/x?y=1"), "/x?y=1");
+    assert.strictEqual(escapeAttributeValue(""), "");
+  });
+});
 
 describe("semanticAttribute escaping", () => {
   test("escapes every non-[A-Za-z0-9-] code unit, including the marker", () => {

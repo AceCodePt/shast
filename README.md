@@ -40,7 +40,7 @@ see all of it, output included.
 
 ```sh
 npm install -D @ace-code/shast   # or: pnpm add -D @ace-code/shast
-npx shast add src/shast          # default destination is src/shast
+npx shast add src/shast          # default; resolved from your current directory
 ```
 
 That is the whole setup. `add` vendors the engine, the `minimal`/`common`/`full`
@@ -68,6 +68,10 @@ import {
   SUPPORTED_KEYWORDS,
 } from "./src/shast/index.ts";
 ```
+
+That path is the destination you passed to `shast add` — `./src/shast` above
+because the command used the default. Vendoring somewhere else means editing the
+specifier to match; `add` prints the resolved path when it finishes.
 
 Run it with anything that executes TypeScript directly (`tsx`, `node --import
 tsx`, `vitest`, a bundler).

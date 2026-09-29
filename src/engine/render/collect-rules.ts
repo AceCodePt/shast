@@ -1,4 +1,9 @@
 import type { BaseComponentStructure } from "@/engine/types.ts";
+import { semanticAttribute } from "./escape.ts";
+
+// `semanticAttribute` is used below and re-exported so importers that knew it
+// here keep working; both escaping policies now live in `escape.ts`.
+export { escapeAttributeValue, semanticAttribute } from "./escape.ts";
 
 /**
  * The structured form of what `renderComponent` emits as CSS text.
@@ -129,36 +134,6 @@ function hashNode(node: unknown): string {
  */
 export function scopeAttribute(node: BaseComponentStructure): string {
   return `${PREFIX}${hashNode(node.css)}`;
-}
-
-/**
- * The attribute a `"> name"` child selector emits and the HTML identifier the
- * child carries, derived from the raw child name.
- *
- * A child name is any string the author writes (the key is never validated),
- * so it cannot be pasted into an attribute name or a CSS identifier verbatim:
- * `"my item"` would emit `<span cid-my item>` and `& > [cid-a"]b]`. The name
- * is therefore encoded rather than rejected. `[A-Za-z0-9-]` maps literally;
- * every other UTF-16 code unit, including `_` itself, maps to `_` followed by
- * its four-digit lowercase hex. Escaping the marker as `_005f` makes the
- * encoding injective: distinct names can never collide onto one attribute, so
- * a `> name` selector can never match a different child. Ordinary names are
- * unchanged.
- */
-export function semanticAttribute(name: string): string {
-  let escaped = "";
-  for (let index = 0; index < name.length; index += 1) {
-    const code = name.charCodeAt(index);
-    const isLiteral =
-      (code >= 0x61 && code <= 0x7a) || // a-z
-      (code >= 0x41 && code <= 0x5a) || // A-Z
-      (code >= 0x30 && code <= 0x39) || // 0-9
-      code === 0x2d; // -
-    escaped += isLiteral
-      ? String.fromCharCode(code)
-      : `_${code.toString(16).padStart(4, "0")}`;
-  }
-  return `${PREFIX}${escaped}`;
 }
 
 export function hasCSS(node: BaseComponentStructure): boolean {
