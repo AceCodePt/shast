@@ -6,6 +6,16 @@ on closed-world component registries. HTML structure and CSS are typed
 against each other and checked at compile time and runtime, constraining
 generated UI to the vocabulary and relationships your registry declares.
 
+**The whole point is to catch bugs before they get compiled and shipped to
+the client.** A browser is forgiving: it silently drops CSS it cannot parse,
+ignores selectors that match nothing, and resolves an unset custom property
+to its initial value. So a mistake stays invisible until the app is built,
+deployed, and running somewhere in front of a user. shast moves that
+discovery earlier, to the two points before the client: `tsc` rejects the
+component while you write it, and the server-side runtime rejects whatever
+slips past the types — before the HTML leaves the server. The mistakes a
+browser would hide are found on your machine, not on the client.
+
 shast is not a client-side framework and doesn't compete with React or Vue
 for the browser. It is a constrained target format for AI-generated,
 server-rendered UI, with a renderer that validates components before HTML
@@ -258,11 +268,11 @@ is checked against them **twice**:
 | `grid-area` name is declared by the parent's `grid-template-areas`         | ✓            | ✓                               |
 | Pseudo-class/element declared for that tag                                 | ✓            | see [Limitations](#limitations) |
 
-Every one of these is a mistake that plain CSS lets through and the browser
-only reveals at runtime - a dropped declaration, a selector that matches
-nothing, an animation that never runs. shast finds them at `tsc` and, for
-untyped input, on the server before HTML leaves it. The full catalogue, with
-the archived slice behind each entry, is in
+Every one of these is a mistake that plain CSS lets through and that only
+surfaces at runtime in the client - a dropped declaration, a selector that
+matches nothing, an animation that never runs. shast finds them at `tsc` and,
+for untyped input, on the server before the HTML leaves it. The full
+catalogue, with the archived slice behind each entry, is in
 [docs/before-the-browser.md](docs/before-the-browser.md).
 
 Composition does not weaken any of this: components built in separate files

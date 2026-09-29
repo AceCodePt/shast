@@ -7,12 +7,12 @@ when a custom property is unset. None of that is an error to the browser, so
 none of it is reported: you find out visually, in a running app, in the
 browser.
 
-shast catches most of those bugs before the component ever reaches the
-browser. Every value is checked twice against a closed-world registry — once
-by `tsc` at authoring time, once by the server-side runtime in
-`createComponent` — so the mistakes that would otherwise stay silent until
-something looks wrong are instead a red squiggle or a thrown error on your
-server, before HTML is sent.
+shast catches most of those bugs before the component is compiled and
+shipped to the client. Every value is checked twice against a closed-world
+registry — once by `tsc` at authoring time, once by the server-side runtime
+in `createComponent` — so the mistakes that would otherwise stay silent until
+something looks wrong are instead a red squiggle on your machine or a thrown
+error on your server, before HTML is sent.
 
 This document lists the classes of bug that were closed, slice by slice.
 Each one is a mistake that plain CSS accepts and the browser only reveals at
