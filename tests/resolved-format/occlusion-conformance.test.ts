@@ -1,11 +1,11 @@
 import test, { after, before, describe } from "node:test";
 import assert from "node:assert";
 import type { Browser } from "playwright";
-import { chromium } from "playwright";
+import { chromium } from "../../resolved-format/playwright-lazy.ts";
 import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
 import type { BaseComponentStructure } from "@/engine/types.ts";
 import { measureTextVisibility } from "../../resolved-format/conformance.ts";
-import { CASES } from "../../evals/cases.ts";
+import type { Case } from "../../evals/cases.ts";
 import { FIXTURES } from "../../resolved-format/fixtures.ts";
 import { measureBoxes, materializeBoxes } from "../../resolved-format/measured.ts";
 import { occlusionOf, runRect } from "../../resolved-format/occlusion.ts";
@@ -25,6 +25,13 @@ import { occlusionOf, runRect } from "../../resolved-format/occlusion.ts";
  * expected answers are wrong measures nothing.
  */
 const ENABLED = process.env["CONFORMANCE"] === "1";
+
+// `evals/cases.ts` is generated, so it is absent from a fresh checkout. Only
+// resolve it when the browser-gated run is actually enabled; otherwise the suite
+// stays discoverable and inert.
+const { CASES } = ENABLED
+  ? await import("../../evals/cases.ts")
+  : { CASES: [] as readonly Case[] };
 
 type Subject = {
   name: string;

@@ -1,4 +1,5 @@
-import { chromium, type Browser } from "playwright";
+import type { Browser } from "playwright";
+import { chromium } from "./playwright-lazy.ts";
 import type { BaseHTMLTagConfig } from "@/html/tag-config/types.ts";
 import type { BaseComponentStructure } from "@/engine/types.ts";
 import { htmlDocument } from "./html-document.ts";
