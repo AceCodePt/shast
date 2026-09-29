@@ -16,6 +16,30 @@ import {
   semanticAttribute,
 } from "./collect-rules.ts";
 
+/**
+ * HTML-encode an attribute value.
+ *
+ * The value is a string the author wrote, not markup, so `&`, `<`, `>`, `"` and
+ * `'` are data and must be written as entities. Without this a value like
+ * `say "hi"` closes the attribute early -- `title="say "hi""` is three tokens to
+ * a parser -- and `<` or `&` are read as the start of a tag or a reference.
+ *
+ * `&` is encoded first, or the `&` of every later entity would be encoded again
+ * (`&lt;` would become `&amp;lt;`, rendering as a literal `&lt;`).
+ *
+ * This is deliberately *not* applied to `innerHTML` text: the DSL's `innerHTML`
+ * carries markup, so encoding it would render tags as visible text. Attribute
+ * values carry no markup, so here encoding is unconditional.
+ */
+function escapeAttributeValue(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
 function isRecordInnerHTML(
   innerHTML: unknown,
 ): innerHTML is Record<string, unknown> {
@@ -40,7 +64,7 @@ function renderAttributes(attributes: Record<string, unknown>): string {
     // so join with a space -- `String(["a", "b"])` would emit `"a,b"`, which
     // no attribute vocabulary means.
     const serialized = Array.isArray(value) ? value.join(" ") : String(value);
-    html += ` ${key}="${serialized}"`;
+    html += ` ${key}="${escapeAttributeValue(serialized)}"`;
   }
   return html;
 }

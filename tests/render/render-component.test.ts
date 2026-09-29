@@ -124,6 +124,49 @@ describe("renderComponent", () => {
       });
       assert.match(html, /^<a cid-[a-z0-9]+ href="\/x">/);
     });
+
+    test("HTML-significant characters in a value are encoded", () => {
+      const { html } = render({
+        tag: "a",
+        attributes: { title: 'say "hi" & <b>tag</b> it\'s' },
+      });
+      assert.ok(
+        html.includes(
+          'title="say &quot;hi&quot; &amp; &lt;b&gt;tag&lt;/b&gt; it&#39;s"',
+        ),
+        html,
+      );
+      // The value must not be able to close the attribute early.
+      assert.strictEqual((html.match(/"/g) ?? []).length, 2);
+    });
+
+    test("a bare ampersand becomes an entity, so the output is well-formed", () => {
+      const { html } = render({
+        tag: "a",
+        attributes: { href: "/x?y=1&z=2" },
+      });
+      assert.strictEqual(html, `<a href="/x?y=1&amp;z=2"></a>`);
+    });
+
+    test("an already-encoded value is treated as text and encoded again", () => {
+      // The DSL value is a string, not markup: `"&amp;"` is five characters
+      // whose text is `&amp;`, so it renders as `&amp;amp;`. Decoding here
+      // would make `&` unreachable without an arbitrary escape convention.
+      const { html } = render({
+        tag: "a",
+        attributes: { title: "&amp;" },
+      });
+      assert.strictEqual(html, `<a title="&amp;amp;"></a>`);
+    });
+
+    test("innerHTML text is not encoded (it carries markup)", () => {
+      const { html } = render({
+        tag: "div",
+        innerHTML: { bold: { tag: "h1", innerHTML: "<em>hi</em>" } },
+      });
+      assert.ok(html.includes("<h1><em>hi</em></h1>"), html);
+      assert.ok(!html.includes("&lt;em&gt;"));
+    });
   });
 
   describe("Semantic naming", () => {
