@@ -42,14 +42,26 @@ export class ExistingDestinationError extends Error {
   readonly collisions: readonly string[];
 
   constructor(collisions: readonly string[]) {
+    const shown = collisions.slice(0, MAX_LISTED_FILES);
+    const rest = collisions.length - shown.length;
     super(
-      `Destination already contains ${collisions.length} file(s); pass --force to overwrite:\n` +
-        collisions.map((file) => `  ${file}`).join("\n"),
+      `Destination already contains ${collisions.length} file(s). ` +
+        `Nothing was written; pass --force to overwrite.\n` +
+        shown.map((file) => `  ${file}`).join("\n") +
+        (rest > 0 ? `\n  ... and ${rest} more` : ""),
     );
     this.name = "ExistingDestinationError";
     this.collisions = collisions;
   }
 }
+
+/** How many collision paths to list before summarising the remainder. */
+const MAX_LISTED_FILES = 10;
+
+// Printed last, after the file list, because that is the line a user reads when
+// a runner (pnpm, npm) appends its own "Command failed with exit code 1".
+const REFUSED_HINT =
+  "shast: refused to overwrite — re-run with --force to replace those files.";
 
 // The seven families that carry shipped variation files. `css properties` is
 // absent because that registry is assembled per-consumer (it holds *custom*
@@ -336,10 +348,12 @@ export function main(argv: readonly string[]): number {
     );
     return 0;
   } catch (error) {
-    if (
-      error instanceof ExistingDestinationError ||
-      error instanceof CommonJSDestinationError
-    ) {
+    if (error instanceof ExistingDestinationError) {
+      console.error(error.message);
+      console.error(REFUSED_HINT);
+      return 1;
+    }
+    if (error instanceof CommonJSDestinationError) {
       console.error(error.message);
       return 1;
     }

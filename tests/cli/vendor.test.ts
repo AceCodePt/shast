@@ -280,6 +280,48 @@ describe("shast add: no clobber without --force", () => {
     );
   });
 
+  test("the message is actionable and does not dump every path", () => {
+    const dest = tempDest();
+    add({ dest });
+
+    let message = "";
+    try {
+      add({ dest });
+    } catch (error) {
+      assert.ok(error instanceof ExistingDestinationError);
+      message = error.message;
+    }
+
+    // The reason must survive a runner appending its own "command failed" line,
+    // so the count and the --force hint belong at the top, not the bottom.
+    assert.match(message.split("\n")[0]!, /pass --force to overwrite/i);
+    assert.match(message.split("\n")[0]!, /Nothing was written/);
+    // A 55-file dump pushes the reason off screen; summarise the tail instead.
+    const listed = message.split("\n").slice(1, -1);
+    assert.ok(listed.length <= 11, `listed ${listed.length} paths`);
+    assert.match(message, /and \d+ more/);
+  });
+
+  test("main prints the refusal hint last, after the file list", () => {
+    const dest = tempDest();
+    add({ dest });
+
+    const lines: string[] = [];
+    const originalError = console.error;
+    console.error = (value: unknown) => {
+      lines.push(String(value));
+    };
+    try {
+      assert.strictEqual(main(["add", dest]), 1);
+    } finally {
+      console.error = originalError;
+    }
+
+    assert.match(lines[0]!, /Destination already contains/);
+    assert.match(lines[lines.length - 1]!, /refused to overwrite/);
+    assert.match(lines[lines.length - 1]!, /--force/);
+  });
+
   test("--force overwrites and succeeds", () => {
     const dest = tempDest();
     add({ dest });

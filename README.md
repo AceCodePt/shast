@@ -66,7 +66,7 @@ import {
   commonCSSKeyframes,
   cssPropertiesConfig,
   SUPPORTED_KEYWORDS,
-} from "./shast/index.ts";
+} from "./src/shast/index.ts";
 ```
 
 Run it with anything that executes TypeScript directly (`tsx`, `node --import
@@ -125,7 +125,7 @@ import {
   commonCSSSyntax, commonCSSAttributes, commonCSSPseudoClasses,
   commonCSSQueries, commonCSSKeyframes,
   cssPropertiesConfig, engine, SUPPORTED_KEYWORDS,
-} from "./shast/index.ts";
+} from "./src/shast/index.ts";
 
 const { createComponent, renderComponent } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,
