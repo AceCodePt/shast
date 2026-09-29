@@ -72,6 +72,15 @@ import {
 Run it with anything that executes TypeScript directly (`tsx`, `node --import
 tsx`, `vitest`, a bundler).
 
+**`shast add` is the only supported way to consume shast. Do not import
+`"@ace-code/shast"` directly.** The package ships raw TypeScript whose internal
+imports use a `@/` path alias that the repo's `tsconfig.json` resolves; that
+config is not part of the published package. `add` rewrites those imports to
+relative paths as it vendors, so the tree you get is self-contained - the
+package itself is not importable. `main` is deliberately absent so a direct
+import fails immediately, rather than resolving into an alias error three
+levels deep inside the vendored source.
+
 ## Where the walls are
 
 There are exactly two points before the client, and the first one catches
@@ -109,13 +118,17 @@ first one intact.
 
 ## 30 seconds of shast
 
+The registries below are the ones `shast add` wrote into your tree. Everything
+here is a relative import of your own files - see [Install](#install) for why
+that is the only supported path:
+
 ```ts
 import {
   commonHTMLAttributes, commonHTMLTags,
   commonCSSSyntax, commonCSSAttributes, commonCSSPseudoClasses,
   commonCSSQueries, commonCSSKeyframes,
   cssPropertiesConfig, engine, SUPPORTED_KEYWORDS,
-} from "@ace-code/shast";
+} from "./shast/index.ts";
 
 const { createComponent, renderComponent } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,
