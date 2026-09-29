@@ -97,7 +97,9 @@ control run does not cover it.
 - Cost means are per-case unweighted and dominated by the dense cases (`dom` max
   10,767 tokens). The mean is labelled as a mean, so this is a reading hazard
   rather than an error.
-- `evals/out` is still untracked and still the only copy of both matrices.
+- `evals/out` is untracked (gitignored) and is the only copy of both matrices
+  on disk; it is archived as the `evals-cache` release asset rather than
+  committed (see `resolved-format-eval.md#reproducing`).
 
 ## What is safe to quote
 

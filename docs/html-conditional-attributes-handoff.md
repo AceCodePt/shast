@@ -22,8 +22,10 @@ first real vocabulary to use it.
 - `src/engine/types.ts` - HTML attribute gates (`HTMLGateTable` / `GateLookup`);
   branded locked messages (`'checked' requires type: checkbox | radio`);
   `undefined`-arm optionality through `MaybeAttributes`; `ComponentIds`.
-- `src/engine/index.ts` - runtime conformance: own-gate pre-pass, unlocked
-  attributes, branded locked messages, required-attribute check.
+- `src/engine/validate/html.ts` - runtime conformance: own-gate pre-pass,
+  unlocked attributes, branded locked messages, required-attribute check (the CSS
+  half of the walk lives in `src/engine/validate/css.ts`, both sharing the
+  `ValidationContext` in `src/engine/validate/context.ts`).
 - `src/engine/render/render-component.ts` - fills in a single-literal unlock
   when omitted, using the same resolver.
 - `src/html/tag-config/variations/{common,full,minimal}.ts` - the shipped

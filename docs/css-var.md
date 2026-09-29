@@ -100,7 +100,7 @@ The deep grammar is applied on top by:
   for context-dependent slots (gate-unlocked shorthands, gate values) it is
   `unknown`, which turns the resolved-type match off and leaves it to runtime —
   the spec's "one-level resolution + runtime for the rest".
-- `parseCSSValueAgainstDSL` in `src/engine/index.ts` — the **single dispatch
+- `parseCSSValueAgainstDSL` in `src/engine/validate/css.ts` — the **single dispatch
   point** for the deep grammars. A written value is inspected once: calc-shaped
   values go to calc's `parseCalc`, and any value containing `var(` goes to
   `validateVars`, threading the custom properties defined in scope (and

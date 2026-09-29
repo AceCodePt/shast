@@ -26,14 +26,14 @@
 // effect. See docs/css-var.md for the full argument.
 //
 // This module does not import `calc.ts`. A written CSS value is dispatched once
-// by the engine (`src/engine/index.ts`): calc-shaped values go to calc's
+// by the engine (`src/engine/validate/css.ts`): calc-shaped values go to calc's
 // parser, and values containing `var(` go here. `var()` operands inside a
 // `calc()` are calc's business; the engine's separate `VarConstraint` still
 // resolves them at the type level, because the dispatch is not exclusive.
 //
 // Cross-references (name -> syntax type) are read from `CSSPropertiesConfig`.
 // The deep engine constraint (`VarConstraint` in `engine/types.ts`) mirrors the
-// runtime wiring in `engine/index.ts`.
+// runtime wiring in `engine/validate/css.ts`.
 
 import type { BaseCSSPropertiesConfig } from "@/css/properties-config/types.ts";
 import { type DSLInfer, type SupportedKeywordsConfig } from "tsyntax";

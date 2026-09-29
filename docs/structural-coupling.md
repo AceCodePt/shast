@@ -36,6 +36,24 @@ The two layers are required to agree; divergence is treated as a bug. The one
 remaining divergence is pseudo-class/element *usage*, which only the type wall
 checks today (see "Known gaps" below).
 
+### Where the runtime wall lives
+
+The runtime wall is split along the same seam as the type wall, so anyone
+auditing "do the two walls agree?" reads one file per layer instead of one
+600-line function:
+
+- `src/engine/validate/context.ts` — the registry snapshot every walk shares,
+  passed as one value rather than a dozen positional parameters.
+- `src/engine/validate/html.ts` — tag, attribute, gate, required-attribute and
+  child-structure checks: the runtime counterpart of the HTML gate tables.
+- `src/engine/validate/css.ts` — the `css` block: selectors, gates, values
+  (`calc()` / `var()`), keyframe references, `grid-area` cross-references.
+- `src/engine/gate-resolution.ts` — the gate machinery both layers import. Each
+  helper mirrors a type-level table in `src/engine/types.ts`; keeping the pairs
+  side by side is what makes the agreement auditable rather than coincidental.
+- `src/engine/index.ts` — only the `engine()` wiring and the exported
+  `validateComponentNode` entry point.
+
 ## Verified guarantees
 
 These were established by direct experiment (2026-07), not by intention.

@@ -119,7 +119,7 @@ deep grammar is applied on top by:
   token-shaped value keys (`<alpha-value>` for `opacity`), and a gate-unlocked
   key reads the union of the DSLs its gates declare. Mapping over the *written*
   keys instead would declare every typo, disabling the registry's key rejection.
-- `parseCSSValueAgainstDSL` in `src/engine/index.ts` — runs `parseCalc(value,
+- `parseCSSValueAgainstDSL` in `src/engine/validate/css.ts` — runs `parseCalc(value,
   { properties, expected })` after the shallow DSL check whenever the written
   value is calc-shaped, where `expected` is `slotDimensionsOf(dsl)`. Gate values
   (`opacity`, `display`, ...) resolve through a shallow pattern match first; the
