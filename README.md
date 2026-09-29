@@ -408,24 +408,6 @@ Some limitations are **deliberate trade-offs** to keep the type system
 snappy; others are **known gaps**. They are listed here rather than hidden in
 either category's fine print.
 
-### Deliberate (kept for type-system performance)
-
-Two DSL parsing edge cases are intentionally unsupported because handling
-them would slow every DSL string down for a vanishingly rare case:
-
-- **Pipe inside quoted strings.** The `|` character is a **union
-  separator**. A literal pipe inside a single/double-quoted string (`"'|'"`)
-  is not supported: the type-level parser splits on `|` before checking
-  quote boundaries, and quote-aware splitting at the type level adds
-  significant complexity. Template literals are the exception:
-  `` `${"a" | "b"}` `` handles `|` inside `${...}` correctly, because
-  backtick strings are parsed by `DSLTemplateDelimiter` before the pipe
-  split.
-- **Nested template literals.** `` `\`${number | string}\`` `` (a
-  backtick-literal backtick containing an interpolation) is not supported -
-  tracking escape depth across quote contexts at the type level costs far
-  more than the edge case is worth.
-
 ### Known gaps (runtime wall only - the type wall covers these today)
 
 - **Pseudo-class/element usage** in css blocks and pseudo-element
