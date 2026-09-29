@@ -147,3 +147,8 @@ text-renderer/out.txt
 text-renderer/conformance.txt
 
 text-renderer/html/
+
+# Generated eval cache: screenshots, DOM dumps, prompts and per-model replies.
+# Published as the `evals-cache` release asset instead of tracked (see
+# docs/resolved-format-eval.md#reproducing).
+evals/out/

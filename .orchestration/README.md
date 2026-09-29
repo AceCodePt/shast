@@ -25,7 +25,7 @@ absence is the implicit unverified state.
 
 The verification hook that runs is the version **committed on the base branch**, never the
 working-tree copy, so edit the hook and commit it before dispatching. To configure
-it, copy `hooks/session-idle.sample` to `hooks/session-idle`, make it executable,
+it, copy `hooks/session-idle.example` to `hooks/session-idle`, make it executable,
 and put the project's real checks above the commit block (e.g.
 `pnpm check && pnpm test`, `cargo clippy -- -D warnings && cargo test`,
 `ruff check . && pytest -q`); the sample exits non-zero on purpose until then.
@@ -46,12 +46,12 @@ authority: `orch project scheduler <n>` writes the working-tree copy for you to
 review and commit. A machine-wide cap across all projects lives outside the repo in
 `~/.config/orch/daemon.json` (`orch daemon budget`).
 
-Reference samples for the hooks live in `hooks/*.sample` — inert until
+Reference samples for the hooks live in `hooks/*.example` — inert until
 you copy one to its real name, make it executable, and commit it. The
-`session-idle.sample` is the verification hook template: copy it to `hooks/session-idle` for
+`session-idle.example` is the verification hook template: copy it to `hooks/session-idle` for
 the daemon to verify anything at all.
 
-The remaining `hooks/*.sample` files are one per opencode server event
+The remaining `hooks/*.example` files are one per opencode server event
 (the vocabulary in `src/orch/opencode_events.py`), fired by the daemon's SSE
 consumer when the server emits that event — the event's JSON arrives on stdin.
 Copy one to its real name, make it executable, and commit it to react to the

@@ -835,15 +835,16 @@ instead, the document is the **small** option.
 
 ## Reproducing
 
-See `evals/README.md`. Screenshots, DOM dumps, every prompt and every model reply
-are cached under `evals/out/`, so the numbers above can be audited without
-re-spending a single call. **`evals/` is not yet committed** — the cache is the
-only copy of the run, and one partial re-run already destroyed a comparison file
-(`attempts.blind.json`); commit it before iterating.
+Screenshots, DOM dumps, every prompt and every model reply are cached under
+`evals/out/`, so the numbers above can be audited without re-spending a single
+call. That cache is ~5,500 generated files and is **not tracked in git**; it
+ships as the `evals-cache` release asset:
 
 ```sh
-pnpm eval:capture   # Chromium: screenshots + hover pairs + DOM dumps
-pnpm eval           # the matrix (resumable; skips what is already on disk)
-pnpm eval:cost      # provider-counted tokens per arm
-pnpm eval:report    # regenerate evals/out/REPORT.md
+gh release download evals-cache --pattern shast-evals-out.tar.gz
+tar xzf shast-evals-out.tar.gz    # restores evals/out/
 ```
+
+The eval harness itself — the `pnpm eval:capture` / `eval` / `eval:cost` /
+`eval:report` commands that populate `evals/out/` — is not present in this
+repository. The cache is the audit trail of the run, not a runnable input.
