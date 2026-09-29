@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import test, { after, before, describe } from "node:test";
 import type { Browser } from "playwright";
-import { chromium } from "playwright";
+import { chromium } from "../../resolved-format/playwright-lazy.ts";
 import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
 import { resolveDocument } from "../../resolved-format/resolved.ts";
 import { measureBoxes } from "../../resolved-format/measured.ts";
-import { CASES, type Case } from "../../evals/cases.ts";
+import type { Case } from "../../evals/cases.ts";
 
 /**
  * The counterfactual cases have answer keys nothing else can check.
@@ -23,6 +23,13 @@ import { CASES, type Case } from "../../evals/cases.ts";
  * Gated behind CONFORMANCE=1 like the other browser-dependent checks.
  */
 const ENABLED = process.env["CONFORMANCE"] === "1";
+
+// `evals/cases.ts` is generated, so it is absent from a fresh checkout. Only
+// resolve it when the browser-gated run is actually enabled; otherwise the suite
+// stays discoverable and inert.
+const { CASES } = ENABLED
+  ? await import("../../evals/cases.ts")
+  : { CASES: [] as readonly Case[] };
 
 function caseNamed(name: string): Case {
   const found = CASES.find((testCase) => testCase.name === name);

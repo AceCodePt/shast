@@ -1,9 +1,9 @@
 import test, { after, before, describe } from "node:test";
 import assert from "node:assert";
 import type { Browser } from "playwright";
-import { chromium } from "playwright";
+import { chromium } from "../../resolved-format/playwright-lazy.ts";
 import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
-import { CASES } from "../../evals/cases.ts";
+import type { Case } from "../../evals/cases.ts";
 import { resolveCascade } from "../../resolved-format/cascade.ts";
 import { measureHover, type HoverProbe } from "../../resolved-format/conformance.ts";
 import { measureBoxes } from "../../resolved-format/measured.ts";
@@ -22,6 +22,13 @@ import { measureBoxes } from "../../resolved-format/measured.ts";
  * behaviour is overruled", the report has quietly hidden a bug.
  */
 const ENABLED = process.env["CONFORMANCE"] === "1";
+
+// `evals/cases.ts` is generated, so it is absent from a fresh checkout. Only
+// resolve it when the browser-gated run is actually enabled; otherwise the suite
+// stays discoverable and inert.
+const { CASES } = ENABLED
+  ? await import("../../evals/cases.ts")
+  : { CASES: [] as readonly Case[] };
 
 /**
  * `#0022cc` and `rgb(0, 34, 204)` are the same colour. The format reports the
