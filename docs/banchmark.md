@@ -164,10 +164,13 @@ generated code, no `tsc` in the loop).
 emitting shast JSON straight into `renderComponent` on the server.
 
 **Setup:** take Arm B's raw single-shot outputs, skip `tsc` entirely, run
-them through `renderComponent`, and score what the runtime wall catches.
+them through `createComponent` (the runtime wall lives there, not in
+`renderComponent`), and score what the runtime wall catches.
 
-**What we're hoping to see:** structure, attributes, and selector shape
-caught at 100%; CSS property *values* passing — the documented gap.
+**What we're hoping to see:** structure, attributes, selectors, CSS property
+values, custom properties, `calc()`/`var()`, query keys, keyframe references,
+and `grid-area` names all caught. The one remaining gap is pseudo-class/
+element *usage*, which only the type wall checks.
 **Publish that number un-fudged.** The README already declares the gap; the
 benchmark quantifying it is credibility, and it becomes the before/after
 baseline for when the gap closes.

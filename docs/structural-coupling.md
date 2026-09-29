@@ -32,8 +32,9 @@ Every rule is enforced twice, by design:
    the type layer is bypassed (`as any`, generated code, data from outside
    the compiler's view).
 
-The two layers are required to agree; divergence is treated as a bug (see
-"Known gaps" below for the one currently known divergence).
+The two layers are required to agree; divergence is treated as a bug. The one
+remaining divergence is pseudo-class/element *usage*, which only the type wall
+checks today (see "Known gaps" below).
 
 ## Verified guarantees
 
@@ -48,7 +49,7 @@ h1.innerHTML`).
 | `h1 > b` built by its own `createComponent`, then embedded under `<a>` | rejected at the parent call | rejected |
 | Factory with widened return type (`BaseComponentStructure`) embedded under `<a>` | rejected — fails **closed** | rejected |
 | Parent css `> heading` targeting a prebuilt child | accepted | accepted |
-| Parent css `> headnig` (typo) | rejected | **accepted — known gap** |
+| Parent css `> headnig` (typo) | rejected | rejected |
 
 Key consequences:
 
@@ -87,20 +88,25 @@ component size.
 
 ## Known gaps
 
-Tracked in `TASK.md`:
+The two gaps this document originally tracked are now closed: runtime
+validates `> childName` css selector keys against `innerHTML` keys (agreeing
+with the type wall), and CSS property values — including `calc()` and `var()`
+— are validated at both walls.
 
-- Runtime does not yet validate `> childName` css selector keys against
-  `innerHTML` keys (type level does). Until fixed, a typo'd child selector can
-  survive if the type layer is bypassed.
-- Runtime does not yet validate css *property values* during render
-  (`renderComponent`), only during `createComponent`.
+One divergence remains:
+
+- Pseudo-class/element *usage* is type-checked but not runtime-checked.
+
+Everything the browser would silently ignore or fail to match is catalogued,
+with the archived slice behind each entry, in
+[`before-the-browser.md`](before-the-browser.md).
 
 ## Non-goals
 
-- Reimplementing the full CSS value grammar in the type system. The moat is
-  the structure↔style coupling and the closed-world registries, not proving
-  `calc(100% - 20px)` correct at the type level. Grammar features are added
-  only where they serve the coupling (e.g. `var()` resolution against the
-  property registry).
 - Being a rendering framework. Output is plain HTML and CSS strings; how they
   are served is the caller's concern.
+- Chasing the entire CSS value grammar for its own sake. The moat is still the
+  structure↔style coupling and the closed-world registries, not CSS trivia.
+  Grammar is deepened only where a silent browser failure is worth catching —
+  which is why `calc()` dimension algebra and `var()` resolution were added to
+  both walls (see [`css-calc.md`](css-calc.md), [`css-var.md`](css-var.md)).

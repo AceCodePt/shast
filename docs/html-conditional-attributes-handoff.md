@@ -40,7 +40,7 @@ first real vocabulary to use it.
     and `novalidate` by `get`/`post`; `dialog` unlocks none.
   - `track[kind]` (full) - `srclang` by `subtitles`; `label`/`default` by every
     kind except `metadata`.
-- `README.md`, `TASK.md` - documented as the third structural binding.
+- `README.md` - documented as the third structural binding.
 
 An **omitted gate** (or one explicitly written as `undefined`) contributes its
 `undefined` arm's bag. This is what makes `type`/`kind` optional while still
@@ -109,7 +109,7 @@ parameter; the shared row helpers (`GateEntry`, `GateKeyOf`, `GatePropsOf`,
   and a generated `evals/cases.ts` that are not part of this package's
   dependencies; it was already failing on `main` and is excluded from the
   library typecheck in `tsconfig.json`.
-- `node --test tests/css tests/html tests/render tests/engine.test.ts`: 449 pass
+- `node --test tests/css tests/html tests/render tests/engine`: 449 pass
   / 8 fail. The 8 are pre-existing rendering failures in
   `tests/css/queries-integration.test.ts`, unrelated to this work.
 - `tests/html/conditional-attributes.test.ts`: 17/17 mechanism tests

@@ -244,11 +244,26 @@ is checked against them **twice**:
 | Child tag allowed by parent (`ul` → only `li`)                             | ✓            | ✓                               |
 | Ancestral inheritance (`a > h1 > b` rejected because `a ∩ h1` forbids `b`) | ✓            | ✓                               |
 | Attribute exists and value matches its DSL type                            | ✓            | ✓                               |
+| Attribute unlocked by its gate (e.g. `checked` needs `type: checkbox`)     | ✓            | ✓                               |
 | CSS property value matches the syntax config                               | ✓            | ✓                               |
+| CSS property unlocked by its gate (`gap` needs flex/grid display)          | ✓            | ✓                               |
 | `> child` selector targets a real named child (at any nesting depth)       | ✓            | ✓                               |
 | `&.class` references a class declared on the context element - including classes computed via template literals (`` class: `${active} card` ``) | ✓            | ✓                               |
+| Class name is a legal CSS identifier (`1bad`, `b!c` rejected)              | ✓            | ✓                               |
 | Custom property (`--x`) registered and value matches its `syntax`          | ✓            | ✓                               |
+| `calc()` dimensions are legal and match the property's slot                | ✓            | ✓                               |
+| `var()` names a registered property and no cycle exists                    | ✓            | ✓ (cycles too)                  |
+| Registered `@media`/`@container` query key (exact string)                  | ✓            | ✓                               |
+| `animation` references a registered `@keyframes`                           | ✓            | ✓                               |
+| `grid-area` name is declared by the parent's `grid-template-areas`         | ✓            | ✓                               |
 | Pseudo-class/element declared for that tag                                 | ✓            | see [Limitations](#limitations) |
+
+Every one of these is a mistake that plain CSS lets through and the browser
+only reveals at runtime - a dropped declaration, a selector that matches
+nothing, an animation that never runs. shast finds them at `tsc` and, for
+untyped input, on the server before HTML leaves it. The full catalogue, with
+the archived slice behind each entry, is in
+[docs/before-the-browser.md](docs/before-the-browser.md).
 
 Composition does not weaken any of this: components built in separate files
 and embedded into parents are **re-validated under the parent's context**, at
@@ -302,17 +317,18 @@ What that means concretely:
 - **Checked:** structure, selector targets, child validity, attribute and
   value vocabularies, named relationships between a component's CSS and its
   own tree.
-- **Plausible future work:** *unconditional* cross-node style relations
+- **Shipped, with more planned:** *unconditional* cross-node style relations
   (e.g. a child declaring `flex: 1` under a parent whose own `css` block
   declares `display: flex`). Both facts are visible in the same definition
-  the types already walk. A broader catalog of these checks — the common CSS
-  "why isn't this working" mistakes (`z-index` without a stacking context,
-  inline elements ignoring `width`, flex/grid item props without a flex/grid
-  parent, `grid-area` names, `position` sticky/absolute/fixed ancestor
-  requirements) — is enumerated in `TASK.md` under **CSS Semantic Rules**,
-  ordered by type-system cost. The cheap tiers (same-node and one-level
-  parent→child rules) cover a large fraction of the most-Googled CSS bugs;
-  heavier tiers are gated behind the performance budget. Tracked, not promised.
+  the types already walk. The cheap tiers — same-node rules (`z-index`
+  without a stacking context, inline elements ignoring `width`, `gap`
+  without flex/grid display) and one-level parent→child rules (flex/grid
+  item props, `grid-area` names) — are implemented at both walls. The
+  heavier ancestor-chain tiers and the full catalog of common CSS
+  "why isn't this working" mistakes live in
+  [docs/css-semantic-rules.md](docs/css-semantic-rules.md), ordered by
+  type-system cost and gated behind the performance budget. Tracked, not
+  promised for the rest.
 - **Out of scope, permanently:** *conditional* layout semantics. The moment
   `display` sits behind a media query, a pseudo-class, or resolves via
   inheritance from a parent unknown at definition time, "is `flex: 1`
@@ -380,8 +396,8 @@ imperceptible. Details in
 ## Limitations
 
 Some limitations are **deliberate trade-offs** to keep the type system
-snappy; others are **known gaps** with the fix tracked in `TASK.md`. They
-are listed here rather than hidden in either category's fine print.
+snappy; others are **known gaps**. They are listed here rather than hidden in
+either category's fine print.
 
 ### Deliberate (kept for type-system performance)
 
@@ -400,14 +416,6 @@ them would slow every DSL string down for a vanishingly rare case:
   backtick-literal backtick containing an interpolation) is not supported -
   tracking escape depth across quote contexts at the type level costs far
   more than the edge case is worth.
-
-- **CSS class name syntax is not validated at the type level.** The type
-  system checks *existence* (`&.foo` must reference a class on the element)
-  but not *well-formedness* — a class like `&.123` or `&.foo!bar` passes
-  the type wall even though it is an invalid CSS identifier. The runtime
-  wall catches these; adding character-level validation at the type level
-  would require recursion across every class name for a mistake the runtime
-  already catches.
 
 ### Known gaps (runtime wall only - the type wall covers these today)
 
