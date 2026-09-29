@@ -19,6 +19,7 @@ import {
 } from "./types.ts";
 import type { ValidateQueries } from "./types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import { isMemberOf } from "@/types.ts";
 
 const MEDIA_TYPE_REGEX = new RegExp(`^(${MEDIA_TYPES.join("|")})(?: |$)`);
 const MEDIA_TYPE_AND_REGEX = new RegExp(
@@ -50,7 +51,7 @@ function validateOperatorForm(
   const tokens = inner.split(/\s+/).filter((t) => t !== "");
   if (tokens.length === 3) {
     const [a, op, b] = tokens;
-    if (op === undefined || !OPERATORS.includes(op)) {
+    if (op === undefined || !isMemberOf(OPERATORS, op)) {
       fail(query, `Invalid comparison operator "${op ?? ""}"`);
     }
     if (isFeatureValue(a!, b!)) return;
@@ -62,12 +63,12 @@ function validateOperatorForm(
     if (
       op1 === undefined ||
       op2 === undefined ||
-      !RANGE_OPS.includes(op1) ||
-      !RANGE_OPS.includes(op2)
+      !isMemberOf(RANGE_OPS, op1) ||
+      !isMemberOf(RANGE_OPS, op2)
     ) {
       fail(query, `Invalid range comparison operator in "${inner}"`);
     }
-    if (feature === undefined || !RANGE_FEATURES.includes(feature)) {
+    if (feature === undefined || !isMemberOf(RANGE_FEATURES, feature)) {
       fail(query, `Invalid range comparison "${inner}"`);
     }
     if (!isFeatureValue(feature, v1!) || !isFeatureValue(feature, v2!)) {
@@ -159,21 +160,21 @@ export function cssQueriesConfig<
     numberSyntax !== undefined && matchesDSL(keywords, numberSyntax, value);
 
   function isMediaFeatureValue(feature: string, value: string): boolean {
-    if (MEDIA_LENGTH_FEATURES.includes(feature)) return isLength(value);
-    if (MEDIA_RESOLUTION_FEATURES.includes(feature)) return isResolution(value);
-    if (MEDIA_RATIO_FEATURES.includes(feature)) return isNumber(value);
-    if (feature === "orientation") return ORIENTATION_VALUES.includes(value);
+    if (isMemberOf(MEDIA_LENGTH_FEATURES, feature)) return isLength(value);
+    if (isMemberOf(MEDIA_RESOLUTION_FEATURES, feature)) return isResolution(value);
+    if (isMemberOf(MEDIA_RATIO_FEATURES, feature)) return isNumber(value);
+    if (feature === "orientation") return isMemberOf(ORIENTATION_VALUES, value);
     if (feature === "prefers-color-scheme") {
-      return PREFERS_COLOR_SCHEME_VALUES.includes(value);
+      return isMemberOf(PREFERS_COLOR_SCHEME_VALUES, value);
     }
     if (feature === "prefers-reduced-motion") {
-      return PREFERS_REDUCED_MOTION_VALUES.includes(value);
+      return isMemberOf(PREFERS_REDUCED_MOTION_VALUES, value);
     }
     return false;
   }
 
   function isContainerFeatureValue(feature: string, value: string): boolean {
-    return CONTAINER_LENGTH_FEATURES.includes(feature) && isLength(value);
+    return isMemberOf(CONTAINER_LENGTH_FEATURES, feature) && isLength(value);
   }
 
   function validateMediaFeature(inner: string, query: string): void {
@@ -298,7 +299,7 @@ export function cssQueriesConfig<
       fail(query, `Expected 'and' after 'only ${type}'`);
     }
     const firstToken = /^[^\s]+/.exec(q)?.[0];
-    if (firstToken !== undefined && MEDIA_TYPES.includes(firstToken)) {
+    if (firstToken !== undefined && isMemberOf(MEDIA_TYPES, firstToken)) {
       if (q === firstToken) return;
       validateMediaTypeAnd(q, query);
       return;

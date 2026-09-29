@@ -139,3 +139,19 @@ export function uniqueArray<const T extends readonly string[]>(
   }
   return items as T;
 }
+
+/**
+ * Membership test for the `uniqueArray` vocabularies.
+ *
+ * `uniqueArray` returns a readonly tuple of literals, so the standard
+ * `Array.prototype.includes` signature (`searchElement: T`) rejects the widened
+ * `string` these runtime validators actually hold. Comparing through a
+ * `readonly string[]` view accepts any string without weakening the registry's
+ * own type. The same widening is used in `css/wide-keyword.ts`.
+ */
+export function isMemberOf(
+  vocabulary: readonly string[],
+  value: string,
+): boolean {
+  return vocabulary.includes(value);
+}

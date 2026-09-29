@@ -59,7 +59,7 @@ export class ExistingDestinationError extends Error {
 const COPY_DIRS = ["engine", "css", "html"] as const;
 // Root-level `src/` files copied too. `index.ts` is the package's public entry
 // point (a side-effect-free barrel) and becomes the vendored tree's entry.
-const COPY_FILES = ["types.ts", "env.d.ts", "index.ts"] as const;
+const COPY_FILES = ["types.ts", "index.ts"] as const;
 // tsyntax files vendored under `<dest>/tsyntax/`.
 const TSYNTAX_FILES = ["index.ts", "types.ts"] as const;
 

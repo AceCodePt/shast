@@ -41,7 +41,6 @@
 	"license": "MIT",
 	"packageManager": "pnpm@11.17.0",
 	"devDependencies": {
-		"@total-typescript/ts-reset": "^0.6.1",
 		"@types/node": "^26.1.2",
 		"typescript": "^7.0.2"
 	},

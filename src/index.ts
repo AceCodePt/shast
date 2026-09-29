@@ -3,11 +3,6 @@
 // Importing this module has no side effects: it only re-exports the surface a
 // consumer needs to assemble their own registry with `engine()`. A complete,
 // runnable wiring lives in `examples/basic.ts` (`pnpm example`).
-//
-// The reference pulls in `env.d.ts` (the `@total-typescript/ts-reset`
-// augmentation the engine's types rely on) so a consumer that only imports this
-// entry - or a tree vendored by `pnpm shast add` - still gets it.
-/// <reference path="./env.d.ts" />
 
 // ---------------------------------------------------------------------------
 // Engine

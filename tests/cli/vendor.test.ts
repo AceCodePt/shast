@@ -28,7 +28,7 @@ function read(dest: string, rel: string): string {
 }
 
 describe("shast add: copy set", () => {
-  test("copies engine, css, html, types, env and tsyntax, including the entry", () => {
+  test("copies engine, css, html, types and tsyntax, including the entry", () => {
     const dest = tempDest();
     add({ dest });
 
@@ -43,13 +43,21 @@ describe("shast add: copy set", () => {
       "html/attribute-config/index.ts",
       "html/tag-config/types.ts",
       "types.ts",
-      "env.d.ts",
       "tsyntax/index.ts",
       "tsyntax/types.ts",
       "index.ts",
     ]) {
       assert.ok(existsSync(path.join(dest, rel)), `expected ${rel} to exist`);
     }
+
+    // The tree is vendored as ESM: the entry is side-effect free and the
+    // package's own type augmentation is gone, so the tree depends on nothing
+    // outside `tsyntax` and `@total-typescript/ts-reset` must not be needed.
+    assert.deepStrictEqual(
+      JSON.parse(read(dest, "package.json")),
+      { type: "module" },
+    );
+    assert.ok(!existsSync(path.join(dest, "env.d.ts")));
 
     // No docs, tests, evals or resolved-format leakage.
     for (const absent of ["docs", "tests", "evals", "resolved-format", "examples"]) {
@@ -64,7 +72,10 @@ describe("shast add: copy set", () => {
 
     assert.ok(entry.includes('export { default as engine } from "./engine/index.ts"'));
     assert.ok(entry.includes('from "./engine/render/render-component.ts"'));
-    assert.ok(entry.includes('/// <reference path="./env.d.ts" />'));
+    // No triple-slash reference to a ts-reset shim: the query vocabularies are
+    // compared through `isMemberOf` instead of a global `includes` widening.
+    assert.ok(!entry.includes("env.d.ts"));
+    assert.ok(!entry.includes("ts-reset"));
     // Side-effect free: no engine wiring, no demo component, no logging.
     assert.ok(!entry.includes("engine({"));
     assert.ok(!entry.includes("const list = createComponent"));
