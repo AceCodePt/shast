@@ -92,7 +92,7 @@ describe("createComponent (engine)", () => {
           "array items carry semantic name",
         );
         assert.ok(
-          html.includes("cid-innerKey"),
+          html.includes("cid-inner_004bey"),
           "innerKey present on both array elements (object and array entries)",
         );
         assert.ok(
@@ -100,7 +100,7 @@ describe("createComponent (engine)", () => {
           "check present on deeply nested children",
         );
         assert.ok(css.includes("[cid-items]"), "CSS targets items");
-        assert.ok(css.includes("[cid-innerKey]"), "CSS targets innerKey");
+        assert.ok(css.includes("[cid-inner_004bey]"), "CSS targets innerKey");
         assert.ok(css.includes("[cid-check]"), "CSS targets check");
         assert.ok(css.includes("color: inherit;"));
       });
@@ -174,10 +174,10 @@ describe("createComponent (engine)", () => {
           },
         });
         const { html, css } = renderBound(comp);
-        assert.ok(html.includes("cid-groupA"));
-        assert.ok(html.includes("cid-groupB"));
-        assert.ok(css.includes("[cid-groupA]"));
-        assert.ok(css.includes("[cid-groupB]"));
+        assert.ok(html.includes("cid-group_0041"));
+        assert.ok(html.includes("cid-group_0042"));
+        assert.ok(css.includes("[cid-group_0041]"));
+        assert.ok(css.includes("[cid-group_0042]"));
         assert.ok(css.includes("color: transparent;"));
         assert.ok(css.includes("color: currentColor;"));
         assert.ok(html.includes(">a1</span>"));
