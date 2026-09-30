@@ -5,11 +5,11 @@ developer would otherwise put in a context: a screenshot, a devtools dump, or
 both.
 
 The subject is the resolved-node document produced by
-`resolved-format/resolved.ts` — one flat record per rendered node, in which the
+`tests/resolved-format/resolved.ts` — one flat record per rendered node, in which the
 style is fully resolved, the geometry is measured, and every contested property
 carries the block it came from. Geometry comes from a real Chromium page
-(`resolved-format/measured.ts`), so every box is the browser's, including `flex`
-and `grid`. The format itself is documented in `resolved-format/RESOLVED.md`;
+(`tests/resolved-format/measured.ts`), so every box is the browser's, including `flex`
+and `grid`. The format itself is documented in `tests/resolved-format/RESOLVED.md`;
 this document is the measurement of whether it is worth its tokens.
 
 **Status:** the harness that produced these numbers is not in this repository.
@@ -720,7 +720,7 @@ The two weaknesses that matter most come first.
   whose failure motivated a format change should be treated as a held-back example
   that was then trained on.
 - **Geometry is Chromium's, and the eval is only as good as the capture.** Boxes
-  come from `resolved-format/measured.ts`, which renders each case into a real page
+  come from `tests/resolved-format/measured.ts`, which renders each case into a real page
   and reads every box back. A bug there is shared by every arm that reads the
   numbers, and is caught by the conformance suite before the eval is trusted.
 - **The dense cases are synthetic.** ~45 nodes at 1280×800 is closer to real than
@@ -788,7 +788,7 @@ The eval harness itself — the `pnpm eval:capture` / `eval` / `eval:cost` /
 `eval:report` commands that populate `evals/out/` — is not present in this
 repository. The cache is the audit trail of the run, not a runnable input. The
 format's own reference, including the re-measured cost-at-scale and its known
-limits, is `resolved-format/RESOLVED.md`.
+limits, is `tests/resolved-format/RESOLVED.md`.
 
 ---
 

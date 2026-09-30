@@ -109,7 +109,7 @@ parameter; the shared row helpers (`GateEntry`, `GateKeyOf`, `GatePropsOf`,
 ## Verification status
 
 - `pnpm check`: passes (exit 0). The browser-backed eval harness
-  (`resolved-format/`, `tests/resolved-format/`, `evals/`) needs `playwright`
+  (`tests/resolved-format/`, `evals/`) needs `playwright`
   and a generated `evals/cases.ts` that are not part of this package's
   dependencies; it was already failing on `main` and is excluded from the
   library typecheck in `tsconfig.json`.

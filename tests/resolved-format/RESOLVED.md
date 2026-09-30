@@ -10,11 +10,11 @@ to be discovered by someone who trusted the document.
 ```
 collectRules      src/engine/render/collect-rules.ts   every emitted rule, structured
   ├─ printStylesheet                                   -> the CSS renderComponent emits
-  └─ resolveCascade resolved-format/cascade.ts            -> per-node style + provenance
-measureBoxes      resolved-format/measured.ts             -> boxes, measured by Chromium
-occlusionOf       resolved-format/occlusion.ts            -> who hides what
-resolveDocument   resolved-format/resolved.ts             -> the JSON document
-printResolved     resolved-format/print-resolved.ts       -> the text projection
+  └─ resolveCascade tests/resolved-format/cascade.ts            -> per-node style + provenance
+measureBoxes      tests/resolved-format/measured.ts             -> boxes, measured by Chromium
+occlusionOf       tests/resolved-format/occlusion.ts            -> who hides what
+resolveDocument   tests/resolved-format/resolved.ts             -> the JSON document
+printResolved     tests/resolved-format/print-resolved.ts       -> the text projection
 ```
 
 ## Precedence: one code path, and it was measured
@@ -38,7 +38,7 @@ selectors — **specificity, then source order** — which in this emitter means
 
 So **the most distant contributor wins**, which is the opposite of the intuition
 that a node's own declaration is the last word. Verified against Chromium by the
-`cascade-*` fixtures in `resolved-format/fixtures.ts`; run `pnpm test:conformance`.
+`cascade-*` fixtures in `tests/resolved-format/fixtures.ts`; run `pnpm test:conformance`.
 
 **This is the intended design, not a wart to route around.** A child defines how
 it looks on its own; an ancestor composing it is better placed to decide how it
@@ -72,7 +72,7 @@ conformance had been passing over the top of it.
 | `box` measured by a browser render pass | measured by `measured.ts` | It *is* the browser: every box is read back from a real Chromium page with `getBoundingClientRect`, `getComputedStyle` and the scroll geometry. The format cannot disagree with the renderer about a number the renderer produced, and `flex`, `grid` and `sticky` are laid out by the browser rather than throwing. |
 | `states` keyed `"hover"` | keyed `":hover"`, `".active"`, `"::before"`, `":hover.on"` | The bare name cannot distinguish a pseudo-class from a class from a pseudo-element, and compound states need a spelling at all. |
 | `from: "own"` in the text output | `declared by <path>, inside its "<key>" block` | See below. |
-| package named `text-renderer/` | `resolved-format/` | Nothing here renders. This is a formatter: it serialises resolved state as named text, and the one thing it deliberately does not do is depict the page spatially. The old name is a fossil of a predecessor that drew a glyph grid, which models decoded badly — keeping it invited the assumption that this is that, only in a directory. |
+| package named `text-renderer/` | `tests/resolved-format/` | Nothing here renders. This is a formatter: it serialises resolved state as named text, and the one thing it deliberately does not do is depict the page spatially. The old name is a fossil of a predecessor that drew a glyph grid, which models decoded badly — keeping it invited the assumption that this is that, only in a directory. |
 | — | `collides` | Added. |
 | — | `dead-state` | Added. |
 | — | paint-order explanation on `covered` | Added. |
@@ -354,7 +354,7 @@ share by roughly 2.5x.
 
 ### Measured again, on the real fixtures
 
-`pnpm eval:scale`, now over the 38 fixtures in `resolved-format/fixtures.ts`, which
+`pnpm eval:scale`, now over the 38 fixtures in `tests/resolved-format/fixtures.ts`, which
 differ from one another, against the HTML and CSS `renderComponent` emits for the
 same tree (excluding the reset, which is a fixed ~370 characters emitted once per
 page rather than per component):

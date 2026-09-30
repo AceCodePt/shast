@@ -9,7 +9,7 @@ import {
   specificityOf,
 } from "@/engine/render/collect-rules.ts";
 import { renderComponent } from "@/engine/render/render-component.ts";
-import { resolveCascade } from "../../resolved-format/cascade.ts";
+import { resolveCascade } from "./cascade.ts";
 
 const tagConfig: BaseHTMLTagConfig = {
   div: {

@@ -1,12 +1,12 @@
 import test, { after, before, describe } from "node:test";
 import assert from "node:assert";
 import type { Browser } from "playwright";
-import { chromium } from "../../resolved-format/playwright-lazy.ts";
+import { chromium } from "./playwright-lazy.ts";
 import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
 import type { Case } from "../../evals/cases.ts";
-import { resolveCascade } from "../../resolved-format/cascade.ts";
-import { measureHover, type HoverProbe } from "../../resolved-format/conformance.ts";
-import { measureBoxes } from "../../resolved-format/measured.ts";
+import { resolveCascade } from "./cascade.ts";
+import { measureHover, type HoverProbe } from "./conformance.ts";
+import { measureBoxes } from "./measured.ts";
 
 /**
  * Are the state deltas — and the dead states — right?
