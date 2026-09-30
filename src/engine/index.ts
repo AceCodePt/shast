@@ -40,7 +40,7 @@ export function validateComponentNode(
   node: unknown,
   inheritedAllowed: AllowedTagSet,
 ): void {
-  validateHtmlNode(context, node, inheritedAllowed);
+  validateHtmlNode(context, node, inheritedAllowed, "root");
 }
 
 export default function engine<
