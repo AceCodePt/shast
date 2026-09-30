@@ -122,12 +122,16 @@ export function stableStringify(value: unknown): string {
  * near 112 million), far above the sub-10,000 blocks a realistic page emits;
  * the old FNV-1a/32 reached 1% at roughly 9,292 blocks.
  *
- * A collision is accepted, not detected. The scope is only ever compared
- * within a single `collectRules` tree, so a guard could miss a collision
- * between components rendered or hydrated separately while still hard-failing
- * a render that did compose both — inconsistent protection against a
- * probabilistic event, and an availability risk. Widening the space is the
- * whole mitigation.
+ * A collision *inside one `collectRules` tree* is detected: the scope dedupe
+ * (`dedupeByScope`) keeps the first block per scope and compares
+ * `stableStringify(node.css)` fingerprints, so a repeated scope whose css
+ * differs throws instead of silently misstyling the second component.
+ *
+ * A collision *across separately rendered or hydrated trees* stays undetected
+ * and accepted by design: those two blocks never meet in one stylesheet, so
+ * there is no visible damage to guard against, and a check that only fired on
+ * composed renders would be inconsistent protection against a probabilistic
+ * event. Widening the space remains the mitigation for that case.
  */
 function hashNode(node: unknown): string {
   const input = stableStringify(node);
@@ -156,8 +160,10 @@ function hashNode(node: unknown): string {
  * `[cid-<name>]` by name, not by child hash), so two components with an
  * identical `css` block produce identical rules and must share one scope.
  *
- * The hash is 53-bit `cyrb53` (`hashNode`); a collision is accepted rather
- * than detected, for the hydration/partial-render reasons documented there.
+ * The hash is 53-bit `cyrb53` (`hashNode`). A collision between two blocks
+ * that land in the same `collectRules` tree is detected and thrown by
+ * `dedupeByScope`; a collision between blocks rendered or hydrated separately
+ * is accepted, for the reasons documented on `hashNode`.
  */
 export function scopeAttribute(node: BaseComponentStructure): string {
   return `${PREFIX}${hashNode(node.css)}`;
@@ -404,6 +410,39 @@ function flatten(frame: Frame, out: Frame[]): void {
 }
 
 /**
+ * Keeps the first entry per scope, dropping later entries that share its
+ * fingerprint and throwing when a repeated scope carries a different one.
+ *
+ * A repeated scope with an equal `fingerprint` is genuine sharing: two nodes
+ * with identical css must emit one block, so the duplicate is skipped. A
+ * repeated scope with a different fingerprint means two distinct css blocks
+ * hashed to the same scope — a hash collision — which would silently print
+ * one block and misstyle the other, so it throws and names the scope and both
+ * fingerprints.
+ */
+export function dedupeByScope<T>(
+  entries: readonly { scope: string; fingerprint: string; value: T }[],
+): T[] {
+  const fingerprintByScope = new Map<string, string>();
+  const result: T[] = [];
+  for (const { scope, fingerprint, value } of entries) {
+    const existing = fingerprintByScope.get(scope);
+    if (existing !== undefined) {
+      if (existing !== fingerprint) {
+        throw new Error(
+          `Scope collision: two different css blocks hash to ${scope}: ` +
+            `${existing} and ${fingerprint}`,
+        );
+      }
+      continue;
+    }
+    fingerprintByScope.set(scope, fingerprint);
+    result.push(value);
+  }
+  return result;
+}
+
+/**
  * Walks the tree once and returns every rule the stylesheet will contain,
  * paired with the AST nodes it matches.
  */
@@ -437,15 +476,21 @@ export function collectRules(root: BaseComponentStructure): CollectedRules {
   // Identical `css` blocks hash to the same scope and print identically, so
   // the stylesheet carries one block per scope. Every node sharing that scope
   // still gets its own rules — same selector, same source position, different
-  // targets — because provenance has to name the node that declared it.
+  // targets — because provenance has to name the node that declared it. The
+  // dedupe also guards the single-tree collision case: a repeated scope whose
+  // css differs throws rather than dropping the second block.
+  const blocks = dedupeByScope(
+    perNode.map(({ node, frame }) => ({
+      scope: frame.selector,
+      fingerprint: stableStringify(node.css),
+      value: frame,
+    })),
+  );
+
   const blockIndexByScope = new Map<string, number>();
-  const blocks: Frame[] = [];
-  for (const { frame } of perNode) {
-    const scope = frame.selector;
-    if (blockIndexByScope.has(scope)) continue;
-    blockIndexByScope.set(scope, blocks.length);
-    blocks.push(frame);
-  }
+  blocks.forEach((frame, index) => {
+    blockIndexByScope.set(frame.selector, index);
+  });
 
   const rules: EmittedRule[] = [];
   for (const { frame } of perNode) {

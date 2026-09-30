@@ -3,6 +3,7 @@ import assert from "node:assert";
 import type { BaseComponentStructure } from "@/engine/types.ts";
 import {
   collectRules,
+  dedupeByScope,
   printStylesheet,
   scopeAttribute,
 } from "@/engine/render/collect-rules.ts";
@@ -59,6 +60,71 @@ describe("scopeAttribute (cyrb53, 53-bit)", () => {
     assert.strictEqual(
       printStylesheet(blocks).split("width: 1px;").length - 1,
       1,
+    );
+  });
+
+  test("a render with distinct css prints byte-for-byte as before", () => {
+    const { blocks } = collectRules({
+      tag: "div",
+      innerHTML: {
+        a: { tag: "div", css: { color: "red" } },
+        b: { tag: "section", css: { width: "1px" } },
+      },
+    });
+    assert.strictEqual(
+      printStylesheet(blocks),
+      [
+        "[cid-21762ralqm3] {",
+        "  color: red;",
+        "}",
+        "",
+        "[cid-20qofv0dctg] {",
+        "  width: 1px;",
+        "}",
+      ].join("\n"),
+    );
+  });
+});
+
+describe("dedupeByScope", () => {
+  test("keeps the first value when a scope repeats with an equal fingerprint", () => {
+    assert.deepStrictEqual(
+      dedupeByScope([
+        { scope: "cid-x", fingerprint: "a", value: 1 },
+        { scope: "cid-x", fingerprint: "a", value: 2 },
+      ]),
+      [1],
+    );
+  });
+
+  test("keeps first-seen order across distinct scopes", () => {
+    assert.deepStrictEqual(
+      dedupeByScope([
+        { scope: "cid-b", fingerprint: "b", value: "b" },
+        { scope: "cid-a", fingerprint: "a", value: "a" },
+        { scope: "cid-b", fingerprint: "b", value: "ignored" },
+      ]),
+      ["b", "a"],
+    );
+  });
+
+  test("throws when one scope carries two different fingerprints", () => {
+    assert.throws(
+      () =>
+        dedupeByScope([
+          { scope: "cid-x", fingerprint: "a", value: 1 },
+          { scope: "cid-x", fingerprint: "b", value: 2 },
+        ]),
+      (error: unknown) => {
+        assert.ok(error instanceof Error);
+        for (const part of ["cid-x", "a", "b"]) {
+          assert.ok(
+            error.message.includes(part),
+            `expected ${JSON.stringify(error.message)} to name ${part}`,
+          );
+        }
+        return true;
+      },
     );
   });
 });
