@@ -516,6 +516,10 @@ export function collectRules(root: BaseComponentStructure): CollectedRules {
 
 const INDENT_UNIT = "  ";
 
+// Audit: the only text that reaches the printed stylesheet is what `printBlock`
+// emits (validated css keys and values, plus pseudo/query header keys) and what
+// `printKeyframesRule` emits (validated frame values); every one of those
+// strings crossed `assertNoStructuralBreakout` at validation time.
 /** Prints one top-level block as nested CSS. */
 export function printBlock(frame: Frame, indent = 0): string {
   const pad = INDENT_UNIT.repeat(indent);

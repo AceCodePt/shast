@@ -176,25 +176,33 @@ describe("createComponent (engine)", () => {
     });
 
     test("rejects a pseudo-class the tag does not declare and is not global", () => {
-      createPseudoComponent({
-        tag: "button",
-        innerHTML: "Click",
-        css: {
-          // @ts-expect-error
-          ":disabled": { color: "red" },
-        },
-      });
+      assert.throws(
+        () =>
+          createPseudoComponent({
+            tag: "button",
+            innerHTML: "Click",
+            css: {
+              // @ts-expect-error
+              ":disabled": { color: "red" },
+            },
+          }),
+        /CSS Error: Pseudo-class ':disabled' is not registered in the cssPseudoClassConfig/,
+      );
     });
 
     test("rejects a pseudo-class on a tag with an empty cssPseudoClass list", () => {
-      createPseudoComponent({
-        tag: "span",
-        innerHTML: "text",
-        css: {
-          // @ts-expect-error
-          ":hover": { color: "red" },
-        },
-      });
+      assert.throws(
+        () =>
+          createPseudoComponent({
+            tag: "span",
+            innerHTML: "text",
+            css: {
+              // @ts-expect-error
+              ":hover": { color: "red" },
+            },
+          }),
+        /CSS Error: Pseudo-class ':hover' is not registered in the cssPseudoClassConfig/,
+      );
     });
 
     test("rejects a pseudo-class on a tag with no cssPseudoClass key", () => {
@@ -216,14 +224,18 @@ describe("createComponent (engine)", () => {
         cssPropertiesConfig: PSEUDO_CSS_PROPERTIES,
         cssQueriesConfig: EMPTY_QUERIES,
       });
-      createNoPseudoComponent({
-        tag: "widget",
-        attributes: {},
-        innerHTML: "text",
-        css: {
-          ":hover": { color: "red" },
-        },
-      });
+      assert.throws(
+        () =>
+          createNoPseudoComponent({
+            tag: "widget",
+            attributes: {},
+            innerHTML: "text",
+            css: {
+              ":hover": { color: "red" },
+            },
+          }),
+        /CSS Error: Pseudo-class ':hover' is not registered in the cssPseudoClassConfig/,
+      );
     });
   });
 });

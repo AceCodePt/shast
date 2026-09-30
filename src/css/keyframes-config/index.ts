@@ -7,6 +7,7 @@ import {
 import type { BaseCSSAttributesComplexConfig } from "@/css/attribute-config/types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
 import { CSS_IDENTIFIER_REGEX as KEYFRAME_NAME } from "@/css/ident.ts";
+import { assertNoStructuralBreakout } from "@/engine/validate/css.ts";
 import type {
   BaseKeyframesConfig,
   ValidateKeyframesConfig,
@@ -42,6 +43,13 @@ function validateFrameProperty(
   prop: string,
   value: unknown,
 ): void {
+  // A frame value is printed verbatim inside `@keyframes`
+  // (`printKeyframesRule`), so it is stylesheet text and crosses the single
+  // structural wall before the DSL check. `box-shadow` is `<string>`, which
+  // accepts a break-out shape at the DSL level; this is what stops it.
+  if (typeof value === "string") {
+    assertNoStructuralBreakout(prop, value);
+  }
   const attrDef = cssAttributesConfig[prop];
   if (typeof attrDef === "string") {
     try {

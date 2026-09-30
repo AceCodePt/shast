@@ -28,5 +28,6 @@ export interface ValidationContext {
   readonly cssAttributesConfig: Record<string, any>;
   readonly cssPropertiesConfig: Record<string, any>;
   readonly registeredQueries: ReadonlySet<string>;
+  readonly registeredPseudoClasses: ReadonlySet<string>;
   readonly cssKeyframesConfig: BaseKeyframesConfig;
 }

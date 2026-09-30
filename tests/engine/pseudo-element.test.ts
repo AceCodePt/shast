@@ -195,25 +195,33 @@ describe("createComponent (engine)", () => {
     });
 
     test("rejects a pseudo-element the tag does not declare", () => {
-      createPEComponent({
-        tag: "field",
-        innerHTML: "x",
-        css: {
-          // @ts-expect-error
-          "::before": { color: "red" },
-        },
-      });
+      assert.throws(
+        () =>
+          createPEComponent({
+            tag: "field",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error
+              "::before": { color: "red" },
+            },
+          }),
+        /CSS Error: Pseudo-element '::before' is not declared on tag 'field'/,
+      );
     });
 
     test("rejects a pseudo-element on a tag with an empty cssPseudoElement list", () => {
-      createPEComponent({
-        tag: "span",
-        innerHTML: "x",
-        css: {
-          // @ts-expect-error
-          "::placeholder": { color: "red" },
-        },
-      });
+      assert.throws(
+        () =>
+          createPEComponent({
+            tag: "span",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error
+              "::placeholder": { color: "red" },
+            },
+          }),
+        /CSS Error: Pseudo-element '::placeholder' is not declared on tag 'span'/,
+      );
     });
 
     test("rejects a pseudo-element on a tag with no cssPseudoElement key", () => {
@@ -235,14 +243,18 @@ describe("createComponent (engine)", () => {
         cssPropertiesConfig: PE_CSS_PROPERTIES,
         cssQueriesConfig: EMPTY_QUERIES,
       });
-      createNoPEComponent({
-        tag: "plain",
-        attributes: {},
-        innerHTML: "x",
-        css: {
-          "::placeholder": { color: "red" },
-        },
-      });
+      assert.throws(
+        () =>
+          createNoPEComponent({
+            tag: "plain",
+            attributes: {},
+            innerHTML: "x",
+            css: {
+              "::placeholder": { color: "red" },
+            },
+          }),
+        /CSS Error: Pseudo-element '::placeholder' is not declared on tag 'plain'/,
+      );
     });
 
     test("rejects a pseudo-element nested inside another pseudo-element", () => {

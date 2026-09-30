@@ -2,6 +2,13 @@ import test, { describe } from "node:test";
 import assert from "node:assert";
 import { createComponent, renderBound } from "./harness.ts";
 
+function hashScope(html: string, tag: string): string {
+  const match = html.match(new RegExp(`^<${tag} (cid-[a-z0-9]+)`));
+  const token = match?.[1];
+  assert.ok(token, `expected a hash scope on <${tag}> in: ${html}`);
+  return token;
+}
+
 // The reported injection: a string-typed CSS value that closes the declaration
 // and opens rules of its own. Every string arm of the registry (`<string>`,
 // `<custom-ident>`) accepts it at the DSL level, so the runtime wall must
@@ -402,6 +409,102 @@ describe("runtime structural guard for string CSS values", () => {
           innerHTML: "x",
           css: { content: '"}"' },
         }),
+      );
+    });
+  });
+});
+
+// A pseudo-class / pseudo-element key becomes selector text: the renderer
+// prints it verbatim (`segmentText`), so `:hover} .evil{color:red` would close
+// the block and inject a global rule. The key must be a registered pseudo key;
+// an unregistered one is rejected before its shape matters, and the structural
+// scan is the in-loop backstop. A top-level `:` key with a non-block value
+// never reaches the nested-block registry check, so it gets a pseudo-specific
+// error instead of the generic "not a recognized CSS attribute or property".
+describe("runtime structural guard for selector keys", () => {
+  describe("rejects unregistered or structural pseudo keys", () => {
+    test("a pseudo-class key carrying a structural break-out", () => {
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "div",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error ':hover} .evil{color:red' is not a registered pseudo-class
+              ":hover} .evil{color:red": { color: "red" },
+            },
+          }),
+        /CSS Error: Pseudo-class ':hover\} \.evil\{color:red' is not registered in the cssPseudoClassConfig/,
+      );
+    });
+
+    test("an unregistered pseudo-class name", () => {
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "div",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error ':nonsense-not-registered' is not registered
+              ":nonsense-not-registered": { color: "red" },
+            },
+          }),
+        /CSS Error: Pseudo-class ':nonsense-not-registered' is not registered in the cssPseudoClassConfig/,
+      );
+    });
+
+    test("a functional pseudo-class is rejected by membership alone", () => {
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "div",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error ':has(script)' is not registered
+              ":has(script)": { color: "red" },
+            },
+          }),
+        /CSS Error: Pseudo-class ':has\(script\)' is not registered in the cssPseudoClassConfig/,
+      );
+    });
+
+    test("a top-level ':' key with a non-block value gets a pseudo-specific error", () => {
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "div",
+            innerHTML: "x",
+            css: {
+              ":hover": "red",
+            },
+          }),
+        /CSS Error: ':hover' is not a registered pseudo-class/,
+      );
+    });
+  });
+
+  describe("renders a legitimate pseudo-class block unchanged", () => {
+    test(":hover emits the same nested selector as before", () => {
+      const component = createComponent({
+        tag: "div",
+        innerHTML: "x",
+        css: {
+          color: "#000",
+          ":hover": { color: "#f00" },
+        },
+      });
+      const { html, css } = renderBound(component);
+      const scope = hashScope(html, "div");
+      assert.strictEqual(
+        css,
+        [
+          `[${scope}] {`,
+          `  color: #000;`,
+          `  &:hover {`,
+          `    color: #f00;`,
+          `  }`,
+          `}`,
+        ].join("\n"),
       );
     });
   });

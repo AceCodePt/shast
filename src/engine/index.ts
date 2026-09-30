@@ -106,6 +106,7 @@ export default function engine<
     cssAttributesConfig: config.cssAttributesConfig,
     cssPropertiesConfig: config.cssPropertiesConfig,
     registeredQueries: new Set(config.cssQueriesConfig),
+    registeredPseudoClasses: new Set(config.cssPseudoClassConfig),
     cssKeyframesConfig: config.cssKeyframesConfig ?? {},
   };
 
