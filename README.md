@@ -958,6 +958,17 @@ runtime inside `createComponent`. The remaining gap covers only
 pseudo-class/element usage — worth knowing if you rely on the runtime wall
 alone (e.g. validating untyped AI output without running `tsc`).
 
+### Integer-like child keys silently reorder children
+
+JavaScript orders object keys that look like array indices (canonical
+non-negative integer strings such as `"0"`, `"1"`, `"42"`) ahead of every
+other key, in ascending numeric order, regardless of insertion order. A
+numeric `innerHTML` key therefore silently reorders the rendered children.
+No guard is added: child names double as nested-CSS selector handles
+(`> name`), and `> 1` is not a usable identifier, so numeric keys are already
+outside the intended API shape and a runtime rejection would be dead code.
+The array form is the supported way to repeat a child.
+
 ## Status
 
 Early, honest version: one maintainer, 200+ commits, no releases yet. The
