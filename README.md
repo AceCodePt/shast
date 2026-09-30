@@ -969,6 +969,17 @@ No guard is added: child names double as nested-CSS selector handles
 outside the intended API shape and a runtime rejection would be dead code.
 The array form is the supported way to repeat a child.
 
+## Repository history
+
+`.orchestration/` and `archive/` are deliberately version-controlled, not
+leftover clutter to be cleaned up or `.gitignore`d. They are this project's
+development record: `.orchestration/` is the task pipeline and its hooks, and
+`archive/` holds the spec and outcome of every completed or abandoned task -
+how the project was built, what was tried, and what was discarded and why.
+Keeping them tracked means that record is reviewable next to the code it
+produced and can differ per branch like anything else, instead of living
+outside version control where it would have no history and no backup.
+
 ## Status
 
 Early, honest version: one maintainer, 200+ commits, no releases yet. The
