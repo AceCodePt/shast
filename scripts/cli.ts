@@ -218,27 +218,182 @@ function rewriteSpecifier(specifier: string, fromDestRel: string): string {
   return specifier;
 }
 
+/** Characters that make up an identifier-like token (`from`, `import`, ...). */
+const WORD_CHAR = /[A-Za-z0-9_$]/;
+
+/**
+ * Whether the string literal the scanner is about to read sits in specifier
+ * position. `lastWord` is the identifier most recently read in *code* position,
+ * so a word inside a skipped comment or literal can never count. Only
+ * whitespace may separate the keyword from the quote, matching the regex this
+ * scan replaced.
+ */
+function isSpecifierPosition(lastWord: string): boolean {
+  return lastWord === "from" || lastWord === "import";
+}
+
+/**
+ * The index just past the string literal starting at `start` (a quote).
+ * Backslash escapes are honoured, so `"a\"b"` is one literal. An unterminated
+ * literal stops at the newline or end of input rather than swallowing the rest
+ * of the file.
+ */
+function scanStringLiteral(source: string, start: number): number {
+  const quote = source[start]!;
+  if (quote === "`") return scanTemplateLiteral(source, start);
+  let i = start + 1;
+  while (i < source.length) {
+    const char = source[i]!;
+    if (char === "\\") {
+      i += 2;
+      continue;
+    }
+    if (char === quote) return i + 1;
+    if (char === "\n") return i;
+    i += 1;
+  }
+  return source.length;
+}
+
+/** The index just past the template literal starting at `start` (a backtick). */
+function scanTemplateLiteral(source: string, start: number): number {
+  let i = start + 1;
+  while (i < source.length) {
+    const char = source[i]!;
+    if (char === "\\") {
+      i += 2;
+      continue;
+    }
+    if (char === "`") return i + 1;
+    if (char === "$" && source[i + 1] === "{") {
+      i = scanTemplateExpression(source, i + 2);
+      continue;
+    }
+    i += 1;
+  }
+  return source.length;
+}
+
+/** Skip a `${ ... }` interpolation body; returns the index past its closing `}`. */
+function scanTemplateExpression(source: string, start: number): number {
+  let depth = 1;
+  let i = start;
+  while (i < source.length) {
+    const char = source[i]!;
+    if (char === "{") {
+      depth += 1;
+      i += 1;
+      continue;
+    }
+    if (char === "}") {
+      depth -= 1;
+      i += 1;
+      if (depth === 0) return i;
+      continue;
+    }
+    if (char === "/" && source[i + 1] === "/") {
+      const newline = source.indexOf("\n", i);
+      i = newline === -1 ? source.length : newline;
+      continue;
+    }
+    if (char === "/" && source[i + 1] === "*") {
+      const close = source.indexOf("*/", i + 2);
+      i = close === -1 ? source.length : close + 2;
+      continue;
+    }
+    if (char === '"' || char === "'" || char === "`") {
+      i = scanStringLiteral(source, i);
+      continue;
+    }
+    i += 1;
+  }
+  return source.length;
+}
+
 /**
  * Rewrite `@/...` and bare `tsyntax` specifiers in `source` to paths relative
  * to that file's mirrored destination location. Other specifiers (already
  * relative, or external packages such as `@total-typescript/ts-reset`) are
  * left untouched.
+ *
+ * A hand-rolled scan - no parser, no dependency - so a specifier is rewritten
+ * only in code position: line comments, block comments and string literals are
+ * copied verbatim, and text inside them can never be mistaken for an import.
+ * This replaces two global regexes that matched raw text and silently rewrote
+ * prose shaped like `from "@/..."`.
  */
 export function rewriteImports(source: string, fromDestRel: string): string {
   const rewrite = (specifier: string): string =>
     rewriteSpecifier(specifier, fromDestRel);
 
-  return source
-    .replace(
-      /(\bfrom\s*)(["'])([^"']+)\2/g,
-      (_match, prefix: string, quote: string, specifier: string) =>
-        `${prefix}${quote}${rewrite(specifier)}${quote}`,
-    )
-    .replace(
-      /(\bimport\s*)(["'])([^"']+)\2/g,
-      (_match, prefix: string, quote: string, specifier: string) =>
-        `${prefix}${quote}${rewrite(specifier)}${quote}`,
-    );
+  let result = "";
+  let i = 0;
+  // The identifier most recently read in code position, and whether the
+  // character just read continued it. Comments and literals reset the word so
+  // skipped text cannot masquerade as an import keyword.
+  let lastWord = "";
+  let inWord = false;
+
+  while (i < source.length) {
+    const char = source[i]!;
+
+    if (char === "/" && source[i + 1] === "/") {
+      const newline = source.indexOf("\n", i);
+      const stop = newline === -1 ? source.length : newline;
+      result += source.slice(i, stop);
+      i = stop;
+      lastWord = "";
+      inWord = false;
+      continue;
+    }
+
+    if (char === "/" && source[i + 1] === "*") {
+      const close = source.indexOf("*/", i + 2);
+      const stop = close === -1 ? source.length : close + 2;
+      result += source.slice(i, stop);
+      i = stop;
+      lastWord = "";
+      inWord = false;
+      continue;
+    }
+
+    if (char === '"' || char === "'" || char === "`") {
+      const end = scanStringLiteral(source, i);
+      const closed = end > i + 1 && source[end - 1] === char;
+      const literal = source.slice(i, end);
+      // Only plain "..." / '...' specifiers were ever rewritten; a backtick is
+      // not a module specifier, so its contents stay untouched.
+      if (char !== "`" && closed && isSpecifierPosition(lastWord)) {
+        const specifier = literal.slice(1, -1);
+        const rewritten = rewrite(specifier);
+        result +=
+          rewritten === specifier ? literal : `${char}${rewritten}${char}`;
+      } else {
+        result += literal;
+      }
+      i = end;
+      lastWord = "";
+      inWord = false;
+      continue;
+    }
+
+    if (WORD_CHAR.test(char)) {
+      lastWord = inWord ? lastWord + char : char;
+      inWord = true;
+      result += char;
+      i += 1;
+      continue;
+    }
+
+    // Any other character ends a word; whitespace keeps it across the gap so
+    // `from   "..."` still counts.
+    if (!/\s/.test(char)) lastWord = "";
+    inWord = false;
+    result += char;
+    i += 1;
+  }
+
+  return result;
 }
 
 /**
