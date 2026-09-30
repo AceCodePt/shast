@@ -50,28 +50,29 @@ export type BaseComponentStructure = {
   [att: string]: unknown;
 };
 
+type TagInnerHTMLInclude<
+  HTMLTagConfig extends BaseHTMLTagConfig,
+  Tag extends keyof HTMLTagConfig,
+> = Extract<HTMLTagConfig[Tag]["innerHTML"], { include: unknown }>["include"];
+
 type IsTagAllowText<
   HTMLTagConfig extends BaseHTMLTagConfig,
   Tag extends keyof HTMLTagConfig,
-> = "*" extends HTMLTagConfig[Tag]["innerHTML"]
+> = HTMLTagConfig[Tag]["innerHTML"] extends { all: true }
   ? true
-  : HTMLTagConfig[Tag]["innerHTML"] extends any[]
-    ? "#text" extends HTMLTagConfig[Tag]["innerHTML"][number]
-      ? true
-      : false
+  : "#text" extends TagInnerHTMLInclude<HTMLTagConfig, Tag>[number]
+    ? true
     : false;
 
 type GetAllowedTags<
   HTMLTagConfig extends BaseHTMLTagConfig,
   AllowedTags extends keyof HTMLTagConfig | "#text",
   Tag extends keyof HTMLTagConfig,
-> = "*" extends HTMLTagConfig[Tag]["innerHTML"]
+> = HTMLTagConfig[Tag]["innerHTML"] extends { all: true }
   ? AllowedTags
-  : HTMLTagConfig[Tag]["innerHTML"] extends any[]
-    ? "#text" extends HTMLTagConfig[Tag]["innerHTML"][number]
-      ? AllowedTags & HTMLTagConfig[Tag]["innerHTML"][number]
-      : HTMLTagConfig[Tag]["innerHTML"][number]
-    : never;
+  : "#text" extends TagInnerHTMLInclude<HTMLTagConfig, Tag>[number]
+    ? AllowedTags & TagInnerHTMLInclude<HTMLTagConfig, Tag>[number]
+    : TagInnerHTMLInclude<HTMLTagConfig, Tag>[number];
 
 type IsOptionalAttribute<T> = T extends string
   ? T extends `${string}undefined${string}`
@@ -117,12 +118,11 @@ type ValidateComponentInnerHTMLItemStructure<
         CSSPropertiesConfig,
         CSSQueriesConfig,
         CSSKeyframesConfig,
-        HTMLTagConfig[CurrentTag]["innerHTML"] extends any[]
-          ? // This is the check for when
-            "#text" extends HTMLTagConfig[CurrentTag]["innerHTML"][number]
-            ? AllowedTags & HTMLTagConfig[CurrentTag]["innerHTML"][number]
-            : AllowedTags
-          : AllowedTags,
+        HTMLTagConfig[CurrentTag]["innerHTML"] extends { all: true }
+          ? AllowedTags
+          : "#text" extends TagInnerHTMLInclude<HTMLTagConfig, CurrentTag>[number]
+            ? AllowedTags & TagInnerHTMLInclude<HTMLTagConfig, CurrentTag>[number]
+            : AllowedTags,
         T,
         GetAllowedTags<HTMLTagConfig, AllowedTags, CurrentTag>
       >
@@ -1495,7 +1495,9 @@ export type ValidateComponentStructure<
                   T["attributes"]
                 >
               : K extends "innerHTML"
-                ? HTMLTagConfig[T["tag"]]["innerHTML"] extends []
+                ? HTMLTagConfig[T["tag"]]["innerHTML"] extends {
+                    include: readonly [];
+                  }
                   ? `No innerHTML for void elements` & { _err: true }
                   : T[K] extends BaseComponentInnerHTMLStructure
                     ? ValidateComponentInnerHTMLStructure<
@@ -1515,7 +1517,9 @@ export type ValidateComponentStructure<
                     : never
                 : never
         : never;
-    } & { css?: {} } & (HTMLTagConfig[T["tag"]]["innerHTML"] extends []
+    } & { css?: {} } & (HTMLTagConfig[T["tag"]]["innerHTML"] extends {
+        include: readonly [];
+      }
         ? {}
         : {
             innerHTML?: {};

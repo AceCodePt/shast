@@ -38,21 +38,21 @@ describe("createComponent (engine)", () => {
       button: {
         display: "inline-block",
         attributes: {},
-        innerHTML: ["#text"],
+        innerHTML: { include: ["#text"] },
         cssPseudoClass: [":hover", ":focus"],
         cssPseudoElement: [],
       },
       span: {
         display: "inline",
         attributes: {},
-        innerHTML: ["#text"],
+        innerHTML: { include: ["#text"] },
         cssPseudoClass: [],
         cssPseudoElement: [],
       },
       div: {
         display: "block",
         attributes: {},
-        innerHTML: "*",
+        innerHTML: { all: true },
         cssPseudoClass: [],
         cssPseudoElement: [],
       },
@@ -201,7 +201,7 @@ describe("createComponent (engine)", () => {
       const NO_PSEUDO_TAG_CONFIG = {
         widget: {
           attributes: {},
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoElement: [],
         },
       };

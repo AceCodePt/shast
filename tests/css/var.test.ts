@@ -64,7 +64,7 @@ const TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, COMMON_ATTRIBUTES, {
   box: {
     display: "block",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [":hover"],
     cssPseudoElement: ["::before"],
   },

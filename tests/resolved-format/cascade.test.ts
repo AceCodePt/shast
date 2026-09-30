@@ -15,14 +15,14 @@ const tagConfig: BaseHTMLTagConfig = {
   div: {
     display: "block",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [":hover"],
     cssPseudoElement: ["::before"],
   },
   section: {
     display: "block",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [":hover"],
     cssPseudoElement: [],
   },

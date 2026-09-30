@@ -46,7 +46,7 @@ describe("htmlTagConfig", () => {
             {
               br: {
                 display: "block";
-                innerHTML: [];
+              innerHTML: { include: [] };
                 attributes: {};
                 cssPseudoClass: [];
                 cssPseudoElement: [];
@@ -57,7 +57,9 @@ describe("htmlTagConfig", () => {
             br: {
               display: DisplayKey;
               attributes: {};
-              innerHTML: "*" | ("#text" | "br")[];
+              innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "br")[] };
               cssPseudoClass: `:${string}${string}`[];
               cssPseudoElement: `::${string}${string}`[];
             };
@@ -75,7 +77,7 @@ describe("htmlTagConfig", () => {
             {
               p: {
                 display: "block";
-                innerHTML: ["#text"];
+                innerHTML: { include: ["#text"] };
                 attributes: {};
                 cssPseudoClass: [];
                 cssPseudoElement: [];
@@ -86,7 +88,9 @@ describe("htmlTagConfig", () => {
             p: {
               display: DisplayKey;
               attributes: {};
-              innerHTML: "*" | ("#text" | "p")[];
+              innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "p")[] };
               cssPseudoClass: `:${string}${string}`[];
               cssPseudoElement: `::${string}${string}`[];
             };
@@ -104,7 +108,7 @@ describe("htmlTagConfig", () => {
             {
               div: {
                 display: "block";
-                innerHTML: "*";
+                innerHTML: { all: true };
                 attributes: {};
                 cssPseudoClass: [];
                 cssPseudoElement: [];
@@ -115,7 +119,9 @@ describe("htmlTagConfig", () => {
             div: {
               display: DisplayKey;
               attributes: {};
-              innerHTML: "*" | ("#text" | "div")[];
+              innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "div")[] };
               cssPseudoClass: `:${string}${string}`[];
               cssPseudoElement: `::${string}${string}`[];
             };
@@ -134,7 +140,7 @@ describe("htmlTagConfig", () => {
               a: {
                 display: "inline";
                 attributes: { href: "string | undefined" };
-                innerHTML: ["#text"];
+                innerHTML: { include: ["#text"] };
                 cssPseudoClass: [];
                 cssPseudoElement: [];
               };
@@ -144,7 +150,9 @@ describe("htmlTagConfig", () => {
             a: {
               display: DisplayKey;
               attributes: { href: "string | undefined" };
-              innerHTML: "*" | ("#text" | "a")[];
+              innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "a")[] };
               cssPseudoClass: `:${string}${string}`[];
               cssPseudoElement: `::${string}${string}`[];
             };
@@ -162,14 +170,14 @@ describe("htmlTagConfig", () => {
             {
               ul: {
                 display: "block";
-                innerHTML: ["li"];
+                innerHTML: { include: ["li"] };
                 attributes: {};
                 cssPseudoClass: [];
                 cssPseudoElement: [];
               };
               li: {
                 display: "list-item";
-                innerHTML: ["#text"];
+                innerHTML: { include: ["#text"] };
                 attributes: {};
                 cssPseudoClass: [];
                 cssPseudoElement: [];
@@ -180,14 +188,18 @@ describe("htmlTagConfig", () => {
             ul: {
               display: DisplayKey;
               attributes: {};
-              innerHTML: "*" | ("#text" | "ul" | "li")[];
+              innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "ul" | "li")[] };
               cssPseudoClass: `:${string}${string}`[];
               cssPseudoElement: `::${string}${string}`[];
             };
             li: {
               display: DisplayKey;
               attributes: {};
-              innerHTML: "*" | ("#text" | "ul" | "li")[];
+              innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "ul" | "li")[] };
               cssPseudoClass: `:${string}${string}`[];
               cssPseudoElement: `::${string}${string}`[];
             };
@@ -205,14 +217,14 @@ describe("htmlTagConfig", () => {
             {
               p: {
                 display: "block";
-                innerHTML: ["#text", "span"];
+                innerHTML: { include: ["#text", "span"] };
                 attributes: {};
                 cssPseudoClass: [];
                 cssPseudoElement: [];
               };
               span: {
                 display: "inline";
-                innerHTML: ["#text"];
+                innerHTML: { include: ["#text"] };
                 attributes: {};
                 cssPseudoClass: [];
                 cssPseudoElement: [];
@@ -223,18 +235,132 @@ describe("htmlTagConfig", () => {
             p: {
               display: DisplayKey;
               attributes: {};
-              innerHTML: "*" | ("#text" | "p" | "span")[];
+              innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "p" | "span")[] };
               cssPseudoClass: `:${string}${string}`[];
               cssPseudoElement: `::${string}${string}`[];
             };
             span: {
               display: DisplayKey;
               attributes: {};
-              innerHTML: "*" | ("#text" | "p" | "span")[];
+              innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "p" | "span")[] };
               cssPseudoClass: `:${string}${string}`[];
               cssPseudoElement: `::${string}${string}`[];
             };
           }
+        >
+      >();
+    });
+  });
+
+  describe("innerHTML discriminant", () => {
+    test("rejects { all: false }", () => {
+      assertType<
+        Equal<
+          ValidateHTMLTagConfig<
+            SupportedKeywords,
+            CSSConfig,
+            // @ts-expect-error - `all` must be the literal `true`, not `boolean`
+            {
+              div: {
+                display: "block";
+                innerHTML: { all: false };
+                attributes: {};
+                cssPseudoClass: [];
+                cssPseudoElement: [];
+              };
+            }
+          >,
+          {
+            div: {
+              display: DisplayKey;
+              attributes: {};
+              innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "div")[] };
+              cssPseudoClass: `:${string}${string}`[];
+              cssPseudoElement: `::${string}${string}`[];
+            };
+          }
+        >
+      >();
+    });
+
+    test("rejects { all: true, include: [...] }", () => {
+      assertType<
+        Equal<
+          ValidateHTMLTagConfig<
+            SupportedKeywords,
+            CSSConfig,
+            // @ts-expect-error - the arms are closed; `include` may not accompany `all`
+            {
+              div: {
+                display: "block";
+                innerHTML: { all: true, include: ["#text"] };
+                attributes: {};
+                cssPseudoClass: [];
+                cssPseudoElement: [];
+              };
+            }
+          >,
+          {
+            div: {
+              display: DisplayKey;
+              attributes: {};
+              innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "div")[] };
+              cssPseudoClass: `:${string}${string}`[];
+              cssPseudoElement: `::${string}${string}`[];
+            };
+          }
+        >
+      >();
+    });
+
+    test("a void tag keeps the include arm, it is not treated as all", () => {
+      assertType<
+        Equal<
+          ValidateHTMLTagConfig<
+            SupportedKeywords,
+            CSSConfig,
+            {
+              br: {
+                display: "block";
+                innerHTML: { include: [] };
+                attributes: {};
+                cssPseudoClass: [];
+                cssPseudoElement: [];
+              };
+            }
+          >["br"]["innerHTML"],
+          | { all: true; include?: never }
+          | { all?: never; include: ("#text" | "br")[] }
+        >
+      >();
+    });
+
+    test("a wildcard tag keeps the all arm, it is not treated as void", () => {
+      assertType<
+        Equal<
+          ValidateHTMLTagConfig<
+            SupportedKeywords,
+            CSSConfig,
+            {
+              div: {
+                display: "block";
+                innerHTML: { all: true };
+                attributes: {};
+                cssPseudoClass: [];
+                cssPseudoElement: [];
+              };
+            }
+          >["div"]["innerHTML"],
+          | { all: true; include?: never }
+          | { all?: never; include: ("#text" | "div")[] }
         >
       >();
     });
@@ -245,7 +371,7 @@ describe("htmlTagConfig", () => {
       type Config = {
         br: {
           display: "block";
-          innerHTML: [];
+          innerHTML: { include: [] };
           attributes: {};
           cssPseudoClass: [];
           cssPseudoElement: [];
@@ -261,7 +387,7 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         br: {
           display: "inline",
-          innerHTML: [],
+          innerHTML: { include: [] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -270,7 +396,7 @@ describe("htmlTagConfig", () => {
       assert.deepStrictEqual(config, {
         br: {
           display: "inline",
-          innerHTML: [],
+          innerHTML: { include: [] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -282,7 +408,7 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         p: {
           display: "block",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -291,7 +417,7 @@ describe("htmlTagConfig", () => {
       assert.deepStrictEqual(config, {
         p: {
           display: "block",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -305,14 +431,14 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         div: {
           display: "block",
-          innerHTML: ["span"],
+          innerHTML: { include: ["span"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
           display: "inline",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -321,14 +447,14 @@ describe("htmlTagConfig", () => {
       assert.deepStrictEqual(config, {
         div: {
           display: "block",
-          innerHTML: ["span"],
+          innerHTML: { include: ["span"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
           display: "inline",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -340,14 +466,14 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         ul: {
           display: "block",
-          innerHTML: ["li"],
+          innerHTML: { include: ["li"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         li: {
           display: "list-item",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -356,14 +482,14 @@ describe("htmlTagConfig", () => {
       assert.deepStrictEqual(config, {
         ul: {
           display: "block",
-          innerHTML: ["li"],
+          innerHTML: { include: ["li"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         li: {
           display: "list-item",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -379,7 +505,7 @@ describe("htmlTagConfig", () => {
             href: "string | undefined",
             target: "string | undefined",
           },
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -391,7 +517,7 @@ describe("htmlTagConfig", () => {
             href: "string | undefined",
             target: "string | undefined",
           },
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -403,14 +529,14 @@ describe("htmlTagConfig", () => {
         ul: {
           display: "block",
           attributes: { id: "string | undefined" },
-          innerHTML: ["li"],
+          innerHTML: { include: ["li"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         li: {
           display: "list-item",
           attributes: { class: "string | undefined" },
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -419,14 +545,14 @@ describe("htmlTagConfig", () => {
         ul: {
           display: "block",
           attributes: { id: "string | undefined" },
-          innerHTML: ["li"],
+          innerHTML: { include: ["li"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         li: {
           display: "list-item",
           attributes: { class: "string | undefined" },
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -437,7 +563,7 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         span: {
           display: "inline",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -446,7 +572,7 @@ describe("htmlTagConfig", () => {
       assert.deepStrictEqual(config, {
         span: {
           display: "inline",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -459,7 +585,7 @@ describe("htmlTagConfig", () => {
         bdo: {
           display: "inline",
           attributes: { dir: "'ltr' | 'rtl' | 'auto' | undefined" },
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -468,7 +594,7 @@ describe("htmlTagConfig", () => {
         bdo: {
           display: "inline",
           attributes: { dir: "'ltr' | 'rtl' | 'auto' | undefined" },
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -479,7 +605,7 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         div: {
           display: "block",
-          innerHTML: ["div"],
+          innerHTML: { include: ["div"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -488,7 +614,7 @@ describe("htmlTagConfig", () => {
       assert.deepStrictEqual(config, {
         div: {
           display: "block",
-          innerHTML: ["div"],
+          innerHTML: { include: ["div"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -500,14 +626,14 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         p: {
           display: "block",
-          innerHTML: ["#text", "span"],
+          innerHTML: { include: ["#text", "span"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
           display: "inline",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -516,14 +642,14 @@ describe("htmlTagConfig", () => {
       assert.deepStrictEqual(config, {
         p: {
           display: "block",
-          innerHTML: ["#text", "span"],
+          innerHTML: { include: ["#text", "span"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
           display: "inline",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -536,14 +662,14 @@ describe("htmlTagConfig", () => {
         a: {
           display: "inline",
           attributes: { href: "string", rel: "string | undefined" },
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         img: {
           display: "inline",
           attributes: { src: "string", alt: "string" },
-          innerHTML: [],
+          innerHTML: { include: [] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -553,7 +679,7 @@ describe("htmlTagConfig", () => {
             disabled: "boolean | undefined",
             type: "'submit' | 'button' | undefined",
           },
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -562,14 +688,14 @@ describe("htmlTagConfig", () => {
         a: {
           display: "inline",
           attributes: { href: "string", rel: "string | undefined" },
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         img: {
           display: "inline",
           attributes: { src: "string", alt: "string" },
-          innerHTML: [],
+          innerHTML: { include: [] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -579,7 +705,7 @@ describe("htmlTagConfig", () => {
             disabled: "boolean | undefined",
             type: "'submit' | 'button' | undefined",
           },
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -594,7 +720,7 @@ describe("htmlTagConfig", () => {
           div: {
             display: "block",
             // @ts-expect-error
-            innerHTML: ["span"],
+            innerHTML: { include: ["span"] },
             attributes: {},
             cssPseudoClass: [],
             cssPseudoElement: [],
@@ -611,7 +737,7 @@ describe("htmlTagConfig", () => {
               display: "block",
               // @ts-expect-error
               attributes: { id: "xyz" },
-              innerHTML: [],
+              innerHTML: { include: [] },
               cssPseudoClass: [],
               cssPseudoElement: [],
             },
@@ -626,7 +752,7 @@ describe("htmlTagConfig", () => {
           p: {
             display: "block",
             // @ts-expect-error - span is not defined in this config
-            innerHTML: ["#text", "span"],
+            innerHTML: { include: ["#text", "span"] },
             attributes: {},
             cssPseudoClass: [],
             cssPseudoElement: [],
@@ -643,7 +769,7 @@ describe("htmlTagConfig", () => {
               display: "block",
               // @ts-expect-error
               attributes: { id: "string | xyz" },
-              innerHTML: [],
+              innerHTML: { include: [] },
               cssPseudoClass: [],
               cssPseudoElement: [],
             },
@@ -663,7 +789,7 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         br: {
           display: "block",
-          innerHTML: [],
+          innerHTML: { include: [] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -672,7 +798,7 @@ describe("htmlTagConfig", () => {
       assert.deepStrictEqual(config, {
         br: {
           display: "block",
-          innerHTML: [],
+          innerHTML: { include: [] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -684,14 +810,14 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         div: {
           display: "block",
-          innerHTML: ["span"],
+          innerHTML: { include: ["span"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
           display: "inline",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -700,14 +826,14 @@ describe("htmlTagConfig", () => {
       assert.deepStrictEqual(config, {
         div: {
           display: "block",
-          innerHTML: ["span"],
+          innerHTML: { include: ["span"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         span: {
           display: "inline",
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           attributes: {},
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -720,7 +846,7 @@ describe("htmlTagConfig", () => {
         div: {
           display: "block",
           attributes: { style: "`${string}` | undefined" },
-          innerHTML: [],
+          innerHTML: { include: [] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -729,7 +855,7 @@ describe("htmlTagConfig", () => {
         div: {
           display: "block",
           attributes: { style: "`${string}` | undefined" },
-          innerHTML: [],
+          innerHTML: { include: [] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
@@ -748,7 +874,7 @@ describe("htmlTagConfig", () => {
               {
                 button: {
                   display: "block";
-                  innerHTML: ["#text"];
+                  innerHTML: { include: ["#text"] };
                   attributes: {};
                   cssPseudoClass: [":hover", ":focus"];
                   cssPseudoElement: [];
@@ -758,7 +884,9 @@ describe("htmlTagConfig", () => {
             {
               button: {
                 display: DisplayKey;
-                innerHTML: "*" | ("#text" | "button")[];
+                innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "button")[] };
                 attributes: {};
                 cssPseudoClass: `:${string}${string}`[];
                 cssPseudoElement: `::${string}${string}`[];
@@ -778,7 +906,7 @@ describe("htmlTagConfig", () => {
               {
                 button: {
                   display: "block";
-                  innerHTML: ["#text"];
+                  innerHTML: { include: ["#text"] };
                   attributes: {};
                   cssPseudoClass: ["hover"];
                   cssPseudoElement: [];
@@ -788,7 +916,9 @@ describe("htmlTagConfig", () => {
             {
               button: {
                 display: DisplayKey;
-                innerHTML: "*" | ("#text" | "button")[];
+                innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "button")[] };
                 attributes: {};
                 cssPseudoClass: `:${string}${string}`[];
                 cssPseudoElement: `::${string}${string}`[];
@@ -807,7 +937,7 @@ describe("htmlTagConfig", () => {
               {
                 button: {
                   display: "block";
-                  innerHTML: ["#text"];
+                  innerHTML: { include: ["#text"] };
                   attributes: {};
                   cssPseudoClass: [];
                   cssPseudoElement: [];
@@ -817,7 +947,9 @@ describe("htmlTagConfig", () => {
             {
               button: {
                 display: DisplayKey;
-                innerHTML: "*" | ("#text" | "button")[];
+                innerHTML:
+                | { all: true; include?: never }
+                | { all?: never; include: ("#text" | "button")[] };
                 attributes: {};
                 cssPseudoClass: `:${string}${string}`[];
                 cssPseudoElement: `::${string}${string}`[];
@@ -833,7 +965,7 @@ describe("htmlTagConfig", () => {
         const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           button: {
             display: "inline-block",
-            innerHTML: ["#text"],
+            innerHTML: { include: ["#text"] },
             attributes: {},
             cssPseudoClass: [],
             cssPseudoElement: [],
@@ -842,7 +974,7 @@ describe("htmlTagConfig", () => {
         assert.deepStrictEqual(config, {
           button: {
             display: "inline-block",
-            innerHTML: ["#text"],
+            innerHTML: { include: ["#text"] },
             attributes: {},
             cssPseudoClass: [],
             cssPseudoElement: [],
@@ -854,7 +986,7 @@ describe("htmlTagConfig", () => {
         const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           button: {
             display: "inline-block",
-            innerHTML: ["#text"],
+            innerHTML: { include: ["#text"] },
             attributes: {},
             cssPseudoClass: [":hover"],
             cssPseudoElement: [],
@@ -867,7 +999,7 @@ describe("htmlTagConfig", () => {
         const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           button: {
             display: "inline-block",
-            innerHTML: ["#text"],
+            innerHTML: { include: ["#text"] },
             attributes: {},
             cssPseudoClass: [":hover", ":focus"],
             cssPseudoElement: [],
@@ -876,7 +1008,7 @@ describe("htmlTagConfig", () => {
         assert.deepStrictEqual(config, {
           button: {
             display: "inline-block",
-            innerHTML: ["#text"],
+            innerHTML: { include: ["#text"] },
             attributes: {},
             cssPseudoClass: [":hover", ":focus"],
             cssPseudoElement: [],
@@ -890,21 +1022,21 @@ describe("htmlTagConfig", () => {
         const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           button: {
             display: "inline-block",
-            innerHTML: ["#text"],
+            innerHTML: { include: ["#text"] },
             attributes: {},
             cssPseudoClass: [":hover", ":focus"],
             cssPseudoElement: [],
           },
           div: {
             display: "block",
-            innerHTML: ["#text"],
+            innerHTML: { include: ["#text"] },
             attributes: {},
             cssPseudoClass: [":active"],
             cssPseudoElement: [],
           },
           span: {
             display: "inline",
-            innerHTML: ["#text"],
+            innerHTML: { include: ["#text"] },
             attributes: {},
             cssPseudoClass: [],
             cssPseudoElement: [],
@@ -913,21 +1045,21 @@ describe("htmlTagConfig", () => {
         assert.deepStrictEqual(config, {
           button: {
             display: "inline-block",
-            innerHTML: ["#text"],
+            innerHTML: { include: ["#text"] },
             attributes: {},
             cssPseudoClass: [":hover", ":focus"],
             cssPseudoElement: [],
           },
           div: {
             display: "block",
-            innerHTML: ["#text"],
+            innerHTML: { include: ["#text"] },
             attributes: {},
             cssPseudoClass: [":active"],
             cssPseudoElement: [],
           },
           span: {
             display: "inline",
-            innerHTML: ["#text"],
+            innerHTML: { include: ["#text"] },
             attributes: {},
             cssPseudoClass: [],
             cssPseudoElement: [],
@@ -939,14 +1071,14 @@ describe("htmlTagConfig", () => {
         const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           button: {
             display: "inline-block",
-            innerHTML: [],
+            innerHTML: { include: [] },
             attributes: {},
             cssPseudoClass: [":hover"],
             cssPseudoElement: [],
           },
           span: {
             display: "inline",
-            innerHTML: [],
+            innerHTML: { include: [] },
             attributes: {},
             cssPseudoClass: [],
             cssPseudoElement: [],
@@ -955,14 +1087,14 @@ describe("htmlTagConfig", () => {
         assert.deepStrictEqual(config, {
           button: {
             display: "inline-block",
-            innerHTML: [],
+            innerHTML: { include: [] },
             attributes: {},
             cssPseudoClass: [":hover"],
             cssPseudoElement: [],
           },
           span: {
             display: "inline",
-            innerHTML: [],
+            innerHTML: { include: [] },
             attributes: {},
             cssPseudoClass: [],
             cssPseudoElement: [],

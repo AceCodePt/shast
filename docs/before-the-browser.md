@@ -81,6 +81,10 @@ runtime throws, e.g.
 `Structural Error: '<div>' is not a permitted child of <ul>` and
 `Tag '<img>' is configured as a void element and must not contain any innerHTML or children`.
 
+The one exception is nested `form`: `form` and `dialog` are wildcards, so
+`form > ... > form` satisfies the registry rule and is emitted even though an
+HTML parser repairs it on the client rather than rejecting it here.
+
 ## Vocabulary
 
 Closed-world registries mean a tag, attribute, CSS property, or custom
