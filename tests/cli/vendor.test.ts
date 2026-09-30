@@ -331,3 +331,253 @@ describe("shast add: no clobber without --force", () => {
     assert.ok(!read(dest, "index.ts").includes('"@/'));
   });
 });
+
+/**
+ * A scratch ESM project with an optional tsconfig, used to exercise the
+ * tsconfig reconciliation `main` performs after vendoring.
+ */
+function tempProject(tsconfig?: string): {
+  dest: string;
+  tsconfigPath: string;
+} {
+  const root = mkdtempSync(path.join(os.tmpdir(), "shast-allow-imports-"));
+  process.on("exit", () => rmSync(root, { recursive: true, force: true }));
+  writeFileSync(
+    path.join(root, "package.json"),
+    JSON.stringify({ type: "module" }),
+  );
+  const tsconfigPath = path.join(root, "tsconfig.json");
+  if (tsconfig !== undefined) writeFileSync(tsconfigPath, tsconfig);
+  return { dest: path.join(root, "shast"), tsconfigPath };
+}
+
+interface CapturedRun {
+  code: number;
+  stdout: string[];
+  stderr: string[];
+}
+
+/** Run `main` with console output captured, so silence can be asserted. */
+function runMain(
+  argv: readonly string[],
+  options?: Parameters<typeof main>[1],
+): CapturedRun {
+  const stdout: string[] = [];
+  const stderr: string[] = [];
+  const originalLog = console.log;
+  const originalError = console.error;
+  console.log = (value: unknown) => {
+    stdout.push(String(value));
+  };
+  console.error = (value: unknown) => {
+    stderr.push(String(value));
+  };
+  try {
+    return { code: main(argv, options), stdout, stderr };
+  } finally {
+    console.log = originalLog;
+    console.error = originalError;
+  }
+}
+
+function runText(run: CapturedRun): string {
+  return [...run.stdout, ...run.stderr].join("\n");
+}
+
+function readBytes(file: string): Buffer {
+  return readFileSync(file);
+}
+
+describe("shast add: allowImportingTsExtensions reconciliation", () => {
+  test("a correct config is left alone, silently", () => {
+    const { dest, tsconfigPath } = tempProject(
+      `{ "compilerOptions": { "allowImportingTsExtensions": true, "noEmit": true } }\n`,
+    );
+    const before = readBytes(tsconfigPath);
+
+    const run = runMain(["add", dest, "--yes"]);
+
+    assert.strictEqual(run.code, 0);
+    assert.ok(before.equals(readBytes(tsconfigPath)));
+    assert.ok(!runText(run).includes("allowImportingTsExtensions"));
+    assert.ok(!runText(run).includes("tsconfig"));
+  });
+
+  test("--yes adds the option and preserves comments and formatting", () => {
+    const { dest, tsconfigPath } = tempProject(
+      `{
+  // keep this comment
+  "compilerOptions": {
+    // the consumer's emit decision
+    "noEmit": true,
+  },
+}
+`,
+    );
+
+    const run = runMain(["add", dest, "--yes"]);
+
+    assert.strictEqual(run.code, 0);
+    const edited = readFileSync(tsconfigPath, "utf8");
+    assert.match(edited, /"allowImportingTsExtensions": true/);
+    assert.match(edited, /\/\/ keep this comment/);
+    assert.match(edited, /\/\/ the consumer's emit decision/);
+    assert.match(edited, /"noEmit": true/);
+    // Exactly one insertion, not one per run.
+    assert.strictEqual(edited.match(/"allowImportingTsExtensions"/g)?.length, 1);
+  });
+
+  test("a second run reports nothing about the config", () => {
+    const { dest } = tempProject(`{ "compilerOptions": { "noEmit": true } }\n`);
+    runMain(["add", dest, "--yes"]);
+
+    const run = runMain(["add", dest, "--force", "--yes"]);
+
+    assert.strictEqual(run.code, 0);
+    assert.ok(!runText(run).includes("allowImportingTsExtensions"));
+    assert.ok(!runText(run).includes("tsconfig"));
+  });
+
+  test("an emitting config is reported and left byte-identical", () => {
+    const { dest, tsconfigPath } = tempProject(
+      `{ "compilerOptions": { "outDir": "dist" } }\n`,
+    );
+    const before = readBytes(tsconfigPath);
+
+    const run = runMain(["add", dest, "--yes"]);
+
+    assert.strictEqual(run.code, 1);
+    assert.ok(before.equals(readBytes(tsconfigPath)));
+    assert.match(runText(run), /emitDeclarationOnly/);
+    assert.match(runText(run), /did not change it/);
+  });
+
+  test("noEmit: false is treated as emitting", () => {
+    const { dest, tsconfigPath } = tempProject(
+      `{ "compilerOptions": { "noEmit": false } }\n`,
+    );
+    const before = readBytes(tsconfigPath);
+
+    const run = runMain(["add", dest, "--yes"]);
+
+    assert.strictEqual(run.code, 1);
+    assert.ok(before.equals(readBytes(tsconfigPath)));
+  });
+
+  test("emitDeclarationOnly: true is fixable", () => {
+    const { dest, tsconfigPath } = tempProject(
+      `{ "compilerOptions": { "emitDeclarationOnly": true } }\n`,
+    );
+
+    const run = runMain(["add", dest, "--yes"]);
+
+    assert.strictEqual(run.code, 0);
+    assert.match(
+      readFileSync(tsconfigPath, "utf8"),
+      /"allowImportingTsExtensions": true/,
+    );
+  });
+
+  test("a relative extends chain is resolved", () => {
+    const { dest, tsconfigPath } = tempProject(
+      `{ "extends": "./tsconfig.base.json", "compilerOptions": { "strict": true } }\n`,
+    );
+    const basePath = path.join(path.dirname(tsconfigPath), "tsconfig.base.json");
+    writeFileSync(basePath, `{ "compilerOptions": { "noEmit": true } }\n`);
+    const baseBefore = readBytes(basePath);
+
+    const run = runMain(["add", dest, "--yes"]);
+
+    assert.strictEqual(run.code, 0);
+    assert.match(
+      readFileSync(tsconfigPath, "utf8"),
+      /"allowImportingTsExtensions": true/,
+    );
+    // The extended config is read, never edited.
+    assert.ok(baseBefore.equals(readBytes(basePath)));
+  });
+
+  test("an inline compilerOptions object is edited without reformatting", () => {
+    const { dest, tsconfigPath } = tempProject(
+      `{ "compilerOptions": { "noEmit": true } }\n`,
+    );
+
+    const run = runMain(["add", dest, "--yes"]);
+
+    assert.strictEqual(run.code, 0);
+    assert.strictEqual(
+      readFileSync(tsconfigPath, "utf8"),
+      `{ "compilerOptions": { "allowImportingTsExtensions": true, "noEmit": true } }\n`,
+    );
+  });
+
+  test("an existing false value is replaced, not duplicated", () => {
+    const { dest, tsconfigPath } = tempProject(
+      `{ "compilerOptions": { "noEmit": true, "allowImportingTsExtensions": false } }\n`,
+    );
+
+    const run = runMain(["add", dest, "--yes"]);
+
+    assert.strictEqual(run.code, 0);
+    const edited = readFileSync(tsconfigPath, "utf8");
+    assert.strictEqual(edited.match(/"allowImportingTsExtensions"/g)?.length, 1);
+    assert.match(edited, /"allowImportingTsExtensions": true/);
+  });
+
+  test("no tsconfig prints the required options and creates none", () => {
+    const { dest, tsconfigPath } = tempProject();
+
+    const run = runMain(["add", dest, "--yes"]);
+
+    assert.strictEqual(run.code, 0);
+    assert.ok(!existsSync(tsconfigPath));
+    assert.match(runText(run), /allowImportingTsExtensions/);
+    assert.match(runText(run), /noEmit/);
+  });
+
+  test("non-interactive without --yes edits nothing and exits 1", () => {
+    const { dest, tsconfigPath } = tempProject(
+      `{ "compilerOptions": { "noEmit": true } }\n`,
+    );
+    const before = readBytes(tsconfigPath);
+
+    const run = runMain(["add", dest], { interactive: false });
+
+    assert.strictEqual(run.code, 1);
+    assert.ok(before.equals(readBytes(tsconfigPath)));
+    assert.match(runText(run), /compilerOptions/);
+    assert.match(runText(run), /left unchanged/);
+  });
+
+  test("interactive decline edits nothing and exits 1", () => {
+    const { dest, tsconfigPath } = tempProject(
+      `{ "compilerOptions": { "noEmit": true } }\n`,
+    );
+    const before = readBytes(tsconfigPath);
+
+    const run = runMain(["add", dest], {
+      interactive: true,
+      confirm: () => false,
+    });
+
+    assert.strictEqual(run.code, 1);
+    assert.ok(before.equals(readBytes(tsconfigPath)));
+  });
+
+  test("interactive consent edits and exits 0", () => {
+    const { dest, tsconfigPath } = tempProject(
+      `{ "compilerOptions": { "noEmit": true } }\n`,
+    );
+
+    const run = runMain(["add", dest], {
+      interactive: true,
+      confirm: () => true,
+    });
+
+    assert.strictEqual(run.code, 0);
+    assert.match(
+      readFileSync(tsconfigPath, "utf8"),
+      /"allowImportingTsExtensions": true/,
+    );
+  });
+});

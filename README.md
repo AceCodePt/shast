@@ -54,6 +54,25 @@ nearest `package.json` needs `"type": "module"`. `shast add` does not write a
 `package.json` for you - if the destination would be read as CommonJS it stops
 and says so, rather than leaving you a tree that fails `tsc` with a TS1295 wall.
 
+The vendored tree also imports its own `.ts` files by their `.ts` extension,
+which `tsc` permits only under `"allowImportingTsExtensions": true` - and only
+when `"noEmit": true` or `"emitDeclarationOnly": true` is set too. After
+vendoring, `shast add` inspects the nearest `tsconfig.json` and reconciles that
+option:
+
+- If it is already set, `shast add` says nothing.
+- If your config sets `noEmit`/`emitDeclarationOnly` but not the option, it
+  explains the change and asks before adding it, editing only the one line so
+  your comments and formatting survive. Pass `--yes` to consent without a prompt
+  in CI.
+- If your config would emit JavaScript, it reports that `.ts`-extension imports
+  cannot compile there and leaves your emit settings alone - turning emit off is
+  your decision.
+- If there is no tsconfig, it prints the options you need but creates no file.
+
+`shast add` never edits a tsconfig without consent, and never sets or flips
+`noEmit`, `emitDeclarationOnly` or `outDir`.
+
 ```ts
 import {
   engine,
