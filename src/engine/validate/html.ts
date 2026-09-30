@@ -8,6 +8,7 @@ import {
 import type { BaseComponentStructure } from "@/engine/types.ts";
 import { classesOf, validateCssBlock } from "./css.ts";
 import type { AllowedTagSet, ValidationContext } from "./context.ts";
+import { valueError } from "./value-error.ts";
 
 // Narrow the tags a parent permits to those the child itself still permits.
 // `null` (no restriction) yields the child's own list; otherwise it is the
@@ -25,10 +26,14 @@ const intersectAllowed = (
 // Validate one node and its subtree: its tag, attributes (including gate
 // resolution and required-attribute checks), its `css` block via the CSS layer,
 // and every child against the `innerHTML` the registry declares for the tag.
+// `path` is the node's position in the component tree (`root > item > text`),
+// built from the innerHTML key each node was reached by; it travels with the
+// recursion so a value error can name where it happened.
 export function validateHtmlNode(
   context: ValidationContext,
   node: unknown,
   inheritedAllowed: AllowedTagSet,
+  path: string,
 ): void {
   if (node === null || typeof node !== "object" || Array.isArray(node)) {
     throw new Error(
@@ -83,7 +88,11 @@ export function validateHtmlNode(
   for (const [attributeKey, value] of Object.entries(providedAttributes)) {
     const def = allAttributeDefs[attributeKey];
     if (typeof def === "string") {
-      parseValueAgainstDSL(keywords, def, value);
+      try {
+        parseValueAgainstDSL(keywords, def, value);
+      } catch (error) {
+        throw valueError("Attribute Error", attributeKey, tag, path, error);
+      }
       continue;
     }
     if (isGateDefinition(def)) {
@@ -91,7 +100,11 @@ export function validateHtmlNode(
     }
     const unlockedDsl = htmlSlotDSL(allAttributeDefs, ownGates, attributeKey);
     if (unlockedDsl !== undefined) {
-      parseValueAgainstDSL(keywords, unlockedDsl, value);
+      try {
+        parseValueAgainstDSL(keywords, unlockedDsl, value);
+      } catch (error) {
+        throw valueError("Attribute Error", attributeKey, tag, path, error);
+      }
       continue;
     }
     if (def !== undefined) {
@@ -133,6 +146,7 @@ export function validateHtmlNode(
       innerHTML,
       classes: classesOf(record),
       nodeTag: tag,
+      path,
     });
   }
 
@@ -181,7 +195,7 @@ export function validateHtmlNode(
     return;
   }
 
-  const processChild = (child: unknown): void => {
+  const processChild = (child: unknown, childPath: string): void => {
     if (typeof child === "string") {
       if (!allowsText) {
         throw new Error(
@@ -192,7 +206,7 @@ export function validateHtmlNode(
     }
     if (Array.isArray(child)) {
       for (const item of child) {
-        processChild(item);
+        processChild(item, childPath);
       }
       return;
     }
@@ -209,10 +223,10 @@ export function validateHtmlNode(
         `Structural Error: '<${childTag}>' is not a permitted child of <${tag}>`,
       );
     }
-    validateHtmlNode(context, child, forwardAllowed);
+    validateHtmlNode(context, child, forwardAllowed, childPath);
   };
 
-  for (const child of Object.values(innerHTML)) {
-    processChild(child);
+  for (const [childKey, child] of Object.entries(innerHTML)) {
+    processChild(child, `${path} > ${childKey}`);
   }
 }

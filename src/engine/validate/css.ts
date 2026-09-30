@@ -18,6 +18,7 @@ import {
 } from "@/engine/animation.ts";
 import type { BaseComponentStructure } from "@/engine/types.ts";
 import type { InnerHTML, ValidationContext } from "./context.ts";
+import { valueError } from "./value-error.ts";
 
 // `mergedKeywords` (CSS syntax layered with the component's supported keywords)
 // is structurally a `SupportedKeywordsConfig`, which is what the DSL parser
@@ -235,7 +236,9 @@ const deepValidateCSSValue = (
   }
 };
 
-// A CSS value passes the shallow DSL first, then the deep grammars.
+// A CSS value passes the shallow DSL first, then the deep grammars. A miss on
+// the shallow DSL is tsyntax's bare prose, so it is rethrown with the property,
+// the element's tag, and the element's path through the tree.
 const parseCSSValueAgainstDSL = (
   keywords: MergedKeywords,
   key: string,
@@ -245,8 +248,14 @@ const parseCSSValueAgainstDSL = (
     properties: Record<string, any>;
     defined: Record<string, string>;
   },
+  tag: string | undefined,
+  path: string,
 ): void => {
-  parseValueAgainstDSL(keywords, dsl, value as never);
+  try {
+    parseValueAgainstDSL(keywords, dsl, value as never);
+  } catch (error) {
+    throw valueError("CSS Error", key, tag, path, error);
+  }
   deepValidateCSSValue(key, value, varContext, dsl);
 };
 
@@ -259,6 +268,10 @@ export interface CssBlockScope {
   innerHTML: InnerHTML;
   classes: string[];
   nodeTag: string | undefined;
+  // The element's position in the component tree (`root > item > text`),
+  // derived from the innerHTML key each node was reached by. Nested `> child`
+  // blocks extend it; query, class, and pseudo blocks pass it through.
+  path: string;
 }
 
 // Everything that varies between nested CSS blocks. `block` is the one under
@@ -481,6 +494,11 @@ export function validateCssBlock(
           }
         }
         const nextInPseudoElement = key.startsWith("::") || state.inPseudoElement;
+        // A `> child` block moves the diagnostic path to that child; query,
+        // class, and pseudo blocks stay on the element under validation.
+        const nextPath = key.startsWith("> ")
+          ? `${state.path} > ${key.slice(2)}`
+          : state.path;
         // A `> child` block and a `::` pseudo-element block resolve their
         // grid-area against this scope's own grid-template-areas (mirroring
         // CSSParent = CSSValue at the type level); every other nested block
@@ -493,6 +511,7 @@ export function validateCssBlock(
           innerHTML: nextContext,
           classes: nextClasses,
           nodeTag: nextTag,
+          path: nextPath,
           // `> child` blocks inherit this scope's EXPLICIT gates for the
           // children slot; pseudo-class / class / pseudo-element blocks pass
           // the parent gates through unchanged.
@@ -519,6 +538,8 @@ export function validateCssBlock(
               attrDef,
               value,
               varContext,
+              state.nodeTag,
+              state.path,
             );
             // `animation-name` / `animation` must reference a registered
             // keyframe. The base DSL above still validates the value's shape;
@@ -556,6 +577,8 @@ export function validateCssBlock(
               propDef.syntax,
               value,
               varContext,
+              state.nodeTag,
+              state.path,
             );
           }
           continue;
@@ -569,6 +592,8 @@ export function validateCssBlock(
               selfDSL,
               value,
               varContext,
+              state.nodeTag,
+              state.path,
             );
           }
           continue;
@@ -582,6 +607,8 @@ export function validateCssBlock(
               childrenDSL,
               value,
               varContext,
+              state.nodeTag,
+              state.path,
             );
             // `grid-area` names an area the parent's `grid-template-areas`
             // must define. The DSL above only checks the value's shape
@@ -614,6 +641,7 @@ export function validateCssBlock(
     innerHTML: scope.innerHTML,
     classes: scope.classes,
     nodeTag: scope.nodeTag,
+    path: scope.path,
     parentGates: {},
     inheritedVars: {},
     inPseudoElement: false,

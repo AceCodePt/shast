@@ -384,15 +384,15 @@ colr                                       a CSS property outside the registry
 target: "_blah"                            a value outside an attribute's DSL
   tsc     Type '"_blah"' is not assignable to type
           '"_blank" | "_parent" | "_self" | "_top" | undefined'.
-  server  Value of type "string" does not match DSL
-          "'_self' | '_blank' | '_parent' | '_top' | undefined"
+  server  Attribute Error: target on <a> at root: Value of type "string" does
+          not match DSL "'_self' | '_blank' | '_parent' | '_top' | undefined"
 
 text-transform: "capitilize"               a value outside a property's DSL
   tsc     Type '"capitilize"' is not assignable to type
           '"capitalize" | "lowercase" | "none" | "uppercase" | CSSWideKeyword'.
           Did you mean '"capitalize"'?
-  server  Value of type "string" does not match DSL
-          "'none' | 'uppercase' | 'lowercase' | 'capitalize'"
+  server  CSS Error: text-transform on <div> at root: Value of type "string"
+          does not match DSL "'none' | 'uppercase' | 'lowercase' | 'capitalize'"
 ```
 
 ### Conditional disclosure (what unlocks what)
