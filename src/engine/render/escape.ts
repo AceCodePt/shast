@@ -75,12 +75,19 @@ export function escapeText(value: string): string {
  * A child name is any string the author writes (the key is never validated),
  * so it cannot be pasted into an attribute name or a CSS identifier verbatim:
  * `"my item"` would emit `<span cid-my item>` and `& > [cid-a"]b]`. The name
- * is therefore encoded rather than rejected. `[A-Za-z0-9-]` maps literally;
- * every other UTF-16 code unit, including `_` itself, maps to `_` followed by
- * its four-digit lowercase hex. Escaping the marker as `_005f` makes the
- * encoding injective: distinct names can never collide onto one attribute, so
- * a `> name` selector can never match a different child. Ordinary names are
- * unchanged.
+ * is therefore encoded rather than rejected. `[a-z0-9-]` maps literally;
+ * every other UTF-16 code unit, including uppercase letters and `_` itself,
+ * maps to `_` followed by its four-digit lowercase hex. Uppercase is folded
+ * here, not at either use site, because an HTML attribute name is lowercased
+ * by the parser and CSS attribute-name matching is ASCII case-insensitive in
+ * HTML documents: emitting `cid-Title` and `cid-title` would collapse to one
+ * attribute in the browser and a `> Title` selector would match the `title`
+ * child too. Encoding `A-Z` as `_00xx` keeps every emitted attribute
+ * lowercase, so case-only-distinct names stay distinct after the browser
+ * lowercases them. Escaping the marker as `_005f` makes the encoding
+ * injective: distinct names can never collide onto one attribute, so a
+ * `> name` selector can never match a different child. Ordinary all-lowercase
+ * names are unchanged.
  */
 export function semanticAttribute(name: string): string {
   let escaped = "";
@@ -88,7 +95,6 @@ export function semanticAttribute(name: string): string {
     const code = name.charCodeAt(index);
     const isLiteral =
       (code >= 0x61 && code <= 0x7a) || // a-z
-      (code >= 0x41 && code <= 0x5a) || // A-Z
       (code >= 0x30 && code <= 0x39) || // 0-9
       code === 0x2d; // -
     escaped += isLiteral

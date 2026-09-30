@@ -40,4 +40,31 @@ describe("special child names pass both walls", () => {
     assert.ok(html.includes("<p cid->"), html);
     assert.ok(css.includes("& > [cid-]"), css);
   });
+
+  test("case-only-distinct keys stay distinct after HTML lowercasing", () => {
+    const component = createComponent({
+      tag: "div",
+      innerHTML: {
+        Title: { tag: "p", innerHTML: "a" },
+        title: { tag: "p", innerHTML: "b" },
+      },
+      css: {
+        "> Title": { display: "block" },
+        "> title": { display: "block" },
+      },
+    });
+    const { html, css } = renderBound(component);
+    const attributes = [...html.matchAll(/<p (cid-[^\s>]+)>/g)].map(
+      (match) => match[1]!,
+    );
+    assert.strictEqual(attributes.length, 2);
+    const [upper, lower] = attributes as [string, string];
+    assert.notStrictEqual(upper.toLowerCase(), lower.toLowerCase());
+    const VALID_ESCAPED_ATTRIBUTE = /^cid-[a-z0-9_-]+$/;
+    for (const attribute of attributes) {
+      assert.match(attribute, VALID_ESCAPED_ATTRIBUTE);
+    }
+    assert.ok(css.includes(`& > [${upper}]`), css);
+    assert.ok(css.includes(`& > [${lower}]`), css);
+  });
 });
