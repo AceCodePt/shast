@@ -1,14 +1,14 @@
 import test, { after, before, describe } from "node:test";
 import assert from "node:assert";
 import type { Browser } from "playwright";
-import { chromium } from "../../resolved-format/playwright-lazy.ts";
+import { chromium } from "./playwright-lazy.ts";
 import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
 import type { BaseComponentStructure } from "@/engine/types.ts";
-import { measureTextVisibility } from "../../resolved-format/conformance.ts";
+import { measureTextVisibility } from "./conformance.ts";
 import type { Case } from "../../evals/cases.ts";
-import { FIXTURES } from "../../resolved-format/fixtures.ts";
-import { measureBoxes, materializeBoxes } from "../../resolved-format/measured.ts";
-import { occlusionOf, runRect } from "../../resolved-format/occlusion.ts";
+import { FIXTURES } from "./fixtures.ts";
+import { measureBoxes, materializeBoxes } from "./measured.ts";
+import { occlusionOf, runRect } from "./occlusion.ts";
 
 /**
  * Does the format's readability claim survive contact with a renderer?

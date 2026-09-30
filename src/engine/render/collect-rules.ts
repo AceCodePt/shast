@@ -10,7 +10,7 @@ export { escapeAttributeValue, semanticAttribute } from "./escape.ts";
  *
  * `render-component.ts` prints its stylesheet from these rules and nothing
  * else, so any consumer that needs to know *which declaration wins on which
- * node* — the resolver in `resolved-format/cascade.ts` — reads the same objects
+ * node* — the resolver in `tests/resolved-format/cascade.ts` — reads the same objects
  * the emitter printed from. A resolver that walked `css` blocks on its own
  * would be a second implementation of selector emission, free to drift, and a
  * resolver that disagrees with the emitter describes a page that does not

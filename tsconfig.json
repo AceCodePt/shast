@@ -51,5 +51,5 @@
   // The browser-backed eval harness needs `playwright` and a generated
   // `evals/cases.ts`, neither of which is part of this package's dependency
   // set. It is deliberately outside the library's typecheck and test suite.
-  "exclude": ["node_modules", "resolved-format", "tests/resolved-format", "evals"]
+  "exclude": ["node_modules", "tests/resolved-format", "evals"]
 }

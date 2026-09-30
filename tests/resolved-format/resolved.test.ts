@@ -1,14 +1,14 @@
 import test, { after, before, describe } from "node:test";
 import assert from "node:assert";
 import type { Browser } from "playwright";
-import { chromium } from "../../resolved-format/playwright-lazy.ts";
+import { chromium } from "./playwright-lazy.ts";
 import type { BaseComponentStructure } from "@/engine/types.ts";
 import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
-import { measureBoxes } from "../../resolved-format/measured.ts";
-import { unionCoveredArea } from "../../resolved-format/occlusion.ts";
-import { printResolved } from "../../resolved-format/print-resolved.ts";
-import { resolveDocument } from "../../resolved-format/resolved.ts";
-import type { NodeRecord } from "../../resolved-format/resolved.ts";
+import { measureBoxes } from "./measured.ts";
+import { unionCoveredArea } from "./occlusion.ts";
+import { printResolved } from "./print-resolved.ts";
+import { resolveDocument } from "./resolved.ts";
+import type { NodeRecord } from "./resolved.ts";
 
 /**
  * The resolved document, end to end.
