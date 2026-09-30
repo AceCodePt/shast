@@ -174,7 +174,7 @@ function read(dest: string, rel: string): string {
 }
 
 describe("shast add: copy set", () => {
-  test("copies engine, css, html, types and tsyntax, including the entry", () => {
+  test("copies engine, css, html, types and tsyntax", () => {
     const dest = tempDest();
     add({ dest });
 
@@ -191,7 +191,6 @@ describe("shast add: copy set", () => {
       "types.ts",
       "tsyntax/index.ts",
       "tsyntax/types.ts",
-      "index.ts",
     ]) {
       assert.ok(existsSync(path.join(dest, rel)), `expected ${rel} to exist`);
     }
@@ -206,55 +205,72 @@ describe("shast add: copy set", () => {
       assert.ok(!existsSync(path.join(dest, absent)), `expected no ${absent}/`);
     }
   });
+});
 
-  test("the vendored entry is the package's public entry, not a demo", () => {
-    const dest = tempDest();
-    add({ dest });
-    const entry = read(dest, "index.ts");
+describe("shast add: tier selection", () => {
+  for (const tier of VARIANTS) {
+    test(`--tier ${tier} vendors only ${tier}.ts for every variation family`, () => {
+      const dest = tempDest();
+      add({ dest, tier });
 
-    assert.ok(entry.includes('export { default as engine } from "./engine/index.ts"'));
-    assert.ok(entry.includes('from "./engine/render/render-component.ts"'));
-    // No triple-slash reference to a ts-reset shim: the query vocabularies are
-    // compared through `isMemberOf` instead of a global `includes` widening.
-    assert.ok(!entry.includes("env.d.ts"));
-    assert.ok(!entry.includes("ts-reset"));
-    // Side-effect free: no engine wiring, no demo component, no logging.
-    assert.ok(!entry.includes("engine({"));
-    assert.ok(!entry.includes("const list = createComponent"));
-    assert.ok(!entry.includes("console.log"));
-  });
+      for (const dir of VARIATION_DIRS) {
+        for (const variant of VARIANTS) {
+          const rel = `${dir}/${variant}.ts`;
+          if (variant === tier) {
+            assert.ok(existsSync(path.join(dest, rel)), `expected ${rel}`);
+          } else {
+            assert.ok(!existsSync(path.join(dest, rel)), `expected no ${rel}`);
+          }
+        }
+      }
 
-  test("copies every variation for every family that ships them", () => {
+      // No vendored barrel of any kind: the consumer imports the engine and
+      // family entry points directly.
+      assert.ok(!existsSync(path.join(dest, "index.ts")));
+    });
+  }
+
+  test("omitting --tier vendors common only", () => {
     const dest = tempDest();
     add({ dest });
 
     for (const dir of VARIATION_DIRS) {
-      for (const variant of VARIANTS) {
-        const rel = `${dir}/${variant}.ts`;
-        assert.ok(existsSync(path.join(dest, rel)), `expected ${rel}`);
-      }
+      assert.ok(existsSync(path.join(dest, `${dir}/common.ts`)));
+      assert.ok(!existsSync(path.join(dest, `${dir}/minimal.ts`)));
+      assert.ok(!existsSync(path.join(dest, `${dir}/full.ts`)));
     }
+    assert.ok(!existsSync(path.join(dest, "index.ts")));
+  });
 
-    // The source tree spells the pseudo-class variant `minimal`; the vendored
-    // tree must carry that exact name (the copied entry imports it by name).
-    assert.ok(
-      existsSync(
-        path.join(dest, "css/pseudo-class-config/variations/minimal.ts"),
-      ),
-    );
-    assert.ok(
-      !existsSync(
-        path.join(dest, "css/pseudo-class-config/variations/mimimal.ts"),
-      ),
-    );
+  test("switching tiers prunes the stale tier and the old root barrel", () => {
+    const dest = tempDest();
+    add({ dest, tier: "full" });
+    // Simulate a tree vendored before tiers existed: the old barrel sat at the
+    // root, and add() no longer writes one.
+    writeFileSync(path.join(dest, "index.ts"), "// old vendored barrel\n");
 
-    // The entry imports the variant by name, so a rename on either side would
-    // be a broken vendored tree rather than a missing file.
-    assert.ok(
-      read(dest, "index.ts").includes(
-        'from "./css/pseudo-class-config/variations/minimal.ts"',
-      ),
-    );
+    const result = add({ dest, tier: "common", force: true });
+
+    for (const dir of VARIATION_DIRS) {
+      assert.ok(
+        existsSync(path.join(dest, `${dir}/common.ts`)),
+        `expected ${dir}/common.ts`,
+      );
+      assert.ok(
+        !existsSync(path.join(dest, `${dir}/full.ts`)),
+        `expected no ${dir}/full.ts`,
+      );
+      assert.ok(
+        !existsSync(path.join(dest, `${dir}/minimal.ts`)),
+        `expected no ${dir}/minimal.ts`,
+      );
+      assert.ok(
+        result.removed.includes(`${dir}/full.ts`),
+        `removed should name ${dir}/full.ts`,
+      );
+    }
+    assert.ok(!existsSync(path.join(dest, "index.ts")));
+    assert.ok(result.removed.includes("index.ts"));
   });
 });
 
@@ -292,11 +308,6 @@ describe("shast add: import rewriting", () => {
     assert.ok(calC.includes('from "./properties-config/types.ts"'));
     assert.ok(calC.includes('from "../tsyntax/index.ts"'));
     assert.ok(!calC.includes('from "tsyntax"'));
-
-    // The entry's exported variations resolve relative to the root.
-    const entry = read(dest, "index.ts");
-    assert.ok(entry.includes('from "./html/tag-config/variations/common.ts"'));
-    assert.ok(entry.includes('from "./css/pseudo-class-config/variations/minimal.ts"'));
   });
 
   // The two regexes this replaced matched raw text, so prose shaped like
@@ -444,13 +455,13 @@ describe("shast add: dynamic import fixture", () => {
       mkdirSync(path.dirname(abs), { recursive: true });
       writeFileSync(abs, content);
     };
-    write("src/engine/render/escape.ts", `export const escape = 1;\n`);
-    write("src/types.ts", `export type Placeholder = 1;\n`);
     write(
-      "src/index.ts",
-      `export const load = async (): Promise<unknown> =>\n` +
-        `  await import("@/engine/render/escape");\n`,
+      "src/engine/render/escape.ts",
+      `export const escape = 1;\n` +
+        `export const load = async (): Promise<unknown> =>\n` +
+        `  await import("@/engine/render/render-component");\n`,
     );
+    write("src/types.ts", `export type Placeholder = 1;\n`);
     // planVendor walks every copy directory; they are allowed to be empty.
     write("src/css/.keep", "");
     write("src/html/.keep", "");
@@ -461,10 +472,10 @@ describe("shast add: dynamic import fixture", () => {
       tsyntaxSourceRoot: resolveTsyntaxSourceRoot(REPO_ROOT),
     });
 
-    const entry = read(dest, "index.ts");
+    const escape = read(dest, "engine/render/escape.ts");
     assert.ok(
-      entry.includes('import("./engine/render/escape.ts")'),
-      `expected the dynamic specifier to be rewritten, got: ${entry}`,
+      escape.includes('import("./render-component.ts")'),
+      `expected the dynamic specifier to be rewritten, got: ${escape}`,
     );
     assert.deepStrictEqual(survivingSpecifierStrings(dest), []);
   });
@@ -480,7 +491,20 @@ describe("shast add: usage", () => {
     } finally {
       console.error = originalError;
     }
-    assert.ok(!existsSync(path.join(dest, "index.ts")));
+    assert.ok(!existsSync(path.join(dest, "types.ts")));
+  });
+
+  test("an unknown --tier value is rejected before anything is written", () => {
+    const dest = tempDest();
+    const originalError = console.error;
+    console.error = () => {};
+    try {
+      assert.strictEqual(main(["add", dest, "--tier", "bogus"]), 2);
+    } finally {
+      console.error = originalError;
+    }
+    assert.ok(!existsSync(path.join(dest, "types.ts")));
+    assert.ok(!existsSync(path.join(dest, "engine")));
   });
 });
 
@@ -500,7 +524,7 @@ describe("shast add: CommonJS destination", () => {
         return true;
       },
     );
-    assert.ok(!existsSync(path.join(dest, "index.ts")));
+    assert.ok(!existsSync(path.join(dest, "types.ts")));
   });
 
   test("a CommonJS package.json above the destination is rejected", () => {
@@ -530,7 +554,7 @@ describe("shast add: CommonJS destination", () => {
     const dest = path.join(root, "src", "shast");
 
     const result = add({ dest });
-    assert.ok(result.written.includes("index.ts"));
+    assert.ok(result.written.includes("types.ts"));
   });
 
   test("main reports the CommonJS destination and exits 1", () => {
@@ -559,7 +583,7 @@ describe("shast add: no clobber without --force", () => {
       () => add({ dest }),
       (error: unknown) => {
         assert.ok(error instanceof ExistingDestinationError);
-        assert.ok(error.collisions.includes("index.ts"));
+        assert.ok(error.collisions.includes("types.ts"));
         assert.ok(error.collisions.includes("engine/index.ts"));
         assert.ok(
           error.collisions.includes("css/pseudo-class-config/variations/common.ts"),
@@ -615,9 +639,9 @@ describe("shast add: no clobber without --force", () => {
     const dest = tempDest();
     add({ dest });
     const result = add({ dest, force: true });
-    assert.ok(result.written.includes("index.ts"));
+    assert.ok(result.written.includes("types.ts"));
     // The rewrite still applies on overwrite.
-    assert.ok(!read(dest, "index.ts").includes('"@/'));
+    assert.ok(!read(dest, "engine/index.ts").includes('"@/'));
   });
 });
 
@@ -964,6 +988,6 @@ describe("shast add: --force replacement report", () => {
 
     assert.deepStrictEqual(result.replacedDiffering, [EDITED]);
     assert.ok(result.replaced.length > 1);
-    assert.ok(!result.replacedDiffering.includes("index.ts"));
+    assert.ok(!result.replacedDiffering.includes("types.ts"));
   });
 });

@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 // Repo-local `shast` CLI. Today it has one subcommand, `add`, which vendors
-// the engine, its config variations and the local tsyntax source into a
+// the engine, one config-variation tier and the local tsyntax source into a
 // consumer's tree, rewriting every import so the result is self-contained.
-// The package's public entry point (`src/index.ts`) is copied as the tree's own
-// `index.ts`; there is no generated entry.
+// The chosen tier is selected with `--tier` (default `common`); only that
+// tier's variation files are written, and no barrel or generated entry point is
+// produced - the consumer imports the engine and family entry points directly.
 //
-// Run through the package script: `pnpm shast add [dest]`.
+// Run through the package script: `pnpm shast add [dest] [--tier <tier>]`.
 
 import {
   existsSync,
@@ -14,6 +15,7 @@ import {
   readFileSync,
   readSync,
   realpathSync,
+  rmSync,
   writeFileSync,
 } from "node:fs";
 import { createRequire } from "node:module";
@@ -21,9 +23,14 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
+/** The config-variation tier `add` vendors. Exactly one is written. */
+export type Tier = "minimal" | "common" | "full";
+
 export interface AddOptions {
   /** Destination directory. Relative paths resolve against the cwd. */
   dest: string;
+  /** Config-variation tier to vendor. Defaults to `"common"`. */
+  tier?: Tier;
   /** Overwrite files that already exist in the destination. */
   force?: boolean;
   /** Repo root to copy `src/` from. Defaults to this worktree. */
@@ -48,6 +55,13 @@ export interface AddResult {
    * and on a second update it over-reports.
    */
   replacedDiffering: string[];
+  /**
+   * Destination-relative shast-owned paths pruned because they belong to a
+   * different tier than the one being vendored (or to the old root barrel),
+   * sorted. There is no byte-comparison guard: backwards compatibility is not
+   * required, so a stale file is removed outright.
+   */
+  removed: string[];
 }
 
 /** Thrown when the destination already holds files and `force` is not set. */
@@ -114,16 +128,40 @@ function formatReplacedReport(
 
 // The seven families that carry shipped variation files. `css properties` is
 // absent because that registry is assembled per-consumer (it holds *custom*
-// properties, which have no shipped minimal/common/full form); the copied
-// entry exports the `cssPropertiesConfig` builder for exactly that.
+// properties, which have no shipped minimal/common/full form); the vendored
+// `css/properties-config/index.ts` exports the `cssPropertiesConfig` builder
+// for exactly that.
 
-// Directories under `src/` copied wholesale.
+// Directories under `src/` copied wholesale, except for the config variations,
+// which are filtered to the chosen tier.
 const COPY_DIRS = ["engine", "css", "html"] as const;
-// Root-level `src/` files copied too. `index.ts` is the package's public entry
-// point (a side-effect-free barrel) and becomes the vendored tree's entry.
-const COPY_FILES = ["types.ts", "index.ts"] as const;
+// Root-level `src/` files copied too. `src/index.ts` is deliberately absent: it
+// is a barrel re-exporting every tier of every family, so vendoring it would
+// drag the unchosen tiers back into the program. The vendored tree has no
+// barrel; the consumer imports the engine and family entry points directly.
+const COPY_FILES = ["types.ts"] as const;
 // tsyntax files vendored under `<dest>/tsyntax/`.
 const TSYNTAX_FILES = ["index.ts", "types.ts"] as const;
+
+const TIERS = ["minimal", "common", "full"] as const;
+const TIER_SET: ReadonlySet<string> = new Set(TIERS);
+const DEFAULT_TIER: Tier = "common";
+
+/** A shipped variation file, capturing its tier name. */
+const VARIATION_FILE = /(?:^|\/)variations\/([^/]+)\.ts$/;
+
+/**
+ * Whether `rel` (relative to a COPY_DIRS root) is a shipped variation file for
+ * a tier other than `tier`. Only the three known tier names count as
+ * variations, so a differently-named file under a `variations/` directory is
+ * kept rather than silently dropped.
+ */
+function isNonChosenVariation(rel: string, tier: Tier): boolean {
+  const match = VARIATION_FILE.exec(rel);
+  if (match === null) return false;
+  const name = match[1]!;
+  return TIER_SET.has(name) && name !== tier;
+}
 
 const REPO_ROOT = fileURLToPath(new URL("..", import.meta.url));
 
@@ -201,6 +239,7 @@ export function planVendor(options: AddOptions): PlannedFile[] {
   const tsyntaxRoot =
     options.tsyntaxSourceRoot ?? resolveTsyntaxSourceRoot(sourceRoot);
   const srcRoot = path.join(sourceRoot, "src");
+  const tier = options.tier ?? DEFAULT_TIER;
 
   const planned: PlannedFile[] = [];
 
@@ -212,6 +251,7 @@ export function planVendor(options: AddOptions): PlannedFile[] {
     })) {
       const rel = toPosix(entry);
       if (!rel.endsWith(".ts")) continue;
+      if (isNonChosenVariation(rel, tier)) continue;
       const sourceRel = `${dir}/${rel}`;
       planned.push({
         source: path.join(absDir, entry),
@@ -238,6 +278,41 @@ export function planVendor(options: AddOptions): PlannedFile[] {
   }
 
   return planned.sort((a, b) => (a.destRel < b.destRel ? -1 : 1));
+}
+
+/**
+ * Destination-relative shast-owned paths a previous `add` may have left behind
+ * and this run must prune: the two non-chosen tier files in every variation
+ * directory the source walk visits, plus the root `index.ts` barrel that `add`
+ * no longer vendors. Pure: it reads the source directories but writes nothing.
+ */
+export function planStale(options: AddOptions): string[] {
+  const sourceRoot = options.sourceRoot ?? REPO_ROOT;
+  const srcRoot = path.join(sourceRoot, "src");
+  const tier = options.tier ?? DEFAULT_TIER;
+
+  const variationDirs = new Set<string>();
+  for (const dir of COPY_DIRS) {
+    const absDir = path.join(srcRoot, dir);
+    for (const entry of readdirSync(absDir, {
+      recursive: true,
+      encoding: "utf8",
+    })) {
+      const rel = toPosix(entry);
+      if (!rel.endsWith(".ts")) continue;
+      const match = VARIATION_FILE.exec(rel);
+      if (match === null || !TIER_SET.has(match[1]!)) continue;
+      variationDirs.add(`${dir}/${path.posix.dirname(rel)}`);
+    }
+  }
+
+  const stale = ["index.ts"];
+  for (const dir of variationDirs) {
+    for (const candidate of TIERS) {
+      if (candidate !== tier) stale.push(`${dir}/${candidate}.ts`);
+    }
+  }
+  return stale.sort((a, b) => (a < b ? -1 : 1));
 }
 
 /** Resolve the installed `tsyntax` package to its source directory. */
@@ -463,12 +538,13 @@ export function rewriteImports(source: string, fromDestRel: string): string {
 }
 
 /**
- * Vendor the engine, every config variation and tsyntax into `dest`.
+ * Vendor the engine, exactly one config-variation tier and tsyntax into `dest`.
  *
  * Throws {@link CommonJSDestinationError} when `dest` would be resolved as
  * CommonJS, and {@link ExistingDestinationError} when any planned file already
- * exists and `force` is not set. Returns the sorted list of written files plus
- * the pre-existing files that were replaced and which of those differed.
+ * exists and `force` is not set. Returns the sorted list of written files, the
+ * pre-existing files that were replaced and which of those differed, and the
+ * stale shast-owned paths that were pruned.
  */
 export function add(options: AddOptions): AddResult {
   const force = options.force ?? false;
@@ -512,11 +588,24 @@ export function add(options: AddOptions): AddResult {
     writeFileSync(target, content);
   }
 
+  // Prune stale shast-owned paths after the collision check. There is no
+  // byte-comparison guard: backwards compatibility is explicitly not required,
+  // so the non-chosen tiers and the old root barrel are removed outright.
+  const removed: string[] = [];
+  for (const rel of planStale(options)) {
+    const target = path.join(dest, rel);
+    if (existsSync(target)) {
+      rmSync(target);
+      removed.push(rel);
+    }
+  }
+
   return {
     dest,
     written: copiedRels.sort((a, b) => (a < b ? -1 : 1)),
     replaced,
     replacedDiffering,
+    removed,
   };
 }
 
@@ -923,11 +1012,15 @@ function reconcileTsconfig(
   }
 }
 
-const USAGE = `Usage: shast add [dest] [--force] [--yes]
+const USAGE = `Usage: shast add [dest] [--tier minimal|common|full] [--force] [--yes]
 
-Vendor shast's engine, config variations and tsyntax into a consumer tree.
+Vendor shast's engine, one config-variation tier and tsyntax into a consumer
+tree. Only the chosen tier's variation files are written; the vendored tree has
+no barrel, so import the engine and family entry points directly.
 
   dest      destination directory (default: src/shast)
+  --tier    config-variation tier to vendor (default: common). Stale files from
+            a different tier, and the old root index.ts, are removed
   --force   overwrite files that already exist in the destination, reporting
             which replaced files differ from the bytes being written
   --yes     consent to adding "allowImportingTsExtensions" to the nearest
@@ -942,12 +1035,14 @@ config without consent and never changes your emit settings.`;
 
 interface ParsedArgs {
   dest: string;
+  tier: Tier;
   force: boolean;
   yes: boolean;
 }
 
 function parseAddArgs(args: readonly string[]): ParsedArgs {
   let dest = "src/shast";
+  let tier: Tier = DEFAULT_TIER;
   let force = false;
   let yes = false;
   let destSeen = false;
@@ -959,6 +1054,18 @@ function parseAddArgs(args: readonly string[]): ParsedArgs {
       force = true;
     } else if (token === "--yes") {
       yes = true;
+    } else if (token === "--tier") {
+      const value = args[i + 1];
+      if (value === undefined) {
+        throw new Error("Option '--tier' requires a value");
+      }
+      if (!TIER_SET.has(value)) {
+        throw new Error(
+          `Unknown tier '${value}'; expected one of ${TIERS.join(", ")}`,
+        );
+      }
+      tier = value as Tier;
+      i += 1;
     } else if (token.startsWith("-")) {
       throw new Error(`Unknown option '${token}'`);
     } else if (destSeen) {
@@ -969,7 +1076,7 @@ function parseAddArgs(args: readonly string[]): ParsedArgs {
     }
   }
 
-  return { dest, force, yes };
+  return { dest, tier, force, yes };
 }
 
 export function main(argv: readonly string[], options: CliOptions = {}): number {
@@ -1001,6 +1108,11 @@ export function main(argv: readonly string[], options: CliOptions = {}): number 
     if (result.replaced.length > 0) {
       console.log(
         formatReplacedReport(result.replaced.length, result.replacedDiffering),
+      );
+    }
+    if (result.removed.length > 0) {
+      console.log(
+        `shast: removed ${result.removed.length} stale file(s) from a previous tier.`,
       );
     }
     return reconcileTsconfig(result.dest, parsed.yes, options);
