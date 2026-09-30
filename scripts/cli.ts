@@ -12,6 +12,7 @@ import {
   mkdirSync,
   readdirSync,
   readFileSync,
+  readSync,
   realpathSync,
   writeFileSync,
 } from "node:fs";
@@ -282,24 +283,435 @@ export function add(options: AddOptions): AddResult {
   };
 }
 
-const USAGE = `Usage: shast add [dest] [--force]
+// ---------------------------------------------------------------------------
+// tsconfig reconciliation
+//
+// The vendored tree is raw TypeScript source whose imports carry `.ts`
+// extensions, so it only compiles when the consumer's tsconfig sets
+// `allowImportingTsExtensions: true` - which TypeScript permits only alongside
+// `noEmit: true` or `emitDeclarationOnly: true`. `add` writes into the
+// consumer's project, so it is the right place to notice a config that would
+// reject the tree. It must not edit one without consent, must never touch the
+// consumer's emit settings, and must stay silent when the config is correct.
+//
+// Everything here is pure or reads files; the consent-gated write lives in
+// `main`, because `add()` stays non-interactive.
+
+/** The tsconfig state that decides what `shast add` reports after vendoring. */
+export type TsconfigState =
+  | { readonly kind: "none" }
+  | { readonly kind: "ok"; readonly path: string }
+  | { readonly kind: "fixable"; readonly path: string }
+  | { readonly kind: "incompatible"; readonly path: string };
+
+/** The nearest `tsconfig.json` at or above `dir`, if any. */
+export function nearestTsconfig(dir: string): string | null {
+  let current = path.resolve(dir);
+  for (;;) {
+    const candidate = path.join(current, "tsconfig.json");
+    if (existsSync(candidate)) return candidate;
+    const parent = path.dirname(current);
+    if (parent === current) return null;
+    current = parent;
+  }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+/**
+ * Replace every comment character with a space, preserving both string contents
+ * and the length of the input, so offsets into the result still address the
+ * original text. Comment-aware: a `//` inside a string is not a comment.
+ */
+function maskJsonComments(text: string): string {
+  const masked = text.split("");
+  let i = 0;
+  let inString = false;
+  while (i < text.length) {
+    const char = text[i]!;
+    if (inString) {
+      if (char === "\\") {
+        i += 2;
+        continue;
+      }
+      if (char === '"') inString = false;
+      i += 1;
+      continue;
+    }
+    if (char === '"') {
+      inString = true;
+      i += 1;
+      continue;
+    }
+    if (char === "/" && text[i + 1] === "/") {
+      while (i < text.length && text[i] !== "\n") {
+        masked[i] = " ";
+        i += 1;
+      }
+      continue;
+    }
+    if (char === "/" && text[i + 1] === "*") {
+      masked[i] = " ";
+      masked[i + 1] = " ";
+      i += 2;
+      while (i < text.length && !(text[i] === "*" && text[i + 1] === "/")) {
+        if (text[i] !== "\n") masked[i] = " ";
+        i += 1;
+      }
+      if (i < text.length) {
+        masked[i] = " ";
+        masked[i + 1] = " ";
+        i += 2;
+      }
+      continue;
+    }
+    i += 1;
+  }
+  return masked.join("");
+}
+
+/** Drop trailing commas before `}`/`]`, respecting strings. */
+function stripTrailingCommas(text: string): string {
+  let result = "";
+  let i = 0;
+  let inString = false;
+  while (i < text.length) {
+    const char = text[i]!;
+    if (inString) {
+      result += char;
+      if (char === "\\") {
+        result += text[i + 1] ?? "";
+        i += 2;
+        continue;
+      }
+      if (char === '"') inString = false;
+      i += 1;
+      continue;
+    }
+    if (char === '"') {
+      inString = true;
+      result += char;
+      i += 1;
+      continue;
+    }
+    if (char === ",") {
+      let j = i + 1;
+      while (j < text.length && /\s/.test(text[j]!)) j += 1;
+      if (text[j] === "}" || text[j] === "]") {
+        i += 1;
+        continue;
+      }
+    }
+    result += char;
+    i += 1;
+  }
+  return result;
+}
+
+/**
+ * Parse tsconfig-flavoured JSON: comments and trailing commas are tolerated.
+ * No dependency is added - the masking and comma stripping are local, and the
+ * result is handed to the built-in `JSON.parse`.
+ */
+function parseJsonc(text: string): unknown {
+  const withoutBom = text.charCodeAt(0) === 0xfeff ? text.slice(1) : text;
+  return JSON.parse(stripTrailingCommas(maskJsonComments(withoutBom))) as unknown;
+}
+
+/** Resolve a relative `extends` target to a readable file, or null. */
+function resolveExtendedTsconfig(
+  specifier: string,
+  fromDir: string,
+): string | null {
+  // Only relative (and absolute) chains are resolved; a package specifier would
+  // need node resolution, and the requirement is "where possible".
+  if (!specifier.startsWith(".") && !path.isAbsolute(specifier)) return null;
+  const base = path.resolve(fromDir, specifier);
+  for (const candidate of [
+    base,
+    `${base}.json`,
+    path.join(base, "tsconfig.json"),
+  ]) {
+    if (existsSync(candidate)) return candidate;
+  }
+  return null;
+}
+
+/**
+ * Merge the `compilerOptions` of a tsconfig with those it extends, parents
+ * first so the nearest config wins. Unreadable or unparsable files contribute
+ * nothing rather than failing the reconciliation.
+ */
+function resolveCompilerOptions(
+  tsconfigPath: string,
+  seen: Set<string>,
+): Record<string, unknown> {
+  let real: string;
+  try {
+    real = realpathSync(tsconfigPath);
+  } catch {
+    return {};
+  }
+  if (seen.has(real)) return {};
+  seen.add(real);
+
+  let parsed: unknown;
+  try {
+    parsed = parseJsonc(readFileSync(tsconfigPath, "utf8"));
+  } catch {
+    return {};
+  }
+  if (!isRecord(parsed)) return {};
+
+  let merged: Record<string, unknown> = {};
+  const extended = parsed["extends"];
+  const chain =
+    typeof extended === "string"
+      ? [extended]
+      : Array.isArray(extended)
+        ? extended.filter((entry): entry is string => typeof entry === "string")
+        : [];
+  for (const specifier of chain) {
+    const resolved = resolveExtendedTsconfig(
+      specifier,
+      path.dirname(tsconfigPath),
+    );
+    if (resolved !== null) {
+      merged = { ...merged, ...resolveCompilerOptions(resolved, seen) };
+    }
+  }
+
+  const own = parsed["compilerOptions"];
+  if (isRecord(own)) merged = { ...merged, ...own };
+  return merged;
+}
+
+/**
+ * Inspect the nearest tsconfig for `.ts`-extension import support. `undefined`
+ * emit settings read as "emits JavaScript", which is TypeScript's default.
+ */
+export function inspectTsconfig(dir: string): TsconfigState {
+  const found = nearestTsconfig(dir);
+  if (found === null) return { kind: "none" };
+
+  const options = resolveCompilerOptions(found, new Set());
+  if (options["allowImportingTsExtensions"] === true) {
+    return { kind: "ok", path: found };
+  }
+  const emitsDeclarationsOnly =
+    options["noEmit"] === true || options["emitDeclarationOnly"] === true;
+  return emitsDeclarationsOnly
+    ? { kind: "fixable", path: found }
+    : { kind: "incompatible", path: found };
+}
+
+const ALLOW_TS_EXTENSIONS_KEY = '"allowImportingTsExtensions"';
+
+/** The `:`-value span of `key` at or after `from`, or null. */
+function findValueSpan(
+  masked: string,
+  from: number,
+  key: string,
+): { start: number; end: number } | null {
+  const keyIndex = masked.indexOf(key, from);
+  if (keyIndex === -1) return null;
+  const colon = masked.indexOf(":", keyIndex + key.length);
+  if (colon === -1) return null;
+  let start = colon + 1;
+  while (start < masked.length && /\s/.test(masked[start]!)) start += 1;
+  let end = start;
+  while (end < masked.length && !/[},\]]/.test(masked[end]!)) end += 1;
+  return { start, end };
+}
+
+/**
+ * Add `"allowImportingTsExtensions": true` to `compilerOptions`, editing the
+ * text in place so comments, indentation and member order survive. Throws when
+ * there is no `compilerOptions` object to edit. Pure: the caller performs the
+ * consent-gated write.
+ */
+export function addAllowImportingTsExtensions(source: string): string {
+  const masked = maskJsonComments(source);
+  const keyIndex = masked.indexOf('"compilerOptions"');
+  const colon = keyIndex === -1 ? -1 : masked.indexOf(":", keyIndex);
+  const open = colon === -1 ? -1 : masked.indexOf("{", colon);
+  if (open === -1) {
+    throw new Error('tsconfig has no "compilerOptions" object to edit');
+  }
+
+  // If the key already exists (but is not true) replace its value rather than
+  // adding a duplicate, which JSON.parse would resolve to the later one.
+  const existing = findValueSpan(masked, open, ALLOW_TS_EXTENSIONS_KEY);
+  if (existing !== null) {
+    return `${source.slice(0, existing.start)}true${source.slice(existing.end)}`;
+  }
+
+  const afterOpen = open + 1;
+  const lead = /^[ \t\r\n]*/.exec(masked.slice(afterOpen))?.[0] ?? "";
+  if (lead.includes("\n")) {
+    const indent = lead.slice(lead.lastIndexOf("\n") + 1);
+    return `${source.slice(0, afterOpen)}\n${indent}${ALLOW_TS_EXTENSIONS_KEY}: true,${source.slice(afterOpen)}`;
+  }
+  return `${source.slice(0, afterOpen)} ${ALLOW_TS_EXTENSIONS_KEY}: true,${source.slice(afterOpen)}`;
+}
+
+const REQUIRED_OPTIONS = `  "allowImportingTsExtensions": true
+  "noEmit": true            (or "emitDeclarationOnly": true)`;
+
+const MANUAL_CHANGE =
+  'add "allowImportingTsExtensions": true to "compilerOptions"';
+
+function noneMessage(dest: string): string {
+  return (
+    `shast: no tsconfig.json was found at or above ${dest}.\n` +
+    `  The vendored tree is TypeScript source whose imports carry .ts extensions,\n` +
+    `  which tsc rejects unless your tsconfig sets:\n` +
+    `${REQUIRED_OPTIONS}\n` +
+    `  No tsconfig was created - add the options to your own config.`
+  );
+}
+
+function fixableMessage(tsconfigPath: string): string {
+  return (
+    `The vendored tree is TypeScript source whose imports carry .ts extensions\n` +
+    `and is never emitted, so tsc needs "allowImportingTsExtensions": true.\n` +
+    `${tsconfigPath} sets "noEmit"/"emitDeclarationOnly" but not that option, so\n` +
+    `every vendored import fails to compile.`
+  );
+}
+
+function incompatibleMessage(tsconfigPath: string): string {
+  return (
+    `shast: ${tsconfigPath} emits JavaScript (neither "noEmit": true nor\n` +
+    `  "emitDeclarationOnly": true is set), which TypeScript refuses to combine\n` +
+    `  with "allowImportingTsExtensions". The vendored tree is .ts-extension\n` +
+    `  TypeScript source, so it cannot compile under that config.\n` +
+    `  Turning emit off is your build decision, so shast did not change it.`
+  );
+}
+
+/** Read a line from stdin, synchronously, for the interactive consent prompt. */
+function defaultConfirm(question: string): boolean {
+  process.stderr.write(question);
+  const buffer = Buffer.alloc(1);
+  let answer = "";
+  for (;;) {
+    let bytes: number;
+    try {
+      bytes = readSync(0, buffer, 0, 1, null);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === "EAGAIN") continue;
+      return false;
+    }
+    if (bytes === 0) return false;
+    const char = buffer.toString("utf8", 0, 1);
+    if (char === "\n") break;
+    if (char !== "\r") answer += char;
+  }
+  return /^y(es)?$/i.test(answer.trim());
+}
+
+/** Consent to the tsconfig edit for a run. */
+export interface CliOptions {
+  /** Ask the user to consent; defaults to a synchronous stdin prompt. */
+  confirm?: (question: string) => boolean;
+  /** Whether stdin can be prompted; defaults to `process.stdin.isTTY === true`. */
+  interactive?: boolean;
+}
+
+function applyFixable(
+  tsconfigPath: string,
+  yes: boolean,
+  options: CliOptions,
+): number {
+  let edited: string;
+  try {
+    edited = addAllowImportingTsExtensions(readFileSync(tsconfigPath, "utf8"));
+  } catch (error) {
+    console.error(
+      `shast: ${error instanceof Error ? error.message : String(error)}`,
+    );
+    return 1;
+  }
+
+  const apply = (): number => {
+    writeFileSync(tsconfigPath, edited);
+    console.log(
+      `shast: added "allowImportingTsExtensions": true to ${tsconfigPath}.`,
+    );
+    return 0;
+  };
+
+  if (yes) return apply();
+
+  const interactive = options.interactive ?? process.stdin.isTTY === true;
+  const confirm = options.confirm ?? defaultConfirm;
+  if (interactive) {
+    if (confirm(`${fixableMessage(tsconfigPath)}\n\n${MANUAL_CHANGE}? [y/N] `)) {
+      return apply();
+    }
+    console.error(
+      `shast: ${MANUAL_CHANGE}, or re-run with --yes. ${tsconfigPath} was left unchanged.`,
+    );
+    return 1;
+  }
+
+  console.error(fixableMessage(tsconfigPath));
+  console.error(
+    `shast: no consent given (stdin is not a TTY) - ${MANUAL_CHANGE}, or re-run with --yes. ${tsconfigPath} was left unchanged.`,
+  );
+  return 1;
+}
+
+/** Report (and, with consent, reconcile) the tsconfig after a successful add. */
+function reconcileTsconfig(
+  dest: string,
+  yes: boolean,
+  options: CliOptions,
+): number {
+  const state = inspectTsconfig(dest);
+  switch (state.kind) {
+    case "none":
+      console.error(noneMessage(dest));
+      return 0;
+    case "ok":
+      return 0;
+    case "incompatible":
+      console.error(incompatibleMessage(state.path));
+      return 1;
+    case "fixable":
+      return applyFixable(state.path, yes, options);
+  }
+}
+
+const USAGE = `Usage: shast add [dest] [--force] [--yes]
 
 Vendor shast's engine, config variations and tsyntax into a consumer tree.
 
   dest      destination directory (default: src/shast)
   --force   overwrite files that already exist in the destination
+  --yes     consent to adding "allowImportingTsExtensions" to the nearest
+            tsconfig.json without prompting (for CI)
 
 The destination must resolve as ESM (its nearest package.json needs
-"type": "module"); vendoring into a CommonJS subtree is rejected.`;
+"type": "module"); vendoring into a CommonJS subtree is rejected.
+
+The vendored tree imports .ts-extension TypeScript sources, so shast also
+reconciles "allowImportingTsExtensions" in your tsconfig. It never edits the
+config without consent and never changes your emit settings.`;
 
 interface ParsedArgs {
   dest: string;
   force: boolean;
+  yes: boolean;
 }
 
 function parseAddArgs(args: readonly string[]): ParsedArgs {
   let dest = "src/shast";
   let force = false;
+  let yes = false;
   let destSeen = false;
 
   for (let i = 0; i < args.length; i += 1) {
@@ -307,6 +719,8 @@ function parseAddArgs(args: readonly string[]): ParsedArgs {
     if (token === undefined) continue;
     if (token === "--force") {
       force = true;
+    } else if (token === "--yes") {
+      yes = true;
     } else if (token.startsWith("-")) {
       throw new Error(`Unknown option '${token}'`);
     } else if (destSeen) {
@@ -317,10 +731,10 @@ function parseAddArgs(args: readonly string[]): ParsedArgs {
     }
   }
 
-  return { dest, force };
+  return { dest, force, yes };
 }
 
-export function main(argv: readonly string[]): number {
+export function main(argv: readonly string[], options: CliOptions = {}): number {
   const [subcommand, ...rest] = argv;
 
   if (subcommand === undefined || subcommand === "--help" || subcommand === "-h") {
@@ -346,7 +760,7 @@ export function main(argv: readonly string[]): number {
     console.log(
       `Vendored shast into ${result.dest} — ${result.written.length} files.`,
     );
-    return 0;
+    return reconcileTsconfig(result.dest, parsed.yes, options);
   } catch (error) {
     if (error instanceof ExistingDestinationError) {
       console.error(error.message);
