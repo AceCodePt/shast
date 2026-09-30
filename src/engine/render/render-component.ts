@@ -31,10 +31,10 @@ function isRecordInnerHTML(
 // so it must be a name and not a fragment of markup. Every name the registry
 // declares satisfies this, and the generated `cid-*` identifiers are written
 // separately (see `identifiers` in `renderHTMLNode`), so this rejects only a
-// name that reached the renderer some other way -- e.g. a widened value under
-// `skipValidation`. It is output safety, not input validation: it runs on every
-// render, whatever the flag says, because this is the last step before bytes
-// leave the process.
+// name that reached the renderer some other way -- e.g. a widened `as any`
+// value, or generated/out-of-compiler data that never met the type wall. It is
+// output safety, not input validation: it runs on every render, because this is
+// the last step before bytes leave the process.
 const ATTRIBUTE_NAME_PATTERN = /^[a-zA-Z][\w-]*$/;
 
 function renderAttributes(attributes: Record<string, unknown>): string {
@@ -53,7 +53,7 @@ function renderAttributes(attributes: Record<string, unknown>): string {
     // Attribute values are scalars at the DSL layer (`class` and `rel` are
     // `string | undefined`; no registry entry declares an array), so there is
     // no array case. `String` is the fallback for a widened value that reaches
-    // here some other way (`as any` / `skipValidation`).
+    // here some other way (`as any`, generated or out-of-compiler data).
     html += ` ${key}="${escapeAttributeValue(String(value))}"`;
   }
   return html;

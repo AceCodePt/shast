@@ -91,7 +91,6 @@ export default function engine<
     // constrained to the registered names at both walls.
     cssKeyframesConfig?: CSSKeyframesConfig;
   },
-  options?: { skipValidation?: boolean },
 ) {
   // The registry snapshot is fixed for the engine's lifetime, so build it once
   // and hand the same value to every recursive step.
@@ -126,9 +125,7 @@ export default function engine<
       keyof HTMLTagConfig | "#text"
     >,
   ) => {
-    if (!options?.skipValidation) {
-      validateComponentNode(validationContext, componentStructure, null);
-    }
+    validateComponentNode(validationContext, componentStructure, null);
     return componentStructure as T;
   };
 

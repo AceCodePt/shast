@@ -48,12 +48,6 @@ const engineConfig = {
 
 const { createComponent } = engine(engineConfig);
 
-// Same type wall, runtime checks skipped: lets a type-only rejection be
-// asserted without the runtime backstop throwing first.
-const { createComponent: createTypeOnlyComponent } = engine(engineConfig, {
-  skipValidation: true,
-});
-
 // Each keyword is typed as the `CSSWideKeyword` union, so the loop exercises
 // the *type* wall (the value must be assignable to the property's inferred
 // value) and the runtime wall on every iteration.
@@ -216,33 +210,6 @@ describe("CSS-wide keywords", () => {
           css: { color: keyword, width: keyword, "--_a": keyword },
         }),
       );
-    });
-
-    test("invalid values are still rejected at the type wall", () => {
-      createTypeOnlyComponent({
-        tag: "div",
-        innerHTML: "hi",
-        css: {
-          // @ts-expect-error - 'greenish' is not a <color>
-          color: "greenish",
-        },
-      });
-      createTypeOnlyComponent({
-        tag: "div",
-        innerHTML: "hi",
-        css: {
-          // @ts-expect-error - 'floppy' is not a display value
-          display: "floppy",
-        },
-      });
-      createTypeOnlyComponent({
-        tag: "div",
-        innerHTML: "hi",
-        css: {
-          // @ts-expect-error - 'wide' is not a <length-percentage>
-          width: "wide",
-        },
-      });
     });
   });
 });

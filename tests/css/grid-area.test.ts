@@ -39,11 +39,6 @@ const engineConfig = {
 };
 
 const { createComponent } = engine(engineConfig);
-// Same type wall, runtime skipped: a type-only row can be asserted without the
-// runtime backstop throwing first.
-const { createComponent: createTypeOnlyComponent } = engine(engineConfig, {
-  skipValidation: true,
-});
 
 describe("grid-area against the parent's grid-template-areas", () => {
   describe("Runtime validation", () => {
@@ -140,85 +135,6 @@ describe("grid-area against the parent's grid-template-areas", () => {
           },
         }),
       );
-    });
-  });
-
-  describe("Type validation", () => {
-    test("accepts a name defined by a multi-line grid-template-areas", () => {
-      createTypeOnlyComponent({
-        tag: "div",
-        innerHTML: { c: { tag: "span", innerHTML: "x" } },
-        css: {
-          display: "grid",
-          "grid-template-areas": "a a\nb b",
-          "> c": { "grid-area": "a" },
-        },
-      });
-    });
-
-    test("accepts a name from a quoted multi-line grid-template-areas", () => {
-      createTypeOnlyComponent({
-        tag: "div",
-        innerHTML: { c: { tag: "span", innerHTML: "x" } },
-        css: {
-          display: "grid",
-          "grid-template-areas": '"a a" "b b"',
-          "> c": { "grid-area": "b" },
-        },
-      });
-    });
-
-    test("accepts a name from an area row containing . empty cells", () => {
-      createTypeOnlyComponent({
-        tag: "div",
-        innerHTML: { c: { tag: "span", innerHTML: "x" } },
-        css: {
-          display: "grid",
-          "grid-template-areas": "a . c",
-          "> c": { "grid-area": "c" },
-        },
-      });
-    });
-
-    test("rejects a name the parent's grid-template-areas does not define", () => {
-      createTypeOnlyComponent({
-        tag: "div",
-        innerHTML: { c: { tag: "span", innerHTML: "x" } },
-        css: {
-          display: "grid",
-          "grid-template-areas": "a a\nb b",
-          "> c": {
-            // @ts-expect-error 'c' is not one of the parent's areas (a | b)
-            "grid-area": "c",
-          },
-        },
-      });
-    });
-
-    test(". empty cells are not names", () => {
-      createTypeOnlyComponent({
-        tag: "div",
-        innerHTML: { c: { tag: "span", innerHTML: "x" } },
-        css: {
-          display: "grid",
-          "grid-template-areas": "a . b",
-          "> c": {
-            // @ts-expect-error '.' marks an empty cell, not an area name
-            "grid-area": ".",
-          },
-        },
-      });
-    });
-
-    test("a parent without grid-template-areas constrains nothing", () => {
-      createTypeOnlyComponent({
-        tag: "div",
-        innerHTML: { c: { tag: "span", innerHTML: "x" } },
-        css: {
-          display: "grid",
-          "> c": { "grid-area": "whatever" },
-        },
-      });
     });
   });
 });

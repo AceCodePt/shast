@@ -81,7 +81,7 @@ describe("engine", () => {
 });
 
 describe("createComponent (engine)", () => {
-  describe("production mode", () => {
+  describe("a second registry", () => {
     const PROD_CSS_ATTRIBUTES = cssAttributeConfig(
       SUPPORTED_KEYWORDS,
       MOCK_CSS_SYNTAX,
@@ -132,76 +132,71 @@ describe("createComponent (engine)", () => {
       cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
       cssPropertiesConfig: PROD_CSS_PROPERTIES,
       cssQueriesConfig: EMPTY_QUERIES,
-    }, { skipValidation: true });
-
-    test("skips validation — invalid data passes through", () => {
-      const comp = createProdComponent({
-        // @ts-expect-error unknown tag passes through in production mode
-        tag: "unknown",
-      });
-      assert.deepStrictEqual(comp, { tag: "unknown" });
     });
 
-    test("skips attribute validation — unknown attributes pass through", () => {
-      const comp = createProdComponent({
-        tag: "div",
-        attributes: {
-          // @ts-expect-error unknown attribute passes through in production mode
-          href: "https://example.com",
-        },
-      });
-      assert.deepStrictEqual(comp, {
-        tag: "div",
-        attributes: { href: "https://example.com" },
-      });
-    });
-
-    test("invalid attribute name throws at render, even with skipValidation", () => {
-      // `skipValidation` makes createComponent a pass-through, but the name is
-      // pasted into markup unescaped, so the renderer must still refuse it:
-      // this is output safety, the last wall before bytes leave the process.
-      const comp = createProdComponent({
-        tag: "div",
-        attributes: {
-          // @ts-expect-error an injected attribute name survives validation
-          'x onload="alert(1)"': "y",
-        },
-      });
+    test("rejects an unknown tag (it no longer passes through)", () => {
       assert.throws(
-        () => renderProd(comp),
+        () =>
+          createProdComponent({
+            // @ts-expect-error unknown tag
+            tag: "unknown",
+          }),
+        /Structural Error: '<unknown>' is not a recognized configuration tag/,
+      );
+    });
+
+    test("rejects an unknown attribute (it no longer passes through)", () => {
+      assert.throws(
+        () =>
+          createProdComponent({
+            tag: "div",
+            attributes: {
+              // @ts-expect-error unknown attribute
+              href: "https://example.com",
+            },
+          }),
+        /Attribute Error: Property 'href' is not a valid attribute/,
+      );
+    });
+
+    test("an invalid attribute name throws at render when built directly", () => {
+      // The name is pasted into markup unescaped, so the renderer must refuse
+      // it even when the value never met the type or runtime wall: this is
+      // output safety, the last wall before bytes leave the process.
+      const comp = {
+        tag: "div",
+        attributes: { 'x onload="alert(1)"': "y" },
+      };
+      assert.throws(
+        () => renderProd(comp as any),
         /Attribute Error: 'x onload="alert\(1\)"' is not a valid attribute name/,
       );
     });
 
-    test("valid data-*/aria-* names still render with skipValidation", () => {
+    test("valid data-*/aria-* names still render when built directly", () => {
       // Names the registry does not declare but HTML allows still render; the
       // render-time check rejects only names that are not names.
-      const comp = createProdComponent({
+      const comp = {
         tag: "div",
-        attributes: {
-          // @ts-expect-error unknown to the registry, but a legal HTML name
-          "data-x": "y",
-          "aria-label": "z",
-        },
-      });
-      const { html } = renderProd(comp);
+        attributes: { "data-x": "y", "aria-label": "z" },
+      };
+      const { html } = renderProd(comp as any);
       assert.strictEqual(html, `<div data-x="y" aria-label="z"></div>`);
     });
 
-    test("skips CSS child selector check — invalid child selector passes through", () => {
-      const comp = createProdComponent({
-        tag: "div",
-        innerHTML: { title: { tag: "span", innerHTML: "Hello" } },
-        css: {
-          // @ts-expect-error unknown child selector passes through in production mode
-          "> headnig": { color: "red" },
-        },
-      });
-      assert.deepStrictEqual(comp, {
-        tag: "div",
-        innerHTML: { title: { tag: "span", innerHTML: "Hello" } },
-        css: { "> headnig": { color: "red" } },
-      });
+    test("rejects an invalid child selector (it no longer passes through)", () => {
+      assert.throws(
+        () =>
+          createProdComponent({
+            tag: "div",
+            innerHTML: { title: { tag: "span", innerHTML: "Hello" } },
+            css: {
+              // @ts-expect-error unknown child selector
+              "> headnig": { color: "red" },
+            },
+          }),
+        /CSS Error: Child selector '> headnig' references child 'headnig' which is not declared/,
+      );
     });
 
     test("valid components still render correctly", () => {
@@ -217,7 +212,7 @@ describe("createComponent (engine)", () => {
       assert.ok(css.includes("width: 100%;"));
     });
 
-    test("deeply nested valid tree renders correctly in production mode", () => {
+    test("deeply nested valid tree renders correctly", () => {
       const comp = createProdComponent({
         tag: "div",
         innerHTML: {

@@ -104,19 +104,6 @@ editor enforces is a fact the server enforces, with the same wording. That is
 the property that makes "fail fast" trustworthy - you are never told "it's
 fine" by one wall and "it's broken" by the other.
 
-If you trust your pipeline and want to skip the per-component runtime
-validation in production, pass `skipValidation: true` as a second argument to
-`engine()`:
-
-```ts
-const { createComponent } = engine(config, { skipValidation: true });
-```
-
-`createComponent` becomes a pass-through - no tag, attribute, or CSS checks.
-Use it only when `tsc`/CI has already caught everything and you are CPU-bound.
-It is the one deliberate way to remove the second wall, and it leaves the
-first one intact.
-
 ## 30 seconds of shast
 
 The registries below are the ones `shast add` wrote into your tree. Everything

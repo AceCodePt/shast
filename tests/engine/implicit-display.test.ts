@@ -1,4 +1,5 @@
 import test, { describe } from "node:test";
+import assert from "node:assert";
 import {
   engine,
   cssAttributeConfig,
@@ -55,7 +56,7 @@ describe("implicit display from tag config at type level", () => {
     cssPseudoClassConfig: EMPTY_PSEUDO_CLASSES,
     cssPropertiesConfig: CSS_PROPS,
     cssQueriesConfig: EMPTY_QUERIES,
-  }, { skipValidation: true });
+  });
 
   test("implicit flex display unlocks flex-direction", () => {
     createComponent({ tag: "flex-box", innerHTML: "x", css: { "flex-direction": "row" } });
@@ -75,10 +76,19 @@ describe("implicit display from tag config at type level", () => {
   });
 
   test("implicit display does not unlock non-matching dependent props", () => {
-    // div has display: "block", so flex-direction should not be allowed without explicit display
-    createComponent({ tag: "div", innerHTML: "x", css: {
-      // @ts-expect-error
-      "flex-direction": "row"
-    } });
+    // div has display: "block", so flex-direction is rejected at runtime as
+    // well as at the type wall without an explicit display.
+    assert.throws(
+      () =>
+        createComponent({
+          tag: "div",
+          innerHTML: "x",
+          css: {
+            // @ts-expect-error
+            "flex-direction": "row",
+          },
+        }),
+      /CSS Error: 'flex-direction' requires display: flex/,
+    );
   });
 });

@@ -67,9 +67,11 @@ treats a written `undefined` as absent.
 3. **`children` unlocks crossing `GetAllowedTags`** - no longer applicable;
    the HTML shape never had a `children` slot.
 4. **Render-time fill-in and `skipValidation: true`** - materialised as
-   expected. `renderComponent` receives the global attribute config and the
-   merged keywords (the engine binds them). `skipValidation` remains a full
-   pass-through of `createComponent`; fill-in is render-only and still runs.
+   expected at the time. `renderComponent` receives the global attribute config
+   and the merged keywords (the engine binds them); fill-in is render-only and
+   still runs. *Historical:* the `skipValidation` engine option has since been
+   removed, so `createComponent` now always validates and this note is kept only
+   as a record of the state when this work shipped.
 
 ## Shape of the per-registry unlocked table
 
