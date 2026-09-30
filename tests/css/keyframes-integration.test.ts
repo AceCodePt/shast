@@ -345,4 +345,48 @@ describe("css keyframes integration", () => {
       assert.ok(!css.includes("@keyframes"));
     });
   });
+
+  // A frame value is printed verbatim inside `@keyframes`
+  // (`printKeyframesRule`). `box-shadow` is `<string>`, so the DSL accepts a
+  // break-out shape; the structural wall rejects it when the registry is built,
+  // before any component can reference the keyframe.
+  describe("Structural guard for keyframe values", () => {
+    test("a box-shadow value carrying a structural break-out is rejected at registry build", () => {
+      assert.throws(
+        () =>
+          cssKeyframesConfig(COMMON_SYNTAX, COMMON_ATTRIBUTES, {
+            evil: { from: { "box-shadow": "none; } .evil{color:red" } },
+          }),
+        /CSS Error: 'box-shadow' value contains a top-level ';'/,
+      );
+    });
+
+    test("a legitimate keyframe emits unchanged @keyframes text", () => {
+      const { html, css } = renderComponent(
+        createComponent({
+          tag: "box",
+          innerHTML: "x",
+          css: { animation: "fade 1s linear" },
+        }),
+      );
+      const scope = hashScope(html, "box");
+      assert.strictEqual(
+        css,
+        [
+          `[${scope}] {`,
+          `  animation: fade 1s linear;`,
+          `}`,
+          ``,
+          `@keyframes fade {`,
+          `  from {`,
+          `    opacity: 0;`,
+          `  }`,
+          `  to {`,
+          `    opacity: 1;`,
+          `  }`,
+          `}`,
+        ].join("\n"),
+      );
+    });
+  });
 });

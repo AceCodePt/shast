@@ -86,6 +86,19 @@ const gridAreasOf = (block: Record<string, unknown>): string | undefined => {
 // open/close a block and let the author inject arbitrary rules. Reject that at
 // the runtime wall, where calc()/var() already refuse the same shape.
 //
+// This is the single wall for text that becomes part of the emitted
+// stylesheet, so it is called from every place such text is validated:
+//
+//   * component declaration values (`deepValidateCSSValue`);
+//   * keyframe frame values (`validateFrameProperty` in
+//     `css/keyframes-config`);
+//   * `style()` container-query values (`assertStyleQueryValues`);
+//   * selector/header keys -- pseudo-class / pseudo-element keys, and the
+//     `@container` header that embeds a `style()` condition.
+//
+// A caller that emits a key rather than a declaration passes the key as both
+// arguments, so the message still names the offending text.
+//
 // The delimiters are legal inside a quoted string (a `content` value may
 // contain `}`, grid-template-areas is quoted) and inside a balanced function
 // such as `url(...)` (data URLs carry `;` and `,`), so the scanner tracks quote
@@ -114,7 +127,10 @@ const isUrlTokenAt = (value: string, index: number): boolean => {
   return value[next] === "(";
 };
 
-const assertNoStructuralBreakout = (key: string, value: string): void => {
+export const assertNoStructuralBreakout = (
+  key: string,
+  value: string,
+): void => {
   let depth = 0;
   let quote: '"' | "'" | undefined;
   // True while inside a quoted `url("...")` token; `)` there closes the url.
@@ -321,6 +337,144 @@ interface CssBlockState extends CssBlockScope {
   parentGridAreas: string | undefined;
 }
 
+// The registered pseudo-classes and pseudo-elements a `:`-keyed block may name.
+// Pseudo-classes are global (`cssPseudoClassConfig`), with a tag free to declare
+// more on itself (`cssPseudoClass`); pseudo-elements resolve per node from the
+// target tag's `cssPseudoElement`, mirroring the type wall exactly. An
+// unregistered key is rejected here, before its shape matters, which is what
+// closes the selector-injection path as a side effect of the correctness gap.
+const assertRegisteredPseudoKey = (
+  context: ValidationContext,
+  state: CssBlockState,
+  key: string,
+): void => {
+  if (key.startsWith("::")) {
+    const declared: readonly string[] =
+      (state.nodeTag === undefined
+        ? undefined
+        : context.tagConfig[state.nodeTag]?.cssPseudoElement) ?? [];
+    if (!declared.includes(key)) {
+      throw new Error(
+        `CSS Error: Pseudo-element '${key}' is not declared on tag '${state.nodeTag}'. Declared pseudo-elements are: ${declared.join(", ")}`,
+      );
+    }
+    return;
+  }
+  const tagPseudoClasses: readonly string[] =
+    (state.nodeTag === undefined
+      ? undefined
+      : context.tagConfig[state.nodeTag]?.cssPseudoClass) ?? [];
+  if (
+    !context.registeredPseudoClasses.has(key) &&
+    !tagPseudoClasses.includes(key)
+  ) {
+    const registered = new Set([
+      ...context.registeredPseudoClasses,
+      ...tagPseudoClasses,
+    ]);
+    throw new Error(
+      `CSS Error: Pseudo-class '${key}' is not registered in the cssPseudoClassConfig. Registered pseudo-classes are: ${[...registered].join(", ")}`,
+    );
+  }
+};
+
+const STYLE_QUERY_PREFIX = "style(";
+
+// The text inside each top-level `style(...)` condition of a registered
+// `@container` query. The query grammar places `style(` at the start of a
+// top-level condition, so this matches there and skips a `style(` that appears
+// inside a quoted value. Balanced parentheses and quotes are tracked so a value
+// may itself contain a function (`style(--x: calc(1px + 2px))`).
+const styleQueryContents = (query: string): string[] => {
+  const contents: string[] = [];
+  let depth = 0;
+  let quote: '"' | "'" | undefined;
+  let i = 0;
+  while (i < query.length) {
+    const char = query[i] as string;
+    if (quote !== undefined) {
+      if (char === "\\") {
+        i += 2;
+        continue;
+      }
+      if (char === quote) quote = undefined;
+      i += 1;
+      continue;
+    }
+    if (char === '"' || char === "'") {
+      quote = char;
+      i += 1;
+      continue;
+    }
+    if (
+      char === "(" &&
+      depth === 0 &&
+      i >= STYLE_QUERY_PREFIX.length - 1 &&
+      query.startsWith(STYLE_QUERY_PREFIX, i - (STYLE_QUERY_PREFIX.length - 1))
+    ) {
+      let closeDepth = 1;
+      let closeQuote: '"' | "'" | undefined;
+      let j = i + 1;
+      while (j < query.length && closeDepth > 0) {
+        const inner = query[j] as string;
+        if (closeQuote !== undefined) {
+          if (inner === "\\") {
+            j += 2;
+            continue;
+          }
+          if (inner === closeQuote) closeQuote = undefined;
+          j += 1;
+          continue;
+        }
+        if (inner === '"' || inner === "'") {
+          closeQuote = inner;
+          j += 1;
+          continue;
+        }
+        if (inner === "(") closeDepth += 1;
+        else if (inner === ")") closeDepth -= 1;
+        j += 1;
+      }
+      contents.push(
+        query.slice(i + 1, closeDepth === 0 ? j - 1 : query.length),
+      );
+      i = j;
+      continue;
+    }
+    if (char === "(") depth += 1;
+    else if (char === ")") depth -= 1;
+    i += 1;
+  }
+  return contents;
+};
+
+// A `style()` container query embeds a `--property: value` pair inside the
+// at-rule header, which the renderer prints verbatim (`frame.atRule`).
+// `cssQueriesConfig` validates the query's shape but not the value, so the
+// engine re-reads each `style(...)` condition here and applies the same walls a
+// component declaration gets: the property must be a registered custom
+// property, and the value must clear the structural scan. This lives at engine
+// time because `cssPropertiesConfig` is in scope and `css/queries-config` must
+// not import engine code.
+const assertStyleQueryValues = (
+  context: ValidationContext,
+  key: string,
+): void => {
+  for (const content of styleQueryContents(key)) {
+    const colon = content.indexOf(":");
+    if (colon === -1) continue; // shape already checked by cssQueriesConfig
+    const property = content.slice(0, colon).trim();
+    const value = content.slice(colon + 1).trim();
+    if (!property.startsWith("--")) continue;
+    if (context.cssPropertiesConfig[property] === undefined) {
+      throw new Error(
+        `CSS Error: Style query property '${property}' is not registered in the cssPropertiesConfig. Registered properties are: ${Object.keys(context.cssPropertiesConfig).join(", ")}`,
+      );
+    }
+    assertNoStructuralBreakout(property, value);
+  }
+};
+
 // Validate one `css` block against the element's structure. A complex CSS
 // attribute (`display`, `position`, ...) is a *gate*: the value the author
 // writes unlocks further props on the node itself (`self`) and on its direct
@@ -446,6 +600,14 @@ export function validateCssBlock(
             `CSS Error: Query block '${key}' must be a CSS block object`,
           );
         }
+        if (key.startsWith("@container") && key.includes(STYLE_QUERY_PREFIX)) {
+          // The header is printed verbatim as the at-rule, so its `style()`
+          // values are stylesheet text: check each property against the
+          // registry and scan each value, then scan the whole header as the
+          // in-loop backstop for text the targeted scan does not cover.
+          assertStyleQueryValues(context, key);
+          assertNoStructuralBreakout(key, key);
+        }
         const nextInPseudoElement = key.startsWith("::") || state.inPseudoElement;
         walk(value as Record<string, unknown>, {
           ...state,
@@ -455,6 +617,16 @@ export function validateCssBlock(
         continue;
       }
       if (value !== null && typeof value === "object" && !Array.isArray(value)) {
+        if (key.startsWith(":")) {
+          // A pseudo key becomes selector text (`segmentText` prints it
+          // verbatim). Membership in the registry is the fix -- an
+          // unregistered key is rejected before its shape matters -- and the
+          // structural scan is the in-loop backstop, independent of the
+          // registry. The check is unconditional (not skipped inside a
+          // pseudo-element) so nesting is decided by the registry, not shape.
+          assertRegisteredPseudoKey(context, state, key);
+          assertNoStructuralBreakout(key, key);
+        }
         let nextContext = state.innerHTML;
         let nextClasses = state.classes;
         let nextTag = state.nodeTag;
@@ -558,7 +730,11 @@ export function validateCssBlock(
           inPseudoElement: nextInPseudoElement,
           parentGridAreas: nextGridAreas,
         });
-      } else if (!key.startsWith("> ") && !key.startsWith("&.")) {
+      } else if (
+        !key.startsWith("> ") &&
+        !key.startsWith("&.") &&
+        !key.startsWith(":")
+      ) {
         const attrDef = cssAttrs[key];
         const propDef = cssProps[key];
 
@@ -670,6 +846,14 @@ export function validateCssBlock(
         }
         throw new Error(
           `CSS Error: '${key}' is not a recognized CSS attribute or property`,
+        );
+      } else if (key.startsWith(":")) {
+        // A pseudo key with a non-block value never reaches the nested-block
+        // registry check above, so give it the pseudo-specific message instead
+        // of the generic "not a recognized CSS attribute or property".
+        const kind = key.startsWith("::") ? "pseudo-element" : "pseudo-class";
+        throw new Error(
+          `CSS Error: '${key}' is not a registered ${kind}`,
         );
       }
     }
