@@ -84,16 +84,17 @@ Key consequences:
 Structural typing at this depth is only viable if it stays cheap. The figures
 below were produced by a local benchmark harness that is **not included in
 this repository**, so treat them as indicative rather than reproducible.
-Measured against the `common` and `full` config variations:
+Measured against the `common` registry on TypeScript 7.0.2:
 
-- `tsc` cost is **linear**: ~4.8K instantiations / ~5ms check time per
-  component (1 → 400 components: 124K → 2.05M instantiations, 0.36s → 2.4s).
-- Editor (tsserver): warm completions inside a `css` block 8–18ms; completion
-  immediately after an edit ~210ms (`common`) / ~370ms (`full`); full-file
-  semantic check of a 5-component file ~43ms.
+- `tsc` cost is a **fixed registry load plus a linear per-component term**.
+  Loading `common` costs ~1.17M instantiations / ~1.1s before any component
+  is checked; each modest component (`ul > li > span`, one `:hover`, one
+  nested `> child`) then adds ~15K instantiations / ~25ms (registry only:
+  1.17M / 1.15s; registry + 100 components: 2.69M / 3.60s). Instantiation
+  counts are machine-stable; times vary by machine.
 
-Practical rule: keep files to a handful of components each and editor latency
-is a non-issue. The post-edit constant grows with *config breadth*, not
+Practical rule: keep files to a handful of components each and per-file
+checking stays small. The fixed constant grows with *config breadth*, not
 component size.
 
 ## Constraints on authors

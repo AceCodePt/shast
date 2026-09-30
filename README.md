@@ -915,16 +915,26 @@ undefined"` means exactly what it looks like.
 ## Performance (indicative)
 
 The figures below come from a local benchmark harness that is **not part of
-this repository**, so they are indicative, not reproducible here:
+this repository**, so they are indicative, not reproducible here. Measured on
+TypeScript 7.0.2 against the `common` registry.
 
-- `tsc` cost is **linear**: ~4.8K instantiations / ~5ms per component
-  (400 components: 2.4s full check).
-- Editor: warm completions inside a `css` block 8–18ms; ~43ms full-file
-  recheck for a typical component file.
+Loading `common` is a **fixed ~1.17M instantiations / ~1.1s** of `tsc` cost
+before a single component is checked. On top of that fixed cost, `tsc` is
+**linear** in components — a file of 100 modest components (`ul > li > span`,
+one `:hover`, one nested `> child`):
 
-Keep files to a handful of components each and the type machinery is
-imperceptible. The same harness produced the fuller numbers in
-[docs/structural-coupling.md](docs/structural-coupling.md).
+| Measure | `common` only (`examples/basic.ts`) | +100 components | Per component |
+|---|---|---|---|
+| Instantiations | 1.17M | 2.69M | ~15K |
+| Check time | 1.15s | 3.60s | ~25ms |
+
+Instantiation counts are machine-stable; check times vary by machine. The
+earlier ~4.8K / ~5ms figures were taken on a trivial component and
+undercounted realistic ones.
+
+Keep files to a handful of components each and the marginal cost stays small;
+the fixed registry cost is paid once per program. The same harness produced
+the fuller numbers in [docs/structural-coupling.md](docs/structural-coupling.md).
 
 ## Limitations
 
