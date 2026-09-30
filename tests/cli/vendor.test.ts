@@ -1,15 +1,146 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
-import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { createScanner, LanguageVariant, SyntaxKind } from "typescript/unstable/ast";
 import {
   add,
   CommonJSDestinationError,
   ExistingDestinationError,
   main,
+  resolveTsyntaxSourceRoot,
   rewriteImports,
 } from "../../scripts/cli.ts";
+
+/** This repository's root, used to resolve the real vendored tsyntax source. */
+const REPO_ROOT = fileURLToPath(new URL("../..", import.meta.url));
+
+interface ScannedToken {
+  kind: SyntaxKind;
+  /** The raw token text, quotes included for a string literal. */
+  text: string;
+  /** The literal's value, quotes removed and escapes resolved. */
+  value: string;
+  start: number;
+}
+
+/** Tokenize `source` with the TypeScript lexer (a devDependency, never shipped). */
+function scanTokens(source: string, skipTrivia: boolean): ScannedToken[] {
+  const scanner = createScanner(skipTrivia, LanguageVariant.Standard, source);
+  const tokens: ScannedToken[] = [];
+  for (;;) {
+    const kind = scanner.scan();
+    if (kind === SyntaxKind.EndOfFile) break;
+    tokens.push({
+      kind,
+      text: scanner.getTokenText(),
+      value: scanner.getTokenValue(),
+      start: scanner.getTokenStart(),
+    });
+  }
+  return tokens;
+}
+
+function isTrivia(kind: SyntaxKind): boolean {
+  return kind >= SyntaxKind.FirstTriviaToken && kind <= SyntaxKind.LastTriviaToken;
+}
+
+/**
+ * Whether the string literal at `index` sits in a module specifier position:
+ * after `from` or `import` (static import/export, side-effect import), or as
+ * the argument of a dynamic `import(...)`. Trivia between tokens is ignored.
+ */
+function isSpecifierPositionToken(
+  tokens: readonly ScannedToken[],
+  index: number,
+): boolean {
+  let previous = index - 1;
+  while (previous >= 0 && isTrivia(tokens[previous]!.kind)) previous -= 1;
+  if (previous < 0) return false;
+  const keyword = tokens[previous]!;
+  if (
+    keyword.kind === SyntaxKind.FromKeyword ||
+    keyword.kind === SyntaxKind.ImportKeyword
+  ) {
+    return true;
+  }
+  if (keyword.kind !== SyntaxKind.OpenParenToken) return false;
+  let beforeParen = previous - 1;
+  while (beforeParen >= 0 && isTrivia(tokens[beforeParen]!.kind)) beforeParen -= 1;
+  return (
+    beforeParen >= 0 &&
+    tokens[beforeParen]!.kind === SyntaxKind.ImportKeyword
+  );
+}
+
+/**
+ * Guard: every byte `rewriteImports` changes must lie inside a module specifier
+ * string literal. Both sides are tokenized with the TypeScript lexer, so a
+ * change inside a comment or a non-specifier string is reported instead of
+ * passing silently.
+ */
+function assertRewritesOnlySpecifiers(before: string, after: string): void {
+  const beforeTokens = scanTokens(before, false);
+  const afterTokens = scanTokens(after, false);
+  assert.strictEqual(
+    afterTokens.length,
+    beforeTokens.length,
+    "rewriteImports changed the token stream length",
+  );
+  for (let index = 0; index < beforeTokens.length; index += 1) {
+    const from = beforeTokens[index]!;
+    const to = afterTokens[index]!;
+    if (from.text === to.text) continue;
+    assert.strictEqual(
+      to.kind,
+      from.kind,
+      `rewriteImports changed a ${SyntaxKind[from.kind]} into a ${SyntaxKind[to.kind]}`,
+    );
+    assert.ok(
+      from.kind === SyntaxKind.StringLiteral &&
+        isSpecifierPositionToken(beforeTokens, index),
+      `rewriteImports changed ${JSON.stringify(from.text)} at ${from.start}, which is not a module specifier`,
+    );
+  }
+}
+
+/**
+ * Every string literal in the vendored `.ts` files that still holds a `@/` path
+ * or the bare `tsyntax` package name. The lexer skips comments, so prose is not
+ * mistaken for a specifier; a dynamic `import("@/...")` is a literal and is.
+ */
+function survivingSpecifierStrings(dest: string): string[] {
+  const offenders: string[] = [];
+  const walk = (dir: string): void => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const abs = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walk(abs);
+        continue;
+      }
+      if (!entry.name.endsWith(".ts")) continue;
+      const source = readFileSync(abs, "utf8");
+      for (const token of scanTokens(source, true)) {
+        if (token.kind !== SyntaxKind.StringLiteral) continue;
+        if (token.value.includes("@/") || token.value === "tsyntax") {
+          offenders.push(`${path.relative(dest, abs)}: ${JSON.stringify(token.value)}`);
+        }
+      }
+    }
+  };
+  walk(dest);
+  return offenders;
+}
 
 const VARIANTS = ["minimal", "common", "full"] as const;
 
@@ -128,27 +259,14 @@ describe("shast add: copy set", () => {
 });
 
 describe("shast add: import rewriting", () => {
-  test("no vendored file keeps a @/ or bare tsyntax specifier", () => {
+  test("no vendored file keeps a @/ or bare tsyntax string literal", () => {
     const dest = tempDest();
     add({ dest });
 
-    const offenders: string[] = [];
-    const walk = (dir: string): void => {
-      for (const entry of readdirSync(dir, { withFileTypes: true })) {
-        const abs = path.join(dir, entry.name);
-        if (entry.isDirectory()) {
-          walk(abs);
-        } else if (entry.name.endsWith(".ts")) {
-          const source = readFileSync(abs, "utf8");
-          if (/from\s+"@\//.test(source) || /from\s+"tsyntax"/.test(source)) {
-            offenders.push(path.relative(dest, abs));
-          }
-        }
-      }
-    };
-    walk(dest);
-
-    assert.deepStrictEqual(offenders, []);
+    // Anchored on every string literal rather than a `from "..."` grep: the
+    // grep's shape is a blind spot for `import("@/...")`, which shares no
+    // `from` and would ship an unresolvable specifier unnoticed.
+    assert.deepStrictEqual(survivingSpecifierStrings(dest), []);
   });
 
   test("rewrites @/ and tsyntax specifiers to mirrored relative paths", () => {
@@ -235,6 +353,120 @@ describe("shast add: import rewriting", () => {
       const source = `const label = "@/engine/types";\n`;
       assert.strictEqual(rewriteImports(source, FROM), source);
     });
+
+    test("a dynamic import specifier rewrites to the mirrored relative path", () => {
+      const out = rewriteImports(
+        `export const load = () => import("@/engine/render/escape");\n`,
+        FROM,
+      );
+      assert.strictEqual(
+        out,
+        `export const load = () => import("./escape.ts");\n`,
+      );
+    });
+
+    test("a dynamic import with attributes rewrites only the specifier", () => {
+      const out = rewriteImports(
+        `await import("@/engine/render/escape", { with: { type: "json" } });\n`,
+        FROM,
+      );
+      assert.strictEqual(
+        out,
+        `await import("./escape.ts", { with: { type: "json" } });\n`,
+      );
+    });
+
+    test("a dynamic import of tsyntax rewrites too", () => {
+      const out = rewriteImports(`import("tsyntax");\n`, FROM);
+      assert.strictEqual(out, `import("../../tsyntax/index.ts");\n`);
+    });
+
+    test("import.meta is not a dynamic import", () => {
+      const source = `const url = import.meta.url;\n`;
+      assert.strictEqual(rewriteImports(source, FROM), source);
+    });
+
+    test("a call to a function whose name is a keyword is left alone", () => {
+      const source = `const x = foo("@/engine/types");\n`;
+      assert.strictEqual(rewriteImports(source, FROM), source);
+    });
+  });
+
+  // The rewriter's contract, checked against the TypeScript lexer rather than
+  // against the rewriter itself: a change is legal only inside a module
+  // specifier string literal.
+  describe("rewriteImports changes only specifier bytes", () => {
+    const FROM = "engine/render/render-component.ts";
+
+    test("a real rewrite touches only specifier positions", () => {
+      const before =
+        `// from "@/engine/types" stays prose\n` +
+        `import { a } from "@/engine/types";\n` +
+        `export const label = "from '@/engine/types'";\n` +
+        `export const load = () => import("@/engine/render/escape");\n` +
+        `await import("@/engine/render/escape", { with: { type: "json" } });\n`;
+      const after = rewriteImports(before, FROM);
+      assert.notStrictEqual(after, before);
+      assertRewritesOnlySpecifiers(before, after);
+    });
+
+    test("the guard fails when a comment is rewritten", () => {
+      assert.throws(
+        () =>
+          assertRewritesOnlySpecifiers(
+            `// from "@/engine/types"\n`,
+            `// from "../types.ts"\n`,
+          ),
+        /not a module specifier/,
+      );
+    });
+
+    test("the guard fails when a non-specifier string is rewritten", () => {
+      assert.throws(
+        () =>
+          assertRewritesOnlySpecifiers(
+            `const label = "from '@/engine/types'";\n`,
+            `const label = "from '../types.ts'";\n`,
+          ),
+        /not a module specifier/,
+      );
+    });
+  });
+});
+
+describe("shast add: dynamic import fixture", () => {
+  test("await import(\"@/engine/render/escape\") vendors to a relative path with no surviving @/", () => {
+    const dest = tempDest();
+    const fixture = mkdtempSync(path.join(os.tmpdir(), "shast-dynamic-src-"));
+    process.on("exit", () => rmSync(fixture, { recursive: true, force: true }));
+    const write = (rel: string, content: string): void => {
+      const abs = path.join(fixture, rel);
+      mkdirSync(path.dirname(abs), { recursive: true });
+      writeFileSync(abs, content);
+    };
+    write("src/engine/render/escape.ts", `export const escape = 1;\n`);
+    write("src/types.ts", `export type Placeholder = 1;\n`);
+    write(
+      "src/index.ts",
+      `export const load = async (): Promise<unknown> =>\n` +
+        `  await import("@/engine/render/escape");\n`,
+    );
+    // planVendor walks every copy directory; they are allowed to be empty.
+    write("src/css/.keep", "");
+    write("src/html/.keep", "");
+
+    add({
+      dest,
+      sourceRoot: fixture,
+      tsyntaxSourceRoot: resolveTsyntaxSourceRoot(REPO_ROOT),
+    });
+
+    const entry = read(dest, "index.ts");
+    assert.ok(
+      entry.includes('import("./engine/render/escape.ts")'),
+      `expected the dynamic specifier to be rewritten, got: ${entry}`,
+    );
+    assert.deepStrictEqual(survivingSpecifierStrings(dest), []);
   });
 });
 

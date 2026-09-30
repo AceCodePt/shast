@@ -369,6 +369,12 @@ function scanTemplateExpression(source: string, start: number): number {
  * copied verbatim, and text inside them can never be mistaken for an import.
  * This replaces two global regexes that matched raw text and silently rewrote
  * prose shaped like `from "@/..."`.
+ *
+ * Static imports and exports (`from "..."`, side-effect `import "..."`) and the
+ * argument of a dynamic `import("...")` call (including the `import("...", {
+ * with: ... })` form) share the same mapping. A dynamic import is recognised by
+ * the `import` keyword immediately before the argument list, so `import.meta`
+ * and a call to some function named `import` are not candidates.
  */
 export function rewriteImports(source: string, fromDestRel: string): string {
   const rewrite = (specifier: string): string =>
@@ -381,6 +387,9 @@ export function rewriteImports(source: string, fromDestRel: string): string {
   // skipped text cannot masquerade as an import keyword.
   let lastWord = "";
   let inWord = false;
+  // Set when the last significant code character was `(` and the word before it
+  // was `import`, so the next string is a dynamic import's specifier argument.
+  let dynamicImportParen = false;
 
   while (i < source.length) {
     const char = source[i]!;
@@ -392,6 +401,7 @@ export function rewriteImports(source: string, fromDestRel: string): string {
       i = stop;
       lastWord = "";
       inWord = false;
+      dynamicImportParen = false;
       continue;
     }
 
@@ -402,6 +412,7 @@ export function rewriteImports(source: string, fromDestRel: string): string {
       i = stop;
       lastWord = "";
       inWord = false;
+      dynamicImportParen = false;
       continue;
     }
 
@@ -411,7 +422,9 @@ export function rewriteImports(source: string, fromDestRel: string): string {
       const literal = source.slice(i, end);
       // Only plain "..." / '...' specifiers were ever rewritten; a backtick is
       // not a module specifier, so its contents stay untouched.
-      if (char !== "`" && closed && isSpecifierPosition(lastWord)) {
+      const specifierPosition =
+        isSpecifierPosition(lastWord) || dynamicImportParen;
+      if (char !== "`" && closed && specifierPosition) {
         const specifier = literal.slice(1, -1);
         const rewritten = rewrite(specifier);
         result +=
@@ -422,19 +435,24 @@ export function rewriteImports(source: string, fromDestRel: string): string {
       i = end;
       lastWord = "";
       inWord = false;
+      dynamicImportParen = false;
       continue;
     }
 
     if (WORD_CHAR.test(char)) {
       lastWord = inWord ? lastWord + char : char;
       inWord = true;
+      dynamicImportParen = false;
       result += char;
       i += 1;
       continue;
     }
 
     // Any other character ends a word; whitespace keeps it across the gap so
-    // `from   "..."` still counts.
+    // `from   "..."` still counts, and a `(` right after `import` opens a
+    // dynamic import's argument list.
+    if (char === "(" && lastWord === "import") dynamicImportParen = true;
+    else if (!/\s/.test(char)) dynamicImportParen = false;
     if (!/\s/.test(char)) lastWord = "";
     inWord = false;
     result += char;
