@@ -34,7 +34,13 @@ export const validateHTMLAttributes = (
     }
     for (const subKey in value) {
       if (isPatternKey(subKey)) {
-        dslString(supportedKeywords, subKey);
+        try {
+          dslString(supportedKeywords, subKey);
+        } catch {
+          throw new Error(
+            `Invalid pattern key \`${subKey}\` for gate \`${key}\`: not a valid DSL`,
+          );
+        }
       }
       const bag = value[subKey];
       if (!isComplex(bag)) continue;

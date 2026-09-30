@@ -4,6 +4,7 @@ import type {
   ValidateCSSAttributesConfig,
 } from "./types.ts";
 import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import { isPatternKey } from "@/engine/gate-resolution.ts";
 
 export const cssAttributeConfig = <
   const Keywords extends SupportedKeywordsConfig,
@@ -20,6 +21,17 @@ export const cssAttributeConfig = <
     if (typeof value === "string") {
       dslString(allKeywords, value);
     } else if (typeof value === "object") {
+      for (const subKey in value) {
+        if (isPatternKey(subKey)) {
+          try {
+            dslString(allKeywords, subKey);
+          } catch {
+            throw new Error(
+              `Invalid pattern key \`${subKey}\` for gate \`${key}\`: not a valid DSL`,
+            );
+          }
+        }
+      }
       for (const subKey in value) {
         for (const attribute in value[subKey].self) {
           const innerValue = value[subKey]!.self[attribute];

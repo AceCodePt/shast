@@ -18,9 +18,14 @@ export const isPatternKey = (key: string): boolean =>
   (key.startsWith("`") && key.endsWith("`"));
 
 // Resolve the value a gate was written with to the key that actually matched.
-// Literal first: only on a miss are pattern keys tried, each by parsing the
-// written value against it. A value matching two keys is an error; a value
-// matching none reports tsyntax's prose about the value.
+// A literal key wins outright: when the written value is a declared literal it
+// is returned before any pattern is tried, regardless of declaration order, and
+// only that literal's unlocked keys apply - a pattern that also matches it is
+// not an error. Pattern keys are tried only on a literal miss, each by parsing
+// the written value against it. Ambiguity is therefore detected
+// pattern-against-pattern only, never pattern-against-literal: a value matching
+// two pattern keys is an error, and a value matching none reports tsyntax's
+// prose about the value.
 export function resolveGateValue(
   keywords: SupportedKeywordsConfig,
   gate: string,
@@ -33,6 +38,9 @@ export function resolveGateValue(
       `${prefix} Error: Invalid value type for '${gate}'. Expected a string`,
     );
   }
+  // Must stay hasOwnProperty (not `in`): a gate definition's prototype is not
+  // part of the registry, so `constructor` / `__proto__` are treated as
+  // unregistered values rather than resolving up the prototype chain.
   if (Object.prototype.hasOwnProperty.call(gateDefinition, writtenValue)) {
     return writtenValue;
   }

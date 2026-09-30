@@ -100,6 +100,31 @@ const overlapEngine = engine({
   cssQueriesConfig: COMMON_QUERIES,
 });
 
+// A third registry whose id keys overlap with the pattern declared *first*:
+// `todo-1` matches both the pattern and the literal, so resolution must land on
+// the literal and the pattern's unlocked attribute must be rejected.
+const PATTERN_FIRST_GLOBAL_ATTRIBUTES = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
+  id: {
+    "`todo-${number}`": { "data-pattern": "'yes'" },
+    "todo-1": { "data-literal": "'yes'" },
+  },
+});
+
+const patternFirstEngine = engine({
+  supportedKeywords: SUPPORTED_KEYWORDS,
+  htmlAttributesConfig: PATTERN_FIRST_GLOBAL_ATTRIBUTES,
+  htmlTagConfig: TAGS,
+  cssSyntaxConfig: CSS_SYNTAX_CONFIG,
+  cssAttributesConfig: CSS_ATTRIBUTES_CONFIG,
+  cssPseudoClassConfig: CSS_PSEUDO_CLASSES,
+  cssPropertiesConfig: cssPropertiesConfig(
+    SUPPORTED_KEYWORDS,
+    CSS_SYNTAX_CONFIG,
+    {},
+  ),
+  cssQueriesConfig: COMMON_QUERIES,
+});
+
 describe("HTML conditional attributes", () => {
   describe("value unlocks", () => {
     test("accepts an attribute unlocked by the written gate value", () => {
@@ -217,6 +242,43 @@ describe("HTML conditional attributes", () => {
             },
           }),
         /matches more than one pattern key/,
+      );
+    });
+  });
+
+  describe("literal over pattern overlap", () => {
+    const { createComponent: patternFirstCreate } = patternFirstEngine;
+
+    test("a literal declared after the pattern still wins", () => {
+      assert.doesNotThrow(() =>
+        patternFirstCreate({
+          tag: "span",
+          attributes: { id: "todo-1", "data-literal": "yes" },
+        }),
+      );
+    });
+
+    test("the pattern's unlocked attribute is rejected for a literal value", () => {
+      assert.throws(
+        () =>
+          patternFirstCreate({
+            tag: "span",
+            attributes: {
+              id: "todo-1",
+              // @ts-expect-error data-pattern is unlocked only by the pattern key
+              "data-pattern": "yes",
+            },
+          }),
+        /'data-pattern' requires id: `todo-\$\{number\}`/,
+      );
+    });
+
+    test("a value matching only the pattern unlocks the pattern's attribute", () => {
+      assert.doesNotThrow(() =>
+        patternFirstCreate({
+          tag: "span",
+          attributes: { id: "todo-7", "data-pattern": "yes" },
+        }),
       );
     });
   });
