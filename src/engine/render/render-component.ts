@@ -50,13 +50,11 @@ function renderAttributes(attributes: Record<string, unknown>): string {
       html += ` ${key}`;
       continue;
     }
-    // Arrays are outside the DSL (`BaseComponentStructure["attributes"]` is
-    // `Record<string, any>`, so a widened value can carry one). HTML attribute
-    // values are token lists separated by spaces (`class`, `rel`, `aria-*`),
-    // so join with a space -- `String(["a", "b"])` would emit `"a,b"`, which
-    // no attribute vocabulary means.
-    const serialized = Array.isArray(value) ? value.join(" ") : String(value);
-    html += ` ${key}="${escapeAttributeValue(serialized)}"`;
+    // Attribute values are scalars at the DSL layer (`class` and `rel` are
+    // `string | undefined`; no registry entry declares an array), so there is
+    // no array case. `String` is the fallback for a widened value that reaches
+    // here some other way (`as any` / `skipValidation`).
+    html += ` ${key}="${escapeAttributeValue(String(value))}"`;
   }
   return html;
 }
