@@ -8,6 +8,7 @@ import {
   CommonJSDestinationError,
   ExistingDestinationError,
   main,
+  rewriteImports,
 } from "../../scripts/cli.ts";
 
 const VARIANTS = ["minimal", "common", "full"] as const;
@@ -178,6 +179,62 @@ describe("shast add: import rewriting", () => {
     const entry = read(dest, "index.ts");
     assert.ok(entry.includes('from "./html/tag-config/variations/common.ts"'));
     assert.ok(entry.includes('from "./css/pseudo-class-config/variations/minimal.ts"'));
+  });
+
+  // The two regexes this replaced matched raw text, so prose shaped like
+  // `from "@/..."` inside a comment or literal was silently rewritten.
+  describe("rewriteImports distinguishes code from text", () => {
+    const FROM = "engine/render/render-component.ts";
+
+    test("a line comment containing a specifier shape is byte-identical", () => {
+      const source = `// see from "@/engine/types"\nconst x = 1;\n`;
+      assert.strictEqual(rewriteImports(source, FROM), source);
+    });
+
+    test("a block comment containing a specifier shape is byte-identical", () => {
+      const source = `/* from "@/engine/types" */\nconst x = 1;\n`;
+      assert.strictEqual(rewriteImports(source, FROM), source);
+    });
+
+    test("string literals containing specifier shapes are byte-identical", () => {
+      const source =
+        `const a = "from '@/engine/types'";\n` +
+        `const b = 'import "tsyntax"';\n` +
+        "const c = `from \"@/engine/types\"`;\n";
+      assert.strictEqual(rewriteImports(source, FROM), source);
+    });
+
+    test("a real static import still rewrites", () => {
+      const out = rewriteImports(
+        `import { engine } from "@/engine/index";\n`,
+        FROM,
+      );
+      assert.strictEqual(out, `import { engine } from "../index.ts";\n`);
+    });
+
+    test("a real side-effect import of tsyntax still rewrites", () => {
+      const out = rewriteImports(`import "tsyntax";\n`, FROM);
+      assert.strictEqual(out, `import "../../tsyntax/index.ts";\n`);
+    });
+
+    test("a multi-line named import still rewrites", () => {
+      const source = `import {\n  a,\n  b,\n} from "@/engine/types";\n`;
+      const out = rewriteImports(source, FROM);
+      assert.strictEqual(
+        out,
+        `import {\n  a,\n  b,\n} from "../types.ts";\n`,
+      );
+    });
+
+    test("an export ... from still rewrites", () => {
+      const out = rewriteImports(`export { x } from "@/engine/types";\n`, FROM);
+      assert.strictEqual(out, `export { x } from "../types.ts";\n`);
+    });
+
+    test("a non-specifier string keeps its contents untouched", () => {
+      const source = `const label = "@/engine/types";\n`;
+      assert.strictEqual(rewriteImports(source, FROM), source);
+    });
   });
 });
 
