@@ -148,8 +148,8 @@ function renderHTMLNode(
   const tagDefinition = tagConfig[tag];
   const isVoidElement =
     tagDefinition !== undefined &&
-    Array.isArray(tagDefinition.innerHTML) &&
-    tagDefinition.innerHTML.length === 0;
+    "include" in tagDefinition.innerHTML &&
+    tagDefinition.innerHTML.include.length === 0;
 
   if (isVoidElement) {
     return `<${tag}${attributesHTML}>`;

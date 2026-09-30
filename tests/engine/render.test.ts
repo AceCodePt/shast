@@ -104,14 +104,14 @@ describe("createComponent (engine)", () => {
       div: {
         display: "block",
         attributes: {},
-        innerHTML: "*",
+        innerHTML: { all: true },
         cssPseudoClass: [],
         cssPseudoElement: [],
       },
       span: {
         display: "inline",
         attributes: {},
-        innerHTML: ["#text"],
+        innerHTML: { include: ["#text"] },
         cssPseudoClass: [],
         cssPseudoElement: [],
       },

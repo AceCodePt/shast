@@ -25,10 +25,10 @@ export const htmlTagConfig = <
     validateHTMLAttributes(supportedKeywords, attributes);
 
     const innerHTML = config[tag].innerHTML;
-    if (typeof innerHTML === "string") {
+    if ("all" in innerHTML && innerHTML.all) {
       continue;
     }
-    for (const innerTag of innerHTML) {
+    for (const innerTag of innerHTML.include) {
       if (innerTag === "#text") {
         continue;
       }

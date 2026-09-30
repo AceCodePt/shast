@@ -38,21 +38,21 @@ describe("createComponent (engine)", () => {
       field: {
         display: "inline-block",
         attributes: {},
-        innerHTML: ["#text"],
+        innerHTML: { include: ["#text"] },
         cssPseudoClass: [":hover"],
         cssPseudoElement: ["::placeholder"],
       },
       box: {
         display: "block",
         attributes: {},
-        innerHTML: "*",
+        innerHTML: { all: true },
         cssPseudoClass: [],
         cssPseudoElement: ["::before", "::after"],
       },
       span: {
         display: "inline",
         attributes: {},
-        innerHTML: ["#text"],
+        innerHTML: { include: ["#text"] },
         cssPseudoClass: [],
         cssPseudoElement: [],
       },
@@ -220,7 +220,7 @@ describe("createComponent (engine)", () => {
       const NO_PE_TAG_CONFIG = {
         plain: {
           attributes: {},
-          innerHTML: ["#text"],
+          innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
         },
       };

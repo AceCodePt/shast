@@ -152,7 +152,7 @@ export function validateHtmlNode(
 
   const innerHTMLConfig = tagDefinition.innerHTML;
   const isVoidElement =
-    Array.isArray(innerHTMLConfig) && innerHTMLConfig.length === 0;
+    "include" in innerHTMLConfig && innerHTMLConfig.include.length === 0;
 
   if (isVoidElement) {
     if (innerHTML !== undefined) {
@@ -167,8 +167,8 @@ export function validateHtmlNode(
     return;
   }
 
-  const isWildcard = innerHTMLConfig === "*";
-  const ownList = Array.isArray(innerHTMLConfig) ? innerHTMLConfig : [];
+  const isWildcard = "all" in innerHTMLConfig && innerHTMLConfig.all;
+  const ownList = "include" in innerHTMLConfig ? innerHTMLConfig.include : [];
   const declaresText = ownList.includes("#text");
   const allowsText = isWildcard || declaresText;
 

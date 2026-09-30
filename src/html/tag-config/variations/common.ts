@@ -12,29 +12,31 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       rel: "string | undefined",
       hreflang: "string | undefined",
     },
-    innerHTML: [
-      "#text",
-      "img",
-      "div",
-      "section",
-      "p",
-      "ul",
-      "h1",
-      "h2",
-      "h3",
-      "h4",
-      "h5",
-      "h6",
-      "span",
-      "br",
-    ],
+    innerHTML: {
+      include: [
+        "#text",
+        "img",
+        "div",
+        "section",
+        "p",
+        "ul",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "span",
+        "br",
+      ],
+    },
     cssPseudoClass: [":link", ":visited", ":any-link"],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   article: {
     display: "block",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -47,7 +49,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   br: {
     display: "inline",
     attributes: {},
-    innerHTML: [],
+    innerHTML: { include: [] },
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
@@ -79,14 +81,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       value: "string | undefined",
       form: "string | undefined",
     },
-    innerHTML: ["#text", "span", "img", "br"],
+    innerHTML: { include: ["#text", "span", "img", "br"] },
     cssPseudoClass: [":disabled", ":enabled"],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   div: {
     display: "block",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -99,7 +101,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   footer: {
     display: "block",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -126,7 +128,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         dialog: {},
       },
     },
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [":valid", ":invalid"],
     cssPseudoElement: [
       "::before",
@@ -139,7 +141,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h1: {
     display: "block",
     attributes: {},
-    innerHTML: ["#text", "span", "a", "br", "img"],
+    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -152,7 +154,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h2: {
     display: "block",
     attributes: {},
-    innerHTML: ["#text", "span", "a", "br", "img"],
+    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -165,7 +167,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h3: {
     display: "block",
     attributes: {},
-    innerHTML: ["#text", "span", "a", "br", "img"],
+    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -178,7 +180,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h4: {
     display: "block",
     attributes: {},
-    innerHTML: ["#text", "span", "a", "br", "img"],
+    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -191,7 +193,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h5: {
     display: "block",
     attributes: {},
-    innerHTML: ["#text", "span", "a", "br", "img"],
+    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -204,7 +206,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h6: {
     display: "block",
     attributes: {},
-    innerHTML: ["#text", "span", "a", "br", "img"],
+    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -217,7 +219,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   header: {
     display: "block",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -238,7 +240,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       srcset: "string | undefined",
       sizes: "string | undefined",
     },
-    innerHTML: [],
+    innerHTML: { include: [] },
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
@@ -280,7 +282,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       readonly: "boolean | undefined",
       hidden: "boolean | undefined",
     },
-    innerHTML: [],
+    innerHTML: { include: [] },
     cssPseudoClass: [
       ":disabled",
       ":enabled",
@@ -299,14 +301,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       for: "string | undefined",
       form: "string | undefined",
     },
-    innerHTML: ["#text", "a", "input", "span", "img", "br"],
+    innerHTML: { include: ["#text", "a", "input", "span", "img", "br"] },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   li: {
     display: "list-item",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -320,7 +322,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   main: {
     display: "block",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -333,7 +335,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   nav: {
     display: "block",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -346,7 +348,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   ol: {
     display: "block",
     attributes: {},
-    innerHTML: ["li"],
+    innerHTML: { include: ["li"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -359,7 +361,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   p: {
     display: "block",
     attributes: {},
-    innerHTML: ["#text", "span", "a", "img", "input", "br", "label"],
+    innerHTML: { include: ["#text", "span", "a", "img", "input", "br", "label"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -372,7 +374,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   section: {
     display: "block",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -385,14 +387,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   span: {
     display: "inline",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   table: {
     display: "table",
     attributes: {},
-    innerHTML: ["thead", "tbody", "tr"],
+    innerHTML: { include: ["thead", "tbody", "tr"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -405,7 +407,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   tbody: {
     display: "table-row-group",
     attributes: {},
-    innerHTML: ["tr"],
+    innerHTML: { include: ["tr"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -422,7 +424,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       rowspan: "number | undefined",
       headers: "string | undefined",
     },
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -444,7 +446,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       readonly: "boolean | undefined",
       maxlength: "number | undefined",
     },
-    innerHTML: ["#text"],
+    innerHTML: { include: ["#text"] },
     cssPseudoClass: [
       ":disabled",
       ":enabled",
@@ -463,7 +465,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       rowspan: "number | undefined",
       headers: "string | undefined",
     },
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -476,7 +478,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   thead: {
     display: "table-header-group",
     attributes: {},
-    innerHTML: ["tr"],
+    innerHTML: { include: ["tr"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -489,7 +491,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   tr: {
     display: "table-row",
     attributes: {},
-    innerHTML: ["th", "td"],
+    innerHTML: { include: ["th", "td"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -502,7 +504,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   ul: {
     display: "block",
     attributes: {},
-    innerHTML: ["li"],
+    innerHTML: { include: ["li"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",

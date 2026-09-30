@@ -9,25 +9,27 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       href: "string",
       target: "'_self' | '_blank' | undefined",
     },
-    innerHTML: [
-      "#text",
-      "img",
-      "div",
-      "p",
-      "ul",
-      "h1",
-      "h2",
-      "h3",
-      "span",
-      "br",
-    ],
+    innerHTML: {
+      include: [
+        "#text",
+        "img",
+        "div",
+        "p",
+        "ul",
+        "h1",
+        "h2",
+        "h3",
+        "span",
+        "br",
+      ],
+    },
     cssPseudoClass: [":link", ":visited"],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   br: {
     display: "inline",
     attributes: {},
-    innerHTML: [],
+    innerHTML: { include: [] },
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
@@ -37,14 +39,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       type: "'submit' | 'reset' | 'button' | undefined",
       disabled: "boolean | undefined",
     },
-    innerHTML: ["#text", "span", "br", "img"],
+    innerHTML: { include: ["#text", "span", "br", "img"] },
     cssPseudoClass: [":disabled"],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   div: {
     display: "block",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -57,7 +59,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h1: {
     display: "block",
     attributes: {},
-    innerHTML: ["#text", "span", "a", "br", "img"],
+    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -70,7 +72,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h2: {
     display: "block",
     attributes: {},
-    innerHTML: ["#text", "span", "a", "br", "img"],
+    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -83,7 +85,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h3: {
     display: "block",
     attributes: {},
-    innerHTML: ["#text", "span", "a", "br", "img"],
+    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -99,7 +101,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       src: "string",
       alt: "string",
     },
-    innerHTML: [],
+    innerHTML: { include: [] },
     cssPseudoClass: [],
     cssPseudoElement: [],
   },
@@ -118,14 +120,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       value: "string | undefined",
       disabled: "boolean | undefined",
     },
-    innerHTML: [],
+    innerHTML: { include: [] },
     cssPseudoClass: [":disabled", ":checked"],
     cssPseudoElement: ["::placeholder", "::file-selector-button"],
   },
   li: {
     display: "list-item",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -139,7 +141,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   p: {
     display: "block",
     attributes: {},
-    innerHTML: ["#text", "span", "a", "br", "img"],
+    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -152,14 +154,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   span: {
     display: "inline",
     attributes: {},
-    innerHTML: "*",
+    innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   ul: {
     display: "block",
     attributes: {},
-    innerHTML: ["li"],
+    innerHTML: { include: ["li"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",

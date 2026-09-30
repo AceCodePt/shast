@@ -9,7 +9,9 @@ export interface BaseHTMLTagConfig {
   [tag: string]: {
     display: string;
     attributes: BaseHTMLAttributesConfig;
-    innerHTML: "*" | string[];
+    innerHTML:
+      | { all: true; include?: never }
+      | { all?: never; include: string[] };
     cssPseudoClass: `:${string}${string}`[];
     cssPseudoElement: `::${string}${string}`[];
   };
@@ -27,7 +29,9 @@ export type ValidateHTMLTagConfig<
           Keywords,
           TagDefinition[Tag]["attributes"]
         >;
-        innerHTML: "*" | (keyof TagDefinition | "#text")[];
+        innerHTML:
+          | { all: true; include?: never }
+          | { all?: never; include: (keyof TagDefinition | "#text")[] };
         cssPseudoClass: `:${string}${string}`[];
         cssPseudoElement: `::${string}${string}`[];
       };
