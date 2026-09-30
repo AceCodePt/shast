@@ -39,15 +39,24 @@ see all of it, output included.
 ## Install
 
 ```sh
-npm install -D @ace-code/shast   # or: pnpm add -D @ace-code/shast
-npx shast add src/shast          # default; resolved from your current directory
+npm install -D @ace-code/shast            # or: pnpm add -D @ace-code/shast
+npx shast add src/shast                   # common tier (the default)
+npx shast add src/shast --tier minimal    # or: --tier full
 ```
 
-That is the whole setup. `add` vendors the engine, the `minimal`/`common`/`full`
-config variations, the public entry and the local `tsyntax` source into the
-destination, rewriting every import so the tree is self-contained. You own those
-files from then on - there is no build step, no emitted `.js`, and nothing to
-ship to the browser.
+That is the whole setup. `add` vendors the engine, exactly one tier of the
+`minimal`/`common`/`full` config variations, and the local `tsyntax` source into
+the destination, rewriting every import so the tree is self-contained. Only the
+chosen tier's variation files are written; the other two never reach your tree,
+and there is no vendored barrel or generated entry point - you import the engine
+and each family's entry point directly. You own those files from then on - there
+is no build step, no emitted `.js`, and nothing to ship to the browser.
+
+`--tier` defaults to `common`. Pick the smallest tier that fits: `minimal` is the
+tightest vocabulary, `common` the usual starting point, and `full` covers
+essentially the whole HTML/CSS surface as a reference rather than a starting
+point. To switch tiers later, re-run `shast add src/shast --tier <tier> --force`:
+the stale tier's files, and the old root `index.ts` barrel, are removed.
 
 The vendored tree is **ESM**, so the destination must resolve as ESM: its
 nearest `package.json` needs `"type": "module"`. `shast add` does not write a
@@ -74,23 +83,32 @@ option:
 `noEmit`, `emitDeclarationOnly` or `outDir`.
 
 ```ts
-import {
-  engine,
-  commonHTMLTags,
-  commonHTMLAttributes,
-  commonCSSSyntax,
-  commonCSSAttributes,
-  commonCSSPseudoClasses,
-  commonCSSQueries,
-  commonCSSKeyframes,
-  cssPropertiesConfig,
-  SUPPORTED_KEYWORDS,
-} from "./src/shast/index.ts";
+import { engine } from "./src/shast/engine/index.ts";
+import { htmlAttributeConfig } from "./src/shast/html/attribute-config/index.ts";
+import { htmlTagConfig } from "./src/shast/html/tag-config/index.ts";
+import { cssAttributeConfig } from "./src/shast/css/attribute-config/index.ts";
+import { cssSyntaxConfig } from "./src/shast/css/syntax-config/index.ts";
+import { cssPropertiesConfig } from "./src/shast/css/properties-config/index.ts";
+import { cssPseudoClassConfig } from "./src/shast/css/pseudo-class-config/index.ts";
+import { cssQueriesConfig } from "./src/shast/css/queries-config/index.ts";
+import { cssKeyframesConfig } from "./src/shast/css/keyframes-config/index.ts";
+import { SUPPORTED_KEYWORDS } from "./src/shast/tsyntax/index.ts";
+
+// The one tier you vendored: commonHTMLTags below means --tier common (default).
+import commonHTMLTags from "./src/shast/html/tag-config/variations/common.ts";
+import commonHTMLAttributes from "./src/shast/html/attribute-config/variations/common.ts";
+import commonCSSSyntax from "./src/shast/css/syntax-config/variations/common.ts";
+import commonCSSAttributes from "./src/shast/css/attribute-config/variations/common.ts";
+import commonCSSPseudoClasses from "./src/shast/css/pseudo-class-config/variations/common.ts";
+import commonCSSQueries from "./src/shast/css/queries-config/variations/common.ts";
+import commonCSSKeyframes from "./src/shast/css/keyframes-config/variations/common.ts";
 ```
 
-That path is the destination you passed to `shast add` — `./src/shast` above
+That prefix is the destination you passed to `shast add` — `./src/shast` above
 because the command used the default. Vendoring somewhere else means editing the
-specifier to match; `add` prints the resolved path when it finishes.
+specifiers to match; `add` prints the resolved path when it finishes. There is no
+`index.ts` to import from: the vendored tree deliberately has no barrel, so the
+unchosen tiers cannot leak into your program.
 
 Run it with anything that executes TypeScript directly (`tsx`, `node --import
 tsx`, `vitest`, a bundler).
@@ -130,12 +148,16 @@ here is a relative import of your own files - see [Install](#install) for why
 that is the only supported path:
 
 ```ts
-import {
-  commonHTMLAttributes, commonHTMLTags,
-  commonCSSSyntax, commonCSSAttributes, commonCSSPseudoClasses,
-  commonCSSQueries, commonCSSKeyframes,
-  cssPropertiesConfig, engine, SUPPORTED_KEYWORDS,
-} from "./src/shast/index.ts";
+import { engine } from "./src/shast/engine/index.ts";
+import { cssPropertiesConfig } from "./src/shast/css/properties-config/index.ts";
+import { SUPPORTED_KEYWORDS } from "./src/shast/tsyntax/index.ts";
+import commonHTMLTags from "./src/shast/html/tag-config/variations/common.ts";
+import commonHTMLAttributes from "./src/shast/html/attribute-config/variations/common.ts";
+import commonCSSSyntax from "./src/shast/css/syntax-config/variations/common.ts";
+import commonCSSAttributes from "./src/shast/css/attribute-config/variations/common.ts";
+import commonCSSPseudoClasses from "./src/shast/css/pseudo-class-config/variations/common.ts";
+import commonCSSQueries from "./src/shast/css/queries-config/variations/common.ts";
+import commonCSSKeyframes from "./src/shast/css/keyframes-config/variations/common.ts";
 
 const { createComponent, renderComponent } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,
@@ -922,14 +944,16 @@ undefined"` means exactly what it looks like.
 
 The figures below come from a local benchmark harness that is **not part of
 this repository**, so they are indicative, not reproducible here. Measured on
-TypeScript 7.0.2 against the `common` registry.
+TypeScript 7.0.2 against a single-tier `common` vendored tree (`--tier common`,
+the default): only `common.ts` is present, and no barrel pulls the other tiers
+in.
 
-Loading `common` is a **fixed ~1.17M instantiations / ~1.1s** of `tsc` cost
-before a single component is checked. On top of that fixed cost, `tsc` is
-**linear** in components — a file of 100 modest components (`ul > li > span`,
-one `:hover`, one nested `> child`):
+Loading that single-tier tree is a **fixed ~1.17M instantiations / ~1.1s** of
+`tsc` cost before a single component is checked. On top of that fixed cost,
+`tsc` is **linear** in components — a file of 100 modest components
+(`ul > li > span`, one `:hover`, one nested `> child`):
 
-| Measure | `common` only (`examples/basic.ts`) | +100 components | Per component |
+| Measure | single-tier `common` tree (`examples/basic.ts`) | +100 components | Per component |
 |---|---|---|---|
 | Instantiations | 1.17M | 2.69M | ~15K |
 | Check time | 1.15s | 3.60s | ~25ms |
