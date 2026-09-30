@@ -156,6 +156,38 @@ describe("createComponent (engine)", () => {
       });
     });
 
+    test("invalid attribute name throws at render, even with skipValidation", () => {
+      // `skipValidation` makes createComponent a pass-through, but the name is
+      // pasted into markup unescaped, so the renderer must still refuse it:
+      // this is output safety, the last wall before bytes leave the process.
+      const comp = createProdComponent({
+        tag: "div",
+        attributes: {
+          // @ts-expect-error an injected attribute name survives validation
+          'x onload="alert(1)"': "y",
+        },
+      });
+      assert.throws(
+        () => renderProd(comp),
+        /Attribute Error: 'x onload="alert\(1\)"' is not a valid attribute name/,
+      );
+    });
+
+    test("valid data-*/aria-* names still render with skipValidation", () => {
+      // Names the registry does not declare but HTML allows still render; the
+      // render-time check rejects only names that are not names.
+      const comp = createProdComponent({
+        tag: "div",
+        attributes: {
+          // @ts-expect-error unknown to the registry, but a legal HTML name
+          "data-x": "y",
+          "aria-label": "z",
+        },
+      });
+      const { html } = renderProd(comp);
+      assert.strictEqual(html, `<div data-x="y" aria-label="z"></div>`);
+    });
+
     test("skips CSS child selector check — invalid child selector passes through", () => {
       const comp = createProdComponent({
         tag: "div",

@@ -116,6 +116,30 @@ describe("renderComponent", () => {
       assert.ok(html.includes(' target="_blank"'));
     });
 
+    test("an invalid attribute name throws rather than emitting markup", () => {
+      // The name is pasted into markup unescaped, so it must be a name. This is
+      // output safety and runs on every render, independent of validation.
+      assert.throws(
+        () =>
+          render({
+            tag: "div",
+            attributes: { 'x onload="alert(1)"': "y" } as Record<
+              string,
+              unknown
+            >,
+          }),
+        /Attribute Error: 'x onload="alert\(1\)"' is not a valid attribute name/,
+      );
+    });
+
+    test("data-* and aria-* style names render unchanged", () => {
+      const { html } = render({
+        tag: "a",
+        attributes: { "data-x": "y", "aria-label": "z" },
+      });
+      assert.strictEqual(html, `<a data-x="y" aria-label="z"></a>`);
+    });
+
     test("identifier attributes precede user attributes", () => {
       const { html } = render({
         tag: "a",

@@ -27,9 +27,24 @@ function isRecordInnerHTML(
   );
 }
 
+// An attribute name is pasted into markup unescaped (` ${key}` / ` ${key}="..."`),
+// so it must be a name and not a fragment of markup. Every name the registry
+// declares satisfies this, and the generated `cid-*` identifiers are written
+// separately (see `identifiers` in `renderHTMLNode`), so this rejects only a
+// name that reached the renderer some other way -- e.g. a widened value under
+// `skipValidation`. It is output safety, not input validation: it runs on every
+// render, whatever the flag says, because this is the last step before bytes
+// leave the process.
+const ATTRIBUTE_NAME_PATTERN = /^[a-zA-Z][\w-]*$/;
+
 function renderAttributes(attributes: Record<string, unknown>): string {
   let html = "";
   for (const [key, value] of Object.entries(attributes)) {
+    if (!ATTRIBUTE_NAME_PATTERN.test(key)) {
+      throw new Error(
+        `Attribute Error: '${key}' is not a valid attribute name; attribute names must match /^[a-zA-Z][\\w-]*$/`,
+      );
+    }
     if (value === undefined || value === null || value === false) continue;
     if (value === true) {
       html += ` ${key}`;
