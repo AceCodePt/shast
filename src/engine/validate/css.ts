@@ -78,6 +78,112 @@ const gridAreasOf = (block: Record<string, unknown>): string | undefined => {
   return value;
 };
 
+// A string DSL such as `<string>` or `<custom-ident>` matches anything, so the
+// shallow DSL check cannot stop a value from carrying CSS structural
+// punctuation. The renderer prints the value verbatim (`box-shadow: ${value};`),
+// so a `;`, `{` or `}` at the top level of a value would end the declaration or
+// open/close a block and let the author inject arbitrary rules. Reject that at
+// the runtime wall, where calc()/var() already refuse the same shape.
+//
+// The delimiters are legal inside a quoted string (a `content` value may
+// contain `}`, grid-template-areas is quoted) and inside a balanced function
+// such as `url(...)` (data URLs carry `;` and `,`), so the scanner tracks quote
+// state -- with backslash escapes -- and parenthesis depth. Two CSS tokenizer
+// details matter, because the scanner must agree with the browser about where a
+// quote or parenthesis ends:
+//
+//   * a string cannot contain a raw newline, so an unescaped newline ends it;
+//   * `url(` is a single token: an unquoted url body has no strings and no
+//     nested parentheses, so `url(a"b)` and `url(a(b)` end at the first `)` and
+//     the quote or `(` inside is literal text, not structure.
+//
+// `/*` opens a comment even inside parentheses, so it is rejected anywhere
+// outside a quoted string.
+const isUrlTokenAt = (value: string, index: number): boolean => {
+  if (value.slice(index, index + 3).toLowerCase() !== "url") return false;
+  let next = index + 3;
+  while (next < value.length && /\s/.test(value[next] as string)) next += 1;
+  return value[next] === "(";
+};
+
+const assertNoStructuralBreakout = (key: string, value: string): void => {
+  let depth = 0;
+  let quote: '"' | "'" | undefined;
+  // True while inside a quoted `url("...")` token; `)` there closes the url.
+  let urlQuoted = false;
+  // True while inside an unquoted `url(...)` body; none of `"'()` are structure.
+  let urlRaw = false;
+  for (let i = 0; i < value.length; i++) {
+    const char = value[i];
+    if (urlQuoted) {
+      if (char === "\\") {
+        i += 1;
+        continue;
+      }
+      const urlQuote = quote as '"' | "'";
+      if (char === urlQuote || char === "\n" || char === "\r" || char === "\f") {
+        quote = undefined;
+        urlQuoted = false;
+      }
+      continue;
+    }
+    if (urlRaw) {
+      if (char === "\\") {
+        i += 1;
+        continue;
+      }
+      if (char === ")") {
+        urlRaw = false;
+        if (depth > 0) depth -= 1;
+      }
+      continue;
+    }
+    if (quote !== undefined) {
+      if (char === "\\") {
+        i += 1; // the next character is escaped, even a closing quote
+        continue;
+      }
+      // An unescaped terminating quote always ends the string; a raw newline
+      // ends it too, because CSS strings cannot span lines.
+      if (char === quote || char === "\n" || char === "\r" || char === "\f") {
+        quote = undefined;
+      }
+      continue;
+    }
+    if (char === '"' || char === "'") {
+      quote = char;
+      continue;
+    }
+    if (char === "(") {
+      depth += 1;
+      if (depth === 1 && isUrlTokenAt(value, i - 3)) {
+        const body = value[i + 1];
+        if (body === '"' || body === "'") {
+          quote = body;
+          urlQuoted = true;
+        } else {
+          urlRaw = true;
+        }
+      }
+      continue;
+    }
+    if (char === ")") {
+      if (depth > 0) depth -= 1;
+      continue;
+    }
+    if (depth === 0 && (char === ";" || char === "{" || char === "}")) {
+      throw new Error(
+        `CSS Error: '${key}' value contains a top-level '${char}' which would break out of the declaration`,
+      );
+    }
+    if (char === "/" && value[i + 1] === "*") {
+      throw new Error(
+        `CSS Error: '${key}' value contains '/*' which would open a comment`,
+      );
+    }
+  }
+};
+
 // The deep half of CSS value validation: calc-shaped values are handed to
 // calc's parser, and any value containing a `var(` call is handed to var's
 // resolver. The two are not exclusive -- a `calc()` may contain `var()`
@@ -87,11 +193,16 @@ const gridAreasOf = (block: Record<string, unknown>): string | undefined => {
 // shallow check already ran during gate resolution, can still reach the deep
 // walls.
 //
+// Every string value also crosses the structural wall here, so a value that
+// matched a match-anything DSL (`<string>`, `<custom-ident>`) cannot smuggle a
+// declaration break-out past the renderer.
+//
 // `dsl` is the syntax the value matched: when it is a named numeric token,
 // calc's slot check confirms the expression's result dimension is one the
 // property accepts (`calc(2Hz * 2)` on `<length-percentage>` fails). An
 // unrecognised DSL leaves the check off.
 const deepValidateCSSValue = (
+  key: string,
   value: unknown,
   varContext?: {
     properties: Record<string, any>;
@@ -99,6 +210,7 @@ const deepValidateCSSValue = (
   },
   dsl?: string,
 ): void => {
+  if (typeof value === "string") assertNoStructuralBreakout(key, value);
   if (isCalcString(value)) {
     const expected = dsl === undefined ? undefined : slotDimensionsOf(dsl);
     if (varContext === undefined) {
@@ -126,6 +238,7 @@ const deepValidateCSSValue = (
 // A CSS value passes the shallow DSL first, then the deep grammars.
 const parseCSSValueAgainstDSL = (
   keywords: MergedKeywords,
+  key: string,
   dsl: string,
   value: unknown,
   varContext: {
@@ -134,7 +247,7 @@ const parseCSSValueAgainstDSL = (
   },
 ): void => {
   parseValueAgainstDSL(keywords, dsl, value as never);
-  deepValidateCSSValue(value, varContext, dsl);
+  deepValidateCSSValue(key, value, varContext, dsl);
 };
 
 // What a CSS block is validating against: the target element's `innerHTML`
@@ -214,7 +327,7 @@ export function validateCssBlock(
         // `opacity: "calc(2px * 3px)"` would pass the runtime while the type
         // wall rejected it. The matched key is the slot DSL (`<alpha-value>`
         // for opacity), so calc's dimension check applies too.
-        deepValidateCSSValue(written, varContext, matched);
+        deepValidateCSSValue(key, written, varContext, matched);
       }
     }
     const defaultDisplay =
@@ -402,6 +515,7 @@ export function validateCssBlock(
           if (!isKeyword) {
             parseCSSValueAgainstDSL(
               context.mergedKeywords,
+              key,
               attrDef,
               value,
               varContext,
@@ -438,6 +552,7 @@ export function validateCssBlock(
           ) {
             parseCSSValueAgainstDSL(
               context.mergedKeywords,
+              key,
               propDef.syntax,
               value,
               varContext,
@@ -450,6 +565,7 @@ export function validateCssBlock(
           if (!isKeyword) {
             parseCSSValueAgainstDSL(
               context.mergedKeywords,
+              key,
               selfDSL,
               value,
               varContext,
@@ -462,6 +578,7 @@ export function validateCssBlock(
           if (!isKeyword) {
             parseCSSValueAgainstDSL(
               context.mergedKeywords,
+              key,
               childrenDSL,
               value,
               varContext,
