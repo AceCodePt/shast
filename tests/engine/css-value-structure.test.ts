@@ -256,4 +256,153 @@ describe("runtime structural guard for string CSS values", () => {
       );
     });
   });
+
+  // A value that opens a string, a url token or a parenthesised block and
+  // never closes it used to leave the scanner in a state where the structural
+  // check was unreachable for the rest of the value, so everything after the
+  // opener shipped unexamined. The scanner must end at the top level, and a
+  // brace inside a function body is rejected in-loop (balanced parens do not
+  // make it safe).
+  describe("rejects an opener that never returns to the top level", () => {
+    const UNCLOSED_STRING =
+      /CSS Error: 'box-shadow' value has an unterminated string which never returns to the top level/;
+    const UNCLOSED_FUNCTION =
+      /CSS Error: 'box-shadow' value contains a '\}' inside a function/;
+
+    test("a bare double-quoted string", () => {
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "div",
+            innerHTML: "x",
+            css: { "box-shadow": '"; } .evil { color: red }' },
+          }),
+        UNCLOSED_STRING,
+      );
+    });
+
+    test("a bare single-quoted string", () => {
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "div",
+            innerHTML: "x",
+            css: { "box-shadow": "'; } .evil { color: red }" },
+          }),
+        UNCLOSED_STRING,
+      );
+    });
+
+    test("an unclosed parenthesis", () => {
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "div",
+            innerHTML: "x",
+            css: { "box-shadow": "(; } .evil { color: red }" },
+          }),
+        UNCLOSED_FUNCTION,
+      );
+    });
+
+    test("a rebalanced parenthesis (ends at depth 0)", () => {
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "div",
+            innerHTML: "x",
+            css: { "box-shadow": "(; } .evil { color: red })" },
+          }),
+        UNCLOSED_FUNCTION,
+      );
+    });
+
+    test("an unclosed quoted url(), double-quoted", () => {
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "div",
+            innerHTML: "x",
+            css: { "box-shadow": 'url(")"; } .evil { color: red }' },
+          }),
+        UNCLOSED_FUNCTION,
+      );
+    });
+
+    test("an unclosed quoted url(), single-quoted", () => {
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "div",
+            innerHTML: "x",
+            css: { "box-shadow": "url(')'; } .evil { color: red }" },
+          }),
+        UNCLOSED_FUNCTION,
+      );
+    });
+
+    test("an unquoted data: URL carrying a semicolon", () => {
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "div",
+          innerHTML: "x",
+          css: {
+            background: "url(data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=)",
+          },
+        }),
+      );
+    });
+
+    test("a raw url() with an escaped parenthesis", () => {
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "div",
+          innerHTML: "x",
+          css: { background: "url(a\\)b)" },
+        }),
+      );
+    });
+
+    test("a calc() expression", () => {
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "div",
+          innerHTML: "x",
+          css: { width: "calc(100% - 2px)" },
+        }),
+      );
+    });
+
+    test("a quoted string containing a brace", () => {
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "div",
+          innerHTML: "x",
+          css: { content: '"a } b"' },
+        }),
+      );
+    });
+
+    test("a quoted url() containing a semicolon", () => {
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "div",
+          innerHTML: "x",
+          css: {
+            background: 'url("data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=")',
+          },
+        }),
+      );
+    });
+
+    test("content set to a lone quoted brace", () => {
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "div",
+          innerHTML: "x",
+          css: { content: '"}"' },
+        }),
+      );
+    });
+  });
 });
