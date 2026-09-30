@@ -638,3 +638,100 @@ describe("shast add: allowImportingTsExtensions reconciliation", () => {
     );
   });
 });
+
+describe("shast add: --force replacement report", () => {
+  const EDITED = "html/tag-config/variations/common.ts";
+
+  test("names a replaced file whose bytes differ", () => {
+    const dest = tempDest();
+    add({ dest });
+    writeFileSync(
+      path.join(dest, EDITED),
+      `${read(dest, EDITED)}\n// local tweak\n`,
+    );
+
+    const run = runMain(["add", dest, "--force"]);
+    const text = runText(run);
+
+    assert.strictEqual(run.code, 0);
+    assert.match(
+      text,
+      /--force replaced \d+ pre-existing file\(s\); 1 differed from the incoming bytes\./,
+    );
+    assert.ok(text.includes(EDITED), `expected ${EDITED} in:\n${text}`);
+    // --force still overwrites: the tweak is gone.
+    assert.ok(!read(dest, EDITED).includes("local tweak"));
+  });
+
+  test("reports zero differing over an identical tree", () => {
+    const dest = tempDest();
+    add({ dest });
+
+    const run = runMain(["add", dest, "--force"]);
+
+    assert.strictEqual(run.code, 0);
+    assert.match(
+      runText(run),
+      /--force replaced \d+ pre-existing file\(s\); 0 differed from the incoming bytes\./,
+    );
+  });
+
+  test("a first-time add prints no replacement report", () => {
+    const dest = tempDest();
+
+    const run = runMain(["add", dest]);
+
+    assert.strictEqual(run.code, 0);
+    const text = runText(run);
+    assert.ok(!text.includes("--force replaced"));
+    assert.ok(!text.includes("differed"));
+  });
+
+  test("the differing list is bounded and summarises the remainder", () => {
+    const dest = tempDest();
+    add({ dest });
+    // Edit every vendored file so the whole tree diverges.
+    for (const entry of readdirSync(dest, {
+      recursive: true,
+      encoding: "utf8",
+    })) {
+      if (!entry.endsWith(".ts")) continue;
+      const file = path.join(dest, entry);
+      writeFileSync(file, `${readFileSync(file, "utf8")}\n// tweak\n`);
+    }
+
+    const run = runMain(["add", dest, "--force"]);
+    const text = runText(run);
+
+    assert.strictEqual(run.code, 0);
+    const listed = text.split("\n").filter((line) => /^ {2}\S+\.ts$/.test(line));
+    assert.ok(listed.length <= 10, `listed ${listed.length} paths`);
+    assert.match(text, /and \d+ more/);
+  });
+
+  test("without --force an edited tree still refuses and reports no differences", () => {
+    const dest = tempDest();
+    add({ dest });
+    writeFileSync(path.join(dest, EDITED), "// edited\n");
+
+    const run = runMain(["add", dest]);
+
+    assert.strictEqual(run.code, 1);
+    const text = runText(run);
+    assert.match(text, /Destination already contains/);
+    assert.match(text, /refused to overwrite/);
+    assert.ok(!text.includes("differed"));
+  });
+
+  test("add() exposes the replaced and differing sets", () => {
+    const dest = tempDest();
+    add({ dest });
+    writeFileSync(path.join(dest, EDITED), "// edited\n");
+
+    const result = add({ dest, force: true });
+
+    assert.deepStrictEqual(result.replacedDiffering, [EDITED]);
+    assert.ok(result.replaced.length > 1);
+    assert.ok(!result.replacedDiffering.includes("index.ts"));
+  });
+});

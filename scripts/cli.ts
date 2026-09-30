@@ -36,6 +36,18 @@ export interface AddResult {
   dest: string;
   /** Destination-relative paths that were written, sorted. */
   written: string[];
+  /**
+   * Destination-relative paths that already existed and were overwritten
+   * (`--force` only; empty otherwise), sorted.
+   */
+  replaced: string[];
+  /**
+   * The subset of {@link replaced} whose previous bytes differed from the bytes
+   * written this run, sorted. This is a byte comparison, not attribution: with
+   * no stored baseline shast cannot tell a local edit from an upstream change,
+   * and on a second update it over-reports.
+   */
+  replacedDiffering: string[];
 }
 
 /** Thrown when the destination already holds files and `force` is not set. */
@@ -63,6 +75,42 @@ const MAX_LISTED_FILES = 10;
 // a runner (pnpm, npm) appends its own "Command failed with exit code 1".
 const REFUSED_HINT =
   "shast: refused to overwrite — re-run with --force to replace those files.";
+
+/**
+ * The report `--force` prints after it replaces pre-existing files: how many
+ * were replaced, and which of them differed byte-for-byte from the bytes just
+ * written. The list is bounded like the refusal's, so a wholesale divergence
+ * cannot bury the count.
+ *
+ * "Differed" is deliberately not attribution. With no stored baseline the
+ * comparison is exact only on the first update (one add generation exists, so
+ * any divergence is local - an edit or a consumer-added file). On later updates
+ * it over-reports: a file where only upstream changed still differs from the
+ * incoming bytes and is listed. That is why the output says nothing about who
+ * changed what.
+ */
+function formatReplacedReport(
+  replaced: number,
+  differing: readonly string[],
+): string {
+  const head =
+    `shast: --force replaced ${replaced} pre-existing file(s); ` +
+    `${differing.length} differed from the incoming bytes.`;
+  if (differing.length === 0) return head;
+
+  const shown = differing.slice(0, MAX_LISTED_FILES);
+  const rest = differing.length - shown.length;
+  return (
+    head +
+    "\n" +
+    shown.map((file) => `  ${file}`).join("\n") +
+    (rest > 0 ? `\n  ... and ${rest} more` : "") +
+    "\n" +
+    `shast: "differed" only means the file on disk was not the bytes shast is\n` +
+    `  writing now; it does not say who changed it. With no stored baseline shast\n` +
+    `  cannot tell a local edit from an upstream change.`
+  );
+}
 
 // The seven families that carry shipped variation files. `css properties` is
 // absent because that registry is assembled per-consumer (it holds *custom*
@@ -401,7 +449,8 @@ export function rewriteImports(source: string, fromDestRel: string): string {
  *
  * Throws {@link CommonJSDestinationError} when `dest` would be resolved as
  * CommonJS, and {@link ExistingDestinationError} when any planned file already
- * exists and `force` is not set. Returns the sorted list of written files.
+ * exists and `force` is not set. Returns the sorted list of written files plus
+ * the pre-existing files that were replaced and which of those differed.
  */
 export function add(options: AddOptions): AddResult {
   const force = options.force ?? false;
@@ -422,12 +471,25 @@ export function add(options: AddOptions): AddResult {
     throw new ExistingDestinationError(collisions);
   }
 
+  // Reuse the refusal path's enumeration: the collisions are exactly the
+  // pre-existing files `--force` is about to replace, so annotate them with
+  // whether their bytes match what is being written.
+  const collisionSet = new Set(collisions);
+  const replaced: string[] = [];
+  const replacedDiffering: string[] = [];
+
   for (const file of planned) {
     const content = rewriteImports(
       readFileSync(file.source, "utf8"),
       file.destRel,
     );
     const target = path.join(dest, file.destRel);
+    if (collisionSet.has(file.destRel)) {
+      replaced.push(file.destRel);
+      if (!readFileSync(target).equals(Buffer.from(content))) {
+        replacedDiffering.push(file.destRel);
+      }
+    }
     mkdirSync(path.dirname(target), { recursive: true });
     writeFileSync(target, content);
   }
@@ -435,6 +497,8 @@ export function add(options: AddOptions): AddResult {
   return {
     dest,
     written: copiedRels.sort((a, b) => (a < b ? -1 : 1)),
+    replaced,
+    replacedDiffering,
   };
 }
 
@@ -846,7 +910,8 @@ const USAGE = `Usage: shast add [dest] [--force] [--yes]
 Vendor shast's engine, config variations and tsyntax into a consumer tree.
 
   dest      destination directory (default: src/shast)
-  --force   overwrite files that already exist in the destination
+  --force   overwrite files that already exist in the destination, reporting
+            which replaced files differ from the bytes being written
   --yes     consent to adding "allowImportingTsExtensions" to the nearest
             tsconfig.json without prompting (for CI)
 
@@ -915,6 +980,11 @@ export function main(argv: readonly string[], options: CliOptions = {}): number 
     console.log(
       `Vendored shast into ${result.dest} — ${result.written.length} files.`,
     );
+    if (result.replaced.length > 0) {
+      console.log(
+        formatReplacedReport(result.replaced.length, result.replacedDiffering),
+      );
+    }
     return reconcileTsconfig(result.dest, parsed.yes, options);
   } catch (error) {
     if (error instanceof ExistingDestinationError) {
