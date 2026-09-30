@@ -100,6 +100,13 @@ const gridAreasOf = (block: Record<string, unknown>): string | undefined => {
 //
 // `/*` opens a comment even inside parentheses, so it is rejected anywhere
 // outside a quoted string.
+//
+// The scan is only sound if it returns to the top level. A string, url token
+// or parenthesised block left open at the end of the value means every later
+// delimiter was consumed as part of that opener and never examined, so the
+// scanner must reject an end state where quote, urlRaw or depth is still set.
+// A brace seen inside a function body (depth > 0) is rejected in-loop for the
+// same reason: balanced parens do not make a block opener inside them safe.
 const isUrlTokenAt = (value: string, index: number): boolean => {
   if (value.slice(index, index + 3).toLowerCase() !== "url") return false;
   let next = index + 3;
@@ -162,6 +169,10 @@ const assertNoStructuralBreakout = (key: string, value: string): void => {
         if (body === '"' || body === "'") {
           quote = body;
           urlQuoted = true;
+          // The opening quote is consumed here; step past it so the loop does
+          // not reprocess it in the urlQuoted branch and mistake it for the
+          // closing quote (which would leave a valid `url("...")` open).
+          i += 1;
         } else {
           urlRaw = true;
         }
@@ -171,6 +182,15 @@ const assertNoStructuralBreakout = (key: string, value: string): void => {
     if (char === ")") {
       if (depth > 0) depth -= 1;
       continue;
+    }
+    // A brace inside a function body is structural even when the parens are
+    // balanced: `(; } .evil { color: red })` returns to depth 0, so only an
+    // in-loop check catches it. Quoted strings and url() bodies never reach
+    // here -- their branches `continue` above -- and braces are legal there.
+    if (depth > 0 && (char === "{" || char === "}")) {
+      throw new Error(
+        `CSS Error: '${key}' value contains a '${char}' inside a function, which would open a block inside the declaration`,
+      );
     }
     if (depth === 0 && (char === ";" || char === "{" || char === "}")) {
       throw new Error(
@@ -182,6 +202,24 @@ const assertNoStructuralBreakout = (key: string, value: string): void => {
         `CSS Error: '${key}' value contains '/*' which would open a comment`,
       );
     }
+  }
+  // The scan must end at the top level; an unclosed opener means every later
+  // delimiter was consumed as part of it and never examined. Worded distinctly
+  // from the in-loop "top-level" message so the two branches stay tellable.
+  if (quote !== undefined) {
+    throw new Error(
+      `CSS Error: '${key}' value has an unterminated ${urlQuoted ? "quoted url()" : "string"} which never returns to the top level`,
+    );
+  }
+  if (urlRaw) {
+    throw new Error(
+      `CSS Error: '${key}' value has an unterminated url() which never returns to the top level`,
+    );
+  }
+  if (depth > 0) {
+    throw new Error(
+      `CSS Error: '${key}' value has an unterminated function or parenthesised block which never returns to the top level`,
+    );
   }
 };
 
