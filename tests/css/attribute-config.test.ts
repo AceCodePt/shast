@@ -172,6 +172,16 @@ describe("cssAttributeConfig", () => {
         /Invalid DSL string/,
       );
     });
+
+    test("a malformed pattern key names the gate and the key", () => {
+      assert.throws(
+        () =>
+          (cssAttributeConfig as any)(SUPPORTED_KEYWORDS, SYNTAX, {
+            display: { "<not-a-real-dsl>": { self: {}, children: {} } },
+          }),
+        /Invalid pattern key `<not-a-real-dsl>` for gate `display`: not a valid DSL/,
+      );
+    });
   });
 
   describe("Edge Cases", () => {

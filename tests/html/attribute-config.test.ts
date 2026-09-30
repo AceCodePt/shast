@@ -208,6 +208,16 @@ describe("htmlAttributeConfig", () => {
         /Invalid DSL string/,
       );
     });
+
+    test("a malformed pattern key names the gate and the key", () => {
+      assert.throws(
+        () =>
+          htmlAttributeConfig(SUPPORTED_KEYWORDS, {
+            id: { "<not-a-real-dsl>": {} },
+          }),
+        /Invalid pattern key `<not-a-real-dsl>` for gate `id`: not a valid DSL/,
+      );
+    });
   });
 
   describe("Edge Cases", () => {
