@@ -10,17 +10,6 @@ import { classesOf, validateCssBlock } from "./css.ts";
 import type { AllowedTagSet, ValidationContext } from "./context.ts";
 import { valueError } from "./value-error.ts";
 
-// JavaScript reorders object keys that look like array indices (canonical
-// non-negative integer strings such as "0", "1", "42") to the front in
-// ascending numeric order, so an integer-like child name would silently
-// reorder the rendered children. Such a name is also a selector handle
-// (`> name`) and an identifier, and a bare integer is not a usable one, so it
-// is outside the intended API shape and rejected at construction. The array
-// form is the supported way to repeat a child. `2 ** 32 - 1` is the exclusive
-// upper bound of an array index, matching the engine's own key ordering.
-const isArrayIndexKey = (key: string): boolean =>
-  /^(?:0|[1-9]\d*)$/.test(key) && Number(key) < 2 ** 32 - 1;
-
 // Narrow the tags a parent permits to those the child itself still permits.
 // `null` (no restriction) yields the child's own list; otherwise it is the
 // intersection, so a `#text` tag list composes with an ancestor's closed world.
@@ -238,11 +227,6 @@ export function validateHtmlNode(
   };
 
   for (const [childKey, child] of Object.entries(innerHTML)) {
-    if (isArrayIndexKey(childKey)) {
-      throw new Error(
-        `Validation Error: Child name '${childKey}' on <${tag}> is not allowed: child names must be valid identifiers, not integer-like keys`,
-      );
-    }
     processChild(child, `${path} > ${childKey}`);
   }
 }
