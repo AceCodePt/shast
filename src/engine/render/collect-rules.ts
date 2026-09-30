@@ -112,15 +112,39 @@ export function stableStringify(value: unknown): string {
     .join(",")}}`;
 }
 
+/**
+ * cyrb53 (53-bit), seed 0, over `stableStringify(node.css)`, as a base36 string.
+ *
+ * 53 bits is the widest integer a JS number represents exactly, so the hash is
+ * built from `Math.imul` and bitwise ops alone — no BigInt, no `node:crypto`,
+ * no dependency. The birthday bound for a 53-bit space puts a ~1% chance of
+ * any collision at about 13.5 million distinct blocks in one document (~50%
+ * near 112 million), far above the sub-10,000 blocks a realistic page emits;
+ * the old FNV-1a/32 reached 1% at roughly 9,292 blocks.
+ *
+ * A collision is accepted, not detected. The scope is only ever compared
+ * within a single `collectRules` tree, so a guard could miss a collision
+ * between components rendered or hydrated separately while still hard-failing
+ * a render that did compose both — inconsistent protection against a
+ * probabilistic event, and an availability risk. Widening the space is the
+ * whole mitigation.
+ */
 function hashNode(node: unknown): string {
   const input = stableStringify(node);
-  // FNV-1a (32-bit)
-  let hash = 0x811c9dc5;
+  let h1 = 0xdeadbeef;
+  let h2 = 0x41c6ce57;
   for (let i = 0; i < input.length; i++) {
-    hash ^= input.charCodeAt(i);
-    hash = Math.imul(hash, 0x01000193);
+    const ch = input.charCodeAt(i);
+    h1 = Math.imul(h1 ^ ch, 2654435761);
+    h2 = Math.imul(h2 ^ ch, 1597334677);
   }
-  return (hash >>> 0).toString(36);
+  h1 =
+    Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^
+    Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 =
+    Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^
+    Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
 }
 
 /**
@@ -131,6 +155,9 @@ function hashNode(node: unknown): string {
  * rendered rules are a pure function of `css` (child selectors emit
  * `[cid-<name>]` by name, not by child hash), so two components with an
  * identical `css` block produce identical rules and must share one scope.
+ *
+ * The hash is 53-bit `cyrb53` (`hashNode`); a collision is accepted rather
+ * than detected, for the hydration/partial-render reasons documented there.
  */
 export function scopeAttribute(node: BaseComponentStructure): string {
   return `${PREFIX}${hashNode(node.css)}`;
