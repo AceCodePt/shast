@@ -97,6 +97,7 @@ function withFilledAttributes(
     try {
       matched = resolveGateValue(keywords, key, def, value, "Attribute");
     } catch {
+      // createComponent already validated this gate value, so a miss can only come from a widened/unvalidated value passed straight to renderComponent; skip it intentionally (no unlocked attributes are filled).
       continue;
     }
     const bag = def[matched];
