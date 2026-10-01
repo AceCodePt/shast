@@ -29,7 +29,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
   "<color>":
-    "`#${string}` | `rgb(${number} ${number} ${number})` | 'transparent' | 'currentColor' | 'inherit' | <var>",
+    "`#${string}` | `rgb(${number} ${number} ${number})` | `rgb(${number}, ${number}, ${number})` | 'transparent' | 'currentColor' | 'inherit' | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/string
   "<string>": "string",

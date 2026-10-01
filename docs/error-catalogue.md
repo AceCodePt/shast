@@ -109,7 +109,8 @@ width: "calc(2Hz * 2)"                     a legal calc whose result misses the 
 
 color: "var(--spacng)"                     an unregistered custom property
   tsc     Type '"var(--spacng)"' is not assignable to type
-          '("currentColor" | "transparent" | `#${string}` | … )'.
+          '("currentColor" | "transparent" | `#${string}` | `rgb(${number} ${number}
+          ${number})` | `rgb(${number}, ${number}, ${number})` | … )'.
   server  Invalid var() value: unknown custom property '--spacng';
           register it in the CSS Properties config
 
