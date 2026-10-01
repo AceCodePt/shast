@@ -154,7 +154,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   span: {
     display: "inline",
     attributes: {},
-    innerHTML: { all: true },
+    innerHTML: { include: ["#text", "a", "span", "img", "br", "input"] },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
