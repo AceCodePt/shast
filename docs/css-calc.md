@@ -109,16 +109,20 @@ That keeps every inferred property type a plain union and keeps the registry
 surface unchanged, but it would accept malformed expressions on its own. The
 deep grammar is applied on top by:
 
-- `CalcConstraint` in `src/engine/types.ts` — a mapped type over the known CSS
-  value keys (top-level string attributes, every gate-unlockable key, registered
-  custom properties) that reads the written value back out of the component and
-  narrows calc-shaped values to `ValidateCalc`, passing the registry so `var()`
-  operands classify and the key's slot dimensions so the result is checked. The
-  slot dimensions come from `CalcSlotAtomsForKey`: a custom property reads its
-  `syntax`, a top-level attribute reads its DSL, a gate value reads its
-  token-shaped value keys (`<alpha-value>` for `opacity`), and a gate-unlocked
-  key reads the union of the DSLs its gates declare. Mapping over the *written*
-  keys instead would declare every typo, disabling the registry's key rejection.
+- `CalcConstraint` in `src/engine/types.ts` — a mapped type over
+  `keyof CSSValue` (the keys the author actually wrote) whose `as` clause keeps
+  only a key that is in the registry (top-level string attributes, every
+  gate-unlockable key, registered custom properties) and whose written value is
+  calc-shaped. The value side is then an unconditional `ValidateCalc`, passing
+  the registry so `var()` operands classify and the key's slot dimensions so the
+  result is checked. The slot dimensions come from `CalcSlotAtomsForKey`: a
+  custom property reads its `syntax`, a top-level attribute reads its DSL, a
+  gate value reads its token-shaped value keys (`<alpha-value>` for `opacity`),
+  and a gate-unlocked key reads the union of the DSLs its gates declare. The
+  registry-membership test in the `as` clause is what keeps a written key that
+  is *not* in the registry (a typo, an undeclared pseudo-class) from being
+  declared: it remaps to `never`, so the registry's excess-property rejection
+  still fires.
 - `parseCSSValueAgainstDSL` in `src/engine/validate/css.ts` — runs `parseCalc(value,
   { properties, expected })` after the shallow DSL check whenever the written
   value is calc-shaped, where `expected` is `slotDimensionsOf(dsl)`. Gate values
@@ -204,6 +208,38 @@ bounded, one-per-(attributes, properties) cost, not per node; only a written
 calc value reaches `ValidateCalc` with a concrete slot. It is a single-digit
 percentage over the deep parser, well inside the "roughly 2×" threshold the
 fallback note sets.
+
+### Constraint inversion: written-key iteration
+
+`CalcConstraint` and `VarConstraint` used to map over `CalcValueKeys`, the
+registry-wide union of ~130 string attributes, gate keys, lockable keys and
+registered custom properties, testing every key for a written calc/var value.
+They now map over `keyof CSSValue` — the handful of keys the author wrote — and
+move the registry-membership test and the calc/var token test into the `as`
+clause, so the value side is unconditional. The excess-property guarantee is
+unchanged: a written key outside `CalcValueKeys` remaps to `never`.
+
+Measured on a vendored `common`-tier consumer tree (TypeScript 7.0.2,
+`tsc --noEmit --extendedDiagnostics`), marginal instantiations per component =
+`(I(100) − I(50)) / 50`, each component made distinct so nothing is cached.
+Instantiations are deterministic; no times are quoted.
+
+| Variant            | Before (registry-wide) | After (written-key) | Delta   |
+| ------------------ | ---------------------- | ------------------- | ------- |
+| flat               | 3,790                  | 1,380               | −63.6 % |
+| one `:hover`       | 7,527                  | 2,951               | −60.8 % |
+| one `@media`       | 7,841                  | 3,305               | −57.9 % |
+| rich               | 12,487                 | 6,013               | −51.8 % |
+| a `calc()` value   | 4,448                  | 1,995               | −55.1 % |
+| a `var()` value    | 3,805                  | 1,391               | −63.4 % |
+| N=0 fixed cost     | 533,958                | 534,188             | +230    |
+
+The rich component is `display: flex`, a `calc()` on `width`, a registered
+custom property, a `:hover` block and an `@media` block. The fixed cost is flat
+(+230 instantiations, +0.04 %); every component repays it on the first write.
+Validation where it is used is not slower: a `calc()` component costs 1,995
+against 1,380 for flat, and a `var()` component 1,391. `docs/css-var.md` shares
+this measurement for `VarConstraint`.
 
 ## Fallback (not taken)
 

@@ -1044,17 +1044,34 @@ type AnimationKeyframeConstraints<
 // would accept malformed expressions. This member narrows a written calc()
 // value to the real grammar via `ValidateCalc`.
 //
-// It maps over the *known* CSS value keys -- top-level string attributes, every
-// key a gate can unlock on `self`/`children`, and registered custom properties
-// -- and reads the written value back out of `CSSValue`. Mapping over the
-// written keys instead would turn every excess-property key (a typo, an
-// undeclared pseudo-class) into a declared one and silently disable the
-// registry's key rejection; all of these key sets are already declared by the
-// other members, so this adds no new key.
+// It maps over `keyof CSSValue` -- the handful of keys the author actually
+// wrote -- and keeps a key only when, in the `as` clause, it is a string, it is
+// in the registry (`CalcValueKeys`: top-level string attributes, every
+// gate-unlockable key on `self`/`children`, and registered custom properties),
+// its written value is a string, and that string is calc-shaped
+// (`IsCalcString`). The value side is then an unconditional `ValidateCalc`.
+//
+// The registry-membership test in the `as` clause is what preserves the
+// excess-property guarantee the old registry-wide mapping gave: a written key
+// that is not in `CalcValueKeys` remaps to `never` and is never declared, so a
+// typo with a calc-shaped value still fails TS2353. Every key that survives is
+// already declared by the other members, so this adds no new key.
 //
 // A malformed value yields a branded `CalcError`, which no string is assignable
-// to, so the deep check fails where the shallow one passed. Non-calc values
-// contribute `unknown` and change no decision.
+// to, so the deep check fails where the shallow one passed. A value that is not
+// calc-shaped remaps to `never` and changes no decision.
+//
+// Prior art -- do not re-tread:
+//   (a) Folding the nine registry members of the component structure into seven
+//       was tried and REVERTED: it cost +1,272 instantiations on plain-200.
+//       That changed how members are grouped.
+//   (b) A "cheap-shape-test-first `as` remap" was tried and REVERTED earlier.
+//   (c) A registry-only hoist produced byte-identical instantiation counts and
+//       must not be revisited.
+// This inversion is different in kind from all three: it changes *what is
+// iterated* -- the written keys, not the registry-wide union -- rather than how
+// members are grouped. Any deviation from this measured shape needs its own
+// benchmark.
 // ---------------------------------------------------------------------------
 type CalcValueKeys<
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
@@ -1129,28 +1146,23 @@ type CalcConstraint<
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   CSSValue extends Record<string, any>,
 > = {
-  [K in CalcValueKeys<
-    CSSAttributesConfig,
-    CSSPropertiesConfig
-  >]?: K extends keyof CSSValue
-    ? CSSValue[K] extends string
-      ? IsCalcString<CSSValue[K]> extends true
-        ? ValidateCalc<
-            CSSValue[K] & string,
-            CSSPropertiesConfig,
-            Keywords,
-            CSSSyntaxConfig,
-            K extends string
-              ? CalcSlotAtomsForKey<
-                  CSSAttributesConfig,
-                  CSSPropertiesConfig,
-                  K
-                >
-              : "unknown"
-          >
-        : unknown
-      : unknown
-    : unknown;
+  [K in keyof CSSValue as K extends string
+    ? K extends CalcValueKeys<CSSAttributesConfig, CSSPropertiesConfig>
+      ? CSSValue[K] extends string
+        ? IsCalcString<CSSValue[K]> extends true
+          ? K
+          : never
+        : never
+      : never
+    : never]?: ValidateCalc<
+    CSSValue[K] & string,
+    CSSPropertiesConfig,
+    Keywords,
+    CSSSyntaxConfig,
+    K extends string
+      ? CalcSlotAtomsForKey<CSSAttributesConfig, CSSPropertiesConfig, K>
+      : "unknown"
+  >;
 };
 
 // ---------------------------------------------------------------------------
@@ -1162,8 +1174,12 @@ type CalcConstraint<
 // registry, exactly as `CalcConstraint` does for calc. There is no fallback:
 // see `src/css/var.ts` for why one can never be read.
 //
-// Like calc, it maps over the *known* CSS value keys and reads the written
-// value back out of `CSSValue`, so it never declares an excess-property key.
+// Like calc, it maps over `keyof CSSValue` (the written keys) and keeps, in the
+// `as` clause, only a key that is a string, is in `CalcValueKeys`, and whose
+// written value contains `var(` (`ContainsVar`). The value side is then an
+// unconditional `ValidateVar`. The membership test is what keeps it from
+// declaring an excess-property key: a typo remaps to `never`. See
+// `CalcConstraint` for the prior-art warnings; the same inversion applies here.
 //
 // The expected type (`Context`) is only known for top-level string attributes
 // and registered custom properties. For every context-dependent slot -- a
@@ -1193,28 +1209,27 @@ type VarConstraint<
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   CSSValue extends Record<string, any>,
 > = {
-  [K in CalcValueKeys<
-    CSSAttributesConfig,
-    CSSPropertiesConfig
-  >]?: K extends keyof CSSValue
-    ? CSSValue[K] extends string
-      ? ContainsVar<CSSValue[K]> extends true
-        ? ValidateVar<
-            CSSValue[K] & string,
-            CSSPropertiesConfig,
-            Keywords,
-            CSSSyntaxConfig,
-            VarContextType<
-              Keywords,
-              CSSSyntaxConfig,
-              CSSAttributesConfig,
-              CSSPropertiesConfig,
-              K
-            >
-          >
-        : unknown
-      : unknown
-    : unknown;
+  [K in keyof CSSValue as K extends string
+    ? K extends CalcValueKeys<CSSAttributesConfig, CSSPropertiesConfig>
+      ? CSSValue[K] extends string
+        ? ContainsVar<CSSValue[K]> extends true
+          ? K
+          : never
+        : never
+      : never
+    : never]?: ValidateVar<
+    CSSValue[K] & string,
+    CSSPropertiesConfig,
+    Keywords,
+    CSSSyntaxConfig,
+    VarContextType<
+      Keywords,
+      CSSSyntaxConfig,
+      CSSAttributesConfig,
+      CSSPropertiesConfig,
+      K
+    >
+  >;
 };
 
 type ValidateComponentCSSStructure<
@@ -1285,8 +1300,11 @@ type ValidateComponentCSSStructure<
         // the error path, for a check time that was a wash in an interleaved
         // A/B (0.234s vs 0.238s plain, 0.446s vs 0.448s pseudo). Dispatching on
         // the value side per key over ~130 keys costs more than the two
-        // intersection members it removes -- the same reason the
-        // cheap-shape-test-first `as` remap was reverted earlier. Keep them
+        // intersection members it removes. That is the opposite trade from the
+        // `CalcConstraint` / `VarConstraint` inversion above, which wins by
+        // iterating the *written* keys rather than the registry-wide union; the
+        // reverted cheap-shape-test-first `as` remap still iterated the
+        // registry-wide union, so it is not a precedent for it. Keep them
         // separate: each is a trivial mapped type cached once for the program.
         [K in KeysMatching<CSSAttributesConfig, string>]?:
           | DSLInfer<CSSSyntaxConfig & Keywords, CSSAttributesConfig[K] & string>
