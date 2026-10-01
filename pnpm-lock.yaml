@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       tsyntax:
-        specifier: ^1.0.1
-        version: 1.0.1
+        specifier: ^1.1.0
+        version: 1.1.0
     devDependencies:
       '@types/node':
         specifier: ^26.1.2
@@ -428,8 +428,8 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  tsyntax@1.0.1:
-    resolution: {integrity: sha512-U2s8OQAAyKIHngGhPmVElt8KIS3P91dEiMCthh0pWz2lMw9/p6g28QPXtD57fpXd+T4na3FXuKGJvT7V65OY4Q==}
+  tsyntax@1.1.0:
+    resolution: {integrity: sha512-SC8TLc7T5FE2uiGwWmpIuzVySzre3HWR8T2eTOTjcgXf2KSpJPecVAsZ/5wFDx4IRT4Sf7a/0Rh0myg3Q6aWqA==}
 
   typescript@7.0.2:
     resolution: {integrity: sha512-8FYau96o3NKOhbjKi/qNvG/W5jhzxkbdm5sj9AbZ/5T5sWqn3hJgLfGx27sRKZWTvyzCP8dLRBTf5tBTSRVUNA==}
@@ -691,7 +691,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  tsyntax@1.0.1: {}
+  tsyntax@1.1.0: {}
 
   typescript@7.0.2:
     optionalDependencies:
