@@ -65,7 +65,9 @@ npx shast add src/shast --tier minimal    # or: --tier full
 import so the tree is self-contained, and generates an `index.ts` that wires the
 engine to that tier. You own those files from then on; there is no build step,
 no emitted `.js`, and nothing to ship to the browser. **Requires TypeScript 5.0
-or newer** (developed and benchmarked on 7.0.2) and an ESM destination.
+or newer** (developed and benchmarked on 7.0.2; the performance figures below
+are TS 7, and TS 5 is slower - see [Performance](#performance-indicative)) and an
+ESM destination.
 `shast add` is the only supported way to consume shast - do not import
 `"@ace-code/shast"` directly. See [docs/install.md](docs/install.md) for
 package-manager detection, tsconfig reconciliation, the generated entry, and
@@ -373,10 +375,18 @@ undefined"` means exactly what it looks like.
 
 ## Performance (indicative)
 
+The figures below are measured on **TypeScript 7.0.2**, the development target.
 Loading a single-tier `common` tree is a fixed ~1.17M instantiations / ~1.1s of
 `tsc` cost before any component is checked; each component then adds ~15K
-instantiations / ~25ms. Keep files to a handful of components. See
-[docs/performance.md](docs/performance.md).
+instantiations / ~25ms. Keep files to a handful of components.
+
+**TypeScript 5.x is substantially slower.** On a 50-component harness measured
+with TypeScript 5.9.3, the fixed baseline was ~4.8s (versus ~1.1s on TS 7) and
+each realistic component added ~70ms (versus ~25ms), ~8.3s total - enough that
+editor latency is noticeable. Those TS 5 figures are indicative wall-clock from
+one machine, not machine-stable like the instantiation counts, and they do not
+change the supported minimum: shast supports TypeScript 5.0+.
+See [docs/performance.md](docs/performance.md).
 
 ## Limitations
 
