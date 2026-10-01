@@ -71,7 +71,7 @@ describe("engine", () => {
     });
     const { html } = renderBound(component);
     // A root void element with no css and no semantic name gets no identifier.
-    assert.strictEqual(html, `<img src="a.png" alt="">`);
+    assert.strictEqual(html, `<img src="./a.png" alt="">`);
     assert.ok(!html.includes("</img>"));
   });
 
