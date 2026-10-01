@@ -54,7 +54,7 @@ const list = createComponent({
     item: {
       tag: "li",
       innerHTML: {
-        image: { tag: "img", attributes: { alt: "", src: "" } },
+        image: { tag: "img", attributes: { alt: "", src: "./check.png" } },
         text: {
           tag: "button",
           innerHTML: {

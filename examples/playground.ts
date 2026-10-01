@@ -380,7 +380,7 @@ report("ancestral inheritance: a tag only the immediate parent allows", () =>
 report("text inside a void element", () =>
   createComponent({
     tag: "img",
-    attributes: { src: "x.png", alt: "x" },
+    attributes: { src: "./x.png", alt: "x" },
     // @ts-expect-error <img> is void and takes no children
     innerHTML: "no",
   }),

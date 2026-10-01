@@ -67,7 +67,7 @@ describe("engine", () => {
   test("void elements from the real config self-close", () => {
     const component = createComponent({
       tag: "img",
-      attributes: { src: "a.png", alt: "" },
+      attributes: { src: "./a.png", alt: "" },
     });
     const { html } = renderBound(component);
     // A root void element with no css and no semantic name gets no identifier.

@@ -82,7 +82,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // Covers url(), linear-gradient(), etc. — kept as url() for the common case;
   // gradient functions are compound shorthands typed as <string> at usage sites.
   "<image>":
-    "`url(${string})` | `linear-gradient(${string})` | `radial-gradient(${string})` | <var>",
+    "<url> | `linear-gradient(${string})` | `radial-gradient(${string})` | <var>",
 
   // ── MDN 2D position type ───────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/position_value

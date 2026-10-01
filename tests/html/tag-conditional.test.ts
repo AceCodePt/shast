@@ -181,7 +181,7 @@ describe("track[kind] gate (shipped full)", () => {
       createComponent({
         tag: "track",
         attributes: {
-          src: "subs.vtt",
+          src: "./subs.vtt",
           kind: "subtitles",
           srclang: "en",
           label: "English",
@@ -195,7 +195,7 @@ describe("track[kind] gate (shipped full)", () => {
     assert.doesNotThrow(() =>
       createComponent({
         tag: "track",
-        attributes: { src: "subs.vtt", srclang: "en" },
+        attributes: { src: "./subs.vtt", srclang: "en" },
       }),
     );
   });
@@ -206,7 +206,7 @@ describe("track[kind] gate (shipped full)", () => {
         createComponent({
           tag: "track",
           attributes: {
-            src: "s.vtt",
+            src: "./s.vtt",
             kind: "metadata",
             // @ts-expect-error srclang is not allowed for metadata tracks
             srclang: "en",
@@ -219,7 +219,7 @@ describe("track[kind] gate (shipped full)", () => {
         createComponent({
           tag: "track",
           attributes: {
-            src: "s.vtt",
+            src: "./s.vtt",
             kind: "metadata",
             // @ts-expect-error label is not allowed for metadata tracks
             label: "x",
@@ -232,7 +232,7 @@ describe("track[kind] gate (shipped full)", () => {
         createComponent({
           tag: "track",
           attributes: {
-            src: "s.vtt",
+            src: "./s.vtt",
             kind: "metadata",
             // @ts-expect-error default is not allowed for metadata tracks
             default: true,
