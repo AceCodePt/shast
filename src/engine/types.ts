@@ -609,6 +609,57 @@ type ElementSelfValue<
   CSSElementValue extends Record<string, any>,
 > = WithDefaultDisplay<HTMLTagConfig, T, CSSElementValue>;
 
+// ---------------------------------------------------------------------------
+// Settling the node type of an array child.
+//
+// A `> child` selector that targets an array admits one node type for the whole
+// array. The runtime derives the child's implicit `display` from the tag alone
+// (`tagsOf` in `engine/validate/css.ts`), and only when every entry agrees on
+// it. The type level gets the same fact by intersecting the element structures
+// -- but a plain `UnionToIntersection` of the entries collapses to `never`
+// first, because TypeScript treats a differing `innerHTML` as a conflicting
+// discriminant:
+//
+//   { tag: "li"; innerHTML: "a" } & { tag: "li"; innerHTML: "b" }  ->  never
+//
+// So two `li`s that differ only in their text ("a" vs "b") -- the common case,
+// not an edge -- would tell `WithDefaultDisplay` that nothing is known about the
+// node, while the runtime happily applies `li`'s `display`. The walls drift.
+//
+// `innerHTML` is the field authors vary per entry, and it is never read off the
+// settled child (a `> child` block targets the child's own gates and the child
+// structure, not the child's children). Blanking the `innerHTML` *value* before
+// intersecting -- a text child becomes `{}`, whose own children recurse -- asks
+// agreement only of the fields that matter, so `tag` (and therefore `display`)
+// settles exactly as the runtime computes it.
+//
+// Differing TAGS still settle to `never`: `tag` is kept, so its disagreement is
+// a genuine conflict, and both walls stay conservative (no single display).
+// ---------------------------------------------------------------------------
+type NormalizeInnerHTMLValue<V> = V extends readonly any[]
+  ? NormalizeArrayChild<V[number]>[]
+  : NormalizeArrayChild<V>;
+
+type NormalizeArrayChild<E> = E extends Record<string, any>
+  ? "innerHTML" extends keyof E
+    ? Omit<E, "innerHTML"> & {
+        innerHTML: E["innerHTML"] extends string
+          ? {}
+          : E["innerHTML"] extends Record<string, any>
+            ? {
+                [K in keyof E["innerHTML"]]: NormalizeInnerHTMLValue<
+                  E["innerHTML"][K]
+                >;
+              }
+            : E["innerHTML"];
+      }
+    : E
+  : E;
+
+type SettleArrayChild<U> = UnionToIntersection<
+  NormalizeArrayChild<Extract<U, BaseComponentStructure>>
+>;
+
 type DependentChildrenProps<
   Keywords extends SupportedKeywordsConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
