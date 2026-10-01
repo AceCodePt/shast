@@ -92,7 +92,7 @@ option:
 `noEmit`, `emitDeclarationOnly` or `outDir`.
 
 ```ts
-import { engine } from "./src/shast/engine/index.ts";
+import engine from "./src/shast/engine/index.ts";
 import { htmlAttributeConfig } from "./src/shast/html/attribute-config/index.ts";
 import { htmlTagConfig } from "./src/shast/html/tag-config/index.ts";
 import { cssAttributeConfig } from "./src/shast/css/attribute-config/index.ts";
@@ -157,7 +157,7 @@ here is imported from your own files, plus the installed `tsyntax` package - see
 [Install](#install) for why the vendored tree is the only supported path:
 
 ```ts
-import { engine } from "./src/shast/engine/index.ts";
+import engine from "./src/shast/engine/index.ts";
 import { cssPropertiesConfig } from "./src/shast/css/properties-config/index.ts";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
 import commonHTMLTags from "./src/shast/html/tag-config/variations/common.ts";
