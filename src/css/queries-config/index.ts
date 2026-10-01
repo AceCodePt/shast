@@ -18,7 +18,7 @@ import {
   QUERY_VOCABULARY,
 } from "./types.ts";
 import type { ValidateQueries } from "./types.ts";
-import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 import { isMemberOf } from "@/types.ts";
 
 const MEDIA_TYPE_REGEX = new RegExp(`^(${MEDIA_TYPES.join("|")})(?: |$)`);
@@ -137,7 +137,7 @@ function validateContainerName(name: string, query: string): void {
 }
 
 export function cssQueriesConfig<
-  const S extends BaseCSSSyntaxConfig,
+  const S extends CSSSyntaxKeywords,
   const T extends readonly string[],
 >(syntaxConfig: S, queries: ValidateQueries<T, typeof QUERY_VOCABULARY, S>): T {
   const keywords = Object.assign({}, SUPPORTED_KEYWORDS, syntaxConfig);

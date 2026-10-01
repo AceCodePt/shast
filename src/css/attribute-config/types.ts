@@ -3,7 +3,7 @@ import type {
   DSLValidate,
   SupportedKeywordsConfig,
 } from "tsyntax";
-import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 
 export interface BaseCSSAttributeSimpleConfig {
   [attribute: string]: string;
@@ -20,7 +20,7 @@ export interface BaseCSSAttributesComplexConfig {
 
 export type ValidateCSSAttributesSimpleConfig<
   Keywords extends SupportedKeywordsConfig,
-  S extends BaseCSSSyntaxConfig,
+  S extends CSSSyntaxKeywords,
   A extends BaseCSSAttributeSimpleConfig,
 > = keyof A extends string
   ? {
@@ -30,7 +30,7 @@ export type ValidateCSSAttributesSimpleConfig<
 
 export type ValidateCSSAttributesConfig<
   Keywords extends SupportedKeywordsConfig,
-  S extends BaseCSSSyntaxConfig,
+  S extends CSSSyntaxKeywords,
   A extends BaseCSSAttributesComplexConfig,
 > = keyof A extends string
   ? {
@@ -57,7 +57,7 @@ export type ValidateCSSAttributesConfig<
 
 export type InferCSSAttributesSimpleConfig<
   Keywords extends SupportedKeywordsConfig,
-  S extends BaseCSSSyntaxConfig,
+  S extends CSSSyntaxKeywords,
   A extends BaseCSSAttributeSimpleConfig,
 > = [keyof A] extends [never]
   ? A
@@ -67,7 +67,7 @@ export type InferCSSAttributesSimpleConfig<
 
 export type InferCSSAttributesConfig<
   Keywords extends SupportedKeywordsConfig,
-  S extends BaseCSSSyntaxConfig,
+  S extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
 > = {
   [K in keyof CSSAttributesConfig]: K extends keyof CSSAttributesConfig & string

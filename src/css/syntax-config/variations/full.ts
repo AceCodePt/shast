@@ -4,145 +4,145 @@ import { cssSyntaxConfig } from "@/css/syntax-config/index.ts";
 export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // ── Numeric / dimension types ──────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/integer
-  "<integer>": "`${bigint}` | <var>",
+  "<integer>": ["`${bigint}`", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/number
-  "<number>": "`${number}` | <calc> | <var>",
+  "<number>": ["`${number}`", "<calc>", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/percentage
-  "<percentage>": "`${number}%` | <calc> | <var>",
+  "<percentage>": ["`${number}%`", "<calc>", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length
   "<length>":
-    "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'rlh' | 'ex' | 'rex' | 'cap' | 'rcap' | 'ic' | 'ric' | 'dvh' | 'dvw' | 'dvmin' | 'dvmax' | 'svh' | 'svw' | 'svmin' | 'svmax' | 'lvh' | 'lvw' | 'lvmin' | 'lvmax' | 'cqw' | 'cqh' | 'cqi' | 'cqb' | 'cqmin' | 'cqmax' | 'in' | 'pt' | 'pc' | 'cm' | 'mm' | 'Q'}` | '0' | <calc> | <var>",
+    ["`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'rlh' | 'ex' | 'rex' | 'cap' | 'rcap' | 'ic' | 'ric' | 'dvh' | 'dvw' | 'dvmin' | 'dvmax' | 'svh' | 'svw' | 'svmin' | 'svmax' | 'lvh' | 'lvw' | 'lvmin' | 'lvmax' | 'cqw' | 'cqh' | 'cqi' | 'cqb' | 'cqmin' | 'cqmax' | 'in' | 'pt' | 'pc' | 'cm' | 'mm' | 'Q'}`", "'0'", "<calc>", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/calc
   // Shallow at the DSL level; `CalcConstraint` in the engine parses the
   // written value against the real grammar (src/css/calc.ts).
-  "<calc>": "`calc(${string})`",
+  "<calc>": ["`calc(${string})`"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/var
   // Shallow at the DSL level; `VarConstraint` in the engine resolves the
   // reference against the CSS Properties registry (src/css/var.ts).
-  "<var>": "`var(${string})`",
+  "<var>": ["`var(${string})`"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
-  "<length-percentage>": "<length> | <percentage>",
+  "<length-percentage>": ["<length>", "<percentage>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/angle
-  "<angle>": "`${number}${'deg' | 'rad' | 'turn' | 'grad'}` | <calc> | <var>",
+  "<angle>": ["`${number}${'deg' | 'rad' | 'turn' | 'grad'}`", "<calc>", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/angle-percentage
-  "<angle-percentage>": "<angle> | <percentage>",
+  "<angle-percentage>": ["<angle>", "<percentage>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time
-  "<time>": "`${number}${'s' | 'ms'}` | <calc> | <var>",
+  "<time>": ["`${number}${'s' | 'ms'}`", "<calc>", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/time-percentage
-  "<time-percentage>": "<time> | <percentage>",
+  "<time-percentage>": ["<time>", "<percentage>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/frequency
-  "<frequency>": "`${number}${'Hz' | 'kHz'}` | <calc> | <var>",
+  "<frequency>": ["`${number}${'Hz' | 'kHz'}`", "<calc>", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/frequency-percentage
-  "<frequency-percentage>": "<frequency> | <percentage>",
+  "<frequency-percentage>": ["<frequency>", "<percentage>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/resolution
-  "<resolution>": "`${number}${'dpi' | 'dpcm' | 'dppx' | 'x'}` | <var>",
+  "<resolution>": ["`${number}${'dpi' | 'dpcm' | 'dppx' | 'x'}`", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/ratio
-  "<ratio>": "`${number} / ${number}` | <var>",
+  "<ratio>": ["`${number} / ${number}`", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/flex_value
-  "<flex>": "`${number}${'fr'}` | <var>",
+  "<flex>": ["`${number}${'fr'}`", "<var>"],
 
   // ── Textual types ──────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/string
-  "<string>": "string",
+  "<string>": ["string"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/url_value
-  "<url>": "`url(https://${string})` | `url(http://${string})` | `url(./${string})` | `url(/${string})`",
+  "<url>": ["`url(https://${string})`", "`url(http://${string})`", "`url(./${string})`", "`url(/${string})`"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident
-  "<custom-ident>": "string",
+  "<custom-ident>": ["string"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/dashed-ident
-  "<dashed-ident>": "`--${string}`",
+  "<dashed-ident>": ["`--${string}`"],
 
   // ── Color types ────────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
   "<color>":
-    "`#${string}` | `rgb(${number} ${number} ${number})` | `rgb(${number} ${number} ${number} / ${number})` | `rgb(${number}, ${number}, ${number})` | `rgba(${number}, ${number}, ${number}, ${number})` | `hsl(${number} ${number}% ${number}%)` | `hsl(${number} ${number}% ${number}% / ${number})` | `hsl(${number}, ${number}%, ${number}%)` | `hsla(${number}, ${number}%, ${number}%, ${number})` | `hwb(${number} ${number}% ${number}%)` | `hwb(${number} ${number}% ${number}% / ${number})` | `lab(${number} ${number} ${number})` | `lab(${number} ${number} ${number} / ${number})` | `lch(${number} ${number} ${number})` | `lch(${number} ${number} ${number} / ${number})` | `oklch(${number} ${number} ${number})` | `oklch(${number} ${number} ${number} / ${number})` | `oklab(${number} ${number} ${number})` | `oklab(${number} ${number} ${number} / ${number})` | `color(display-p3 ${number} ${number} ${number})` | `color(srgb ${number} ${number} ${number})` | `color(a98-rgb ${number} ${number} ${number})` | `color(prophoto-rgb ${number} ${number} ${number})` | `color(rec2020 ${number} ${number} ${number})` | 'transparent' | 'currentColor' | 'inherit' | 'initial' | 'unset' | 'black' | 'white' | 'red' | 'blue' | 'gray' | 'green' | 'yellow' | 'orange' | 'purple' | 'silver' | 'navy' | 'teal' | 'coral' | 'lime' | 'pink' | 'gold' | 'maroon' | <var>",
+    ["`#${string}`", "`rgb(${number} ${number} ${number})`", "`rgb(${number} ${number} ${number} / ${number})`", "`rgb(${number}, ${number}, ${number})`", "`rgba(${number}, ${number}, ${number}, ${number})`", "`hsl(${number} ${number}% ${number}%)`", "`hsl(${number} ${number}% ${number}% / ${number})`", "`hsl(${number}, ${number}%, ${number}%)`", "`hsla(${number}, ${number}%, ${number}%, ${number})`", "`hwb(${number} ${number}% ${number}%)`", "`hwb(${number} ${number}% ${number}% / ${number})`", "`lab(${number} ${number} ${number})`", "`lab(${number} ${number} ${number} / ${number})`", "`lch(${number} ${number} ${number})`", "`lch(${number} ${number} ${number} / ${number})`", "`oklch(${number} ${number} ${number})`", "`oklch(${number} ${number} ${number} / ${number})`", "`oklab(${number} ${number} ${number})`", "`oklab(${number} ${number} ${number} / ${number})`", "`color(display-p3 ${number} ${number} ${number})`", "`color(srgb ${number} ${number} ${number})`", "`color(a98-rgb ${number} ${number} ${number})`", "`color(prophoto-rgb ${number} ${number} ${number})`", "`color(rec2020 ${number} ${number} ${number})`", "'transparent'", "'currentColor'", "'inherit'", "'initial'", "'unset'", "'black'", "'white'", "'red'", "'blue'", "'gray'", "'green'", "'yellow'", "'orange'", "'purple'", "'silver'", "'navy'", "'teal'", "'coral'", "'lime'", "'pink'", "'gold'", "'maroon'", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/alpha-value
-  "<alpha-value>": "`${number}` | `${number}%` | <calc> | <var>",
+  "<alpha-value>": ["`${number}`", "`${number}%`", "<calc>", "<var>"],
 
   // ── Image types ────────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/image
   "<image>":
-    "<url> | `linear-gradient(${string})` | `radial-gradient(${string})` | `conic-gradient(${string})` | `repeating-linear-gradient(${string})` | `repeating-radial-gradient(${string})` | `repeating-conic-gradient(${string})` | <var>",
+    ["<url>", "`linear-gradient(${string})`", "`radial-gradient(${string})`", "`conic-gradient(${string})`", "`repeating-linear-gradient(${string})`", "`repeating-radial-gradient(${string})`", "`repeating-conic-gradient(${string})`", "<var>"],
 
   // ── Position / geometry types ──────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/position_value
   "<position>":
-    "'center' | 'top' | 'bottom' | 'left' | 'right' | 'top left' | 'top center' | 'top right' | 'center left' | 'center center' | 'center right' | 'bottom left' | 'bottom center' | 'bottom right' | <var>",
+    ["'center'", "'top'", "'bottom'", "'left'", "'right'", "'top left'", "'top center'", "'top right'", "'center left'", "'center center'", "'center right'", "'bottom left'", "'bottom center'", "'bottom right'", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape
-  "<basic-shape>": "string",
+  "<basic-shape>": ["string"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function
   "<transform-function>":
-    "`translate(${string})` | `translateX(${string})` | `translateY(${string})` | `translateZ(${string})` | `translate3d(${string})` | `scale(${string})` | `scaleX(${string})` | `scaleY(${string})` | `rotate(${string})` | `rotateX(${string})` | `rotateY(${string})` | `rotateZ(${string})` | `rotate3d(${string})` | `skew(${string})` | `skewX(${string})` | `skewY(${string})` | `matrix(${string})` | `matrix3d(${string})` | `perspective(${string})`",
+    ["`translate(${string})`", "`translateX(${string})`", "`translateY(${string})`", "`translateZ(${string})`", "`translate3d(${string})`", "`scale(${string})`", "`scaleX(${string})`", "`scaleY(${string})`", "`rotate(${string})`", "`rotateX(${string})`", "`rotateY(${string})`", "`rotateZ(${string})`", "`rotate3d(${string})`", "`skew(${string})`", "`skewX(${string})`", "`skewY(${string})`", "`matrix(${string})`", "`matrix3d(${string})`", "`perspective(${string})`"],
 
   // ── Easing / animation types ───────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function
   "<easing-function>":
-    "'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | 'linear' | `cubic-bezier(${number}, ${number}, ${number}, ${number})` | `steps(${number})` | `steps(${number}, ${'start' | 'end' | 'jump-start' | 'jump-end' | 'jump-none' | 'jump-both'})`",
+    ["'ease'", "'ease-in'", "'ease-out'", "'ease-in-out'", "'linear'", "`cubic-bezier(${number}, ${number}, ${number}, ${number})`", "`steps(${number})`", "`steps(${number}, ${'start' | 'end' | 'jump-start' | 'jump-end' | 'jump-none' | 'jump-both'})`"],
 
   // ── Border types ───────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/line-style
   "<line-style>":
-    "'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | <var>",
+    ["'none'", "'hidden'", "'dotted'", "'dashed'", "'solid'", "'double'", "'groove'", "'ridge'", "'inset'", "'outset'", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/line-width
-  "<line-width>": "<length> | 'thin' | 'medium' | 'thick'",
+  "<line-width>": ["<length>", "'thin'", "'medium'", "'thick'"],
 
   // ── Grid / layout types ────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/flex_value
   "<track-breadth>":
-    "<length-percentage> | <flex> | 'min-content' | 'max-content' | 'auto'",
+    ["<length-percentage>", "<flex>", "'min-content'", "'max-content'", "'auto'"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/fit-content
   "<track-size>":
-    "<track-breadth> | `minmax(${string}, ${string})` | `fit-content(${string})`",
+    ["<track-breadth>", "`minmax(${string}, ${string})`", "`fit-content(${string})`"],
 
   // ── Typography types ───────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/font-weight
   "<font-weight>":
-    "'normal' | 'bold' | 'bolder' | 'lighter' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'",
+    ["'normal'", "'bold'", "'bolder'", "'lighter'", "'100'", "'200'", "'300'", "'400'", "'500'", "'600'", "'700'", "'800'", "'900'"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/font-family
   "<generic-family>":
-    "'serif' | 'sans-serif' | 'monospace' | 'cursive' | 'fantasy' | 'system-ui' | 'ui-serif' | 'ui-sans-serif' | 'ui-monospace' | 'ui-rounded' | 'emoji' | 'math' | 'fangsong'",
+    ["'serif'", "'sans-serif'", "'monospace'", "'cursive'", "'fantasy'", "'system-ui'", "'ui-serif'", "'ui-sans-serif'", "'ui-monospace'", "'ui-rounded'", "'emoji'", "'math'", "'fangsong'"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/font-style
-  "<font-style>": "'normal' | 'italic' | 'oblique' | `oblique ${string}`",
+  "<font-style>": ["'normal'", "'italic'", "'oblique'", "`oblique ${string}`"],
 
   // ── Overflow / visibility keywords ────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow
-  "<overflow>": "'visible' | 'hidden' | 'clip' | 'scroll' | 'auto'",
+  "<overflow>": ["'visible'", "'hidden'", "'clip'", "'scroll'", "'auto'"],
 
   // ── Sizing keywords ────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/width
   "<sizing-keyword>":
-    "'auto' | 'min-content' | 'max-content' | 'fit-content' | 'stretch' | 'none'",
+    ["'auto'", "'min-content'", "'max-content'", "'fit-content'", "'stretch'", "'none'"],
 
   // ── Global CSS keywords ────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Values_and_Units#css-wide_keywords
-  "<css-wide-keyword>": "'initial' | 'inherit' | 'unset' | 'revert' | 'revert-layer'",
+  "<css-wide-keyword>": ["'initial'", "'inherit'", "'unset'", "'revert'", "'revert-layer'"],
 
   // ── Filter / effect types ──────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/filter
   "<filter-function>":
-    "`blur(${string})` | `brightness(${string})` | `contrast(${string})` | `drop-shadow(${string})` | `grayscale(${string})` | `hue-rotate(${string})` | `invert(${string})` | `opacity(${string})` | `saturate(${string})` | `sepia(${string})`",
+    ["`blur(${string})`", "`brightness(${string})`", "`contrast(${string})`", "`drop-shadow(${string})`", "`grayscale(${string})`", "`hue-rotate(${string})`", "`invert(${string})`", "`opacity(${string})`", "`saturate(${string})`", "`sepia(${string})`"],
 });

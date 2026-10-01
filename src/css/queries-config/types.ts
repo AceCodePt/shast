@@ -2,7 +2,7 @@ import type { SupportedKeywords } from "tsyntax";
 import { uniqueArray } from "@/types.ts";
 import type { Trim } from "@/types.ts";
 import type {
-  BaseCSSSyntaxConfig,
+  CSSSyntaxKeywords,
   InferCSSSyntax,
 } from "@/css/syntax-config/types.ts";
 
@@ -74,7 +74,7 @@ export type QueryVocabulary = typeof QUERY_VOCABULARY;
 // the config, InferCSSSyntax yields never and the value can never match.
 type IsDSLValue<
   Value extends string,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
   Token extends string,
 > = Value extends InferCSSSyntax<SupportedKeywords, Cfg, Token> ? true : false;
 
@@ -84,7 +84,7 @@ type MediaFeatureValueOk<
   F extends string,
   Value extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = F extends V["mediaLengthFeatures"][number]
   ? IsDSLValue<Value, Cfg, "<length>">
   : F extends V["mediaResolutionFeatures"][number]
@@ -109,7 +109,7 @@ type ContainerFeatureValueOk<
   F extends string,
   Value extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = F extends V["containerLengthFeatures"][number]
   ? IsDSLValue<Value, Cfg, "<length>">
   : false;
@@ -117,7 +117,7 @@ type ContainerFeatureValueOk<
 type RangeComparison<
   Inner extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = Inner extends `${infer L1} ${infer Op1} ${infer F} ${infer Op2} ${infer L2}`
   ? Op1 extends V["rangeOperators"][number]
     ? Op2 extends V["rangeOperators"][number]
@@ -135,7 +135,7 @@ type RangeComparison<
 type MediaComparison<
   Inner extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = Inner extends `${infer A} ${infer Op} ${infer B}`
   ? Op extends V["operators"][number]
     ? MediaFeatureValueOk<A, B, V, Cfg> extends true
@@ -149,7 +149,7 @@ type MediaComparison<
 type ContainerComparison<
   Inner extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = Inner extends `${infer A} ${infer Op} ${infer B}`
   ? Op extends V["operators"][number]
     ? ContainerFeatureValueOk<A, B, V, Cfg> extends true
@@ -163,7 +163,7 @@ type ContainerComparison<
 type ValidateMediaFeature<
   S extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = S extends `(${infer Inner})`
   ? Inner extends `${infer F}:${infer RawValue}`
     ? MediaFeatureValueOk<Trim<F>, Trim<RawValue>, V, Cfg>
@@ -173,7 +173,7 @@ type ValidateMediaFeature<
 type ValidateContainerFeature<
   S extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = S extends `style(${infer Inner})`
   ? Inner extends `--${string}:${string}`
     ? true
@@ -187,7 +187,7 @@ type ValidateContainerFeature<
 type MediaFeatureList<
   S extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = S extends `${infer A} and ${infer B}`
   ? ValidateMediaFeature<Trim<A>, V, Cfg> extends true
     ? Trim<B> extends MediaFeatureList<Trim<B>, V, Cfg>
@@ -201,7 +201,7 @@ type MediaFeatureList<
 type MediaQuery<
   S extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = S extends `not ${infer R}`
   ? Trim<R> extends V["mediaTypes"][number]
     ? S
@@ -229,7 +229,7 @@ type MediaQuery<
 type MediaQueryList<
   S extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = S extends `${infer A},${infer B}`
   ? MediaQuery<Trim<A>, V, Cfg> extends Trim<A>
     ? Trim<B> extends MediaQueryList<Trim<B>, V, Cfg>
@@ -243,7 +243,7 @@ type MediaQueryList<
 type ContainerFeatureList<
   S extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = S extends `${infer A} and ${infer B}`
   ? ValidateContainerFeature<Trim<A>, V, Cfg> extends true
     ? Trim<B> extends ContainerFeatureList<Trim<B>, V, Cfg>
@@ -257,7 +257,7 @@ type ContainerFeatureList<
 type ValidateContainerQuery<
   S extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = S extends `style(${string}`
   ? ContainerFeatureList<S, V, Cfg>
   : S extends `(${string}`
@@ -271,7 +271,7 @@ type ValidateContainerQuery<
 export type ValidateQuery<
   S extends string,
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = S extends `@media ${infer Q}`
   ? Trim<Q> extends MediaQueryList<Trim<Q>, V, Cfg>
     ? S
@@ -285,7 +285,7 @@ export type ValidateQuery<
 export type ValidateQueries<
   T extends readonly string[],
   V extends QueryVocabulary,
-  Cfg extends BaseCSSSyntaxConfig,
+  Cfg extends CSSSyntaxKeywords,
 > = {
   [K in keyof T]: T[K] extends string ? ValidateQuery<T[K], V, Cfg> : T[K];
 };

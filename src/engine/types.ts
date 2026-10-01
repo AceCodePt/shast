@@ -4,7 +4,7 @@ import type {
 } from "@/css/attribute-config/types.ts";
 import type { BaseCSSPropertiesConfig } from "@/css/properties-config/types.ts";
 import type { BaseCSSPseudoClassConfig } from "@/css/pseudo-class-config/types.ts";
-import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 import type { BaseKeyframesConfig } from "@/css/keyframes-config/types.ts";
 import type {
   AnimationShorthandValue,
@@ -93,7 +93,7 @@ type ValidateComponentInnerHTMLItemStructure<
   Keywords extends SupportedKeywordsConfig,
   HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
@@ -131,7 +131,7 @@ type ValidateComponentInnerHTMLStructure<
   Keywords extends SupportedKeywordsConfig,
   HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
@@ -309,7 +309,7 @@ type GateKeys<CSSAttributesConfig extends BaseCSSAttributesComplexConfig> =
 
 type InferPropBag<
   Keywords extends SupportedKeywordsConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   Bag extends Record<string, string>,
 > = {
   [P in keyof Bag]?:
@@ -337,7 +337,7 @@ type GatePropsOf<T> = T extends { __gateProps: infer B } ? B : never;
 // remap, so a token becomes a *pattern* key that a concrete literal matches.
 type GateTable<
   Keywords extends SupportedKeywordsConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   Slot extends "self" | "children",
 > = {
@@ -534,7 +534,7 @@ type AllLockableKeys<
 // owner can no longer widen another owner's prop to `string`.
 type DependentProps<
   Keywords extends SupportedKeywordsConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   Slot extends "self" | "children",
   Source extends Record<string, any>,
@@ -555,7 +555,7 @@ type DependentProps<
 
 type DependentSelfProps<
   Keywords extends SupportedKeywordsConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSValue extends Record<string, any>,
 > = DependentProps<
@@ -664,7 +664,7 @@ type SettleArrayChild<U> = UnionToIntersection<
 
 type DependentChildrenProps<
   Keywords extends SupportedKeywordsConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSParent extends Record<string, any>,
 > = DependentProps<
@@ -677,7 +677,7 @@ type DependentChildrenProps<
 
 type CSSNonSelfConfig<
   Keywords extends SupportedKeywordsConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
 > = {
   [
@@ -1183,7 +1183,7 @@ type CalcSlotAtomsForKey<
 
 type CalcConstraint<
   Keywords extends SupportedKeywordsConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   CSSValue extends Record<string, any>,
@@ -1229,7 +1229,7 @@ type CalcConstraint<
 // ---------------------------------------------------------------------------
 type VarContextType<
   Keywords extends SupportedKeywordsConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   K,
@@ -1243,7 +1243,7 @@ type VarContextType<
 
 type VarConstraint<
   Keywords extends SupportedKeywordsConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   CSSValue extends Record<string, any>,
@@ -1274,7 +1274,7 @@ type VarConstraint<
 type ValidateComponentCSSStructure<
   Keywords extends SupportedKeywordsConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
@@ -1526,7 +1526,7 @@ export type ValidateComponentStructure<
   Keywords extends SupportedKeywordsConfig,
   HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig,
   HTMLTagConfig extends BaseHTMLTagConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,

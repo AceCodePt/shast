@@ -3,7 +3,7 @@ import type {
   DSLValidate,
   SupportedKeywordsConfig,
 } from "tsyntax";
-import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 
 export interface BaseCSSPropertiesConfig {
   [attribute: string]: {
@@ -59,7 +59,7 @@ type ValidatePropertySyntax<
 
 export type ValidateCSSPropertiesConfig<
   Keywords extends SupportedKeywordsConfig,
-  S extends BaseCSSSyntaxConfig,
+  S extends CSSSyntaxKeywords,
   P extends BaseCSSPropertiesConfig,
   AllowUnions extends boolean = false,
 > = keyof P extends string

@@ -102,6 +102,8 @@ export type {
 
 export type {
   BaseCSSSyntaxConfig,
+  CSSSyntaxKeywords,
+  CSSSyntaxKeywordsConfig,
   InferCSSSyntaxConfig,
   ValidateCSSSyntaxConfig,
 } from "@/css/syntax-config/types.ts";

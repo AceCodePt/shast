@@ -7,7 +7,7 @@ import {
   type ValidateQueries as RawValidateQueries,
   type ValidateQuery as RawValidateQuery,
 } from "@/css/queries-config/types.ts";
-import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 
 type ValidateQuery<S extends string> = RawValidateQuery<
   S,
@@ -19,7 +19,7 @@ type ValidateQueries<T extends readonly string[]> = RawValidateQueries<
   typeof QUERY_VOCABULARY,
   typeof COMMON_SYNTAX
 >;
-type ValidateQueryWith<Cfg extends BaseCSSSyntaxConfig, S extends string> =
+type ValidateQueryWith<Cfg extends CSSSyntaxKeywords, S extends string> =
   RawValidateQuery<S, typeof QUERY_VOCABULARY, Cfg>;
 import MINIMAL_QUERIES from "@/css/queries-config/variations/minimal.ts";
 import COMMON_QUERIES from "@/css/queries-config/variations/common.ts";
@@ -390,7 +390,7 @@ describe("cssQueriesConfig", () => {
       assert.throws(
         () =>
           cssQueriesConfig(
-            { "<number>": "`${number}`" } as unknown as BaseCSSSyntaxConfig,
+            { "<number>": "`${number}`" } as unknown as CSSSyntaxKeywords,
             [],
           ),
         /"<length>" token/,

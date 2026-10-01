@@ -6,7 +6,7 @@ import type {
   BaseCSSAttributeComplexValue,
   BaseCSSAttributesComplexConfig,
 } from "@/css/attribute-config/types.ts";
-import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 import type {
   CSSIdentifierCharacter,
   CSSIdentifierDigit,
@@ -88,7 +88,7 @@ type HasDuplicateSelector<Frames extends Record<string, any>> =
 
 type FramePropertyValueOk<
   Keywords extends SupportedKeywordsConfig,
-  S extends BaseCSSSyntaxConfig,
+  S extends CSSSyntaxKeywords,
   A extends BaseCSSAttributesComplexConfig,
   K extends keyof A & string,
   V,
@@ -104,7 +104,7 @@ type FramePropertyValueOk<
 
 type FrameProperties<
   Keywords extends SupportedKeywordsConfig,
-  S extends BaseCSSSyntaxConfig,
+  S extends CSSSyntaxKeywords,
   A extends BaseCSSAttributesComplexConfig,
   P extends Record<string, any>,
 > = {
@@ -123,7 +123,7 @@ type FrameProperties<
 
 type ValidateAnimation<
   Keywords extends SupportedKeywordsConfig,
-  S extends BaseCSSSyntaxConfig,
+  S extends CSSSyntaxKeywords,
   A extends BaseCSSAttributesComplexConfig,
   Name extends string,
   Frames,
@@ -143,7 +143,7 @@ type ValidateAnimation<
 
 export type ValidateKeyframesConfig<
   Keywords extends SupportedKeywordsConfig,
-  S extends BaseCSSSyntaxConfig,
+  S extends CSSSyntaxKeywords,
   A extends BaseCSSAttributesComplexConfig,
   C extends BaseKeyframesConfig,
 > = {

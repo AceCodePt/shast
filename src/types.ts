@@ -1,5 +1,5 @@
 import type { DSLInfer, SupportedKeywordsConfig } from "tsyntax";
-import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 
 export type IsUnion<T, U = T> = T extends any
   ? [U] extends [T]
@@ -117,7 +117,7 @@ export type KeysMatching<Obj extends Record<string, any>, T> = {
 // Turn it into the type a user may actually write.
 export type ResolveComplexValue<
   Keywords extends SupportedKeywordsConfig,
-  CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  CSSSyntaxConfig extends CSSSyntaxKeywords,
   V extends string,
 > = V extends "undefined"
   ? undefined
