@@ -1,11 +1,16 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
-import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
+import {
+  SUPPORTED_KEYWORDS,
+  parseValueAgainstDSL,
+  type SupportedKeywords,
+} from "tsyntax";
 import { cssSyntaxConfig } from "@/css/syntax-config/index.ts";
 import MINIMAL_SYNTAX from "@/css/syntax-config/variations/minimal.ts";
 import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
 import FULL_SYNTAX from "@/css/syntax-config/variations/full.ts";
 import type {
+  BaseCSSSyntaxConfig,
   InferCSSSyntax,
   InferCSSSyntaxConfig,
   ValidateCSSSyntaxConfig,
@@ -365,6 +370,200 @@ describe("cssSyntaxConfig", () => {
         "<x>": "`${number}`",
       });
       assert.deepStrictEqual(config, { "<x>": "`${number}`" });
+    });
+  });
+
+  // -------------------------------------------------------------------------
+  // Legacy comma-separated colour forms.
+  //
+  // `<color>` is a closed union of concrete template-literal arms, so a
+  // function form is accepted only if an arm spells it. Each tier declares the
+  // comma arms for exactly the functions it already declares; the interior
+  // stays scalar so the type wall and the runtime wall share one grammar.
+  // -------------------------------------------------------------------------
+  describe("Legacy comma-separated colour forms", () => {
+    type ColorOf<Tier extends BaseCSSSyntaxConfig> = InferCSSSyntax<
+      SupportedKeywords,
+      Tier,
+      "<color>"
+    >;
+    type AcceptsColor<Tier extends BaseCSSSyntaxConfig, V extends string> =
+      V extends ColorOf<Tier> ? true : false;
+
+    // The runtime wall the engine runs: the merged keyword map is the config
+    // under test, and the value is matched against that token's DSL string.
+    const RUNTIME_MINIMAL = { ...SUPPORTED_KEYWORDS, ...MINIMAL_SYNTAX };
+    const RUNTIME_COMMON = { ...SUPPORTED_KEYWORDS, ...COMMON_SYNTAX };
+    const RUNTIME_FULL = { ...SUPPORTED_KEYWORDS, ...FULL_SYNTAX };
+
+    describe("minimal", () => {
+      test("type-level: accepts the comma rgb form and rejects hsl", () => {
+        assertType<
+          Equal<AcceptsColor<typeof MINIMAL_SYNTAX, "rgb(255, 0, 0)">, true>
+        >();
+        // The space-separated arm is untouched.
+        assertType<
+          Equal<AcceptsColor<typeof MINIMAL_SYNTAX, "rgb(255 0 0)">, true>
+        >();
+        // hsl is not declared in minimal, comma or otherwise.
+        assertType<
+          Equal<
+            AcceptsColor<typeof MINIMAL_SYNTAX, "hsl(0, 100%, 50%)">,
+            false
+          >
+        >();
+        // Malformed arity is still a type error.
+        assertType<
+          Equal<AcceptsColor<typeof MINIMAL_SYNTAX, "rgb(255, 0)">, false>
+        >();
+      });
+
+      test("runtime: accepts the comma rgb form and rejects hsl", () => {
+        assert.doesNotThrow(() =>
+          parseValueAgainstDSL(
+            RUNTIME_MINIMAL,
+            MINIMAL_SYNTAX["<color>"],
+            "rgb(255, 0, 0)",
+          ),
+        );
+        assert.doesNotThrow(() =>
+          parseValueAgainstDSL(
+            RUNTIME_MINIMAL,
+            MINIMAL_SYNTAX["<color>"],
+            "rgb(255 0 0)",
+          ),
+        );
+        assert.throws(
+          () =>
+            parseValueAgainstDSL(
+              RUNTIME_MINIMAL,
+              MINIMAL_SYNTAX["<color>"],
+              "hsl(0, 100%, 50%)" as never,
+            ),
+          /does not match DSL/,
+        );
+        assert.throws(
+          () =>
+            parseValueAgainstDSL(
+              RUNTIME_MINIMAL,
+              MINIMAL_SYNTAX["<color>"],
+              "rgb(255, 0)" as never,
+            ),
+          /does not match DSL/,
+        );
+      });
+    });
+
+    describe("common", () => {
+      test("type-level: accepts every added comma form and the space forms", () => {
+        for (const form of [
+          "rgb(255, 0, 0)",
+          "rgba(255, 0, 0, 0.5)",
+          "hsl(0, 100%, 50%)",
+          "hsla(0, 100%, 50%, 0.5)",
+        ] as const) {
+          assertType<Equal<AcceptsColor<typeof COMMON_SYNTAX, typeof form>, true>>();
+        }
+        assertType<
+          Equal<AcceptsColor<typeof COMMON_SYNTAX, "rgb(255 0 0)">, true>
+        >();
+        assertType<
+          Equal<AcceptsColor<typeof COMMON_SYNTAX, "hsl(0 100% 50%)">, true>
+        >();
+        assertType<
+          Equal<AcceptsColor<typeof COMMON_SYNTAX, "rgb(255, 0)">, false>
+        >();
+      });
+
+      test("runtime: accepts every added comma form and rejects malformed", () => {
+        for (const form of [
+          "rgb(255, 0, 0)",
+          "rgba(255, 0, 0, 0.5)",
+          "hsl(0, 100%, 50%)",
+          "hsla(0, 100%, 50%, 0.5)",
+          "rgb(255 0 0)",
+          "hsl(0 100% 50%)",
+        ]) {
+          assert.doesNotThrow(
+            () =>
+              parseValueAgainstDSL(
+                RUNTIME_COMMON,
+                COMMON_SYNTAX["<color>"],
+                form as never,
+              ),
+            `${form} should be accepted`,
+          );
+        }
+        assert.throws(
+          () =>
+            parseValueAgainstDSL(
+              RUNTIME_COMMON,
+              COMMON_SYNTAX["<color>"],
+              "rgb(255, 0)" as never,
+            ),
+          /does not match DSL/,
+        );
+      });
+    });
+
+    describe("full", () => {
+      test("type-level: accepts the added comma forms and the space forms", () => {
+        assertType<
+          Equal<AcceptsColor<typeof FULL_SYNTAX, "rgb(255, 0, 0)">, true>
+        >();
+        assertType<
+          Equal<AcceptsColor<typeof FULL_SYNTAX, "hsl(0, 100%, 50%)">, true>
+        >();
+        assertType<
+          Equal<AcceptsColor<typeof FULL_SYNTAX, "rgba(255, 0, 0, 0.5)">, true>
+        >();
+        assertType<
+          Equal<AcceptsColor<typeof FULL_SYNTAX, "hsla(0, 100%, 50%, 0.5)">, true>
+        >();
+        assertType<
+          Equal<AcceptsColor<typeof FULL_SYNTAX, "rgb(255 0 0)">, true>
+        >();
+      });
+
+      test("runtime: accepts the added comma forms and rejects malformed", () => {
+        for (const form of [
+          "rgb(255, 0, 0)",
+          "hsl(0, 100%, 50%)",
+          "rgba(255, 0, 0, 0.5)",
+          "hsla(0, 100%, 50%, 0.5)",
+          "rgb(255 0 0)",
+        ]) {
+          assert.doesNotThrow(
+            () =>
+              parseValueAgainstDSL(
+                RUNTIME_FULL,
+                FULL_SYNTAX["<color>"],
+                form as never,
+              ),
+            `${form} should be accepted`,
+          );
+        }
+        assert.throws(
+          () =>
+            parseValueAgainstDSL(
+              RUNTIME_FULL,
+              FULL_SYNTAX["<color>"],
+              "rgb(255, 0)" as never,
+            ),
+          /does not match DSL/,
+        );
+      });
+    });
+
+    test("config builder accepts the comma arms at runtime", () => {
+      const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
+        "<number>": "`${number}` | <calc> | <var>",
+        "<calc>": "`calc(${string})`",
+        "<var>": "`var(${string})`",
+        "<color>":
+          "`rgb(${number}, ${number}, ${number})` | `rgba(${number}, ${number}, ${number}, ${number})` | `hsl(${number}, ${number}%, ${number}%)` | `hsla(${number}, ${number}%, ${number}%, ${number})`",
+      });
+      assert.ok(config["<color>"]);
     });
   });
 });
