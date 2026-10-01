@@ -6,11 +6,11 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   a: {
     display: "inline",
     attributes: {
-      href: "`https://${string}` | `http://${string}` | `mailto:${string}` | `tel:${string}` | `./${string}` | `/${string}`",
-      target: "'_self' | '_blank' | '_parent' | '_top' | undefined",
-      download: "string | boolean | undefined",
-      rel: "string | undefined",
-      hreflang: "string | undefined",
+      href: ["`https://${string}`", "`http://${string}`", "`mailto:${string}`", "`tel:${string}`", "`./${string}`", "`/${string}`"],
+      target: ["'_self'", "'_blank'", "'_parent'", "'_top'", "undefined"],
+      download: ["string", "boolean", "undefined"],
+      rel: ["string", "undefined"],
+      hreflang: ["string", "undefined"],
     },
     innerHTML: {
       include: [
@@ -81,7 +81,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   blockquote: {
     display: "block",
     attributes: {
-      cite: "string | undefined",
+      cite: ["string", "undefined"],
     },
     innerHTML: { all: true },
     cssPseudoClass: [],
@@ -105,28 +105,28 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
     attributes: {
       type: {
         submit: {
-          formaction: "string | undefined",
+          formaction: ["string", "undefined"],
           formenctype:
-            "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
-          formmethod: "'get' | 'post' | 'dialog' | undefined",
-          formnovalidate: "boolean | undefined",
-          formtarget: "'_self' | '_blank' | '_parent' | '_top' | undefined",
+            ["'application/x-www-form-urlencoded'", "'multipart/form-data'", "'text/plain'", "undefined"],
+          formmethod: ["'get'", "'post'", "'dialog'", "undefined"],
+          formnovalidate: ["boolean", "undefined"],
+          formtarget: ["'_self'", "'_blank'", "'_parent'", "'_top'", "undefined"],
         },
         reset: {},
         button: {},
         undefined: {
-          formaction: "string | undefined",
+          formaction: ["string", "undefined"],
           formenctype:
-            "'application/x-www-form-urlencoded' | 'multipart/form-data' | 'text/plain' | undefined",
-          formmethod: "'get' | 'post' | 'dialog' | undefined",
-          formnovalidate: "boolean | undefined",
-          formtarget: "'_self' | '_blank' | '_parent' | '_top' | undefined",
+            ["'application/x-www-form-urlencoded'", "'multipart/form-data'", "'text/plain'", "undefined"],
+          formmethod: ["'get'", "'post'", "'dialog'", "undefined"],
+          formnovalidate: ["boolean", "undefined"],
+          formtarget: ["'_self'", "'_blank'", "'_parent'", "'_top'", "undefined"],
         },
       },
-      disabled: "boolean | undefined",
-      name: "string | undefined",
-      value: "string | undefined",
-      form: "string | undefined",
+      disabled: ["boolean", "undefined"],
+      name: ["string", "undefined"],
+      value: ["string", "undefined"],
+      form: ["string", "undefined"],
     },
     innerHTML: {
       include: [
@@ -174,7 +174,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   details: {
     display: "block",
     attributes: {
-      open: "boolean | undefined",
+      open: ["boolean", "undefined"],
     },
     innerHTML: { include: ["summary", "div", "p", "ul", "ol", "table"] },
     cssPseudoClass: [":open"],
@@ -190,7 +190,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   dialog: {
     display: "block",
     attributes: {
-      open: "boolean | undefined",
+      open: ["boolean", "undefined"],
     },
     innerHTML: { all: true },
     cssPseudoClass: [":open", ":modal"],
@@ -271,16 +271,16 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   form: {
     display: "block",
     attributes: {
-      action: "string | undefined",
+      action: ["string", "undefined"],
       method: {
         get: {
-          target: "'_self' | '_blank' | '_parent' | '_top' | undefined",
-          novalidate: "boolean | undefined",
+          target: ["'_self'", "'_blank'", "'_parent'", "'_top'", "undefined"],
+          novalidate: ["boolean", "undefined"],
         },
         post: {
-          enctype: "string | undefined",
-          target: "'_self' | '_blank' | '_parent' | '_top' | undefined",
-          novalidate: "boolean | undefined",
+          enctype: ["string", "undefined"],
+          target: ["'_self'", "'_blank'", "'_parent'", "'_top'", "undefined"],
+          novalidate: ["boolean", "undefined"],
         },
         dialog: {},
       },
@@ -506,13 +506,13 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   img: {
     display: "inline",
     attributes: {
-      src: "`https://${string}` | `http://${string}` | `mailto:${string}` | `tel:${string}` | `./${string}` | `/${string}`",
-      alt: "string",
-      width: "number | undefined",
-      height: "number | undefined",
-      loading: "'lazy' | 'eager' | undefined",
-      srcset: "string | undefined",
-      sizes: "string | undefined",
+      src: ["`https://${string}`", "`http://${string}`", "`mailto:${string}`", "`tel:${string}`", "`./${string}`", "`/${string}`"],
+      alt: ["string"],
+      width: ["number", "undefined"],
+      height: ["number", "undefined"],
+      loading: ["'lazy'", "'eager'", "undefined"],
+      srcset: ["string", "undefined"],
+      sizes: ["string", "undefined"],
     },
     innerHTML: { include: [] },
     cssPseudoClass: [],
@@ -523,38 +523,38 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
     attributes: {
       type: {
         text: {
-          maxlength: "number | undefined",
-          minlength: "number | undefined",
-          pattern: "string | undefined",
+          maxlength: ["number", "undefined"],
+          minlength: ["number", "undefined"],
+          pattern: ["string", "undefined"],
         },
         number: {
-          min: "string | number | undefined",
-          max: "string | number | undefined",
-          step: "string | number | undefined",
+          min: ["string", "number", "undefined"],
+          max: ["string", "number", "undefined"],
+          step: ["string", "number", "undefined"],
         },
         password: {
-          maxlength: "number | undefined",
-          minlength: "number | undefined",
-          pattern: "string | undefined",
+          maxlength: ["number", "undefined"],
+          minlength: ["number", "undefined"],
+          pattern: ["string", "undefined"],
         },
-        checkbox: { checked: "boolean | undefined" },
-        radio: { checked: "boolean | undefined" },
+        checkbox: { checked: ["boolean", "undefined"] },
+        radio: { checked: ["boolean", "undefined"] },
         email: {
-          maxlength: "number | undefined",
-          minlength: "number | undefined",
-          pattern: "string | undefined",
+          maxlength: ["number", "undefined"],
+          minlength: ["number", "undefined"],
+          pattern: ["string", "undefined"],
         },
         submit: {},
         button: {},
         hidden: {},
       },
-      value: "string | undefined",
-      name: "string | undefined",
-      placeholder: "string | undefined",
-      disabled: "boolean | undefined",
-      required: "boolean | undefined",
-      readonly: "boolean | undefined",
-      hidden: "boolean | undefined",
+      value: ["string", "undefined"],
+      name: ["string", "undefined"],
+      placeholder: ["string", "undefined"],
+      disabled: ["boolean", "undefined"],
+      required: ["boolean", "undefined"],
+      readonly: ["boolean", "undefined"],
+      hidden: ["boolean", "undefined"],
     },
     innerHTML: { include: [] },
     cssPseudoClass: [
@@ -572,8 +572,8 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   label: {
     display: "inline",
     attributes: {
-      for: "string | undefined",
-      form: "string | undefined",
+      for: ["string", "undefined"],
+      form: ["string", "undefined"],
     },
     innerHTML: {
       include: [
@@ -649,10 +649,10 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   option: {
     display: "block",
     attributes: {
-      value: "string | undefined",
-      selected: "boolean | undefined",
-      disabled: "boolean | undefined",
-      label: "string | undefined",
+      value: ["string", "undefined"],
+      selected: ["boolean", "undefined"],
+      disabled: ["boolean", "undefined"],
+      label: ["string", "undefined"],
     },
     innerHTML: { include: ["#text"] },
     cssPseudoClass: [":disabled", ":checked", ":default"],
@@ -735,12 +735,12 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   select: {
     display: "inline-block",
     attributes: {
-      name: "string | undefined",
-      disabled: "boolean | undefined",
-      required: "boolean | undefined",
-      multiple: "boolean | undefined",
-      size: "number | undefined",
-      form: "string | undefined",
+      name: ["string", "undefined"],
+      disabled: ["boolean", "undefined"],
+      required: ["boolean", "undefined"],
+      multiple: ["boolean", "undefined"],
+      size: ["number", "undefined"],
+      form: ["string", "undefined"],
     },
     innerHTML: { include: ["option"] },
     cssPseudoClass: [
@@ -873,9 +873,9 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   td: {
     display: "table-cell",
     attributes: {
-      colspan: "number | undefined",
-      rowspan: "number | undefined",
-      headers: "string | undefined",
+      colspan: ["number", "undefined"],
+      rowspan: ["number", "undefined"],
+      headers: ["string", "undefined"],
     },
     innerHTML: { all: true },
     cssPseudoClass: [],
@@ -890,14 +890,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   textarea: {
     display: "inline-block",
     attributes: {
-      name: "string | undefined",
-      placeholder: "string | undefined",
-      rows: "number | undefined",
-      cols: "number | undefined",
-      disabled: "boolean | undefined",
-      required: "boolean | undefined",
-      readonly: "boolean | undefined",
-      maxlength: "number | undefined",
+      name: ["string", "undefined"],
+      placeholder: ["string", "undefined"],
+      rows: ["number", "undefined"],
+      cols: ["number", "undefined"],
+      disabled: ["boolean", "undefined"],
+      required: ["boolean", "undefined"],
+      readonly: ["boolean", "undefined"],
+      maxlength: ["number", "undefined"],
     },
     innerHTML: { include: ["#text"] },
     cssPseudoClass: [
@@ -914,9 +914,9 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   th: {
     display: "table-cell",
     attributes: {
-      colspan: "number | undefined",
-      rowspan: "number | undefined",
-      headers: "string | undefined",
+      colspan: ["number", "undefined"],
+      rowspan: ["number", "undefined"],
+      headers: ["string", "undefined"],
     },
     innerHTML: { all: true },
     cssPseudoClass: [],

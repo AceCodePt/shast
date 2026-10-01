@@ -98,7 +98,9 @@ export default function engine<
     // `htmlAttributeConfig` produced is already joined strings. The divergence
     // is intentional (see `ValidationContext.globalAttributes`).
     globalAttributes: config.htmlAttributesConfig as unknown as ValidationContext["globalAttributes"],
-    tagConfig: config.htmlTagConfig,
+    // Same declared/runtime divergence as `globalAttributes`: the value is the
+    // array-only authoring type, the runtime is joined strings.
+    tagConfig: config.htmlTagConfig as unknown as ValidationContext["tagConfig"],
     cssAttributesConfig: config.cssAttributesConfig,
     cssPropertiesConfig: config.cssPropertiesConfig,
     registeredQueries: new Set(config.cssQueriesConfig),
@@ -130,7 +132,8 @@ export default function engine<
     componentStructure: T,
   ) => {
     return renderComponent(
-      config.htmlTagConfig,
+      // Same declared/runtime divergence as `ValidationContext.tagConfig`.
+      config.htmlTagConfig as unknown as BaseHTMLTagConfig,
       componentStructure,
       // Same declared/runtime divergence as `ValidationContext.globalAttributes`:
       // the value is the array-only authoring type, the runtime is joined strings.

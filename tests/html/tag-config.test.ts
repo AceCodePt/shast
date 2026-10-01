@@ -139,7 +139,7 @@ describe("htmlTagConfig", () => {
             {
               a: {
                 display: "inline";
-                attributes: { href: "string | undefined" };
+                attributes: { href: ["string", "undefined"] };
                 innerHTML: { include: ["#text"] };
                 cssPseudoClass: [];
                 cssPseudoElement: [];
@@ -149,7 +149,7 @@ describe("htmlTagConfig", () => {
           {
             a: {
               display: DisplayKey;
-              attributes: { href: "string | undefined" };
+              attributes: { href: readonly ["string", "undefined"] };
               innerHTML:
                 | { all: true; include?: never }
                 | { all?: never; include: ("#text" | "a")[] };
@@ -502,8 +502,8 @@ describe("htmlTagConfig", () => {
         a: {
           display: "inline",
           attributes: {
-            href: "string | undefined",
-            target: "string | undefined",
+            href: ["string", "undefined"],
+            target: ["string", "undefined"],
           },
           innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
@@ -524,18 +524,71 @@ describe("htmlTagConfig", () => {
       });
     });
 
+    test("joins every tag's attribute arms, including a complex bag", () => {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
+        a: {
+          display: "inline",
+          attributes: {
+            href: ["`https://${string}`", "`http://${string}`", "undefined"],
+          },
+          innerHTML: { include: ["#text"] },
+          cssPseudoClass: [],
+          cssPseudoElement: [],
+        },
+        input: {
+          display: "inline-block",
+          attributes: {
+            type: {
+              checkbox: { checked: ["boolean", "undefined"] },
+              submit: {},
+            },
+            value: ["string", "undefined"],
+          },
+          innerHTML: { include: [] },
+          cssPseudoClass: [],
+          cssPseudoElement: [],
+        },
+      });
+      assert.strictEqual(
+        config.a.attributes.href,
+        "`https://${string}` | `http://${string}` | undefined",
+      );
+      assert.deepStrictEqual(config.input.attributes, {
+        type: {
+          checkbox: { checked: "boolean | undefined" },
+          submit: {},
+        },
+        value: "string | undefined",
+      });
+    });
+
+    test("returns each attribute value as a joined string, never an array", () => {
+      const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
+        a: {
+          display: "inline",
+          attributes: { target: ["'_self'", "'_blank'", "undefined"] },
+          innerHTML: { include: ["#text"] },
+          cssPseudoClass: [],
+          cssPseudoElement: [],
+        },
+      });
+      assert.strictEqual(Array.isArray(config.a.attributes.target), false);
+      assert.strictEqual(typeof config.a.attributes.target, "string");
+      assert.strictEqual(config.a.display, "inline");
+    });
+
     test("accepts multiple tags with attributes and cross-references", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         ul: {
           display: "block",
-          attributes: { id: "string | undefined" },
+          attributes: { id: ["string", "undefined"] },
           innerHTML: { include: ["li"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         li: {
           display: "list-item",
-          attributes: { class: "string | undefined" },
+          attributes: { class: ["string", "undefined"] },
           innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -584,7 +637,7 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         bdo: {
           display: "inline",
-          attributes: { dir: "'ltr' | 'rtl' | 'auto' | undefined" },
+          attributes: { dir: ["'ltr'", "'rtl'", "'auto'", "undefined"] },
           innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -661,14 +714,14 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         a: {
           display: "inline",
-          attributes: { href: "string", rel: "string | undefined" },
+          attributes: { href: ["string"], rel: ["string", "undefined"] },
           innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
           cssPseudoElement: [],
         },
         img: {
           display: "inline",
-          attributes: { src: "string", alt: "string" },
+          attributes: { src: ["string"], alt: ["string"] },
           innerHTML: { include: [] },
           cssPseudoClass: [],
           cssPseudoElement: [],
@@ -676,8 +729,8 @@ describe("htmlTagConfig", () => {
         button: {
           display: "inline-block",
           attributes: {
-            disabled: "boolean | undefined",
-            type: "'submit' | 'button' | undefined",
+            disabled: ["boolean", "undefined"],
+            type: ["'submit'", "'button'", "undefined"],
           },
           innerHTML: { include: ["#text"] },
           cssPseudoClass: [],
@@ -736,7 +789,7 @@ describe("htmlTagConfig", () => {
             div: {
               display: "block",
               // @ts-expect-error
-              attributes: { id: "xyz" },
+              attributes: { id: ["xyz"] },
               innerHTML: { include: [] },
               cssPseudoClass: [],
               cssPseudoElement: [],
@@ -768,7 +821,7 @@ describe("htmlTagConfig", () => {
             div: {
               display: "block",
               // @ts-expect-error
-              attributes: { id: "string | xyz" },
+              attributes: { id: ["string", "xyz"] },
               innerHTML: { include: [] },
               cssPseudoClass: [],
               cssPseudoElement: [],
@@ -845,7 +898,7 @@ describe("htmlTagConfig", () => {
       const config = htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         div: {
           display: "block",
-          attributes: { style: "`${string}` | undefined" },
+          attributes: { style: ["`${string}`", "undefined"] },
           innerHTML: { include: [] },
           cssPseudoClass: [],
           cssPseudoElement: [],

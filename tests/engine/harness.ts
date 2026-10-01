@@ -99,7 +99,7 @@ export const MOCK_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, MOCK_CSS_ATTR_C
   },
   img: {
     display: "inline",
-    attributes: { src: "string", alt: "string" },
+    attributes: { src: ["string"], alt: ["string"] },
     innerHTML: { include: [] },
     cssPseudoClass: [],
     cssPseudoElement: [],

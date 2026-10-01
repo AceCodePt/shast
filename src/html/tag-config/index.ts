@@ -1,7 +1,7 @@
 import type { BaseCSSAttributesComplexConfig } from "@/css/attribute-config/types.ts";
 import type { BaseHTMLTagConfig, ValidateHTMLTagConfig } from "./types.ts";
 import type { SupportedKeywordsConfig } from "tsyntax";
-import { validateHTMLAttributes } from "@/html/attribute-config/index.ts";
+import { normalizeHTMLAttributesConfig } from "@/html/attribute-config/index.ts";
 
 export const htmlTagConfig = <
   const Keywords extends SupportedKeywordsConfig,
@@ -17,26 +17,34 @@ export const htmlTagConfig = <
   const keys = Object.keys(config);
   const displays = new Set(Object.keys(cssAttributesConfig.display));
 
+  const normalised: Record<string, unknown> = {};
+
   for (const tag in config) {
     if (!displays.has(String(config[tag].display))) {
       throw new Error("The tag isn't one of the allowed displays");
     }
-    const attributes = config[tag].attributes;
-    validateHTMLAttributes(supportedKeywords, attributes);
+
+    // Join each tag's attribute arms into the one `' | '`-joined DSL string the
+    // engine reads. This validates every arm and every pattern key on the way.
+    const attributes = normalizeHTMLAttributesConfig(
+      supportedKeywords,
+      config[tag].attributes as unknown as Record<string, unknown>,
+    );
 
     const innerHTML = config[tag].innerHTML;
-    if ("all" in innerHTML && innerHTML.all) {
-      continue;
-    }
-    for (const innerTag of innerHTML.include) {
-      if (innerTag === "#text") {
-        continue;
+    if (!("all" in innerHTML && innerHTML.all)) {
+      for (const innerTag of innerHTML.include) {
+        if (innerTag === "#text") {
+          continue;
+        }
+        if (!keys.includes(innerTag)) {
+          throw new Error(`The tag isn't included`);
+        }
       }
-      if (!keys.includes(innerTag)) {
-        throw new Error(`The tag isn't included`);
-      }
     }
+
+    normalised[tag] = { ...config[tag], attributes };
   }
 
-  return config as T;
+  return normalised as T;
 };
