@@ -11,6 +11,7 @@ set -euo pipefail
 cd "${WORKTREE_PATH:-$(git rev-parse --show-toplevel)}" || exit 1
 
 pnpm check
+pnpm test
 
 # Verification passed: commit the work (idempotent - the agent usually committed
 # already, so an empty tree has nothing to commit, and it still passes so the
