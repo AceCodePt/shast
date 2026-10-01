@@ -192,7 +192,7 @@ is checked against them **twice**:
 | Registered `@media`/`@container` query key (exact string)                  | ✓            | ✓                               |
 | `animation` references a registered `@keyframes`                           | ✓            | ✓                               |
 | `grid-area` name is declared by the parent's `grid-template-areas`         | ✓            | ✓                               |
-| Pseudo-class/element declared for that tag                                 | ✓            | see [Limitations](docs/limitations.md) |
+| Pseudo-class/element declared for that tag                                 | ✓            | ✓                               |
 
 Every one of these is a mistake that plain CSS lets through and that only
 surfaces at runtime in the client - a dropped declaration, a selector that
@@ -370,10 +370,9 @@ instantiations / ~25ms. Keep files to a handful of components. See
 
 ## Limitations
 
-Three trade-offs and known gaps: pseudo-class/element *usage* is type-checked
-but not runtime-checked, wildcard `form`/`dialog` admit child nesting the HTML
-parser repairs, and integer-like `innerHTML` keys silently reorder children.
-See [docs/limitations.md](docs/limitations.md).
+Two trade-offs and known gaps: wildcard `form`/`dialog` admit child nesting the
+HTML parser repairs, and integer-like `innerHTML` keys silently reorder
+children. See [docs/limitations.md](docs/limitations.md).
 
 ## Repository history
 
@@ -388,7 +387,7 @@ outside version control where it would have no history and no backup.
 
 ## Status
 
-Early, honest version: one maintainer, 200+ commits, 0.1.0 published, API may
+Early, honest version: one maintainer, 500+ commits, 0.1.0 published, API may
 still move. The type-level and runtime guarantees in the table above are tested
 (see [docs/structural-coupling.md](docs/structural-coupling.md)). If a
 closed-world, server-rendered approach to AI-generated UI resonates with you,

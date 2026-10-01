@@ -4,17 +4,22 @@ Some limitations are **deliberate trade-offs** to keep the type system
 snappy; others are **known gaps**. They are listed here rather than hidden in
 either category's fine print.
 
-## Known gaps (runtime wall only - the type wall covers these today)
+## Known gaps
 
-- **Pseudo-class/element usage** in css blocks and pseudo-element
-  declarations in the tag config are type-checked but not runtime-checked.
+- **Pseudo-element *declarations* in the tag config** are shape-checked at the
+  type wall (`` `::${string}${string}`[] ``) but there is no pseudo-element
+  registry, so an author-supplied `cssPseudoElement` list is trusted as config
+  rather than checked by either wall.
 
-CSS property values and custom properties (`--*`) are now validated at
-runtime inside `createComponent`. The remaining gap covers only
-pseudo-class/element usage — worth knowing if you rely on the runtime wall
-alone (e.g. validating untyped AI output without running `tsc`).
+Component-side pseudo-class/element *usage* in `css` blocks is now validated at
+both walls: runtime checks each `:`/`::` key by membership against the global
+`cssPseudoClassConfig` and the target tag's declared lists, exactly as the type
+wall does. CSS property values and custom properties (`--*`) are likewise
+validated at runtime inside `createComponent`.
 
-## Wildcard tags admit child nesting the HTML parser repairs
+## Deliberate trade-offs
+
+### Wildcard tags admit child nesting the HTML parser repairs
 
 `form` and `dialog` are declared with the wildcard `innerHTML: { all: true }`,
 so they admit any child, including another `form`. A tree like
@@ -32,7 +37,7 @@ consumer is most likely to hit is `<form method="dialog">` inside `<dialog>`
 inside an outer `<form>`, where the inner form is dropped from the parsed
 tree even though shast emits it.
 
-## Integer-like child keys silently reorder children
+### Integer-like child keys silently reorder children
 
 JavaScript orders object keys that look like array indices (canonical
 non-negative integer strings such as `"0"`, `"1"`, `"42"`) ahead of every

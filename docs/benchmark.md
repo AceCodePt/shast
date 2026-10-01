@@ -169,14 +169,14 @@ them through `createComponent` (the runtime wall lives there, not in
 
 **What we're hoping to see:** structure, attributes, selectors, CSS property
 values, custom properties, `calc()`/`var()`, query keys, keyframe references,
-and `grid-area` names all caught. The one remaining gap is pseudo-class/
-element *usage*, which only the type wall checks.
-**Publish that number un-fudged.** The README already declares the gap; the
-benchmark quantifying it is credibility, and it becomes the before/after
-baseline for when the gap closes.
+`grid-area` names, and pseudo-class/element *usage* all caught. The former
+known gap — pseudo-class/element usage, which for a while only the type wall
+checked — is now closed by the same registry membership at runtime, so it
+belongs in the caught column.
+**Publish that number un-fudged.**
 
-**Metric:** runtime catch rate by violation class, with the known-gap class
-reported separately.
+**Metric:** runtime catch rate by violation class, with the pseudo-class/element
+class reported separately so the closure of the former gap is visible.
 
 ---
 

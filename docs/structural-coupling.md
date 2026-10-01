@@ -32,9 +32,9 @@ Every rule is enforced twice, by design:
    the type layer is bypassed (`as any`, generated code, data from outside
    the compiler's view).
 
-The two layers are required to agree; divergence is treated as a bug. The one
-remaining divergence is pseudo-class/element *usage*, which only the type wall
-checks today (see "Known gaps" below).
+The two layers are required to agree; divergence is treated as a bug. They
+agree today: the runtime wall checks pseudo-class/element *usage* by membership
+against the registered vocabulary, so both walls reject an unregistered key.
 
 ### Where the runtime wall lives
 
@@ -164,14 +164,18 @@ instantiations per component:
 
 ## Known gaps
 
-The two gaps this document originally tracked are now closed: runtime
-validates `> childName` css selector keys against `innerHTML` keys (agreeing
-with the type wall), and CSS property values — including `calc()` and `var()`
-— are validated at both walls.
+The gaps this document originally tracked are all closed: runtime validates
+`> childName` css selector keys against `innerHTML` keys (agreeing with the
+type wall), CSS property values — including `calc()` and `var()` — are
+validated at both walls, and pseudo-class/element *usage* is checked at runtime
+by the same registry membership the type wall applies.
 
-One divergence remains:
-
-- Pseudo-class/element *usage* is type-checked but not runtime-checked.
+One narrow gap remains, and it is about the *tag config*, not component usage:
+the `cssPseudoClass` / `cssPseudoElement` lists a tag declares are only
+shape-checked at the type wall (`` `:${string}${string}`[] ``), and there is no
+pseudo-element registry, so a tag config that declares `::bogus` is not rejected
+by either wall. Component `css` blocks are validated against whatever the tag
+declares; the declarations themselves are trusted as author-owned config.
 
 Everything the browser would silently ignore or fail to match is catalogued,
 with the archived slice behind each entry, in

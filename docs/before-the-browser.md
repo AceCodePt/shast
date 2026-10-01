@@ -207,9 +207,10 @@ shast checks what is mechanically decidable from declared facts. It does not
 pretend to check what depends on the browser's layout engine or on a runtime
 it cannot see — actual overflow, intrinsic sizes, contrast, specificity
 conflicts, and conditional layout semantics are out of scope and listed as
-such in [`limitations.md`](limitations.md). The known remaining gap is
-pseudo-class/element *usage*, which the type wall checks but the runtime does
-not; see [`limitations.md`](limitations.md).
+such in [`limitations.md`](limitations.md). The walls agree on the declared
+surface: pseudo-class/element *usage* is checked at both, by the same registry
+membership; the one narrow gap left is the shape-only check on the tag config's
+own `cssPseudoElement` declarations.
 
 The claim this document makes is the keepable one: the silent CSS mistakes a
 browser would hide are, for the parts of the surface shast declares, found
