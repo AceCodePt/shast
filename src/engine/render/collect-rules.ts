@@ -15,7 +15,7 @@ export { escapeAttributeValue, semanticAttribute } from "./escape.ts";
  * be a second implementation of selector emission, free to drift.
  */
 
-const PREFIX = "cid-";
+const PREFIX = "data-cid-";
 
 /** `[id, class/attribute/pseudo-class, type/pseudo-element]`, as in CSS. */
 export type Specificity = readonly [number, number, number];
@@ -29,9 +29,9 @@ export type StateKind = "pseudo-class" | "pseudo-element" | "class";
  * state rather than at rest (`state` segments).
  */
 export type SelectorSegment =
-  /** `[cid-<hash-of-css>]` — the declaring node's own scope. Always first. */
+  /** `[data-cid-<hash-of-css>]` — the declaring node's own scope. Always first. */
   | { readonly kind: "scope"; readonly attribute: string }
-  /** `& > [cid-<name>]` from a `"> name"` key. */
+  /** `& > [data-cid-<name>]` from a `"> name"` key. */
   | { readonly kind: "child"; readonly name: string }
   /** `&:hover`, `&::before`, `&.active`. */
   | { readonly kind: "state"; readonly key: string; readonly state: StateKind };
@@ -40,7 +40,7 @@ export type SelectorSegment =
  * One way a rule's selector resolves through the tree.
  *
  * A rule can match more than once — a `"> name"` key addresses every entry of
- * an array child, since they all carry the same `cid-<name>`. `chain` records
+ * an array child, since they all carry the same `data-cid-<name>`. `chain` records
  * the node each `child` step landed on, starting at the origin, which is what
  * lets a caller ask "does the element the `.active` in this selector sits on
  * actually have that class" rather than guessing.
@@ -72,7 +72,7 @@ export type CollectedRules = {
   readonly rules: readonly EmittedRule[];
   /**
    * Children reached through a `"> name"` key anywhere in the tree. Only these
-   * need a semantic `cid-<name>` attribute in the HTML.
+   * need a semantic `data-cid-<name>` attribute in the HTML.
    */
   readonly targeted: ReadonlySet<BaseComponentStructure>;
   /** Deduped top-level blocks, in emission order, ready to print. */
@@ -148,7 +148,7 @@ function hashNode(node: unknown): string {
  *
  * The scope is a property of the component's *style contract* — its `css`
  * block — not of instance data. The rendered rules are a pure function of
- * `css` (child selectors emit `[cid-<name>]` by name, not by child hash), so
+ * `css` (child selectors emit `[data-cid-<name>]` by name, not by child hash), so
  * two components with an identical `css` block must share one scope.
  */
 export function scopeAttribute(node: BaseComponentStructure): string {
@@ -297,7 +297,7 @@ function buildFrame(
           next.push({ chain: [...match.chain, child], target: child });
         }
       }
-      // A `"> name"` key marks its children as needing a `cid-<name>`
+      // A `"> name"` key marks its children as needing a `data-cid-<name>`
       // attribute even when the block turns out to be empty and is pruned
       // from the stylesheet: the attribute is part of the HTML contract.
       for (const match of next) targeted.add(match.target);
@@ -346,7 +346,7 @@ function buildFrame(
 }
 
 /**
- * The node a segment's own compound applies to: `[cid-a].on > [cid-b]` puts
+ * The node a segment's own compound applies to: `[data-cid-a].on > [data-cid-b]` puts
  * `.on` on `a`, not on `b`. `chain` advances by one for each `child` segment,
  * so the index of the node a segment sits on is the number of `child` segments
  * up to and including it.

@@ -16,7 +16,7 @@ import { SUPPORTED_KEYWORDS } from "tsyntax";
 // The class-selector validation is the same code path used for top-level,
 // pseudo-class and pseudo-element blocks; a query block only continues the
 // element's scope. These tests pin the composition the task calls out: an
-// `&.foo` inside a query renders scoped under the element's cid, an unknown
+// `&.foo` inside a query renders scoped under the element's scope attribute, an unknown
 // class is rejected by both walls, and the class must be one the element
 // declares.
 // ---------------------------------------------------------------------------
@@ -67,7 +67,7 @@ const { createComponent, renderComponent } = engine({
 });
 
 function hashScope(html: string, tag: string): string {
-  const match = html.match(new RegExp(`^<${tag} (cid-[a-z0-9]+)`));
+  const match = html.match(new RegExp(`^<${tag} (data-cid-[a-z0-9]+)`));
   const token = match?.[1];
   assert.ok(token, `expected a hash scope on <${tag}> in: ${html}`);
   return token;
@@ -192,7 +192,7 @@ describe("css class in media", () => {
   });
 
   describe("Rendering", () => {
-    test("an &.foo inside a @media block renders scoped under the cid", () => {
+    test("an &.foo inside a @media block renders scoped under the scope attribute", () => {
       const { html, css } = renderComponent(
         createComponent({
           tag: "box",

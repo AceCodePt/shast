@@ -32,9 +32,9 @@ selectors — **specificity, then source order** — which in this emitter means
 
 | contributor | emitted selector | specificity | wins over |
 |---|---|---|---|
-| grandparent `> mid > child` | `[cid-root] > [cid-mid] > [cid-child]` | (0,3,0) | everything below |
-| parent `> child` | `[cid-mid] > [cid-child]` | (0,2,0) | the node's own block |
-| the node itself | `[cid-child]` | (0,1,0) | — |
+| grandparent `> mid > child` | `[data-cid-root] > [data-cid-mid] > [data-cid-child]` | (0,3,0) | everything below |
+| parent `> child` | `[data-cid-mid] > [data-cid-child]` | (0,2,0) | the node's own block |
+| the node itself | `[data-cid-child]` | (0,1,0) | — |
 
 So **the most distant contributor wins**, which is the opposite of the intuition
 that a node's own declaration is the last word. Verified against Chromium by the
@@ -294,7 +294,7 @@ the wrong one.** The pages are rendered from a real stylesheet with one rule per
 contributor:
 
 ```css
-[cid-ywfdph] { & > [cid-panel] { padding: 16px; } }
+[data-cid-ywfdph] { & > [data-cid-panel] { padding: 16px; } }
 ```
 
 That is the provenance answer, sitting in the page the captures came from. Chrome's

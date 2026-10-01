@@ -3,7 +3,7 @@ import assert from "node:assert";
 import { createComponent, renderBound } from "./harness.ts";
 
 function hashScope(html: string, tag: string): string {
-  const match = html.match(new RegExp(`^<${tag} (cid-[a-z0-9]+)`));
+  const match = html.match(new RegExp(`^<${tag} (data-cid-[a-z0-9]+)`));
   const token = match?.[1];
   assert.ok(token, `expected a hash scope on <${tag}> in: ${html}`);
   return token;

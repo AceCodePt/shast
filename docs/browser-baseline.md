@@ -1,6 +1,6 @@
 # Browser baseline for the emitted CSS
 
-`renderComponent` emits **nested** CSS - `& > [cid-x]`, `&:hover`, `&.featured`,
+`renderComponent` emits **nested** CSS - `& > [data-cid-x]`, `&:hover`, `&.featured`,
 and `@media` blocks written inside a rule - not flattened selectors. A browser
 has to understand that nesting to run any of it. The minimum versions that do:
 
@@ -11,7 +11,7 @@ has to understand that nesting to run any of it. The minimum versions that do:
 | Firefox         | 117             |
 
 The example stylesheet in [`worked-example.md`](worked-example.md) is the exact
-output format; `& > [cid-heading]` is a nested rule, not an accident of
+output format; `& > [data-cid-heading]` is a nested rule, not an accident of
 formatting.
 
 The output relies on three more features besides nesting, so check them too:

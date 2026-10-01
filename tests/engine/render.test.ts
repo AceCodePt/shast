@@ -31,8 +31,8 @@ describe("engine", () => {
     const direct = renderComponent(HTML_TAGS_CONFIG, component);
     assert.deepStrictEqual(bound, direct);
 
-    assert.match(bound.html, /^<div cid-[a-z0-9]+>/);
-    assert.ok(bound.html.includes("<h1 cid-title"));
+    assert.match(bound.html, /^<div data-cid-[a-z0-9]+>/);
+    assert.ok(bound.html.includes("<h1 data-cid-title"));
     assert.ok(bound.html.includes("hello"));
     assert.ok(bound.css.includes("width: 100%;"));
   });
@@ -206,8 +206,8 @@ describe("createComponent (engine)", () => {
       css: { display: "block", width: "100%", "> title": { color: "inherit" } },
       });
       const { html, css } = renderProd(comp);
-      assert.match(html, /^<div cid-[a-z0-9]+>/);
-      assert.ok(html.includes("<span cid-title"));
+      assert.match(html, /^<div data-cid-[a-z0-9]+>/);
+      assert.ok(html.includes("<span data-cid-title"));
       assert.ok(html.includes("hello"));
       assert.ok(css.includes("width: 100%;"));
     });
@@ -239,12 +239,12 @@ describe("createComponent (engine)", () => {
         },
       });
       const { html, css } = renderProd(comp);
-      assert.ok(html.includes("cid-level1"));
-      assert.ok(html.includes("cid-level2"));
-      assert.ok(html.includes("cid-level3"));
-      assert.ok(css.includes("[cid-level1]"));
-      assert.ok(css.includes("[cid-level2]"));
-      assert.ok(css.includes("[cid-level3]"));
+      assert.ok(html.includes("data-cid-level1"));
+      assert.ok(html.includes("data-cid-level2"));
+      assert.ok(html.includes("data-cid-level3"));
+      assert.ok(css.includes("[data-cid-level1]"));
+      assert.ok(css.includes("[data-cid-level2]"));
+      assert.ok(css.includes("[data-cid-level3]"));
     });
   });
 });

@@ -37,19 +37,19 @@ function render(node: BaseComponentStructure) {
   return renderComponent(tagConfig, node);
 }
 
-/** A valid attribute name / CSS identifier after the `cid-` prefix. */
-const VALID_ESCAPED_ATTRIBUTE = /^cid-[a-z0-9_-]+$/;
+/** A valid attribute name / CSS identifier after the `data-cid-` prefix. */
+const VALID_ESCAPED_ATTRIBUTE = /^data-cid-[a-z0-9_-]+$/;
 
 /** The semantic attribute on the first `<tag ...>` in the HTML. */
 function htmlAttribute(html: string, tag: string): string {
-  const match = html.match(new RegExp(`<${tag} (cid-[^\\s>]+)`));
-  assert.ok(match, `expected a cid attribute on <${tag}> in: ${html}`);
+  const match = html.match(new RegExp(`<${tag} (data-cid-[^\\s>]+)`));
+  assert.ok(match, `expected a data-cid attribute on <${tag}> in: ${html}`);
   return match[1]!;
 }
 
-/** The attribute of the single `& > [cid-...]` selector in the CSS. */
+/** The attribute of the single `& > [data-cid-...]` selector in the CSS. */
 function cssChildAttribute(css: string): string {
-  const match = css.match(/& > \[(cid-[^\]]+)\]/);
+  const match = css.match(/& > \[(data-cid-[^\]]+)\]/);
   assert.ok(match, `expected a child selector in: ${css}`);
   return match[1]!;
 }
@@ -105,21 +105,21 @@ describe("escapeText escaping", () => {
 
 describe("semanticAttribute escaping", () => {
   test("escapes every non-[a-z0-9-] code unit, including uppercase and the marker", () => {
-    assert.strictEqual(semanticAttribute("my item"), "cid-my_0020item");
-    assert.strictEqual(semanticAttribute('a"]b'), "cid-a_0022_005db");
-    assert.strictEqual(semanticAttribute("inner_1"), "cid-inner_005f1");
-    assert.strictEqual(semanticAttribute("T"), "cid-_0054");
+    assert.strictEqual(semanticAttribute("my item"), "data-cid-my_0020item");
+    assert.strictEqual(semanticAttribute('a"]b'), "data-cid-a_0022_005db");
+    assert.strictEqual(semanticAttribute("inner_1"), "data-cid-inner_005f1");
+    assert.strictEqual(semanticAttribute("T"), "data-cid-_0054");
   });
 
   test("ordinary all-lowercase names are byte-identical to the raw concatenation", () => {
-    assert.strictEqual(semanticAttribute("title"), "cid-title");
-    assert.strictEqual(semanticAttribute("some-image"), "cid-some-image");
+    assert.strictEqual(semanticAttribute("title"), "data-cid-title");
+    assert.strictEqual(semanticAttribute("some-image"), "data-cid-some-image");
   });
 
   test("uppercase folds to _00xx so emitted attributes stay lowercase", () => {
-    assert.strictEqual(semanticAttribute("Title"), "cid-_0054itle");
-    assert.strictEqual(semanticAttribute("someImage"), "cid-some_0049mage");
-    assert.strictEqual(semanticAttribute("someimage"), "cid-someimage");
+    assert.strictEqual(semanticAttribute("Title"), "data-cid-_0054itle");
+    assert.strictEqual(semanticAttribute("someImage"), "data-cid-some_0049mage");
+    assert.strictEqual(semanticAttribute("someimage"), "data-cid-someimage");
     assert.ok(!/[A-Z]/.test(semanticAttribute("Title")));
     assert.ok(!/[A-Z]/.test(semanticAttribute("someImage")));
   });
@@ -134,11 +134,11 @@ describe("semanticAttribute escaping", () => {
   });
 
   test("an empty key still yields a valid attribute name", () => {
-    assert.strictEqual(semanticAttribute(""), "cid-");
+    assert.strictEqual(semanticAttribute(""), "data-cid-");
   });
 
   test("a digit-leading key is a valid identifier thanks to the prefix", () => {
-    assert.strictEqual(semanticAttribute("1abc"), "cid-1abc");
+    assert.strictEqual(semanticAttribute("1abc"), "data-cid-1abc");
     assert.match(semanticAttribute("1abc"), VALID_ESCAPED_ATTRIBUTE);
   });
 
@@ -179,7 +179,7 @@ describe("escaping special child names through renderComponent", () => {
     const attribute = htmlAttribute(html, "h1");
     const selectorAttribute = cssChildAttribute(css);
 
-    assert.strictEqual(attribute, "cid-my_0020item");
+    assert.strictEqual(attribute, "data-cid-my_0020item");
     assert.strictEqual(selectorAttribute, attribute);
     assert.match(attribute, VALID_ESCAPED_ATTRIBUTE);
     assert.match(selectorAttribute, VALID_ESCAPED_ATTRIBUTE);
@@ -197,7 +197,7 @@ describe("escaping special child names through renderComponent", () => {
     const attribute = htmlAttribute(html, "h1");
     const selectorAttribute = cssChildAttribute(css);
 
-    assert.strictEqual(attribute, "cid-a_0022_005db");
+    assert.strictEqual(attribute, "data-cid-a_0022_005db");
     assert.strictEqual(selectorAttribute, attribute);
     assert.match(attribute, VALID_ESCAPED_ATTRIBUTE);
     assert.match(selectorAttribute, VALID_ESCAPED_ATTRIBUTE);
@@ -231,8 +231,8 @@ describe("escaping special child names through renderComponent", () => {
       innerHTML: { title: { tag: "h1", innerHTML: "t" } },
       css: { "> title": { color: "red" } },
     });
-    assert.ok(html.includes("<h1 cid-title>"), html);
-    assert.ok(css.includes("& > [cid-title]"), css);
+    assert.ok(html.includes("<h1 data-cid-title>"), html);
+    assert.ok(css.includes("& > [data-cid-title]"), css);
   });
 
   test("some-image is untouched, someImage folds its uppercase", () => {
@@ -241,17 +241,17 @@ describe("escaping special child names through renderComponent", () => {
       innerHTML: { someImage: { tag: "h1", innerHTML: "x" } },
       css: { "> someImage": { color: "red" } },
     });
-    assert.ok(camel.html.includes("cid-some_0049mage"), camel.html);
-    assert.ok(camel.css.includes("& > [cid-some_0049mage]"), camel.css);
-    assert.ok(!camel.html.includes("cid-someImage"), camel.html);
+    assert.ok(camel.html.includes("data-cid-some_0049mage"), camel.html);
+    assert.ok(camel.css.includes("& > [data-cid-some_0049mage]"), camel.css);
+    assert.ok(!camel.html.includes("data-cid-someImage"), camel.html);
 
     const kebab = render({
       tag: "div",
       innerHTML: { "some-image": { tag: "h1", innerHTML: "x" } },
       css: { "> some-image": { color: "red" } },
     });
-    assert.ok(kebab.html.includes("cid-some-image"), kebab.html);
-    assert.ok(kebab.css.includes("& > [cid-some-image]"), kebab.css);
+    assert.ok(kebab.html.includes("data-cid-some-image"), kebab.html);
+    assert.ok(kebab.css.includes("& > [data-cid-some-image]"), kebab.css);
   });
 
   test("case-only-distinct siblings get attributes that differ after lowercasing", () => {
@@ -267,7 +267,7 @@ describe("escaping special child names through renderComponent", () => {
       },
     });
 
-    const attributes = [...html.matchAll(/<h1 (cid-[^\s>]+)>/g)].map(
+    const attributes = [...html.matchAll(/<h1 (data-cid-[^\s>]+)>/g)].map(
       (match) => match[1]!,
     );
     assert.strictEqual(attributes.length, 2);
@@ -279,9 +279,9 @@ describe("escaping special child names through renderComponent", () => {
     assert.match(first, VALID_ESCAPED_ATTRIBUTE);
     assert.match(second, VALID_ESCAPED_ATTRIBUTE);
 
-    // Each `& > [cid-...]` selector addresses exactly one of the two children.
+    // Each `& > [data-cid-...]` selector addresses exactly one of the two children.
     assert.ok(css.includes(`& > [${first}]`), css);
     assert.ok(css.includes(`& > [${second}]`), css);
-    assert.strictEqual(css.match(/& > \[cid-/g)?.length, 2);
+    assert.strictEqual(css.match(/& > \[data-cid-/g)?.length, 2);
   });
 });

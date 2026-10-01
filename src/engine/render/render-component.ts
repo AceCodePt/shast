@@ -212,7 +212,7 @@ export function renderComponent(
 ): { html: string; css: string } {
   const { targeted, blocks } = collectRules(node);
   // Keyframe names are global, so the referenced `@keyframes` rules are
-  // emitted once each, independent of the cid-scoped blocks. They follow the
+  // emitted once each, independent of the `data-cid-`-scoped blocks. They follow the
   // scoped stylesheet; a render that references none is byte-identical to
   // before.
   const scoped = printStylesheet(blocks);

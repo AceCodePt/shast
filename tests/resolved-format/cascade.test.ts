@@ -76,7 +76,7 @@ describe("emitted rules are the single source of truth", () => {
     };
     const { rules } = collectRules(node);
     const rule = rules[0]!;
-    assert.match(rule.selector, /^\[cid-[a-z0-9]+\] > \[cid-inner\]:hover$/u);
+    assert.match(rule.selector, /^\[data-cid-[a-z0-9]+\] > \[data-cid-inner\]:hover$/u);
     assert.deepStrictEqual([...rule.specificity], [0, 3, 0]);
   });
 
@@ -84,7 +84,7 @@ describe("emitted rules are the single source of truth", () => {
     assert.deepStrictEqual(
       [
         ...specificityOf([
-          { kind: "scope", attribute: "cid-x" },
+          { kind: "scope", attribute: "data-cid-x" },
           { kind: "state", key: "::before", state: "pseudo-element" },
         ]),
       ],
@@ -99,11 +99,11 @@ describe("emitted rules are the single source of truth", () => {
   test("flattening substitutes & for the whole parent selector", () => {
     assert.strictEqual(
       flattenSelector([
-        { kind: "scope", attribute: "cid-a" },
+        { kind: "scope", attribute: "data-cid-a" },
         { kind: "child", name: "b" },
         { kind: "state", key: ":hover", state: "pseudo-class" },
       ]),
-      "[cid-a] > [cid-b]:hover",
+      "[data-cid-a] > [data-cid-b]:hover",
     );
   });
 });
@@ -148,7 +148,7 @@ describe("precedence", () => {
   });
 
   test("equal specificity is broken by source order", () => {
-    // `[cid-root] > [cid-mid] > [cid-child]` and `[cid-mid].on > [cid-child]`
+    // `[data-cid-root] > [data-cid-mid] > [data-cid-child]` and `[data-cid-mid].on > [data-cid-child]`
     // are both (0,3,0); `mid`'s block prints second.
     const node: BaseComponentStructure = {
       tag: "div",
@@ -310,7 +310,7 @@ describe("states", () => {
 describe("dead states", () => {
   // Checked against a real hover in tests/resolved-format/hover-conformance.test.ts.
   test("an ancestor outranks a state, and that is reported not hidden", () => {
-    // `[cid-leaf]:hover` is (0,2,0); `[cid-root] > [cid-mid] > [cid-leaf]` is
+    // `[data-cid-leaf]:hover` is (0,2,0); `[data-cid-root] > [data-cid-mid] > [data-cid-leaf]` is
     // (0,3,0). The hover never applies.
     const node: BaseComponentStructure = {
       tag: "div",
@@ -345,7 +345,7 @@ describe("dead states", () => {
   });
 
   test("a parent ties with a state, and the state wins on source order", () => {
-    // `[cid-root] > [cid-leaf]` and `[cid-leaf]:hover` are both (0,2,0), and the
+    // `[data-cid-root] > [data-cid-leaf]` and `[data-cid-leaf]:hover` are both (0,2,0), and the
     // leaf's block prints second. It takes a *grandparent* to kill a hover.
     const node: BaseComponentStructure = {
       tag: "div",

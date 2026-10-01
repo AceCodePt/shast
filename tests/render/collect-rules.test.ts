@@ -16,15 +16,15 @@ describe("scopeAttribute (cyrb53, 53-bit)", () => {
   test("pins the base36 hash of known css blocks at seed 0", () => {
     assert.strictEqual(
       scopeAttribute(node({ width: "300978px" })),
-      "cid-ni3841x8ei",
+      "data-cid-ni3841x8ei",
     );
     assert.strictEqual(
       scopeAttribute(node({ width: "1428402px" })),
-      "cid-e5mod9fxcs",
+      "data-cid-e5mod9fxcs",
     );
     assert.strictEqual(
       scopeAttribute(node({ color: "red" })),
-      "cid-21762ralqm3",
+      "data-cid-21762ralqm3",
     );
   });
 
@@ -74,11 +74,11 @@ describe("scopeAttribute (cyrb53, 53-bit)", () => {
     assert.strictEqual(
       printStylesheet(blocks),
       [
-        "[cid-21762ralqm3] {",
+        "[data-cid-21762ralqm3] {",
         "  color: red;",
         "}",
         "",
-        "[cid-20qofv0dctg] {",
+        "[data-cid-20qofv0dctg] {",
         "  width: 1px;",
         "}",
       ].join("\n"),
@@ -90,8 +90,8 @@ describe("dedupeByScope", () => {
   test("keeps the first value when a scope repeats with an equal fingerprint", () => {
     assert.deepStrictEqual(
       dedupeByScope([
-        { scope: "cid-x", fingerprint: "a", value: 1 },
-        { scope: "cid-x", fingerprint: "a", value: 2 },
+        { scope: "data-cid-x", fingerprint: "a", value: 1 },
+        { scope: "data-cid-x", fingerprint: "a", value: 2 },
       ]),
       [1],
     );
@@ -100,9 +100,9 @@ describe("dedupeByScope", () => {
   test("keeps first-seen order across distinct scopes", () => {
     assert.deepStrictEqual(
       dedupeByScope([
-        { scope: "cid-b", fingerprint: "b", value: "b" },
-        { scope: "cid-a", fingerprint: "a", value: "a" },
-        { scope: "cid-b", fingerprint: "b", value: "ignored" },
+        { scope: "data-cid-b", fingerprint: "b", value: "b" },
+        { scope: "data-cid-a", fingerprint: "a", value: "a" },
+        { scope: "data-cid-b", fingerprint: "b", value: "ignored" },
       ]),
       ["b", "a"],
     );
@@ -112,12 +112,12 @@ describe("dedupeByScope", () => {
     assert.throws(
       () =>
         dedupeByScope([
-          { scope: "cid-x", fingerprint: "a", value: 1 },
-          { scope: "cid-x", fingerprint: "b", value: 2 },
+          { scope: "data-cid-x", fingerprint: "a", value: 1 },
+          { scope: "data-cid-x", fingerprint: "b", value: 2 },
         ]),
       (error: unknown) => {
         assert.ok(error instanceof Error);
-        for (const part of ["cid-x", "a", "b"]) {
+        for (const part of ["data-cid-x", "a", "b"]) {
           assert.ok(
             error.message.includes(part),
             `expected ${JSON.stringify(error.message)} to name ${part}`,

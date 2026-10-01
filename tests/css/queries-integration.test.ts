@@ -85,7 +85,7 @@ const { createComponent, renderComponent } = engine({
 });
 
 function hashScope(html: string, tag: string): string {
-  const match = html.match(new RegExp(`^<${tag} (cid-[a-z0-9]+)`));
+  const match = html.match(new RegExp(`^<${tag} (data-cid-[a-z0-9]+)`));
   const token = match?.[1];
   assert.ok(token, `expected a hash scope on <${tag}> in: ${html}`);
   return token;
@@ -468,7 +468,7 @@ describe("css queries integration", () => {
       assert.ok(css.startsWith(`[${scope}] {`));
     });
 
-    test("cid scoping is preserved inside expanded query blocks", () => {
+    test("`data-cid-` scoping is preserved inside expanded query blocks", () => {
       const { html, css } = renderComponent(
         createComponent({
           tag: "box",
@@ -482,11 +482,11 @@ describe("css queries integration", () => {
       );
       const scope = hashScope(html, "box");
       assert.ok(
-        html.includes("<span cid-title>"),
-        "child targeted through a query block carries its semantic cid",
+        html.includes("<span data-cid-title>"),
+        "child targeted through a query block carries its semantic data-cid attribute",
       );
       assert.ok(
-        css.includes(`& > [cid-title]`),
+        css.includes(`& > [data-cid-title]`),
         "the child selector nests under the query block",
       );
       assert.ok(css.includes(`@media (width < 768px) {`));

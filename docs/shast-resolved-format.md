@@ -74,7 +74,7 @@ static substitute: text-driven heights, wrapping, and flex resolution all
 depend on font metrics and content, and guessing them produces numbers that
 look authoritative and are wrong.
 
-The pass is cheap here because shast emits `cid-<name>` attributes. Boxes
+The pass is cheap here because shast emits `data-cid-<name>` attributes. Boxes
 rejoin the semantic tree by exact key lookup rather than heuristic matching —
 the author's names survive the round trip through the browser:
 
@@ -84,10 +84,10 @@ await page.setContent(`<style>${css}</style>${html}`);
 await page.evaluate(() => {
   const out = {};
   for (const el of document.querySelectorAll('*')) {
-    const cid = [...el.attributes].find(a => a.name.startsWith('cid-'));
-    if (!cid) continue;
+    const attr = [...el.attributes].find(a => a.name.startsWith('data-cid-'));
+    if (!attr) continue;
     const r = el.getBoundingClientRect();
-    out[cid.name.slice(4)] = [r.x, r.y, r.width, r.height].map(Math.round);
+    out[attr.name.slice('data-cid-'.length)] = [r.x, r.y, r.width, r.height].map(Math.round);
   }
   return out;
 });

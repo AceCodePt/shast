@@ -446,7 +446,7 @@ are trivia by comparison.
 
 **The caveat that bounds both.** These pages are rendered from a real stylesheet
 with one rule per contributor —
-`[cid-ywfdph] { & > [cid-panel] { padding: 16px } }` — which *is* the provenance
+`[data-cid-ywfdph] { & > [data-cid-panel] { padding: 16px } }` — which *is* the provenance
 answer, present in the page every capture was taken from. Chrome's Styles pane
 shows those matched rules with their origin and strikes through the losers, and
 CDP returns them from `CSS.getMatchedStylesForNode`. An agent inspecting a real

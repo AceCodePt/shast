@@ -214,7 +214,7 @@ export function printKeyframesRule(
 /**
  * The global `@keyframes` rules for every keyframe `node` references, in
  * reference order and printed once each. Names are global, so these rules are
- * not cid-scoped; they sit alongside the component's scoped css.
+ * not `data-cid-`-scoped; they sit alongside the component's scoped css.
  */
 export function renderReferencedKeyframes(
   node: BaseComponentStructure,

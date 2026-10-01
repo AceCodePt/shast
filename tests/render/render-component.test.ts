@@ -48,7 +48,7 @@ function render(node: BaseComponentStructure) {
 
 /** The hash scope of an element that has a `css` block but no semantic name. */
 function hashScope(html: string, tag: string): string {
-  const match = html.match(new RegExp(`^<${tag} (cid-[a-z0-9]+)`));
+  const match = html.match(new RegExp(`^<${tag} (data-cid-[a-z0-9]+)`));
   const token = match?.[1];
   assert.ok(token, `expected a hash scope on <${tag}> in: ${html}`);
   return token;
@@ -150,7 +150,7 @@ describe("renderComponent", () => {
         css: { width: "1px" },
         attributes: { href: "/x" },
       });
-      assert.match(html, /^<a cid-[a-z0-9]+ href="\/x">/);
+      assert.match(html, /^<a data-cid-[a-z0-9]+ href="\/x">/);
     });
 
     test("HTML-significant characters in a value are encoded", () => {
@@ -223,7 +223,7 @@ describe("renderComponent", () => {
   });
 
   describe("Semantic naming", () => {
-    test("a child targeted by a direct child selector carries a semantic cid attribute", () => {
+    test("a child targeted by a direct child selector carries a semantic data-cid attribute", () => {
       const { html } = render({
         tag: "div",
         innerHTML: {
@@ -233,19 +233,19 @@ describe("renderComponent", () => {
         css: { "> title": { color: "red" } },
       });
       // `title` is targeted, `someImage` is not.
-      assert.ok(html.includes("<h1 cid-title>"));
-      assert.ok(!html.includes("cid-someImage"));
+      assert.ok(html.includes("<h1 data-cid-title>"));
+      assert.ok(!html.includes("data-cid-someImage"));
       assert.ok(html.includes("<img "));
     });
 
-    test("an untargeted child gets no semantic cid attribute", () => {
+    test("an untargeted child gets no semantic data-cid attribute", () => {
       const { html } = render({
         tag: "div",
         innerHTML: {
           title: { tag: "h1", innerHTML: "t" },
         },
       });
-      assert.ok(!html.includes("cid-title"));
+      assert.ok(!html.includes("data-cid-title"));
       assert.strictEqual(html, `<div><h1>t</h1></div>`);
     });
 
@@ -257,7 +257,7 @@ describe("renderComponent", () => {
         },
         css: { "> inner": { display: "block" } },
       });
-      assert.match(html, /<span cid-inner cid-[a-z0-9]+>hi<\/span>/);
+      assert.match(html, /<span data-cid-inner data-cid-[a-z0-9]+>hi<\/span>/);
     });
 
     test("an untargeted child with its own css carries only its hash", () => {
@@ -267,8 +267,8 @@ describe("renderComponent", () => {
           inner: { tag: "span", innerHTML: "hi", css: { color: "green" } },
         },
       });
-      assert.match(html, /<span cid-[a-z0-9]+>hi<\/span>/);
-      assert.ok(!html.includes("cid-inner"));
+      assert.match(html, /<span data-cid-[a-z0-9]+>hi<\/span>/);
+      assert.ok(!html.includes("data-cid-inner"));
     });
 
     test("child selectors nested via pseudo blocks still target the child", () => {
@@ -277,7 +277,7 @@ describe("renderComponent", () => {
         innerHTML: { inner: { tag: "span", innerHTML: "hi" } },
         css: { ":hover": { "> inner": { color: "green" } } },
       });
-      assert.ok(html.includes("<span cid-inner>"));
+      assert.ok(html.includes("<span data-cid-inner>"));
     });
   });
 
@@ -360,7 +360,7 @@ describe("renderComponent", () => {
       );
     });
 
-    test("child selectors nest as `& > [cid-<name>]`", () => {
+    test("child selectors nest as `& > [data-cid-<name>]`", () => {
       const { html, css } = render({
         tag: "div",
         innerHTML: { inner: { tag: "span", innerHTML: "hi" } },
@@ -371,7 +371,7 @@ describe("renderComponent", () => {
         css,
         [
           `[${scope}] {`,
-          `  & > [cid-inner] {`,
+          `  & > [data-cid-inner] {`,
           `    color: green;`,
           `  }`,
           `}`,
@@ -395,8 +395,8 @@ describe("renderComponent", () => {
         css,
         [
           `[${scope}] {`,
-          `  & > [cid-content] {`,
-          `    & > [cid-title] {`,
+          `  & > [data-cid-content] {`,
+          `    & > [data-cid-title] {`,
           `      color: red;`,
           `    }`,
           `  }`,
@@ -414,14 +414,14 @@ describe("renderComponent", () => {
         css: { "> inner": { display: "block" } },
       });
       const rootScope = hashScope(html, "div");
-      const innerHash = html.match(/<span cid-inner (cid-[a-z0-9]+)>/)?.[1];
+      const innerHash = html.match(/<span data-cid-inner (data-cid-[a-z0-9]+)>/)?.[1];
       assert.ok(innerHash, "expected inner element to carry a hash scope");
 
       assert.strictEqual(
         css,
         [
           `[${rootScope}] {`,
-          `  & > [cid-inner] {`,
+          `  & > [data-cid-inner] {`,
           `    display: block;`,
           `  }`,
           `}`,
@@ -581,7 +581,7 @@ describe("renderComponent", () => {
         css,
         [
           `[${scope}] {`,
-          `  & > [cid-inner] {`,
+          `  & > [data-cid-inner] {`,
           `    &.highlight {`,
           `      color: yellow;`,
           `    }`,

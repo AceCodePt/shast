@@ -432,11 +432,11 @@ describe("createComponent (engine)", () => {
         });
         const { html, css } = renderBound(comp);
         assert.ok(
-          html.includes("cid-items"),
+          html.includes("data-cid-items"),
           "array children should carry semantic name",
         );
         assert.ok(
-          css.includes("[cid-items]"),
+          css.includes("[data-cid-items]"),
           "CSS should target semantic name",
         );
         assert.ok(css.includes("color: inherit;"));
@@ -522,19 +522,19 @@ describe("createComponent (engine)", () => {
         });
         const { html, css } = renderBound(comp);
         assert.ok(
-          html.includes("cid-wrapper"),
+          html.includes("data-cid-wrapper"),
           "array element should carry semantic name",
         );
         assert.ok(
-          html.includes("cid-inner"),
+          html.includes("data-cid-inner"),
           "nested child should carry semantic name",
         );
         assert.ok(
-          css.includes("[cid-wrapper]"),
+          css.includes("[data-cid-wrapper]"),
           "CSS should target outer semantic name",
         );
         assert.ok(
-          css.includes("[cid-inner]"),
+          css.includes("[data-cid-inner]"),
           "CSS should target inner semantic name",
         );
         assert.ok(css.includes("color: inherit;"));
@@ -556,9 +556,9 @@ describe("createComponent (engine)", () => {
           },
         });
         const { html, css } = renderBound(comp);
-        assert.ok(html.includes("cid-items"));
+        assert.ok(html.includes("data-cid-items"));
         assert.ok(css.includes(":hover"));
-        assert.ok(css.includes("[cid-items]"));
+        assert.ok(css.includes("[data-cid-items]"));
         assert.ok(css.includes("color: inherit;"));
       });
 
@@ -579,8 +579,8 @@ describe("createComponent (engine)", () => {
           },
         });
         const { html, css } = renderBound(comp);
-        assert.ok(html.includes("cid-items"));
-        assert.ok(css.includes("[cid-items]"));
+        assert.ok(html.includes("data-cid-items"));
+        assert.ok(css.includes("[data-cid-items]"));
         assert.ok(css.includes("color: inherit;"));
         assert.ok(css.includes(":hover"));
         assert.ok(css.includes("color: transparent;"));
@@ -610,23 +610,23 @@ describe("createComponent (engine)", () => {
         });
         const { html, css } = renderBound(comp);
         assert.ok(
-          html.includes("cid-items"),
+          html.includes("data-cid-items"),
           "array children carry semantic name",
         );
         assert.ok(
-          html.includes("cid-inner1"),
+          html.includes("data-cid-inner1"),
           "first element's inner key is targeted",
         );
         assert.ok(
-          html.includes("cid-inner2"),
+          html.includes("data-cid-inner2"),
           "second element's inner key is targeted",
         );
         assert.ok(
-          css.includes("[cid-inner1]"),
+          css.includes("[data-cid-inner1]"),
           "CSS targets inner1 semantic name",
         );
         assert.ok(
-          css.includes("[cid-inner2]"),
+          css.includes("[data-cid-inner2]"),
           "CSS targets inner2 semantic name",
         );
         assert.ok(css.includes("color: inherit;"));
@@ -667,24 +667,24 @@ describe("createComponent (engine)", () => {
         });
         const { html, css } = renderBound(comp);
         // All semantic names present
-        assert.ok(html.includes("cid-items"), "array elements carry cid-items");
+        assert.ok(html.includes("data-cid-items"), "array elements carry data-cid-items");
         assert.ok(
-          html.includes("cid-inner1"),
+          html.includes("data-cid-inner1"),
           "inner1 present on both array elements",
         );
         assert.ok(
-          html.includes("cid-inner2"),
+          html.includes("data-cid-inner2"),
           "inner2 present on second element",
         );
         assert.ok(
-          html.includes("cid-inner3"),
+          html.includes("data-cid-inner3"),
           "inner3 present inside second element's inner1",
         );
         // CSS targets each path
-        assert.ok(css.includes("[cid-items]"), "CSS targets items");
-        assert.ok(css.includes("[cid-inner2]"), "CSS targets inner2");
-        assert.ok(css.includes("[cid-inner1]"), "CSS targets inner1");
-        assert.ok(css.includes("[cid-inner3]"), "CSS targets inner3");
+        assert.ok(css.includes("[data-cid-items]"), "CSS targets items");
+        assert.ok(css.includes("[data-cid-inner2]"), "CSS targets inner2");
+        assert.ok(css.includes("[data-cid-inner1]"), "CSS targets inner1");
+        assert.ok(css.includes("[data-cid-inner3]"), "CSS targets inner3");
         assert.ok(css.includes("color: inherit;"));
         assert.ok(css.includes("color: transparent;"));
         assert.ok(css.includes("width: 100px;"));
@@ -741,24 +741,24 @@ describe("createComponent (engine)", () => {
         const { html, css } = renderBound(comp);
         // All semantic names present
         assert.ok(
-          html.includes("cid-inner1"),
+          html.includes("data-cid-inner1"),
           "array inner1 carries semantic name",
         );
         assert.ok(
-          html.includes("cid-inner2"),
+          html.includes("data-cid-inner2"),
           "array inner2 carries semantic name",
         );
-        assert.ok(html.includes("cid-inner5"), "inner5 present");
-        assert.ok(html.includes("cid-inner6"), "inner6 present");
-        assert.ok(html.includes("cid-inner7"), "inner7 present");
-        assert.ok(html.includes("cid-inner8"), "inner8 present");
+        assert.ok(html.includes("data-cid-inner5"), "inner5 present");
+        assert.ok(html.includes("data-cid-inner6"), "inner6 present");
+        assert.ok(html.includes("data-cid-inner7"), "inner7 present");
+        assert.ok(html.includes("data-cid-inner8"), "inner8 present");
         // CSS targets each path
-        assert.ok(css.includes("[cid-inner1]"));
-        assert.ok(css.includes("[cid-inner2]"));
-        assert.ok(css.includes("[cid-inner5]"));
-        assert.ok(css.includes("[cid-inner6]"));
-        assert.ok(css.includes("[cid-inner7]"));
-        assert.ok(css.includes("[cid-inner8]"));
+        assert.ok(css.includes("[data-cid-inner1]"));
+        assert.ok(css.includes("[data-cid-inner2]"));
+        assert.ok(css.includes("[data-cid-inner5]"));
+        assert.ok(css.includes("[data-cid-inner6]"));
+        assert.ok(css.includes("[data-cid-inner7]"));
+        assert.ok(css.includes("[data-cid-inner8]"));
       });
     });
 

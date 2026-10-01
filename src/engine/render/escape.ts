@@ -15,7 +15,7 @@
 // policy in one file makes those differences visible rather than implied by
 // whichever module owned each function.
 
-const PREFIX = "cid-";
+const PREFIX = "data-cid-";
 
 /**
  * HTML-encode an attribute value.
@@ -62,12 +62,12 @@ export function escapeText(value: string): string {
  *
  * A child name is any string the author writes (the key is never validated), so
  * it cannot be pasted into an attribute name or a CSS identifier verbatim:
- * `"my item"` would emit `<span cid-my item>`. The name is therefore encoded
+ * `"my item"` would emit `<span data-cid-my item>`. The name is therefore encoded
  * rather than rejected. `[a-z0-9-]` maps literally; every other UTF-16 code
  * unit, including uppercase letters and `_` itself, maps to `_` followed by its
  * four-digit lowercase hex. Uppercase is folded here, not at either use site,
  * because an HTML attribute name is lowercased by the parser and CSS
- * attribute-name matching is ASCII case-insensitive: `cid-Title` and `cid-title`
+ * attribute-name matching is ASCII case-insensitive: `data-cid-Title` and `data-cid-title`
  * would collapse to one attribute. Escaping the marker as `_005f` makes the
  * encoding injective, so a `> name` selector can never match a different child.
  * Ordinary all-lowercase names are unchanged.

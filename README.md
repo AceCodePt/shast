@@ -145,8 +145,8 @@ const card = createComponent({
 });
 
 const { html, css } = renderComponent(card);
-// html: <div cid-x1y2z3><h1 cid-title>hello</h1></div>
-// css:  scoped rules for [cid-x1y2z3] and its > [cid-title]
+// html: <div data-cid-x1y2z3><h1 data-cid-title>hello</h1></div>
+// css:  scoped rules for [data-cid-x1y2z3] and its > [data-cid-title]
 ```
 
 Now rename `title` to `heading` and forget the CSS:

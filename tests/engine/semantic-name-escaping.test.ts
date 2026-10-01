@@ -15,8 +15,8 @@ describe("special child names pass both walls", () => {
       css: { "> my item": { display: "block" } },
     });
     const { html, css } = renderBound(component);
-    assert.ok(html.includes("<p cid-my_0020item>"), html);
-    assert.ok(css.includes("& > [cid-my_0020item]"), css);
+    assert.ok(html.includes("<p data-cid-my_0020item>"), html);
+    assert.ok(css.includes("& > [data-cid-my_0020item]"), css);
   });
 
   test("a key with quotes and brackets is accepted and rendered escaped", () => {
@@ -26,8 +26,8 @@ describe("special child names pass both walls", () => {
       css: { '> a"]b': { display: "block" } },
     });
     const { html, css } = renderBound(component);
-    assert.ok(html.includes("<p cid-a_0022_005db>"), html);
-    assert.ok(css.includes("& > [cid-a_0022_005db]"), css);
+    assert.ok(html.includes("<p data-cid-a_0022_005db>"), html);
+    assert.ok(css.includes("& > [data-cid-a_0022_005db]"), css);
   });
 
   test("an empty key is accepted and rendered with the bare prefix", () => {
@@ -37,8 +37,8 @@ describe("special child names pass both walls", () => {
       css: { "> ": { display: "block" } },
     });
     const { html, css } = renderBound(component);
-    assert.ok(html.includes("<p cid->"), html);
-    assert.ok(css.includes("& > [cid-]"), css);
+    assert.ok(html.includes("<p data-cid->"), html);
+    assert.ok(css.includes("& > [data-cid-]"), css);
   });
 
   test("case-only-distinct keys stay distinct after HTML lowercasing", () => {
@@ -54,13 +54,13 @@ describe("special child names pass both walls", () => {
       },
     });
     const { html, css } = renderBound(component);
-    const attributes = [...html.matchAll(/<p (cid-[^\s>]+)>/g)].map(
+    const attributes = [...html.matchAll(/<p (data-cid-[^\s>]+)>/g)].map(
       (match) => match[1]!,
     );
     assert.strictEqual(attributes.length, 2);
     const [upper, lower] = attributes as [string, string];
     assert.notStrictEqual(upper.toLowerCase(), lower.toLowerCase());
-    const VALID_ESCAPED_ATTRIBUTE = /^cid-[a-z0-9_-]+$/;
+    const VALID_ESCAPED_ATTRIBUTE = /^data-cid-[a-z0-9_-]+$/;
     for (const attribute of attributes) {
       assert.match(attribute, VALID_ESCAPED_ATTRIBUTE);
     }

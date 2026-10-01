@@ -66,11 +66,11 @@ const planCard = (featured: boolean) => createComponent({
 and CSS with no client runtime. Its actual output for `planCard(true)`:
 
 ```html
-<article cid-a4vysi class="plan featured"><h2 cid-heading>Studio</h2><p cid-price>$18 / mo</p><ul cid-perks><li cid-seats>5 seats</li><li>100 GB</li></ul></article>
+<article data-cid-a4vysi class="plan featured"><h2 data-cid-heading>Studio</h2><p data-cid-price>$18 / mo</p><ul data-cid-perks><li data-cid-seats>5 seats</li><li>100 GB</li></ul></article>
 ```
 
 ```css
-[cid-a4vysi] {
+[data-cid-a4vysi] {
   display: grid;
   grid-template-columns: auto;
   grid-template-areas: "heading price" "perks perks";
@@ -85,19 +85,19 @@ and CSS with no client runtime. Its actual output for `planCard(true)`:
     transform: scale(1.01);
     transition: transform 150ms ease-out;
   }
-  & > [cid-heading] {
+  & > [data-cid-heading] {
     grid-area: heading;
     font-size: calc(var(--space) * 3);
   }
-  & > [cid-price] {
+  & > [data-cid-price] {
     grid-area: price;
     font-weight: 700;
   }
-  & > [cid-perks] {
+  & > [data-cid-perks] {
     grid-area: perks;
     list-style-type: none;
     padding: 0px;
-    & > [cid-seats] {
+    & > [data-cid-seats] {
       color: var(--brand);
     }
   }

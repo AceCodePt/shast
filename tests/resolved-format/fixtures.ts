@@ -487,7 +487,7 @@ export const FIXTURES: Fixture[] = [
   // specificity, decides what the resolver reports. Each is annotated with
   // the emitted selectors and the width that must win.
   {
-    // `[cid-parent] > [cid-child]` is (0,2,0); `[cid-child]` is (0,1,0).
+    // `[data-cid-parent] > [data-cid-child]` is (0,2,0); `[data-cid-child]` is (0,1,0).
     // The ancestor wins, which is the opposite of "own overrides inherited".
     name: "cascade-own-vs-parent",
     viewport: { width: 400, height: 200 },
@@ -519,8 +519,8 @@ export const FIXTURES: Fixture[] = [
     },
   },
   {
-    // `[cid-root] > [cid-mid] > [cid-child]` and
-    // `[cid-mid]:not(#x) > [cid-child]` would both be (0,3,0) but for the
+    // `[data-cid-root] > [data-cid-mid] > [data-cid-child]` and
+    // `[data-cid-mid]:not(#x) > [data-cid-child]` would both be (0,3,0) but for the
     // `:not(#x)`; using a plain class keeps them equal so the tie is broken by
     // source order, and `mid`'s block is printed after `root`'s.
     name: "cascade-source-order-tie",
@@ -577,7 +577,7 @@ export const FIXTURES: Fixture[] = [
     },
   },
   {
-    // Array children all carry the same `cid-<name>`, so one emitted rule
+    // Array children all carry the same `data-cid-<name>`, so one emitted rule
     // styles every entry.
     name: "cascade-array-children",
     viewport: { width: 400, height: 200 },

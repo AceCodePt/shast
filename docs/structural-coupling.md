@@ -169,7 +169,7 @@ instantiations per component:
   unusable as a child (deliberately).
 - **Name children meaningfully.** The `innerHTML` keys are the selector
   namespace — they appear in css blocks (`> title`) and in rendered scoped CSS
-  (`cid-title`).
+  (`data-cid-title`).
 
 ## Known gaps
 

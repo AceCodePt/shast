@@ -88,20 +88,20 @@ describe("createComponent (engine)", () => {
         });
         const { html, css } = renderBound(comp);
         assert.ok(
-          html.includes("cid-items"),
+          html.includes("data-cid-items"),
           "array items carry semantic name",
         );
         assert.ok(
-          html.includes("cid-inner_004bey"),
+          html.includes("data-cid-inner_004bey"),
           "innerKey present on both array elements (object and array entries)",
         );
         assert.ok(
-          html.includes("cid-check"),
+          html.includes("data-cid-check"),
           "check present on deeply nested children",
         );
-        assert.ok(css.includes("[cid-items]"), "CSS targets items");
-        assert.ok(css.includes("[cid-inner_004bey]"), "CSS targets innerKey");
-        assert.ok(css.includes("[cid-check]"), "CSS targets check");
+        assert.ok(css.includes("[data-cid-items]"), "CSS targets items");
+        assert.ok(css.includes("[data-cid-inner_004bey]"), "CSS targets innerKey");
+        assert.ok(css.includes("[data-cid-check]"), "CSS targets check");
         assert.ok(css.includes("color: inherit;"));
       });
 
@@ -140,13 +140,13 @@ describe("createComponent (engine)", () => {
           },
         });
         const { html, css } = renderBound(comp);
-        assert.ok(html.includes("cid-level1"));
-        assert.ok(html.includes("cid-level2"));
-        assert.ok(html.includes("cid-level3"));
+        assert.ok(html.includes("data-cid-level1"));
+        assert.ok(html.includes("data-cid-level2"));
+        assert.ok(html.includes("data-cid-level3"));
         assert.ok(html.includes("found"));
-        assert.ok(css.includes("[cid-level1]"));
-        assert.ok(css.includes("[cid-level2]"));
-        assert.ok(css.includes("[cid-level3]"));
+        assert.ok(css.includes("[data-cid-level1]"));
+        assert.ok(css.includes("[data-cid-level2]"));
+        assert.ok(css.includes("[data-cid-level3]"));
         assert.ok(css.includes("color: inherit;"));
         assert.ok(css.includes("display: block;"));
       });
@@ -174,10 +174,10 @@ describe("createComponent (engine)", () => {
           },
         });
         const { html, css } = renderBound(comp);
-        assert.ok(html.includes("cid-group_0041"));
-        assert.ok(html.includes("cid-group_0042"));
-        assert.ok(css.includes("[cid-group_0041]"));
-        assert.ok(css.includes("[cid-group_0042]"));
+        assert.ok(html.includes("data-cid-group_0041"));
+        assert.ok(html.includes("data-cid-group_0042"));
+        assert.ok(css.includes("[data-cid-group_0041]"));
+        assert.ok(css.includes("[data-cid-group_0042]"));
         assert.ok(css.includes("color: transparent;"));
         assert.ok(css.includes("color: currentColor;"));
         assert.ok(html.includes(">a1</span>"));
@@ -211,8 +211,8 @@ describe("createComponent (engine)", () => {
           },
         });
         const { html, css } = renderBound(comp);
-        assert.ok(html.includes("cid-items"));
-        assert.ok(css.includes("[cid-items]"));
+        assert.ok(html.includes("data-cid-items"));
+        assert.ok(css.includes("[data-cid-items]"));
         assert.ok(css.includes("text-decoration: underline;"));
         assert.ok(css.includes("font: bold;"));
         assert.ok(css.includes("font: italic;"));
@@ -744,14 +744,14 @@ describe("createComponent (engine)", () => {
           },
         });
         const { html, css } = renderBound(comp);
-        assert.ok(html.includes("cid-a"));
-        assert.ok(html.includes("cid-b"));
-        assert.ok(html.includes("cid-c"));
-        assert.ok(css.includes("[cid-a]"));
-        assert.ok(css.includes("[cid-b]"));
-        assert.ok(css.includes("[cid-c]"));
+        assert.ok(html.includes("data-cid-a"));
+        assert.ok(html.includes("data-cid-b"));
+        assert.ok(html.includes("data-cid-c"));
+        assert.ok(css.includes("[data-cid-a]"));
+        assert.ok(css.includes("[data-cid-b]"));
+        assert.ok(css.includes("[data-cid-c]"));
         assert.ok(css.includes("color: transparent;"));
-        assert.ok(html.includes("<span cid-c>deepest</span>"));
+        assert.ok(html.includes("<span data-cid-c>deepest</span>"));
       });
     });
   });
