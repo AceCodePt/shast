@@ -72,7 +72,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // ── MDN color types ────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
   "<color>":
-    "`#${string}` | `rgb(${number} ${number} ${number})` | `rgb(${number} ${number} ${number} / ${number})` | `rgb(${number}, ${number}, ${number})` | `rgba(${number}, ${number}, ${number}, ${number})` | `hsl(${number} ${number}% ${number}%)` | `hsl(${number} ${number}% ${number}% / ${number})` | `hsl(${number}, ${number}%, ${number}%)` | `hsla(${number}, ${number}%, ${number}%, ${number})` | `oklch(${number} ${number} ${number})` | `oklch(${number} ${number} ${number} / ${number})` | `color(display-p3 ${number} ${number} ${number})` | 'transparent' | 'currentColor' | 'inherit' | <var>",
+    "`#${string}` | `rgb(${number} ${number} ${number})` | `rgb(${number} ${number} ${number} / ${number})` | `rgb(${number}, ${number}, ${number})` | `rgba(${number}, ${number}, ${number}, ${number})` | `hsl(${number} ${number}% ${number}%)` | `hsl(${number} ${number}% ${number}% / ${number})` | `hsl(${number}, ${number}%, ${number}%)` | `hsla(${number}, ${number}%, ${number}%, ${number})` | `oklch(${number} ${number} ${number})` | `oklch(${number} ${number} ${number} / ${number})` | `color(display-p3 ${number} ${number} ${number})` | 'black' | 'white' | 'red' | 'blue' | 'green' | 'gray' | 'transparent' | 'currentColor' | 'inherit' | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/alpha-value
   "<alpha-value>": "`${number}` | `${number}%` | <calc> | <var>",
