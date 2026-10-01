@@ -195,7 +195,7 @@ import cssPseudoClassConfig from "./css/pseudo-class-config/variations/${tier}.t
 import cssQueriesConfig from "./css/queries-config/variations/${tier}.ts";
 import cssKeyframesConfig from "./css/keyframes-config/variations/${tier}.ts";
 
-const { createComponent, renderComponent } = engine({
+export const { createComponent, renderComponent } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,
   htmlAttributesConfig,
   htmlTagConfig,
