@@ -2,39 +2,7 @@ import { SUPPORTED_KEYWORDS } from "tsyntax";
 import { htmlTagConfig } from "@/html/tag-config/index.ts";
 import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/common.ts";
 
-// The everyday phrasing vocabulary common shares across every phrasing
-// container (p, headings, a, label, button and the inline formatting tags).
-// Kept as an explicit curated list: common stays a baseline, not the full web
-// platform, so a phrasing parent never falls back to `{ all: true }`.
-const PHRASING_CONTENT = [
-  "#text",
-  "a",
-  "b",
-  "br",
-  "button",
-  "code",
-  "em",
-  "i",
-  "img",
-  "input",
-  "label",
-  "select",
-  "small",
-  "span",
-  "strong",
-  "textarea",
-] as const;
 
-// <summary> also admits the sectioning headings, as full.ts models.
-const SUMMARY_CONTENT = [
-  ...PHRASING_CONTENT,
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6",
-] as const;
 
 export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   a: {
@@ -89,7 +57,26 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   b: {
     display: "inline",
     attributes: {},
-    innerHTML: { include: [...PHRASING_CONTENT] },
+    innerHTML: {
+      include: [
+        "#text",
+        "a",
+        "b",
+        "br",
+        "button",
+        "code",
+        "em",
+        "i",
+        "img",
+        "input",
+        "label",
+        "select",
+        "small",
+        "span",
+        "strong",
+        "textarea",
+      ]
+    },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
@@ -163,7 +150,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   code: {
     display: "inline",
     attributes: {},
-    innerHTML: { include: [...PHRASING_CONTENT] },
+    innerHTML: { include: ["#text", "a", "b", "br", "button", "code", "em", "i", "img", "input", "label", "select", "small", "span", "strong", "textarea"] },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
@@ -215,7 +202,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   em: {
     display: "inline",
     attributes: {},
-    innerHTML: { include: [...PHRASING_CONTENT] },
+    innerHTML: { include: ["#text", "a", "b", "br", "button", "code", "em", "i", "img", "input", "label", "select", "small", "span", "strong", "textarea"] },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
@@ -457,7 +444,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   i: {
     display: "inline",
     attributes: {},
-    innerHTML: { include: [...PHRASING_CONTENT] },
+    innerHTML: { include: ["#text", "a", "b", "br", "button", "code", "em", "i", "img", "input", "label", "select", "small", "span", "strong", "textarea"] },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
@@ -649,7 +636,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   pre: {
     display: "block",
     attributes: {},
-    innerHTML: { include: [...PHRASING_CONTENT] },
+    innerHTML: { include: ["#text", "a", "b", "br", "button", "code", "em", "i", "img", "input", "label", "select", "small", "span", "strong", "textarea"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -696,7 +683,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   small: {
     display: "inline",
     attributes: {},
-    innerHTML: { include: [...PHRASING_CONTENT] },
+    innerHTML: { include: ["#text", "a", "b", "br", "button", "code", "em", "i", "img", "input", "label", "select", "small", "span", "strong", "textarea"] },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
@@ -710,14 +697,14 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   strong: {
     display: "inline",
     attributes: {},
-    innerHTML: { include: [...PHRASING_CONTENT] },
+    innerHTML: { include: ["#text", "a", "b", "br", "button", "code", "em", "i", "img", "input", "label", "select", "small", "span", "strong", "textarea"] },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
   summary: {
     display: "block",
     attributes: {},
-    innerHTML: { include: [...SUMMARY_CONTENT] },
+    innerHTML: { include: ["#text", "a", "b", "br", "button", "code", "em", "i", "img", "input", "label", "select", "small", "span", "strong", "textarea", "h1", "h2", "h3", "h4", "h5", "h6"] },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection", "::marker"],
   },
