@@ -2,6 +2,40 @@ import { SUPPORTED_KEYWORDS } from "tsyntax";
 import { htmlTagConfig } from "@/html/tag-config/index.ts";
 import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/common.ts";
 
+// The everyday phrasing vocabulary common shares across every phrasing
+// container (p, headings, a, label, button and the inline formatting tags).
+// Kept as an explicit curated list: common stays a baseline, not the full web
+// platform, so a phrasing parent never falls back to `{ all: true }`.
+const PHRASING_CONTENT = [
+  "#text",
+  "a",
+  "b",
+  "br",
+  "button",
+  "code",
+  "em",
+  "i",
+  "img",
+  "input",
+  "label",
+  "select",
+  "small",
+  "span",
+  "strong",
+  "textarea",
+] as const;
+
+// <summary> also admits the sectioning headings, as full.ts models.
+const SUMMARY_CONTENT = [
+  ...PHRASING_CONTENT,
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+] as const;
+
 export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   a: {
     display: "inline",
@@ -28,6 +62,12 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         "h6",
         "span",
         "br",
+        "strong",
+        "em",
+        "b",
+        "i",
+        "code",
+        "small",
       ],
     },
     cssPseudoClass: [":link", ":visited", ":any-link"],
@@ -36,6 +76,28 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   article: {
     display: "block",
     attributes: {},
+    innerHTML: { all: true },
+    cssPseudoClass: [],
+    cssPseudoElement: [
+      "::before",
+      "::after",
+      "::first-letter",
+      "::first-line",
+      "::selection",
+    ],
+  },
+  b: {
+    display: "inline",
+    attributes: {},
+    innerHTML: { include: [...PHRASING_CONTENT] },
+    cssPseudoClass: [],
+    cssPseudoElement: ["::before", "::after", "::selection"],
+  },
+  blockquote: {
+    display: "block",
+    attributes: {
+      cite: "string | undefined",
+    },
     innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: [
@@ -81,14 +143,86 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       value: "string | undefined",
       form: "string | undefined",
     },
-    innerHTML: { include: ["#text", "span", "img", "br"] },
+    innerHTML: {
+      include: [
+        "#text",
+        "span",
+        "img",
+        "br",
+        "strong",
+        "em",
+        "b",
+        "i",
+        "code",
+        "small",
+      ],
+    },
     cssPseudoClass: [":disabled", ":enabled"],
     cssPseudoElement: ["::before", "::after", "::selection"],
+  },
+  code: {
+    display: "inline",
+    attributes: {},
+    innerHTML: { include: [...PHRASING_CONTENT] },
+    cssPseudoClass: [],
+    cssPseudoElement: ["::before", "::after", "::selection"],
+  },
+  details: {
+    display: "block",
+    attributes: {
+      open: "boolean | undefined",
+    },
+    innerHTML: { include: ["summary", "div", "p", "ul", "ol", "table"] },
+    cssPseudoClass: [":open"],
+    cssPseudoElement: [
+      "::before",
+      "::after",
+      "::first-letter",
+      "::first-line",
+      "::selection",
+      "::details-content",
+    ],
+  },
+  dialog: {
+    display: "block",
+    attributes: {
+      open: "boolean | undefined",
+    },
+    innerHTML: { all: true },
+    cssPseudoClass: [":open", ":modal"],
+    cssPseudoElement: [
+      "::before",
+      "::after",
+      "::first-letter",
+      "::first-line",
+      "::selection",
+      "::backdrop",
+    ],
   },
   div: {
     display: "block",
     attributes: {},
     innerHTML: { all: true },
+    cssPseudoClass: [],
+    cssPseudoElement: [
+      "::before",
+      "::after",
+      "::first-letter",
+      "::first-line",
+      "::selection",
+    ],
+  },
+  em: {
+    display: "inline",
+    attributes: {},
+    innerHTML: { include: [...PHRASING_CONTENT] },
+    cssPseudoClass: [],
+    cssPseudoElement: ["::before", "::after", "::selection"],
+  },
+  figure: {
+    display: "block",
+    attributes: {},
+    innerHTML: { include: ["img"] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -141,7 +275,21 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h1: {
     display: "block",
     attributes: {},
-    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
+    innerHTML: {
+      include: [
+        "#text",
+        "span",
+        "a",
+        "br",
+        "img",
+        "strong",
+        "em",
+        "b",
+        "i",
+        "code",
+        "small",
+      ],
+    },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -154,7 +302,21 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h2: {
     display: "block",
     attributes: {},
-    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
+    innerHTML: {
+      include: [
+        "#text",
+        "span",
+        "a",
+        "br",
+        "img",
+        "strong",
+        "em",
+        "b",
+        "i",
+        "code",
+        "small",
+      ],
+    },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -167,7 +329,21 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h3: {
     display: "block",
     attributes: {},
-    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
+    innerHTML: {
+      include: [
+        "#text",
+        "span",
+        "a",
+        "br",
+        "img",
+        "strong",
+        "em",
+        "b",
+        "i",
+        "code",
+        "small",
+      ],
+    },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -180,7 +356,21 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h4: {
     display: "block",
     attributes: {},
-    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
+    innerHTML: {
+      include: [
+        "#text",
+        "span",
+        "a",
+        "br",
+        "img",
+        "strong",
+        "em",
+        "b",
+        "i",
+        "code",
+        "small",
+      ],
+    },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -193,7 +383,21 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h5: {
     display: "block",
     attributes: {},
-    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
+    innerHTML: {
+      include: [
+        "#text",
+        "span",
+        "a",
+        "br",
+        "img",
+        "strong",
+        "em",
+        "b",
+        "i",
+        "code",
+        "small",
+      ],
+    },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -206,7 +410,21 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   h6: {
     display: "block",
     attributes: {},
-    innerHTML: { include: ["#text", "span", "a", "br", "img"] },
+    innerHTML: {
+      include: [
+        "#text",
+        "span",
+        "a",
+        "br",
+        "img",
+        "strong",
+        "em",
+        "b",
+        "i",
+        "code",
+        "small",
+      ],
+    },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -228,6 +446,20 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       "::first-line",
       "::selection",
     ],
+  },
+  hr: {
+    display: "block",
+    attributes: {},
+    innerHTML: { include: [] },
+    cssPseudoClass: [],
+    cssPseudoElement: [],
+  },
+  i: {
+    display: "inline",
+    attributes: {},
+    innerHTML: { include: [...PHRASING_CONTENT] },
+    cssPseudoClass: [],
+    cssPseudoElement: ["::before", "::after", "::selection"],
   },
   img: {
     display: "inline",
@@ -301,7 +533,22 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       for: "string | undefined",
       form: "string | undefined",
     },
-    innerHTML: { include: ["#text", "a", "input", "span", "img", "br"] },
+    innerHTML: {
+      include: [
+        "#text",
+        "a",
+        "input",
+        "span",
+        "img",
+        "br",
+        "strong",
+        "em",
+        "b",
+        "i",
+        "code",
+        "small",
+      ],
+    },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
   },
@@ -358,10 +605,51 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       "::selection",
     ],
   },
+  option: {
+    display: "block",
+    attributes: {
+      value: "string | undefined",
+      selected: "boolean | undefined",
+      disabled: "boolean | undefined",
+      label: "string | undefined",
+    },
+    innerHTML: { include: ["#text"] },
+    cssPseudoClass: [":disabled", ":checked", ":default"],
+    cssPseudoElement: ["::before", "::after", "::selection"],
+  },
   p: {
     display: "block",
     attributes: {},
-    innerHTML: { include: ["#text", "span", "a", "img", "input", "br", "label"] },
+    innerHTML: {
+      include: [
+        "#text",
+        "span",
+        "a",
+        "img",
+        "input",
+        "br",
+        "label",
+        "strong",
+        "em",
+        "b",
+        "i",
+        "code",
+        "small",
+      ],
+    },
+    cssPseudoClass: [],
+    cssPseudoElement: [
+      "::before",
+      "::after",
+      "::first-letter",
+      "::first-line",
+      "::selection",
+    ],
+  },
+  pre: {
+    display: "block",
+    attributes: {},
+    innerHTML: { include: [...PHRASING_CONTENT] },
     cssPseudoClass: [],
     cssPseudoElement: [
       "::before",
@@ -384,12 +672,54 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
       "::selection",
     ],
   },
+  select: {
+    display: "inline-block",
+    attributes: {
+      name: "string | undefined",
+      disabled: "boolean | undefined",
+      required: "boolean | undefined",
+      multiple: "boolean | undefined",
+      size: "number | undefined",
+      form: "string | undefined",
+    },
+    innerHTML: { include: ["option"] },
+    cssPseudoClass: [
+      ":disabled",
+      ":enabled",
+      ":valid",
+      ":invalid",
+      ":required",
+      ":optional",
+    ],
+    cssPseudoElement: [],
+  },
+  small: {
+    display: "inline",
+    attributes: {},
+    innerHTML: { include: [...PHRASING_CONTENT] },
+    cssPseudoClass: [],
+    cssPseudoElement: ["::before", "::after", "::selection"],
+  },
   span: {
     display: "inline",
     attributes: {},
     innerHTML: { all: true },
     cssPseudoClass: [],
     cssPseudoElement: ["::before", "::after", "::selection"],
+  },
+  strong: {
+    display: "inline",
+    attributes: {},
+    innerHTML: { include: [...PHRASING_CONTENT] },
+    cssPseudoClass: [],
+    cssPseudoElement: ["::before", "::after", "::selection"],
+  },
+  summary: {
+    display: "block",
+    attributes: {},
+    innerHTML: { include: [...SUMMARY_CONTENT] },
+    cssPseudoClass: [],
+    cssPseudoElement: ["::before", "::after", "::selection", "::marker"],
   },
   table: {
     display: "table",
