@@ -41,6 +41,10 @@
 	],
 	"author": "Sagi Carmel (https://github.com/AceCodePt)",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/AceCodePt/shast.git"
+	},
 	"packageManager": "pnpm@11.17.0",
 	"devDependencies": {
 		"@types/node": "^26.1.2",
