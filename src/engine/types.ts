@@ -607,6 +607,30 @@ type WithDefaultDisplay<
         ? { display: HTMLTagConfig[T["tag"]]["display"] }
         : {});
 
+// The element's effective value: the gates written in the enclosing
+// same-element blocks (`Inherited`) merged with the ones written here
+// (`Written`). The block's written gates WIN: the inherited keys that
+// `Written` also names are dropped before the intersection, so an inherited
+// `display: "block"` under a written `display: "flex"` does not collapse the
+// pair to `never` the way a plain value intersection would.
+type MergeElementValue<
+  Inherited extends Record<string, any>,
+  Written extends Record<string, any>,
+> = {
+  [K in Exclude<keyof Inherited, keyof Written>]: Inherited[K];
+} & Written;
+
+// `WithDefaultDisplay` applied to the element's effective value. This has to be
+// ONE named alias rather than two copies of the conditional: `DependentSelfProps`
+// is instantiated with it twice -- once as a member of the result intersection
+// and once inside the locked-prop exclusion -- and TypeScript caches by type
+// IDENTITY, not by syntactic shape. See the note on `WithDefaultDisplay` above.
+type ElementSelfValue<
+  HTMLTagConfig extends BaseHTMLTagConfig,
+  T extends BaseComponentStructure,
+  CSSElementValue extends Record<string, any>,
+> = WithDefaultDisplay<HTMLTagConfig, T, CSSElementValue>;
+
 type DependentChildrenProps<
   Keywords extends SupportedKeywordsConfig,
   CSSSyntaxConfig extends BaseCSSSyntaxConfig,
@@ -1249,6 +1273,20 @@ type ValidateComponentCSSStructure<
     CSSSyntaxConfig,
     CSSAttributesConfig
   >,
+  // The target element's effective value: the gates written for it in this
+  // block and in every enclosing block that targets the same element
+  // (`:hover`, `@media`, `&.class`). It resets at a `> child` or `::` block,
+  // which target a different box. Defaulted to `CSSValue` so the top-level call
+  // keeps today's behaviour (`CSSValue` is a `Record` there, and is read as one
+  // only under the `CSSValue extends Record` guard above); the tag's implicit
+  // display is NOT part of it (it is applied only to the self slot, via
+  // `ElementSelfValue`).
+  CSSElementValue extends Record<string, any> = CSSValue extends Record<
+    string,
+    any
+  >
+    ? CSSValue
+    : {},
 > = [CSSValue] extends [never]
   ? {}
   : CSSValue extends Record<string, any>
@@ -1272,7 +1310,8 @@ type ValidateComponentCSSStructure<
                   >,
                   CSSValue[`> ${K & string}`],
                   IsInPseudoElement,
-                  CSSValue
+                  CSSElementValue,
+                  CSSValue[`> ${K & string}`]
                 >
               : T["innerHTML"][K] extends Record<string, any>
                 ? ValidateComponentCSSStructure<
@@ -1287,7 +1326,8 @@ type ValidateComponentCSSStructure<
                     T["innerHTML"][K],
                     CSSValue[`> ${K & string}`],
                     IsInPseudoElement,
-                    CSSValue
+                    CSSElementValue,
+                    CSSValue[`> ${K & string}`]
                   >
                 : never
           : T["innerHTML"][K];
@@ -1340,7 +1380,7 @@ type ValidateComponentCSSStructure<
           Keywords,
           CSSSyntaxConfig,
           CSSAttributesConfig,
-          WithDefaultDisplay<HTMLTagConfig, T, CSSValue>
+          ElementSelfValue<HTMLTagConfig, T, CSSElementValue>
         > & {
           // NOTE: written inline rather than through the `LockedProps` alias on
           // purpose. A type alias applied to type arguments keeps its
@@ -1356,7 +1396,7 @@ type ValidateComponentCSSStructure<
                   Keywords,
                   CSSSyntaxConfig,
                   CSSAttributesConfig,
-                  WithDefaultDisplay<HTMLTagConfig, T, CSSValue>
+                  ElementSelfValue<HTMLTagConfig, T, CSSElementValue>
                 >
               | keyof DependentChildrenProps<
                   Keywords,
@@ -1402,7 +1442,8 @@ type ValidateComponentCSSStructure<
             T,
             CSSValue[K],
             IsInPseudoElement,
-            CSSParent
+            CSSParent,
+            MergeElementValue<CSSElementValue, CSSValue[K]>
           >;
         } & {
           [
@@ -1420,7 +1461,8 @@ type ValidateComponentCSSStructure<
                 T,
                 CSSValue[K],
                 IsInPseudoElement,
-                CSSParent
+                CSSParent,
+                MergeElementValue<CSSElementValue, CSSValue[K]>
               >
             : `Query block '${K}' must be a CSS block object`;
         } & (false extends IsInPseudoElement
@@ -1443,7 +1485,8 @@ type ValidateComponentCSSStructure<
                 T,
                 CSSValue[K],
                 true,
-                CSSValue
+                CSSElementValue,
+                CSSValue[K]
               >;
             } & ("class" extends keyof T["attributes"]
               ? T["attributes"]["class"] extends string
@@ -1462,7 +1505,8 @@ type ValidateComponentCSSStructure<
                       T,
                       CSSValue[`&.${K}`],
                       false,
-                      CSSParent
+                      CSSParent,
+                      MergeElementValue<CSSElementValue, CSSValue[`&.${K}`]>
                     >;
                   }
                 : {}

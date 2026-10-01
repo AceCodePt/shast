@@ -621,13 +621,26 @@ animation: "fade 1s linear",     // renders the referenced @keyframes exactly on
 works the same way: `input[type=checkbox]` unlocks `checked`, and a gate whose
 value is a single literal is filled in for you when omitted.
 
+A gate is **element-scoped**, and the element does not change because the block
+that styles it did: the gates follow the element into every block that targets
+it - `:hover`, `@media`, `@container`, `&.class` - so a single `display: flex`
+at the component level unlocks `gap` and `justify-content` inside all of them.
+The gates **reset at a different box**: a `> child` block starts from the
+child's own gates (plus its implicit display), and a `::before` / `::after`
+block generates its own box, so its *self* slot needs its own `display`, while
+its *children* half (e.g. `flex`) still reads the element's gates.
+
 ```ts
 // valid - display: grid unlocks the grid properties, and the child's
-// grid-area is checked against the parent's literal areas
+// grid-area is checked against the element's literal areas even through :hover
 css: {
   display: "grid",
   "grid-template-areas": '"heading price" "perks perks"',
   "> heading": { "grid-area": "heading" },
+  ":hover": {
+    "> heading": { "grid-area": "heading" },
+    gap: "1rem",
+  },
 }
 ```
 
