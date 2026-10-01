@@ -120,8 +120,8 @@ const CALC_ATTRIBUTES = cssAttributeConfig(SUPPORTED_KEYWORDS, CALC_SYNTAX, {
     block: { self: {}, children: {} },
     inline: { self: {}, children: {} },
   },
-  width: "<calc-size>",
-  height: "<calc-size>",
+  width: ["<calc-size>"],
+  height: ["<calc-size>"],
 });
 
 const CALC_TAGS = htmlTagConfig(

@@ -1,10 +1,9 @@
-import type {
-  DSLInfer,
-  SupportedKeywordsConfig,
-} from "tsyntax";
+import type { SupportedKeywordsConfig } from "tsyntax";
 import type {
   BaseCSSAttributeComplexValue,
   BaseCSSAttributesComplexConfig,
+  CSSAttributeArms,
+  InferCSSAttributeValue,
 } from "@/css/attribute-config/types.ts";
 import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 import type {
@@ -92,14 +91,12 @@ type FramePropertyValueOk<
   A extends BaseCSSAttributesComplexConfig,
   K extends keyof A & string,
   V,
-> = A[K] extends string
-  ? V extends DSLInfer<Keywords & S, A[K]>
+> = A[K] extends BaseCSSAttributeComplexValue
+  ? V extends ResolveComplexValue<Keywords, S, keyof A[K] & string>
     ? true
     : false
-  : A[K] extends BaseCSSAttributeComplexValue
-    ? V extends ResolveComplexValue<Keywords, S, keyof A[K] & string>
-      ? true
-      : false
+  : V extends InferCSSAttributeValue<Keywords & S, Extract<A[K], CSSAttributeArms>>
+    ? true
     : false;
 
 type FrameProperties<
@@ -109,7 +106,7 @@ type FrameProperties<
   P extends Record<string, any>,
 > = {
   [K in keyof P]: K extends string
-    ? K extends KeysMatching<A, string>
+    ? K extends KeysMatching<A, readonly string[]>
       ? FramePropertyValueOk<Keywords, S, A, K, P[K]> extends true
         ? P[K]
         : `Invalid value for '${K}': '${P[K] & string}'`

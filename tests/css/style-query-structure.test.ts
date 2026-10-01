@@ -21,7 +21,7 @@ const STYLE_QUERY_ATTRIBUTES = cssAttributeConfig(
   SUPPORTED_KEYWORDS,
   COMMON_SYNTAX,
   {
-    color: "string",
+    color: ["string"],
     display: {
       block: { self: {}, children: {} },
       inline: { self: {}, children: {} },

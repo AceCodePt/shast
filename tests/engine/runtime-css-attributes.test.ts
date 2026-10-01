@@ -14,13 +14,13 @@ import {
 
 describe("runtime CSS attribute validation", () => {
   const CSS_ATTRS = cssAttributeConfig(SUPPORTED_KEYWORDS, MOCK_CSS_SYNTAX, {
-    color: "string",
+    color: ["string"],
     display: {
-      block: { self: { width: "string" }, children: {} },
-      inline: { self: { "vertical-align": "string" }, children: {} },
+      block: { self: { width: ["string"] }, children: {} },
+      inline: { self: { "vertical-align": ["string"] }, children: {} },
       flex: {
-        self: { "flex-direction": "'row' | 'column'" },
-        children: { flex: "string" },
+        self: { "flex-direction": ["'row'", "'column'"] },
+        children: { flex: ["string"] },
       },
     },
   } as const);
