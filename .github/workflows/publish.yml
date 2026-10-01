@@ -24,4 +24,4 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
-      - run: pnpm --filter @ace-code/shast publish --provenance --no-git-checks
+      - run: pnpm publish --provenance --no-git-checks # Trusted publisher (OIDC) auth
