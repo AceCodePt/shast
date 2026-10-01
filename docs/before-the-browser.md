@@ -207,9 +207,9 @@ shast checks what is mechanically decidable from declared facts. It does not
 pretend to check what depends on the browser's layout engine or on a runtime
 it cannot see — actual overflow, intrinsic sizes, contrast, specificity
 conflicts, and conditional layout semantics are out of scope and listed as
-such in the README. The known remaining gap is pseudo-class/element *usage*,
-which the type wall checks but the runtime does not; see the README's
-[Limitations](../README.md#limitations).
+such in [`limitations.md`](limitations.md). The known remaining gap is
+pseudo-class/element *usage*, which the type wall checks but the runtime does
+not; see [`limitations.md`](limitations.md).
 
 The claim this document makes is the keepable one: the silent CSS mistakes a
 browser would hide are, for the parts of the surface shast declares, found
