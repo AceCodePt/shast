@@ -80,7 +80,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // ── Image types ────────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/image
   "<image>":
-    "`url(${string})` | `linear-gradient(${string})` | `radial-gradient(${string})` | `conic-gradient(${string})` | `repeating-linear-gradient(${string})` | `repeating-radial-gradient(${string})` | `repeating-conic-gradient(${string})` | <var>",
+    "<url> | `linear-gradient(${string})` | `radial-gradient(${string})` | `conic-gradient(${string})` | `repeating-linear-gradient(${string})` | `repeating-radial-gradient(${string})` | `repeating-conic-gradient(${string})` | <var>",
 
   // ── Position / geometry types ──────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/position_value
