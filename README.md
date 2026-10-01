@@ -77,12 +77,12 @@ There are exactly two points before the client, and the first one catches
 almost everything:
 
 ```
-  you write                 build                serve                 user
-     │                        │                    │                     │
-     ▼                        ▼                    ▼                     ▼
-  ┌───────┐              ┌─────────┐        ┌───────────────┐      ┌──────────┐
-  │  tsc  │─────────────▶│  bundle │───────▶│ createComponent│─────▶│ browser  │
-  └───────┘              └─────────┘        └───────────────┘      └──────────┘
+  you write                 build                 serve                  user
+     │                        │                     │                     │
+     ▼                        ▼                     ▼                     ▼
+  ┌───────┐              ┌──────────┐        ┌─────────────────┐      ┌───────────┐
+  │  tsc  │─────────────▶│  bundle  │───────▶│ createComponent │─────▶│  browser  │
+  └───────┘              └──────────┘        └─────────────────┘      └───────────┘
       ▲                                          ▲
   catches typed code                    catches the rest: `as any`,
   before the build                      generated code, no `tsc` in the loop
