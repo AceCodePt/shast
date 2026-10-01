@@ -3,9 +3,10 @@
 // the engine and one config-variation tier into a consumer's tree, rewriting
 // every import so the result is self-contained, and installs the `tsyntax`
 // package the vendored tree imports. The chosen tier is selected with `--tier`
-// (default `common`); only that tier's variation files are written, and no
-// barrel or generated entry point is produced - the consumer imports the engine
-// and family entry points directly.
+// (default `common`); only that tier's variation files are written. `add` also
+// generates a `<dest>/index.ts` that wires the engine to the chosen tier; pass
+// `--no-entry` to skip it and import the engine and family entry points
+// directly.
 //
 // Run through the package script: `pnpm shast add [dest] [--tier <tier>]`.
 
@@ -34,6 +35,11 @@ export interface AddOptions {
   tier?: Tier;
   /** Overwrite files that already exist in the destination. */
   force?: boolean;
+  /**
+   * Skip the generated `<dest>/index.ts`. Defaults to false, so `add` writes a
+   * wiring entry unless this is set.
+   */
+  noEntry?: boolean;
   /** Repo root to copy `src/` from. Defaults to this worktree. */
   sourceRoot?: string;
 }
@@ -162,11 +168,55 @@ function isNonChosenVariation(rel: string, tier: Tier): boolean {
 
 const REPO_ROOT = fileURLToPath(new URL("..", import.meta.url));
 
-interface PlannedFile {
-  /** Absolute source path. */
-  source: string;
-  /** Destination-relative, posix path. */
-  destRel: string;
+/**
+ * A file `add` writes. Either a copy of a source file (`source` set) or a
+ * generated file with no source (`content` set). The two are mutually exclusive.
+ */
+type PlannedFile =
+  | { source: string; destRel: string; content?: undefined }
+  | { source?: undefined; destRel: string; content: string };
+
+/**
+ * The generated `<dest>/index.ts`: wires the engine to the chosen tier's
+ * variation files and runs a minimal component. Every specifier is relative to
+ * the destination root, so the file is self-contained and needs no rewriting.
+ * The bare `tsyntax` specifier is left as-is; the package is installed on the
+ * consumer side.
+ */
+export function generateEntry(tier: Tier): string {
+  return `import engine from "./engine/index.ts";
+import { cssPropertiesConfig } from "./css/properties-config/index.ts";
+import { SUPPORTED_KEYWORDS } from "tsyntax";
+import htmlTagConfig from "./html/tag-config/variations/${tier}.ts";
+import htmlAttributesConfig from "./html/attribute-config/variations/${tier}.ts";
+import cssSyntaxConfig from "./css/syntax-config/variations/${tier}.ts";
+import cssAttributesConfig from "./css/attribute-config/variations/${tier}.ts";
+import cssPseudoClassConfig from "./css/pseudo-class-config/variations/${tier}.ts";
+import cssQueriesConfig from "./css/queries-config/variations/${tier}.ts";
+import cssKeyframesConfig from "./css/keyframes-config/variations/${tier}.ts";
+
+const { createComponent, renderComponent } = engine({
+  supportedKeywords: SUPPORTED_KEYWORDS,
+  htmlAttributesConfig,
+  htmlTagConfig,
+  cssSyntaxConfig,
+  cssAttributesConfig,
+  cssPseudoClassConfig,
+  cssPropertiesConfig: cssPropertiesConfig(
+    SUPPORTED_KEYWORDS,
+    cssSyntaxConfig,
+    {},
+  ),
+  cssQueriesConfig,
+  cssKeyframesConfig,
+});
+
+const comp = createComponent({
+  tag: "div",
+});
+
+renderComponent(comp);
+`;
 }
 
 /** Thrown when the destination would be resolved as CommonJS. */
@@ -260,14 +310,25 @@ export function planVendor(options: AddOptions): PlannedFile[] {
     });
   }
 
+  // The generated entry joins the plan like any copied file, so an existing
+  // consumer index.ts is a collision that only --force replaces.
+  if (!(options.noEntry ?? false)) {
+    planned.push({
+      content: generateEntry(tier),
+      destRel: "index.ts",
+    });
+  }
+
   return planned.sort((a, b) => (a.destRel < b.destRel ? -1 : 1));
 }
 
 /**
  * Destination-relative shast-owned paths a previous `add` may have left behind
  * and this run must prune: the two non-chosen tier files in every variation
- * directory the source walk visits, plus the root `index.ts` barrel that `add`
- * no longer vendors. Pure: it reads the source directories but writes nothing.
+ * directory the source walk visits. The root `index.ts` is pruned only under
+ * `--no-entry`: with entry generation on it is a planned file, so an existing
+ * `index.ts` is a collision the `--force` path reports and replaces instead.
+ * Pure: it reads the source directories but writes nothing.
  */
 export function planStale(options: AddOptions): string[] {
   const sourceRoot = options.sourceRoot ?? REPO_ROOT;
@@ -289,7 +350,10 @@ export function planStale(options: AddOptions): string[] {
     }
   }
 
-  const stale = ["index.ts"];
+  const stale: string[] = [];
+  // With entry generation on, index.ts is planned and handled by the collision
+  // path; only `--no-entry` leaves an old barrel to prune.
+  if (options.noEntry ?? false) stale.push("index.ts");
   for (const dir of variationDirs) {
     for (const candidate of TIERS) {
       if (candidate !== tier) stale.push(`${dir}/${candidate}.ts`);
@@ -564,7 +628,8 @@ export function preflight(options: AddOptions): AddPreflight {
 }
 
 /**
- * Vendor the engine and exactly one config-variation tier into `dest`.
+ * Vendor the engine and exactly one config-variation tier into `dest`, plus a
+ * generated `<dest>/index.ts` entry unless `noEntry` is set.
  *
  * Throws {@link CommonJSDestinationError} when `dest` would be resolved as
  * CommonJS, and {@link ExistingDestinationError} when any planned file already
@@ -584,10 +649,10 @@ export function add(options: AddOptions): AddResult {
   const replacedDiffering: string[] = [];
 
   for (const file of planned) {
-    const content = rewriteImports(
-      readFileSync(file.source, "utf8"),
-      file.destRel,
-    );
+    const content =
+      file.content !== undefined
+        ? file.content
+        : rewriteImports(readFileSync(file.source, "utf8"), file.destRel);
     const target = path.join(dest, file.destRel);
     if (collisionSet.has(file.destRel)) {
       replaced.push(file.destRel);
@@ -601,7 +666,8 @@ export function add(options: AddOptions): AddResult {
 
   // Prune stale shast-owned paths after the collision check. There is no
   // byte-comparison guard: backwards compatibility is explicitly not required,
-  // so the non-chosen tiers and the old root barrel are removed outright.
+  // so the non-chosen tiers (and, under --no-entry, an old root barrel) are
+  // removed outright.
   const removed: string[] = [];
   for (const rel of planStale(options)) {
     const target = path.join(dest, rel);
@@ -1179,17 +1245,15 @@ function reconcileTsconfig(
 }
 
 const USAGE = `Usage: shast add [dest] [--tier minimal|common|full] [--force] [--yes]
-                 [--no-install] [--package-manager npm|pnpm|yarn|bun]
+                 [--no-install] [--no-entry] [--package-manager npm|pnpm|yarn|bun]
 
-Vendor shast's engine and one config-variation tier into a consumer tree, and
-install the tsyntax package the tree imports. Only the chosen tier's variation
-files are written; the vendored tree has no barrel, so import the engine and
-family entry points directly.
+Vendor shast's engine and one config-variation tier into a consumer tree,
+generate a <dest>/index.ts that wires them, and install the tsyntax package the
+tree imports. Only the chosen tier's variation files are written.
 
   dest              destination directory (default: src/shast)
   --tier            config-variation tier to vendor (default: common). Stale
-                    files from a different tier, and the old root index.ts, are
-                    removed
+                    files from a different tier are removed
   --force           overwrite files that already exist in the destination,
                     reporting which replaced files differ from the bytes being
                     written
@@ -1197,6 +1261,8 @@ family entry points directly.
                     "allowImportingTsExtensions" to the nearest tsconfig.json
                     without prompting (for CI)
   --no-install      do not install tsyntax; print the command to run instead
+  --no-entry        do not generate <dest>/index.ts; import the engine and
+                    family entry points directly instead
   --package-manager force a package manager instead of detecting one
 
 tsyntax is installed with your project's package manager, detected from its
@@ -1217,6 +1283,7 @@ interface ParsedArgs {
   force: boolean;
   yes: boolean;
   noInstall: boolean;
+  noEntry: boolean;
   packageManager?: PackageManager;
 }
 
@@ -1226,6 +1293,7 @@ function parseAddArgs(args: readonly string[]): ParsedArgs {
   let force = false;
   let yes = false;
   let noInstall = false;
+  let noEntry = false;
   let packageManager: PackageManager | undefined;
   let destSeen = false;
 
@@ -1238,6 +1306,8 @@ function parseAddArgs(args: readonly string[]): ParsedArgs {
       yes = true;
     } else if (token === "--no-install") {
       noInstall = true;
+    } else if (token === "--no-entry") {
+      noEntry = true;
     } else if (token === "--tier") {
       const value = args[i + 1];
       if (value === undefined) {
@@ -1273,8 +1343,8 @@ function parseAddArgs(args: readonly string[]): ParsedArgs {
   }
 
   return packageManager === undefined
-    ? { dest, tier, force, yes, noInstall }
-    : { dest, tier, force, yes, noInstall, packageManager };
+    ? { dest, tier, force, yes, noInstall, noEntry }
+    : { dest, tier, force, yes, noInstall, noEntry, packageManager };
 }
 
 /**

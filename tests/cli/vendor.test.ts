@@ -190,6 +190,7 @@ describe("shast add: copy set", () => {
       "html/attribute-config/index.ts",
       "html/tag-config/types.ts",
       "types.ts",
+      "index.ts",
     ]) {
       assert.ok(existsSync(path.join(dest, rel)), `expected ${rel} to exist`);
     }
@@ -226,9 +227,21 @@ describe("shast add: tier selection", () => {
         }
       }
 
-      // No vendored barrel of any kind: the consumer imports the engine and
-      // family entry points directly.
-      assert.ok(!existsSync(path.join(dest, "index.ts")));
+      // The generated entry imports only the chosen tier's variation files.
+      const entry = read(dest, "index.ts");
+      for (const dir of VARIATION_DIRS) {
+        assert.ok(
+          entry.includes(`"./${dir}/${tier}.ts"`),
+          `entry should import ${dir}/${tier}.ts`,
+        );
+        for (const other of VARIANTS) {
+          if (other === tier) continue;
+          assert.ok(
+            !entry.includes(`"./${dir}/${other}.ts"`),
+            `entry should not import ${dir}/${other}.ts`,
+          );
+        }
+      }
     });
   }
 
@@ -241,14 +254,16 @@ describe("shast add: tier selection", () => {
       assert.ok(!existsSync(path.join(dest, `${dir}/minimal.ts`)));
       assert.ok(!existsSync(path.join(dest, `${dir}/full.ts`)));
     }
-    assert.ok(!existsSync(path.join(dest, "index.ts")));
+    assert.ok(
+      read(dest, "index.ts").includes('"./html/tag-config/variations/common.ts"'),
+    );
   });
 
-  test("switching tiers prunes the stale tier and the old root barrel", () => {
+  test("switching tiers prunes the stale tier and regenerates the entry", () => {
     const dest = tempDest();
     add({ dest, tier: "full" });
     // Simulate a tree vendored before tiers existed: the old barrel sat at the
-    // root, and add() no longer writes one.
+    // root. The generated entry now replaces it, rather than being pruned.
     writeFileSync(path.join(dest, "index.ts"), "// old vendored barrel\n");
 
     const result = add({ dest, tier: "common", force: true });
@@ -271,8 +286,56 @@ describe("shast add: tier selection", () => {
         `removed should name ${dir}/full.ts`,
       );
     }
+    assert.ok(existsSync(path.join(dest, "index.ts")));
+    assert.ok(
+      read(dest, "index.ts").includes('"./html/tag-config/variations/common.ts"'),
+    );
+    assert.ok(!result.removed.includes("index.ts"));
+  });
+
+  test("--no-entry omits the entry and prunes an old root barrel", () => {
+    const dest = tempDest();
+    add({ dest, tier: "full" });
+    writeFileSync(path.join(dest, "index.ts"), "// old vendored barrel\n");
+
+    const result = add({ dest, tier: "full", noEntry: true, force: true });
+
     assert.ok(!existsSync(path.join(dest, "index.ts")));
     assert.ok(result.removed.includes("index.ts"));
+    assert.ok(!result.written.includes("index.ts"));
+  });
+});
+
+describe("shast add: generated entry", () => {
+  test("wires the engine to the chosen tier's variation files", () => {
+    const dest = tempDest();
+    add({ dest, tier: "minimal" });
+
+    const entry = read(dest, "index.ts");
+    assert.ok(entry.includes('import engine from "./engine/index.ts"'));
+    assert.ok(
+      entry.includes(
+        'import { cssPropertiesConfig } from "./css/properties-config/index.ts"',
+      ),
+    );
+    assert.ok(entry.includes('import { SUPPORTED_KEYWORDS } from "tsyntax"'));
+    for (const dir of VARIATION_DIRS) {
+      assert.ok(entry.includes(`"./${dir}/minimal.ts"`), dir);
+    }
+    assert.ok(
+      entry.includes("const { createComponent, renderComponent } = engine({"),
+    );
+    assert.ok(entry.includes('renderComponent(comp)'));
+    // The generated file authors relative specifiers; it never needs rewriting.
+    assert.ok(!entry.includes("@/"));
+  });
+
+  test("--no-entry writes no index.ts", () => {
+    const dest = tempDest();
+    add({ dest, noEntry: true });
+
+    assert.ok(!existsSync(path.join(dest, "index.ts")));
+    assert.ok(!read(dest, "types.ts").includes("index.ts"));
   });
 });
 
