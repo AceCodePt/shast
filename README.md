@@ -88,10 +88,13 @@ almost everything:
   before the build                      generated code, no `tsc` in the loop
 ```
 
-Both walls read the **same registry data**, so they cannot drift: a fact the
-editor enforces is a fact the server enforces, with the same wording. That is
-the property that makes "fail fast" trustworthy - you are never told "it's
-fine" by one wall and "it's broken" by the other.
+Both walls read the **same registry data**, and where a fact must be derived
+from the component shape (such as the implicit `display` of an array child) both
+walls derive it the same way, so they cannot drift: a fact the editor enforces
+is a fact the server enforces, with the same wording. That is the property that
+makes "fail fast" trustworthy - you are never told "it's fine" by one wall and
+"it's broken" by the other. Each such shared derivation is pinned by a test
+that asserts both walls agree.
 
 **The wall is exactly as strict as your registry.** The engine enforces the
 declared vocabulary and nothing more. The shipped tiers are defaults, not a
@@ -116,7 +119,7 @@ import commonCSSPseudoClasses from "./src/shast/css/pseudo-class-config/variatio
 import commonCSSQueries from "./src/shast/css/queries-config/variations/common.ts";
 import commonCSSKeyframes from "./src/shast/css/keyframes-config/variations/common.ts";
 
-const { createComponent, renderComponent } = engine({
+export const { createComponent, renderComponent } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,
   htmlAttributesConfig: commonHTMLAttributes,
   htmlTagConfig: commonHTMLTags,

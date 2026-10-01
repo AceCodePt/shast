@@ -370,10 +370,12 @@ type GateTable<
 // every property in that scope unwritable.
 //
 // A gate value legitimately becomes `never` when a `> child` selector targets
-// an array of children whose element types do not unify: the validator feeds
-// the recursion `UnionToIntersection<...>`, and TypeScript reduces an
-// intersection to `never` when a discriminant disagrees. Nothing is known about
-// that node, so nothing should be unlocked.
+// an array of children whose tags do not agree: the validator settles the
+// array's node type through `SettleArrayChild`, which keeps `tag`, so a
+// disagreement there is a real conflict and reduces the intersection to `never`.
+// The wall then knows no single node, so nothing should be unlocked -- matching
+// the runtime, which likewise finds no single tag and applies no implicit
+// display.
 type GateLookup<Row, Written> = [Written] extends [never]
   ? {}
   : [Written] extends [keyof Row]
@@ -1318,9 +1320,7 @@ type ValidateComponentCSSStructure<
                   CSSPropertiesConfig,
                   CSSQueriesConfig,
                   CSSKeyframesConfig,
-                  UnionToIntersection<
-                    Extract<T["innerHTML"][K][number], BaseComponentStructure>
-                  >,
+                  SettleArrayChild<T["innerHTML"][K][number]>,
                   CSSValue[`> ${K & string}`],
                   IsInPseudoElement,
                   CSSElementValue,

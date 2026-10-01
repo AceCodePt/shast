@@ -98,6 +98,91 @@ describe("createComponent (engine)", () => {
         });
       });
 
+      // Regression: a `> child` block targeting an array of children used to
+      // collapse to `never` whenever the entries' text differed, because
+      // TypeScript treats a differing `innerHTML` as a conflicting
+      // discriminant. The runtime applied the tag's implicit `display`
+      // regardless, so the two walls drifted exactly in the common case (array
+      // items almost always differ in text). See `SettleArrayChild`. The accept
+      // side of this regression is asserted in the "Render array children"
+      // block below (which also runs the case to completion).
+      test("the settled array node still rejects props the agreed display does not unlock", () => {
+        assert.throws(
+          () => {
+            createComponent({
+              tag: "ul",
+              innerHTML: {
+                item: [
+                  { tag: "li", innerHTML: "a" },
+                  { tag: "li", innerHTML: "b" },
+                ],
+              },
+              css: {
+                "> item": {
+                  // @ts-expect-error flex-direction needs display: flex, which li does not default to
+                  "flex-direction": "row",
+                },
+              },
+            });
+          },
+          /'flex-direction' requires display: flex/,
+        );
+      });
+
+      test("arrays whose tags disagree still unlock nothing", () => {
+        // div is block, span is inline; no single implicit display applies, so
+        // a block-only prop is rejected -- matching the runtime.
+        assert.throws(
+          () => {
+            createComponent({
+              tag: "div",
+              innerHTML: {
+                item: [
+                  { tag: "div", innerHTML: "a" },
+                  { tag: "span", innerHTML: "b" },
+                ],
+              },
+              css: {
+                "> item": {
+                  // @ts-expect-error no single display applies to the array
+                  width: "2px",
+                },
+              },
+            });
+          },
+          /'width' requires display: block/,
+        );
+      });
+
+      test("a > child block on a nested array with differing text settles through both levels", () => {
+        createComponent({
+          tag: "ul",
+          innerHTML: {
+            item: [
+              {
+                tag: "li",
+                innerHTML: {
+                  sub: [
+                    { tag: "li", innerHTML: "x" },
+                    { tag: "li", innerHTML: "y" },
+                  ],
+                },
+              },
+              {
+                tag: "li",
+                innerHTML: {
+                  sub: [
+                    { tag: "li", innerHTML: "p" },
+                    { tag: "li", innerHTML: "q" },
+                  ],
+                },
+              },
+            ],
+          },
+          css: { "> item": { "> sub": { "margin-top": "2px" } } },
+        });
+      });
+
       test("CSS through array child with partial innerHTML overlap at type level", () => {
         createComponent({
           tag: "div",
@@ -355,6 +440,65 @@ describe("createComponent (engine)", () => {
           "CSS should target semantic name",
         );
         assert.ok(css.includes("color: inherit;"));
+      });
+
+      // Regression: the type-level settlement of an array child used to collapse
+      // to `never` whenever entries' text differed, so `tsc` rejected a `> block`
+      // prop the runtime accepted. This file is type-checked, so the accept case
+      // below proves the walls agree at compile time; the runtime assertion
+      // proves it at run time too.
+      test("a > block on an array of same-tag children with differing text unlocks the tag's display props", () => {
+        // The two shapes from the original report: ul > li with margin-top,
+        // and div > div with width.
+        assert.doesNotThrow(() => {
+          createComponent({
+            tag: "ul",
+            innerHTML: {
+              item: [
+                { tag: "li", innerHTML: "a" },
+                { tag: "li", innerHTML: "b" },
+              ],
+            },
+            css: { "> item": { "margin-top": "2px" } },
+          });
+        });
+        assert.doesNotThrow(() => {
+          createComponent({
+            tag: "div",
+            innerHTML: {
+              item: [
+                { tag: "div", innerHTML: "a" },
+                { tag: "div", innerHTML: "b" },
+              ],
+            },
+            css: { "> item": { width: "2px" } },
+          });
+        });
+      });
+
+      test("a > block on an array with disagreeing tags stays locked on both walls", () => {
+        // div is block, span is inline: no single implicit display applies, so
+        // both walls report the locked prop (rather than a structural error).
+        assert.throws(
+          () => {
+            createComponent({
+              tag: "div",
+              innerHTML: {
+                item: [
+                  { tag: "div", innerHTML: "a" },
+                  { tag: "span", innerHTML: "b" },
+                ],
+              },
+              css: {
+                "> item": {
+                  // @ts-expect-error no single display applies to the array
+                  width: "2px",
+                },
+              },
+            });
+          },
+          /'width' requires display:/,
+        );
       });
 
       test("CSS nested > selectors through array child renders correctly", () => {
