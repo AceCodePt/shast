@@ -1,5 +1,4 @@
 import type { SupportedKeywordsConfig } from "tsyntax";
-import type { BaseHTMLAttributesConfig } from "@/html/attribute-config/types.ts";
 import type { BaseHTMLTagConfig } from "@/html/tag-config/types.ts";
 import type { BaseKeyframesConfig } from "@/css/keyframes-config/types.ts";
 import type { BaseComponentStructure } from "@/engine/types.ts";
@@ -21,7 +20,14 @@ export type InnerHTML = BaseComponentStructure["innerHTML"] | undefined;
 export interface ValidationContext {
   readonly keywords: SupportedKeywordsConfig;
   readonly mergedKeywords: Record<string, string>;
-  readonly globalAttributes: BaseHTMLAttributesConfig;
+  // The runtime shape of a normalised global attribute config: every flat value
+  // is a joined DSL string and every complex value is a bag of joined strings.
+  // This intentionally diverges from the array-only authoring type - see the
+  // cast at the construction site in `engine/index.ts`.
+  readonly globalAttributes: Record<
+    string,
+    string | Record<string, Record<string, string>>
+  >;
   readonly tagConfig: BaseHTMLTagConfig;
   readonly cssAttributesConfig: Record<string, any>;
   readonly cssPropertiesConfig: Record<string, any>;

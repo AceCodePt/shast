@@ -1,7 +1,10 @@
 import test, { describe } from "node:test";
 import assert from "node:assert";
 import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
-import { htmlAttributeConfig } from "@/html/attribute-config/index.ts";
+import {
+  htmlAttributeConfig,
+  normalizeHTMLAttributesConfig,
+} from "@/html/attribute-config/index.ts";
 import type {
   InferHTMLAttributesConfig,
   ValidateHTMLAttributesConfig,
@@ -14,34 +17,46 @@ import fullAttributes from "@/html/attribute-config/variations/full.ts";
 
 describe("htmlAttributeConfig", () => {
   describe("Type Validation", () => {
-    test("accepts valid DSL strings", () => {
+    test("accepts a single-arm attribute", () => {
       assertType<
         Equal<
           ValidateHTMLAttributesConfig<
             SupportedKeywords,
-            { id: "string | undefined" }
+            { id: readonly ["string", "undefined"] }
           >,
-          { id: "string | undefined" }
+          { id: readonly ["string", "undefined"] }
         >
       >();
     });
 
-    test("accepts multiple valid DSL strings", () => {
+    test("accepts multiple attributes with several arms", () => {
       assertType<
         Equal<
           ValidateHTMLAttributesConfig<
             SupportedKeywords,
             {
-              id: "string | undefined";
-              dir: "'ltr' | 'rtl' | 'auto' | undefined";
-              hidden: "boolean | undefined";
+              id: readonly ["string", "undefined"];
+              dir: readonly ["'ltr'", "'rtl'", "'auto'", "undefined"];
+              hidden: readonly ["boolean", "undefined"];
             }
           >,
           {
-            id: "string | undefined";
-            dir: "'ltr' | 'rtl' | 'auto' | undefined";
-            hidden: "boolean | undefined";
+            id: readonly ["string", "undefined"];
+            dir: readonly ["'ltr'", "'rtl'", "'auto'", "undefined"];
+            hidden: readonly ["boolean", "undefined"];
           }
+        >
+      >();
+    });
+
+    test("rejects an empty arm list", () => {
+      assertType<
+        Equal<
+          ValidateHTMLAttributesConfig<
+            SupportedKeywords,
+            { id: [] }
+          >,
+          { id: "An HTML attribute must declare at least one arm" }
         >
       >();
     });
@@ -53,7 +68,7 @@ describe("htmlAttributeConfig", () => {
         Equal<
           InferHTMLAttributesConfig<
             SupportedKeywords,
-            { id: "string | undefined" }
+            { id: readonly ["string", "undefined"] }
           >,
           { id: string | undefined }
         >
@@ -65,7 +80,7 @@ describe("htmlAttributeConfig", () => {
         Equal<
           InferHTMLAttributesConfig<
             SupportedKeywords,
-            { tabindex: "number | undefined" }
+            { tabindex: readonly ["number", "undefined"] }
           >,
           { tabindex: number | undefined }
         >
@@ -77,7 +92,7 @@ describe("htmlAttributeConfig", () => {
         Equal<
           InferHTMLAttributesConfig<
             SupportedKeywords,
-            { dir: "'ltr' | 'rtl' | 'auto' | undefined" }
+            { dir: readonly ["'ltr'", "'rtl'", "'auto'", "undefined"] }
           >,
           { dir: "ltr" | "rtl" | "auto" | undefined }
         >
@@ -89,7 +104,7 @@ describe("htmlAttributeConfig", () => {
         Equal<
           InferHTMLAttributesConfig<
             SupportedKeywords,
-            { draggable: "boolean | undefined" }
+            { draggable: readonly ["boolean", "undefined"] }
           >,
           { draggable: boolean | undefined }
         >
@@ -101,7 +116,7 @@ describe("htmlAttributeConfig", () => {
         Equal<
           InferHTMLAttributesConfig<
             SupportedKeywords,
-            { contenteditable: "'plaintext-only' | boolean | undefined" }
+            { contenteditable: readonly ["'plaintext-only'", "boolean", "undefined"] }
           >,
           { contenteditable: "plaintext-only" | boolean | undefined }
         >
@@ -114,9 +129,9 @@ describe("htmlAttributeConfig", () => {
           InferHTMLAttributesConfig<
             SupportedKeywords,
             {
-              id: "string | undefined";
-              tabindex: "number | undefined";
-              dir: "'ltr' | 'rtl' | 'auto' | undefined";
+              id: readonly ["string", "undefined"];
+              tabindex: readonly ["number", "undefined"];
+              dir: readonly ["'ltr'", "'rtl'", "'auto'", "undefined"];
             }
           >,
           {
@@ -130,19 +145,28 @@ describe("htmlAttributeConfig", () => {
   });
 
   describe("Runtime Validation", () => {
-    test("accepts a single string attribute", () => {
+    test("accepts a single attribute and joins its arms", () => {
       const config = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-        id: "string | undefined",
+        id: ["string", "undefined"],
       });
       assert.deepStrictEqual(config, { id: "string | undefined" });
     });
 
-    test("accepts multiple attributes with various DSL strings", () => {
+    test("joins a multi-arm value with ' | '", () => {
       const config = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-        id: "string | undefined",
-        tabindex: "number | undefined",
+        dir: ["'ltr'", "'rtl'", "'auto'", "undefined"],
+      });
+      assert.deepStrictEqual(config, {
         dir: "'ltr' | 'rtl' | 'auto' | undefined",
-        hidden: "boolean | undefined",
+      });
+    });
+
+    test("accepts multiple attributes with various DSL arms", () => {
+      const config = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
+        id: ["string", "undefined"],
+        tabindex: ["number", "undefined"],
+        dir: ["'ltr'", "'rtl'", "'auto'", "undefined"],
+        hidden: ["boolean", "undefined"],
       });
       assert.deepStrictEqual(config, {
         id: "string | undefined",
@@ -152,37 +176,52 @@ describe("htmlAttributeConfig", () => {
       });
     });
 
-    test("returns the same object reference", () => {
-      const input = { id: "string | undefined" } as const;
+    test("returns joined strings, not the input arrays", () => {
+      const input = { id: ["string", "undefined"] } as const;
       const config = htmlAttributeConfig(SUPPORTED_KEYWORDS, input);
-      assert.strictEqual(config, input);
+      assert.deepStrictEqual(config, { id: "string | undefined" });
+      assert.notStrictEqual(config, input);
     });
 
-    test("accepts literal string union attributes", () => {
+    test("normalizeHTMLAttributesConfig joins every arm array", () => {
+      const normalised = normalizeHTMLAttributesConfig(SUPPORTED_KEYWORDS, {
+        id: ["string", "undefined"],
+        dir: ["'ltr'", "'rtl'"],
+        hidden: {
+          undefined: {},
+          true: { "aria-hidden": ["boolean", "'true'"] },
+        },
+      });
+      assert.deepStrictEqual(normalised, {
+        id: "string | undefined",
+        dir: "'ltr' | 'rtl'",
+        hidden: {
+          undefined: {},
+          true: { "aria-hidden": "boolean | 'true'" },
+        },
+      });
+    });
+
+    test("normalises a complex value's bags to joined strings", () => {
       const config = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-        dir: "'ltr' | 'rtl' | 'auto' | undefined",
-        translate: "'yes' | 'no' | undefined",
+        id: {
+          undefined: {},
+          "todo-1": { "data-kind": ["'literal'"] },
+          "`todo-${number}`": { "data-kind": ["'a'", "'b'"] },
+        },
       });
       assert.deepStrictEqual(config, {
-        dir: "'ltr' | 'rtl' | 'auto' | undefined",
-        translate: "'yes' | 'no' | undefined",
+        id: {
+          undefined: {},
+          "todo-1": { "data-kind": "'literal'" },
+          "`todo-${number}`": { "data-kind": "'a' | 'b'" },
+        },
       });
     });
 
-    test("accepts boolean union attributes", () => {
+    test("accepts literal boolean union arms", () => {
       const config = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-        draggable: "boolean | undefined",
-        spellcheck: "boolean | undefined",
-      });
-      assert.deepStrictEqual(config, {
-        draggable: "boolean | undefined",
-        spellcheck: "boolean | undefined",
-      });
-    });
-
-    test("accepts literal boolean union", () => {
-      const config = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-        contenteditable: "'plaintext-only' | boolean | undefined",
+        contenteditable: ["'plaintext-only'", "boolean", "undefined"],
       });
       assert.deepStrictEqual(config, {
         contenteditable: "'plaintext-only' | boolean | undefined",
@@ -191,21 +230,32 @@ describe("htmlAttributeConfig", () => {
   });
 
   describe("Error handling", () => {
-    test("throws for invalid DSL string in an attribute value", () => {
+    test("throws for invalid DSL arm in an attribute value", () => {
       assert.throws(
         () =>
           // @ts-expect-error
-          htmlAttributeConfig(SUPPORTED_KEYWORDS, { id: "xyz" }),
+          htmlAttributeConfig(SUPPORTED_KEYWORDS, { id: ["xyz"] }),
         /Invalid DSL string/,
       );
     });
 
-    test("throws for partially invalid union", () => {
+    test("throws for an unknown arm in a multi-arm value", () => {
       assert.throws(
         () =>
           // @ts-expect-error
-          htmlAttributeConfig(SUPPORTED_KEYWORDS, { id: "string | xyz" }),
+          htmlAttributeConfig(SUPPORTED_KEYWORDS, { id: ["string", "xyz"] }),
         /Invalid DSL string/,
+      );
+    });
+
+    test("throws for an empty arm list", () => {
+      assert.throws(
+        () =>
+          htmlAttributeConfig(SUPPORTED_KEYWORDS, {
+            // @ts-expect-error an empty arm list is rejected
+            id: [],
+          }),
+        /at least one arm/,
       );
     });
 
@@ -228,32 +278,23 @@ describe("htmlAttributeConfig", () => {
 
     test("typed as const config preserves readonly type", () => {
       const input = {
-        id: "string | undefined",
-        hidden: "boolean | undefined",
+        id: ["string", "undefined"],
+        hidden: ["boolean", "undefined"],
       } as const;
       const config = htmlAttributeConfig(SUPPORTED_KEYWORDS, input);
       assertType<
         Equal<
           typeof config,
           {
-            readonly id: "string | undefined";
-            readonly hidden: "boolean | undefined";
+            readonly id: readonly ["string", "undefined"];
+            readonly hidden: readonly ["boolean", "undefined"];
           }
         >
       >();
-      assert.deepStrictEqual(config, input);
-    });
-
-    test("object reference identity preserved", () => {
-      const input = { id: "string | undefined" } as const;
-      const config = htmlAttributeConfig(SUPPORTED_KEYWORDS, input);
-      assert.strictEqual(config, input);
-    });
-
-    test("mutable config is accepted without readonly constraint", () => {
-      const input = { id: "string | undefined" } as const;
-      const config = htmlAttributeConfig(SUPPORTED_KEYWORDS, input);
-      assert.strictEqual(config, input);
+      assert.deepStrictEqual(config, {
+        id: "string | undefined",
+        hidden: "boolean | undefined",
+      });
     });
   });
 });
@@ -264,11 +305,11 @@ describe("HTML Attributes — Variation: minimal.ts", () => {
     assert.deepStrictEqual(keys, ["class", "id", "role", "style", "tabindex"]);
   });
 
-  test("each value is a valid DSL string", () => {
+  test("each value is a valid arm array", () => {
     for (const key of Object.keys(minimalAttributes)) {
       assert.doesNotThrow(() =>
         htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-          [key]: (minimalAttributes as Record<string, string>)[key]!,
+          [key]: (minimalAttributes as Record<string, readonly string[]>)[key]!,
         }),
       );
     }
@@ -290,11 +331,11 @@ describe("HTML Attributes — Variation: common.ts", () => {
     ]);
   });
 
-  test("each value is a valid DSL string", () => {
+  test("each value is a valid arm array", () => {
     for (const key of Object.keys(commonAttributes)) {
       assert.doesNotThrow(() =>
         htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-          [key]: (commonAttributes as Record<string, string>)[key]!,
+          [key]: (commonAttributes as Record<string, readonly string[]>)[key]!,
         }),
       );
     }
@@ -317,11 +358,11 @@ describe("HTML Attributes — Variation: full.ts", () => {
     assert.ok(keys.length >= 50, `expected 50+ attrs, got ${keys.length}`);
   });
 
-  test("each value is a valid DSL string", () => {
+  test("each value is a valid arm array", () => {
     for (const key of Object.keys(fullAttributes)) {
       assert.doesNotThrow(() =>
         htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-          [key]: (fullAttributes as Record<string, string>)[key]!,
+          [key]: (fullAttributes as Record<string, readonly string[]>)[key]!,
         }),
       );
     }

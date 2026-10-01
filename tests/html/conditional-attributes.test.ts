@@ -22,8 +22,8 @@ import { assertType, type Equal } from "../type-utils.ts";
 const GLOBAL_ATTRIBUTES = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
   id: {
     undefined: {},
-    "todo-1": { "data-kind": "'literal'" },
-    "`todo-${number}`": { "data-kind": "'pattern'" },
+    "todo-1": { "data-kind": ["'literal'"] },
+    "`todo-${number}`": { "data-kind": ["'pattern'"] },
   },
 });
 
@@ -80,8 +80,8 @@ const { createComponent, renderComponent } = engine({
 // A second registry whose id keys overlap: `todo-42` matches both.
 const OVERLAP_GLOBAL_ATTRIBUTES = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
   id: {
-    "`todo-${string}`": { "data-kind": "'s'" },
-    "`todo-${number}`": { "data-kind": "'n'" },
+    "`todo-${string}`": { "data-kind": ["'s'"] },
+    "`todo-${number}`": { "data-kind": ["'n'"] },
   },
 });
 
@@ -105,8 +105,8 @@ const overlapEngine = engine({
 // the literal and the pattern's unlocked attribute must be rejected.
 const PATTERN_FIRST_GLOBAL_ATTRIBUTES = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
   id: {
-    "`todo-${number}`": { "data-pattern": "'yes'" },
-    "todo-1": { "data-literal": "'yes'" },
+    "`todo-${number}`": { "data-pattern": ["'yes'"] },
+    "todo-1": { "data-literal": ["'yes'"] },
   },
 });
 
@@ -289,6 +289,42 @@ describe("HTML conditional attributes", () => {
     });
   });
 
+  describe("required vs optional global attributes", () => {
+    const { createComponent: createRequiredComponent } = engine({
+      supportedKeywords: SUPPORTED_KEYWORDS,
+      htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
+        "data-required": ["string"],
+        "data-optional": ["string", "undefined"],
+      }),
+      htmlTagConfig: TAGS,
+      cssSyntaxConfig: CSS_SYNTAX_CONFIG,
+      cssAttributesConfig: CSS_ATTRIBUTES_CONFIG,
+      cssPseudoClassConfig: CSS_PSEUDO_CLASSES,
+      cssPropertiesConfig: cssPropertiesConfig(
+        SUPPORTED_KEYWORDS,
+        CSS_SYNTAX_CONFIG,
+        {},
+      ),
+      cssQueriesConfig: COMMON_QUERIES,
+    });
+
+    test("a global attribute whose arms have no undefined arm is required", () => {
+      assert.throws(
+        () => createRequiredComponent({ tag: "span" }),
+        /Required attribute 'data-required' is missing/,
+      );
+    });
+
+    test("a global attribute with an undefined arm can be omitted", () => {
+      assert.doesNotThrow(() =>
+        createRequiredComponent({
+          tag: "span",
+          attributes: { "data-required": "x" },
+        }),
+      );
+    });
+  });
+
   describe("inference", () => {
     test("a complex attribute infers its variants", () => {
       assertType<
@@ -297,8 +333,8 @@ describe("HTML conditional attributes", () => {
             SupportedKeywords,
             {
               type: {
-                text: { maxlength: "number" };
-                range: { min: "number" };
+                text: { maxlength: ["number"] };
+                range: { min: ["number"] };
               };
             }
           >,

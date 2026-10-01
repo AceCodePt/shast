@@ -78,8 +78,8 @@ export const MOCK_CSS_ATTR_CONFIG = cssAttributeConfig(SUPPORTED_KEYWORDS, cssSy
 } as const);
 
 export const MOCK_SHARED_ATTRIBUTES = htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-  id: "string | undefined",
-  class: "string | undefined",
+  id: ["string", "undefined"],
+  class: ["string", "undefined"],
 });
 
 export const MOCK_TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, MOCK_CSS_ATTR_CONFIG, {

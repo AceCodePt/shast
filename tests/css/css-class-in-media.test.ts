@@ -55,8 +55,8 @@ const QUERIES = cssQueriesConfig(COMMON_SYNTAX, [
 const { createComponent, renderComponent } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,
   htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-    id: "string | undefined",
-    class: "string | undefined",
+    id: ["string", "undefined"],
+    class: ["string", "undefined"],
   }),
   htmlTagConfig: TAG_CONFIG,
   cssSyntaxConfig: COMMON_SYNTAX,

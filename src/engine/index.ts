@@ -94,7 +94,10 @@ export default function engine<
       config.cssSyntaxConfig,
       config.supportedKeywords,
     ),
-    globalAttributes: config.htmlAttributesConfig,
+    // The declared type is the array-only authoring surface; the runtime value
+    // `htmlAttributeConfig` produced is already joined strings. The divergence
+    // is intentional (see `ValidationContext.globalAttributes`).
+    globalAttributes: config.htmlAttributesConfig as unknown as ValidationContext["globalAttributes"],
     tagConfig: config.htmlTagConfig,
     cssAttributesConfig: config.cssAttributesConfig,
     cssPropertiesConfig: config.cssPropertiesConfig,
@@ -129,7 +132,9 @@ export default function engine<
     return renderComponent(
       config.htmlTagConfig,
       componentStructure,
-      config.htmlAttributesConfig,
+      // Same declared/runtime divergence as `ValidationContext.globalAttributes`:
+      // the value is the array-only authoring type, the runtime is joined strings.
+      config.htmlAttributesConfig as unknown as BaseHTMLAttributesConfig,
       Object.assign(
         {},
         config.cssSyntaxConfig,
