@@ -149,6 +149,7 @@ function renderHTMLNode(
   const isVoidElement =
     tagDefinition !== undefined &&
     "include" in tagDefinition.innerHTML &&
+    tagDefinition.innerHTML.include !== undefined &&
     tagDefinition.innerHTML.include.length === 0;
 
   if (isVoidElement) {
