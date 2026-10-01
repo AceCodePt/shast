@@ -2796,7 +2796,6 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
     innerHTML: {
       include: [
         "#text",
-        "a",
         "abbr",
         "audio",
         "b",
@@ -2813,7 +2812,6 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         "dfn",
         "em",
         "i",
-        "iframe",
         "img",
         "input",
         "ins",

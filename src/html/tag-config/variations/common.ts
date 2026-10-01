@@ -578,7 +578,6 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
     innerHTML: {
       include: [
         "#text",
-        "a",
         "input",
         "span",
         "img",
