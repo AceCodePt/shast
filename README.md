@@ -44,13 +44,22 @@ npx shast add src/shast                   # common tier (the default)
 npx shast add src/shast --tier minimal    # or: --tier full
 ```
 
-That is the whole setup. `add` vendors the engine, exactly one tier of the
-`minimal`/`common`/`full` config variations, and the local `tsyntax` source into
-the destination, rewriting every import so the tree is self-contained. Only the
-chosen tier's variation files are written; the other two never reach your tree,
-and there is no vendored barrel or generated entry point - you import the engine
-and each family's entry point directly. You own those files from then on - there
-is no build step, no emitted `.js`, and nothing to ship to the browser.
+That is the whole setup. `add` vendors the engine and exactly one tier of the
+`minimal`/`common`/`full` config variations into the destination, rewriting
+every import so the vendored tree is self-contained, and installs the `tsyntax`
+package the tree imports. Only the chosen tier's variation files are written;
+the other two never reach your tree, and there is no vendored barrel or
+generated entry point - you import the engine and each family's entry point
+directly. You own those files from then on - there is no build step, no emitted
+`.js`, and nothing to ship to the browser.
+
+`shast add` installs `tsyntax` with your project's package manager, detected
+from its `packageManager` field or lockfile (npm, pnpm, yarn or bun). Because
+that changes your `package.json`, lockfile and `node_modules`, it asks first:
+`--yes` consents without a prompt, `--no-install` skips the install and prints
+the command instead. The install runs before any file is written, so a failed
+install leaves your tree untouched. Single package only - workspace roots are
+not supported.
 
 `--tier` defaults to `common`. Pick the smallest tier that fits: `minimal` is the
 tightest vocabulary, `common` the usual starting point, and `full` covers
@@ -92,7 +101,7 @@ import { cssPropertiesConfig } from "./src/shast/css/properties-config/index.ts"
 import { cssPseudoClassConfig } from "./src/shast/css/pseudo-class-config/index.ts";
 import { cssQueriesConfig } from "./src/shast/css/queries-config/index.ts";
 import { cssKeyframesConfig } from "./src/shast/css/keyframes-config/index.ts";
-import { SUPPORTED_KEYWORDS } from "./src/shast/tsyntax/index.ts";
+import { SUPPORTED_KEYWORDS } from "tsyntax";
 
 // The one tier you vendored: commonHTMLTags below means --tier common (default).
 import commonHTMLTags from "./src/shast/html/tag-config/variations/common.ts";
@@ -144,13 +153,13 @@ fine" by one wall and "it's broken" by the other.
 ## 30 seconds of shast
 
 The registries below are the ones `shast add` wrote into your tree. Everything
-here is a relative import of your own files - see [Install](#install) for why
-that is the only supported path:
+here is imported from your own files, plus the installed `tsyntax` package - see
+[Install](#install) for why the vendored tree is the only supported path:
 
 ```ts
 import { engine } from "./src/shast/engine/index.ts";
 import { cssPropertiesConfig } from "./src/shast/css/properties-config/index.ts";
-import { SUPPORTED_KEYWORDS } from "./src/shast/tsyntax/index.ts";
+import { SUPPORTED_KEYWORDS } from "tsyntax";
 import commonHTMLTags from "./src/shast/html/tag-config/variations/common.ts";
 import commonHTMLAttributes from "./src/shast/html/attribute-config/variations/common.ts";
 import commonCSSSyntax from "./src/shast/css/syntax-config/variations/common.ts";

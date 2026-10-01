@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 // Repo-local `shast` CLI. Today it has one subcommand, `add`, which vendors
-// the engine, one config-variation tier and the local tsyntax source into a
-// consumer's tree, rewriting every import so the result is self-contained.
-// The chosen tier is selected with `--tier` (default `common`); only that
-// tier's variation files are written, and no barrel or generated entry point is
-// produced - the consumer imports the engine and family entry points directly.
+// the engine and one config-variation tier into a consumer's tree, rewriting
+// every import so the result is self-contained, and installs the `tsyntax`
+// package the vendored tree imports. The chosen tier is selected with `--tier`
+// (default `common`); only that tier's variation files are written, and no
+// barrel or generated entry point is produced - the consumer imports the engine
+// and family entry points directly.
 //
 // Run through the package script: `pnpm shast add [dest] [--tier <tier>]`.
 
+import { spawnSync } from "node:child_process";
 import {
   existsSync,
   mkdirSync,
@@ -18,7 +20,6 @@ import {
   rmSync,
   writeFileSync,
 } from "node:fs";
-import { createRequire } from "node:module";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
@@ -35,8 +36,6 @@ export interface AddOptions {
   force?: boolean;
   /** Repo root to copy `src/` from. Defaults to this worktree. */
   sourceRoot?: string;
-  /** Directory holding tsyntax's `index.ts` and `types.ts`. Defaults to the resolved package. */
-  tsyntaxSourceRoot?: string;
 }
 
 export interface AddResult {
@@ -140,8 +139,6 @@ const COPY_DIRS = ["engine", "css", "html"] as const;
 // drag the unchosen tiers back into the program. The vendored tree has no
 // barrel; the consumer imports the engine and family entry points directly.
 const COPY_FILES = ["types.ts"] as const;
-// tsyntax files vendored under `<dest>/tsyntax/`.
-const TSYNTAX_FILES = ["index.ts", "types.ts"] as const;
 
 const TIERS = ["minimal", "common", "full"] as const;
 const TIER_SET: ReadonlySet<string> = new Set(TIERS);
@@ -170,8 +167,6 @@ interface PlannedFile {
   source: string;
   /** Destination-relative, posix path. */
   destRel: string;
-  /** `src/`-relative source path used by `@/` rewriting, or null for tsyntax. */
-  sourceRel: string | null;
 }
 
 /** Thrown when the destination would be resolved as CommonJS. */
@@ -236,8 +231,6 @@ function toPosix(value: string): string {
  */
 export function planVendor(options: AddOptions): PlannedFile[] {
   const sourceRoot = options.sourceRoot ?? REPO_ROOT;
-  const tsyntaxRoot =
-    options.tsyntaxSourceRoot ?? resolveTsyntaxSourceRoot(sourceRoot);
   const srcRoot = path.join(sourceRoot, "src");
   const tier = options.tier ?? DEFAULT_TIER;
 
@@ -252,11 +245,10 @@ export function planVendor(options: AddOptions): PlannedFile[] {
       const rel = toPosix(entry);
       if (!rel.endsWith(".ts")) continue;
       if (isNonChosenVariation(rel, tier)) continue;
-      const sourceRel = `${dir}/${rel}`;
+      const destRel = `${dir}/${rel}`;
       planned.push({
         source: path.join(absDir, entry),
-        destRel: sourceRel,
-        sourceRel,
+        destRel,
       });
     }
   }
@@ -265,15 +257,6 @@ export function planVendor(options: AddOptions): PlannedFile[] {
     planned.push({
       source: path.join(srcRoot, file),
       destRel: file,
-      sourceRel: file,
-    });
-  }
-
-  for (const file of TSYNTAX_FILES) {
-    planned.push({
-      source: path.join(tsyntaxRoot, file),
-      destRel: `tsyntax/${file}`,
-      sourceRel: null,
     });
   }
 
@@ -315,13 +298,6 @@ export function planStale(options: AddOptions): string[] {
   return stale.sort((a, b) => (a < b ? -1 : 1));
 }
 
-/** Resolve the installed `tsyntax` package to its source directory. */
-export function resolveTsyntaxSourceRoot(sourceRoot: string): string {
-  const require = createRequire(path.join(sourceRoot, "package.json"));
-  const resolved = require.resolve("tsyntax");
-  return path.dirname(resolved);
-}
-
 function relativeSpecifier(fromDestRel: string, toDestRel: string): string {
   let rel = path.posix.relative(path.posix.dirname(fromDestRel), toDestRel);
   if (rel === "") rel = path.posix.basename(toDestRel);
@@ -330,14 +306,13 @@ function relativeSpecifier(fromDestRel: string, toDestRel: string): string {
 }
 
 function rewriteSpecifier(specifier: string, fromDestRel: string): string {
-  if (specifier === "tsyntax") {
-    return relativeSpecifier(fromDestRel, "tsyntax/index.ts");
-  }
   if (specifier.startsWith("@/")) {
     let targetRel = specifier.slice(2);
     if (path.posix.extname(targetRel) === "") targetRel += ".ts";
     return relativeSpecifier(fromDestRel, targetRel);
   }
+  // A bare `tsyntax` specifier is left untouched: the package is installed on
+  // the consumer side, so it resolves from node_modules like any dependency.
   return specifier;
 }
 
@@ -434,9 +409,9 @@ function scanTemplateExpression(source: string, start: number): number {
 }
 
 /**
- * Rewrite `@/...` and bare `tsyntax` specifiers in `source` to paths relative
- * to that file's mirrored destination location. Other specifiers (already
- * relative, or external packages such as `@total-typescript/ts-reset`) are
+ * Rewrite `@/...` specifiers in `source` to paths relative to that file's
+ * mirrored destination location. Other specifiers (already relative, bare
+ * `tsyntax`, or external packages such as `@total-typescript/ts-reset`) are
  * left untouched.
  *
  * A hand-rolled scan - no parser, no dependency - so a specifier is rewritten
@@ -537,8 +512,59 @@ export function rewriteImports(source: string, fromDestRel: string): string {
   return result;
 }
 
+/** What `preflight` resolves before any file is written. */
+export interface AddPreflight {
+  /** Absolute destination directory. */
+  dest: string;
+  /** Directory holding the consumer's nearest `package.json`. */
+  packageDir: string;
+  /** The consumer's nearest `package.json`. */
+  packageJsonPath: string;
+  /** Every file `add` would write. */
+  planned: PlannedFile[];
+  /** Planned files that already exist in the destination. */
+  collisions: string[];
+}
+
 /**
- * Vendor the engine, exactly one config-variation tier and tsyntax into `dest`.
+ * Validate a destination without writing anything: `dest` must resolve as ESM,
+ * and no planned file may already exist unless `force` is set. `main` runs this
+ * before installing tsyntax, so a destination that would be refused never
+ * mutates the consumer's dependencies.
+ *
+ * Throws {@link CommonJSDestinationError} when `dest` would be resolved as
+ * CommonJS, and {@link ExistingDestinationError} when any planned file already
+ * exists and `force` is not set.
+ */
+export function preflight(options: AddOptions): AddPreflight {
+  const dest = path.resolve(options.dest);
+  const packageJsonPath = nearestPackageJson(dest);
+
+  if (!resolvesAsESM(dest)) {
+    throw new CommonJSDestinationError(dest, packageJsonPath);
+  }
+
+  const planned = planVendor(options);
+  const collisions = planned
+    .map((file) => file.destRel)
+    .filter((rel) => existsSync(path.join(dest, rel)));
+
+  if (collisions.length > 0 && !(options.force ?? false)) {
+    throw new ExistingDestinationError(collisions);
+  }
+
+  // resolvesAsESM returned true, so a package.json exists above `dest`.
+  return {
+    dest,
+    packageDir: path.dirname(packageJsonPath!),
+    packageJsonPath: packageJsonPath!,
+    planned,
+    collisions,
+  };
+}
+
+/**
+ * Vendor the engine and exactly one config-variation tier into `dest`.
  *
  * Throws {@link CommonJSDestinationError} when `dest` would be resolved as
  * CommonJS, and {@link ExistingDestinationError} when any planned file already
@@ -547,23 +573,8 @@ export function rewriteImports(source: string, fromDestRel: string): string {
  * stale shast-owned paths that were pruned.
  */
 export function add(options: AddOptions): AddResult {
-  const force = options.force ?? false;
-  const dest = path.resolve(options.dest);
-  const planned = planVendor(options);
-
-  if (!resolvesAsESM(dest)) {
-    throw new CommonJSDestinationError(dest, nearestPackageJson(dest));
-  }
-
+  const { dest, planned, collisions } = preflight(options);
   const copiedRels = planned.map((file) => file.destRel);
-
-  const collisions = copiedRels.filter((rel) =>
-    existsSync(path.join(dest, rel)),
-  );
-
-  if (collisions.length > 0 && !force) {
-    throw new ExistingDestinationError(collisions);
-  }
 
   // Reuse the refusal path's enumeration: the collisions are exactly the
   // pre-existing files `--force` is about to replace, so annotate them with
@@ -607,6 +618,159 @@ export function add(options: AddOptions): AddResult {
     replacedDiffering,
     removed,
   };
+}
+
+// ---------------------------------------------------------------------------
+// tsyntax installation
+//
+// The vendored tree imports `tsyntax` as a bare specifier, so the consumer must
+// have the package installed. `add` does not copy tsyntax's source any more: it
+// detects the consumer's package manager and runs that manager's add command.
+// `main` runs the install before `add` writes anything, so a failed install
+// leaves the destination untouched. Installing mutates the consumer's
+// package.json, lockfile and node_modules, so it needs consent like the
+// tsconfig edit: `--yes` consents, `--no-install` skips and prints the command,
+// and an interactive run prompts.
+
+/** The package managers `add` can install tsyntax with. */
+export type PackageManager = "npm" | "pnpm" | "yarn" | "bun";
+
+const PACKAGE_MANAGERS: ReadonlySet<string> = new Set([
+  "npm",
+  "pnpm",
+  "yarn",
+  "bun",
+]);
+
+function isPackageManager(value: string): value is PackageManager {
+  return PACKAGE_MANAGERS.has(value);
+}
+
+/** Read and parse a JSON object, or null when missing or unparsable. */
+function readJsonObject(file: string): Record<string, unknown> | null {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(readFileSync(file, "utf8"));
+  } catch {
+    return null;
+  }
+  return isRecord(parsed) ? parsed : null;
+}
+
+/**
+ * Detect the consumer's package manager. Precedence: an explicit override, the
+ * `packageManager` field (Corepack), a lockfile in `packageDir`, the
+ * `npm_config_user_agent` set by `npx`/`pnpm dlx`/`yarn dlx`/`bunx`, then npm.
+ * Single package only: workspace roots are not considered.
+ */
+export function detectPackageManager(
+  packageDir: string,
+  explicit?: PackageManager,
+): PackageManager {
+  if (explicit !== undefined) return explicit;
+
+  const declared = readJsonObject(path.join(packageDir, "package.json"))?.[
+    "packageManager"
+  ];
+  if (typeof declared === "string") {
+    const name = declared.split("@")[0] ?? "";
+    if (isPackageManager(name)) return name;
+  }
+
+  if (existsSync(path.join(packageDir, "pnpm-lock.yaml"))) return "pnpm";
+  if (existsSync(path.join(packageDir, "yarn.lock"))) return "yarn";
+  if (
+    existsSync(path.join(packageDir, "bun.lockb")) ||
+    existsSync(path.join(packageDir, "bun.lock"))
+  ) {
+    return "bun";
+  }
+  if (
+    existsSync(path.join(packageDir, "package-lock.json")) ||
+    existsSync(path.join(packageDir, "npm-shrinkwrap.json"))
+  ) {
+    return "npm";
+  }
+
+  const agent = process.env["npm_config_user_agent"];
+  if (typeof agent === "string") {
+    const name = agent.split("/")[0] ?? "";
+    if (isPackageManager(name)) return name;
+  }
+
+  return "npm";
+}
+
+/** The manager's add command for `tsyntax@<range>`. */
+export function installCommand(
+  manager: PackageManager,
+  range: string,
+): { command: string; args: string[] } {
+  const spec = `tsyntax@${range}`;
+  switch (manager) {
+    case "npm":
+      return { command: "npm", args: ["install", spec] };
+    case "pnpm":
+      return { command: "pnpm", args: ["add", spec] };
+    case "yarn":
+      return { command: "yarn", args: ["add", spec] };
+    case "bun":
+      return { command: "bun", args: ["add", spec] };
+  }
+}
+
+/**
+ * The `tsyntax` range `add` installs, read from shast's own package.json so the
+ * consumer gets exactly the version the vendored engine was built against.
+ * Falls back to `latest` only if that dependency is somehow absent.
+ */
+export function tsyntaxRange(packageRoot: string = REPO_ROOT): string {
+  const deps = readJsonObject(path.join(packageRoot, "package.json"))?.[
+    "dependencies"
+  ];
+  const range = isRecord(deps) ? deps["tsyntax"] : undefined;
+  return typeof range === "string" ? range : "latest";
+}
+
+/** The first version number in a range like `^1.0.1`, or null if there is none. */
+function rangeMajor(range: string): string | null {
+  return /(\d+)/.exec(range)?.[1] ?? null;
+}
+
+/** The range `packageJsonPath` declares for `name` under `dependencies`, if any. */
+function declaredDependency(
+  packageJsonPath: string,
+  name: string,
+): string | undefined {
+  const deps = readJsonObject(packageJsonPath)?.["dependencies"];
+  const value = isRecord(deps) ? deps[name] : undefined;
+  return typeof value === "string" ? value : undefined;
+}
+
+/** The outcome of running a package-manager command. */
+export interface RunResult {
+  /** Exit status, or null when the process could not be spawned. */
+  status: number | null;
+  /** The spawn error, if any (e.g. the manager binary is missing). */
+  error?: Error;
+}
+
+/** Runs a package-manager command. Injectable for tests. */
+export type RunFunction = (
+  command: string,
+  args: readonly string[],
+  cwd: string,
+) => RunResult;
+
+function defaultRun(
+  command: string,
+  args: readonly string[],
+  cwd: string,
+): RunResult {
+  const result = spawnSync(command, args, { cwd, stdio: "inherit" });
+  const outcome: RunResult = { status: result.status };
+  if (result.error !== undefined) outcome.error = result.error;
+  return outcome;
 }
 
 // ---------------------------------------------------------------------------
@@ -939,12 +1103,14 @@ function defaultConfirm(question: string): boolean {
   return /^y(es)?$/i.test(answer.trim());
 }
 
-/** Consent to the tsconfig edit for a run. */
+/** Consent and injection points for a run. */
 export interface CliOptions {
   /** Ask the user to consent; defaults to a synchronous stdin prompt. */
   confirm?: (question: string) => boolean;
   /** Whether stdin can be prompted; defaults to `process.stdin.isTTY === true`. */
   interactive?: boolean;
+  /** Run a package-manager command; defaults to spawnSync with inherited stdio. */
+  run?: RunFunction;
 }
 
 function applyFixable(
@@ -1013,18 +1179,30 @@ function reconcileTsconfig(
 }
 
 const USAGE = `Usage: shast add [dest] [--tier minimal|common|full] [--force] [--yes]
+                 [--no-install] [--package-manager npm|pnpm|yarn|bun]
 
-Vendor shast's engine, one config-variation tier and tsyntax into a consumer
-tree. Only the chosen tier's variation files are written; the vendored tree has
-no barrel, so import the engine and family entry points directly.
+Vendor shast's engine and one config-variation tier into a consumer tree, and
+install the tsyntax package the tree imports. Only the chosen tier's variation
+files are written; the vendored tree has no barrel, so import the engine and
+family entry points directly.
 
-  dest      destination directory (default: src/shast)
-  --tier    config-variation tier to vendor (default: common). Stale files from
-            a different tier, and the old root index.ts, are removed
-  --force   overwrite files that already exist in the destination, reporting
-            which replaced files differ from the bytes being written
-  --yes     consent to adding "allowImportingTsExtensions" to the nearest
-            tsconfig.json without prompting (for CI)
+  dest              destination directory (default: src/shast)
+  --tier            config-variation tier to vendor (default: common). Stale
+                    files from a different tier, and the old root index.ts, are
+                    removed
+  --force           overwrite files that already exist in the destination,
+                    reporting which replaced files differ from the bytes being
+                    written
+  --yes             consent to installing tsyntax and to adding
+                    "allowImportingTsExtensions" to the nearest tsconfig.json
+                    without prompting (for CI)
+  --no-install      do not install tsyntax; print the command to run instead
+  --package-manager force a package manager instead of detecting one
+
+tsyntax is installed with your project's package manager, detected from its
+packageManager field or lockfile (npm, pnpm, yarn or bun). The install runs
+before any file is written, so a failed install leaves the destination
+untouched. Single package only: workspace roots are not supported.
 
 The destination must resolve as ESM (its nearest package.json needs
 "type": "module"); vendoring into a CommonJS subtree is rejected.
@@ -1038,6 +1216,8 @@ interface ParsedArgs {
   tier: Tier;
   force: boolean;
   yes: boolean;
+  noInstall: boolean;
+  packageManager?: PackageManager;
 }
 
 function parseAddArgs(args: readonly string[]): ParsedArgs {
@@ -1045,6 +1225,8 @@ function parseAddArgs(args: readonly string[]): ParsedArgs {
   let tier: Tier = DEFAULT_TIER;
   let force = false;
   let yes = false;
+  let noInstall = false;
+  let packageManager: PackageManager | undefined;
   let destSeen = false;
 
   for (let i = 0; i < args.length; i += 1) {
@@ -1054,6 +1236,8 @@ function parseAddArgs(args: readonly string[]): ParsedArgs {
       force = true;
     } else if (token === "--yes") {
       yes = true;
+    } else if (token === "--no-install") {
+      noInstall = true;
     } else if (token === "--tier") {
       const value = args[i + 1];
       if (value === undefined) {
@@ -1066,6 +1250,18 @@ function parseAddArgs(args: readonly string[]): ParsedArgs {
       }
       tier = value as Tier;
       i += 1;
+    } else if (token === "--package-manager") {
+      const value = args[i + 1];
+      if (value === undefined) {
+        throw new Error("Option '--package-manager' requires a value");
+      }
+      if (!isPackageManager(value)) {
+        throw new Error(
+          `Unknown package manager '${value}'; expected one of npm, pnpm, yarn, bun`,
+        );
+      }
+      packageManager = value;
+      i += 1;
     } else if (token.startsWith("-")) {
       throw new Error(`Unknown option '${token}'`);
     } else if (destSeen) {
@@ -1076,7 +1272,95 @@ function parseAddArgs(args: readonly string[]): ParsedArgs {
     }
   }
 
-  return { dest, tier, force, yes };
+  return packageManager === undefined
+    ? { dest, tier, force, yes, noInstall }
+    : { dest, tier, force, yes, noInstall, packageManager };
+}
+
+/**
+ * Install tsyntax into the consumer's project before `add` writes the vendored
+ * tree. Returns 0 to continue, or a non-zero exit code to stop (nothing is then
+ * written). `--no-install` skips and prints the command; `--yes` installs
+ * without prompting; an interactive run prompts for consent.
+ */
+function ensureTsyntax(
+  pre: AddPreflight,
+  parsed: ParsedArgs,
+  options: CliOptions,
+): number {
+  const range = tsyntaxRange();
+
+  if (parsed.noInstall) {
+    const manager = parsed.packageManager ?? detectPackageManager(pre.packageDir);
+    const { command, args } = installCommand(manager, range);
+    console.error(
+      `shast: --no-install set. The vendored tree imports "tsyntax", which is not\n` +
+        `  installed; run this before compiling:\n` +
+        `    ${command} ${args.join(" ")}\n` +
+        `  (in ${pre.packageDir})`,
+    );
+    return 0;
+  }
+
+  const declared = declaredDependency(pre.packageJsonPath, "tsyntax");
+  if (declared !== undefined) {
+    if (rangeMajor(declared) !== rangeMajor(range)) {
+      console.error(
+        `shast: ${pre.packageJsonPath} lists tsyntax@${declared}, but this shast\n` +
+          `  expects tsyntax@${range}. Leaving your version in place.`,
+      );
+    }
+    return 0;
+  }
+
+  const manager = parsed.packageManager ?? detectPackageManager(pre.packageDir);
+  const { command, args } = installCommand(manager, range);
+  const manual = `${command} ${args.join(" ")}`;
+
+  if (!parsed.yes) {
+    const interactive = options.interactive ?? process.stdin.isTTY === true;
+    const confirm = options.confirm ?? defaultConfirm;
+    if (!interactive) {
+      console.error(
+        `shast: the vendored tree imports "tsyntax", which is not installed.\n` +
+          `  Run \`${manual}\` in ${pre.packageDir}, or re-run with --yes.\n` +
+          `  Nothing was written.`,
+      );
+      return 1;
+    }
+    if (
+      !confirm(
+        `shast add will install tsyntax@${range} into ${pre.packageDir} using ${manager}.\n` +
+          `Run \`${manual}\`? [y/N] `,
+      )
+    ) {
+      console.error(
+        `shast: not installing tsyntax. Run \`${manual}\` in ${pre.packageDir},\n` +
+          `  or re-run with --yes. Nothing was written.`,
+      );
+      return 1;
+    }
+  }
+
+  console.log(`shast: installing tsyntax@${range} with ${manager}...`);
+  const run = options.run ?? defaultRun;
+  const result = run(command, args, pre.packageDir);
+  if (result.error !== undefined) {
+    console.error(
+      `shast: could not run ${command}: ${result.error.message}\n` +
+        `  Install tsyntax@${range} in ${pre.packageDir} manually. Nothing was written.`,
+    );
+    return 1;
+  }
+  if (result.status !== 0) {
+    console.error(
+      `shast: \`${manual}\` failed in ${pre.packageDir}.\n` +
+        `  Nothing was written.`,
+    );
+    return 1;
+  }
+  console.log(`shast: installed tsyntax@${range} with ${manager}.`);
+  return 0;
 }
 
 export function main(argv: readonly string[], options: CliOptions = {}): number {
@@ -1101,6 +1385,12 @@ export function main(argv: readonly string[], options: CliOptions = {}): number 
   }
 
   try {
+    // Validate and install before writing: a destination that would be refused,
+    // or an install that fails, must not leave a half-usable tree behind.
+    const pre = preflight(parsed);
+    const installCode = ensureTsyntax(pre, parsed, options);
+    if (installCode !== 0) return installCode;
+
     const result = add(parsed);
     console.log(
       `Vendored shast into ${result.dest} — ${result.written.length} files.`,

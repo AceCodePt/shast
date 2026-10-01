@@ -11,19 +11,18 @@ import {
 } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { createScanner, LanguageVariant, SyntaxKind } from "typescript/unstable/ast";
 import {
   add,
   CommonJSDestinationError,
+  detectPackageManager,
   ExistingDestinationError,
+  installCommand,
   main,
-  resolveTsyntaxSourceRoot,
   rewriteImports,
+  tsyntaxRange,
+  type RunResult,
 } from "../../scripts/cli.ts";
-
-/** This repository's root, used to resolve the real vendored tsyntax source. */
-const REPO_ROOT = fileURLToPath(new URL("../..", import.meta.url));
 
 interface ScannedToken {
   kind: SyntaxKind;
@@ -115,9 +114,11 @@ function assertRewritesOnlySpecifiers(before: string, after: string): void {
 }
 
 /**
- * Every string literal in the vendored `.ts` files that still holds a `@/` path
- * or the bare `tsyntax` package name. The lexer skips comments, so prose is not
- * mistaken for a specifier; a dynamic `import("@/...")` is a literal and is.
+ * Every string literal in the vendored `.ts` files that still holds an
+ * unresolved `@/` path. A bare `tsyntax` specifier is expected and resolves
+ * from node_modules, so it is not an offender. The lexer skips comments, so
+ * prose is not mistaken for a specifier; a dynamic `import("@/...")` is a
+ * literal and is.
  */
 function survivingSpecifierStrings(dest: string): string[] {
   const offenders: string[] = [];
@@ -132,7 +133,7 @@ function survivingSpecifierStrings(dest: string): string[] {
       const source = readFileSync(abs, "utf8");
       for (const token of scanTokens(source, true)) {
         if (token.kind !== SyntaxKind.StringLiteral) continue;
-        if (token.value.includes("@/") || token.value === "tsyntax") {
+        if (token.value.includes("@/")) {
           offenders.push(`${path.relative(dest, abs)}: ${JSON.stringify(token.value)}`);
         }
       }
@@ -174,7 +175,7 @@ function read(dest: string, rel: string): string {
 }
 
 describe("shast add: copy set", () => {
-  test("copies engine, css, html, types and tsyntax", () => {
+  test("copies engine, css, html and types, but not tsyntax", () => {
     const dest = tempDest();
     add({ dest });
 
@@ -189,11 +190,12 @@ describe("shast add: copy set", () => {
       "html/attribute-config/index.ts",
       "html/tag-config/types.ts",
       "types.ts",
-      "tsyntax/index.ts",
-      "tsyntax/types.ts",
     ]) {
       assert.ok(existsSync(path.join(dest, rel)), `expected ${rel} to exist`);
     }
+
+    // tsyntax is installed as a package now, never copied into the tree.
+    assert.ok(!existsSync(path.join(dest, "tsyntax")), "expected no tsyntax/");
 
     // The tree carries no generated package.json: the module format is the
     // consumer's to declare, and `add` refuses a CommonJS destination outright.
@@ -275,7 +277,7 @@ describe("shast add: tier selection", () => {
 });
 
 describe("shast add: import rewriting", () => {
-  test("no vendored file keeps a @/ or bare tsyntax string literal", () => {
+  test("no vendored file keeps a @/ string literal", () => {
     const dest = tempDest();
     add({ dest });
 
@@ -285,14 +287,14 @@ describe("shast add: import rewriting", () => {
     assert.deepStrictEqual(survivingSpecifierStrings(dest), []);
   });
 
-  test("rewrites @/ and tsyntax specifiers to mirrored relative paths", () => {
+  test("rewrites @/ specifiers and keeps bare tsyntax untouched", () => {
     const dest = tempDest();
     add({ dest });
 
     const engineIndex = read(dest, "engine/index.ts");
     assert.ok(
-      engineIndex.includes('from "../tsyntax/index.ts"'),
-      "engine imports vendored tsyntax",
+      engineIndex.includes('from "tsyntax"'),
+      "engine keeps the bare tsyntax specifier",
     );
     assert.ok(
       engineIndex.includes('from "../css/attribute-config/types.ts"'),
@@ -301,13 +303,13 @@ describe("shast add: import rewriting", () => {
 
     const types = read(dest, "types.ts");
     assert.ok(types.includes('from "./css/syntax-config/types.ts"'));
-    assert.ok(types.includes('from "./tsyntax/index.ts"'));
+    assert.ok(types.includes('from "tsyntax"'));
 
-    // A deeply nested file resolves up to the root and over to tsyntax.
+    // A deeply nested file resolves up to the root, and leaves tsyntax bare.
     const calC = read(dest, "css/calc.ts");
     assert.ok(calC.includes('from "./properties-config/types.ts"'));
-    assert.ok(calC.includes('from "../tsyntax/index.ts"'));
-    assert.ok(!calC.includes('from "tsyntax"'));
+    assert.ok(calC.includes('from "tsyntax"'));
+    assert.ok(!calC.includes('from "../tsyntax/index.ts"'));
   });
 
   // The two regexes this replaced matched raw text, so prose shaped like
@@ -341,9 +343,9 @@ describe("shast add: import rewriting", () => {
       assert.strictEqual(out, `import { engine } from "../index.ts";\n`);
     });
 
-    test("a real side-effect import of tsyntax still rewrites", () => {
-      const out = rewriteImports(`import "tsyntax";\n`, FROM);
-      assert.strictEqual(out, `import "../../tsyntax/index.ts";\n`);
+    test("a side-effect import of tsyntax is left bare", () => {
+      const source = `import "tsyntax";\n`;
+      assert.strictEqual(rewriteImports(source, FROM), source);
     });
 
     test("a multi-line named import still rewrites", () => {
@@ -387,9 +389,9 @@ describe("shast add: import rewriting", () => {
       );
     });
 
-    test("a dynamic import of tsyntax rewrites too", () => {
-      const out = rewriteImports(`import("tsyntax");\n`, FROM);
-      assert.strictEqual(out, `import("../../tsyntax/index.ts");\n`);
+    test("a dynamic import of tsyntax is left bare", () => {
+      const source = `import("tsyntax");\n`;
+      assert.strictEqual(rewriteImports(source, FROM), source);
     });
 
     test("import.meta is not a dynamic import", () => {
@@ -466,11 +468,7 @@ describe("shast add: dynamic import fixture", () => {
     write("src/css/.keep", "");
     write("src/html/.keep", "");
 
-    add({
-      dest,
-      sourceRoot: fixture,
-      tsyntaxSourceRoot: resolveTsyntaxSourceRoot(REPO_ROOT),
-    });
+    add({ dest, sourceRoot: fixture });
 
     const escape = read(dest, "engine/render/escape.ts");
     assert.ok(
@@ -655,9 +653,11 @@ function tempProject(tsconfig?: string): {
 } {
   const root = mkdtempSync(path.join(os.tmpdir(), "shast-allow-imports-"));
   process.on("exit", () => rmSync(root, { recursive: true, force: true }));
+  // tsyntax is declared so these tests exercise the tsconfig reconciliation,
+  // not the tsyntax install (which `main` runs first).
   writeFileSync(
     path.join(root, "package.json"),
-    JSON.stringify({ type: "module" }),
+    JSON.stringify({ type: "module", dependencies: { tsyntax: "^1.0.1" } }),
   );
   const tsconfigPath = path.join(root, "tsconfig.json");
   if (tsconfig !== undefined) writeFileSync(tsconfigPath, tsconfig);
@@ -670,7 +670,27 @@ interface CapturedRun {
   stderr: string[];
 }
 
-/** Run `main` with console output captured, so silence can be asserted. */
+/** A package-manager runner that records calls and succeeds. */
+function recordingRunner(result: RunResult = { status: 0 }): {
+  run: (command: string, args: readonly string[], cwd: string) => RunResult;
+  calls: { command: string; args: readonly string[]; cwd: string }[];
+} {
+  const calls: { command: string; args: readonly string[]; cwd: string }[] = [];
+  return {
+    calls,
+    run: (command, args, cwd) => {
+      calls.push({ command, args, cwd });
+      return result;
+    },
+  };
+}
+
+/**
+ * Run `main` with console output captured, so silence can be asserted. The
+ * defaults consent to installing tsyntax and stub the runner, so a test that
+ * only cares about vendoring never prompts or shells out; tests that exercise
+ * the install override `run`/`confirm`/`interactive` explicitly.
+ */
 function runMain(
   argv: readonly string[],
   options?: Parameters<typeof main>[1],
@@ -685,8 +705,14 @@ function runMain(
   console.error = (value: unknown) => {
     stderr.push(String(value));
   };
+  const resolved = {
+    interactive: true,
+    confirm: () => true,
+    run: () => ({ status: 0 }),
+    ...options,
+  };
   try {
-    return { code: main(argv, options), stdout, stderr };
+    return { code: main(argv, resolved), stdout, stderr };
   } finally {
     console.log = originalLog;
     console.error = originalError;
@@ -989,5 +1015,220 @@ describe("shast add: --force replacement report", () => {
     assert.deepStrictEqual(result.replacedDiffering, [EDITED]);
     assert.ok(result.replaced.length > 1);
     assert.ok(!result.replacedDiffering.includes("types.ts"));
+  });
+});
+
+/** An empty scratch directory, for package-manager detection fixtures. */
+function tempPackage(): string {
+  const root = mkdtempSync(path.join(os.tmpdir(), "shast-pm-test-"));
+  process.on("exit", () => rmSync(root, { recursive: true, force: true }));
+  return root;
+}
+
+describe("shast add: package manager detection", () => {
+  test("an explicit override wins over every signal", () => {
+    const dir = tempPackage();
+    writeFileSync(
+      path.join(dir, "package.json"),
+      JSON.stringify({ packageManager: "pnpm@9.0.0" }),
+    );
+    writeFileSync(path.join(dir, "yarn.lock"), "");
+    assert.strictEqual(detectPackageManager(dir, "bun"), "bun");
+  });
+
+  test("the packageManager field is read", () => {
+    const dir = tempPackage();
+    writeFileSync(
+      path.join(dir, "package.json"),
+      JSON.stringify({ packageManager: "yarn@4.0.0" }),
+    );
+    assert.strictEqual(detectPackageManager(dir), "yarn");
+  });
+
+  test("each lockfile maps to its manager", () => {
+    for (const [file, expected] of [
+      ["pnpm-lock.yaml", "pnpm"],
+      ["yarn.lock", "yarn"],
+      ["bun.lockb", "bun"],
+      ["bun.lock", "bun"],
+      ["package-lock.json", "npm"],
+      ["npm-shrinkwrap.json", "npm"],
+    ] as const) {
+      const dir = tempPackage();
+      writeFileSync(path.join(dir, file), "");
+      assert.strictEqual(detectPackageManager(dir), expected, file);
+    }
+  });
+
+  test("the packageManager field beats a lockfile", () => {
+    const dir = tempPackage();
+    writeFileSync(
+      path.join(dir, "package.json"),
+      JSON.stringify({ packageManager: "pnpm@9.0.0" }),
+    );
+    writeFileSync(path.join(dir, "yarn.lock"), "");
+    assert.strictEqual(detectPackageManager(dir), "pnpm");
+  });
+
+  test("npm_config_user_agent is the last resort before npm", () => {
+    const dir = tempPackage();
+    const saved = process.env["npm_config_user_agent"];
+    try {
+      process.env["npm_config_user_agent"] = "bun/1.0.0 npm/? node/v20.0.0";
+      assert.strictEqual(detectPackageManager(dir), "bun");
+      delete process.env["npm_config_user_agent"];
+      assert.strictEqual(detectPackageManager(dir), "npm");
+    } finally {
+      if (saved === undefined) delete process.env["npm_config_user_agent"];
+      else process.env["npm_config_user_agent"] = saved;
+    }
+  });
+});
+
+describe("shast add: install command", () => {
+  test("maps each manager to its add command", () => {
+    assert.deepStrictEqual(installCommand("npm", "^1.0.1"), {
+      command: "npm",
+      args: ["install", "tsyntax@^1.0.1"],
+    });
+    assert.deepStrictEqual(installCommand("pnpm", "^1.0.1"), {
+      command: "pnpm",
+      args: ["add", "tsyntax@^1.0.1"],
+    });
+    assert.deepStrictEqual(installCommand("yarn", "^1.0.1"), {
+      command: "yarn",
+      args: ["add", "tsyntax@^1.0.1"],
+    });
+    assert.deepStrictEqual(installCommand("bun", "^1.0.1"), {
+      command: "bun",
+      args: ["add", "tsyntax@^1.0.1"],
+    });
+  });
+
+  test("the installed range is shast's own tsyntax dependency", () => {
+    assert.match(tsyntaxRange(), /^\^?\d/);
+  });
+});
+
+describe("shast add: tsyntax install", () => {
+  test("--yes installs before writing the tree", () => {
+    const dest = tempDest();
+    const { run, calls } = recordingRunner();
+
+    const result = runMain(
+      ["add", dest, "--yes", "--package-manager", "npm"],
+      { run },
+    );
+
+    assert.strictEqual(result.code, 0);
+    assert.strictEqual(calls.length, 1);
+    assert.strictEqual(calls[0]!.command, "npm");
+    assert.deepStrictEqual(calls[0]!.args, [
+      "install",
+      `tsyntax@${tsyntaxRange()}`,
+    ]);
+    assert.strictEqual(calls[0]!.cwd, path.dirname(dest));
+    assert.ok(existsSync(path.join(dest, "types.ts")));
+  });
+
+  test("detection feeds the install command", () => {
+    const root = mkdtempSync(path.join(os.tmpdir(), "shast-detect-"));
+    process.on("exit", () => rmSync(root, { recursive: true, force: true }));
+    writeFileSync(
+      path.join(root, "package.json"),
+      JSON.stringify({ type: "module", packageManager: "pnpm@9.0.0" }),
+    );
+    const dest = path.join(root, "shast");
+    const { run, calls } = recordingRunner();
+
+    const result = runMain(["add", dest, "--yes"], { run });
+
+    assert.strictEqual(result.code, 0);
+    assert.strictEqual(calls[0]!.command, "pnpm");
+  });
+
+  test("an interactive decline writes nothing", () => {
+    const dest = tempDest();
+    const { run, calls } = recordingRunner();
+
+    const result = runMain(["add", dest], {
+      run,
+      interactive: true,
+      confirm: () => false,
+    });
+
+    assert.strictEqual(result.code, 1);
+    assert.strictEqual(calls.length, 0);
+    assert.ok(!existsSync(path.join(dest, "types.ts")));
+    assert.match(runText(result), /not installing tsyntax/);
+  });
+
+  test("non-interactive without --yes writes nothing", () => {
+    const dest = tempDest();
+    const { run, calls } = recordingRunner();
+
+    const result = runMain(["add", dest], { run, interactive: false });
+
+    assert.strictEqual(result.code, 1);
+    assert.strictEqual(calls.length, 0);
+    assert.ok(!existsSync(path.join(dest, "types.ts")));
+    assert.match(runText(result), /--yes/);
+  });
+
+  test("--no-install skips the install and still writes", () => {
+    const dest = tempDest();
+    const { run, calls } = recordingRunner();
+
+    const result = runMain(["add", dest, "--no-install"], { run });
+
+    assert.strictEqual(result.code, 0);
+    assert.strictEqual(calls.length, 0);
+    assert.ok(existsSync(path.join(dest, "types.ts")));
+    assert.match(runText(result), /tsyntax/);
+  });
+
+  test("a failing install writes nothing", () => {
+    const dest = tempDest();
+    const { run } = recordingRunner({ status: 1 });
+
+    const result = runMain(["add", dest, "--yes"], { run });
+
+    assert.strictEqual(result.code, 1);
+    assert.ok(!existsSync(path.join(dest, "types.ts")));
+    assert.ok(!existsSync(path.join(dest, "engine")));
+  });
+
+  test("a missing manager binary writes nothing", () => {
+    const dest = tempDest();
+    const { run } = recordingRunner({
+      status: null,
+      error: new Error("spawn npm ENOENT"),
+    });
+
+    const result = runMain(["add", dest, "--yes"], { run });
+
+    assert.strictEqual(result.code, 1);
+    assert.ok(!existsSync(path.join(dest, "types.ts")));
+    assert.match(runText(result), /ENOENT/);
+  });
+
+  test("an already-declared tsyntax is not installed again", () => {
+    const root = mkdtempSync(path.join(os.tmpdir(), "shast-declared-"));
+    process.on("exit", () => rmSync(root, { recursive: true, force: true }));
+    writeFileSync(
+      path.join(root, "package.json"),
+      JSON.stringify({
+        type: "module",
+        dependencies: { tsyntax: "^1.0.1" },
+      }),
+    );
+    const dest = path.join(root, "shast");
+    const { run, calls } = recordingRunner();
+
+    const result = runMain(["add", dest], { run });
+
+    assert.strictEqual(result.code, 0);
+    assert.strictEqual(calls.length, 0);
+    assert.ok(existsSync(path.join(dest, "types.ts")));
   });
 });
