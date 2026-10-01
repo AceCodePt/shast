@@ -92,14 +92,17 @@ added to the fundamental numeric, dimension, time, angle, color, image,
 position, and line-style tokens; `<string>`-typed shorthands already accept it.
 The deep grammar is applied on top by:
 
-- `VarConstraint` in `src/engine/types.ts` — a mapped type over the known CSS
-  value keys (top-level string attributes, every gate-unlockable key, registered
-  custom properties). It reads the written value back out of the component and
-  narrows var-shaped values to `ValidateVar`. The expected context type is
-  computed for top-level string attributes and registered custom properties;
-  for context-dependent slots (gate-unlocked shorthands, gate values) it is
-  `unknown`, which turns the resolved-type match off and leaves it to runtime —
-  the spec's "one-level resolution + runtime for the rest".
+- `VarConstraint` in `src/engine/types.ts` — a mapped type over `keyof CSSValue`
+  (the keys the author actually wrote) whose `as` clause keeps only a key that
+  is in the registry (top-level string attributes, every gate-unlockable key,
+  registered custom properties) and whose written value contains `var(`. The
+  value side is then an unconditional `ValidateVar`. The registry-membership
+  test is what keeps a written key outside the registry (a typo, an undeclared
+  pseudo-class) from being declared: it remaps to `never`. The expected context
+  type is computed for top-level string attributes and registered custom
+  properties; for context-dependent slots (gate-unlocked shorthands, gate
+  values) it is `unknown`, which turns the resolved-type match off and leaves it
+  to runtime — the spec's "one-level resolution + runtime for the rest".
 - `parseCSSValueAgainstDSL` in `src/engine/validate/css.ts` — the **single dispatch
   point** for the deep grammars. A written value is inspected once: calc-shaped
   values go to calc's `parseCalc`, and any value containing `var(` goes to
@@ -243,3 +246,14 @@ fallbacks.
 The engine still runs calc's parser and var's scanner on a value like
 `calc(var(--a) * 2)`, so real nesting keeps both walls live, but neither wall
 imports the other and neither has a recursive fallback path to bound.
+
+### Constraint inversion: written-key iteration
+
+`VarConstraint` (and `CalcConstraint`) now maps over `keyof CSSValue`, the keys
+the author wrote, instead of the registry-wide `CalcValueKeys` union, moving the
+registry-membership test and the `ContainsVar` test into the `as` clause. The
+full measurement — six variants and the N=0 fixed cost, instantiations only —
+is recorded in [`css-calc.md`](css-calc.md#constraint-inversion-written-key-iteration)
+because the two constraints were inverted together. The var-relevant rows:
+a `var()` component fell from 3,805 to 1,391 marginal instantiations, and the
+N=0 fixed cost moved from 533,958 to 534,188 (+230).
