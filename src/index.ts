@@ -82,8 +82,11 @@ export type {
   BaseHTMLAttributeComplexValue,
   BaseHTMLAttributesConfig,
   BaseHTMLAttributeSimpleConfig,
+  HTMLAttributeArms,
   InferHTMLAttributesConfig,
+  InferHTMLAttributeValue,
   ValidateHTMLAttributesConfig,
+  ValidateHTMLAttributeValue,
 } from "@/html/attribute-config/types.ts";
 
 export type {

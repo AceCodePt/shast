@@ -1,12 +1,19 @@
 import type {
   DSLInfer,
-  DSLValidate,
+  DSLValidateArm,
   SupportedKeywordsConfig,
 } from "tsyntax";
 
-// The flat case: an attribute name is a DSL string, exactly as before.
+// The authoring surface: an attribute value is an array of single arms. Each
+// arm is validated on its own by tsyntax's `DSLValidateArm`, so validation does
+// not re-split a value into a union first. `htmlAttributeConfig` joins the arms
+// with `' | '` before returning, so the runtime surface every consumer reads is
+// one joined DSL string per attribute.
+export type HTMLAttributeArms = readonly string[];
+
+// The flat case: an attribute name maps to its arms.
 export interface BaseHTMLAttributeSimpleConfig {
-  [attribute: string]: string;
+  [attribute: string]: HTMLAttributeArms;
 }
 
 // The conditional case: an attribute name maps each possible value directly to
@@ -18,15 +25,39 @@ export interface BaseHTMLAttributeComplexValue {
 }
 
 export interface BaseHTMLAttributesConfig {
-  [attribute: string]: BaseHTMLAttributeComplexValue | string;
+  [attribute: string]: BaseHTMLAttributeComplexValue | HTMLAttributeArms;
 }
+
+// Validate every arm of an attribute value independently. An empty arm list is
+// a diagnostic string, never a valid value, so `[]` is rejected at the type
+// wall (and thrown at runtime by `htmlAttributeConfig`).
+export type ValidateHTMLAttributeValue<
+  Keywords extends SupportedKeywordsConfig,
+  Arms extends HTMLAttributeArms,
+> = Arms extends readonly []
+  ? `An HTML attribute must declare at least one arm`
+  : {
+      readonly [I in keyof Arms]: DSLValidateArm<Keywords, Arms[I] & string>;
+    };
+
+// Infer the value a user may write from an attribute's arms: the union of what
+// each arm infers to. Mapping arm-by-arm keeps an arm's internal template pipe
+// inside one `DSLInfer` instead of letting it split the whole value.
+export type InferHTMLAttributeValue<
+  Keywords extends SupportedKeywordsConfig,
+  Arms extends HTMLAttributeArms,
+> = Arms[number] extends infer Arm
+  ? Arm extends string
+    ? DSLInfer<Keywords, Arm>
+    : never
+  : never;
 
 export type ValidateHTMLAttributesSimpleConfig<
   Keywords extends SupportedKeywordsConfig,
   A extends BaseHTMLAttributeSimpleConfig,
 > = keyof A extends string
   ? {
-      [K in keyof A]: DSLValidate<Keywords, A[K]>;
+      [K in keyof A]: ValidateHTMLAttributeValue<Keywords, A[K]>;
     }
   : A;
 
@@ -35,21 +66,22 @@ export type ValidateHTMLAttributesConfig<
   T extends BaseHTMLAttributesConfig,
 > = keyof T extends string
   ? {
-      [K in keyof T]: T[K] extends string
-        ? DSLValidate<Keywords, T[K]>
-        : T[K] extends BaseHTMLAttributeComplexValue
-          ? {
-              [V in keyof T[K]]: ValidateHTMLAttributesSimpleConfig<
-                Keywords,
-                T[K][V]
-              >;
-            }
-          : never;
+      [K in keyof T]: T[K] extends BaseHTMLAttributeComplexValue
+        ? {
+            [V in keyof T[K]]: ValidateHTMLAttributesSimpleConfig<
+              Keywords,
+              T[K][V]
+            >;
+          }
+        : ValidateHTMLAttributeValue<
+            Keywords,
+            Extract<T[K], HTMLAttributeArms>
+          >;
     }
   : T;
 
 type FlatHTMLAttributeKeys<A> = {
-  [K in keyof A]: A[K] extends string ? K : never;
+  [K in keyof A]: A[K] extends HTMLAttributeArms ? K : never;
 }[keyof A];
 
 type ComplexHTMLAttributeKeys<A> = {
@@ -65,25 +97,31 @@ export type InferHTMLAttributesConfig<
   A extends BaseHTMLAttributesConfig,
 > = [ComplexHTMLAttributeKeys<A>] extends [never]
   ? {
-      [K in FlatHTMLAttributeKeys<A> & string]: DSLInfer<
+      [K in FlatHTMLAttributeKeys<A> & string]: InferHTMLAttributeValue<
         Keywords,
-        A[K] & string
+        Extract<A[K], HTMLAttributeArms>
       >;
     }
   : {
       [K in keyof A]: K extends string
-        ? A[K] extends string
-          ? { [P in K]: DSLInfer<Keywords, A[K]> }
-          : A[K] extends BaseHTMLAttributeComplexValue
-            ? {
-                [V in keyof A[K]]: {
-                  [K1 in K | keyof A[K][V]]?: K1 extends K
-                    ? V
-                    : K1 extends keyof A[K][V]
-                      ? DSLInfer<Keywords, A[K][V][K1]>
-                      : never;
-                };
-              }[keyof A[K]]
-            : never
+        ? A[K] extends BaseHTMLAttributeComplexValue
+          ? {
+              [V in keyof A[K]]: {
+                [K1 in K | keyof A[K][V]]?: K1 extends K
+                  ? V
+                  : K1 extends keyof A[K][V]
+                    ? InferHTMLAttributeValue<
+                        Keywords,
+                        Extract<A[K][V][K1], HTMLAttributeArms>
+                      >
+                    : never;
+              };
+            }[keyof A[K]]
+          : {
+              [P in K]: InferHTMLAttributeValue<
+                Keywords,
+                Extract<A[K], HTMLAttributeArms>
+              >;
+            }
         : never;
     }[keyof A];

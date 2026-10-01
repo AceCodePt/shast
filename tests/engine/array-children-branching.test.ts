@@ -265,8 +265,8 @@ describe("createComponent (engine)", () => {
         const { createComponent: createClassComponent } = engine({
           supportedKeywords: SUPPORTED_KEYWORDS,
           htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-            id: "string | undefined",
-            class: "string | undefined",
+            id: ["string", "undefined"],
+            class: ["string", "undefined"],
           }),
           htmlTagConfig: CLASS_TAG_CONFIG,
           cssSyntaxConfig: MOCK_CSS_SYNTAX,
@@ -329,7 +329,7 @@ describe("createComponent (engine)", () => {
           const { createComponent: createPseudoClassComponent } = engine({
             supportedKeywords: SUPPORTED_KEYWORDS,
             htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-              class: "string | undefined",
+              class: ["string", "undefined"],
             }),
             htmlTagConfig: CLASS_PSEUDO_TAG,
             cssSyntaxConfig: MOCK_CSS_SYNTAX,
@@ -524,8 +524,8 @@ describe("createComponent (engine)", () => {
         const { createComponent: createChildComponent } = engine({
           supportedKeywords: SUPPORTED_KEYWORDS,
           htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-            id: "string | undefined",
-            class: "string | undefined",
+            id: ["string", "undefined"],
+            class: ["string", "undefined"],
           }),
           htmlTagConfig: CHILD_TAG_CONFIG,
           cssSyntaxConfig: MOCK_CSS_SYNTAX,

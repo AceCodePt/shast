@@ -73,8 +73,8 @@ const TAG_CONFIG = htmlTagConfig(SUPPORTED_KEYWORDS, COMMON_ATTRIBUTES, {
 const { createComponent, renderComponent, cssProperties } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,
   htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-    id: "string | undefined",
-    class: "string | undefined",
+    id: ["string", "undefined"],
+    class: ["string", "undefined"],
   }),
   htmlTagConfig: TAG_CONFIG,
   cssSyntaxConfig: COMMON_SYNTAX,

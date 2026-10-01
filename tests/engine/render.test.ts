@@ -123,8 +123,8 @@ describe("createComponent (engine)", () => {
     } = engine({
       supportedKeywords: SUPPORTED_KEYWORDS,
       htmlAttributesConfig: htmlAttributeConfig(SUPPORTED_KEYWORDS, {
-        id: "string | undefined",
-        class: "string | undefined",
+        id: ["string", "undefined"],
+        class: ["string", "undefined"],
       }),
       htmlTagConfig: PROD_TAG_CONFIG,
       cssSyntaxConfig: MOCK_CSS_SYNTAX,

@@ -24,6 +24,8 @@ import type { ContainsVar, ValidateVar } from "@/css/var.ts";
 import type {
   BaseHTMLAttributesConfig,
   BaseHTMLAttributeComplexValue,
+  HTMLAttributeArms,
+  InferHTMLAttributeValue,
 } from "@/html/attribute-config/types.ts";
 import type { BaseHTMLTagConfig } from "@/html/tag-config/types.ts";
 import type {
@@ -83,7 +85,11 @@ type IsOptionalAttribute<T> = T extends string
     ? "undefined" extends keyof T
       ? never
       : "attributes"
-    : "attributes";
+    : T extends HTMLAttributeArms
+      ? T[number] extends `${string}undefined${string}`
+        ? never
+        : "attributes"
+      : "attributes";
 
 type MaybeAttributes<HTMLAttributesConfig extends Record<string, any>> = {
   [K in keyof HTMLAttributesConfig]: IsOptionalAttribute<
@@ -710,15 +716,40 @@ type HTMLGateKeys<C extends BaseHTMLAttributesConfig> = KeysMatching<
   BaseHTMLAttributeComplexValue
 >;
 
-type HTMLFlatKeys<C extends BaseHTMLAttributesConfig> = KeysMatching<C, string>;
+// A tag config still authors bare DSL strings until
+// html-tag-config-array-only; the engine reads the array-only surface. Lift each
+// legacy string to a one-element arm list so the rest of the machinery is
+// uniform. `InferHTMLAttributeValue` then infers over the arm (and still splits
+// the arm's own `|` union through `DSLInfer`).
+type ToHTMLArms<V> = V extends HTMLAttributeArms
+  ? V
+  : V extends string
+    ? readonly [V]
+    : V extends Record<string, any>
+      ? { [K in keyof V]: ToHTMLArms<V[K]> }
+      : never;
+
+type HTMLArmsConfig<C> = {
+  [K in keyof C]: ToHTMLArms<C[K]>;
+};
+
+type AsHTMLArmsConfig<C> = HTMLArmsConfig<C> extends infer T extends
+  BaseHTMLAttributesConfig
+  ? T
+  : never;
+
+type HTMLFlatKeys<C extends BaseHTMLAttributesConfig> = KeysMatching<
+  C,
+  HTMLAttributeArms
+>;
 
 type AsRecord<T> = T extends Record<string, any> ? T : {};
 
 type InferHTMLPropBag<
   Keywords extends SupportedKeywordsConfig,
-  Bag extends Record<string, string>,
+  Bag extends Record<string, HTMLAttributeArms>,
 > = {
-  [P in keyof Bag]?: DSLInfer<Keywords, Bag[P]>;
+  [P in keyof Bag]?: InferHTMLAttributeValue<Keywords, Bag[P]>;
 };
 
 // Registry-only table. Value keys are remapped through `ResolveComplexValue`,
@@ -737,7 +768,7 @@ type HTMLGateTable<
         V
       > &
         PropertyKey
-    ]: C[K][V] extends Record<string, string>
+    ]: C[K][V] extends Record<string, HTMLAttributeArms>
       ? GateEntry<V, InferHTMLPropBag<Keywords, C[K][V]>>
       : GateEntry<V, {}>;
   };
@@ -750,7 +781,10 @@ type HTMLFlatAttributeBag<
   Keywords extends SupportedKeywordsConfig,
   C extends BaseHTMLAttributesConfig,
 > = {
-  [K in HTMLFlatKeys<C> & string]: DSLInfer<Keywords, C[K] & string>;
+  [K in HTMLFlatKeys<C> & string]: InferHTMLAttributeValue<
+    Keywords,
+    Extract<C[K], HTMLAttributeArms>
+  >;
 };
 
 type HTMLGateKeyBag<
@@ -777,7 +811,7 @@ type HTMLUndefinedBag<
   K extends keyof C,
 > = C[K] extends BaseHTMLAttributeComplexValue
   ? "undefined" extends keyof C[K]
-    ? C[K]["undefined"] extends Record<string, string>
+    ? C[K]["undefined"] extends Record<string, HTMLAttributeArms>
       ? InferHTMLPropBag<Keywords, C[K]["undefined"]>
       : {}
     : {}
@@ -810,7 +844,7 @@ type HTMLGateAllKeys<
   C extends BaseHTMLAttributesConfig,
   G extends keyof C,
 > = {
-  [V in keyof C[G]]: C[G][V] extends Record<string, string>
+  [V in keyof C[G]]: C[G][V] extends Record<string, HTMLAttributeArms>
     ? keyof C[G][V]
     : never;
 }[keyof C[G]];
@@ -824,7 +858,10 @@ type HTMLValuesUnlocking<
   G extends keyof C,
   P,
 > = {
-  [V in keyof C[G] & string]: P extends (C[G][V] extends Record<string, string>
+  [V in keyof C[G] & string]: P extends (C[G][V] extends Record<
+    string,
+    HTMLAttributeArms
+  >
     ? keyof C[G][V]
     : never)
     ? V
@@ -891,7 +928,7 @@ type MergedHTMLAttributesConfig<
   Tag extends keyof HTMLTagConfig,
 > = MergeAttributesConfig<
   HTMLGlobalAttributesConfig,
-  HTMLTagConfig[Tag]["attributes"]
+  AsHTMLArmsConfig<HTMLTagConfig[Tag]["attributes"]>
 >;
 
 type ValidateComponentHTMLAttributes<
@@ -929,7 +966,7 @@ type MergedConfigForTag<
 > = Tag extends keyof HTMLTagConfig
   ? MergeAttributesConfig<
       HTMLGlobalAttributesConfig,
-      HTMLTagConfig[Tag]["attributes"]
+      AsHTMLArmsConfig<HTMLTagConfig[Tag]["attributes"]>
     >
   : HTMLGlobalAttributesConfig;
 
@@ -1606,7 +1643,7 @@ export type ValidateComponentStructure<
             innerHTML?: {};
           }) &
       ("attributes" extends MaybeAttributes<
-        HTMLTagConfig[T["tag"]]["attributes"]
+        AsHTMLArmsConfig<HTMLTagConfig[T["tag"]]["attributes"]>
       >
         ? {
             attributes: {};
