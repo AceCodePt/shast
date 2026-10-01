@@ -25,8 +25,8 @@ const CSS_ATTRIBUTES = cssAttributeConfig(
   SUPPORTED_KEYWORDS,
   COMMON_SYNTAX,
   {
-    color: "string",
-    content: "string",
+    color: ["string"],
+    content: ["string"],
     display: {
       block: { self: {}, children: {} },
       inline: { self: {}, children: {} },

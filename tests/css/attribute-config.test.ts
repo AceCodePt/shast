@@ -22,9 +22,9 @@ describe("cssAttributeConfig", () => {
           ValidateCSSAttributesConfig<
             SupportedKeywords,
             typeof SYNTAX,
-            { width: "<length>" }
+            { width: readonly ["<length>"] }
           >,
-          { width: "<length>" }
+          { width: readonly ["<length>"] }
         >
       >();
     });
@@ -35,48 +35,96 @@ describe("cssAttributeConfig", () => {
           ValidateCSSAttributesConfig<
             SupportedKeywords,
             typeof SYNTAX,
-            { width: "<length>"; color: "<color>"; opacity: "<number>" }
+            {
+              width: readonly ["<length>"];
+              color: readonly ["<color>"];
+              opacity: readonly ["<number>"];
+            }
           >,
-          { width: "<length>"; color: "<color>"; opacity: "<number>" }
+          {
+            width: readonly ["<length>"];
+            color: readonly ["<color>"];
+            opacity: readonly ["<number>"];
+          }
         >
       >();
     });
 
-    test("accepts quoted literal values", () => {
+    test("accepts a multi-arm value and validates each arm", () => {
       assertType<
         Equal<
           ValidateCSSAttributesConfig<
             SupportedKeywords,
             typeof SYNTAX,
-            { display: "'block' | 'inline' | 'none'" }
+            { width: readonly ["<integer>", "<length>"] }
           >,
-          { display: "'block' | 'inline' | 'none'" }
+          { width: readonly ["<integer>", "<length>"] }
         >
       >();
     });
 
-    test("accepts mixed token + literal union", () => {
+    test("accepts quoted literal arms", () => {
       assertType<
         Equal<
           ValidateCSSAttributesConfig<
             SupportedKeywords,
             typeof SYNTAX,
-            { "letter-spacing": "'normal' | <length>" }
+            { display: readonly ["'block'", "'inline'", "'none'"] }
           >,
-          { "letter-spacing": "'normal' | <length>" }
+          { display: readonly ["'block'", "'inline'", "'none'"] }
         >
       >();
     });
 
-    test("accepts union of two tokens", () => {
+    test("accepts a mixed token + literal value", () => {
       assertType<
         Equal<
           ValidateCSSAttributesConfig<
             SupportedKeywords,
             typeof SYNTAX,
-            { tint: "<color> | <length>" }
+            { "letter-spacing": readonly ["'normal'", "<length>"] }
           >,
-          { tint: "<color> | <length>" }
+          { "letter-spacing": readonly ["'normal'", "<length>"] }
+        >
+      >();
+    });
+
+    test("accepts a gate whose self/children bags hold arm arrays", () => {
+      assertType<
+        Equal<
+          ValidateCSSAttributesConfig<
+            SupportedKeywords,
+            typeof SYNTAX,
+            {
+              display: {
+                block: {
+                  self: { width: readonly ["<length>"] };
+                  children: {};
+                };
+              };
+            }
+          >,
+          {
+            display: {
+              block: {
+                self: { width: readonly ["<length>"] };
+                children: {};
+              };
+            };
+          }
+        >
+      >();
+    });
+
+    test("rejects an empty arm list", () => {
+      assertType<
+        Equal<
+          ValidateCSSAttributesConfig<
+            SupportedKeywords,
+            typeof SYNTAX,
+            { width: [] }
+          >,
+          { width: "A CSS attribute must declare at least one arm" }
         >
       >();
     });
@@ -85,16 +133,16 @@ describe("cssAttributeConfig", () => {
   describe("Runtime Validation", () => {
     test("accepts a single token attribute", () => {
       const config = cssAttributeConfig(SUPPORTED_KEYWORDS, SYNTAX, {
-        width: "<length>",
+        width: ["<length>"],
       });
       assert.deepStrictEqual(config, { width: "<length>" });
     });
 
     test("accepts multiple token attributes", () => {
       const config = cssAttributeConfig(SUPPORTED_KEYWORDS, SYNTAX, {
-        width: "<length>",
-        color: "<color>",
-        opacity: "<number>",
+        width: ["<length>"],
+        color: ["<color>"],
+        opacity: ["<number>"],
       });
       assert.deepStrictEqual(config, {
         width: "<length>",
@@ -103,10 +151,17 @@ describe("cssAttributeConfig", () => {
       });
     });
 
-    test("accepts quoted literal values", () => {
+    test("joins a multi-arm value with ' | '", () => {
       const config = cssAttributeConfig(SUPPORTED_KEYWORDS, SYNTAX, {
-        display: "'block' | 'inline' | 'flex' | 'none'",
-        position: "'static' | 'relative' | 'absolute'",
+        width: ["<integer>", "<length>"],
+      });
+      assert.deepStrictEqual(config, { width: "<integer> | <length>" });
+    });
+
+    test("accepts quoted literal arms", () => {
+      const config = cssAttributeConfig(SUPPORTED_KEYWORDS, SYNTAX, {
+        display: ["'block'", "'inline'", "'flex'", "'none'"],
+        position: ["'static'", "'relative'", "'absolute'"],
       });
       assert.deepStrictEqual(config, {
         display: "'block' | 'inline' | 'flex' | 'none'",
@@ -114,9 +169,9 @@ describe("cssAttributeConfig", () => {
       });
     });
 
-    test("accepts a mixed token + quoted literal union", () => {
+    test("accepts a mixed token + quoted literal value", () => {
       const config = cssAttributeConfig(SUPPORTED_KEYWORDS, SYNTAX, {
-        "letter-spacing": "'normal' | <length>",
+        "letter-spacing": ["'normal'", "<length>"],
       });
       assert.deepStrictEqual(config, {
         "letter-spacing": "'normal' | <length>",
@@ -128,17 +183,35 @@ describe("cssAttributeConfig", () => {
       assert.deepStrictEqual(config, {});
     });
 
-    test("returns the same object reference", () => {
-      const input = { width: "<length>" } as const;
-      const config = cssAttributeConfig(SUPPORTED_KEYWORDS, SYNTAX, input);
-      assert.strictEqual(config, input);
+    test("normalises a gate's self/children bags to joined strings", () => {
+      const config = cssAttributeConfig(SUPPORTED_KEYWORDS, SYNTAX, {
+        display: {
+          block: {
+            self: {
+              width: ["<length>"],
+              "text-align": ["'left'", "'right'"],
+            },
+            children: { "font-size": ["<length>"] },
+          },
+          inline: { self: {}, children: {} },
+        },
+      });
+      assert.deepStrictEqual(config, {
+        display: {
+          block: {
+            self: { width: "<length>", "text-align": "'left' | 'right'" },
+            children: { "font-size": "<length>" },
+          },
+          inline: { self: {}, children: {} },
+        },
+      });
     });
 
-    test("accepts union of two tokens", () => {
-      const config = cssAttributeConfig(SUPPORTED_KEYWORDS, SYNTAX, {
-        "border-style": "<line-style>",
-      });
-      assert.deepStrictEqual(config, { "border-style": "<line-style>" });
+    test("returns joined strings, not the input arrays", () => {
+      const input = { width: ["<length>"] } as const;
+      const config = cssAttributeConfig(SUPPORTED_KEYWORDS, SYNTAX, input);
+      assert.deepStrictEqual(config, { width: "<length>" });
+      assert.notStrictEqual(config, input);
     });
   });
 
@@ -147,7 +220,17 @@ describe("cssAttributeConfig", () => {
       assert.throws(
         () =>
           (cssAttributeConfig as any)(SUPPORTED_KEYWORDS, SYNTAX, {
-            width: "<unknown-token>",
+            width: ["<unknown-token>"],
+          }),
+        /Invalid DSL string/,
+      );
+    });
+
+    test("an unknown token in one arm throws at runtime", () => {
+      assert.throws(
+        () =>
+          (cssAttributeConfig as any)(SUPPORTED_KEYWORDS, SYNTAX, {
+            width: ["<length>", "<unknown-token>"],
           }),
         /Invalid DSL string/,
       );
@@ -157,19 +240,20 @@ describe("cssAttributeConfig", () => {
       assert.throws(
         () =>
           (cssAttributeConfig as any)(SUPPORTED_KEYWORDS, SYNTAX, {
-            width: "xyz",
+            width: ["xyz"],
           }),
         /Invalid DSL string/,
       );
     });
 
-    test("partially invalid union throws at runtime", () => {
+    test("throws for an empty arm list", () => {
       assert.throws(
         () =>
-          (cssAttributeConfig as any)(SUPPORTED_KEYWORDS, SYNTAX, {
-            width: "<length> | xyz",
+          cssAttributeConfig(SUPPORTED_KEYWORDS, SYNTAX, {
+            // @ts-expect-error an empty arm list is rejected
+            width: [],
           }),
-        /Invalid DSL string/,
+        /at least one arm/,
       );
     });
 
@@ -197,7 +281,7 @@ describe("cssAttributeConfig", () => {
         "<percentage>": "`${number}%`",
       } as const;
       const config = cssAttributeConfig(SUPPORTED_KEYWORDS, extendedSyntax, {
-        width: "<length-percentage>",
+        width: ["<length-percentage>"],
       });
       assert.deepStrictEqual(config, { width: "<length-percentage>" });
     });
@@ -208,9 +292,9 @@ describe("cssAttributeConfig", () => {
           ValidateCSSAttributesConfig<
             SupportedKeywords,
             typeof SYNTAX,
-            { display: "'none' | 'block' | 'inline'" }
+            { display: readonly ["'none'", "'block'", "'inline'"] }
           >,
-          { display: "'none' | 'block' | 'inline'" }
+          { display: readonly ["'none'", "'block'", "'inline'"] }
         >
       >();
     });

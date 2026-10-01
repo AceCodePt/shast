@@ -15,18 +15,18 @@ type CSSConfig = {
     none: { self: {}; children: {} };
     flex: {
       self: {
-        "flex-direction": "'row' | 'row-reverse' | 'column' | 'column-reverse'";
-        "justify-content": "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around'";
-        "align-items": "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'";
-        gap: "<length>";
+        "flex-direction": readonly ["'row'", "'row-reverse'", "'column'", "'column-reverse'"];
+        "justify-content": readonly ["'flex-start'", "'flex-end'", "'center'", "'space-between'", "'space-around'"];
+        "align-items": readonly ["'stretch'", "'flex-start'", "'flex-end'", "'center'", "'baseline'"];
+        gap: readonly ["<length>"];
       };
       children: {};
     };
     grid: {
       self: {
-        gap: "<length>";
-        "justify-content": "'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around'";
-        "align-items": "'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline'";
+        gap: readonly ["<length>"];
+        "justify-content": readonly ["'flex-start'", "'flex-end'", "'center'", "'space-between'", "'space-around'"];
+        "align-items": readonly ["'stretch'", "'flex-start'", "'flex-end'", "'center'", "'baseline'"];
       };
       children: {};
     };

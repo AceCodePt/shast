@@ -86,8 +86,8 @@ describe("createComponent (engine)", () => {
       SUPPORTED_KEYWORDS,
       MOCK_CSS_SYNTAX,
       {
-        width: "string",
-        color: "string",
+        width: ["string"],
+        color: ["string"],
         display: {
           block: { self: {}, children: {} },
           inline: { self: {}, children: {} },

@@ -15,9 +15,9 @@ import {
 describe("implicit display from tag config at type level", () => {
   const CSS_ATTRS = cssAttributeConfig(SUPPORTED_KEYWORDS, MOCK_CSS_SYNTAX, {
     display: {
-      block: { self: { width: "string", height: "string" }, children: {} },
-      inline: { self: { "vertical-align": "string" }, children: {} },
-      flex: { self: { "flex-direction": "'row' | 'column'" }, children: {} },
+      block: { self: { width: ["string"], height: ["string"] }, children: {} },
+      inline: { self: { "vertical-align": ["string"] }, children: {} },
+      flex: { self: { "flex-direction": ["'row'", "'column'"] }, children: {} },
     },
   } as const);
 

@@ -95,9 +95,12 @@ export type {
   BaseCSSAttributeComplexValue,
   BaseCSSAttributesComplexConfig,
   BaseCSSAttributeSimpleConfig,
+  CSSAttributeArms,
   InferCSSAttributesConfig,
   InferCSSAttributesSimpleConfig,
+  InferCSSAttributeValue,
   ValidateCSSAttributesConfig,
+  ValidateCSSAttributeValue,
 } from "@/css/attribute-config/types.ts";
 
 export type {

@@ -1,6 +1,8 @@
 import type {
   BaseCSSAttributeComplexValue,
   BaseCSSAttributesComplexConfig,
+  CSSAttributeArms,
+  InferCSSAttributeValue,
 } from "@/css/attribute-config/types.ts";
 import type { BaseCSSPropertiesConfig } from "@/css/properties-config/types.ts";
 import type { BaseCSSPseudoClassConfig } from "@/css/pseudo-class-config/types.ts";
@@ -310,10 +312,10 @@ type GateKeys<CSSAttributesConfig extends BaseCSSAttributesComplexConfig> =
 type InferPropBag<
   Keywords extends SupportedKeywordsConfig,
   CSSSyntaxConfig extends CSSSyntaxKeywords,
-  Bag extends Record<string, string>,
+  Bag extends Record<string, readonly string[]>,
 > = {
   [P in keyof Bag]?:
-    | DSLInfer<Keywords & CSSSyntaxConfig, Bag[P]>
+    | InferCSSAttributeValue<Keywords & CSSSyntaxConfig, Bag[P] & readonly string[]>
     | CSSWideKeyword;
 };
 
@@ -1119,7 +1121,7 @@ type CalcValueKeys<
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
 > =
-  | KeysMatching<CSSAttributesConfig, string>
+  | KeysMatching<CSSAttributesConfig, readonly string[]>
   | GateKeys<CSSAttributesConfig>
   | AllLockableKeys<CSSAttributesConfig>
   | (keyof CSSPropertiesConfig & string);
@@ -1140,9 +1142,12 @@ type GateSlotDSLUnion<
       V,
       "self"
     >
-      ? SlotOf<CSSAttributesConfig, G, V, "self">[P]
+      ? Extract<SlotOf<CSSAttributesConfig, G, V, "self">[P], CSSAttributeArms>[number]
       : P extends keyof SlotOf<CSSAttributesConfig, G, V, "children">
-        ? SlotOf<CSSAttributesConfig, G, V, "children">[P]
+        ? Extract<
+            SlotOf<CSSAttributesConfig, G, V, "children">[P],
+            CSSAttributeArms
+          >[number]
         : never;
   }[keyof CSSAttributesConfig[G] & string];
 }[GateKeys<CSSAttributesConfig>];
@@ -1173,8 +1178,8 @@ type CalcSlotAtomsForKey<
       ? CalcSlotAtoms<S>
       : "unknown"
     : "unknown"
-  : K extends KeysMatching<CSSAttributesConfig, string>
-    ? CalcSlotAtoms<CSSAttributesConfig[K] & string>
+  : K extends KeysMatching<CSSAttributesConfig, readonly string[]>
+    ? CalcSlotAtoms<(CSSAttributesConfig[K] & readonly string[])[number]>
     : K extends GateKeys<CSSAttributesConfig>
       ? CalcSlotAtoms<GateValueTokenDSLs<CSSAttributesConfig, K> & string>
       : K extends AllLockableKeys<CSSAttributesConfig>
@@ -1233,8 +1238,11 @@ type VarContextType<
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   CSSPropertiesConfig extends BaseCSSPropertiesConfig,
   K,
-> = K extends KeysMatching<CSSAttributesConfig, string>
-  ? DSLInfer<Keywords & CSSSyntaxConfig, CSSAttributesConfig[K] & string>
+> = K extends KeysMatching<CSSAttributesConfig, readonly string[]>
+  ? InferCSSAttributeValue<
+      Keywords & CSSSyntaxConfig,
+      CSSAttributesConfig[K] & readonly string[]
+    >
   : K extends keyof CSSPropertiesConfig
     ? CSSPropertiesConfig[K] extends { syntax: infer S extends string }
       ? DSLInfer<Keywords & CSSSyntaxConfig, S>
@@ -1354,8 +1362,11 @@ type ValidateComponentCSSStructure<
         // more than the two intersection members it removes -- the opposite
         // trade from the `CalcConstraint` / `VarConstraint` inversion. Keep them
         // separate: each is a trivial mapped type cached once for the program.
-        [K in KeysMatching<CSSAttributesConfig, string>]?:
-          | DSLInfer<CSSSyntaxConfig & Keywords, CSSAttributesConfig[K] & string>
+        [K in KeysMatching<CSSAttributesConfig, readonly string[]>]?:
+          | InferCSSAttributeValue<
+              CSSSyntaxConfig & Keywords,
+              CSSAttributesConfig[K] & readonly string[]
+            >
           | CSSWideKeyword;
       } & AnimationKeyframeConstraints<
         CSSAttributesConfig,
@@ -1412,7 +1423,7 @@ type ValidateComponentCSSStructure<
                   CSSAttributesConfig,
                   CSSParent
                 >
-              | KeysMatching<CSSAttributesConfig, string>
+              | KeysMatching<CSSAttributesConfig, readonly string[]>
             > &
               string
           ]?: LockedMessage<CSSAttributesConfig, P> & Locked;
