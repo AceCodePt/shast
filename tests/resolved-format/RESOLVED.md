@@ -1,6 +1,6 @@
 # The resolved-node format, as built
 
-Implements `shast-resolved-format.md`. This file records what the code actually
+Implements `docs/shast-resolved-format.md`. This file records what the code actually
 does, and — more usefully — every place it departs from the spec and why. A
 divergence that is written down is a decision; one that is not is a bug waiting
 to be discovered by someone who trusted the document.
