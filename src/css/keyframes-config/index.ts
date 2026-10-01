@@ -5,7 +5,7 @@ import {
   type SupportedKeywordsConfig,
 } from "tsyntax";
 import type { BaseCSSAttributesComplexConfig } from "@/css/attribute-config/types.ts";
-import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 import { CSS_IDENTIFIER_REGEX as KEYFRAME_NAME } from "@/css/ident.ts";
 import { assertNoStructuralBreakout } from "@/engine/validate/css.ts";
 import type {
@@ -86,7 +86,7 @@ function validateFrameProperty(
 // the registered keyframe names (see `KeyframeName`); the integration slice
 // constrains the `animation` property against that union.
 export function cssKeyframesConfig<
-  const S extends BaseCSSSyntaxConfig,
+  const S extends CSSSyntaxKeywords,
   const A extends BaseCSSAttributesComplexConfig,
   const C extends BaseKeyframesConfig,
 >(

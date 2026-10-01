@@ -10,7 +10,7 @@ import MINIMAL_SYNTAX from "@/css/syntax-config/variations/minimal.ts";
 import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
 import FULL_SYNTAX from "@/css/syntax-config/variations/full.ts";
 import type {
-  BaseCSSSyntaxConfig,
+  CSSSyntaxKeywords,
   InferCSSSyntax,
   InferCSSSyntaxConfig,
   ValidateCSSSyntaxConfig,
@@ -24,9 +24,9 @@ describe("cssSyntaxConfig", () => {
         Equal<
           ValidateCSSSyntaxConfig<
             SupportedKeywords,
-            { "<length>": "`${number}${'px' | 'rem'}`" }
+            { "<length>": ["`${number}${'px' | 'rem'}`"] }
           >,
-          { "<length>": "`${number}${'px' | 'rem'}`" }
+          { "<length>": readonly ["`${number}${'px' | 'rem'}`"] }
         >
       >();
     });
@@ -37,15 +37,15 @@ describe("cssSyntaxConfig", () => {
           ValidateCSSSyntaxConfig<
             SupportedKeywords,
             {
-              "<integer>": "`${bigint}`";
-              "<number>": "`${number}`";
-              "<percentage>": "`${number}%`";
+              "<integer>": ["`${bigint}`"];
+              "<number>": ["`${number}`"];
+              "<percentage>": ["`${number}%`"];
             }
           >,
           {
-            "<integer>": "`${bigint}`";
-            "<number>": "`${number}`";
-            "<percentage>": "`${number}%`";
+            "<integer>": readonly ["`${bigint}`"];
+            "<number>": readonly ["`${number}`"];
+            "<percentage>": readonly ["`${number}%`"];
           }
         >
       >();
@@ -57,15 +57,15 @@ describe("cssSyntaxConfig", () => {
           ValidateCSSSyntaxConfig<
             SupportedKeywords,
             {
-              "<length>": "`${number}${'px'}`";
-              "<percentage>": "`${number}%`";
-              "<length-percentage>": "<length> | <percentage>";
+              "<length>": ["`${number}${'px'}`"];
+              "<percentage>": ["`${number}%`"];
+              "<length-percentage>": ["<length>", "<percentage>"];
             }
           >,
           {
-            "<length>": "`${number}${'px'}`";
-            "<percentage>": "`${number}%`";
-            "<length-percentage>": "<length> | <percentage>";
+            "<length>": readonly ["`${number}${'px'}`"];
+            "<percentage>": readonly ["`${number}%`"];
+            "<length-percentage>": readonly ["<length>", "<percentage>"];
           }
         >
       >();
@@ -77,18 +77,41 @@ describe("cssSyntaxConfig", () => {
           ValidateCSSSyntaxConfig<
             SupportedKeywords,
             {
-              "<length>": "`${number}${'px'}`";
-              "<percentage>": "`${number}%`";
-              "<length-percentage>": "<length> | <percentage>";
-              "<track-breadth>": "<length-percentage> | 'auto'";
+              "<length>": ["`${number}${'px'}`"];
+              "<percentage>": ["`${number}%`"];
+              "<length-percentage>": ["<length>", "<percentage>"];
+              "<track-breadth>": ["<length-percentage>", "'auto'"];
             }
           >,
           {
-            "<length>": "`${number}${'px'}`";
-            "<percentage>": "`${number}%`";
-            "<length-percentage>": "<length> | <percentage>";
-            "<track-breadth>": "<length-percentage> | 'auto'";
+            "<length>": readonly ["`${number}${'px'}`"];
+            "<percentage>": readonly ["`${number}%`"];
+            "<length-percentage>": readonly ["<length>", "<percentage>"];
+            "<track-breadth>": readonly ["<length-percentage>", "'auto'"];
           }
+        >
+      >();
+    });
+
+    test("rejects an empty arm list", () => {
+      assertType<
+        Equal<
+          ValidateCSSSyntaxConfig<SupportedKeywords, { "<length>": [] }>,
+          { "<length>": "A syntax token must declare at least one arm" }
+        >
+      >();
+    });
+
+    test("validates each arm independently, keeping a template's internal pipe", () => {
+      // `DSLValidate` would split `` `${number}|${string}` `` at the `|` and
+      // reject the halves; `DSLValidateArm` reads it as one arm.
+      assertType<
+        Equal<
+          ValidateCSSSyntaxConfig<
+            SupportedKeywords,
+            { "<custom>": ["`${number}|${string}`", "'a'"] }
+          >,
+          { "<custom>": readonly ["`${number}|${string}`", "'a'"] }
         >
       >();
     });
@@ -101,9 +124,9 @@ describe("cssSyntaxConfig", () => {
           InferCSSSyntaxConfig<
             SupportedKeywords,
             {
-              "<integer>": "`${bigint}`";
-              "<number>": "`${number}`";
-              "<percentage>": "`${number}%`";
+              "<integer>": ["`${bigint}`"];
+              "<number>": ["`${number}`"];
+              "<percentage>": ["`${number}%`"];
             }
           >,
           {
@@ -115,12 +138,32 @@ describe("cssSyntaxConfig", () => {
       >();
     });
 
+    test("infers over every arm of a multi-arm token", () => {
+      assertType<
+        Equal<
+          InferCSSSyntaxConfig<
+            SupportedKeywords,
+            {
+              "<calc>": ["`calc(${string})`"];
+              "<var>": ["`var(${string})`"];
+              "<length>": ["`${number}${'px'}`", "<calc>", "<var>"];
+            }
+          >,
+          {
+            "<calc>": `calc(${string})`;
+            "<var>": `var(${string})`;
+            "<length>": `${number}${"px"}` | `calc(${string})` | `var(${string})`;
+          }
+        >
+      >();
+    });
+
     test("infers type for a single token via InferCSSSyntax", () => {
       assertType<
         Equal<
           InferCSSSyntax<
             SupportedKeywords,
-            { "<length>": "`${number}${'px'}`" },
+            { "<length>": ["`${number}${'px'}`"] },
             "<length>"
           >,
           `${number}${"px"}`
@@ -133,7 +176,7 @@ describe("cssSyntaxConfig", () => {
         Equal<
           InferCSSSyntax<
             SupportedKeywords,
-            { "<length>": "`${number}${'px'}`" },
+            { "<length>": ["`${number}${'px'}`"] },
             "<unknown-token>"
           >,
           never
@@ -145,17 +188,30 @@ describe("cssSyntaxConfig", () => {
   describe("Runtime Validation", () => {
     test("accepts a single syntax token", () => {
       const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-        "<length>": "`${number}${'px' | 'rem'}`",
+        "<length>": ["`${number}${'px' | 'rem'}`"],
       });
       assert.deepStrictEqual(config, {
         "<length>": "`${number}${'px' | 'rem'}`",
       });
     });
 
+    test("joins a multi-arm token with ' | '", () => {
+      const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
+        "<length>": ["`${number}${'px'}`", "<calc>", "<var>"],
+        "<calc>": ["`calc(${string})`"],
+        "<var>": ["`var(${string})`"],
+      });
+      assert.deepStrictEqual(config, {
+        "<length>": "`${number}${'px'}` | <calc> | <var>",
+        "<calc>": "`calc(${string})`",
+        "<var>": "`var(${string})`",
+      });
+    });
+
     test("accepts multiple syntax tokens", () => {
       const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-        "<integer>": "`${bigint}`",
-        "<number>": "`${number}`",
+        "<integer>": ["`${bigint}`"],
+        "<number>": ["`${number}`"],
       });
       assert.deepStrictEqual(config, {
         "<integer>": "`${bigint}`",
@@ -165,9 +221,9 @@ describe("cssSyntaxConfig", () => {
 
     test("accepts token references (recursive keyword resolution)", () => {
       const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-        "<length>": "`${number}${'px' | 'rem'}`",
-        "<percentage>": "`${number}%`",
-        "<length-percentage>": "<length> | <percentage>",
+        "<length>": ["`${number}${'px' | 'rem'}`"],
+        "<percentage>": ["`${number}%`"],
+        "<length-percentage>": ["<length>", "<percentage>"],
       });
       assert.deepStrictEqual(config, {
         "<length>": "`${number}${'px' | 'rem'}`",
@@ -178,10 +234,10 @@ describe("cssSyntaxConfig", () => {
 
     test("accepts chained token references", () => {
       const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-        "<length>": "`${number}${'px'}`",
-        "<percentage>": "`${number}%`",
-        "<length-percentage>": "<length> | <percentage>",
-        "<track-breadth>": "<length-percentage> | 'auto' | 'min-content'",
+        "<length>": ["`${number}${'px'}`"],
+        "<percentage>": ["`${number}%`"],
+        "<length-percentage>": ["<length>", "<percentage>"],
+        "<track-breadth>": ["<length-percentage>", "'auto'", "'min-content'"],
       });
       assert.deepStrictEqual(config, {
         "<length>": "`${number}${'px'}`",
@@ -191,12 +247,13 @@ describe("cssSyntaxConfig", () => {
       });
     });
 
-    test("returns the same object reference", () => {
+    test("returns joined strings, not the input arrays", () => {
       const input = {
-        "<length>": "`${number}${'px'}`" as const,
+        "<length>": ["`${number}${'px'}`"],
       } as const;
       const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, input);
-      assert.strictEqual(config, input);
+      assert.deepStrictEqual(config, { "<length>": "`${number}${'px'}`" });
+      assert.notStrictEqual(config, input);
     });
   });
 
@@ -206,9 +263,20 @@ describe("cssSyntaxConfig", () => {
         () =>
           cssSyntaxConfig(SUPPORTED_KEYWORDS, {
             // @ts-expect-error
-            length: "`${number}${'px'}`",
+            length: ["`${number}${'px'}`"],
           }),
         /should start and end with/,
+      );
+    });
+
+    test("throws for an empty arm list", () => {
+      assert.throws(
+        () =>
+          cssSyntaxConfig(SUPPORTED_KEYWORDS, {
+            // @ts-expect-error an empty arm list is rejected
+            "<length>": [],
+          }),
+        /at least one arm/,
       );
     });
 
@@ -217,7 +285,7 @@ describe("cssSyntaxConfig", () => {
         () =>
           cssSyntaxConfig(SUPPORTED_KEYWORDS, {
             // @ts-expect-error
-            "<length>": "xyz",
+            "<length>": ["xyz"],
           }),
         /Invalid DSL string/,
       );
@@ -228,18 +296,18 @@ describe("cssSyntaxConfig", () => {
         () =>
           cssSyntaxConfig(SUPPORTED_KEYWORDS, {
             // @ts-expect-error
-            "<length>": "<unknown-token>",
+            "<length>": ["<unknown-token>"],
           }),
         /Invalid DSL string/,
       );
     });
 
-    test("throws for partially valid union referencing unknown token", () => {
+    test("throws when one arm references an unknown token", () => {
       assert.throws(
         () =>
           cssSyntaxConfig(SUPPORTED_KEYWORDS, {
             // @ts-expect-error
-            "<length>": "`${number}${'px'}` | <unknown-token>",
+            "<length>": ["`${number}${'px'}`", "<unknown-token>"],
           }),
         /Invalid DSL string/,
       );
@@ -251,7 +319,7 @@ describe("cssSyntaxConfig", () => {
       assert.throws(
         () =>
           cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-            "<a>": "<a>",
+            "<a>": ["<a>"],
           }),
         /Circular reference/,
       );
@@ -261,8 +329,8 @@ describe("cssSyntaxConfig", () => {
       assert.throws(
         () =>
           cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-            "<a>": "<b>",
-            "<b>": "<a>",
+            "<a>": ["<b>"],
+            "<b>": ["<a>"],
           }),
         /Circular reference/,
       );
@@ -272,9 +340,9 @@ describe("cssSyntaxConfig", () => {
       assert.throws(
         () =>
           cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-            "<a>": "<b>",
-            "<b>": "<c>",
-            "<c>": "<a>",
+            "<a>": ["<b>"],
+            "<b>": ["<c>"],
+            "<c>": ["<a>"],
           }),
         /Circular reference/,
       );
@@ -284,8 +352,8 @@ describe("cssSyntaxConfig", () => {
       assert.throws(
         () =>
           cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-            "<length>": "`${number}${'px'}`",
-            "<length-percentage>": "<length> | <length-percentage>",
+            "<length>": ["`${number}${'px'}`"],
+            "<length-percentage>": ["<length>", "<length-percentage>"],
           }),
         /Circular reference/,
       );
@@ -295,9 +363,9 @@ describe("cssSyntaxConfig", () => {
       assert.throws(
         () =>
           cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-            "<a>": "<b> | <c>",
-            "<b>": "<a>",
-            "<c>": "`${number}%`",
+            "<a>": ["<b>", "<c>"],
+            "<b>": ["<a>"],
+            "<c>": ["`${number}%`"],
           }),
         /Circular reference/,
       );
@@ -305,9 +373,9 @@ describe("cssSyntaxConfig", () => {
 
     test("accepts acyclic references", () => {
       const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-        "<length>": "`${number}${'px'}`",
-        "<percentage>": "`${number}%`",
-        "<length-percentage>": "<length> | <percentage>",
+        "<length>": ["`${number}${'px'}`"],
+        "<percentage>": ["`${number}%`"],
+        "<length-percentage>": ["<length>", "<percentage>"],
       });
       assert.ok(config);
     });
@@ -351,23 +419,23 @@ describe("cssSyntaxConfig", () => {
 
     test("config with only keyword references passes", () => {
       const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-        "<length>": "`${number}${'px'}`",
-        "<length-percentage>": "<length> | <percentage>",
-        "<percentage>": "`${number}%`",
+        "<length>": ["`${number}${'px'}`"],
+        "<length-percentage>": ["<length>", "<percentage>"],
+        "<percentage>": ["`${number}%`"],
       });
       assert.ok(config);
     });
 
     test("template literal with no interpolations is accepted", () => {
       const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-        "<custom>": "`plain`",
+        "<custom>": ["`plain`"],
       });
       assert.deepStrictEqual(config, { "<custom>": "`plain`" });
     });
 
     test("single-character key inside <> is accepted", () => {
       const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-        "<x>": "`${number}`",
+        "<x>": ["`${number}`"],
       });
       assert.deepStrictEqual(config, { "<x>": "`${number}`" });
     });
@@ -382,12 +450,12 @@ describe("cssSyntaxConfig", () => {
   // stays scalar so the type wall and the runtime wall share one grammar.
   // -------------------------------------------------------------------------
   describe("Legacy comma-separated colour forms", () => {
-    type ColorOf<Tier extends BaseCSSSyntaxConfig> = InferCSSSyntax<
+    type ColorOf<Tier extends CSSSyntaxKeywords> = InferCSSSyntax<
       SupportedKeywords,
       Tier,
       "<color>"
     >;
-    type AcceptsColor<Tier extends BaseCSSSyntaxConfig, V extends string> =
+    type AcceptsColor<Tier extends CSSSyntaxKeywords, V extends string> =
       V extends ColorOf<Tier> ? true : false;
 
     // The runtime wall the engine runs: the merged keyword map is the config
@@ -557,11 +625,15 @@ describe("cssSyntaxConfig", () => {
 
     test("config builder accepts the comma arms at runtime", () => {
       const config = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-        "<number>": "`${number}` | <calc> | <var>",
-        "<calc>": "`calc(${string})`",
-        "<var>": "`var(${string})`",
-        "<color>":
-          "`rgb(${number}, ${number}, ${number})` | `rgba(${number}, ${number}, ${number}, ${number})` | `hsl(${number}, ${number}%, ${number}%)` | `hsla(${number}, ${number}%, ${number}%, ${number})`",
+        "<number>": ["`${number}`", "<calc>", "<var>"],
+        "<calc>": ["`calc(${string})`"],
+        "<var>": ["`var(${string})`"],
+        "<color>": [
+          "`rgb(${number}, ${number}, ${number})`",
+          "`rgba(${number}, ${number}, ${number}, ${number})`",
+          "`hsl(${number}, ${number}%, ${number}%)`",
+          "`hsla(${number}, ${number}%, ${number}%, ${number})`",
+        ],
       });
       assert.ok(config["<color>"]);
     });

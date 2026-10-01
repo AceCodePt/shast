@@ -3,12 +3,12 @@ import type {
   BaseCSSAttributesComplexConfig,
   ValidateCSSAttributesConfig,
 } from "./types.ts";
-import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 import { isPatternKey } from "@/engine/gate-resolution.ts";
 
 export const cssAttributeConfig = <
   const Keywords extends SupportedKeywordsConfig,
-  const S extends BaseCSSSyntaxConfig,
+  const S extends CSSSyntaxKeywords,
   const A extends BaseCSSAttributesComplexConfig,
 >(
   keywords: Keywords,

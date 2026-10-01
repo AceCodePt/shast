@@ -7,10 +7,7 @@ import type {
   ValidateCSSPropertiesConfig,
 } from "@/css/properties-config/types.ts";
 import type { BaseCSSPseudoClassConfig } from "@/css/pseudo-class-config/types.ts";
-import type {
-  BaseCSSSyntaxConfig,
-  ValidateCSSSyntaxConfig,
-} from "@/css/syntax-config/types.ts";
+import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 import type { BaseKeyframesConfig } from "@/css/keyframes-config/types.ts";
 import type { SupportedKeywordsConfig } from "tsyntax";
 import type {
@@ -46,7 +43,7 @@ export default function engine<
   const SupportedKeywords extends SupportedKeywordsConfig,
   const HTMLGlobalAttributesConfig extends BaseHTMLAttributesConfig,
   const HTMLTagConfig extends BaseHTMLTagConfig,
-  const CSSSyntaxConfig extends BaseCSSSyntaxConfig,
+  const CSSSyntaxConfig extends CSSSyntaxKeywords,
   const CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
   const CSSPseudoClassConfig extends BaseCSSPseudoClassConfig,
   const CSSPropertiesConfig extends BaseCSSPropertiesConfig,
@@ -64,10 +61,7 @@ export default function engine<
       CSSAttributesConfig,
       HTMLTagConfig
     >;
-    cssSyntaxConfig: ValidateCSSSyntaxConfig<
-      SupportedKeywords,
-      CSSSyntaxConfig
-    >;
+    cssSyntaxConfig: CSSSyntaxConfig;
     cssAttributesConfig: ValidateCSSAttributesConfig<
       SupportedKeywords,
       CSSSyntaxConfig,

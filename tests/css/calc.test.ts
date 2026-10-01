@@ -111,8 +111,8 @@ const { createComponent, renderComponent } = engine({
 // ---------------------------------------------------------------------------
 
 const CALC_SYNTAX = cssSyntaxConfig(SUPPORTED_KEYWORDS, {
-  "<calc>": "`calc(${string})`",
-  "<calc-size>": "<calc>",
+  "<calc>": ["`calc(${string})`"],
+  "<calc-size>": ["<calc>"],
 });
 
 const CALC_ATTRIBUTES = cssAttributeConfig(SUPPORTED_KEYWORDS, CALC_SYNTAX, {

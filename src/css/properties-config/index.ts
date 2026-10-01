@@ -3,7 +3,7 @@ import {
   parseValueAgainstDSL,
   type SupportedKeywordsConfig,
 } from "tsyntax";
-import type { BaseCSSSyntaxConfig } from "@/css/syntax-config/types.ts";
+import type { CSSSyntaxKeywords } from "@/css/syntax-config/types.ts";
 import type {
   BaseCSSPropertiesConfig,
   CSSPropertiesConfigOptions,
@@ -13,7 +13,7 @@ import { assertNoVarCycles } from "@/css/var.ts";
 
 export const cssPropertiesConfig = <
   const K extends SupportedKeywordsConfig,
-  const S extends BaseCSSSyntaxConfig,
+  const S extends CSSSyntaxKeywords,
   const P extends BaseCSSPropertiesConfig,
   const AllowUnions extends boolean = false,
 >(
