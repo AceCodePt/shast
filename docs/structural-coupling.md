@@ -131,7 +131,9 @@ not an intersection, so an inherited `display: block` cannot cancel a written
 Structural typing at this depth is only viable if it stays cheap. The figures
 below were produced by a local benchmark harness that is **not included in
 this repository**, so treat them as indicative rather than reproducible.
-Measured against the `common` registry on TypeScript 7.0.2:
+Measured against the `common` registry on TypeScript 7.0.2 (the development
+target). TypeScript 5.x is materially slower - higher fixed and per-component
+cost; see [`performance.md`](performance.md) for the TS 5 comparison:
 
 - `tsc` cost is a **fixed registry load plus a linear per-component term**.
   Loading `common` costs ~1.17M instantiations / ~1.1s before any component
