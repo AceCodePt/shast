@@ -64,7 +64,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   "<string>": "string",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/url_value
-  "<url>": "`url(${string})`",
+  "<url>": "`url(https://${string})` | `url(http://${string})` | `url(./${string})` | `url(/${string})`",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident
   "<custom-ident>": "string",

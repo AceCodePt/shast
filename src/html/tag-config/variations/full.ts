@@ -6,7 +6,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   a: {
     display: "inline",
     attributes: {
-      href: "string",
+      href: "`https://${string}` | `http://${string}` | `mailto:${string}` | `tel:${string}` | `./${string}` | `/${string}`",
       target: "'_self' | '_blank' | '_parent' | '_top' | undefined",
       download: "string | boolean | undefined",
       rel: "string | undefined",
@@ -2319,7 +2319,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   audio: {
     display: "inline",
     attributes: {
-      src: "string | undefined",
+      src: "`https://${string}` | `http://${string}` | `./${string}` | `/${string}`",
       controls: "boolean | undefined",
       autoplay: "boolean | undefined",
       loop: "boolean | undefined",
@@ -2377,7 +2377,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   iframe: {
     display: "inline",
     attributes: {
-      src: "string | undefined",
+      src: "`https://${string}` | `http://${string}` | `./${string}` | `/${string}`",
       srcdoc: "string | undefined",
       name: "string | undefined",
       width: "number | undefined",
@@ -2396,7 +2396,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   img: {
     display: "inline",
     attributes: {
-      src: "string",
+      src: "`https://${string}` | `http://${string}` | `./${string}` | `/${string}`",
       alt: "string",
       width: "number | undefined",
       height: "number | undefined",
@@ -2425,7 +2425,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   source: {
     display: "inline",
     attributes: {
-      src: "string | undefined",
+      src: "`https://${string}` | `http://${string}` | `./${string}` | `/${string}`",
       srcset: "string | undefined",
       sizes: "string | undefined",
       type: "string | undefined",
@@ -2465,7 +2465,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
           default: "boolean | undefined",
         },
       },
-      src: "string",
+      src: "`https://${string}` | `http://${string}` | `./${string}` | `/${string}`",
     },
     innerHTML: { include: [] },
     cssPseudoClass: [],
@@ -2474,7 +2474,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   video: {
     display: "inline",
     attributes: {
-      src: "string | undefined",
+      src: "`https://${string}` | `http://${string}` | `./${string}` | `/${string}`",
       controls: "boolean | undefined",
       autoplay: "boolean | undefined",
       loop: "boolean | undefined",
@@ -2733,7 +2733,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
             size: "number | undefined",
           },
         image: {
-            src: "string | undefined",
+            src: "`https://${string}` | `http://${string}` | `./${string}` | `/${string}`",
             alt: "string | undefined",
             height: "number | undefined",
             width: "number | undefined",

@@ -35,7 +35,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   "<string>": "string",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/url_value
-  "<url>": "`url(${string})`",
+  "<url>": "`url(https://${string})` | `url(http://${string})` | `url(./${string})` | `url(/${string})`",
 
   "<line-style>":
     "'none' | 'hidden' | 'dotted' | 'dashed' | 'solid' | 'double' | 'groove' | 'ridge' | 'inset' | 'outset' | <var>",

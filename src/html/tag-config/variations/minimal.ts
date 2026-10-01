@@ -6,7 +6,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   a: {
     display: "inline",
     attributes: {
-      href: "string",
+      href: "`https://${string}` | `http://${string}` | `mailto:${string}` | `tel:${string}` | `./${string}` | `/${string}`",
       target: "'_self' | '_blank' | undefined",
     },
     innerHTML: {
@@ -98,7 +98,7 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   img: {
     display: "inline",
     attributes: {
-      src: "string",
+      href: "`https://${string}` | `http://${string}` | `mailto:${string}` | `tel:${string}` | `./${string}` | `/${string}`",
       alt: "string",
     },
     innerHTML: { include: [] },
