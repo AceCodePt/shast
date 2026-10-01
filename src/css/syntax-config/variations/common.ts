@@ -14,7 +14,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length
   "<length>":
-    "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'dvh' | 'dvw' | 'svh' | 'svw' | 'in' | 'pt' | 'pc' | 'cm' | 'mm'}` | <calc> | <var>",
+    "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'dvh' | 'dvw' | 'svh' | 'svw' | 'in' | 'pt' | 'pc' | 'cm' | 'mm'}` | '0' | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/calc
   // The token resolves to a shallow `calc(${string})` at the DSL level so the

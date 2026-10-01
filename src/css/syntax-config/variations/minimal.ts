@@ -12,7 +12,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   "<percentage>": "`${number}%` | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length
-  "<length>": "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh'}` | <calc> | <var>",
+  "<length>": "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh'}` | '0' | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length-percentage
   "<length-percentage>": "<length> | <percentage>",

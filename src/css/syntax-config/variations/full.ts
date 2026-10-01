@@ -14,7 +14,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/length
   "<length>":
-    "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'rlh' | 'ex' | 'rex' | 'cap' | 'rcap' | 'ic' | 'ric' | 'dvh' | 'dvw' | 'dvmin' | 'dvmax' | 'svh' | 'svw' | 'svmin' | 'svmax' | 'lvh' | 'lvw' | 'lvmin' | 'lvmax' | 'cqw' | 'cqh' | 'cqi' | 'cqb' | 'cqmin' | 'cqmax' | 'in' | 'pt' | 'pc' | 'cm' | 'mm' | 'Q'}` | <calc> | <var>",
+    "`${number}${'px' | 'rem' | 'em' | 'vw' | 'vh' | 'vmin' | 'vmax' | 'ch' | 'lh' | 'rlh' | 'ex' | 'rex' | 'cap' | 'rcap' | 'ic' | 'ric' | 'dvh' | 'dvw' | 'dvmin' | 'dvmax' | 'svh' | 'svw' | 'svmin' | 'svmax' | 'lvh' | 'lvw' | 'lvmin' | 'lvmax' | 'cqw' | 'cqh' | 'cqi' | 'cqb' | 'cqmin' | 'cqmax' | 'in' | 'pt' | 'pc' | 'cm' | 'mm' | 'Q'}` | '0' | <calc> | <var>",
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/calc
   // Shallow at the DSL level; `CalcConstraint` in the engine parses the
