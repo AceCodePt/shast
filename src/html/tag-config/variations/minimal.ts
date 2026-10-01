@@ -6,8 +6,8 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   a: {
     display: "inline",
     attributes: {
-      href: "`https://${string}` | `http://${string}` | `mailto:${string}` | `tel:${string}` | `./${string}` | `/${string}`",
-      target: "'_self' | '_blank' | undefined",
+      href: ["`https://${string}`", "`http://${string}`", "`mailto:${string}`", "`tel:${string}`", "`./${string}`", "`/${string}`"],
+      target: ["'_self'", "'_blank'", "undefined"],
     },
     innerHTML: {
       include: [
@@ -36,8 +36,8 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   button: {
     display: "inline-block",
     attributes: {
-      type: "'submit' | 'reset' | 'button' | undefined",
-      disabled: "boolean | undefined",
+      type: ["'submit'", "'reset'", "'button'", "undefined"],
+      disabled: ["boolean", "undefined"],
     },
     innerHTML: { include: ["#text", "span", "br", "img"] },
     cssPseudoClass: [":disabled"],
@@ -98,8 +98,8 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   img: {
     display: "inline",
     attributes: {
-      href: "`https://${string}` | `http://${string}` | `mailto:${string}` | `tel:${string}` | `./${string}` | `/${string}`",
-      alt: "string",
+      href: ["`https://${string}`", "`http://${string}`", "`mailto:${string}`", "`tel:${string}`", "`./${string}`", "`/${string}`"],
+      alt: ["string"],
     },
     innerHTML: { include: [] },
     cssPseudoClass: [],
@@ -112,13 +112,13 @@ export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
         text: {},
         number: {},
         password: {},
-        checkbox: { checked: "boolean | undefined" },
-        radio: { checked: "boolean | undefined" },
+        checkbox: { checked: ["boolean", "undefined"] },
+        radio: { checked: ["boolean", "undefined"] },
         submit: {},
         hidden: {},
       },
-      value: "string | undefined",
-      disabled: "boolean | undefined",
+      value: ["string", "undefined"],
+      disabled: ["boolean", "undefined"],
     },
     innerHTML: { include: [] },
     cssPseudoClass: [":disabled", ":checked"],

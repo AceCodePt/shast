@@ -86,9 +86,9 @@ type IsOptionalAttribute<T> = T extends string
       ? never
       : "attributes"
     : T extends HTMLAttributeArms
-      ? T[number] extends `${string}undefined${string}`
-        ? never
-        : "attributes"
+      ? [Extract<T[number], `${string}undefined${string}`>] extends [never]
+        ? "attributes"
+        : never
       : "attributes";
 
 type MaybeAttributes<HTMLAttributesConfig extends Record<string, any>> = {
@@ -716,28 +716,6 @@ type HTMLGateKeys<C extends BaseHTMLAttributesConfig> = KeysMatching<
   BaseHTMLAttributeComplexValue
 >;
 
-// A tag config still authors bare DSL strings until
-// html-tag-config-array-only; the engine reads the array-only surface. Lift each
-// legacy string to a one-element arm list so the rest of the machinery is
-// uniform. `InferHTMLAttributeValue` then infers over the arm (and still splits
-// the arm's own `|` union through `DSLInfer`).
-type ToHTMLArms<V> = V extends HTMLAttributeArms
-  ? V
-  : V extends string
-    ? readonly [V]
-    : V extends Record<string, any>
-      ? { [K in keyof V]: ToHTMLArms<V[K]> }
-      : never;
-
-type HTMLArmsConfig<C> = {
-  [K in keyof C]: ToHTMLArms<C[K]>;
-};
-
-type AsHTMLArmsConfig<C> = HTMLArmsConfig<C> extends infer T extends
-  BaseHTMLAttributesConfig
-  ? T
-  : never;
-
 type HTMLFlatKeys<C extends BaseHTMLAttributesConfig> = KeysMatching<
   C,
   HTMLAttributeArms
@@ -928,7 +906,7 @@ type MergedHTMLAttributesConfig<
   Tag extends keyof HTMLTagConfig,
 > = MergeAttributesConfig<
   HTMLGlobalAttributesConfig,
-  AsHTMLArmsConfig<HTMLTagConfig[Tag]["attributes"]>
+  HTMLTagConfig[Tag]["attributes"]
 >;
 
 type ValidateComponentHTMLAttributes<
@@ -966,7 +944,7 @@ type MergedConfigForTag<
 > = Tag extends keyof HTMLTagConfig
   ? MergeAttributesConfig<
       HTMLGlobalAttributesConfig,
-      AsHTMLArmsConfig<HTMLTagConfig[Tag]["attributes"]>
+      HTMLTagConfig[Tag]["attributes"]
     >
   : HTMLGlobalAttributesConfig;
 
@@ -1643,7 +1621,7 @@ export type ValidateComponentStructure<
             innerHTML?: {};
           }) &
       ("attributes" extends MaybeAttributes<
-        AsHTMLArmsConfig<HTMLTagConfig[T["tag"]]["attributes"]>
+        HTMLTagConfig[T["tag"]]["attributes"]
       >
         ? {
             attributes: {};
