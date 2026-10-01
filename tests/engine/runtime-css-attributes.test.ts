@@ -315,26 +315,22 @@ describe("runtime CSS attribute validation", () => {
     );
   });
 
-  test("children-slot props stay locked inside pseudo-class blocks", () => {
-    // The top-level display: flex does not leak into the :hover scope; the
-    // children slot there is empty (mirrors CSSParent threading at the type
-    // level, which is reset per CSS scope).
-    assert.throws(
-      () =>
-        createComponent({
-          tag: "div",
-          innerHTML: { c: { tag: "span", innerHTML: "x" } },
-          css: {
-            display: "flex",
-            ":hover": {
-              "> c": {
-                // @ts-expect-error the top-level display does not reach the :hover scope
-                flex: "1",
-              },
-            },
+  test("children-slot props follow the element into pseudo-class blocks", () => {
+    // A `:hover` block targets the same element, so the top-level
+    // display: flex still unlocks the children slot there. The `> c` block
+    // then reads that gate for the child's `flex` (mirrors CSSElementValue
+    // threading at the type level, which passes through :hover unchanged).
+    assert.doesNotThrow(() =>
+      createComponent({
+        tag: "div",
+        innerHTML: { c: { tag: "span", innerHTML: "x" } },
+        css: {
+          display: "flex",
+          ":hover": {
+            "> c": { flex: "1" },
           },
-        }),
-      /'flex' requires display: flex on the parent/,
+        },
+      }),
     );
   });
 

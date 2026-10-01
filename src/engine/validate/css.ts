@@ -330,11 +330,25 @@ export interface CssBlockScope {
 
 // Everything that varies between nested CSS blocks. `block` is the one under
 // validation; the rest is the surrounding scope the type-level walk encodes.
+//
+// `parentGates` / `parentGridAreas` are the enclosing element's own explicit
+// gates and literal `grid-template-areas`, used to resolve this block's
+// children-slot props (`flex`, `grid-area`). `elementGates` / `elementGridAreas`
+// are THIS element's effective gates and areas: the explicit gates of every
+// same-element block on the path (`:hover`, `@media`, `&.class`), merged with
+// this block's own, plus this block's own `grid-template-areas`. A `> child` or
+// `::` block targets a different box, so it takes its `parentGates` /
+// `parentGridAreas` from the enclosing element's effective state and resets
+// `elementGates` / `elementGridAreas` to its own block. The tag's implicit
+// display is NOT part of `elementGates`; it is added only to the self slot, so
+// the existing "implicit display does not unlock children" rule is preserved.
 interface CssBlockState extends CssBlockScope {
   parentGates: Record<string, string>;
+  parentGridAreas: string | undefined;
+  elementGates: Record<string, string>;
+  elementGridAreas: string | undefined;
   inheritedVars: Record<string, string>;
   inPseudoElement: boolean;
-  parentGridAreas: string | undefined;
 }
 
 // The registered pseudo-classes and pseudo-elements a `:`-keyed block may name.
@@ -503,10 +517,8 @@ export function validateCssBlock(
     }
     const varContext = { properties: cssProps, defined: definedVars };
 
-    // Gates the author wrote in this scope, in any order, plus the tag's
-    // default `display` when they did not write one (implicit display).
+    // Gates the author wrote in this scope, in any order.
     const explicitGates: Record<string, string> = {};
-    const selfGates: Record<string, string> = {};
 
     for (const key of Object.keys(block)) {
       if (key.startsWith("> ") || key.startsWith("&.")) continue;
@@ -535,14 +547,38 @@ export function validateCssBlock(
         deepValidateCSSValue(key, written, varContext, matched);
       }
     }
+    // The element's effective gates: the enclosing same-element blocks' gates
+    // merged with the ones written here. This block's written value wins, so an
+    // explicit `display` here overrides one inherited from a `:hover` / query
+    // ancestor rather than intersecting the two values into `never`.
+    const elementGates: Record<string, string> = {
+      ...state.elementGates,
+      ...explicitGates,
+    };
+
+    // The self slot reads the element's gates plus the tag's implicit `display`,
+    // but only when no same-element block wrote a `display` (an explicit value,
+    // including a CSS-wide keyword, always wins). The children slot never sees
+    // the implicit display: `parentGates` carries explicit gates only.
+    const selfGates: Record<string, string> = { ...elementGates };
     const defaultDisplay =
       state.nodeTag !== undefined
         ? context.tagConfig[state.nodeTag]?.display
         : undefined;
-    if (defaultDisplay !== undefined && isGateDefinition(cssAttrs["display"])) {
+    if (
+      defaultDisplay !== undefined &&
+      elementGates["display"] === undefined &&
+      isGateDefinition(cssAttrs["display"])
+    ) {
       selfGates["display"] = defaultDisplay;
     }
-    Object.assign(selfGates, explicitGates);
+
+    // The element's own `grid-template-areas`, inherited through same-element
+    // blocks. A `> child` / `::` block resolves its children's `grid-area`
+    // against this, so the cross-check survives `:hover` / `@media` nesting.
+    const ownGridAreas = gridAreasOf(block);
+    const elementGridAreas =
+      ownGridAreas !== undefined ? ownGridAreas : state.elementGridAreas;
 
     for (const key of Object.keys(block)) {
       if (key.startsWith("> ")) {
@@ -609,8 +645,13 @@ export function validateCssBlock(
           assertNoStructuralBreakout(key, key);
         }
         const nextInPseudoElement = key.startsWith("::") || state.inPseudoElement;
+        // A query targets the same element, so it inherits this block's
+        // effective element state (the same-element merge), not the incoming
+        // one. `parentGates` / `parentGridAreas` pass through unchanged.
         walk(value as Record<string, unknown>, {
           ...state,
+          elementGates,
+          elementGridAreas,
           inheritedVars: definedVars,
           inPseudoElement: nextInPseudoElement,
         });
@@ -709,26 +750,28 @@ export function validateCssBlock(
         const nextPath = key.startsWith("> ")
           ? `${state.path} > ${key.slice(2)}`
           : state.path;
-        // A `> child` block and a `::` pseudo-element block resolve their
-        // grid-area against this scope's own grid-template-areas (mirroring
-        // CSSParent = CSSValue at the type level); every other nested block
-        // passes the enclosing scope's areas through unchanged.
-        const nextGridAreas =
-          key.startsWith("> ") || key.startsWith("::")
-            ? gridAreasOf(block)
-            : state.parentGridAreas;
+        // A `> child` and a `::` pseudo-element block target a different box:
+        // they take their children-slot gates and grid-area cross-check from the
+        // enclosing element's effective state, and start a fresh element state
+        // from their own block. Every other nested block (`:`, `@`, `&.`)
+        // targets the SAME element, so it inherits the element state and passes
+        // the parent slots through unchanged. This mirrors the type level, where
+        // `> child` / `::` pass `CSSElementValue` as `CSSParent` and reset
+        // `CSSElementValue`, while `:` / `@` / `&.` merge it.
+        const targetsOwnBox = key.startsWith("> ") || key.startsWith("::");
         walk(value as Record<string, unknown>, {
           innerHTML: nextContext,
           classes: nextClasses,
           nodeTag: nextTag,
           path: nextPath,
-          // `> child` blocks inherit this scope's EXPLICIT gates for the
-          // children slot; pseudo-class / class / pseudo-element blocks pass
-          // the parent gates through unchanged.
-          parentGates: key.startsWith("> ") ? explicitGates : state.parentGates,
+          parentGates: targetsOwnBox ? elementGates : state.parentGates,
+          parentGridAreas: targetsOwnBox
+            ? elementGridAreas
+            : state.parentGridAreas,
+          elementGates: targetsOwnBox ? {} : elementGates,
+          elementGridAreas: targetsOwnBox ? undefined : elementGridAreas,
           inheritedVars: definedVars,
           inPseudoElement: nextInPseudoElement,
-          parentGridAreas: nextGridAreas,
         });
       } else if (
         !key.startsWith("> ") &&
@@ -865,8 +908,10 @@ export function validateCssBlock(
     nodeTag: scope.nodeTag,
     path: scope.path,
     parentGates: {},
+    parentGridAreas: undefined,
+    elementGates: {},
+    elementGridAreas: undefined,
     inheritedVars: {},
     inPseudoElement: false,
-    parentGridAreas: undefined,
   });
 }

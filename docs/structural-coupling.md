@@ -79,6 +79,46 @@ Key consequences:
   cannot be embedded at all — the type system refuses rather than trusting it.
   Safe, but it imposes the constraint below.
 
+## Element-scoped gates
+
+A gate (`display`, `position`, …) unlocks props on the element itself (`self`)
+and on its direct children (`children`). A gate is **element-scoped**: it is a
+fact about the target element, not about the block the author happened to write
+it in. A `:hover`, `@media`, `@container` or `&.class` block targets the *same*
+element, and nothing in CSS changes that element's display, so the gates follow
+it into those blocks.
+
+```ts
+css: {
+  display: "flex",                    // written once, at component level
+  ":hover": { gap: "1rem" },          // gap is unlocked: same element
+  "@media (width < 768px)": { "justify-content": "center" },
+  ":hover": { "> c": { flex: "1" } }, // children slot: still the same element
+}
+```
+
+The rule resets wherever the target box changes:
+
+- a `> child` block starts from the child's own gates plus the child's tag
+  implicit display (the element's gates do **not** reach the child's self slot);
+  `gap` inside `> span` still needs the span to be `display: flex` itself.
+- a `::before` / `::after` pseudo-element generates its own box, so its *self*
+  slot needs its own `display`. But `::before` / `::after` **are** child boxes,
+  so the element's children gates apply (`flex` on `::before` is valid when the
+  element is flex) - and a `grid-template-areas` literal on the element still
+  cross-checks `grid-area` on a `> child` or `::before` through any number of
+  `:hover` / query wrappers.
+
+The implicit display a tag declares is added only to the self slot, never to the
+children slot: an explicit gate is what unlocks children props.
+
+Both walls thread the same state. The type-level walk carries the element's
+effective value (`CSSElementValue`) beside `CSSParent`; the runtime carries
+`elementGates` / `elementGridAreas` beside `parentGates` / `parentGridAreas`.
+The written value in the innermost block wins over an inherited one (a merge,
+not an intersection, so an inherited `display: block` cannot cancel a written
+`display: flex`).
+
 ## Performance envelope (indicative)
 
 Structural typing at this depth is only viable if it stays cheap. The figures
@@ -96,6 +136,21 @@ Measured against the `common` registry on TypeScript 7.0.2:
 Practical rule: keep files to a handful of components each and per-file
 checking stays small. The fixed constant grows with *config breadth*, not
 component size.
+
+### Gate propagation cost (instantiations only)
+
+Threading the element's effective gates through nested blocks is a small,
+linear addition. Measured on the `common` registry by differencing marginal
+instantiations per component:
+
+- the gate state adds **43,326** instantiations for a component carrying one
+  `:hover` plus one `@media` (the merge and the extra type parameter), on top of
+  the fixed registry load;
+- removing the redundant `display: flex` re-declaration from those blocks now
+  costs **1,241 fewer** instantiations for a single component and **1,274
+  fewer** for two components (5,585 -> 4,311 marginal plus 1,274). The
+  re-declaration itself is what was measured; block cost is otherwise identical
+  whether or not a gate is active.
 
 ## Constraints on authors
 

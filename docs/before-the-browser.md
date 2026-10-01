@@ -105,7 +105,10 @@ ignored by the browser.
 CSS already has conditional disclosure in shast: `display: flex` unlocks
 `gap`; `display: block` unlocks `width`. Writing a property nothing unlocked
 is a compile error naming what would unlock it, instead of a declaration the
-browser ignores because it does not apply. The same mechanism was extended to
+browser ignores because it does not apply. A gate is element-scoped: it follows
+the element into `:hover`, `@media`, `@container` and `&.class` blocks (they
+target the same box), and resets at a `> child` or a `::before` / `::after`
+self slot (a different box). The same mechanism was extended to
 HTML attributes — `<input type="range" checked>` fails at both walls with
 `'checked' requires type: checkbox | radio`, while `<input type="checkbox" checked>`
 is accepted. Gates may be literal values or DSL patterns
