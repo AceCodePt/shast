@@ -15,10 +15,17 @@ Here, a component's CSS is keyed off the component's own structure:
   structural handles instead of positional/tag selectors,
 - child selectors (`> title`) are typed as keys of that structure,
 - so renaming, removing, or moving a child makes the CSS that targeted it a
-  **compile error at the same call site**.
+  **compile error at the same call site**.[^squiggle]
 
 Change the structure and the stale CSS is not a runtime surprise or a visual
 bug — it is a red squiggle.
+
+[^squiggle]: The compile error is conditional. TypeScript suppresses its
+excess-property check when the same object literal already contains another
+error, so `css: { width: "banana", "> title": { ... } }` reports only the
+`width` error and the stale selector surfaces once that is fixed. Errors are
+not reported all at once, but the component does not compile until every one
+is resolved, and the runtime wall catches the stale selector regardless.
 
 ## Two walls, one contract
 

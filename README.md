@@ -155,7 +155,14 @@ css: { "> title": { ... } }
 
 The stale style is not a visual bug you discover next month. It is a red
 squiggle right now - and if the types were bypassed, a runtime error instead
-of silence.
+of silence.[^squiggle]
+
+[^squiggle]: The compile error is conditional. TypeScript suppresses its
+excess-property check when the same object literal already contains another
+error, so `css: { width: "banana", "> title": { ... } }` reports only the
+`width` error and the stale selector surfaces once that is fixed. Errors are
+not reported all at once, but the component does not compile until every one
+is resolved, and the runtime wall catches the stale selector regardless.
 
 ## One component, all the walls
 

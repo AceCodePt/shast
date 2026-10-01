@@ -49,11 +49,18 @@ The original bug this library exists to kill. Rename, move, or delete a child
 and the CSS that targeted it does not fail — the selector simply stops
 matching and the rule becomes dead. shast names children
 (`innerHTML: { title: ... }`) and types `> title` as a key of that structure,
-so the stale selector is a compile error at the same call site, and the
-runtime backstop throws
+so the stale selector is a compile error at the same call site,[^squiggle] and
+the runtime backstop throws
 `Child selector '> headnig' references child 'headnig' which is not declared in the element's innerHTML`.
 Provenance: the structural-coupling work
 ([`structural-coupling.md`](structural-coupling.md)).
+
+[^squiggle]: The compile error is conditional. TypeScript suppresses its
+excess-property check when the same object literal already contains another
+error, so `css: { width: "banana", "> title": { ... } }` reports only the
+`width` error and the stale selector surfaces once that is fixed. Errors are
+not reported all at once, but the component does not compile until every one
+is resolved, and the runtime wall catches the stale selector regardless.
 
 ### Dead class selectors (`&.className`)
 
