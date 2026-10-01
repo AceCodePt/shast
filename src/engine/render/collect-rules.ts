@@ -1,20 +1,18 @@
 import type { BaseComponentStructure } from "@/engine/types.ts";
 import { semanticAttribute } from "./escape.ts";
 
-// `semanticAttribute` is used below and re-exported so importers that knew it
-// here keep working; both escaping policies now live in `escape.ts`.
+// `semanticAttribute` is re-exported so importers that knew it here keep
+// working; both escaping policies now live in `escape.ts`.
 export { escapeAttributeValue, semanticAttribute } from "./escape.ts";
 
 /**
  * The structured form of what `renderComponent` emits as CSS text.
  *
  * `render-component.ts` prints its stylesheet from these rules and nothing
- * else, so any consumer that needs to know *which declaration wins on which
- * node* — the resolver in `tests/resolved-format/cascade.ts` — reads the same objects
- * the emitter printed from. A resolver that walked `css` blocks on its own
- * would be a second implementation of selector emission, free to drift, and a
- * resolver that disagrees with the emitter describes a page that does not
- * exist.
+ * else, so a consumer that needs to know *which declaration wins on which node*
+ * — the resolver in `tests/resolved-format/cascade.ts` — reads the same objects
+ * the emitter printed from. A resolver that walked `css` blocks on its own would
+ * be a second implementation of selector emission, free to drift.
  */
 
 const PREFIX = "cid-";
@@ -117,21 +115,15 @@ export function stableStringify(value: unknown): string {
  *
  * 53 bits is the widest integer a JS number represents exactly, so the hash is
  * built from `Math.imul` and bitwise ops alone — no BigInt, no `node:crypto`,
- * no dependency. The birthday bound for a 53-bit space puts a ~1% chance of
- * any collision at about 13.5 million distinct blocks in one document (~50%
- * near 112 million), far above the sub-10,000 blocks a realistic page emits;
- * the old FNV-1a/32 reached 1% at roughly 9,292 blocks.
+ * no dependency. The birthday bound puts a ~1% chance of any collision at about
+ * 13.5 million distinct blocks in one document; the old FNV-1a/32 reached 1% at
+ * roughly 9,292 blocks.
  *
- * A collision *inside one `collectRules` tree* is detected: the scope dedupe
- * (`dedupeByScope`) keeps the first block per scope and compares
- * `stableStringify(node.css)` fingerprints, so a repeated scope whose css
- * differs throws instead of silently misstyling the second component.
- *
- * A collision *across separately rendered or hydrated trees* stays undetected
- * and accepted by design: those two blocks never meet in one stylesheet, so
- * there is no visible damage to guard against, and a check that only fired on
- * composed renders would be inconsistent protection against a probabilistic
- * event. Widening the space remains the mitigation for that case.
+ * A collision *inside one `collectRules` tree* is detected by the scope dedupe
+ * (`dedupeByScope`), which throws on a repeated scope with a different
+ * fingerprint. A collision *across separately rendered trees* stays undetected
+ * and accepted by design: those blocks never meet in one stylesheet, so there
+ * is nothing to guard against.
  */
 function hashNode(node: unknown): string {
   const input = stableStringify(node);
@@ -155,15 +147,9 @@ function hashNode(node: unknown): string {
  * The scope attribute for a node.
  *
  * The scope is a property of the component's *style contract* — its `css`
- * block — not of instance data (attribute values, text, child data). The
- * rendered rules are a pure function of `css` (child selectors emit
- * `[cid-<name>]` by name, not by child hash), so two components with an
- * identical `css` block produce identical rules and must share one scope.
- *
- * The hash is 53-bit `cyrb53` (`hashNode`). A collision between two blocks
- * that land in the same `collectRules` tree is detected and thrown by
- * `dedupeByScope`; a collision between blocks rendered or hydrated separately
- * is accepted, for the reasons documented on `hashNode`.
+ * block — not of instance data. The rendered rules are a pure function of
+ * `css` (child selectors emit `[cid-<name>]` by name, not by child hash), so
+ * two components with an identical `css` block must share one scope.
  */
 export function scopeAttribute(node: BaseComponentStructure): string {
   return `${PREFIX}${hashNode(node.css)}`;
@@ -268,8 +254,8 @@ export function compareSpecificity(a: Specificity, b: Specificity): number {
 
 /**
  * The cascade, over emitted rules: more specific wins, and on a tie the rule
- * printed later wins. Verified against Chromium in
- * `tests/resolved-format/cascade-conformance.test.ts`.
+ * printed later wins. Verified against Chromium in the resolved-format
+ * conformance tests.
  */
 export function compareCascade(a: EmittedRule, b: EmittedRule): number {
   return (
@@ -396,7 +382,7 @@ function prune(frame: Frame): Frame | null {
 }
 
 /**
- * Pre-order walk, which is the textual order of the printed stylesheet.
+ * Pre-order walk, the textual order of the printed stylesheet.
  *
  * Query blocks (`atRule`) are skipped along with their whole subtree: their
  * rules only apply under the query, and `EmittedRule` has no way to carry that
@@ -476,9 +462,7 @@ export function collectRules(root: BaseComponentStructure): CollectedRules {
   // Identical `css` blocks hash to the same scope and print identically, so
   // the stylesheet carries one block per scope. Every node sharing that scope
   // still gets its own rules — same selector, same source position, different
-  // targets — because provenance has to name the node that declared it. The
-  // dedupe also guards the single-tree collision case: a repeated scope whose
-  // css differs throws rather than dropping the second block.
+  // targets — because provenance has to name the node that declared it.
   const blocks = dedupeByScope(
     perNode.map(({ node, frame }) => ({
       scope: frame.selector,

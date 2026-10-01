@@ -27,14 +27,11 @@ function isRecordInnerHTML(
   );
 }
 
-// An attribute name is pasted into markup unescaped (` ${key}` / ` ${key}="..."`),
-// so it must be a name and not a fragment of markup. Every name the registry
-// declares satisfies this, and the generated `cid-*` identifiers are written
-// separately (see `identifiers` in `renderHTMLNode`), so this rejects only a
-// name that reached the renderer some other way -- e.g. a widened `as any`
-// value, or generated/out-of-compiler data that never met the type wall. It is
-// output safety, not input validation: it runs on every render, because this is
-// the last step before bytes leave the process.
+// An attribute name is pasted into markup unescaped (` ${key}`), so it must be
+// a name and not a fragment of markup. Every name the registry declares
+// satisfies this; it rejects only a name that reached the renderer some other
+// way (a widened `as any` value, generated data). It is output safety, not
+// input validation, and runs on every render.
 const ATTRIBUTE_NAME_PATTERN = /^[a-zA-Z][\w-]*$/;
 
 function renderAttributes(attributes: Record<string, unknown>): string {
@@ -203,9 +200,8 @@ function renderHTMLNode(
  * Renders a component to structurally coupled HTML and CSS.
  *
  * The stylesheet is printed from {@link collectRules}, which is also what the
- * resolver reads. There is exactly one implementation of "which selector does
- * this `css` key emit", so a description of the resolved page cannot drift
- * from the page.
+ * resolver reads, so a description of the resolved page cannot drift from the
+ * page.
  */
 export function renderComponent(
   tagConfig: BaseHTMLTagConfig,

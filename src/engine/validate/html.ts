@@ -26,9 +26,8 @@ const intersectAllowed = (
 // Validate one node and its subtree: its tag, attributes (including gate
 // resolution and required-attribute checks), its `css` block via the CSS layer,
 // and every child against the `innerHTML` the registry declares for the tag.
-// `path` is the node's position in the component tree (`root > item > text`),
-// built from the innerHTML key each node was reached by; it travels with the
-// recursion so a value error can name where it happened.
+// `path` is the node's position in the tree (`root > item > text`), so a value
+// error can name where it happened.
 export function validateHtmlNode(
   context: ValidationContext,
   node: unknown,

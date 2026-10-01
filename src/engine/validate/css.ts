@@ -20,14 +20,9 @@ import type { BaseComponentStructure } from "@/engine/types.ts";
 import type { InnerHTML, ValidationContext } from "./context.ts";
 import { valueError } from "./value-error.ts";
 
-// `mergedKeywords` (CSS syntax layered with the component's supported keywords)
-// is structurally a `SupportedKeywordsConfig`, which is what the DSL parser
-// type wants; alias it so the intent reads at the call site.
 type MergedKeywords = SupportedKeywordsConfig;
 
-// The classes an element declares, read from `attributes.class`. Used both to
-// seed a node's own scope and to resolve the declaring scope of a `> child`
-// block whose target is an array.
+// The classes an element declares, from `attributes.class`.
 export const classesOf = (node: unknown): string[] => {
   const attrs =
     node !== null && typeof node === "object"
@@ -44,7 +39,7 @@ export const classesOf = (node: unknown): string[] => {
 
 // The distinct tags in an array of children; used to seed the implicit
 // `display` inside a `> child` block that targets an array. When the children
-// disagree, no single default display applies.
+// disagree, no single default applies.
 const tagsOf = (children: unknown[]): string[] => {
   const tags = new Set<string>();
   for (const child of children) {
@@ -56,10 +51,10 @@ const tagsOf = (children: unknown[]): string[] => {
   return [...tags];
 };
 
-// The area names a `grid-template-areas` value defines, parsed the same way the
-// type-level `GridAreaNames` splits the literal: whitespace (spaces, newlines,
-// tabs) separates cells, each cell is an optionally quoted token, and `.` marks
-// an empty cell and contributes no name. A CSS-wide keyword names no areas.
+// The area names a `grid-template-areas` value defines, split the same way the
+// type-level `GridAreaNames` splits the literal: whitespace separates cells,
+// each cell is an optionally quoted token, and `.` marks an empty cell. A
+// CSS-wide keyword names no areas.
 const parseGridAreaNames = (areas: string): Set<string> => {
   const names = new Set<string>();
   for (const rawToken of areas.split(/\s+/)) {
@@ -79,47 +74,26 @@ const gridAreasOf = (block: Record<string, unknown>): string | undefined => {
   return value;
 };
 
-// A string DSL such as `<string>` or `<custom-ident>` matches anything, so the
-// shallow DSL check cannot stop a value from carrying CSS structural
-// punctuation. The renderer prints the value verbatim (`box-shadow: ${value};`),
-// so a `;`, `{` or `}` at the top level of a value would end the declaration or
-// open/close a block and let the author inject arbitrary rules. Reject that at
-// the runtime wall, where calc()/var() already refuse the same shape.
+// A match-anything string DSL (`<string>`, `<custom-ident>`) cannot stop a
+// value from carrying CSS structural punctuation. The renderer prints values
+// verbatim (`box-shadow: ${value};`), so a top-level `;`, `{` or `}` would end
+// the declaration or open a block and let the author inject arbitrary rules.
+// Rejected here, at the single wall for text that reaches the stylesheet: every
+// declaration value, keyframe frame value, `style()` query value and
+// selector/header key passes through this. A caller emitting a key passes it as
+// both arguments, so the message still names the offending text.
 //
-// This is the single wall for text that becomes part of the emitted
-// stylesheet, so it is called from every place such text is validated:
+// Delimiters are legal inside a quoted string and inside a balanced function
+// (`url(...)` data URLs carry `;` and `,`), so the scanner tracks quote state
+// (with backslash escapes) and parenthesis depth. Two CSS tokenizer details
+// matter: a string cannot contain a raw newline, and `url(` is a single token
+// whose unquoted body has no strings or nested parens. `/*` opens a comment
+// even inside parens, so it is rejected anywhere outside a quoted string.
 //
-//   * component declaration values (`deepValidateCSSValue`);
-//   * keyframe frame values (`validateFrameProperty` in
-//     `css/keyframes-config`);
-//   * `style()` container-query values (`assertStyleQueryValues`);
-//   * selector/header keys -- pseudo-class / pseudo-element keys, and the
-//     `@container` header that embeds a `style()` condition.
-//
-// A caller that emits a key rather than a declaration passes the key as both
-// arguments, so the message still names the offending text.
-//
-// The delimiters are legal inside a quoted string (a `content` value may
-// contain `}`, grid-template-areas is quoted) and inside a balanced function
-// such as `url(...)` (data URLs carry `;` and `,`), so the scanner tracks quote
-// state -- with backslash escapes -- and parenthesis depth. Two CSS tokenizer
-// details matter, because the scanner must agree with the browser about where a
-// quote or parenthesis ends:
-//
-//   * a string cannot contain a raw newline, so an unescaped newline ends it;
-//   * `url(` is a single token: an unquoted url body has no strings and no
-//     nested parentheses, so `url(a"b)` and `url(a(b)` end at the first `)` and
-//     the quote or `(` inside is literal text, not structure.
-//
-// `/*` opens a comment even inside parentheses, so it is rejected anywhere
-// outside a quoted string.
-//
-// The scan is only sound if it returns to the top level. A string, url token
-// or parenthesised block left open at the end of the value means every later
-// delimiter was consumed as part of that opener and never examined, so the
-// scanner must reject an end state where quote, urlRaw or depth is still set.
-// A brace seen inside a function body (depth > 0) is rejected in-loop for the
-// same reason: balanced parens do not make a block opener inside them safe.
+// A brace inside a function body is rejected in-loop: `(; } .evil { ... })`
+// returns to depth 0, so only the in-loop check catches it. The scan must also
+// end at the top level -- an unclosed string, url token or paren means every
+// later delimiter was consumed by the opener and never examined.
 const isUrlTokenAt = (value: string, index: number): boolean => {
   if (value.slice(index, index + 3).toLowerCase() !== "url") return false;
   let next = index + 3;
@@ -239,23 +213,16 @@ export const assertNoStructuralBreakout = (
   }
 };
 
-// The deep half of CSS value validation: calc-shaped values are handed to
-// calc's parser, and any value containing a `var(` call is handed to var's
-// resolver. The two are not exclusive -- a `calc()` may contain `var()`
-// operands, and both run, so `calc(var(--x) * 2)` validates the expression
-// *and* resolves `--x` against the registry. Non-calc, non-var values are
+// The deep half of CSS value validation: calc-shaped values go to calc's
+// parser, values containing `var(` to var's resolver. The two are not
+// exclusive -- `calc(var(--x) * 2)` runs both -- and other values are
 // untouched. Kept separate from the shallow DSL check so a gate value, whose
-// shallow check already ran during gate resolution, can still reach the deep
-// walls.
+// shallow check already ran during gate resolution, still reaches the deep
+// walls. Every string also crosses the structural wall here.
 //
-// Every string value also crosses the structural wall here, so a value that
-// matched a match-anything DSL (`<string>`, `<custom-ident>`) cannot smuggle a
-// declaration break-out past the renderer.
-//
-// `dsl` is the syntax the value matched: when it is a named numeric token,
-// calc's slot check confirms the expression's result dimension is one the
-// property accepts (`calc(2Hz * 2)` on `<length-percentage>` fails). An
-// unrecognised DSL leaves the check off.
+// `dsl` is the syntax the value matched: a named numeric token lets calc's slot
+// check confirm the result dimension (`calc(2Hz * 2)` on `<length-percentage>`
+// fails). An unrecognised DSL leaves the check off.
 const deepValidateCSSValue = (
   key: string,
   value: unknown,
@@ -290,9 +257,8 @@ const deepValidateCSSValue = (
   }
 };
 
-// A CSS value passes the shallow DSL first, then the deep grammars. A miss on
-// the shallow DSL is tsyntax's bare prose, so it is rethrown with the property,
-// the element's tag, and the element's path through the tree.
+// A CSS value passes the shallow DSL first, then the deep grammars. A shallow
+// miss is tsyntax's bare prose, rethrown with the property, tag and tree path.
 const parseCSSValueAgainstDSL = (
   keywords: MergedKeywords,
   key: string,
@@ -314,34 +280,28 @@ const parseCSSValueAgainstDSL = (
 };
 
 // What a CSS block is validating against: the target element's `innerHTML`
-// (for `> child` selectors), its declared classes (for `&.class`), and its tag
-// (seeded into the tag's implicit `display`). Queries, pseudo-classes and
-// pseudo-elements pass these through unchanged; a `> child` block replaces
-// them with the child's.
+// (for `> child` selectors), its declared classes (for `&.class`), its tag
+// (seeded into the implicit `display`), and its position in the tree. Queries,
+// pseudo-classes and pseudo-elements pass these through; a `> child` block
+// replaces them with the child's.
 export interface CssBlockScope {
   innerHTML: InnerHTML;
   classes: string[];
   nodeTag: string | undefined;
-  // The element's position in the component tree (`root > item > text`),
-  // derived from the innerHTML key each node was reached by. Nested `> child`
-  // blocks extend it; query, class, and pseudo blocks pass it through.
+  /** The element's position (`root > item > text`), for diagnostics. */
   path: string;
 }
 
-// Everything that varies between nested CSS blocks. `block` is the one under
-// validation; the rest is the surrounding scope the type-level walk encodes.
-//
-// `parentGates` / `parentGridAreas` are the enclosing element's own explicit
-// gates and literal `grid-template-areas`, used to resolve this block's
-// children-slot props (`flex`, `grid-area`). `elementGates` / `elementGridAreas`
-// are THIS element's effective gates and areas: the explicit gates of every
-// same-element block on the path (`:hover`, `@media`, `&.class`), merged with
-// this block's own, plus this block's own `grid-template-areas`. A `> child` or
-// `::` block targets a different box, so it takes its `parentGates` /
-// `parentGridAreas` from the enclosing element's effective state and resets
-// `elementGates` / `elementGridAreas` to its own block. The tag's implicit
-// display is NOT part of `elementGates`; it is added only to the self slot, so
-// the existing "implicit display does not unlock children" rule is preserved.
+// Everything that varies between nested CSS blocks. `parentGates` /
+// `parentGridAreas` are the enclosing element's explicit gates and literal
+// `grid-template-areas`, resolving this block's children-slot props (`flex`,
+// `grid-area`). `elementGates` / `elementGridAreas` are THIS element's
+// effective gates and areas: the explicit gates of every same-element block on
+// the path (`:hover`, `@media`, `&.class`) merged with this block's own. A
+// `> child` or `::` block targets a different box, so it takes its parent slots
+// from the enclosing element's effective state and resets the element slots.
+// The tag's implicit display is not part of `elementGates` -- it is added only
+// to the self slot, so it never unlocks children props.
 interface CssBlockState extends CssBlockScope {
   parentGates: Record<string, string>;
   parentGridAreas: string | undefined;
@@ -353,10 +313,8 @@ interface CssBlockState extends CssBlockScope {
 
 // The registered pseudo-classes and pseudo-elements a `:`-keyed block may name.
 // Pseudo-classes are global (`cssPseudoClassConfig`), with a tag free to declare
-// more on itself (`cssPseudoClass`); pseudo-elements resolve per node from the
-// target tag's `cssPseudoElement`, mirroring the type wall exactly. An
-// unregistered key is rejected here, before its shape matters, which is what
-// closes the selector-injection path as a side effect of the correctness gap.
+// more; pseudo-elements resolve per node from the target tag, mirroring the
+// type wall. An unregistered key is rejected here, before its shape matters.
 const assertRegisteredPseudoKey = (
   context: ValidationContext,
   state: CssBlockState,
@@ -465,11 +423,10 @@ const styleQueryContents = (query: string): string[] => {
 // A `style()` container query embeds a `--property: value` pair inside the
 // at-rule header, which the renderer prints verbatim (`frame.atRule`).
 // `cssQueriesConfig` validates the query's shape but not the value, so the
-// engine re-reads each `style(...)` condition here and applies the same walls a
-// component declaration gets: the property must be a registered custom
-// property, and the value must clear the structural scan. This lives at engine
-// time because `cssPropertiesConfig` is in scope and `css/queries-config` must
-// not import engine code.
+// engine re-reads each condition and applies the same walls a declaration gets:
+// the property must be registered and the value must clear the structural scan.
+// This lives at engine time because `cssPropertiesConfig` is in scope and
+// `css/queries-config` must not import engine code.
 const assertStyleQueryValues = (
   context: ValidationContext,
   key: string,
@@ -492,9 +449,8 @@ const assertStyleQueryValues = (
 // Validate one `css` block against the element's structure. A complex CSS
 // attribute (`display`, `position`, ...) is a *gate*: the value the author
 // writes unlocks further props on the node itself (`self`) and on its direct
-// children (`children`). The shared helpers in `engine/gate-resolution.ts`
-// mirror the type-level gate tables in `engine/types.ts` so the two walls
-// agree, and serve the HTML layer too.
+// children (`children`). The helpers in `engine/gate-resolution.ts` mirror the
+// type-level gate tables in `engine/types.ts`, and serve the HTML layer too.
 export function validateCssBlock(
   context: ValidationContext,
   css: Record<string, unknown>,
@@ -539,18 +495,18 @@ export function validateCssBlock(
           "CSS",
         );
         explicitGates[key] = matched;
-        // Gate resolution only ran the shallow pattern match; a calc- or
-        // var-shaped gate value still needs the deep walls. Without this,
+        // Gate resolution ran only the shallow pattern match; a calc- or
+        // var-shaped gate value still needs the deep walls, or
         // `opacity: "calc(2px * 3px)"` would pass the runtime while the type
-        // wall rejected it. The matched key is the slot DSL (`<alpha-value>`
-        // for opacity), so calc's dimension check applies too.
+        // wall rejected it. `matched` is the slot DSL, so the dimension check
+        // applies too.
         deepValidateCSSValue(key, written, varContext, matched);
       }
     }
-    // The element's effective gates: the enclosing same-element blocks' gates
-    // merged with the ones written here. This block's written value wins, so an
-    // explicit `display` here overrides one inherited from a `:hover` / query
-    // ancestor rather than intersecting the two values into `never`.
+    // The element's effective gates: same-element blocks' gates merged with
+    // the ones written here. This block's value wins, so an explicit `display`
+    // here overrides one inherited from a `:hover` / query ancestor rather than
+    // intersecting the two into `never`.
     const elementGates: Record<string, string> = {
       ...state.elementGates,
       ...explicitGates,
@@ -605,12 +561,10 @@ export function validateCssBlock(
             `CSS Error: Class selector '${key}' has an invalid class name '${className}'`,
           );
         }
-        // The class must be one the element declares, mirroring the type
-        // wall's `&.${K}` keys derived from `T["attributes"]["class"]`.
-        // `state.classes` is the declaring scope's class list: the element
-        // itself, or the `> child` target when this block is nested under a
-        // child selector. Query blocks pass it through unchanged, so this
-        // composes with them exactly as with pseudo-class/element blocks.
+        // The class must be one the element declares, mirroring the type wall's
+        // `&.${K}` keys derived from `T["attributes"]["class"]`. `state.classes`
+        // is the declaring scope's class list: the element itself, or the
+        // `> child` target when nested under a child selector.
         if (!state.classes.includes(className)) {
           throw new Error(
             `CSS Error: Class selector '${key}' references class '${className}' which is not declared on the element`,
@@ -638,9 +592,9 @@ export function validateCssBlock(
         }
         if (key.startsWith("@container") && key.includes(STYLE_QUERY_PREFIX)) {
           // The header is printed verbatim as the at-rule, so its `style()`
-          // values are stylesheet text: check each property against the
-          // registry and scan each value, then scan the whole header as the
-          // in-loop backstop for text the targeted scan does not cover.
+          // values are stylesheet text: check each property and value, then
+          // scan the whole header as the backstop for text the targeted scan
+          // does not cover.
           assertStyleQueryValues(context, key);
           assertNoStructuralBreakout(key, key);
         }
@@ -660,11 +614,10 @@ export function validateCssBlock(
       if (value !== null && typeof value === "object" && !Array.isArray(value)) {
         if (key.startsWith(":")) {
           // A pseudo key becomes selector text (`segmentText` prints it
-          // verbatim). Membership in the registry is the fix -- an
-          // unregistered key is rejected before its shape matters -- and the
-          // structural scan is the in-loop backstop, independent of the
-          // registry. The check is unconditional (not skipped inside a
-          // pseudo-element) so nesting is decided by the registry, not shape.
+          // verbatim). Registry membership is the fix; the structural scan is
+          // the in-loop backstop, independent of the registry. The check is
+          // unconditional (not skipped inside a pseudo-element) so nesting is
+          // decided by the registry, not shape.
           assertRegisteredPseudoKey(context, state, key);
           assertNoStructuralBreakout(key, key);
         }
@@ -752,12 +705,11 @@ export function validateCssBlock(
           : state.path;
         // A `> child` and a `::` pseudo-element block target a different box:
         // they take their children-slot gates and grid-area cross-check from the
-        // enclosing element's effective state, and start a fresh element state
+        // enclosing element's effective state and start a fresh element state
         // from their own block. Every other nested block (`:`, `@`, `&.`)
-        // targets the SAME element, so it inherits the element state and passes
-        // the parent slots through unchanged. This mirrors the type level, where
-        // `> child` / `::` pass `CSSElementValue` as `CSSParent` and reset
-        // `CSSElementValue`, while `:` / `@` / `&.` merge it.
+        // targets the SAME element and inherits the element state. This mirrors
+        // the type level, where `> child` / `::` pass `CSSElementValue` as
+        // `CSSParent` and reset it, while `:` / `@` / `&.` merge it.
         const targetsOwnBox = key.startsWith("> ") || key.startsWith("::");
         walk(value as Record<string, unknown>, {
           innerHTML: nextContext,
@@ -799,8 +751,8 @@ export function validateCssBlock(
               state.path,
             );
             // `animation-name` / `animation` must reference a registered
-            // keyframe. The base DSL above still validates the value's shape;
-            // this is the closed-world reference check on top.
+            // keyframe. The base DSL still validates the value's shape; this is
+            // the closed-world reference check on top.
             if (
               !referencesRegisteredKeyframe(
                 key,
@@ -867,11 +819,10 @@ export function validateCssBlock(
               state.nodeTag,
               state.path,
             );
-            // `grid-area` names an area the parent's `grid-template-areas`
-            // must define. The DSL above only checks the value's shape
-            // (`<custom-ident>` is any string); this is the closed-world
-            // cross-reference on top, mirroring the type-level
-            // `GridAreaConstraint`.
+            // `grid-area` names an area the parent's `grid-template-areas` must
+            // define. The DSL checks only the value's shape (`<custom-ident>` is
+            // any string); this is the closed-world cross-reference on top,
+            // mirroring the type-level `GridAreaConstraint`.
             if (key === "grid-area" && state.parentGridAreas !== undefined) {
               const areaNames = parseGridAreaNames(state.parentGridAreas);
               if (typeof value !== "string" || !areaNames.has(value)) {
@@ -892,8 +843,7 @@ export function validateCssBlock(
         );
       } else if (key.startsWith(":")) {
         // A pseudo key with a non-block value never reaches the nested-block
-        // registry check above, so give it the pseudo-specific message instead
-        // of the generic "not a recognized CSS attribute or property".
+        // check above, so give it the pseudo-specific message.
         const kind = key.startsWith("::") ? "pseudo-element" : "pseudo-class";
         throw new Error(
           `CSS Error: '${key}' is not a registered ${kind}`,

@@ -14,12 +14,10 @@ export type AllowedTagSet = Set<string> | null;
 export type InnerHTML = BaseComponentStructure["innerHTML"] | undefined;
 
 // The registry snapshot every validation walk shares. It is built once per
-// `engine()` and never changes across the recursion, so it travels as one
-// value instead of a dozen positional parameters. The HTML layer reads
-// `keywords` (attribute DSLs); the CSS layer reads `mergedKeywords` (CSS
-// syntax tokens layered with the component's supported keywords) and the CSS
-// registries. `gate-resolution.ts` is the machinery both layers share, which
-// is what keeps the two walls agreeing.
+// `engine()` and never changes across the recursion, so it travels as one value
+// instead of a dozen positional parameters. `keywords` is for HTML attribute
+// DSLs; `mergedKeywords` (CSS syntax layered with the component's supported
+// keywords) and the CSS registries are for the CSS layer.
 export interface ValidationContext {
   readonly keywords: SupportedKeywordsConfig;
   readonly mergedKeywords: Record<string, string>;

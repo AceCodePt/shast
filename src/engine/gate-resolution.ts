@@ -2,10 +2,10 @@ import { parseValueAgainstDSL, type SupportedKeywordsConfig } from "tsyntax";
 
 // Shared gate machinery for both walls and both layers (CSS and HTML).
 //
-// A "gate" is a complex attribute (`display`, `type`, ...): the value the
-// author writes unlocks further keys on the node itself (`self`) and on its
-// direct children (`children`). The type-level counterparts live next to each
-// other in `engine/types.ts` (`GateTable` / `GateLookup` / `GateOverlaps`).
+// A "gate" is a complex attribute (`display`, `type`, ...): the value the author
+// writes unlocks further keys on the node itself (`self`) and on its direct
+// children (`children`). The type-level counterparts live in `engine/types.ts`
+// (`GateTable` / `GateLookup` / `GateOverlaps`).
 
 export const isGateDefinition = (def: unknown): def is Record<string, any> =>
   def !== null && typeof def === "object" && !Array.isArray(def);
@@ -17,15 +17,12 @@ export const isPatternKey = (key: string): boolean =>
   (key.startsWith("<") && key.endsWith(">")) ||
   (key.startsWith("`") && key.endsWith("`"));
 
-// Resolve the value a gate was written with to the key that actually matched.
-// A literal key wins outright: when the written value is a declared literal it
-// is returned before any pattern is tried, regardless of declaration order, and
-// only that literal's unlocked keys apply - a pattern that also matches it is
-// not an error. Pattern keys are tried only on a literal miss, each by parsing
-// the written value against it. Ambiguity is therefore detected
-// pattern-against-pattern only, never pattern-against-literal: a value matching
-// two pattern keys is an error, and a value matching none reports tsyntax's
-// prose about the value.
+// Resolve the value a gate was written with to the key that actually matched. A
+// literal key wins outright, regardless of declaration order; a pattern that
+// also matches it is not an error. Pattern keys are tried only on a literal
+// miss, each by parsing the written value. Ambiguity is therefore detected
+// pattern-against-pattern only: a value matching two pattern keys is an error,
+// and a value matching none reports tsyntax's prose about the value.
 export function resolveGateValue(
   keywords: SupportedKeywordsConfig,
   gate: string,

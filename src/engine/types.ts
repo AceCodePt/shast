@@ -45,8 +45,7 @@ export type BaseComponentStructure = {
   attributes?: Record<string, any>;
   css?: Record<string, any>;
   innerHTML?: BaseComponentInnerHTMLStructure;
-  // This is to make the stuff extra premissible so types won't
-  // get screwed over
+  // Keep this open so widened/partial structures stay assignable.
   [att: string]: unknown;
 };
 
@@ -185,14 +184,13 @@ type ValidateComponentInnerHTMLStructure<
       : never;
 
 // Whether `S` contains any character that is not a legal CSS identifier
-// character. `S` is a single class name (already space-split). The character
-// set itself lives in @/css/ident.ts.
+// character. The character set lives in @/css/ident.ts.
 type ContainsIllegalClassNameCharacter<S extends string> =
   ContainsIllegalCharacter<S, CSSIdentifierCharacter>;
 
-// Returns `S` unchanged when `S` is a legal CSS class name, otherwise a
-// diagnostic string literal. `SplitSpace` applies this to every name so that
-// garbage class names fail the type wall where the component is created.
+// Returns `S` unchanged when it is a legal CSS class name, otherwise a
+// diagnostic string literal. `SplitSpace` applies this to every name so garbage
+// class names fail the type wall where the component is created.
 type ValidateClassName<S extends string> = S extends `${infer First}${string}`
   ? First extends CSSIdentifierDigit
     ? `Invalid CSS class name '${S}': must not start with a digit`
@@ -216,12 +214,9 @@ type SplitSpace<S extends string> = string extends S
 //
 // `grid-template-areas` is a plain CSS string on the parent; `grid-area` names
 // one of its areas on a child. Neither DSL constrains the other (both are just
-// `string`), so the membership check lives here, in the structural validator,
-// which already threads the parent's css through `CSSParent` for `> child`
-// blocks. The parent's literal is split into its area-name union exactly the
-// way the runtime parses it: whitespace (spaces, newlines, tabs) separates
-// cells, each cell is an optionally quoted token, and `.` marks an empty cell
-// (no name).
+// `string`), so the membership check lives here, threading the parent's css
+// through `CSSParent` for `> child` blocks. The parent's literal is split the
+// same way the runtime parses it.
 // ---------------------------------------------------------------------------
 
 type StripAreaQuotes<S extends string> = S extends `"${infer R}"`
@@ -304,9 +299,9 @@ type GridAreaConstraint<
 // user writes unlocks further props on the node itself (`self`) and on its
 // direct children (`children`).
 //
-// These two tables are parameterised ONLY by the registry, never by the node
-// being checked, so TypeScript instantiates them once for the whole program
-// and every node afterwards is a cache hit + one indexed access.
+// These tables are parameterised ONLY by the registry, never by the node being
+// checked, so TypeScript instantiates them once for the whole program and every
+// node afterwards is a cache hit + one indexed access.
 // ---------------------------------------------------------------------------
 
 type GateKeys<CSSAttributesConfig extends BaseCSSAttributesComplexConfig> =
@@ -364,23 +359,21 @@ type GateTable<
 };
 
 // One row lookup: `Written` is what the user actually wrote for that gate.
-// The `[...]` wrapper keeps the check NON-distributive on purpose: a gate whose
-// value is still the open union (the parent-side default, where nothing has
-// been written yet) must unlock nothing, exactly as before.
+// The `[...]` wrapper keeps the check NON-distributive: a gate whose value is
+// still the open union (the parent-side default, nothing written yet) must
+// unlock nothing.
 //
 // The `[Written] extends [never]` guard comes FIRST and is load-bearing.
 // `never` extends everything, so without it a `never` gate value takes the
-// lookup branch and produces `Row[never]` -> `never` -> a mapped type over
-// `keyof never` (i.e. `PropertyKey`), which collapses the entire surrounding
-// intersection to `never` and makes every property in that scope unwritable.
+// lookup branch and produces `never` -> a mapped type over `keyof never` (i.e.
+// `PropertyKey`), which collapses the whole surrounding intersection and makes
+// every property in that scope unwritable.
 //
 // A gate value legitimately becomes `never` when a `> child` selector targets
 // an array of children whose element types do not unify: the validator feeds
-// the recursion `UnionToIntersection<...>` of the element types, and TypeScript
-// reduces an intersection to `never` as soon as a unit-type discriminant
-// disagrees -- `{ innerHTML: "a" } & { innerHTML: "b" }` is `never`. The node
-// type is then `never`, `T["tag"]` is `never`, and the defaulted `display` is
-// `never`. Nothing is known about that node, so nothing should be unlocked.
+// the recursion `UnionToIntersection<...>`, and TypeScript reduces an
+// intersection to `never` when a discriminant disagrees. Nothing is known about
+// that node, so nothing should be unlocked.
 type GateLookup<Row, Written> = [Written] extends [never]
   ? {}
   : [Written] extends [keyof Row]
@@ -407,18 +400,16 @@ type GateOverlaps<Row, Written> = [Written] extends [never]
 // Locked props.
 //
 // A gate variant is a discriminated-union member in spirit: picking
-// `display: "flex"` should both grant `gap` AND state, in the type, that
-// `gap` is unavailable under `display: "block"`.
+// `display: "flex"` should both grant `gap` AND state, in the type, that `gap`
+// is unavailable under `display: "block"`.
 //
-// Materialising that as an actual union across all gates is not viable -- the
-// gates are independent, so the union is their cross product and TypeScript
-// distributes it eagerly (TS2590 at 7 gates; the registry has 16). See the
-// note at the bottom of this block.
+// Materialising that as an actual union is not viable -- the gates are
+// independent, so the union is their cross product and TypeScript distributes
+// it eagerly (TS2590 at 7 gates; the registry has 16).
 //
 // Instead the "denied" half of each variant is kept as a registry-only
 // constant: every gate-lockable prop maps to an opaque message type naming the
-// values that would unlock it. Intersecting that in costs one mapped type over
-// the props of the gates that were actually written, and turns
+// values that would unlock it. Intersecting that in turns
 //
 //   Object literal may only specify known properties, and 'gap' does not
 //   exist in type '<3000 characters of registry>'
@@ -513,26 +504,13 @@ type LockedMessage<
   P extends string,
 > = `'${P}' requires ${JoinUnion<UnlockedBy<CSSAttributesConfig, P>, ", or ">}`;
 
-// NOTE: there is deliberately no branded "unknown property" check here.
-// An earlier revision added one (mapping every key the registry does not know
-// onto a `'x' is not a property in this registry` message) so that typos would
-// stop producing TypeScript's stock TS2353 dump. It was removed because it lost
-// on every axis that was measured:
-//
-//   * cost: 6-11% extra type instantiations and 17-25% extra check time, the
-//     single largest contributor to this validator being slower than the naive
-//     one -- while changing no accept/reject decision anywhere in the suite.
-//   * message quality: it produced a WORSE diagnostic than the built-in. TS2353
-//     already says "'foo' does not exist in type ...", whereas the branded
-//     version reported the assignability failure of a synthetic string.
-//   * the giant registry dump it was meant to suppress is an artifact of
-//     `noErrorTruncation: true` in tsconfig.json, not of TS2353. With the flag
-//     at its default the stock message is ~430 chars.
-//
-// The locked-property check below is a different story and does earn its cost:
-// TS2353 can only say a prop "does not exist", it cannot say *why*, and "'gap'
-// requires display: flex | grid | inline-flex | inline-grid" is information
-// TypeScript has no way to produce on its own.
+// NOTE: there is deliberately no branded "unknown property" check here. One was
+// tried (mapping every unknown key onto an `'x' is not a property in this
+// registry` message) and removed: it cost 6-11% extra instantiations and 17-25%
+// extra check time while changing no accept/reject decision, and it produced a
+// WORSE diagnostic than TypeScript's built-in TS2353. The locked-property check
+// below is different and does earn its cost: TS2353 can only say a prop "does
+// not exist", not *why*.
 
 // Every prop any gate can unlock, on this element or through its parent.
 // Registry-only, so it is instantiated once for the whole program.
@@ -878,10 +856,9 @@ type ValidateComponentHTMLAttributes<
 //
 // Every literal `id` written anywhere in a component, mapped to the value its
 // resolved key declares. With a registry supplied, that is the bag the id key
-// the value resolved to (literal first, then pattern keys; a value matching two
-// keys contributes nothing). Without a registry it falls back to the attributes
-// the element itself carries. A non-literal (widened `string`, or a component
-// with no ids at all) contributes `never`; duplicate ids merge.
+// the value resolved to (literal first, then pattern keys). Without one it
+// falls back to the attributes the element itself carries. A non-literal
+// (widened `string`, or no ids) contributes `never`; duplicate ids merge.
 // ---------------------------------------------------------------------------
 
 type NodeTagOf<T> = T extends { tag: infer G extends string } ? G : never;
@@ -1064,38 +1041,26 @@ type AnimationKeyframeConstraints<
 // calc() deep validation.
 //
 // The syntax config admits calc() shallowly (`<calc>` resolves to
-// `calc(${string})`), which keeps the inferred property types a plain union but
+// `calc(${string})`), which keeps inferred property types a plain union but
 // would accept malformed expressions. This member narrows a written calc()
 // value to the real grammar via `ValidateCalc`.
 //
-// It maps over `keyof CSSValue` -- the handful of keys the author actually
-// wrote -- and keeps a key only when, in the `as` clause, it is a string, it is
-// in the registry (`CalcValueKeys`: top-level string attributes, every
-// gate-unlockable key on `self`/`children`, and registered custom properties),
-// its written value is a string, and that string is calc-shaped
-// (`IsCalcString`). The value side is then an unconditional `ValidateCalc`.
-//
-// The registry-membership test in the `as` clause is what preserves the
-// excess-property guarantee the old registry-wide mapping gave: a written key
-// that is not in `CalcValueKeys` remaps to `never` and is never declared, so a
-// typo with a calc-shaped value still fails TS2353. Every key that survives is
-// already declared by the other members, so this adds no new key.
-//
-// A malformed value yields a branded `CalcError`, which no string is assignable
-// to, so the deep check fails where the shallow one passed. A value that is not
-// calc-shaped remaps to `never` and changes no decision.
+// It maps over `keyof CSSValue` (the keys the author actually wrote) and keeps
+// a key only when, in the `as` clause, it is a string, it is in the registry
+// (`CalcValueKeys`), and its written value is calc-shaped (`IsCalcString`). The
+// value side is then an unconditional `ValidateCalc`. The registry-membership
+// test preserves the excess-property guarantee: a written key outside
+// `CalcValueKeys` remaps to `never`, so a typo still fails TS2353. Every key
+// that survives is already declared by the other members, so this adds none.
 //
 // Prior art -- do not re-tread:
 //   (a) Folding the nine registry members of the component structure into seven
 //       was tried and REVERTED: it cost +1,272 instantiations on plain-200.
-//       That changed how members are grouped.
 //   (b) A "cheap-shape-test-first `as` remap" was tried and REVERTED earlier.
-//   (c) A registry-only hoist produced byte-identical instantiation counts and
-//       must not be revisited.
-// This inversion is different in kind from all three: it changes *what is
-// iterated* -- the written keys, not the registry-wide union -- rather than how
-// members are grouped. Any deviation from this measured shape needs its own
-// benchmark.
+//   (c) A registry-only hoist produced byte-identical instantiation counts.
+// This inversion is different in kind: it changes *what is iterated* -- the
+// written keys, not the registry-wide union. Any deviation from this measured
+// shape needs its own benchmark.
 // ---------------------------------------------------------------------------
 type CalcValueKeys<
   CSSAttributesConfig extends BaseCSSAttributesComplexConfig,
@@ -1193,24 +1158,21 @@ type CalcConstraint<
 // var() deep validation.
 //
 // The syntax config admits var() shallowly (`<var>` resolves to
-// `var(${string})`), which is what lets a written var() clear the shallow DSL
-// wall. This member then resolves each reference against the CSS Properties
-// registry, exactly as `CalcConstraint` does for calc. There is no fallback:
-// see `src/css/var.ts` for why one can never be read.
+// `var(${string})`), which lets a written var() clear the shallow DSL wall.
+// This member resolves each reference against the CSS Properties registry,
+// exactly as `CalcConstraint` does for calc. There is no fallback: see
+// `src/css/var.ts` for why one can never be read.
 //
-// Like calc, it maps over `keyof CSSValue` (the written keys) and keeps, in the
-// `as` clause, only a key that is a string, is in `CalcValueKeys`, and whose
-// written value contains `var(` (`ContainsVar`). The value side is then an
-// unconditional `ValidateVar`. The membership test is what keeps it from
-// declaring an excess-property key: a typo remaps to `never`. See
-// `CalcConstraint` for the prior-art warnings; the same inversion applies here.
+// Like calc, it maps over `keyof CSSValue` and keeps, in the `as` clause, only a
+// key that is a string, is in `CalcValueKeys`, and whose value contains `var(`
+// (`ContainsVar`); the value side is an unconditional `ValidateVar`. The
+// membership test keeps a typo from declaring an excess-property key. See
+// `CalcConstraint` for the prior-art warnings; the same inversion applies.
 //
 // The expected type (`Context`) is only known for top-level string attributes
-// and registered custom properties. For every context-dependent slot -- a
-// gate-unlocked shorthand, a gate value itself -- it is `unknown`, which turns
-// the compatibility half off: the reference grammar is still checked, but the
-// resolved-type match is left to runtime. That is the spec's "one-level
-// resolution + runtime for the rest".
+// and registered custom properties. For a context-dependent slot it is
+// `unknown`, which turns the compatibility half off: the grammar is still
+// checked, but the resolved-type match is left to runtime.
 // ---------------------------------------------------------------------------
 type VarContextType<
   Keywords extends SupportedKeywordsConfig,
@@ -1336,15 +1298,10 @@ type ValidateComponentCSSStructure<
         // further down are all registry-only and have disjoint key sets, so they
         // can be folded into a single mapped type with a value-side conditional
         // (9 intersection members -> 7). That was tried and REVERTED: it cost
-        // +1,272 instantiations on plain-200, +274 on pseudo-200 and +6,434 on
-        // the error path, for a check time that was a wash in an interleaved
-        // A/B (0.234s vs 0.238s plain, 0.446s vs 0.448s pseudo). Dispatching on
-        // the value side per key over ~130 keys costs more than the two
-        // intersection members it removes. That is the opposite trade from the
-        // `CalcConstraint` / `VarConstraint` inversion above, which wins by
-        // iterating the *written* keys rather than the registry-wide union; the
-        // reverted cheap-shape-test-first `as` remap still iterated the
-        // registry-wide union, so it is not a precedent for it. Keep them
+        // +1,272 instantiations on plain-200 and more on the error path, for a
+        // check time that was a wash. Dispatching per key over ~130 keys costs
+        // more than the two intersection members it removes -- the opposite
+        // trade from the `CalcConstraint` / `VarConstraint` inversion. Keep them
         // separate: each is a trivial mapped type cached once for the program.
         [K in KeysMatching<CSSAttributesConfig, string>]?:
           | DSLInfer<CSSSyntaxConfig & Keywords, CSSAttributesConfig[K] & string>

@@ -11,17 +11,14 @@ import { isCSSWideKeyword } from "@/css/wide-keyword.ts";
  * The two animation longhands that name a keyframe.
  *
  * `animation-name` is a single name; `animation` is the shorthand, a
- * whitespace-separated list of longhand values (`,` separates animations).
- * Both must reference a keyframe registered in `cssKeyframesConfig`. The two
- * walls below are the type-level and runtime halves of that same rule and are
- * deliberately kept in one file so they cannot drift.
+ * whitespace-separated list of longhand values (`,` separates animations). Both
+ * must reference a keyframe registered in `cssKeyframesConfig`. The two walls
+ * below are deliberately kept in one file so they cannot drift.
  *
- * The shorthand is scanned for a token that names a registered keyframe rather
- * than parsed exhaustively into its longhands. A real parse would have to know
- * every longhand's grammar, and the grammar itself embeds spaces and commas
- * (`cubic-bezier(0.1, 0.2, 0.3, 0.4)`, `steps(4, end)`), which a token scan
- * cannot round-trip. Requiring a registered name *somewhere* in the value is
- * the strongest check that stays honest for the values the DSL admits.
+ * The shorthand is scanned for a token naming a registered keyframe rather than
+ * parsed exhaustively: a real parse would have to know every longhand's grammar,
+ * which embeds spaces and commas (`cubic-bezier(0.1, 0.2, 0.3, 0.4)`) that a
+ * token scan cannot round-trip.
  */
 
 export const ANIMATION_NAME_PROPERTY = "animation-name";
@@ -32,15 +29,12 @@ export type KeyframeNames<C extends BaseKeyframesConfig> = KeyframeName<C>;
 // ---------------------------------------------------------------------------
 // Type wall.
 //
-// `animation-name` narrows to the registered names (`none` and the CSS-wide
+// `animation-name` narrows to the registered names (`none` and CSS-wide
 // keywords stay legal). The shorthand cannot be expressed as a union of valid
-// strings -- "contains a registered name token" is not a type TypeScript can
-// build -- so it is validated against the author's own value, exactly as the
-// *Config builders validate their inputs: a valid value passes through
-// unchanged, an invalid one resolves to a diagnostic string literal the author
-// cannot produce. A widened `string` is not analyzable and defers to the base
-// `<string>` DSL (fail open, matching the class wall's treatment of widened
-// class strings).
+// strings, so it validates the author's own value, exactly as the *Config
+// builders validate their inputs: valid passes through unchanged, invalid
+// resolves to a diagnostic literal. A widened `string` is not analyzable and
+// defers to the base `<string>` DSL (fail open, as with widened class strings).
 // ---------------------------------------------------------------------------
 
 /** Whitespace-separated tokens of a shorthand value, as a union. */
@@ -80,9 +74,8 @@ export type AnimationShorthandValue<V, Names extends string> = string extends V
 // ---------------------------------------------------------------------------
 
 /**
- * Whether `value` references a registered keyframe. An empty keyframes
- * registry imposes no constraint (there is nothing to reference, and the base
- * DSL already governs the value). A non-string value is left to the DSL parse.
+ * Whether `value` references a registered keyframe. An empty keyframes registry
+ * imposes no constraint. A non-string value is left to the DSL parse.
  */
 export function referencesRegisteredKeyframe(
   property: string,
@@ -154,10 +147,10 @@ function collectFromBlock(
 }
 
 /**
- * Every registered keyframe referenced by `node`'s `css` tree, in first-seen
- * order and deduped. The walk mirrors the CSS renderer: declarations can sit at
- * any nesting depth (child/pseudo/class/query), but a keyframe name is global,
- * so its rule is emitted once per render regardless of how many nodes use it.
+ * Every registered keyframe referenced by `node`'s `css` tree, first-seen order,
+ * deduped. Declarations can sit at any nesting depth, but a keyframe name is
+ * global, so its rule is emitted once per render regardless of how many nodes
+ * use it.
  */
 export function referencedKeyframes(
   node: BaseComponentStructure,

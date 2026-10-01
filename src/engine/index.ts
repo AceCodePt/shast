@@ -32,9 +32,8 @@ import type { AllowedTagSet, ValidationContext } from "@/engine/validate/context
 
 // The runtime wall's entry point: validate a component node and its subtree
 // against a built `ValidationContext`. The HTML and CSS layers live in
-// `engine/validate/html.ts` and `engine/validate/css.ts`; they share the gate
-// machinery in `engine/gate-resolution.ts`, which is what keeps this wall and
-// the type wall agreeing.
+// `engine/validate/`, and each layer imports the gate machinery, so the two
+// walls stay in sync.
 export function validateComponentNode(
   context: ValidationContext,
   node: unknown,
@@ -75,10 +74,10 @@ export default function engine<
       CSSAttributesConfig
     >;
     cssPseudoClassConfig: CSSPseudoClassConfig;
-    // The registry builder (`cssPropertiesConfig`) is where the no-union
-    // policy is enforced, and it is the only supported way to build one. The
-    // engine trusts that already-validated registry, so it permits unions here
-    // rather than re-deciding against the flag it cannot see.
+    // The registry builder (`cssPropertiesConfig`) enforces the no-union
+    // policy and is the only supported way to build one. The engine trusts that
+    // already-validated registry, so it permits unions here rather than
+    // re-deciding against the flag it cannot see.
     cssPropertiesConfig: ValidateCSSPropertiesConfig<
       SupportedKeywords,
       CSSSyntaxConfig,
