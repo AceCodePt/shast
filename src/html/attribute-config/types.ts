@@ -61,22 +61,25 @@ export type ValidateHTMLAttributesSimpleConfig<
     }
   : A;
 
+// Named alias rather than an inline conditional: an alias instantiation is
+// cached by its arguments, so attributes that share a value or a gate shape
+// share one evaluation. The same conditional written inline in a mapped type is
+// cached per key (`K`) and shares nothing.
+type ValidateHTMLAttributeEntry<
+  Keywords extends SupportedKeywordsConfig,
+  V,
+> = V extends BaseHTMLAttributeComplexValue
+  ? {
+      [G in keyof V]: ValidateHTMLAttributesSimpleConfig<Keywords, V[G]>;
+    }
+  : ValidateHTMLAttributeValue<Keywords, Extract<V, HTMLAttributeArms>>;
+
 export type ValidateHTMLAttributesConfig<
   Keywords extends SupportedKeywordsConfig,
   T extends BaseHTMLAttributesConfig,
 > = keyof T extends string
   ? {
-      [K in keyof T]: T[K] extends BaseHTMLAttributeComplexValue
-        ? {
-            [V in keyof T[K]]: ValidateHTMLAttributesSimpleConfig<
-              Keywords,
-              T[K][V]
-            >;
-          }
-        : ValidateHTMLAttributeValue<
-            Keywords,
-            Extract<T[K], HTMLAttributeArms>
-          >;
+      [K in keyof T]: ValidateHTMLAttributeEntry<Keywords, T[K]>;
     }
   : T;
 
