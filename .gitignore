@@ -159,3 +159,10 @@ scripts/cli.mjs
 
 # Example orchestration hooks are local-only; keep the files, ignore them.
 .orchestration/hooks/*.example
+
+# Benchmark harness output: vendored trees, generated fixtures, logs and
+# results. bench/baseline.json is deliberately tracked as the recorded
+# reference.
+bench/.generated/
+bench/out/
+bench/*.log

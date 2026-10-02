@@ -1,0 +1,1561 @@
+{
+  "generated": "2026-10-02T06:50:00.731Z",
+  "gitHead": "8c296fcebcf311519cb2feca2d264f53854f8f5d",
+  "compilers": [
+    {
+      "id": "ts7",
+      "version": "7.0.2"
+    },
+    {
+      "id": "ts5",
+      "version": "5.9.3"
+    }
+  ],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "strictBindCallApply": true,
+    "erasableSyntaxOnly": true,
+    "noImplicitAny": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "types": []
+  },
+  "tiers": [
+    "minimal",
+    "common",
+    "full"
+  ],
+  "shapes": [
+    "flat",
+    "modest",
+    "hover",
+    "media",
+    "rich",
+    "keyframes"
+  ],
+  "sizes": [
+    1,
+    10,
+    50,
+    100
+  ],
+  "repeats": 3,
+  "rows": [
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "baseline",
+      "n": 0,
+      "instantiations": 186879,
+      "types": 50070,
+      "checkTimeMs": 158.33333333333334,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "flat",
+      "n": 1,
+      "instantiations": 226998,
+      "types": 59954,
+      "checkTimeMs": 261.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "flat",
+      "n": 10,
+      "instantiations": 232560,
+      "types": 60143,
+      "checkTimeMs": 210,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "flat",
+      "n": 50,
+      "instantiations": 257280,
+      "types": 60983,
+      "checkTimeMs": 234.33333333333334,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "flat",
+      "n": 100,
+      "instantiations": 288180,
+      "types": 62033,
+      "checkTimeMs": 239.33333333333334,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "modest",
+      "n": 1,
+      "instantiations": 238957,
+      "types": 61466,
+      "checkTimeMs": 217.33333333333334,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "modest",
+      "n": 10,
+      "instantiations": 299779,
+      "types": 63482,
+      "checkTimeMs": 258.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "modest",
+      "n": 50,
+      "instantiations": 570099,
+      "types": 72442,
+      "checkTimeMs": 497.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "modest",
+      "n": 100,
+      "instantiations": 907999,
+      "types": 83642,
+      "checkTimeMs": 700.6666666666666,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "hover",
+      "n": 1,
+      "instantiations": 233905,
+      "types": 61094,
+      "checkTimeMs": 201,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "hover",
+      "n": 10,
+      "instantiations": 257854,
+      "types": 62057,
+      "checkTimeMs": 223,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "hover",
+      "n": 50,
+      "instantiations": 364294,
+      "types": 66337,
+      "checkTimeMs": 309.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "hover",
+      "n": 100,
+      "instantiations": 497344,
+      "types": 71687,
+      "checkTimeMs": 399.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "media",
+      "n": 1,
+      "instantiations": 234348,
+      "types": 61145,
+      "checkTimeMs": 201.33333333333334,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "media",
+      "n": 10,
+      "instantiations": 261996,
+      "types": 62135,
+      "checkTimeMs": 210.33333333333334,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "media",
+      "n": 50,
+      "instantiations": 384876,
+      "types": 66535,
+      "checkTimeMs": 316.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "media",
+      "n": 100,
+      "instantiations": 538476,
+      "types": 72035,
+      "checkTimeMs": 425.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "rich",
+      "n": 1,
+      "instantiations": 259035,
+      "types": 64673,
+      "checkTimeMs": 232.66666666666666,
+      "errors": 2
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "rich",
+      "n": 10,
+      "instantiations": 406122,
+      "types": 68768,
+      "checkTimeMs": 332.3333333333333,
+      "errors": 20
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "rich",
+      "n": 50,
+      "instantiations": 1059842,
+      "types": 86968,
+      "checkTimeMs": 829.3333333333334,
+      "errors": 100
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "rich",
+      "n": 100,
+      "instantiations": 1876992,
+      "types": 109718,
+      "checkTimeMs": 1455.3333333333333,
+      "errors": 200
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "keyframes",
+      "n": 1,
+      "instantiations": 241266,
+      "types": 63302,
+      "checkTimeMs": 190.33333333333334,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "keyframes",
+      "n": 10,
+      "instantiations": 270561,
+      "types": 64337,
+      "checkTimeMs": 245.66666666666666,
+      "errors": 10
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "keyframes",
+      "n": 50,
+      "instantiations": 400761,
+      "types": 68937,
+      "checkTimeMs": 350.3333333333333,
+      "errors": 50
+    },
+    {
+      "compiler": "ts7",
+      "tier": "minimal",
+      "shape": "keyframes",
+      "n": 100,
+      "instantiations": 563511,
+      "types": 74687,
+      "checkTimeMs": 467.3333333333333,
+      "errors": 100
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "baseline",
+      "n": 0,
+      "instantiations": 90207,
+      "types": 24612,
+      "checkTimeMs": 1236.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "flat",
+      "n": 1,
+      "instantiations": 92006,
+      "types": 24672,
+      "checkTimeMs": 1263.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "flat",
+      "n": 10,
+      "instantiations": 97568,
+      "types": 24861,
+      "checkTimeMs": 1263.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "flat",
+      "n": 50,
+      "instantiations": 122288,
+      "types": 25701,
+      "checkTimeMs": 1376.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "flat",
+      "n": 100,
+      "instantiations": 153188,
+      "types": 26751,
+      "checkTimeMs": 1493.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "modest",
+      "n": 1,
+      "instantiations": 103313,
+      "types": 25717,
+      "checkTimeMs": 1286.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "modest",
+      "n": 10,
+      "instantiations": 164135,
+      "types": 27031,
+      "checkTimeMs": 1483.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "modest",
+      "n": 50,
+      "instantiations": 434455,
+      "types": 32871,
+      "checkTimeMs": 2186.6666666666665,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "modest",
+      "n": 100,
+      "instantiations": 772355,
+      "types": 40171,
+      "checkTimeMs": 3033.3333333333335,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "hover",
+      "n": 1,
+      "instantiations": 98302,
+      "types": 25455,
+      "checkTimeMs": 1270,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "hover",
+      "n": 10,
+      "instantiations": 122251,
+      "types": 26130,
+      "checkTimeMs": 1356.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "hover",
+      "n": 50,
+      "instantiations": 228691,
+      "types": 29130,
+      "checkTimeMs": 1696.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "hover",
+      "n": 100,
+      "instantiations": 361741,
+      "types": 32880,
+      "checkTimeMs": 2103.3333333333335,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "media",
+      "n": 1,
+      "instantiations": 98745,
+      "types": 25485,
+      "checkTimeMs": 1260,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "media",
+      "n": 10,
+      "instantiations": 126393,
+      "types": 26160,
+      "checkTimeMs": 1373.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "media",
+      "n": 50,
+      "instantiations": 249273,
+      "types": 29160,
+      "checkTimeMs": 1713.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "media",
+      "n": 100,
+      "instantiations": 402873,
+      "types": 32910,
+      "checkTimeMs": 2163.3333333333335,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "rich",
+      "n": 1,
+      "instantiations": 122124,
+      "types": 28505,
+      "checkTimeMs": 1393.3333333333333,
+      "errors": 2
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "rich",
+      "n": 10,
+      "instantiations": 268257,
+      "types": 30899,
+      "checkTimeMs": 1790,
+      "errors": 20
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "rich",
+      "n": 50,
+      "instantiations": 917737,
+      "types": 41539,
+      "checkTimeMs": 3323.3333333333335,
+      "errors": 100
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "rich",
+      "n": 100,
+      "instantiations": 1729587,
+      "types": 54839,
+      "checkTimeMs": 5213.333333333333,
+      "errors": 200
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "keyframes",
+      "n": 1,
+      "instantiations": 105650,
+      "types": 27694,
+      "checkTimeMs": 1296.6666666666667,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "keyframes",
+      "n": 10,
+      "instantiations": 134639,
+      "types": 28567,
+      "checkTimeMs": 1530,
+      "errors": 10
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "keyframes",
+      "n": 50,
+      "instantiations": 263479,
+      "types": 32447,
+      "checkTimeMs": 1936.6666666666667,
+      "errors": 50
+    },
+    {
+      "compiler": "ts5",
+      "tier": "minimal",
+      "shape": "keyframes",
+      "n": 100,
+      "instantiations": 424529,
+      "types": 37297,
+      "checkTimeMs": 2430,
+      "errors": 100
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "baseline",
+      "n": 0,
+      "instantiations": 403029,
+      "types": 92008,
+      "checkTimeMs": 317,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "flat",
+      "n": 1,
+      "instantiations": 515842,
+      "types": 117645,
+      "checkTimeMs": 365.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "flat",
+      "n": 10,
+      "instantiations": 521404,
+      "types": 117834,
+      "checkTimeMs": 346,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "flat",
+      "n": 50,
+      "instantiations": 546124,
+      "types": 118674,
+      "checkTimeMs": 349,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "flat",
+      "n": 100,
+      "instantiations": 577024,
+      "types": 119724,
+      "checkTimeMs": 404.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "modest",
+      "n": 1,
+      "instantiations": 545815,
+      "types": 123068,
+      "checkTimeMs": 402,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "modest",
+      "n": 10,
+      "instantiations": 606709,
+      "types": 125300,
+      "checkTimeMs": 494.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "modest",
+      "n": 50,
+      "instantiations": 877349,
+      "types": 135220,
+      "checkTimeMs": 942,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "modest",
+      "n": 100,
+      "instantiations": 1215649,
+      "types": 147620,
+      "checkTimeMs": 1508.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "hover",
+      "n": 1,
+      "instantiations": 540428,
+      "types": 122490,
+      "checkTimeMs": 389.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "hover",
+      "n": 10,
+      "instantiations": 564413,
+      "types": 123651,
+      "checkTimeMs": 457.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "hover",
+      "n": 50,
+      "instantiations": 671013,
+      "types": 128811,
+      "checkTimeMs": 633.6666666666666,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "hover",
+      "n": 100,
+      "instantiations": 804263,
+      "types": 135261,
+      "checkTimeMs": 841.3333333333334,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "media",
+      "n": 1,
+      "instantiations": 540871,
+      "types": 122639,
+      "checkTimeMs": 390.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "media",
+      "n": 10,
+      "instantiations": 568555,
+      "types": 123827,
+      "checkTimeMs": 424.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "media",
+      "n": 50,
+      "instantiations": 691595,
+      "types": 129107,
+      "checkTimeMs": 653.3333333333334,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "media",
+      "n": 100,
+      "instantiations": 845395,
+      "types": 135707,
+      "checkTimeMs": 854.3333333333334,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "rich",
+      "n": 1,
+      "instantiations": 547057,
+      "types": 123216,
+      "checkTimeMs": 412,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "rich",
+      "n": 10,
+      "instantiations": 609193,
+      "types": 125601,
+      "checkTimeMs": 765.6666666666666,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "rich",
+      "n": 50,
+      "instantiations": 885353,
+      "types": 136201,
+      "checkTimeMs": 1273,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "rich",
+      "n": 100,
+      "instantiations": 1230553,
+      "types": 149451,
+      "checkTimeMs": 1999,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "keyframes",
+      "n": 1,
+      "instantiations": 532050,
+      "types": 121844,
+      "checkTimeMs": 377.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "keyframes",
+      "n": 10,
+      "instantiations": 545910,
+      "types": 122465,
+      "checkTimeMs": 395,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "keyframes",
+      "n": 50,
+      "instantiations": 607510,
+      "types": 125225,
+      "checkTimeMs": 514,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "common",
+      "shape": "keyframes",
+      "n": 100,
+      "instantiations": 684510,
+      "types": 128675,
+      "checkTimeMs": 657,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "baseline",
+      "n": 0,
+      "instantiations": 173892,
+      "types": 41700,
+      "checkTimeMs": 1610,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "flat",
+      "n": 1,
+      "instantiations": 175691,
+      "types": 41760,
+      "checkTimeMs": 1656.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "flat",
+      "n": 10,
+      "instantiations": 181253,
+      "types": 41949,
+      "checkTimeMs": 1700,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "flat",
+      "n": 50,
+      "instantiations": 205973,
+      "types": 42789,
+      "checkTimeMs": 1803.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "flat",
+      "n": 100,
+      "instantiations": 236873,
+      "types": 43839,
+      "checkTimeMs": 1973.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "modest",
+      "n": 1,
+      "instantiations": 205249,
+      "types": 46341,
+      "checkTimeMs": 2033.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "modest",
+      "n": 10,
+      "instantiations": 266143,
+      "types": 47655,
+      "checkTimeMs": 2176.6666666666665,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "modest",
+      "n": 50,
+      "instantiations": 536783,
+      "types": 53495,
+      "checkTimeMs": 3463.3333333333335,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "modest",
+      "n": 100,
+      "instantiations": 875083,
+      "types": 60795,
+      "checkTimeMs": 4976.666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "hover",
+      "n": 1,
+      "instantiations": 199903,
+      "types": 46012,
+      "checkTimeMs": 1796.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "hover",
+      "n": 10,
+      "instantiations": 223888,
+      "types": 46687,
+      "checkTimeMs": 1956.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "hover",
+      "n": 50,
+      "instantiations": 330488,
+      "types": 49687,
+      "checkTimeMs": 2503.3333333333335,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "hover",
+      "n": 100,
+      "instantiations": 463738,
+      "types": 53437,
+      "checkTimeMs": 3276.6666666666665,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "media",
+      "n": 1,
+      "instantiations": 200346,
+      "types": 46045,
+      "checkTimeMs": 1800,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "media",
+      "n": 10,
+      "instantiations": 228030,
+      "types": 46720,
+      "checkTimeMs": 1963.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "media",
+      "n": 50,
+      "instantiations": 351070,
+      "types": 49720,
+      "checkTimeMs": 2593.3333333333335,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "media",
+      "n": 100,
+      "instantiations": 504870,
+      "types": 53470,
+      "checkTimeMs": 3336.6666666666665,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "rich",
+      "n": 1,
+      "instantiations": 205330,
+      "types": 46204,
+      "checkTimeMs": 1846.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "rich",
+      "n": 10,
+      "instantiations": 267466,
+      "types": 47383,
+      "checkTimeMs": 2176.6666666666665,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "rich",
+      "n": 50,
+      "instantiations": 543626,
+      "types": 52623,
+      "checkTimeMs": 3730,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "rich",
+      "n": 100,
+      "instantiations": 888826,
+      "types": 59173,
+      "checkTimeMs": 5590,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "keyframes",
+      "n": 1,
+      "instantiations": 191371,
+      "types": 45503,
+      "checkTimeMs": 1733.3333333333333,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "keyframes",
+      "n": 10,
+      "instantiations": 205231,
+      "types": 45935,
+      "checkTimeMs": 1836.6666666666667,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "keyframes",
+      "n": 50,
+      "instantiations": 266831,
+      "types": 47855,
+      "checkTimeMs": 2190,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "common",
+      "shape": "keyframes",
+      "n": 100,
+      "instantiations": 343831,
+      "types": 50255,
+      "checkTimeMs": 2583.3333333333335,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "baseline",
+      "n": 0,
+      "instantiations": 770988,
+      "types": 180272,
+      "checkTimeMs": 901.3333333333334,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "flat",
+      "n": 1,
+      "instantiations": 1108937,
+      "types": 263356,
+      "checkTimeMs": 969,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "flat",
+      "n": 10,
+      "instantiations": 1114499,
+      "types": 263545,
+      "checkTimeMs": 965,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "flat",
+      "n": 50,
+      "instantiations": 1139219,
+      "types": 264385,
+      "checkTimeMs": 1044,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "flat",
+      "n": 100,
+      "instantiations": 1170119,
+      "types": 265435,
+      "checkTimeMs": 997.6666666666666,
+      "errors": 0
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "modest",
+      "n": 1,
+      "instantiations": 1152721,
+      "types": 270251,
+      "checkTimeMs": 1039,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "modest",
+      "n": 10,
+      "instantiations": 1213615,
+      "types": 272105,
+      "checkTimeMs": 1138.6666666666667,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "modest",
+      "n": 50,
+      "instantiations": 1484255,
+      "types": 280345,
+      "checkTimeMs": 1847,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "modest",
+      "n": 100,
+      "instantiations": 1822555,
+      "types": 290645,
+      "checkTimeMs": 2659,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "hover",
+      "n": 1,
+      "instantiations": 1146946,
+      "types": 269463,
+      "checkTimeMs": 1063.3333333333333,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "hover",
+      "n": 10,
+      "instantiations": 1170931,
+      "types": 270489,
+      "checkTimeMs": 1048.6666666666667,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "hover",
+      "n": 50,
+      "instantiations": 1277531,
+      "types": 275049,
+      "checkTimeMs": 1408,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "hover",
+      "n": 100,
+      "instantiations": 1410781,
+      "types": 280749,
+      "checkTimeMs": 1669.6666666666667,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "media",
+      "n": 1,
+      "instantiations": 1147389,
+      "types": 269667,
+      "checkTimeMs": 1031.6666666666667,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "media",
+      "n": 10,
+      "instantiations": 1175073,
+      "types": 270675,
+      "checkTimeMs": 1094,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "media",
+      "n": 50,
+      "instantiations": 1298113,
+      "types": 275155,
+      "checkTimeMs": 1410.3333333333333,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "media",
+      "n": 100,
+      "instantiations": 1451913,
+      "types": 280755,
+      "checkTimeMs": 1743.6666666666667,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "rich",
+      "n": 1,
+      "instantiations": 1206434,
+      "types": 288882,
+      "checkTimeMs": 1133,
+      "errors": 2
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "rich",
+      "n": 10,
+      "instantiations": 1329014,
+      "types": 292032,
+      "checkTimeMs": 1546.6666666666667,
+      "errors": 11
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "rich",
+      "n": 50,
+      "instantiations": 1873814,
+      "types": 306032,
+      "checkTimeMs": 3359,
+      "errors": 51
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "rich",
+      "n": 100,
+      "instantiations": 2554814,
+      "types": 323532,
+      "checkTimeMs": 5744,
+      "errors": 101
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "keyframes",
+      "n": 1,
+      "instantiations": 1133979,
+      "types": 269336,
+      "checkTimeMs": 1041.3333333333333,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "keyframes",
+      "n": 10,
+      "instantiations": 1147839,
+      "types": 269921,
+      "checkTimeMs": 1045,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "keyframes",
+      "n": 50,
+      "instantiations": 1209439,
+      "types": 272521,
+      "checkTimeMs": 1222.6666666666667,
+      "errors": 1
+    },
+    {
+      "compiler": "ts7",
+      "tier": "full",
+      "shape": "keyframes",
+      "n": 100,
+      "instantiations": 1286439,
+      "types": 275771,
+      "checkTimeMs": 1415.6666666666667,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "baseline",
+      "n": 0,
+      "instantiations": 416088,
+      "types": 102701,
+      "checkTimeMs": 2793.3333333333335,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "flat",
+      "n": 1,
+      "instantiations": 417887,
+      "types": 102761,
+      "checkTimeMs": 2790,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "flat",
+      "n": 10,
+      "instantiations": 423449,
+      "types": 102950,
+      "checkTimeMs": 2823.3333333333335,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "flat",
+      "n": 50,
+      "instantiations": 448169,
+      "types": 103790,
+      "checkTimeMs": 2916.6666666666665,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "flat",
+      "n": 100,
+      "instantiations": 479069,
+      "types": 104840,
+      "checkTimeMs": 3000,
+      "errors": 0
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "modest",
+      "n": 1,
+      "instantiations": 461264,
+      "types": 108619,
+      "checkTimeMs": 3010,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "modest",
+      "n": 10,
+      "instantiations": 522158,
+      "types": 109933,
+      "checkTimeMs": 3370,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "modest",
+      "n": 50,
+      "instantiations": 792798,
+      "types": 115773,
+      "checkTimeMs": 4990,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "modest",
+      "n": 100,
+      "instantiations": 1131098,
+      "types": 123073,
+      "checkTimeMs": 6963.333333333333,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "hover",
+      "n": 1,
+      "instantiations": 455530,
+      "types": 108179,
+      "checkTimeMs": 2960,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "hover",
+      "n": 10,
+      "instantiations": 479515,
+      "types": 108854,
+      "checkTimeMs": 3223.3333333333335,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "hover",
+      "n": 50,
+      "instantiations": 586115,
+      "types": 111854,
+      "checkTimeMs": 3923.3333333333335,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "hover",
+      "n": 100,
+      "instantiations": 719365,
+      "types": 115604,
+      "checkTimeMs": 4716.666666666667,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "media",
+      "n": 1,
+      "instantiations": 455973,
+      "types": 108212,
+      "checkTimeMs": 2990,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "media",
+      "n": 10,
+      "instantiations": 483657,
+      "types": 108887,
+      "checkTimeMs": 3150,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "media",
+      "n": 50,
+      "instantiations": 606697,
+      "types": 111887,
+      "checkTimeMs": 3930,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "media",
+      "n": 100,
+      "instantiations": 760497,
+      "types": 115637,
+      "checkTimeMs": 4800,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "rich",
+      "n": 1,
+      "instantiations": 513493,
+      "types": 126967,
+      "checkTimeMs": 3276.6666666666665,
+      "errors": 2
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "rich",
+      "n": 10,
+      "instantiations": 633184,
+      "types": 128956,
+      "checkTimeMs": 4160,
+      "errors": 11
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "rich",
+      "n": 50,
+      "instantiations": 1165144,
+      "types": 137796,
+      "checkTimeMs": 8050,
+      "errors": 51
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "rich",
+      "n": 100,
+      "instantiations": 1830094,
+      "types": 148846,
+      "checkTimeMs": 12806.666666666666,
+      "errors": 101
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "keyframes",
+      "n": 1,
+      "instantiations": 442409,
+      "types": 108262,
+      "checkTimeMs": 2946.6666666666665,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "keyframes",
+      "n": 10,
+      "instantiations": 456269,
+      "types": 108694,
+      "checkTimeMs": 3056.6666666666665,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "keyframes",
+      "n": 50,
+      "instantiations": 517869,
+      "types": 110614,
+      "checkTimeMs": 3506.6666666666665,
+      "errors": 1
+    },
+    {
+      "compiler": "ts5",
+      "tier": "full",
+      "shape": "keyframes",
+      "n": 100,
+      "instantiations": 594869,
+      "types": 113014,
+      "checkTimeMs": 4036.6666666666665,
+      "errors": 1
+    }
+  ]
+}
