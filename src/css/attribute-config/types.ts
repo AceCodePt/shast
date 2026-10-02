@@ -59,31 +59,34 @@ export type ValidateCSSAttributesSimpleConfig<
     }
   : A;
 
+// Named alias rather than an inline conditional: an alias instantiation is
+// cached by its arguments, so attributes that share a value or a gate shape
+// share one evaluation. The same conditional written inline in a mapped type is
+// cached per key (`K`) and shares nothing.
+type ValidateCSSAttributeEntry<
+  Keywords extends SupportedKeywordsConfig,
+  S extends CSSSyntaxKeywords,
+  V,
+> = V extends BaseCSSAttributeComplexValue
+  ? {
+      [G in keyof V]: {
+        self: ValidateCSSAttributesSimpleConfig<Keywords, S, V[G]["self"]>;
+        children: ValidateCSSAttributesSimpleConfig<
+          Keywords,
+          S,
+          V[G]["children"]
+        >;
+      };
+    }
+  : ValidateCSSAttributeValue<S & Keywords, Extract<V, CSSAttributeArms>>;
+
 export type ValidateCSSAttributesConfig<
   Keywords extends SupportedKeywordsConfig,
   S extends CSSSyntaxKeywords,
   A extends BaseCSSAttributesComplexConfig,
 > = keyof A extends string
   ? {
-      [K in keyof A]: A[K] extends BaseCSSAttributeComplexValue
-        ? {
-            [V in keyof A[K]]: {
-              self: ValidateCSSAttributesSimpleConfig<
-                Keywords,
-                S,
-                A[K][V]["self"]
-              >;
-              children: ValidateCSSAttributesSimpleConfig<
-                Keywords,
-                S,
-                A[K][V]["children"]
-              >;
-            };
-          }
-        : ValidateCSSAttributeValue<
-            S & Keywords,
-            Extract<A[K], CSSAttributeArms>
-          >;
+      [K in keyof A]: ValidateCSSAttributeEntry<Keywords, S, A[K]>;
     }
   : A;
 
