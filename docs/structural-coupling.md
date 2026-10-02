@@ -129,17 +129,17 @@ not an intersection, so an inherited `display: block` cannot cancel a written
 ## Performance envelope (indicative)
 
 Structural typing at this depth is only viable if it stays cheap. The figures
-below were produced by a local benchmark harness that is **not included in
-this repository**, so treat them as indicative rather than reproducible.
-Measured against the `common` registry on TypeScript 7.0.2 (the development
-target). TypeScript 5.x is materially slower - higher fixed and per-component
-cost; see [`performance.md`](performance.md) for the TS 5 comparison:
+below are produced by the in-repo harness in [`bench/`](../bench/) (`pnpm
+bench`), so they can be re-measured rather than taken on trust. Measured against
+the `common` registry on TypeScript 7.0.2 (the development target). TypeScript
+5.x is materially slower - higher fixed and per-component cost; see
+[`performance.md`](performance.md) for the TS 5 comparison:
 
 - `tsc` cost is a **fixed registry load plus a linear per-component term**.
-  Loading `common` costs ~1.17M instantiations / ~1.1s before any component
+  Loading `common` costs ~403K instantiations / ~0.32s before any component
   is checked; each modest component (`ul > li > span`, one `:hover`, one
-  nested `> child`) then adds ~15K instantiations / ~25ms (registry only:
-  1.17M / 1.15s; registry + 100 components: 2.69M / 3.60s). Instantiation
+  nested `> child`) then adds ~7K instantiations / ~11ms (registry only:
+  403,029 / 0.32s; registry + 100 components: 1,215,649 / 1.51s). Instantiation
   counts are machine-stable; times vary by machine.
 
 Practical rule: keep files to a handful of components each and per-file
@@ -160,6 +160,9 @@ instantiations per component:
   fewer** for two components (5,585 -> 4,311 marginal plus 1,274). The
   re-declaration itself is what was measured; block cost is otherwise identical
   whether or not a gate is active.
+
+These gate figures were measured on an earlier revision and have not been
+re-measured by the current [`bench/`](../bench/) harness; they are indicative.
 
 ## Constraints on authors
 
