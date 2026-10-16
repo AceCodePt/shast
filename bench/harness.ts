@@ -24,13 +24,33 @@
 // the exact version that produced it and the two can never be confused.
 //
 // Run:
-//   pnpm bench                 full sweep, both compilers, results + baseline
-//   pnpm bench -- --quick      fast smoke run (common, modest+rich, n=1,10)
+//   pnpm bench                     full sweep, both compilers, results + baseline
+//   pnpm bench -- --quick          fast smoke run (common, modest+rich, n=1,10)
 //   pnpm bench -- --tiers common --sizes 1,10,50,100
+//   pnpm bench -- --json -         emit the result document to stdout
+//   pnpm bench -- --wall           add the break-point sweep
 //
-// Results are written to bench/out/results.json and bench/out/RESULTS.md. With
-// --save-baseline the same payload is written to bench/baseline.json, which the
-// next run diffs against to report drift.
+// Flags:
+//   --compilers a,b   --tiers a,b   --shapes a,b   --sizes a,b   --repeats n
+//   --save-baseline   write bench/baseline.json (the same document --json emits)
+//   --json [path|-]   emit the result document as JSON; default is the tracked
+//                     bench/out/results.json, `-` writes to stdout (which moves
+//                     all human output to stderr so the pipe stays parseable)
+//   --wall            run the break-point sweep (opt-in: it is many extra
+//                     compiles). Finds the largest component count that still
+//                     compiles per tier/shape - the TS2589 headroom.
+//   --wall-max n      largest component count the wall sweep probes (default 256)
+//   --fail-on-error   exit 1 if any fixture fails to compile
+//   --fail-on-drift   exit 1 if any row drifts from bench/baseline.json
+//   --report-only     re-render RESULTS.md from bench/out/results.json
+//
+// Results are written to bench/out/results.json and bench/out/RESULTS.md. The
+// baseline and the JSON result share one schema (see `BenchmarkDocument`): the
+// baseline is that document for a given commit, and every result row carries a
+// `deltaVsBaseline`, so drift is a field-for-field comparison rather than a
+// second code path. Runs pass `--singleThreaded` where the compiler supports it:
+// TypeScript 7 (tsgo) parallelises by default, and the thread scheduling makes
+// whole-program counters jitter run to run.
 
 import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
@@ -52,7 +72,19 @@ const REPO_ROOT = path.resolve(HERE, "..");
 const GENERATED = path.join(HERE, ".generated");
 /** Results. Gitignored except the deliberately tracked bench/baseline.json. */
 const OUT_DIR = path.join(HERE, "out");
+const RESULTS_FILE = path.join(OUT_DIR, "results.json");
+const REPORT_FILE = path.join(OUT_DIR, "RESULTS.md");
 const BASELINE_FILE = path.join(HERE, "baseline.json");
+/** Identifies the producer of a document, so a foreign JSON is recognisable. */
+const HARNESS_ID = "shast-bench";
+/**
+ * What is under measurement: the engine source `shast add` vendors from. The
+ * harness never measures the repo's own barrel (which pulls in all three tiers),
+ * so this is the stable provenance label for every row.
+ */
+const IMPL = "src";
+/** Default ceiling for the break-point sweep's component count. */
+const DEFAULT_WALL_MAX = 256;
 
 const ALL_TIERS: readonly Tier[] = ["minimal", "common", "full"];
 
@@ -104,12 +136,25 @@ const MEASURE_COMPILER_OPTIONS: Readonly<Record<string, unknown>> = {
 // Compilers
 // ---------------------------------------------------------------------------
 
+/** The provenance slice of a compiler that a document persists and reports on. */
+interface CompilerInfo {
+  id: string;
+  version: string;
+}
+
 interface Compiler {
   id: string;
   /** Package alias in node_modules. */
   pkg: string;
   version: string;
   bin: string;
+  /**
+   * Whether `--singleThreaded` is passed. TypeScript 7 (tsgo) is parallel by
+   * default and its whole-program counters jitter with thread scheduling;
+   * classic tsc (5.x) is already single-threaded and has no such flag, so this
+   * is gated on the major version rather than assumed.
+   */
+  singleThreaded: boolean;
 }
 
 /**
@@ -142,7 +187,14 @@ function loadCompiler(id: string): Compiler {
   const version = spawnSync(process.execPath, [bin, "--version"], {
     encoding: "utf8",
   }).stdout.trim().replace(/^Version\s+/, "");
-  return { id, pkg, version, bin };
+  const major = Number.parseInt(version.split(".")[0] ?? "", 10);
+  return {
+    id,
+    pkg,
+    version,
+    bin,
+    singleThreaded: Number.isFinite(major) && major >= 7,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -275,6 +327,8 @@ interface Diagnostics {
   checkTimeMs: number;
   totalTimeMs: number;
   errors: number;
+  /** The first `TS####` code in the output, or null when it compiled. */
+  errorCode: string | null;
   errorSample: string | null;
 }
 
@@ -295,6 +349,7 @@ function parseDiagnostics(output: string): Diagnostics {
     checkTimeMs: seconds("Check time"),
     totalTimeMs: seconds("Total time"),
     errors: errorMatches.length,
+    errorCode: /error (TS\d+)/.exec(output)?.[1] ?? null,
     errorSample:
       errorMatches.length === 0
         ? null
@@ -312,11 +367,19 @@ function runTsc(compiler: Compiler, tsconfig: string, repeats: number): Run {
   let diagnostics: Diagnostics | null = null;
   const checkSamples: number[] = [];
   for (let run = 0; run < repeats; run += 1) {
-    const result = spawnSync(
-      process.execPath,
-      [compiler.bin, "--pretty", "false", "--extendedDiagnostics", "-p", tsconfig],
-      { cwd: REPO_ROOT, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 },
-    );
+    const args = [
+      compiler.bin,
+      "--pretty",
+      "false",
+      "--extendedDiagnostics",
+    ];
+    if (compiler.singleThreaded) args.push("--singleThreaded");
+    args.push("-p", tsconfig);
+    const result = spawnSync(process.execPath, args, {
+      cwd: REPO_ROOT,
+      encoding: "utf8",
+      maxBuffer: 64 * 1024 * 1024,
+    });
     const output = `${result.stdout ?? ""}\n${result.stderr ?? ""}`;
     const parsed = parseDiagnostics(output);
     if (diagnostics === null) diagnostics = parsed;
@@ -345,7 +408,74 @@ interface Row {
   checkTimeMs: number;
   checkSamples: number[];
   errors: number;
+  errorCode: string | null;
   errorSample: string | null;
+  /**
+   * Change in the deterministic counters since the loaded baseline, or null
+   * when there is no matching baseline row. Filled in once, right after the
+   * sweep, so both the report and `--fail-on-drift` read the same numbers.
+   */
+  deltaVsBaseline: { instantiations: number; types: number } | null;
+}
+
+/**
+ * A row as persisted: the in-memory `Row` minus the raw timing samples and the
+ * per-row compiler version (the document already lists versions once, in
+ * `compilers`).
+ */
+interface DocumentRow {
+  compiler: string;
+  tier: Tier;
+  shape: ShapeId | "baseline";
+  n: number;
+  instantiations: number;
+  types: number;
+  checkTimeMs: number;
+  errors: number;
+  errorCode: string | null;
+  errorSample: string | null;
+  deltaVsBaseline: { instantiations: number; types: number } | null;
+}
+
+/**
+ * A break-point result: the largest component count of `shape` that still
+ * compiles on a tier. `threshold` 0 means even a single component failed (the
+ * `full` tier's `TS2589` on any non-flat shape), which is a result, not an
+ * error. `open` marks a sweep that reached `--wall-max` without failing.
+ */
+interface WallResult {
+  compiler: string;
+  tier: Tier;
+  shape: ShapeId;
+  threshold: number;
+  open: boolean;
+  errorCode: string | null;
+  errorSample: string | null;
+}
+
+/**
+ * One schema for both the JSON result and `bench/baseline.json`. The baseline
+ * is this document for a given commit; the result is this document with
+ * `deltaVsBaseline` filled in per row. Field-for-field comparison, no second
+ * shape to keep in sync.
+ */
+interface BenchmarkDocument {
+  harness: string;
+  generated: string;
+  gitHead: string;
+  /** The source under measurement (always the vendored engine, `IMPL`). */
+  impl: string;
+  compilers: { id: string; version: string }[];
+  compilerOptions: Readonly<Record<string, unknown>>;
+  tiers: Tier[];
+  shapes: ShapeId[];
+  sizes: number[];
+  repeats: number;
+  /** Path + commit of the baseline this document was diffed against. */
+  baseline: string | null;
+  baselineGitHead: string | null;
+  rows: DocumentRow[];
+  walls: WallResult[] | null;
 }
 
 function ensureTree(tier: Tier): string {
@@ -383,12 +513,15 @@ interface SweepOptions {
   shapes: readonly ShapeId[];
   sizes: readonly number[];
   repeats: number;
+  /** Vendored tree per tier, built once in `main` and shared with the wall sweep. */
+  trees: ReadonlyMap<Tier, string>;
 }
 
 function sweep(options: SweepOptions): Row[] {
   const rows: Row[] = [];
   for (const tier of options.tiers) {
-    const treeDir = ensureTree(tier);
+    const treeDir = options.trees.get(tier);
+    if (treeDir === undefined) throw new Error(`No vendored tree for tier '${tier}'`);
     const fixtures: {
       shape: ShapeId | "baseline";
       n: number;
@@ -438,7 +571,9 @@ function sweep(options: SweepOptions): Row[] {
           checkTimeMs: mean(run.checkSamples),
           checkSamples: run.checkSamples,
           errors: d.errors,
+          errorCode: d.errorCode,
           errorSample: d.errorSample,
+          deltaVsBaseline: null,
         });
       }
     }
@@ -447,16 +582,217 @@ function sweep(options: SweepOptions): Row[] {
 }
 
 // ---------------------------------------------------------------------------
-// Reporting
+// Baseline deltas
 // ---------------------------------------------------------------------------
 
-function find(
-  rows: readonly Row[],
+function rowKey(
   compiler: string,
   tier: Tier,
   shape: ShapeId | "baseline",
   n: number,
-): Row | undefined {
+): string {
+  return `${compiler}|${tier}|${shape}|${n}`;
+}
+
+/**
+ * Fill each row's `deltaVsBaseline` from the loaded baseline. A row with no
+ * matching baseline row (a tier/shape/size set the baseline did not measure)
+ * gets null rather than a misleading zero.
+ */
+function attachDeltas(rows: readonly Row[], baseline: BenchmarkDocument | null): void {
+  const previous = baseline?.rows;
+  if (previous === undefined) {
+    for (const row of rows) row.deltaVsBaseline = null;
+    return;
+  }
+  const byKey = new Map(
+    previous.map((row) => [rowKey(row.compiler, row.tier, row.shape, row.n), row]),
+  );
+  for (const row of rows) {
+    const prev = byKey.get(rowKey(row.compiler, row.tier, row.shape, row.n));
+    row.deltaVsBaseline =
+      prev === undefined
+        ? null
+        : {
+            instantiations: row.instantiations - prev.instantiations,
+            types: row.types - prev.types,
+          };
+  }
+}
+
+/** Read the tracked baseline, or null when it is absent or unreadable. */
+function loadBaseline(): BenchmarkDocument | null {
+  if (!existsSync(BASELINE_FILE)) return null;
+  try {
+    return JSON.parse(readFileSync(BASELINE_FILE, "utf8")) as BenchmarkDocument;
+  } catch {
+    return null;
+  }
+}
+
+/** Project an in-memory row to the persisted shape (drop the timing samples). */
+function documentRows(rows: readonly Row[]): DocumentRow[] {
+  return rows.map((row) => ({
+    compiler: row.compiler,
+    tier: row.tier,
+    shape: row.shape,
+    n: row.n,
+    instantiations: row.instantiations,
+    types: row.types,
+    checkTimeMs: row.checkTimeMs,
+    errors: row.errors,
+    errorCode: row.errorCode,
+    errorSample: row.errorSample,
+    deltaVsBaseline: row.deltaVsBaseline,
+  }));
+}
+
+// ---------------------------------------------------------------------------
+// Break-point (wall) sweep
+// ---------------------------------------------------------------------------
+
+interface WallProbe {
+  ok: boolean;
+  errorCode: string | null;
+  errorSample: string | null;
+}
+
+/**
+ * Compile `n` components of `shape` on `tier` and report whether it compiled.
+ * A single run: the pass/fail boundary is a deterministic property of the
+ * program, not a timing, so it is not repeated.
+ */
+function wallProbe(
+  treeDir: string,
+  compiler: Compiler,
+  tier: Tier,
+  shape: ShapeId,
+  n: number,
+): WallProbe {
+  const config = writeFixture(treeDir, "wall", fixtureSource(shape, n, tier));
+  const run = runTsc(compiler, config, 1);
+  const diagnostics = run.diagnostics;
+  return {
+    ok: diagnostics.errors === 0,
+    errorCode: diagnostics.errorCode,
+    errorSample: diagnostics.errorSample,
+  };
+}
+
+/**
+ * The largest component count of `shape` that still compiles on `tier`, found
+ * by doubling from 1 then bisecting - the same search the tsyntax harness uses
+ * for its DSL dimensions. The count is the input; the ceiling (`--wall-max`)
+ * bounds the cost. `full` on any non-flat shape stops at 0 (`TS2589`), which is
+ * the headroom figure the per-shape tables cannot show.
+ */
+function findWall(
+  treeDir: string,
+  compiler: Compiler,
+  tier: Tier,
+  shape: ShapeId,
+  max: number,
+): WallResult {
+  const cache = new Map<number, WallProbe>();
+  const at = (n: number): WallProbe => {
+    const cached = cache.get(n);
+    if (cached !== undefined) return cached;
+    const probe = wallProbe(treeDir, compiler, tier, shape, n);
+    cache.set(n, probe);
+    return probe;
+  };
+
+  const first = at(1);
+  if (!first.ok) {
+    return {
+      compiler: compiler.id,
+      tier,
+      shape,
+      threshold: 0,
+      open: false,
+      errorCode: first.errorCode,
+      errorSample: first.errorSample,
+    };
+  }
+  let ok = 1;
+  let failN: number | null = null;
+  for (let n = 1; n < max; ) {
+    n = Math.min(n * 2, max);
+    if (!at(n).ok) {
+      failN = n;
+      break;
+    }
+    ok = n;
+    if (n === max) break;
+  }
+  if (failN === null) {
+    return {
+      compiler: compiler.id,
+      tier,
+      shape,
+      threshold: max,
+      open: true,
+      errorCode: null,
+      errorSample: null,
+    };
+  }
+  let lo = ok;
+  let hi = failN;
+  while (lo + 1 < hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (at(mid).ok) lo = mid;
+    else hi = mid;
+  }
+  const fail = at(hi);
+  return {
+    compiler: compiler.id,
+    tier,
+    shape,
+    threshold: lo,
+    open: false,
+    errorCode: fail.errorCode,
+    errorSample: fail.errorSample,
+  };
+}
+
+function runWalls(
+  compilers: readonly Compiler[],
+  tiers: readonly Tier[],
+  shapes: readonly ShapeId[],
+  trees: ReadonlyMap<Tier, string>,
+  max: number,
+): WallResult[] {
+  const walls: WallResult[] = [];
+  for (const tier of tiers) {
+    const treeDir = trees.get(tier);
+    if (treeDir === undefined) throw new Error(`No vendored tree for tier '${tier}'`);
+    for (const compiler of compilers) {
+      for (const shape of shapes) {
+        process.stderr.write(`  wall ${compiler.id} ${tier} ${shape} ... `);
+        const wall = findWall(treeDir, compiler, tier, shape, max);
+        process.stderr.write(
+          wall.open
+            ? `>=${wall.threshold}\n`
+            : `${wall.threshold} (${wall.errorCode ?? "clean"})\n`,
+        );
+        walls.push(wall);
+      }
+    }
+  }
+  return walls;
+}
+
+// ---------------------------------------------------------------------------
+// Reporting
+// ---------------------------------------------------------------------------
+
+function find(
+  rows: readonly DocumentRow[],
+  compiler: string,
+  tier: Tier,
+  shape: ShapeId | "baseline",
+  n: number,
+): DocumentRow | undefined {
   return rows.find(
     (row) =>
       row.compiler === compiler &&
@@ -474,7 +810,7 @@ function find(
  * figure.
  */
 function slope(
-  rows: readonly Row[],
+  rows: readonly DocumentRow[],
   compiler: string,
   tier: Tier,
   shape: ShapeId,
@@ -508,7 +844,10 @@ function fmt(value: number, digits = 0): string {
   });
 }
 
-function fixedCostTable(rows: readonly Row[], compilers: readonly Compiler[]): string[] {
+function fixedCostTable(
+  rows: readonly DocumentRow[],
+  compilers: readonly CompilerInfo[],
+): string[] {
   const [a, b] = compilers;
   const lines: string[] = [];
   lines.push("## Fixed cost (tree loaded, no components)");
@@ -540,8 +879,8 @@ function fixedCostTable(rows: readonly Row[], compilers: readonly Compiler[]): s
 }
 
 function slopeTable(
-  rows: readonly Row[],
-  compilers: readonly Compiler[],
+  rows: readonly DocumentRow[],
+  compilers: readonly CompilerInfo[],
   tiers: readonly Tier[],
   shapes: readonly ShapeId[],
 ): string[] {
@@ -572,7 +911,10 @@ function slopeTable(
   return lines;
 }
 
-function rawTables(rows: readonly Row[], compilers: readonly Compiler[]): string[] {
+function rawTables(
+  rows: readonly DocumentRow[],
+  compilers: readonly CompilerInfo[],
+): string[] {
   const lines: string[] = [];
   lines.push("## Raw measurements");
   lines.push("");
@@ -595,62 +937,98 @@ function rawTables(rows: readonly Row[], compilers: readonly Compiler[]): string
   return lines;
 }
 
-function driftSection(rows: readonly Row[]): string[] {
-  if (!existsSync(BASELINE_FILE)) return [];
-  let baseline: { rows?: Row[]; generated?: string };
-  try {
-    baseline = JSON.parse(readFileSync(BASELINE_FILE, "utf8")) as typeof baseline;
-  } catch {
-    return ["## Baseline drift", "", "_bench/baseline.json is unreadable._", ""];
-  }
-  const previous = baseline.rows ?? [];
+function signed(value: number): string {
+  return `${value >= 0 ? "+" : ""}${fmt(value)}`;
+}
+
+/**
+ * Drift reads the `deltaVsBaseline` already attached to each row, so the report
+ * and the `--fail-on-drift` gate can never disagree about what moved.
+ */
+function driftSection(
+  rows: readonly DocumentRow[],
+  baseline: { file: string | null; gitHead: string | null } | null,
+): string[] {
   const lines = ["## Baseline drift", ""];
-  if (previous.length === 0) {
-    lines.push("_bench/baseline.json holds no rows._", "");
+  if (baseline === null) {
+    lines.push("_No baseline loaded._", "");
     return lines;
   }
-  const compared: string[] = [];
-  const changed: string[] = [];
-  for (const row of rows) {
-    const match = previous.find(
-      (old) =>
-        old.compiler === row.compiler &&
-        old.tier === row.tier &&
-        old.shape === row.shape &&
-        old.n === row.n,
+  const compared = rows.filter((row) => row.deltaVsBaseline !== null).length;
+  if (compared === 0) {
+    lines.push(
+      `_No row in ${baseline.file ?? "the baseline"} matched this sweep._`,
+      "",
     );
-    if (match === undefined) continue;
-    compared.push(`${row.compiler}/${row.tier}/${row.shape}/n=${row.n}`);
-    if (match.instantiations !== row.instantiations) {
-      const delta = row.instantiations - match.instantiations;
-      const pct = match.instantiations === 0 ? "—" : `${((delta / match.instantiations) * 100).toFixed(1)}%`;
-      changed.push(
-        `- ${row.compiler}/${row.tier}/${row.shape}/n=${row.n}: ` +
-          `${fmt(match.instantiations)} -> ${fmt(row.instantiations)} ` +
-          `(${delta >= 0 ? "+" : ""}${fmt(delta)}, ${pct})`,
-      );
-    }
+    return lines;
   }
-  lines.push(
-    `Compared ${compared.length} row(s) against baseline generated ${baseline.generated ?? "unknown"}.`,
+  const changed = rows.filter(
+    (row) =>
+      row.deltaVsBaseline !== null &&
+      (row.deltaVsBaseline.instantiations !== 0 || row.deltaVsBaseline.types !== 0),
   );
-  lines.push("");
+  const where =
+    baseline.gitHead === null
+      ? (baseline.file ?? "baseline")
+      : `${baseline.file ?? "baseline"} @ ${baseline.gitHead.slice(0, 12)}`;
+  lines.push(`Compared ${compared} row(s) against ${where}.`, "");
   if (changed.length === 0) {
-    lines.push("No instantiation drift.");
-  } else {
-    lines.push("Instantiation drift:");
-    lines.push("");
-    lines.push(...changed);
+    lines.push("No drift.", "");
+    return lines;
+  }
+  lines.push(`Drift in ${changed.length} row(s):`, "");
+  for (const row of changed) {
+    const d = row.deltaVsBaseline!;
+    lines.push(
+      `- ${row.compiler}/${row.tier}/${row.shape}/n=${row.n}: ` +
+        `instantiations ${signed(d.instantiations)}, types ${signed(d.types)}`,
+    );
+  }
+  lines.push("");
+  return lines;
+}
+
+function wallTable(
+  walls: readonly WallResult[],
+  compilers: readonly CompilerInfo[],
+  tiers: readonly Tier[],
+  shapes: readonly ShapeId[],
+): string[] {
+  const lines: string[] = [];
+  lines.push("## Break points (largest component count that still compiles)");
+  lines.push("");
+  lines.push("| tier | shape | compiler | largest n | status |");
+  lines.push("| --- | --- | --- | ---: | --- |");
+  for (const tier of tiers) {
+    for (const shape of shapes) {
+      for (const compiler of compilers) {
+        const wall = walls.find(
+          (entry) =>
+            entry.compiler === compiler.id &&
+            entry.tier === tier &&
+            entry.shape === shape,
+        );
+        if (wall === undefined) continue;
+        const status = wall.open
+          ? `>=${wall.threshold} (ceiling)`
+          : (wall.errorCode ?? "compiles");
+        lines.push(
+          `| ${tier} | ${shape} | ${compiler.id} | ${wall.threshold} | ${status} |`,
+        );
+      }
+    }
   }
   lines.push("");
   return lines;
 }
 
 function markdown(
-  rows: readonly Row[],
-  compilers: readonly Compiler[],
+  rows: readonly DocumentRow[],
+  compilers: readonly CompilerInfo[],
   tiers: readonly Tier[],
   shapes: readonly ShapeId[],
+  walls: readonly WallResult[] | null,
+  baseline: { file: string | null; gitHead: string | null } | null,
   meta: { generated: string; gitHead: string; repeats: number },
 ): string {
   const lines: string[] = [];
@@ -672,6 +1050,7 @@ function markdown(
   lines.push("");
   lines.push(...fixedCostTable(rows, compilers));
   lines.push(...slopeTable(rows, compilers, tiers, shapes));
+  if (walls !== null) lines.push(...wallTable(walls, compilers, tiers, shapes));
   lines.push(...rawTables(rows, compilers));
 
   const errorRows = rows.filter((row) => row.errors > 0);
@@ -680,12 +1059,13 @@ function markdown(
     lines.push("");
     for (const row of errorRows) {
       lines.push(
-        `- ${row.tier}/${row.shape}/n=${row.n}: ${row.errors} error(s) — ${row.errorSample}`,
+        `- ${row.tier}/${row.shape}/n=${row.n}: ` +
+          `${row.errors} error(s) — ${row.errorSample ?? row.errorCode ?? "unknown"}`,
       );
     }
     lines.push("");
   }
-  lines.push(...driftSection(rows));
+  lines.push(...driftSection(rows, baseline));
   return lines.join("\n");
 }
 
@@ -701,8 +1081,13 @@ interface Parsed {
   repeats: number;
   saveBaseline: boolean;
   failOnError: boolean;
+  failOnDrift: boolean;
   reportOnly: boolean;
   quick: boolean;
+  /** JSON destination: an absolute path, `-` for stdout, or null when off. */
+  jsonPath: string | null;
+  wall: boolean;
+  wallMax: number;
 }
 
 function parseArgs(argv: readonly string[]): Parsed {
@@ -714,12 +1099,23 @@ function parseArgs(argv: readonly string[]): Parsed {
     repeats: 3,
     saveBaseline: false,
     failOnError: false,
+    failOnDrift: false,
     reportOnly: false,
     quick: false,
+    jsonPath: null,
+    wall: false,
+    wallMax: DEFAULT_WALL_MAX,
   };
   const list = (value: string | undefined, label: string): string[] => {
     if (value === undefined) throw new Error(`Option '${label}' requires a value`);
     return value.split(",").map((entry) => entry.trim()).filter(Boolean);
+  };
+  const number = (value: string | undefined, label: string): number => {
+    const parsedNumber = Number(value);
+    if (value === undefined || !Number.isFinite(parsedNumber)) {
+      throw new Error(`Option '${label}' requires a number`);
+    }
+    return parsedNumber;
   };
   for (let i = 0; i < argv.length; i += 1) {
     const token = argv[i]!;
@@ -739,13 +1135,33 @@ function parseArgs(argv: readonly string[]): Parsed {
         parsed.sizes = list(argv[++i], token).map(Number);
         break;
       case "--repeats":
-        parsed.repeats = Number(argv[++i]);
+        parsed.repeats = number(argv[++i], token);
         break;
+      case "--wall-max":
+        parsed.wallMax = number(argv[++i], token);
+        break;
+      case "--json": {
+        const next = argv[i + 1];
+        // The path is optional: bare `--json` means the tracked results file.
+        if (next !== undefined && (next === "-" || !next.startsWith("--"))) {
+          parsed.jsonPath = next;
+          i += 1;
+        } else {
+          parsed.jsonPath = RESULTS_FILE;
+        }
+        break;
+      }
       case "--save-baseline":
         parsed.saveBaseline = true;
         break;
       case "--fail-on-error":
         parsed.failOnError = true;
+        break;
+      case "--fail-on-drift":
+        parsed.failOnDrift = true;
+        break;
+      case "--wall":
+        parsed.wall = true;
         break;
       case "--report-only":
         parsed.reportOnly = true;
@@ -763,6 +1179,10 @@ function parseArgs(argv: readonly string[]): Parsed {
     parsed.sizes = [1, 10];
     parsed.repeats = 1;
   }
+  if (parsed.wallMax < 1) throw new Error("--wall-max must be >= 1");
+  if (parsed.jsonPath !== null && parsed.jsonPath !== "-") {
+    parsed.jsonPath = path.resolve(process.cwd(), parsed.jsonPath);
+  }
   return parsed;
 }
 
@@ -772,29 +1192,27 @@ function main(argv: readonly string[]): number {
   // Regenerate the report from a previous run without re-measuring. Useful when
   // only the presentation changed; the raw counters are untouched.
   if (args.reportOnly) {
-    const payload = JSON.parse(
-      readFileSync(path.join(OUT_DIR, "results.json"), "utf8"),
-    ) as {
-      generated: string;
-      gitHead: string;
-      repeats: number;
-      compilers: Compiler[];
-      tiers: Tier[];
-      shapes: ShapeId[];
-      rows: Row[];
-    };
+    const document = JSON.parse(
+      readFileSync(RESULTS_FILE, "utf8"),
+    ) as BenchmarkDocument;
+    const baseline =
+      document.baseline === null && document.baselineGitHead === null
+        ? null
+        : { file: document.baseline, gitHead: document.baselineGitHead };
     const report = markdown(
-      payload.rows,
-      payload.compilers,
-      payload.tiers,
-      payload.shapes,
+      document.rows,
+      document.compilers,
+      document.tiers,
+      document.shapes,
+      document.walls,
+      baseline,
       {
-        generated: payload.generated,
-        gitHead: payload.gitHead,
-        repeats: payload.repeats,
+        generated: document.generated,
+        gitHead: document.gitHead,
+        repeats: document.repeats,
       },
     );
-    writeFileSync(path.join(OUT_DIR, "RESULTS.md"), `${report}\n`);
+    writeFileSync(REPORT_FILE, `${report}\n`);
     process.stdout.write(report + "\n");
     return 0;
   }
@@ -802,14 +1220,25 @@ function main(argv: readonly string[]): number {
   const compilers = args.compilers.map(loadCompiler);
   if (compilers.length === 0) throw new Error("No compilers selected");
 
+  // Saving the baseline means this run *is* the reference, so nothing is loaded
+  // to diff against (matching the tsyntax harness's `--save`). Otherwise the
+  // tracked baseline is read up front so every row can carry its delta.
+  const baseline = args.saveBaseline ? null : loadBaseline();
+
   process.stderr.write(
     `shast bench: ${compilers.map((c) => `${c.id}=TS ${c.version}`).join(", ")}\n` +
       `  tiers=${args.tiers.join(",")} shapes=${args.shapes.join(",")} ` +
-      `sizes=${args.sizes.join(",")} repeats=${args.repeats}\n`,
+      `sizes=${args.sizes.join(",")} repeats=${args.repeats}` +
+      `${args.wall ? ` wall<=${args.wallMax}` : ""}\n`,
   );
 
   rmSync(OUT_DIR, { recursive: true, force: true });
   mkdirSync(OUT_DIR, { recursive: true });
+
+  // Vendored trees, built once and shared by the per-component sweep and the
+  // break-point sweep, so the wall sweep never re-vendors.
+  const trees = new Map<Tier, string>();
+  for (const tier of args.tiers) trees.set(tier, ensureTree(tier));
 
   const started = Date.now();
   const rows = sweep({
@@ -818,7 +1247,13 @@ function main(argv: readonly string[]): number {
     shapes: args.shapes,
     sizes: args.sizes,
     repeats: args.repeats,
+    trees,
   });
+  attachDeltas(rows, baseline);
+
+  const walls = args.wall
+    ? runWalls(compilers, args.tiers, args.shapes, trees, args.wallMax)
+    : null;
 
   const meta = {
     generated: new Date().toISOString(),
@@ -828,75 +1263,96 @@ function main(argv: readonly string[]): number {
     }).stdout.trim(),
     repeats: args.repeats,
   };
-  const payload = {
+  const baselineFile = path.relative(REPO_ROOT, BASELINE_FILE);
+  const baselineMeta =
+    baseline === null
+      ? null
+      : { file: baselineFile, gitHead: baseline.gitHead ?? null };
+
+  // One document for both the JSON result and the baseline. The baseline is
+  // this exact shape for a given commit; nothing is dropped from the result.
+  const document: BenchmarkDocument = {
+    harness: HARNESS_ID,
     ...meta,
-    compilers: compilers.map(({ id, pkg, version, bin }) => ({
-      id,
-      pkg,
-      version,
-      bin,
-    })),
+    impl: IMPL,
+    compilers: compilers.map(({ id, version }) => ({ id, version })),
     compilerOptions: MEASURE_COMPILER_OPTIONS,
     tiers: args.tiers,
     shapes: args.shapes,
     sizes: args.sizes,
-    rows,
+    baseline: baselineMeta?.file ?? null,
+    baselineGitHead: baselineMeta?.gitHead ?? null,
+    rows: documentRows(rows),
+    walls,
   };
-  writeFileSync(
-    path.join(OUT_DIR, "results.json"),
-    `${JSON.stringify(payload, null, 2)}\n`,
+
+  writeFileSync(RESULTS_FILE, `${JSON.stringify(document, null, 2)}\n`);
+  const report = markdown(
+    rows,
+    compilers,
+    args.tiers,
+    args.shapes,
+    walls,
+    baselineMeta,
+    meta,
   );
-  const report = markdown(rows, compilers, args.tiers, args.shapes, meta);
-  writeFileSync(path.join(OUT_DIR, "RESULTS.md"), `${report}\n`);
+  writeFileSync(REPORT_FILE, `${report}\n`);
 
   if (args.saveBaseline) {
-    // The baseline is a portable reference, not a machine record: keep the
-    // deterministic counters and the averaged time, drop absolute binary paths
-    // and the raw timing samples.
-    const baseline = {
-      generated: meta.generated,
-      gitHead: meta.gitHead,
-      compilers: payload.compilers.map(({ id, version }) => ({ id, version })),
-      compilerOptions: payload.compilerOptions,
-      tiers: args.tiers,
-      shapes: args.shapes,
-      sizes: args.sizes,
-      repeats: args.repeats,
-      rows: rows.map(
-        ({ compiler, tier, shape, n, instantiations, types, checkTimeMs, errors }) => ({
-          compiler,
-          tier,
-          shape,
-          n,
-          instantiations,
-          types,
-          checkTimeMs,
-          errors,
-        }),
-      ),
-    };
-    writeFileSync(BASELINE_FILE, `${JSON.stringify(baseline, null, 2)}\n`);
-    process.stderr.write(`shast bench: wrote ${path.relative(REPO_ROOT, BASELINE_FILE)}\n`);
+    writeFileSync(BASELINE_FILE, `${JSON.stringify(document, null, 2)}\n`);
+    process.stderr.write(`shast bench: wrote ${baselineFile}\n`);
   }
 
-  process.stdout.write(report + "\n");
+  if (
+    args.jsonPath !== null &&
+    args.jsonPath !== "-" &&
+    path.resolve(args.jsonPath) !== path.resolve(RESULTS_FILE)
+  ) {
+    writeFileSync(args.jsonPath, `${JSON.stringify(document, null, 2)}\n`);
+    process.stderr.write(
+      `shast bench: wrote ${path.relative(REPO_ROOT, args.jsonPath)}\n`,
+    );
+  }
+
+  if (args.jsonPath === "-") {
+    // Machine output owns stdout; the report is already in bench/out/RESULTS.md.
+    process.stdout.write(`${JSON.stringify(document, null, 2)}\n`);
+  } else {
+    process.stdout.write(report + "\n");
+  }
+
   process.stderr.write(
-    `\nshast bench: ${rows.length} measurements in ` +
+    `\nshast bench: ${rows.length} measurements` +
+      `${walls === null ? "" : ` + ${walls.length} break-points`} in ` +
       `${((Date.now() - started) / 1000).toFixed(1)}s ` +
       `-> ${path.relative(REPO_ROOT, OUT_DIR)}/\n`,
   );
 
   // Fixtures that do not compile are a *result* (a tier whose vocabulary does
   // not cover a shape, or one that exceeds the instantiation depth limit), not
-  // a harness failure. `--fail-on-error` turns them into a non-zero exit for a
-  // caller that wants the harness to gate.
+  // a harness failure. `--fail-on-error` / `--fail-on-drift` turn them and any
+  // counter drift into a non-zero exit for a caller that wants the harness to
+  // gate.
   const failed = rows.filter((row) => row.errors > 0);
   if (failed.length > 0) {
     process.stderr.write(
       `shast bench: ${failed.length} fixture(s) did not compile; see RESULTS.md.\n`,
     );
   }
-  return args.failOnError && failed.length > 0 ? 1 : 0;
+  const drifted = rows.filter(
+    (row) =>
+      row.deltaVsBaseline !== null &&
+      (row.deltaVsBaseline.instantiations !== 0 || row.deltaVsBaseline.types !== 0),
+  );
+  if (drifted.length > 0) {
+    process.stderr.write(
+      `shast bench: ${drifted.length} row(s) drifted from ${baselineFile}; see RESULTS.md.\n`,
+    );
+  }
+
+  if (args.failOnError && failed.length > 0) return 1;
+  if (args.failOnDrift && drifted.length > 0) return 1;
+  return 0;
 }
 
 try {

@@ -12,17 +12,40 @@ re-exports all three tiers and would measure a different program.
 ## Run
 
 ```sh
-pnpm bench                              # full sweep, both compilers, writes baseline
-pnpm bench -- --quick                   # fast smoke run
+pnpm bench                              # full sweep, both compilers
+pnpm bench -- --quick                   # fast smoke run (common, modest+rich, n=1,10)
 pnpm bench -- --tiers common --sizes 1,10,50,100
+pnpm bench -- --wall                    # add the break-point sweep
+pnpm bench -- --json -                  # emit the result document to stdout
 pnpm bench -- --save-baseline           # record bench/baseline.json
 pnpm bench -- --fail-on-error           # exit 1 if any fixture fails to compile
+pnpm bench -- --fail-on-drift           # exit 1 if any row moved against the baseline
 ```
+
+Selection flags: `--compilers a,b`, `--tiers a,b`, `--shapes a,b`, `--sizes a,b`,
+`--repeats n`. `--wall-max n` bounds the break-point sweep (default 256).
+`--report-only` re-renders `RESULTS.md` from the last `results.json` without
+re-measuring.
 
 Results are written to `bench/out/results.json` and `bench/out/RESULTS.md`.
 `bench/out/` and `bench/.generated/` are gitignored. `bench/baseline.json` is
-deliberately tracked: the next run diffs its instantiation counts against it and
-reports drift in `RESULTS.md`.
+deliberately tracked: the next run diffs its counters against it and reports
+drift in `RESULTS.md`.
+
+Runs pass `--singleThreaded` to compilers that support it (TypeScript 7 / tsgo
+parallelises by default and its whole-program counters jitter with thread
+scheduling; classic tsc has no such flag and is already single-threaded). The
+flag is gated on the major version, not assumed.
+
+## One schema for the result and the baseline
+
+`bench/out/results.json` and `bench/baseline.json` are the same document shape
+(`BenchmarkDocument` in `harness.ts`); the baseline is just that document for a
+given commit. Each row carries a `deltaVsBaseline` (`{ instantiations, types }`,
+or null when the baseline has no matching row), filled in once right after the
+sweep, so the report and the `--fail-on-drift` gate read the same numbers and
+can never disagree. `--json -` writes that document to stdout, which moves all
+human output to stderr so the pipe stays parseable.
 
 ## The two compilers
 
@@ -75,22 +98,32 @@ Every run is `tsc --pretty false --extendedDiagnostics -p <fixture tsconfig>`.
 
 - **Instantiations** - deterministic, machine-stable, and the primary metric.
   Read from one run.
+- **Types** - also deterministic: distinct type objects created. It can move
+  while instantiations stay flat (retained allocation versus checker work), so
+  drift compares both.
 - **Check time** - wall-clock, machine-dependent. The mean over `--repeats`
   (default 3).
 - **Per-component cost** - the slope between the two largest component counts,
   `(I(n_max) - I(n_prev)) / (n_max - n_prev)`. This is the documented method and
   it excludes the one-time cost of the first component, which would otherwise
   inflate a `(I(n) - I(0)) / n` figure.
+- **Break points** (with `--wall`) - the largest component count of a shape that
+  still compiles on a tier, found by doubling from 1 then bisecting. This is the
+  `TS2589` *headroom* the per-shape tables cannot show: `full` walls at `0` on any
+  non-flat shape, `common` has large slack.
 
 ## Reading the output
 
-`RESULTS.md` has four sections:
+`RESULTS.md` has these sections:
 
 1. **Fixed cost** - the baseline for each tier, both compilers, with ratios.
 2. **Per-component cost** - the asymptotic slope per tier and shape, both
    compilers.
-3. **Raw measurements** - every row, so nothing is hidden behind a summary.
-4. **Baseline drift** - instantiation changes since `bench/baseline.json`.
+3. **Break points** - the largest component count that still compiles, per tier,
+   shape and compiler (only with `--wall`).
+4. **Raw measurements** - every row, so nothing is hidden behind a summary.
+5. **Baseline drift** - instantiation and type changes since
+   `bench/baseline.json`.
 
 ## Recorded baseline
 
