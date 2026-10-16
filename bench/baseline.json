@@ -1,7 +1,7 @@
 {
   "harness": "shast-bench",
   "tsc": "7.0.2",
-  "generatedAt": "2026-10-16T13:06:15.009Z",
+  "generatedAt": "2026-10-16T15:09:04.648Z",
   "baseline": null,
   "results": {
     "src/minimal": {
@@ -10,11 +10,91 @@
       "variant": "src",
       "tier": "minimal",
       "scenarios": {
+        "classes-big": {
+          "instantiations": 218096,
+          "types": 55451,
+          "check": "0.16s",
+          "total": "0.23s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "classes-small": {
+          "instantiations": 215851,
+          "types": 55181,
+          "check": "0.16s",
+          "total": "0.22s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "complex-big": {
+          "instantiations": 220909,
+          "types": 56611,
+          "check": "0.17s",
+          "total": "0.24s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "complex-small": {
+          "instantiations": 218670,
+          "types": 55975,
+          "check": "0.19s",
+          "total": "0.25s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "mixed-big": {
+          "instantiations": 224381,
+          "types": 56099,
+          "check": "0.17s",
+          "total": "0.23s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "mixed-small": {
+          "instantiations": 220502,
+          "types": 55848,
+          "check": "0.18s",
+          "total": "0.25s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
         "null": {
           "instantiations": 170908,
           "types": 45648,
-          "check": "0.12s",
-          "total": "0.18s",
+          "check": "0.13s",
+          "total": "0.20s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "simple-big": {
+          "instantiations": 207103,
+          "types": 53836,
+          "check": "0.16s",
+          "total": "0.22s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "simple-small": {
+          "instantiations": 204690,
+          "types": 53683,
+          "check": "0.15s",
+          "total": "0.22s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -29,11 +109,91 @@
       "variant": "src",
       "tier": "common",
       "scenarios": {
+        "classes-big": {
+          "instantiations": 424394,
+          "types": 89240,
+          "check": "0.31s",
+          "total": "0.37s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "classes-small": {
+          "instantiations": 421913,
+          "types": 88951,
+          "check": "0.32s",
+          "total": "0.38s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "complex-big": {
+          "instantiations": 428925,
+          "types": 90605,
+          "check": "0.37s",
+          "total": "0.43s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "complex-small": {
+          "instantiations": 426227,
+          "types": 89922,
+          "check": "0.34s",
+          "total": "0.41s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "mixed-big": {
+          "instantiations": 432727,
+          "types": 90309,
+          "check": "0.33s",
+          "total": "0.39s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "mixed-small": {
+          "instantiations": 428748,
+          "types": 89996,
+          "check": "0.34s",
+          "total": "0.41s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
         "null": {
           "instantiations": 314033,
           "types": 67434,
-          "check": "0.24s",
-          "total": "0.31s",
+          "check": "0.23s",
+          "total": "0.30s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "simple-big": {
+          "instantiations": 395852,
+          "types": 83852,
+          "check": "0.29s",
+          "total": "0.35s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "simple-small": {
+          "instantiations": 394151,
+          "types": 83869,
+          "check": "0.29s",
+          "total": "0.35s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -48,6 +208,78 @@
       "variant": "src",
       "tier": "full",
       "scenarios": {
+        "classes-big": {
+          "instantiations": 959549,
+          "types": 204914,
+          "check": "0.87s",
+          "total": "0.94s",
+          "ok": false,
+          "codes": [
+            "TS2589"
+          ],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "classes-small": {
+          "instantiations": 956395,
+          "types": 204642,
+          "check": "0.89s",
+          "total": "0.96s",
+          "ok": false,
+          "codes": [
+            "TS2589"
+          ],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "complex-big": {
+          "instantiations": 934916,
+          "types": 205589,
+          "check": "0.86s",
+          "total": "0.92s",
+          "ok": false,
+          "codes": [
+            "TS2589"
+          ],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "complex-small": {
+          "instantiations": 931124,
+          "types": 204822,
+          "check": "0.85s",
+          "total": "0.92s",
+          "ok": false,
+          "codes": [
+            "TS2589"
+          ],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "mixed-big": {
+          "instantiations": 964542,
+          "types": 205664,
+          "check": "0.89s",
+          "total": "0.95s",
+          "ok": false,
+          "codes": [
+            "TS2589"
+          ],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "mixed-small": {
+          "instantiations": 960503,
+          "types": 205274,
+          "check": "0.89s",
+          "total": "0.95s",
+          "ok": false,
+          "codes": [
+            "TS2589"
+          ],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
         "null": {
           "instantiations": 615925,
           "types": 134612,
@@ -57,9 +289,66 @@
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
+        },
+        "simple-big": {
+          "instantiations": 888395,
+          "types": 197248,
+          "check": "0.80s",
+          "total": "0.88s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "simple-small": {
+          "instantiations": 886689,
+          "types": 197261,
+          "check": "0.79s",
+          "total": "0.85s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
         }
       },
-      "nearWallProblems": []
+      "nearWallProblems": [
+        {
+          "scenario": "classes-big",
+          "codes": [
+            "TS2589"
+          ]
+        },
+        {
+          "scenario": "classes-small",
+          "codes": [
+            "TS2589"
+          ]
+        },
+        {
+          "scenario": "complex-big",
+          "codes": [
+            "TS2589"
+          ]
+        },
+        {
+          "scenario": "complex-small",
+          "codes": [
+            "TS2589"
+          ]
+        },
+        {
+          "scenario": "mixed-big",
+          "codes": [
+            "TS2589"
+          ]
+        },
+        {
+          "scenario": "mixed-small",
+          "codes": [
+            "TS2589"
+          ]
+        }
+      ]
     }
   }
 }
