@@ -5,176 +5,99 @@ in [`../README.md`](../README.md) and [`../docs/performance.md`](../docs/perform
 It lives in the repo so the numbers have a reproducible source instead of being
 "a local benchmark harness that is not included in this repository".
 
-It measures `tsc` cost against the **vendored single-tier consumer tree** that
-`shast add` writes - not against the repo's own `src/index.ts` barrel, which
-re-exports all three tiers and would measure a different program.
+It measures `tsc` cost against the **vendored consumer trees** that `shast add`
+writes - not against the repo's own `src/index.ts` barrel, which re-exports all
+three tiers and would measure a different program. There is a **single
+compiler**: the repository's own `typescript` package.
+
+## The model: variant x tier x scenario
+
+- **Variant** - a copy of the project used as the source for a run. The
+  repository's own `src` is the default variant, spelled `src`; every other
+  variant lives in [`variants/`](variants/README.md) (a directory containing a
+  `src/`). Each (variant, tier) is vendored once into
+  `bench/.generated/<variant>/<tier>/shast` through the real `add()` from
+  `scripts/cli.ts`.
+- **Tier** - `minimal`, `common`, or `full`: which shipped tier files are
+  vendored. Only the chosen tier's files are written, so the other tiers are
+  never pulled into the program.
+- **Scenario** - a TypeScript file in [`scenarios/`](scenarios/). Scenarios are
+  **tier-agnostic**: each imports the `@tier` alias and never names a tier. For
+  every (variant, tier, scenario) the harness generates a tsconfig that extends
+  the root tsconfig, maps `@tier` at that tree's entry
+  (`./shast/index.ts`), and includes exactly that one scenario file. The
+  scenario text never changes; only the generated tsconfig does.
+
+`scenarios/null.ts` (`import "@tier";`) is the floor: it measures the cost of
+loading a tree with no components checked, and every other scenario carries a
+`deltaVsNull` against it.
 
 ## Run
 
 ```sh
-pnpm bench                              # full sweep, both compilers
-pnpm bench -- --quick                   # fast smoke run (common, modest+rich, n=1,10)
-pnpm bench -- --tiers common --sizes 1,10,50,100
-pnpm bench -- --wall                    # add the break-point sweep
+pnpm bench                              # every variant x tier x scenario
+pnpm bench -- --variants src,scratch    # add a variant from bench/variants/
+pnpm bench -- --tiers common            # one tier
+pnpm bench -- --scenarios null          # one scenario
 pnpm bench -- --json -                  # emit the result document to stdout
 pnpm bench -- --save-baseline           # record bench/baseline.json
-pnpm bench -- --fail-on-error           # exit 1 if any fixture fails to compile
-pnpm bench -- --fail-on-drift           # exit 1 if any row moved against the baseline
+pnpm bench -- --fail-on-drift           # exit 1 if a run drifts from baseline
+pnpm bench -- --report-only             # re-render RESULTS.md, no measuring
 ```
 
-Selection flags: `--compilers a,b`, `--tiers a,b`, `--shapes a,b`, `--sizes a,b`,
-`--repeats n`. `--wall-max n` bounds the break-point sweep (default 256).
-`--report-only` re-renders `RESULTS.md` from the last `results.json` without
-re-measuring.
+Flags: `--variants a,b` (default `src`), `--tiers a,b` (default
+`minimal,common,full`), `--scenarios a,b` (default: every file in
+`scenarios/`), `--repeats n` (default 3), `--json [path|-]`. `--report-only`
+re-renders `RESULTS.md` from the last `results.json` without measuring.
 
 Results are written to `bench/out/results.json` and `bench/out/RESULTS.md`.
 `bench/out/` and `bench/.generated/` are gitignored. `bench/baseline.json` is
 deliberately tracked: the next run diffs its counters against it and reports
-drift in `RESULTS.md`.
+drift.
 
-Runs pass `--singleThreaded` to compilers that support it (TypeScript 7 / tsgo
-parallelises by default and its whole-program counters jitter with thread
-scheduling; classic tsc has no such flag and is already single-threaded). The
-flag is gated on the major version, not assumed.
+## What it measures
+
+Every run is `tsc --pretty false --extendedDiagnostics -p <scenario tsconfig>`.
+
+- **Instantiations** - deterministic, machine-stable, and the primary metric.
+  Read from a single run.
+- **Types** - also deterministic: distinct type objects created. It can move
+  while instantiations stay flat, so drift compares both.
+- **Check time** / **total time** - wall-clock, machine-dependent. The mean
+  over `--repeats` (default 3), formatted as `"0.27s"`.
+- **ok** - whether the scenario's program compiled.
+- **codes** - the error codes the compiler reported, if any.
+- **deltaVsNull** - instantiations minus the `null` scenario's, on the same
+  (variant, tier).
+- **deltaVsBaseline** - instantiations minus the recorded baseline's for the
+  same (variant, tier, scenario), or null when the baseline has no such row.
+- **nearWallProblems** - the scenarios whose codes include `TS2589` or
+  `TS2590`, the instantiation-depth errors - the "near the wall" signal.
 
 ## One schema for the result and the baseline
 
 `bench/out/results.json` and `bench/baseline.json` are the same document shape
-(`BenchmarkDocument` in `harness.ts`); the baseline is just that document for a
-given commit. Each row carries a `deltaVsBaseline` (`{ instantiations, types }`,
-or null when the baseline has no matching row), filled in once right after the
-sweep, so the report and the `--fail-on-drift` gate read the same numbers and
-can never disagree. `--json -` writes that document to stdout, which moves all
-human output to stderr so the pipe stays parseable.
-
-## The two compilers
-
-The whole point of this harness is that TypeScript 7 (the development target)
-and TypeScript 5 (what most consumers run) are measured **side by side and never
-confused**. They are installed under distinct package aliases:
-
-| id | package alias | version | role |
-| --- | --- | --- | --- |
-| `ts7` | `typescript` | 7.0.2 | development target |
-| `ts5` | `typescript-5` | 5.9.3 | the consumer reality |
-
-The alias is a plain `devDependency`:
-
-```json
-"typescript-5": "npm:typescript@5.9.3"
-```
-
-The harness resolves each package's own `bin/tsc` through `require.resolve`, so
-every row is labelled with the exact version that produced it. Adding a third
-compiler is a matter of adding one alias and one entry to `COMPILER_PACKAGES` in
-`harness.ts`.
-
-## What it sweeps
-
-The cartesian product of:
-
-- **Tiers** - `minimal`, `common`, `full`. Each is vendored fresh via the real
-  `add()` from `scripts/cli.ts`, so the measured tree is exactly what a consumer
-  gets.
-- **Component shapes** - `flat`, `modest` (the README's `ul > li > span`, one
-  `:hover`, one nested `> child`), `hover`, `media`, `rich` (`display: flex`,
-  `calc()`, gated props), and `keyframes`.
-- **Component counts** - `1`, `10`, `50`, `100`, plus a `baseline` fixture that
-  loads the tree and defines no components.
-- **Compilers** - `ts7` and `ts5`.
-
-Every fixture is generated into its own file with its own tsconfig that pins the
-measurement options and includes only that file, so no run can be helped by
-another's cache. Components are made distinct (distinct text and values) so
-TypeScript cannot cache instantiations by identity.
-
-The measurement options mirror the repo's own `tsconfig.json` strictness (minus
-the `@/*` path alias the vendored tree does not use). `types: []` keeps
-`@types/node` out of the program.
-
-## What it measures
-
-Every run is `tsc --pretty false --extendedDiagnostics -p <fixture tsconfig>`.
-
-- **Instantiations** - deterministic, machine-stable, and the primary metric.
-  Read from one run.
-- **Types** - also deterministic: distinct type objects created. It can move
-  while instantiations stay flat (retained allocation versus checker work), so
-  drift compares both.
-- **Check time** - wall-clock, machine-dependent. The mean over `--repeats`
-  (default 3).
-- **Per-component cost** - the slope between the two largest component counts,
-  `(I(n_max) - I(n_prev)) / (n_max - n_prev)`. This is the documented method and
-  it excludes the one-time cost of the first component, which would otherwise
-  inflate a `(I(n) - I(0)) / n` figure.
-- **Break points** (with `--wall`) - the largest component count of a shape that
-  still compiles on a tier, found by doubling from 1 then bisecting. This is the
-  `TS2589` *headroom* the per-shape tables cannot show: `full` walls at `0` on any
-  non-flat shape, `common` has large slack.
-
-## Reading the output
-
-`RESULTS.md` has these sections:
-
-1. **Fixed cost** - the baseline for each tier, both compilers, with ratios.
-2. **Per-component cost** - the asymptotic slope per tier and shape, both
-   compilers.
-3. **Break points** - the largest component count that still compiles, per tier,
-   shape and compiler (only with `--wall`).
-4. **Raw measurements** - every row, so nothing is hidden behind a summary.
-5. **Baseline drift** - instantiation and type changes since
-   `bench/baseline.json`.
+(`ResultsDocument` in `harness.ts`); the baseline is that document with
+`baseline`, `deltaVsNull`, and `deltaVsBaseline` all null. The result carries
+the deltas, so the report and the `--fail-on-drift` gate read the same numbers
+and can never disagree. `--json -` writes that document to stdout, which moves
+all human output to stderr so the pipe stays parseable.
 
 ## Recorded baseline
 
-From `pnpm bench -- --save-baseline` at commit `8c296fc`, TypeScript 7.0.2 and
-5.9.3. Check time is the mean of 3 runs on one machine; instantiations are
-machine-stable.
+From `pnpm bench -- --save-baseline`, TypeScript 7.0.2. Check time is the mean
+of 3 runs on one machine; instantiations are machine-stable. Fixed cost (the
+`null` scenario, tree loaded, no components):
 
-Fixed cost (tree loaded, no components):
-
-| tier | ts7 inst | ts7 check | ts5 inst | ts5 check |
-| --- | ---: | ---: | ---: | ---: |
-| minimal | 186,879 | 158 ms | 90,207 | 1,237 ms |
-| common | 403,029 | 317 ms | 173,892 | 1,610 ms |
-| full | 770,988 | 901 ms | 416,088 | 2,793 ms |
-
-Per-component slope at `n=100` (`common` tier):
-
-| shape | ts7 inst | ts7 check | ts5 inst | ts5 check |
-| --- | ---: | ---: | ---: | ---: |
-| flat | 618 | 1.1 ms | 618 | 3.4 ms |
-| modest (README shape) | 6,766 | 11.3 ms | 6,766 | 30.3 ms |
-| hover | 2,665 | 4.2 ms | 2,665 | 15.5 ms |
-| media | 3,076 | 4.0 ms | 3,076 | 14.9 ms |
-| rich | 6,904 | 14.5 ms | 6,904 | 37.2 ms |
-| keyframes | 1,540 | 2.9 ms | 1,540 | 7.9 ms |
-
-Two things stand out. First, the per-component **instantiation** slope is
-identical between TS 5 and TS 7 for every shape: the compilers do the same
-marginal work, and TS 7's advantage is the much smaller fixed registry load
-(~0.43x the instantiations) plus faster execution (the TS 5 fixed cost is ~5x
-the TS 7 one). Second, the README's older figures (fixed ~1.17M / ~1.1s, ~15K /
-~25ms per component) are roughly 2-3x the current measured values, consistent
-with having been recorded before the single-tier `shast add` entry and the
-array-only config optimization landed.
+| Tier | Instantiations | Types | Check |
+| --- | ---: | ---: | ---: |
+| `minimal` | 170,908 | 45,648 | 0.13s |
+| `common` | 314,033 | 67,434 | 0.24s |
+| `full` | 615,925 | 134,612 | 0.67s |
 
 ## Known results and caveats
 
-- **The `full` tier does not type-check ordinary components.** Under the
-  measurement options, any `full` fixture with a CSS block fails with
-  `TS2589: Type instantiation is excessively deep and possibly infinite` at the
-  first property. Only the `flat` shape compiles. This is reported as a result,
-  not hidden: the harness records the error and keeps going. It is consistent
-  with the README's advice that `full` is a reference rather than a starting
-  point, but it is stronger - `full` is not usable as a component registry at
-  this compiler depth budget.
-- **`minimal` lacks some vocabulary** the feature shapes use (`animation`, and
-  `calc()` on `width`), so `keyframes` and `rich` do not compile there. The
-  `media` shape reads each tier's own registered `@media` string, so it compiles
-  on every tier.
 - **Instantiation counts are the comparable number across machines**; check
-  times vary. The TS 5 check times in particular are wall-clock from one
-  machine.
+  times vary.
 - **The numbers are only as current as the commit.** Re-run `pnpm bench --
   --save-baseline` after a change that could affect type-checking cost.
