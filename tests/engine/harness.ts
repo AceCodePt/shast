@@ -5,11 +5,11 @@ import { cssSyntaxConfig } from "@/css/syntax-config/index.ts";
 import { cssAttributeConfig } from "@/css/attribute-config/index.ts";
 import { htmlAttributeConfig } from "@/html/attribute-config/index.ts";
 import { htmlTagConfig } from "@/html/tag-config/index.ts";
-import HTML_GLOBAL_ATTRIBUTES_CONFIG from "@/html/attribute-config/variations/common.ts";
-import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
-import CSS_SYNTAX_CONFIG from "@/css/syntax-config/variations/common.ts";
-import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/common.ts";
-import CSS_GLOBAL_PSEUDO_CLASSES_CONFIG from "@/css/pseudo-class-config/variations/common.ts";
+import HTML_GLOBAL_ATTRIBUTES_CONFIG from "@/html/attribute-config/tiers/common.ts";
+import HTML_TAGS_CONFIG from "@/html/tag-config/tiers/common.ts";
+import CSS_SYNTAX_CONFIG from "@/css/syntax-config/tiers/common.ts";
+import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/tiers/common.ts";
+import CSS_GLOBAL_PSEUDO_CLASSES_CONFIG from "@/css/pseudo-class-config/tiers/common.ts";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
 
 // Shared setup for the fragments split out of the former engine.test.ts. This

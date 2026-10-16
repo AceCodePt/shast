@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test, { after, before, describe } from "node:test";
 import type { Browser } from "playwright";
 import { chromium } from "./playwright-lazy.ts";
-import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
+import HTML_TAGS_CONFIG from "@/html/tag-config/tiers/common.ts";
 import { resolveDocument } from "./resolved.ts";
 import { measureBoxes } from "./measured.ts";
 import type { Case } from "../../evals/cases.ts";

@@ -1,6 +1,6 @@
 import { cssKeyframesConfig } from "@/css/keyframes-config/index.ts";
-import commonCSSAttributes from "@/css/attribute-config/variations/common.ts";
-import commonCSSSyntax from "@/css/syntax-config/variations/common.ts";
+import commonCSSAttributes from "@/css/attribute-config/tiers/common.ts";
+import commonCSSSyntax from "@/css/syntax-config/tiers/common.ts";
 
 export default cssKeyframesConfig(commonCSSSyntax, commonCSSAttributes, {
   fade: {

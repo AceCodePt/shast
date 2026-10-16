@@ -3,13 +3,13 @@ import assert from "node:assert";
 import engine from "@/engine/index.ts";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
 import { cssPropertiesConfig } from "@/css/properties-config/index.ts";
-import commonCSSSyntax from "@/css/syntax-config/variations/common.ts";
-import commonCSSAttributes from "@/css/attribute-config/variations/common.ts";
-import commonCSSPseudoClasses from "@/css/pseudo-class-config/variations/common.ts";
-import commonCSSQueries from "@/css/queries-config/variations/common.ts";
-import commonCSSKeyframes from "@/css/keyframes-config/variations/common.ts";
-import commonHTMLAttributes from "@/html/attribute-config/variations/common.ts";
-import commonHTMLTags from "@/html/tag-config/variations/common.ts";
+import commonCSSSyntax from "@/css/syntax-config/tiers/common.ts";
+import commonCSSAttributes from "@/css/attribute-config/tiers/common.ts";
+import commonCSSPseudoClasses from "@/css/pseudo-class-config/tiers/common.ts";
+import commonCSSQueries from "@/css/queries-config/tiers/common.ts";
+import commonCSSKeyframes from "@/css/keyframes-config/tiers/common.ts";
+import commonHTMLAttributes from "@/html/attribute-config/tiers/common.ts";
+import commonHTMLTags from "@/html/tag-config/tiers/common.ts";
 
 // ---------------------------------------------------------------------------
 // The `CalcConstraint` / `VarConstraint` inversion maps over `keyof CSSValue`

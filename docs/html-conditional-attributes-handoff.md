@@ -8,7 +8,7 @@ on the **same element**: a parent's attribute is not a fact a child inherits, so
 unlike `BaseCSSAttributeComplexValue` there is no `children` slot - and no `self`
 slot either, because a slot named `self` would imply a `children` counterpart.
 The value maps straight to the bag of attributes it unlocks. The mechanism is
-generic and vocabulary-free in `src/`; the shipped `input` variations are the
+generic and vocabulary-free in `src/`; the shipped `input` tiers are the
 first real vocabulary to use it.
 
 - `src/html/attribute-config/types.ts` - `BaseHTMLAttributeComplexValue`,
@@ -28,7 +28,7 @@ first real vocabulary to use it.
   `ValidationContext` in `src/engine/validate/context.ts`).
 - `src/engine/render/render-component.ts` - fills in a single-literal unlock
   when omitted, using the same resolver.
-- `src/html/tag-config/variations/{common,full,minimal}.ts` - the shipped
+- `src/html/tag-config/tiers/{common,full,minimal}.ts` - the shipped
   vocabulary now uses gates:
   - `input[type]` - `checked` for checkbox/radio, `min`/`max`/`step` for the
     numeric/date-like types, `maxlength`/`minlength`/`pattern`/`size` for the

@@ -1,6 +1,6 @@
 import { SUPPORTED_KEYWORDS } from "tsyntax";
 import { htmlTagConfig } from "@/html/tag-config/index.ts";
-import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/common.ts";
+import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/tiers/common.ts";
 
 export default htmlTagConfig(SUPPORTED_KEYWORDS, CSS_ATTRIBUTES_CONFIG, {
   a: {

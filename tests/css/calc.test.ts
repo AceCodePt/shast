@@ -6,8 +6,8 @@ import { cssAttributeConfig } from "@/css/attribute-config/index.ts";
 import { htmlAttributeConfig } from "@/html/attribute-config/index.ts";
 import { htmlTagConfig } from "@/html/tag-config/index.ts";
 import { cssPropertiesConfig } from "@/css/properties-config/index.ts";
-import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
-import COMMON_ATTRIBUTES from "@/css/attribute-config/variations/common.ts";
+import COMMON_SYNTAX from "@/css/syntax-config/tiers/common.ts";
+import COMMON_ATTRIBUTES from "@/css/attribute-config/tiers/common.ts";
 import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
 import {
   parseCalc,

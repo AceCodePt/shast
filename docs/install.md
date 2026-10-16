@@ -7,11 +7,11 @@ npx shast add src/shast --tier minimal    # or: --tier full
 ```
 
 That is the whole setup. `add` vendors the engine and exactly one tier of the
-`minimal`/`common`/`full` config variations into the destination, rewriting
+`minimal`/`common`/`full` config tiers into the destination, rewriting
 every import so the vendored tree is self-contained, and installs the `tsyntax`
 package the tree imports. It also generates an `index.ts` at the destination
 that wires the engine to the one tier you chose. Only the chosen tier's
-variation files are written; the other two never reach your tree, and there is
+tier files are written; the other two never reach your tree, and there is
 no barrel, so the unchosen tiers cannot leak into your program. You own those
 files from then on - there is no build step, no emitted `.js`, and nothing to
 ship to the browser.
@@ -80,13 +80,13 @@ what it contains for the default (`common`) tier, at the default destination:
 import engine from "./engine/index.ts";
 import { cssPropertiesConfig } from "./css/properties-config/index.ts";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
-import htmlTagConfig from "./html/tag-config/variations/common.ts";
-import htmlAttributesConfig from "./html/attribute-config/variations/common.ts";
-import cssSyntaxConfig from "./css/syntax-config/variations/common.ts";
-import cssAttributesConfig from "./css/attribute-config/variations/common.ts";
-import cssPseudoClassConfig from "./css/pseudo-class-config/variations/common.ts";
-import cssQueriesConfig from "./css/queries-config/variations/common.ts";
-import cssKeyframesConfig from "./css/keyframes-config/variations/common.ts";
+import htmlTagConfig from "./html/tag-config/tiers/common.ts";
+import htmlAttributesConfig from "./html/attribute-config/tiers/common.ts";
+import cssSyntaxConfig from "./css/syntax-config/tiers/common.ts";
+import cssAttributesConfig from "./css/attribute-config/tiers/common.ts";
+import cssPseudoClassConfig from "./css/pseudo-class-config/tiers/common.ts";
+import cssQueriesConfig from "./css/queries-config/tiers/common.ts";
+import cssKeyframesConfig from "./css/keyframes-config/tiers/common.ts";
 
 const { createComponent, renderComponent } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,
@@ -112,7 +112,7 @@ renderComponent(comp);
 ```
 
 That file is written at the destination you passed (`src/shast/index.ts` for the
-default), and its variation imports match the tier you chose. Edit it freely - it
+default), and its tier imports match the tier you chose. Edit it freely - it
 is yours - or import the engine and each family's entry point directly instead.
 Pass `--no-entry` to skip generating it. Either way there is no barrel: the entry
 imports only the chosen tier, so the unchosen tiers cannot leak into your

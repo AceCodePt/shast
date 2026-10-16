@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 // Repo-local `shast` CLI. Today it has one subcommand, `add`, which vendors
-// the engine and one config-variation tier into a consumer's tree, rewriting
+// the engine and one config tier into a consumer's tree, rewriting
 // every import so the result is self-contained, and installs the `tsyntax`
 // package the vendored tree imports. The chosen tier is selected with `--tier`
-// (default `common`); only that tier's variation files are written. `add` also
+// (default `common`); only that tier's tier files are written. `add` also
 // generates a `<dest>/index.ts` that wires the engine to the chosen tier; pass
 // `--no-entry` to skip it and import the engine and family entry points
 // directly.
@@ -25,13 +25,13 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
-/** The config-variation tier `add` vendors. Exactly one is written. */
+/** The config tier `add` vendors. Exactly one is written. */
 export type Tier = "minimal" | "common" | "full";
 
 export interface AddOptions {
   /** Destination directory. Relative paths resolve against the cwd. */
   dest: string;
-  /** Config-variation tier to vendor. Defaults to `"common"`. */
+  /** Config tier to vendor. Defaults to `"common"`. */
   tier?: Tier;
   /** Overwrite files that already exist in the destination. */
   force?: boolean;
@@ -131,13 +131,13 @@ function formatReplacedReport(
   );
 }
 
-// The seven families that carry shipped variation files. `css properties` is
+// The seven families that carry shipped tier files. `css properties` is
 // absent because that registry is assembled per-consumer (it holds *custom*
 // properties, which have no shipped minimal/common/full form); the vendored
 // `css/properties-config/index.ts` exports the `cssPropertiesConfig` builder
 // for exactly that.
 
-// Directories under `src/` copied wholesale, except for the config variations,
+// Directories under `src/` copied wholesale, except for the config tiers,
 // which are filtered to the chosen tier.
 const COPY_DIRS = ["engine", "css", "html"] as const;
 // Root-level `src/` files copied too. `src/index.ts` is deliberately absent: it
@@ -150,17 +150,17 @@ const TIERS = ["minimal", "common", "full"] as const;
 const TIER_SET: ReadonlySet<string> = new Set(TIERS);
 const DEFAULT_TIER: Tier = "common";
 
-/** A shipped variation file, capturing its tier name. */
-const VARIATION_FILE = /(?:^|\/)variations\/([^/]+)\.ts$/;
+/** A shipped tier file, capturing its tier name. */
+const TIER_FILE = /(?:^|\/)tiers\/([^/]+)\.ts$/;
 
 /**
- * Whether `rel` (relative to a COPY_DIRS root) is a shipped variation file for
- * a tier other than `tier`. Only the three known tier names count as
- * variations, so a differently-named file under a `variations/` directory is
- * kept rather than silently dropped.
+ * Whether `rel` (relative to a COPY_DIRS root) is a shipped tier file for
+ * a tier other than `tier`. Only the three known tier names count, so a
+ * differently-named file under a `tiers/` directory is kept rather than
+ * silently dropped.
  */
-function isNonChosenVariation(rel: string, tier: Tier): boolean {
-  const match = VARIATION_FILE.exec(rel);
+function isNonChosenTier(rel: string, tier: Tier): boolean {
+  const match = TIER_FILE.exec(rel);
   if (match === null) return false;
   const name = match[1]!;
   return TIER_SET.has(name) && name !== tier;
@@ -178,7 +178,7 @@ type PlannedFile =
 
 /**
  * The generated `<dest>/index.ts`: wires the engine to the chosen tier's
- * variation files and runs a minimal component. Every specifier is relative to
+ * tier files and runs a minimal component. Every specifier is relative to
  * the destination root, so the file is self-contained and needs no rewriting.
  * The bare `tsyntax` specifier is left as-is; the package is installed on the
  * consumer side.
@@ -187,13 +187,13 @@ export function generateEntry(tier: Tier): string {
   return `import engine from "./engine/index.ts";
 import { cssPropertiesConfig } from "./css/properties-config/index.ts";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
-import htmlTagConfig from "./html/tag-config/variations/${tier}.ts";
-import htmlAttributesConfig from "./html/attribute-config/variations/${tier}.ts";
-import cssSyntaxConfig from "./css/syntax-config/variations/${tier}.ts";
-import cssAttributesConfig from "./css/attribute-config/variations/${tier}.ts";
-import cssPseudoClassConfig from "./css/pseudo-class-config/variations/${tier}.ts";
-import cssQueriesConfig from "./css/queries-config/variations/${tier}.ts";
-import cssKeyframesConfig from "./css/keyframes-config/variations/${tier}.ts";
+import htmlTagConfig from "./html/tag-config/tiers/${tier}.ts";
+import htmlAttributesConfig from "./html/attribute-config/tiers/${tier}.ts";
+import cssSyntaxConfig from "./css/syntax-config/tiers/${tier}.ts";
+import cssAttributesConfig from "./css/attribute-config/tiers/${tier}.ts";
+import cssPseudoClassConfig from "./css/pseudo-class-config/tiers/${tier}.ts";
+import cssQueriesConfig from "./css/queries-config/tiers/${tier}.ts";
+import cssKeyframesConfig from "./css/keyframes-config/tiers/${tier}.ts";
 
 export const { createComponent, renderComponent } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,
@@ -294,7 +294,7 @@ export function planVendor(options: AddOptions): PlannedFile[] {
     })) {
       const rel = toPosix(entry);
       if (!rel.endsWith(".ts")) continue;
-      if (isNonChosenVariation(rel, tier)) continue;
+      if (isNonChosenTier(rel, tier)) continue;
       const destRel = `${dir}/${rel}`;
       planned.push({
         source: path.join(absDir, entry),
@@ -324,7 +324,7 @@ export function planVendor(options: AddOptions): PlannedFile[] {
 
 /**
  * Destination-relative shast-owned paths a previous `add` may have left behind
- * and this run must prune: the two non-chosen tier files in every variation
+ * and this run must prune: the two non-chosen tier files in every tier
  * directory the source walk visits. The root `index.ts` is pruned only under
  * `--no-entry`: with entry generation on it is a planned file, so an existing
  * `index.ts` is a collision the `--force` path reports and replaces instead.
@@ -335,7 +335,7 @@ export function planStale(options: AddOptions): string[] {
   const srcRoot = path.join(sourceRoot, "src");
   const tier = options.tier ?? DEFAULT_TIER;
 
-  const variationDirs = new Set<string>();
+  const tierDirs = new Set<string>();
   for (const dir of COPY_DIRS) {
     const absDir = path.join(srcRoot, dir);
     for (const entry of readdirSync(absDir, {
@@ -344,9 +344,9 @@ export function planStale(options: AddOptions): string[] {
     })) {
       const rel = toPosix(entry);
       if (!rel.endsWith(".ts")) continue;
-      const match = VARIATION_FILE.exec(rel);
+      const match = TIER_FILE.exec(rel);
       if (match === null || !TIER_SET.has(match[1]!)) continue;
-      variationDirs.add(`${dir}/${path.posix.dirname(rel)}`);
+      tierDirs.add(`${dir}/${path.posix.dirname(rel)}`);
     }
   }
 
@@ -354,7 +354,7 @@ export function planStale(options: AddOptions): string[] {
   // With entry generation on, index.ts is planned and handled by the collision
   // path; only `--no-entry` leaves an old barrel to prune.
   if (options.noEntry ?? false) stale.push("index.ts");
-  for (const dir of variationDirs) {
+  for (const dir of tierDirs) {
     for (const candidate of TIERS) {
       if (candidate !== tier) stale.push(`${dir}/${candidate}.ts`);
     }
@@ -628,7 +628,7 @@ export function preflight(options: AddOptions): AddPreflight {
 }
 
 /**
- * Vendor the engine and exactly one config-variation tier into `dest`, plus a
+ * Vendor the engine and exactly one config tier into `dest`, plus a
  * generated `<dest>/index.ts` entry unless `noEntry` is set.
  *
  * Throws {@link CommonJSDestinationError} when `dest` would be resolved as
@@ -1247,12 +1247,12 @@ function reconcileTsconfig(
 const USAGE = `Usage: shast add [dest] [--tier minimal|common|full] [--force] [--yes]
                  [--no-install] [--no-entry] [--package-manager npm|pnpm|yarn|bun]
 
-Vendor shast's engine and one config-variation tier into a consumer tree,
+Vendor shast's engine and one config tier into a consumer tree,
 generate a <dest>/index.ts that wires them, and install the tsyntax package the
-tree imports. Only the chosen tier's variation files are written.
+tree imports. Only the chosen tier's tier files are written.
 
   dest              destination directory (default: src/shast)
-  --tier            config-variation tier to vendor (default: common). Stale
+  --tier            config tier to vendor (default: common). Stale
                     files from a different tier are removed
   --force           overwrite files that already exist in the destination,
                     reporting which replaced files differ from the bytes being

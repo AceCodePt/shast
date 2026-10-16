@@ -1,6 +1,6 @@
 import { cssKeyframesConfig } from "@/css/keyframes-config/index.ts";
-import fullCSSAttributes from "@/css/attribute-config/variations/full.ts";
-import fullCSSSyntax from "@/css/syntax-config/variations/full.ts";
+import fullCSSAttributes from "@/css/attribute-config/tiers/full.ts";
+import fullCSSSyntax from "@/css/syntax-config/tiers/full.ts";
 
 export default cssKeyframesConfig(fullCSSSyntax, fullCSSAttributes, {
   bounce: {

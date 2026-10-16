@@ -1,5 +1,5 @@
 import { cssQueriesConfig } from "@/css/queries-config/index.ts";
-import commonCSSSyntax from "@/css/syntax-config/variations/common.ts";
+import commonCSSSyntax from "@/css/syntax-config/tiers/common.ts";
 
 export default cssQueriesConfig(commonCSSSyntax, [
   "@media (width < 768px)",

@@ -61,7 +61,7 @@ Deliberately **without** `calc()`: `<integer>` (the spec rounds a calc result to
 an integer, which this parser does not model), `<resolution>` and `<flex>`
 (neither has a `<percentage>`-composed form that could smuggle a unit into the
 deep parser, so leaving them out is consistent rather than a silent gap). Adding
-one is a one-line change to the syntax variation plus, if it introduces a new
+one is a one-line change to the syntax tier plus, if it introduces a new
 unit, `CalcUnit` in `src/css/calc.ts`.
 
 ### Named unions and the multiplication classifier
@@ -140,7 +140,7 @@ var's own dependency on calc was removed when fallbacks were removed
 
 `<calc>` is wired into `<number>`, `<percentage>`, `<length>`, `<angle>`,
 `<time>`, `<frequency>`, and `<alpha-value>` across the `common` and `full`
-syntax variations (`minimal` has no angle/frequency/alpha tokens), so
+syntax tiers (`minimal` has no angle/frequency/alpha tokens), so
 `<length-percentage>`, `<time-percentage>`, and everything built on them admit
 calc.
 

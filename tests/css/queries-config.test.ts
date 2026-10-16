@@ -21,12 +21,12 @@ type ValidateQueries<T extends readonly string[]> = RawValidateQueries<
 >;
 type ValidateQueryWith<Cfg extends CSSSyntaxKeywords, S extends string> =
   RawValidateQuery<S, typeof QUERY_VOCABULARY, Cfg>;
-import MINIMAL_QUERIES from "@/css/queries-config/variations/minimal.ts";
-import COMMON_QUERIES from "@/css/queries-config/variations/common.ts";
-import FULL_QUERIES from "@/css/queries-config/variations/full.ts";
-import MINIMAL_SYNTAX from "@/css/syntax-config/variations/minimal.ts";
-import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
-import FULL_SYNTAX from "@/css/syntax-config/variations/full.ts";
+import MINIMAL_QUERIES from "@/css/queries-config/tiers/minimal.ts";
+import COMMON_QUERIES from "@/css/queries-config/tiers/common.ts";
+import FULL_QUERIES from "@/css/queries-config/tiers/full.ts";
+import MINIMAL_SYNTAX from "@/css/syntax-config/tiers/minimal.ts";
+import COMMON_SYNTAX from "@/css/syntax-config/tiers/common.ts";
+import FULL_SYNTAX from "@/css/syntax-config/tiers/full.ts";
 import { assertType, type Equal } from "../type-utils.ts";
 
 describe("cssQueriesConfig", () => {
@@ -290,25 +290,25 @@ describe("cssQueriesConfig", () => {
     });
   });
 
-  describe("Variations", () => {
-    test("Minimal variation builds without error", () => {
+  describe("Tiers", () => {
+    test("Minimal tier builds without error", () => {
       assert.equal(Array.isArray(MINIMAL_QUERIES), true);
       assert.equal(MINIMAL_QUERIES.length, 6);
     });
 
-    test("Common variation builds without error", () => {
+    test("Common tier builds without error", () => {
       assert.equal(Array.isArray(COMMON_QUERIES), true);
       assert.equal(COMMON_QUERIES.length, 13);
     });
 
-    test("Full variation builds without error", () => {
+    test("Full tier builds without error", () => {
       assert.equal(Array.isArray(FULL_QUERIES), true);
       assert.equal(FULL_QUERIES.length, 27);
     });
   });
 
-  describe("Type Validation of Variations (integration)", () => {
-    test("ValidateQueries maps every variation entry to itself", () => {
+  describe("Type Validation of Tiers (integration)", () => {
+    test("ValidateQueries maps every tier entry to itself", () => {
       const minimal = [
         "@media (width < 480px)",
         "@media (width < 768px)",

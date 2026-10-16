@@ -2,7 +2,7 @@ import test, { after, before, describe } from "node:test";
 import assert from "node:assert";
 import type { Browser } from "playwright";
 import { chromium } from "./playwright-lazy.ts";
-import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
+import HTML_TAGS_CONFIG from "@/html/tag-config/tiers/common.ts";
 import type { BaseComponentStructure } from "@/engine/types.ts";
 import { measureTextVisibility } from "./conformance.ts";
 import type { Case } from "../../evals/cases.ts";

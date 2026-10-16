@@ -3,17 +3,17 @@ import assert from "node:assert";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
 import engine from "@/engine/index.ts";
 import { cssPropertiesConfig } from "@/css/properties-config/index.ts";
-import HTML_GLOBAL_ATTRIBUTES_CONFIG from "@/html/attribute-config/variations/common.ts";
-import COMMON_TAGS from "@/html/tag-config/variations/common.ts";
-import FULL_TAGS from "@/html/tag-config/variations/full.ts";
-import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
-import COMMON_ATTRIBUTES from "@/css/attribute-config/variations/common.ts";
-import COMMON_PSEUDO from "@/css/pseudo-class-config/variations/common.ts";
-import COMMON_QUERIES from "@/css/queries-config/variations/common.ts";
-import FULL_SYNTAX from "@/css/syntax-config/variations/full.ts";
-import FULL_ATTRIBUTES from "@/css/attribute-config/variations/full.ts";
-import FULL_PSEUDO from "@/css/pseudo-class-config/variations/full.ts";
-import FULL_QUERIES from "@/css/queries-config/variations/full.ts";
+import HTML_GLOBAL_ATTRIBUTES_CONFIG from "@/html/attribute-config/tiers/common.ts";
+import COMMON_TAGS from "@/html/tag-config/tiers/common.ts";
+import FULL_TAGS from "@/html/tag-config/tiers/full.ts";
+import COMMON_SYNTAX from "@/css/syntax-config/tiers/common.ts";
+import COMMON_ATTRIBUTES from "@/css/attribute-config/tiers/common.ts";
+import COMMON_PSEUDO from "@/css/pseudo-class-config/tiers/common.ts";
+import COMMON_QUERIES from "@/css/queries-config/tiers/common.ts";
+import FULL_SYNTAX from "@/css/syntax-config/tiers/full.ts";
+import FULL_ATTRIBUTES from "@/css/attribute-config/tiers/full.ts";
+import FULL_PSEUDO from "@/css/pseudo-class-config/tiers/full.ts";
+import FULL_QUERIES from "@/css/queries-config/tiers/full.ts";
 
 const common = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,

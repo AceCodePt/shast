@@ -3,16 +3,16 @@ import assert from "node:assert";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
 import engine from "@/engine/index.ts";
 import { cssPropertiesConfig } from "@/css/properties-config/index.ts";
-import HTML_GLOBAL_ATTRIBUTES_CONFIG from "@/html/attribute-config/variations/common.ts";
-import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
-import CSS_SYNTAX_CONFIG from "@/css/syntax-config/variations/common.ts";
-import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/common.ts";
-import CSS_PSEUDO_CLASSES from "@/css/pseudo-class-config/variations/common.ts";
-import COMMON_QUERIES from "@/css/queries-config/variations/common.ts";
+import HTML_GLOBAL_ATTRIBUTES_CONFIG from "@/html/attribute-config/tiers/common.ts";
+import HTML_TAGS_CONFIG from "@/html/tag-config/tiers/common.ts";
+import CSS_SYNTAX_CONFIG from "@/css/syntax-config/tiers/common.ts";
+import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/tiers/common.ts";
+import CSS_PSEUDO_CLASSES from "@/css/pseudo-class-config/tiers/common.ts";
+import COMMON_QUERIES from "@/css/queries-config/tiers/common.ts";
 
 // The shipped `common` registry now expresses the input vocabulary as a gate:
 // `type` unlocks the attributes that are only meaningful for that type. This
-// exercises the real variation, not a test-only registry.
+// exercises the real tier, not a test-only registry.
 const { createComponent, renderComponent } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,
   htmlAttributesConfig: HTML_GLOBAL_ATTRIBUTES_CONFIG,

@@ -6,8 +6,8 @@ import type { KeyframeName } from "@/css/keyframes-config/types.ts";
 import { cssPropertiesConfig } from "@/css/properties-config/index.ts";
 import { htmlAttributeConfig } from "@/html/attribute-config/index.ts";
 import { htmlTagConfig } from "@/html/tag-config/index.ts";
-import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
-import COMMON_ATTRIBUTES from "@/css/attribute-config/variations/common.ts";
+import COMMON_SYNTAX from "@/css/syntax-config/tiers/common.ts";
+import COMMON_ATTRIBUTES from "@/css/attribute-config/tiers/common.ts";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
 import { assertType, type Equal } from "../type-utils.ts";
 

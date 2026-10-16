@@ -6,9 +6,9 @@ import {
   type SupportedKeywords,
 } from "tsyntax";
 import { cssSyntaxConfig } from "@/css/syntax-config/index.ts";
-import MINIMAL_SYNTAX from "@/css/syntax-config/variations/minimal.ts";
-import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
-import FULL_SYNTAX from "@/css/syntax-config/variations/full.ts";
+import MINIMAL_SYNTAX from "@/css/syntax-config/tiers/minimal.ts";
+import COMMON_SYNTAX from "@/css/syntax-config/tiers/common.ts";
+import FULL_SYNTAX from "@/css/syntax-config/tiers/full.ts";
 import type {
   CSSSyntaxKeywords,
   InferCSSSyntax,

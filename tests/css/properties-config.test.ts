@@ -3,7 +3,7 @@ import assert from "node:assert";
 import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
 import { cssPropertiesConfig } from "@/css/properties-config/index.ts";
 import type { ValidateCSSPropertiesConfig } from "@/css/properties-config/types.ts";
-import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
+import COMMON_SYNTAX from "@/css/syntax-config/tiers/common.ts";
 import { assertType, type Equal } from "../type-utils.ts";
 
 const SYNTAX = {

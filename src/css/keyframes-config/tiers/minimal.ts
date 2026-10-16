@@ -1,6 +1,6 @@
 import { cssKeyframesConfig } from "@/css/keyframes-config/index.ts";
-import minimalCSSAttributes from "@/css/attribute-config/variations/minimal.ts";
-import minimalCSSSyntax from "@/css/syntax-config/variations/minimal.ts";
+import minimalCSSAttributes from "@/css/attribute-config/tiers/minimal.ts";
+import minimalCSSSyntax from "@/css/syntax-config/tiers/minimal.ts";
 
 export default cssKeyframesConfig(minimalCSSSyntax, minimalCSSAttributes, {
   blink: {

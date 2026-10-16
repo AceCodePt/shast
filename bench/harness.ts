@@ -201,10 +201,10 @@ function loadCompiler(id: string): Compiler {
 // Fixtures
 // ---------------------------------------------------------------------------
 
-/** Read one tier's variation file for a registry family. */
-function readTierVariation(tier: Tier, family: string): string {
+/** Read one tier's config file for a registry family. */
+function readTierConfig(tier: Tier, family: string): string {
   return readFileSync(
-    path.join(REPO_ROOT, "src", family, "variations", `${tier}.ts`),
+    path.join(REPO_ROOT, "src", family, "tiers", `${tier}.ts`),
     "utf8",
   );
 }
@@ -217,7 +217,7 @@ function tierMediaQuery(tier: Tier): string {
   const cached = TIER_MEDIA_CACHE.get(tier);
   if (cached !== undefined) return cached;
   const match = /"(@media [^"]+)"/.exec(
-    readTierVariation(tier, "css/queries-config"),
+    readTierConfig(tier, "css/queries-config"),
   );
   const query = match?.[1] ?? "@media (width < 768px)";
   TIER_MEDIA_CACHE.set(tier, query);
@@ -229,7 +229,7 @@ function tierKeyframe(tier: Tier): string {
   const cached = TIER_KEYFRAME_CACHE.get(tier);
   if (cached !== undefined) return cached;
   const match = /^\s{2}([A-Za-z_][\w-]*):\s*\{/m.exec(
-    readTierVariation(tier, "css/keyframes-config"),
+    readTierConfig(tier, "css/keyframes-config"),
   );
   const name = match?.[1] ?? "fade";
   TIER_KEYFRAME_CACHE.set(tier, name);

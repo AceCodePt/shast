@@ -32,40 +32,40 @@ export { SUPPORTED_KEYWORDS } from "tsyntax";
 export type { SupportedKeywordsConfig } from "tsyntax";
 
 // ---------------------------------------------------------------------------
-// Shipped config variations
+// Shipped config tiers
 //
 // `common` is the starting point; `minimal` and `full` are the two extremes.
 // Copy the one you want next to your own code and edit it - the registry is
 // meant to be owned, not imported as a fixed black box.
 // ---------------------------------------------------------------------------
 
-export { default as minimalHTMLTags } from "@/html/tag-config/variations/minimal.ts";
-export { default as commonHTMLTags } from "@/html/tag-config/variations/common.ts";
-export { default as fullHTMLTags } from "@/html/tag-config/variations/full.ts";
+export { default as minimalHTMLTags } from "@/html/tag-config/tiers/minimal.ts";
+export { default as commonHTMLTags } from "@/html/tag-config/tiers/common.ts";
+export { default as fullHTMLTags } from "@/html/tag-config/tiers/full.ts";
 
-export { default as minimalHTMLAttributes } from "@/html/attribute-config/variations/minimal.ts";
-export { default as commonHTMLAttributes } from "@/html/attribute-config/variations/common.ts";
-export { default as fullHTMLAttributes } from "@/html/attribute-config/variations/full.ts";
+export { default as minimalHTMLAttributes } from "@/html/attribute-config/tiers/minimal.ts";
+export { default as commonHTMLAttributes } from "@/html/attribute-config/tiers/common.ts";
+export { default as fullHTMLAttributes } from "@/html/attribute-config/tiers/full.ts";
 
-export { default as minimalCSSSyntax } from "@/css/syntax-config/variations/minimal.ts";
-export { default as commonCSSSyntax } from "@/css/syntax-config/variations/common.ts";
-export { default as fullCSSSyntax } from "@/css/syntax-config/variations/full.ts";
+export { default as minimalCSSSyntax } from "@/css/syntax-config/tiers/minimal.ts";
+export { default as commonCSSSyntax } from "@/css/syntax-config/tiers/common.ts";
+export { default as fullCSSSyntax } from "@/css/syntax-config/tiers/full.ts";
 
-export { default as minimalCSSAttributes } from "@/css/attribute-config/variations/minimal.ts";
-export { default as commonCSSAttributes } from "@/css/attribute-config/variations/common.ts";
-export { default as fullCSSAttributes } from "@/css/attribute-config/variations/full.ts";
+export { default as minimalCSSAttributes } from "@/css/attribute-config/tiers/minimal.ts";
+export { default as commonCSSAttributes } from "@/css/attribute-config/tiers/common.ts";
+export { default as fullCSSAttributes } from "@/css/attribute-config/tiers/full.ts";
 
-export { default as minimalCSSPseudoClasses } from "@/css/pseudo-class-config/variations/minimal.ts";
-export { default as commonCSSPseudoClasses } from "@/css/pseudo-class-config/variations/common.ts";
-export { default as fullCSSPseudoClasses } from "@/css/pseudo-class-config/variations/full.ts";
+export { default as minimalCSSPseudoClasses } from "@/css/pseudo-class-config/tiers/minimal.ts";
+export { default as commonCSSPseudoClasses } from "@/css/pseudo-class-config/tiers/common.ts";
+export { default as fullCSSPseudoClasses } from "@/css/pseudo-class-config/tiers/full.ts";
 
-export { default as minimalCSSQueries } from "@/css/queries-config/variations/minimal.ts";
-export { default as commonCSSQueries } from "@/css/queries-config/variations/common.ts";
-export { default as fullCSSQueries } from "@/css/queries-config/variations/full.ts";
+export { default as minimalCSSQueries } from "@/css/queries-config/tiers/minimal.ts";
+export { default as commonCSSQueries } from "@/css/queries-config/tiers/common.ts";
+export { default as fullCSSQueries } from "@/css/queries-config/tiers/full.ts";
 
-export { default as minimalCSSKeyframes } from "@/css/keyframes-config/variations/minimal.ts";
-export { default as commonCSSKeyframes } from "@/css/keyframes-config/variations/common.ts";
-export { default as fullCSSKeyframes } from "@/css/keyframes-config/variations/full.ts";
+export { default as minimalCSSKeyframes } from "@/css/keyframes-config/tiers/minimal.ts";
+export { default as commonCSSKeyframes } from "@/css/keyframes-config/tiers/common.ts";
+export { default as fullCSSKeyframes } from "@/css/keyframes-config/tiers/full.ts";
 
 // ---------------------------------------------------------------------------
 // Types

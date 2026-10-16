@@ -8,15 +8,15 @@ import type {
   ValidateKeyframesConfig,
 } from "@/css/keyframes-config/types.ts";
 import type { SupportedKeywords } from "tsyntax";
-import MINIMAL_KEYFRAMES from "@/css/keyframes-config/variations/minimal.ts";
-import COMMON_KEYFRAMES from "@/css/keyframes-config/variations/common.ts";
-import FULL_KEYFRAMES from "@/css/keyframes-config/variations/full.ts";
-import MINIMAL_ATTRIBUTES from "@/css/attribute-config/variations/minimal.ts";
-import COMMON_ATTRIBUTES from "@/css/attribute-config/variations/common.ts";
-import FULL_ATTRIBUTES from "@/css/attribute-config/variations/full.ts";
-import MINIMAL_SYNTAX from "@/css/syntax-config/variations/minimal.ts";
-import COMMON_SYNTAX from "@/css/syntax-config/variations/common.ts";
-import FULL_SYNTAX from "@/css/syntax-config/variations/full.ts";
+import MINIMAL_KEYFRAMES from "@/css/keyframes-config/tiers/minimal.ts";
+import COMMON_KEYFRAMES from "@/css/keyframes-config/tiers/common.ts";
+import FULL_KEYFRAMES from "@/css/keyframes-config/tiers/full.ts";
+import MINIMAL_ATTRIBUTES from "@/css/attribute-config/tiers/minimal.ts";
+import COMMON_ATTRIBUTES from "@/css/attribute-config/tiers/common.ts";
+import FULL_ATTRIBUTES from "@/css/attribute-config/tiers/full.ts";
+import MINIMAL_SYNTAX from "@/css/syntax-config/tiers/minimal.ts";
+import COMMON_SYNTAX from "@/css/syntax-config/tiers/common.ts";
+import FULL_SYNTAX from "@/css/syntax-config/tiers/full.ts";
 import { assertType, type Equal } from "../type-utils.ts";
 
 type ValidateKeyframes<
@@ -284,13 +284,13 @@ describe("cssKeyframesConfig", () => {
     });
   });
 
-  describe("Variations", () => {
-    test("Minimal variation builds and infers its names", () => {
+  describe("Tiers", () => {
+    test("Minimal tier builds and infers its names", () => {
       assert.deepStrictEqual(Object.keys(MINIMAL_KEYFRAMES), ["blink", "grow"]);
       assertType<Equal<keyof typeof MINIMAL_KEYFRAMES, "blink" | "grow">>();
     });
 
-    test("Common variation builds and infers its names", () => {
+    test("Common tier builds and infers its names", () => {
       assert.deepStrictEqual(Object.keys(COMMON_KEYFRAMES), [
         "fade",
         "pulse",
@@ -301,7 +301,7 @@ describe("cssKeyframesConfig", () => {
       >();
     });
 
-    test("Full variation builds and infers its names", () => {
+    test("Full tier builds and infers its names", () => {
       assert.deepStrictEqual(Object.keys(FULL_KEYFRAMES), ["bounce", "spin"]);
       assertType<Equal<keyof typeof FULL_KEYFRAMES, "bounce" | "spin">>();
     });

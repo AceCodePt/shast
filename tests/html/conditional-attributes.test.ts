@@ -7,10 +7,10 @@ import { cssPropertiesConfig } from "@/css/properties-config/index.ts";
 import type { InferHTMLAttributesConfig } from "@/html/attribute-config/types.ts";
 import engine from "@/engine/index.ts";
 import type { ComponentIds } from "@/engine/types.ts";
-import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/common.ts";
-import CSS_SYNTAX_CONFIG from "@/css/syntax-config/variations/common.ts";
-import CSS_PSEUDO_CLASSES from "@/css/pseudo-class-config/variations/common.ts";
-import COMMON_QUERIES from "@/css/queries-config/variations/common.ts";
+import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/tiers/common.ts";
+import CSS_SYNTAX_CONFIG from "@/css/syntax-config/tiers/common.ts";
+import CSS_PSEUDO_CLASSES from "@/css/pseudo-class-config/tiers/common.ts";
+import COMMON_QUERIES from "@/css/queries-config/tiers/common.ts";
 import { assertType, type Equal } from "../type-utils.ts";
 
 // ---------------------------------------------------------------------------

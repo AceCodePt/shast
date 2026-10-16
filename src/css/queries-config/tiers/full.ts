@@ -1,5 +1,5 @@
 import { cssQueriesConfig } from "@/css/queries-config/index.ts";
-import fullCSSSyntax from "@/css/syntax-config/variations/full.ts";
+import fullCSSSyntax from "@/css/syntax-config/tiers/full.ts";
 
 export default cssQueriesConfig(fullCSSSyntax, [
   "@media (width < 480px)",

@@ -3,11 +3,11 @@ import assert from "node:assert";
 import engine from "@/engine/index.ts";
 import { cssPropertiesConfig } from "@/css/properties-config/index.ts";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
-import HTML_GLOBAL_ATTRIBUTES_CONFIG from "@/html/attribute-config/variations/common.ts";
-import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
-import CSS_SYNTAX_CONFIG from "@/css/syntax-config/variations/common.ts";
-import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/common.ts";
-import CSS_GLOBAL_PSEUDO_CLASSES_CONFIG from "@/css/pseudo-class-config/variations/common.ts";
+import HTML_GLOBAL_ATTRIBUTES_CONFIG from "@/html/attribute-config/tiers/common.ts";
+import HTML_TAGS_CONFIG from "@/html/tag-config/tiers/common.ts";
+import CSS_SYNTAX_CONFIG from "@/css/syntax-config/tiers/common.ts";
+import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/tiers/common.ts";
+import CSS_GLOBAL_PSEUDO_CLASSES_CONFIG from "@/css/pseudo-class-config/tiers/common.ts";
 
 // `grid-area` places a grid item into a named area the parent's
 // `grid-template-areas` defines. Neither DSL is extended (`grid-template-areas`

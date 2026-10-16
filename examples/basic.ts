@@ -16,7 +16,7 @@ import {
   SUPPORTED_KEYWORDS,
 } from "../src/index.ts";
 
-// CSS custom properties are per-consumer: they have no shipped variations, so
+// CSS custom properties are per-consumer: they have no shipped tiers, so
 // the example registers the handful the demo component uses.
 const cssProperties = cssPropertiesConfig(SUPPORTED_KEYWORDS, commonCSSSyntax, {
   "--a": {

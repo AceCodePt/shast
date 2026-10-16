@@ -11,11 +11,11 @@ import {
   CSS_WIDE_KEYWORDS,
   type CSSWideKeyword,
 } from "@/css/wide-keyword.ts";
-import HTML_GLOBAL_ATTRIBUTES_CONFIG from "@/html/attribute-config/variations/common.ts";
-import HTML_TAGS_CONFIG from "@/html/tag-config/variations/common.ts";
-import CSS_SYNTAX_CONFIG from "@/css/syntax-config/variations/common.ts";
-import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/variations/common.ts";
-import CSS_GLOBAL_PSEUDO_CLASSES_CONFIG from "@/css/pseudo-class-config/variations/common.ts";
+import HTML_GLOBAL_ATTRIBUTES_CONFIG from "@/html/attribute-config/tiers/common.ts";
+import HTML_TAGS_CONFIG from "@/html/tag-config/tiers/common.ts";
+import CSS_SYNTAX_CONFIG from "@/css/syntax-config/tiers/common.ts";
+import CSS_ATTRIBUTES_CONFIG from "@/css/attribute-config/tiers/common.ts";
+import CSS_GLOBAL_PSEUDO_CLASSES_CONFIG from "@/css/pseudo-class-config/tiers/common.ts";
 import { assertType, type Equal } from "../type-utils.ts";
 
 const CSS_GLOBAL_PROPERTIES = cssPropertiesConfig(

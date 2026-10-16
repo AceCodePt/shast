@@ -11,9 +11,9 @@ import type {
 } from "@/html/attribute-config/types.ts";
 import { assertType, type Equal } from "../type-utils.ts";
 
-import minimalAttributes from "@/html/attribute-config/variations/minimal.ts";
-import commonAttributes from "@/html/attribute-config/variations/common.ts";
-import fullAttributes from "@/html/attribute-config/variations/full.ts";
+import minimalAttributes from "@/html/attribute-config/tiers/minimal.ts";
+import commonAttributes from "@/html/attribute-config/tiers/common.ts";
+import fullAttributes from "@/html/attribute-config/tiers/full.ts";
 
 describe("htmlAttributeConfig", () => {
   describe("Type Validation", () => {
@@ -299,7 +299,7 @@ describe("htmlAttributeConfig", () => {
   });
 });
 
-describe("HTML Attributes — Variation: minimal.ts", () => {
+describe("HTML Attributes — Tier: minimal.ts", () => {
   test("contains expected keys", () => {
     const keys = Object.keys(minimalAttributes).sort();
     assert.deepStrictEqual(keys, ["class", "id", "role", "style", "tabindex"]);
@@ -316,7 +316,7 @@ describe("HTML Attributes — Variation: minimal.ts", () => {
   });
 });
 
-describe("HTML Attributes — Variation: common.ts", () => {
+describe("HTML Attributes — Tier: common.ts", () => {
   test("contains expected keys", () => {
     const keys = Object.keys(commonAttributes).sort();
     assert.deepStrictEqual(keys, [
@@ -342,7 +342,7 @@ describe("HTML Attributes — Variation: common.ts", () => {
   });
 });
 
-describe("HTML Attributes — Variation: full.ts", () => {
+describe("HTML Attributes — Tier: full.ts", () => {
   test("contains all major attribute groups", () => {
     const keys = Object.keys(fullAttributes);
     assert.ok(keys.includes("id"), "should have identity attrs");

@@ -61,7 +61,7 @@ npx shast add src/shast --tier minimal    # or: --tier full
 ```
 
 `shast add` vendors the engine and exactly one tier of the
-`minimal`/`common`/`full` config variations into your tree, rewriting every
+`minimal`/`common`/`full` config tiers into your tree, rewriting every
 import so the tree is self-contained, and generates an `index.ts` that wires the
 engine to that tier. You own those files from then on; there is no build step,
 no emitted `.js`, and nothing to ship to the browser. **Requires TypeScript 5.0
@@ -113,13 +113,13 @@ here is imported from your own files, plus the installed `tsyntax` package - see
 import engine from "./src/shast/engine/index.ts";
 import { cssPropertiesConfig } from "./src/shast/css/properties-config/index.ts";
 import { SUPPORTED_KEYWORDS } from "tsyntax";
-import commonHTMLTags from "./src/shast/html/tag-config/variations/common.ts";
-import commonHTMLAttributes from "./src/shast/html/attribute-config/variations/common.ts";
-import commonCSSSyntax from "./src/shast/css/syntax-config/variations/common.ts";
-import commonCSSAttributes from "./src/shast/css/attribute-config/variations/common.ts";
-import commonCSSPseudoClasses from "./src/shast/css/pseudo-class-config/variations/common.ts";
-import commonCSSQueries from "./src/shast/css/queries-config/variations/common.ts";
-import commonCSSKeyframes from "./src/shast/css/keyframes-config/variations/common.ts";
+import commonHTMLTags from "./src/shast/html/tag-config/tiers/common.ts";
+import commonHTMLAttributes from "./src/shast/html/attribute-config/tiers/common.ts";
+import commonCSSSyntax from "./src/shast/css/syntax-config/tiers/common.ts";
+import commonCSSAttributes from "./src/shast/css/attribute-config/tiers/common.ts";
+import commonCSSPseudoClasses from "./src/shast/css/pseudo-class-config/tiers/common.ts";
+import commonCSSQueries from "./src/shast/css/queries-config/tiers/common.ts";
+import commonCSSKeyframes from "./src/shast/css/keyframes-config/tiers/common.ts";
 
 export const { createComponent, renderComponent } = engine({
   supportedKeywords: SUPPORTED_KEYWORDS,

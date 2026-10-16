@@ -145,14 +145,14 @@ function survivingSpecifierStrings(dest: string): string[] {
 
 const VARIANTS = ["minimal", "common", "full"] as const;
 
-const VARIATION_DIRS = [
-  "html/attribute-config/variations",
-  "html/tag-config/variations",
-  "css/syntax-config/variations",
-  "css/attribute-config/variations",
-  "css/pseudo-class-config/variations",
-  "css/queries-config/variations",
-  "css/keyframes-config/variations",
+const TIER_DIRS = [
+  "html/attribute-config/tiers",
+  "html/tag-config/tiers",
+  "css/syntax-config/tiers",
+  "css/attribute-config/tiers",
+  "css/pseudo-class-config/tiers",
+  "css/queries-config/tiers",
+  "css/keyframes-config/tiers",
 ] as const;
 
 /**
@@ -212,11 +212,11 @@ describe("shast add: copy set", () => {
 
 describe("shast add: tier selection", () => {
   for (const tier of VARIANTS) {
-    test(`--tier ${tier} vendors only ${tier}.ts for every variation family`, () => {
+    test(`--tier ${tier} vendors only ${tier}.ts for every tier family`, () => {
       const dest = tempDest();
       add({ dest, tier });
 
-      for (const dir of VARIATION_DIRS) {
+      for (const dir of TIER_DIRS) {
         for (const variant of VARIANTS) {
           const rel = `${dir}/${variant}.ts`;
           if (variant === tier) {
@@ -227,9 +227,9 @@ describe("shast add: tier selection", () => {
         }
       }
 
-      // The generated entry imports only the chosen tier's variation files.
+      // The generated entry imports only the chosen tier's files.
       const entry = read(dest, "index.ts");
-      for (const dir of VARIATION_DIRS) {
+      for (const dir of TIER_DIRS) {
         assert.ok(
           entry.includes(`"./${dir}/${tier}.ts"`),
           `entry should import ${dir}/${tier}.ts`,
@@ -249,13 +249,13 @@ describe("shast add: tier selection", () => {
     const dest = tempDest();
     add({ dest });
 
-    for (const dir of VARIATION_DIRS) {
+    for (const dir of TIER_DIRS) {
       assert.ok(existsSync(path.join(dest, `${dir}/common.ts`)));
       assert.ok(!existsSync(path.join(dest, `${dir}/minimal.ts`)));
       assert.ok(!existsSync(path.join(dest, `${dir}/full.ts`)));
     }
     assert.ok(
-      read(dest, "index.ts").includes('"./html/tag-config/variations/common.ts"'),
+      read(dest, "index.ts").includes('"./html/tag-config/tiers/common.ts"'),
     );
   });
 
@@ -268,7 +268,7 @@ describe("shast add: tier selection", () => {
 
     const result = add({ dest, tier: "common", force: true });
 
-    for (const dir of VARIATION_DIRS) {
+    for (const dir of TIER_DIRS) {
       assert.ok(
         existsSync(path.join(dest, `${dir}/common.ts`)),
         `expected ${dir}/common.ts`,
@@ -288,7 +288,7 @@ describe("shast add: tier selection", () => {
     }
     assert.ok(existsSync(path.join(dest, "index.ts")));
     assert.ok(
-      read(dest, "index.ts").includes('"./html/tag-config/variations/common.ts"'),
+      read(dest, "index.ts").includes('"./html/tag-config/tiers/common.ts"'),
     );
     assert.ok(!result.removed.includes("index.ts"));
   });
@@ -307,7 +307,7 @@ describe("shast add: tier selection", () => {
 });
 
 describe("shast add: generated entry", () => {
-  test("wires the engine to the chosen tier's variation files", () => {
+  test("wires the engine to the chosen tier's files", () => {
     const dest = tempDest();
     add({ dest, tier: "minimal" });
 
@@ -319,7 +319,7 @@ describe("shast add: generated entry", () => {
       ),
     );
     assert.ok(entry.includes('import { SUPPORTED_KEYWORDS } from "tsyntax"'));
-    for (const dir of VARIATION_DIRS) {
+    for (const dir of TIER_DIRS) {
       assert.ok(entry.includes(`"./${dir}/minimal.ts"`), dir);
     }
     assert.ok(
@@ -647,7 +647,7 @@ describe("shast add: no clobber without --force", () => {
         assert.ok(error.collisions.includes("types.ts"));
         assert.ok(error.collisions.includes("engine/index.ts"));
         assert.ok(
-          error.collisions.includes("css/pseudo-class-config/variations/common.ts"),
+          error.collisions.includes("css/pseudo-class-config/tiers/common.ts"),
         );
         return true;
       },
@@ -985,7 +985,7 @@ describe("shast add: allowImportingTsExtensions reconciliation", () => {
 });
 
 describe("shast add: --force replacement report", () => {
-  const EDITED = "html/tag-config/variations/common.ts";
+  const EDITED = "html/tag-config/tiers/common.ts";
 
   test("names a replaced file whose bytes differ", () => {
     const dest = tempDest();

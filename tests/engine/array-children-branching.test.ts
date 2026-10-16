@@ -17,7 +17,7 @@ import {
 
 describe("createComponent (engine)", () => {
   describe("Array innerHTML Children", () => {
-    describe("Branching tree variations (arrays + objects + strings)", () => {
+    describe("Branching tree shapes (arrays + objects + strings)", () => {
       test("interleaved strings and objects in array render in correct order", () => {
         const comp = createComponent({
           tag: "div",
