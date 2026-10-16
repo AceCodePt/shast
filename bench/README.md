@@ -86,14 +86,15 @@ all human output to stderr so the pipe stays parseable.
 ## Recorded baseline
 
 From `pnpm bench -- --save-baseline`, TypeScript 7.0.2. Check time is the mean
-of 3 runs on one machine; instantiations are machine-stable. Fixed cost (the
-`null` scenario, tree loaded, no components):
+of 3 runs on one machine; instantiations are machine-stable. The table quotes
+the `null` scenario - the tree loaded, with no components checked - for each
+tier of the default variant:
 
 | Tier | Instantiations | Types | Check |
 | --- | ---: | ---: | ---: |
 | `minimal` | 170,908 | 45,648 | 0.13s |
-| `common` | 314,033 | 67,434 | 0.24s |
-| `full` | 615,925 | 134,612 | 0.67s |
+| `common` | 314,033 | 67,434 | 0.23s |
+| `full` | 615,925 | 134,612 | 0.68s |
 
 ## Known results and caveats
 

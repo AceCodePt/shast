@@ -64,10 +64,9 @@ npx shast add src/shast --tier minimal    # or: --tier full
 `minimal`/`common`/`full` config tiers into your tree, rewriting every
 import so the tree is self-contained, and generates an `index.ts` that wires the
 engine to that tier. You own those files from then on; there is no build step,
-no emitted `.js`, and nothing to ship to the browser. **Requires TypeScript 5.0
-or newer** (developed and benchmarked on 7.0.2; the performance figures below
-are TS 7, and TS 5 is slower - see [Performance](#performance-indicative)) and an
-ESM destination.
+no emitted `.js`, and nothing to ship to the browser. **Requires TypeScript**
+(developed and benchmarked on 7.0.2; the performance figures below are TS 7) and
+an ESM destination.
 `shast add` is the only supported way to consume shast - do not import
 `"@ace-code/shast"` directly. See [docs/install.md](docs/install.md) for
 package-manager detection, tsconfig reconciliation, the generated entry, and
@@ -376,16 +375,75 @@ undefined"` means exactly what it looks like.
 ## Performance (indicative)
 
 The figures below are produced by the in-repo harness in [`bench/`](bench/)
-(`pnpm bench`) and measured on **TypeScript 7.0.2**, the development target. The
+(`pnpm bench`), measured on **TypeScript 7.0.2**, the development target. The
 harness runs every variant x tier x scenario combination; a scenario is a
 tier-agnostic file that imports the `@tier` alias at the vendored tree, and
-`scenarios/null.ts` measures the fixed cost of loading a tree. Loading a
-single-tier `common` tree is a fixed **~314K instantiations / ~0.24s** of `tsc`
-cost before any component is checked. Keep files to a handful of components.
+every number is read from `bench/baseline.json`.
 
-TypeScript 5.0+ remains supported, though the harness measures only the
-repository's own compiler. See [docs/performance.md](docs/performance.md) for
-the fixed cost of each tier.
+The table for each tier quotes the `null` scenario - the tree loaded, with no
+components checked - before any component is checked:
+
+| Tier | Instantiations | Types | Check |
+| --- | ---: | ---: | ---: |
+| `minimal` | 170,908 | 45,648 | 0.13s |
+| `common` | 314,033 | 67,434 | 0.23s |
+| `full` | 615,925 | 134,612 | 0.68s |
+
+Instantiation counts are machine-stable; check times vary by machine. The
+per-scenario instantiations and types are listed per tier below, and the
+near-wall scenarios and their limitations are recorded in
+[docs/performance.md](docs/performance.md).
+
+### Per scenario, per tier
+
+#### `minimal` tier
+
+| Scenario | Instantiations | Types |
+| --- | ---: | ---: |
+| classes-big | 218,096 | 55,451 |
+| classes-small | 215,851 | 55,181 |
+| complex-big | 220,909 | 56,611 |
+| complex-small | 218,670 | 55,975 |
+| mixed-big | 224,381 | 56,099 |
+| mixed-small | 220,502 | 55,848 |
+| null | 170,908 | 45,648 |
+| simple-big | 207,103 | 53,836 |
+| simple-small | 204,690 | 53,683 |
+
+#### `common` tier
+
+| Scenario | Instantiations | Types |
+| --- | ---: | ---: |
+| classes-big | 424,394 | 89,240 |
+| classes-small | 421,913 | 88,951 |
+| complex-big | 428,925 | 90,605 |
+| complex-small | 426,227 | 89,922 |
+| mixed-big | 432,727 | 90,309 |
+| mixed-small | 428,748 | 89,996 |
+| null | 314,033 | 67,434 |
+| simple-big | 395,852 | 83,852 |
+| simple-small | 394,151 | 83,869 |
+
+#### `full` tier
+
+| Scenario | Instantiations | Types |
+| --- | ---: | ---: |
+| classes-big | 959,549 | 204,914 |
+| classes-small | 956,395 | 204,642 |
+| complex-big | 934,916 | 205,589 |
+| complex-small | 931,124 | 204,822 |
+| mixed-big | 964,542 | 205,664 |
+| mixed-small | 960,503 | 205,274 |
+| null | 615,925 | 134,612 |
+| simple-big | 888,395 | 197,248 |
+| simple-small | 886,689 | 197,261 |
+
+With the `full` tier every scenario except the `simple-*` scenarios runs close
+to the compiler's instantiation-depth limit: they fail with `TS2589` and are
+recorded as the near-wall problems. They are the known limitation of the
+harness - their counts are recorded, but the program never finishes checking.
+The `minimal` and `common` tiers stay under the limit, and the `simple-*`
+scenarios always pass.
 
 ## Limitations
 
