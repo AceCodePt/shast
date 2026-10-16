@@ -131,16 +131,15 @@ not an intersection, so an inherited `display: block` cannot cancel a written
 Structural typing at this depth is only viable if it stays cheap. The figures
 below are produced by the in-repo harness in [`bench/`](../bench/) (`pnpm
 bench`), so they can be re-measured rather than taken on trust. Measured against
-the `common` registry on TypeScript 7.0.2 (the development target). TypeScript
-5.x is materially slower - higher fixed and per-component cost; see
-[`performance.md`](performance.md) for the TS 5 comparison:
+the `common` registry on TypeScript 7.0.2 (the development target; the harness
+now measures a single compiler):
 
-- `tsc` cost is a **fixed registry load plus a linear per-component term**.
-  Loading `common` costs ~403K instantiations / ~0.32s before any component
-  is checked; each modest component (`ul > li > span`, one `:hover`, one
-  nested `> child`) then adds ~7K instantiations / ~11ms (registry only:
-  403,029 / 0.32s; registry + 100 components: 1,215,649 / 1.51s). Instantiation
-  counts are machine-stable; times vary by machine.
+- `tsc` cost is a **fixed registry load plus a per-scenario term**. Loading
+  `common` costs ~314K instantiations / ~0.24s before any component is checked.
+  The harness measures whole scenarios (a tier-agnostic file importing the
+  vendored tree) and records each scenario's `deltaVsNull`; the old
+  per-component slopes came from a component-shape sweep the harness no longer
+  runs. Instantiation counts are machine-stable; times vary by machine.
 
 Practical rule: keep files to a handful of components each and per-file
 checking stays small. The fixed constant grows with *config breadth*, not
@@ -161,8 +160,8 @@ instantiations per component:
   re-declaration itself is what was measured; block cost is otherwise identical
   whether or not a gate is active.
 
-These gate figures were measured on an earlier revision and have not been
-re-measured by the current [`bench/`](../bench/) harness; they are indicative.
+These gate figures were measured on an earlier revision of the harness, by the
+component-shape sweep it no longer runs; they are indicative.
 
 ## Constraints on authors
 

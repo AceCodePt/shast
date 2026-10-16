@@ -376,20 +376,16 @@ undefined"` means exactly what it looks like.
 ## Performance (indicative)
 
 The figures below are produced by the in-repo harness in [`bench/`](bench/)
-(`pnpm bench`) and measured on **TypeScript 7.0.2**, the development target.
-Loading a single-tier `common` tree is a fixed ~403K instantiations / ~0.3s of
-`tsc` cost before any component is checked; each modest component then adds
-~7K instantiations / ~11ms. Keep files to a handful of components.
+(`pnpm bench`) and measured on **TypeScript 7.0.2**, the development target. The
+harness runs every variant x tier x scenario combination; a scenario is a
+tier-agnostic file that imports the `@tier` alias at the vendored tree, and
+`scenarios/null.ts` measures the fixed cost of loading a tree. Loading a
+single-tier `common` tree is a fixed **~314K instantiations / ~0.24s** of `tsc`
+cost before any component is checked. Keep files to a handful of components.
 
-**TypeScript 5.x is substantially slower.** On the same harness measured with
-TypeScript 5.9.3, the fixed `common` baseline was ~1.6s (versus ~0.3s on TS 7,
-about 5x) and each modest component added ~30ms (versus ~11ms, about 3x),
-~3.5s total for 50. TS 5 counts fewer instantiations for the registry load
-(~174K) but the same per-component slope, so the difference is execution speed,
-not workload. Those TS 5 figures are indicative wall-clock from one machine, not
-machine-stable like the instantiation counts, and they do not change the
-supported minimum: shast supports TypeScript 5.0+.
-See [docs/performance.md](docs/performance.md) for the full table.
+TypeScript 5.0+ remains supported, though the harness measures only the
+repository's own compiler. See [docs/performance.md](docs/performance.md) for
+the fixed cost of each tier.
 
 ## Limitations
 
