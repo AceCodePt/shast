@@ -4,7 +4,7 @@ The figures below are produced by the in-repo harness in [`bench/`](../bench/)
 (`pnpm bench`, recorded in `bench/baseline.json`), so they can be re-measured
 rather than taken on trust. Measured on **TypeScript 7.0.2**, the development
 target, against the repository's own `src` variant, with the repository's own
-`typescript` package as the single compiler.
+`typescript` package as the single compiler and `tsyntax` 1.1.4.
 
 ## What the harness measures
 
@@ -23,9 +23,9 @@ Loading a tree, before any component is checked (the `null` scenario, default
 
 | Tier | Instantiations | Types | Check |
 | --- | ---: | ---: | ---: |
-| `minimal` | 170,908 | 45,648 | 0.13s |
-| `common` | 314,033 | 67,434 | 0.23s |
-| `full` | 615,925 | 134,612 | 0.68s |
+| `minimal` | 147,762 | 42,221 | 0.12s |
+| `common` | 292,811 | 64,060 | 0.23s |
+| `full` | 595,714 | 131,282 | 0.71s |
 
 Instantiation counts are machine-stable; check times vary by machine. The cost
 grows with tier breadth: keep files to a handful of components each and the
@@ -35,61 +35,72 @@ marginal cost stays small.
 
 The tables below quote `instantiations` and `types` for every scenario, on the
 default (`src`) variant, per tier. All values are read from
-`bench/baseline.json`.
+`bench/baseline.json`. Every scenario compiles at every tier.
 
 ### `minimal` tier
 
 | Scenario | Instantiations | Types |
 | --- | ---: | ---: |
-| classes-big | 218,096 | 55,451 |
-| classes-small | 215,851 | 55,181 |
-| complex-big | 220,909 | 56,611 |
-| complex-small | 218,670 | 55,975 |
-| mixed-big | 224,381 | 56,099 |
-| mixed-small | 220,502 | 55,848 |
-| null | 170,908 | 45,648 |
-| simple-big | 207,103 | 53,836 |
-| simple-small | 204,690 | 53,683 |
+| classes-big | 193,088 | 51,474 |
+| classes-small | 190,757 | 51,201 |
+| complex-big | 195,684 | 52,619 |
+| complex-small | 193,278 | 51,980 |
+| mixed-big | 199,250 | 52,114 |
+| mixed-small | 195,371 | 51,863 |
+| null | 147,762 | 42,221 |
+| simple-big | 181,837 | 49,856 |
+| simple-small | 179,424 | 49,703 |
 
 ### `common` tier
 
 | Scenario | Instantiations | Types |
 | --- | ---: | ---: |
-| classes-big | 424,394 | 89,240 |
-| classes-small | 421,913 | 88,951 |
-| complex-big | 428,925 | 90,605 |
-| complex-small | 426,227 | 89,922 |
-| mixed-big | 432,727 | 90,309 |
-| mixed-small | 428,748 | 89,996 |
-| null | 314,033 | 67,434 |
-| simple-big | 395,852 | 83,852 |
-| simple-small | 394,151 | 83,869 |
+| classes-big | 401,797 | 85,307 |
+| classes-small | 399,180 | 85,016 |
+| complex-big | 405,976 | 86,635 |
+| complex-small | 403,012 | 85,949 |
+| mixed-big | 409,818 | 86,346 |
+| mixed-small | 405,839 | 86,033 |
+| null | 292,811 | 64,060 |
+| simple-big | 372,679 | 79,921 |
+| simple-small | 371,067 | 79,938 |
 
 ### `full` tier
 
 | Scenario | Instantiations | Types |
 | --- | ---: | ---: |
-| classes-big | 959,549 | 204,914 |
-| classes-small | 956,395 | 204,642 |
-| complex-big | 934,916 | 205,589 |
-| complex-small | 931,124 | 204,822 |
-| mixed-big | 964,542 | 205,664 |
-| mixed-small | 960,503 | 205,274 |
-| null | 615,925 | 134,612 |
-| simple-big | 888,395 | 197,248 |
-| simple-small | 886,689 | 197,261 |
+| classes-big | 937,604 | 201,023 |
+| classes-small | 934,335 | 200,749 |
+| complex-big | 911,857 | 201,630 |
+| complex-small | 907,559 | 200,862 |
+| mixed-big | 942,483 | 201,714 |
+| mixed-small | 938,444 | 201,324 |
+| null | 595,714 | 131,282 |
+| simple-big | 866,025 | 193,357 |
+| simple-small | 864,408 | 193,370 |
 
-## Near the wall
+## Attribute arms: arrays vs piping
 
-With the `full` tier, every scenario except the `simple-*` scenarios runs close
-to the compiler's instantiation-depth limit: they fail with `TS2589` and are
-listed in `nearWallProblems`. Those are the known limitation of the harness -
-their counts are recorded, but the program never finishes checking. The
-`minimal` and `common` tiers stay under the limit, and the `simple-*`
-scenarios always pass.
+Attribute values are authored as an array of single arms
+(`direction: ["'ltr'", "'rtl'"]`), each validated on its own by tsyntax's
+`DSLValidateArm`. The [`piped`](../bench/variants/piped/README.md) variant
+authors each value as one piped DSL string instead
+(`direction: "'ltr' | 'rtl'"`), validated by `DSLValidate`. On the same
+scenarios, piping costs more at every tier:
 
-The same signal is computed for every (variant, tier) combination; the
-recorded baseline lists, per combination, the scenarios that hit it.
+| Tier | Scenario | arrays (`src`) | piped |
+| --- | --- | ---: | ---: |
+| `minimal` | `null` | 147,762 | 153,871 |
+| `common` | `null` | 292,811 | 336,625 |
+| `full` | `null` | 595,714 | 676,351 |
+| `full` | `classes-big` | 937,604 | 1,050,733 |
+| `full` | `mixed-big` | 942,483 | 1,055,612 |
+
+The difference is a fixed per-tier registry cost - it moves the `null` floor by
+the whole amount, plus a small constant per scenario - and it tracks the arm
+count at roughly **30 instantiations per arm**, paid on every program:
+`DSLValidate` splits the whole value and threads an accumulator per arm, where
+`DSLValidateArm` runs one bounded check per arm.
 
 The same harness informs the fuller analysis in
 [`structural-coupling.md`](structural-coupling.md).
