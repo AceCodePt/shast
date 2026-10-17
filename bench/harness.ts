@@ -282,18 +282,12 @@ interface ScenarioResult {
   deltaVsBaseline: number | null;
 }
 
-interface NearWallProblem {
-  scenario: string;
-  codes: string[];
-}
-
 interface VariantTierResult {
   impl: string;
   implLabel: string;
   variant: string;
   tier: Tier;
   scenarios: Record<string, ScenarioResult>;
-  nearWallProblems: NearWallProblem[];
 }
 
 /** The result document and the baseline share this shape. */
@@ -337,10 +331,6 @@ function baselineDocument(document: ResultsDocument): ResultsDocument {
     baseline: null,
     results,
   };
-}
-
-function nearWallCodes(codes: readonly string[]): boolean {
-  return codes.some((code) => code === "TS2589" || code === "TS2590");
 }
 
 function implLabelOf(variant: string): string {
@@ -490,13 +480,6 @@ function renderReport(
           `${scenario.check} | ${scenario.total} | ${scenario.ok ? "yes" : "no"} |`,
       );
     }
-    if (result.nearWallProblems.length > 0) {
-      lines.push("");
-      lines.push("Near the wall:");
-      for (const problem of result.nearWallProblems) {
-        lines.push(`- ${problem.scenario}: ${problem.codes.join(", ")}`);
-      }
-    }
     lines.push("");
   }
   return lines.join("\n");
@@ -632,14 +615,6 @@ function measureVariantTier(
     variant,
     tier,
     scenarios: results,
-    nearWallProblems: scenarios
-      .filter((scenario) =>
-        nearWallCodes(measured.get(scenario)!.codes),
-      )
-      .map((scenario) => ({
-        scenario,
-        codes: measured.get(scenario)!.codes,
-      })),
   };
 }
 

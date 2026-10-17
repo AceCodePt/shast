@@ -1,7 +1,7 @@
 {
   "harness": "shast-bench",
   "tsc": "7.0.2",
-  "generatedAt": "2026-10-17T19:21:40.816Z",
+  "generatedAt": "2026-10-17T19:28:48.525Z",
   "baseline": null,
   "results": {
     "src/minimal": {
@@ -13,8 +13,8 @@
         "classes-big": {
           "instantiations": 193088,
           "types": 51474,
-          "check": "0.18s",
-          "total": "0.25s",
+          "check": "0.17s",
+          "total": "0.23s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -23,8 +23,8 @@
         "classes-small": {
           "instantiations": 190757,
           "types": 51201,
-          "check": "0.18s",
-          "total": "0.25s",
+          "check": "0.16s",
+          "total": "0.23s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -33,8 +33,8 @@
         "complex-big": {
           "instantiations": 195684,
           "types": 52619,
-          "check": "0.18s",
-          "total": "0.25s",
+          "check": "0.17s",
+          "total": "0.23s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -43,7 +43,7 @@
         "complex-small": {
           "instantiations": 193278,
           "types": 51980,
-          "check": "0.17s",
+          "check": "0.16s",
           "total": "0.23s",
           "ok": true,
           "codes": [],
@@ -53,8 +53,8 @@
         "mixed-big": {
           "instantiations": 199250,
           "types": 52114,
-          "check": "0.16s",
-          "total": "0.23s",
+          "check": "0.18s",
+          "total": "0.24s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -63,8 +63,8 @@
         "mixed-small": {
           "instantiations": 195371,
           "types": 51863,
-          "check": "0.18s",
-          "total": "0.24s",
+          "check": "0.20s",
+          "total": "0.26s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -73,7 +73,7 @@
         "null": {
           "instantiations": 147762,
           "types": 42221,
-          "check": "0.12s",
+          "check": "0.13s",
           "total": "0.19s",
           "ok": true,
           "codes": [],
@@ -83,8 +83,8 @@
         "simple-big": {
           "instantiations": 181837,
           "types": 49856,
-          "check": "0.14s",
-          "total": "0.20s",
+          "check": "0.16s",
+          "total": "0.23s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -93,15 +93,14 @@
         "simple-small": {
           "instantiations": 179424,
           "types": 49703,
-          "check": "0.15s",
-          "total": "0.22s",
+          "check": "0.16s",
+          "total": "0.23s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         }
-      },
-      "nearWallProblems": []
+      }
     },
     "src/common": {
       "impl": "src",
@@ -112,7 +111,7 @@
         "classes-big": {
           "instantiations": 401797,
           "types": 85307,
-          "check": "0.32s",
+          "check": "0.33s",
           "total": "0.39s",
           "ok": true,
           "codes": [],
@@ -132,8 +131,8 @@
         "complex-big": {
           "instantiations": 405976,
           "types": 86635,
-          "check": "0.35s",
-          "total": "0.41s",
+          "check": "0.36s",
+          "total": "0.43s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -143,7 +142,7 @@
           "instantiations": 403012,
           "types": 85949,
           "check": "0.34s",
-          "total": "0.41s",
+          "total": "0.40s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -152,8 +151,8 @@
         "mixed-big": {
           "instantiations": 409818,
           "types": 86346,
-          "check": "0.36s",
-          "total": "0.42s",
+          "check": "0.37s",
+          "total": "0.43s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -162,8 +161,8 @@
         "mixed-small": {
           "instantiations": 405839,
           "types": 86033,
-          "check": "0.33s",
-          "total": "0.40s",
+          "check": "0.36s",
+          "total": "0.45s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -172,8 +171,8 @@
         "null": {
           "instantiations": 292811,
           "types": 64060,
-          "check": "0.23s",
-          "total": "0.30s",
+          "check": "0.27s",
+          "total": "0.34s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -182,8 +181,8 @@
         "simple-big": {
           "instantiations": 372679,
           "types": 79921,
-          "check": "0.28s",
-          "total": "0.34s",
+          "check": "0.30s",
+          "total": "0.37s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -192,15 +191,14 @@
         "simple-small": {
           "instantiations": 371067,
           "types": 79938,
-          "check": "0.27s",
-          "total": "0.34s",
+          "check": "0.29s",
+          "total": "0.36s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         }
-      },
-      "nearWallProblems": []
+      }
     },
     "src/full": {
       "impl": "src",
@@ -211,7 +209,7 @@
         "classes-big": {
           "instantiations": 937604,
           "types": 201023,
-          "check": "0.92s",
+          "check": "0.91s",
           "total": "0.98s",
           "ok": true,
           "codes": [],
@@ -221,8 +219,8 @@
         "classes-small": {
           "instantiations": 934335,
           "types": 200749,
-          "check": "0.87s",
-          "total": "0.94s",
+          "check": "0.89s",
+          "total": "0.95s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -231,8 +229,8 @@
         "complex-big": {
           "instantiations": 911857,
           "types": 201630,
-          "check": "0.88s",
-          "total": "0.95s",
+          "check": "0.93s",
+          "total": "0.99s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -242,7 +240,7 @@
           "instantiations": 907559,
           "types": 200862,
           "check": "0.92s",
-          "total": "0.98s",
+          "total": "0.99s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -251,8 +249,8 @@
         "mixed-big": {
           "instantiations": 942483,
           "types": 201714,
-          "check": "0.92s",
-          "total": "0.99s",
+          "check": "0.93s",
+          "total": "1.00s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -261,8 +259,8 @@
         "mixed-small": {
           "instantiations": 938444,
           "types": 201324,
-          "check": "0.90s",
-          "total": "0.96s",
+          "check": "0.91s",
+          "total": "0.97s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -271,8 +269,8 @@
         "null": {
           "instantiations": 595714,
           "types": 131282,
-          "check": "0.71s",
-          "total": "0.78s",
+          "check": "0.70s",
+          "total": "0.77s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -281,8 +279,8 @@
         "simple-big": {
           "instantiations": 866025,
           "types": 193357,
-          "check": "0.81s",
-          "total": "0.88s",
+          "check": "0.80s",
+          "total": "0.86s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -291,15 +289,14 @@
         "simple-small": {
           "instantiations": 864408,
           "types": 193370,
-          "check": "0.80s",
-          "total": "0.86s",
+          "check": "0.81s",
+          "total": "0.88s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         }
-      },
-      "nearWallProblems": []
+      }
     }
   }
 }

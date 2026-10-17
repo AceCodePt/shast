@@ -71,8 +71,6 @@ Every run is `tsc --pretty false --extendedDiagnostics -p <scenario tsconfig>`.
   (variant, tier).
 - **deltaVsBaseline** - instantiations minus the recorded baseline's for the
   same (variant, tier, scenario), or null when the baseline has no such row.
-- **nearWallProblems** - the scenarios whose codes include `TS2589` or
-  `TS2590`, the instantiation-depth errors - the "near the wall" signal.
 
 ## One schema for the result and the baseline
 
@@ -96,8 +94,7 @@ tier of the default variant:
 | `common` | 292,811 | 64,060 | 0.23s |
 | `full` | 595,714 | 131,282 | 0.71s |
 
-Every scenario of the default variant compiles at every tier:
-`nearWallProblems` is empty throughout.
+Every scenario of the default variant compiles at every tier.
 
 ## Known results and caveats
 
