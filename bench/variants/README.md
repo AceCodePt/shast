@@ -8,16 +8,17 @@ A variant directory must contain a `src/` directory: `shast add` vendors
 `<variant>/src` into `bench/.generated/<variant>/<tier>/shast`. The repository's
 own `src` is the default variant, spelled `src`, and is **not** a directory
 here - it is vendored from the repository root. Every other variant is a
-directory in this folder, for example `bench/variants/scratch/src`.
+directory in this folder.
 
-Create a throwaway variant to compare against the default:
+## `piped`
+
+[`piped/`](piped/README.md) recodes the attribute authoring shape from an array
+of single arms (`["'ltr'", "'rtl'"]`) to one piped DSL string
+(`"'ltr' | 'rtl'"`), so the two shapes measure against the same scenarios:
 
 ```sh
-mkdir -p bench/variants/scratch
-cp -r src bench/variants/scratch/src
-pnpm bench -- --variants src,scratch --tiers common
-rm -rf bench/variants/scratch
+pnpm bench -- --variants src,piped
 ```
 
-The variant's `src/` is the only per-variant difference; scenarios and their
-generated tsconfigs are shared across every variant and tier.
+Every variant shares the scenario corpus and their generated tsconfigs; the
+variant's `src/` is the only per-variant difference.

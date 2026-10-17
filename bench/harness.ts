@@ -26,7 +26,7 @@
 //
 // Run:
 //   pnpm bench                              measure every variant x tier x scenario
-//   pnpm bench -- --variants src,scratch    add the `scratch` variant
+//   pnpm bench -- --variants src,piped      add the `piped` variant
 //   pnpm bench -- --tiers common            measure only the `common` tier
 //   pnpm bench -- --scenarios null          measure only the `null` scenario
 //   pnpm bench -- --json -                  emit the result document to stdout

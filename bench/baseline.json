@@ -1,7 +1,7 @@
 {
   "harness": "shast-bench",
   "tsc": "7.0.2",
-  "generatedAt": "2026-10-16T15:09:04.648Z",
+  "generatedAt": "2026-10-17T19:21:40.816Z",
   "baseline": null,
   "results": {
     "src/minimal": {
@@ -11,58 +11,8 @@
       "tier": "minimal",
       "scenarios": {
         "classes-big": {
-          "instantiations": 218096,
-          "types": 55451,
-          "check": "0.16s",
-          "total": "0.23s",
-          "ok": true,
-          "codes": [],
-          "deltaVsNull": null,
-          "deltaVsBaseline": null
-        },
-        "classes-small": {
-          "instantiations": 215851,
-          "types": 55181,
-          "check": "0.16s",
-          "total": "0.22s",
-          "ok": true,
-          "codes": [],
-          "deltaVsNull": null,
-          "deltaVsBaseline": null
-        },
-        "complex-big": {
-          "instantiations": 220909,
-          "types": 56611,
-          "check": "0.17s",
-          "total": "0.24s",
-          "ok": true,
-          "codes": [],
-          "deltaVsNull": null,
-          "deltaVsBaseline": null
-        },
-        "complex-small": {
-          "instantiations": 218670,
-          "types": 55975,
-          "check": "0.19s",
-          "total": "0.25s",
-          "ok": true,
-          "codes": [],
-          "deltaVsNull": null,
-          "deltaVsBaseline": null
-        },
-        "mixed-big": {
-          "instantiations": 224381,
-          "types": 56099,
-          "check": "0.17s",
-          "total": "0.23s",
-          "ok": true,
-          "codes": [],
-          "deltaVsNull": null,
-          "deltaVsBaseline": null
-        },
-        "mixed-small": {
-          "instantiations": 220502,
-          "types": 55848,
+          "instantiations": 193088,
+          "types": 51474,
           "check": "0.18s",
           "total": "0.25s",
           "ok": true,
@@ -70,29 +20,79 @@
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
+        "classes-small": {
+          "instantiations": 190757,
+          "types": 51201,
+          "check": "0.18s",
+          "total": "0.25s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "complex-big": {
+          "instantiations": 195684,
+          "types": 52619,
+          "check": "0.18s",
+          "total": "0.25s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "complex-small": {
+          "instantiations": 193278,
+          "types": 51980,
+          "check": "0.17s",
+          "total": "0.23s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "mixed-big": {
+          "instantiations": 199250,
+          "types": 52114,
+          "check": "0.16s",
+          "total": "0.23s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
+        "mixed-small": {
+          "instantiations": 195371,
+          "types": 51863,
+          "check": "0.18s",
+          "total": "0.24s",
+          "ok": true,
+          "codes": [],
+          "deltaVsNull": null,
+          "deltaVsBaseline": null
+        },
         "null": {
-          "instantiations": 170908,
-          "types": 45648,
-          "check": "0.13s",
-          "total": "0.20s",
+          "instantiations": 147762,
+          "types": 42221,
+          "check": "0.12s",
+          "total": "0.19s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "simple-big": {
-          "instantiations": 207103,
-          "types": 53836,
-          "check": "0.16s",
-          "total": "0.22s",
+          "instantiations": 181837,
+          "types": 49856,
+          "check": "0.14s",
+          "total": "0.20s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "simple-small": {
-          "instantiations": 204690,
-          "types": 53683,
+          "instantiations": 179424,
+          "types": 49703,
           "check": "0.15s",
           "total": "0.22s",
           "ok": true,
@@ -110,18 +110,18 @@
       "tier": "common",
       "scenarios": {
         "classes-big": {
-          "instantiations": 424394,
-          "types": 89240,
-          "check": "0.31s",
-          "total": "0.37s",
+          "instantiations": 401797,
+          "types": 85307,
+          "check": "0.32s",
+          "total": "0.39s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "classes-small": {
-          "instantiations": 421913,
-          "types": 88951,
+          "instantiations": 399180,
+          "types": 85016,
           "check": "0.32s",
           "total": "0.38s",
           "ok": true,
@@ -130,18 +130,18 @@
           "deltaVsBaseline": null
         },
         "complex-big": {
-          "instantiations": 428925,
-          "types": 90605,
-          "check": "0.37s",
-          "total": "0.43s",
+          "instantiations": 405976,
+          "types": 86635,
+          "check": "0.35s",
+          "total": "0.41s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "complex-small": {
-          "instantiations": 426227,
-          "types": 89922,
+          "instantiations": 403012,
+          "types": 85949,
           "check": "0.34s",
           "total": "0.41s",
           "ok": true,
@@ -150,28 +150,28 @@
           "deltaVsBaseline": null
         },
         "mixed-big": {
-          "instantiations": 432727,
-          "types": 90309,
-          "check": "0.33s",
-          "total": "0.39s",
+          "instantiations": 409818,
+          "types": 86346,
+          "check": "0.36s",
+          "total": "0.42s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "mixed-small": {
-          "instantiations": 428748,
-          "types": 89996,
-          "check": "0.34s",
-          "total": "0.41s",
+          "instantiations": 405839,
+          "types": 86033,
+          "check": "0.33s",
+          "total": "0.40s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "null": {
-          "instantiations": 314033,
-          "types": 67434,
+          "instantiations": 292811,
+          "types": 64060,
           "check": "0.23s",
           "total": "0.30s",
           "ok": true,
@@ -180,20 +180,20 @@
           "deltaVsBaseline": null
         },
         "simple-big": {
-          "instantiations": 395852,
-          "types": 83852,
-          "check": "0.29s",
-          "total": "0.35s",
+          "instantiations": 372679,
+          "types": 79921,
+          "check": "0.28s",
+          "total": "0.34s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "simple-small": {
-          "instantiations": 394151,
-          "types": 83869,
-          "check": "0.29s",
-          "total": "0.35s",
+          "instantiations": 371067,
+          "types": 79938,
+          "check": "0.27s",
+          "total": "0.34s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
@@ -209,91 +209,79 @@
       "tier": "full",
       "scenarios": {
         "classes-big": {
-          "instantiations": 959549,
-          "types": 204914,
-          "check": "0.87s",
-          "total": "0.94s",
-          "ok": false,
-          "codes": [
-            "TS2589"
-          ],
+          "instantiations": 937604,
+          "types": 201023,
+          "check": "0.92s",
+          "total": "0.98s",
+          "ok": true,
+          "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "classes-small": {
-          "instantiations": 956395,
-          "types": 204642,
-          "check": "0.89s",
-          "total": "0.96s",
-          "ok": false,
-          "codes": [
-            "TS2589"
-          ],
+          "instantiations": 934335,
+          "types": 200749,
+          "check": "0.87s",
+          "total": "0.94s",
+          "ok": true,
+          "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "complex-big": {
-          "instantiations": 934916,
-          "types": 205589,
-          "check": "0.86s",
-          "total": "0.92s",
-          "ok": false,
-          "codes": [
-            "TS2589"
-          ],
+          "instantiations": 911857,
+          "types": 201630,
+          "check": "0.88s",
+          "total": "0.95s",
+          "ok": true,
+          "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "complex-small": {
-          "instantiations": 931124,
-          "types": 204822,
-          "check": "0.85s",
-          "total": "0.92s",
-          "ok": false,
-          "codes": [
-            "TS2589"
-          ],
+          "instantiations": 907559,
+          "types": 200862,
+          "check": "0.92s",
+          "total": "0.98s",
+          "ok": true,
+          "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "mixed-big": {
-          "instantiations": 964542,
-          "types": 205664,
-          "check": "0.89s",
-          "total": "0.95s",
-          "ok": false,
-          "codes": [
-            "TS2589"
-          ],
+          "instantiations": 942483,
+          "types": 201714,
+          "check": "0.92s",
+          "total": "0.99s",
+          "ok": true,
+          "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "mixed-small": {
-          "instantiations": 960503,
-          "types": 205274,
-          "check": "0.89s",
-          "total": "0.95s",
-          "ok": false,
-          "codes": [
-            "TS2589"
-          ],
+          "instantiations": 938444,
+          "types": 201324,
+          "check": "0.90s",
+          "total": "0.96s",
+          "ok": true,
+          "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "null": {
-          "instantiations": 615925,
-          "types": 134612,
-          "check": "0.68s",
-          "total": "0.74s",
+          "instantiations": 595714,
+          "types": 131282,
+          "check": "0.71s",
+          "total": "0.78s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         },
         "simple-big": {
-          "instantiations": 888395,
-          "types": 197248,
-          "check": "0.80s",
+          "instantiations": 866025,
+          "types": 193357,
+          "check": "0.81s",
           "total": "0.88s",
           "ok": true,
           "codes": [],
@@ -301,54 +289,17 @@
           "deltaVsBaseline": null
         },
         "simple-small": {
-          "instantiations": 886689,
-          "types": 197261,
-          "check": "0.79s",
-          "total": "0.85s",
+          "instantiations": 864408,
+          "types": 193370,
+          "check": "0.80s",
+          "total": "0.86s",
           "ok": true,
           "codes": [],
           "deltaVsNull": null,
           "deltaVsBaseline": null
         }
       },
-      "nearWallProblems": [
-        {
-          "scenario": "classes-big",
-          "codes": [
-            "TS2589"
-          ]
-        },
-        {
-          "scenario": "classes-small",
-          "codes": [
-            "TS2589"
-          ]
-        },
-        {
-          "scenario": "complex-big",
-          "codes": [
-            "TS2589"
-          ]
-        },
-        {
-          "scenario": "complex-small",
-          "codes": [
-            "TS2589"
-          ]
-        },
-        {
-          "scenario": "mixed-big",
-          "codes": [
-            "TS2589"
-          ]
-        },
-        {
-          "scenario": "mixed-small",
-          "codes": [
-            "TS2589"
-          ]
-        }
-      ]
+      "nearWallProblems": []
     }
   }
 }

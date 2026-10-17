@@ -36,7 +36,7 @@ loading a tree with no components checked, and every other scenario carries a
 
 ```sh
 pnpm bench                              # every variant x tier x scenario
-pnpm bench -- --variants src,scratch    # add a variant from bench/variants/
+pnpm bench -- --variants src,piped      # add a variant from bench/variants/
 pnpm bench -- --tiers common            # one tier
 pnpm bench -- --scenarios null          # one scenario
 pnpm bench -- --json -                  # emit the result document to stdout
@@ -92,9 +92,12 @@ tier of the default variant:
 
 | Tier | Instantiations | Types | Check |
 | --- | ---: | ---: | ---: |
-| `minimal` | 170,908 | 45,648 | 0.13s |
-| `common` | 314,033 | 67,434 | 0.23s |
-| `full` | 615,925 | 134,612 | 0.68s |
+| `minimal` | 147,762 | 42,221 | 0.12s |
+| `common` | 292,811 | 64,060 | 0.23s |
+| `full` | 595,714 | 131,282 | 0.71s |
+
+Every scenario of the default variant compiles at every tier:
+`nearWallProblems` is empty throughout.
 
 ## Known results and caveats
 
