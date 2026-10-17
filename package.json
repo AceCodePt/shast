@@ -28,7 +28,7 @@
 		"example": "npx tsx examples/basic.ts",
 		"playground": "npx tsx examples/playground.ts",
 		"bench": "tsx bench/harness.ts",
-		"bench:quick": "tsx bench/harness.ts --quick"
+		"bench:quick": "tsx bench/harness.ts --tiers common --repeats 1"
 	},
 	"keywords": [
 		"html",
@@ -55,6 +55,6 @@
 		"typescript": "^7.0.2"
 	},
 	"dependencies": {
-		"tsyntax": "^1.1.0"
+		"tsyntax": "^1.1.4"
 	}
 }
