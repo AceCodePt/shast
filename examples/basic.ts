@@ -1,20 +1,21 @@
 // Runnable example: assemble the shipped `common` registry with the public
 // surface, build a component, and print the rendered html/css.
 //
-// This is the piece that used to live in `src/index.ts` as a side effect.
+// This is the wiring `shast add` generates into a consumer's tree, spelled out
+// against the repository's own `src`: the engine, the `common` tier files, and
+// the `cssPropertiesConfig` builder, imported directly.
+//
 // Run it with `pnpm example`.
-import {
-  commonCSSAttributes,
-  commonCSSKeyframes,
-  commonCSSPseudoClasses,
-  commonCSSQueries,
-  commonCSSSyntax,
-  commonHTMLAttributes,
-  commonHTMLTags,
-  cssPropertiesConfig,
-  engine,
-  SUPPORTED_KEYWORDS,
-} from "../src/index.ts";
+import engine from "../src/engine/index.ts";
+import { cssPropertiesConfig } from "../src/css/properties-config/index.ts";
+import { SUPPORTED_KEYWORDS } from "tsyntax";
+import commonHTMLTags from "../src/html/tag-config/tiers/common.ts";
+import commonHTMLAttributes from "../src/html/attribute-config/tiers/common.ts";
+import commonCSSSyntax from "../src/css/syntax-config/tiers/common.ts";
+import commonCSSAttributes from "../src/css/attribute-config/tiers/common.ts";
+import commonCSSPseudoClasses from "../src/css/pseudo-class-config/tiers/common.ts";
+import commonCSSQueries from "../src/css/queries-config/tiers/common.ts";
+import commonCSSKeyframes from "../src/css/keyframes-config/tiers/common.ts";
 
 // CSS custom properties are per-consumer: they have no shipped tiers, so
 // the example registers the handful the demo component uses.

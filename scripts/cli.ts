@@ -140,10 +140,9 @@ function formatReplacedReport(
 // Directories under `src/` copied wholesale, except for the config tiers,
 // which are filtered to the chosen tier.
 const COPY_DIRS = ["engine", "css", "html"] as const;
-// Root-level `src/` files copied too. `src/index.ts` is deliberately absent: it
-// is a barrel re-exporting every tier of every family, so vendoring it would
-// drag the unchosen tiers back into the program. The vendored tree has no
-// barrel; the consumer imports the engine and family entry points directly.
+// Root-level `src/` files copied too. There is no root barrel to copy: the
+// vendored tree has none either, so the consumer imports the engine and family
+// entry points directly and no unchosen tier is dragged into the program.
 const COPY_FILES = ["types.ts"] as const;
 
 const TIERS = ["minimal", "common", "full"] as const;

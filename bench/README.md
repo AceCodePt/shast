@@ -6,9 +6,8 @@ It lives in the repo so the numbers have a reproducible source instead of being
 "a local benchmark harness that is not included in this repository".
 
 It measures `tsc` cost against the **vendored consumer trees** that `shast add`
-writes - not against the repo's own `src/index.ts` barrel, which re-exports all
-three tiers and would measure a different program. There is a **single
-compiler**: the repository's own `typescript` package.
+writes, so the program under test is exactly what a consumer's compiler sees.
+There is a **single compiler**: the repository's own `typescript` package.
 
 ## The model: variant x tier x scenario
 

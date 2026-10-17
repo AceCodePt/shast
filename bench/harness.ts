@@ -3,8 +3,8 @@
 //
 // This is the in-repo replacement for the out-of-tree harness the README and
 // docs/performance.md describe as "indicative". It measures `tsc` cost against
-// the *vendored consumer trees* `shast add` writes - not against the repo's
-// own barrel, which pulls in all three tiers.
+// the *vendored consumer trees* `shast add` writes, so the program under test
+// is exactly what a consumer's compiler sees.
 //
 // The model is variant x tier x scenario:
 //
