@@ -380,6 +380,21 @@ describe("runtime structural guard for string CSS values", () => {
       );
     });
 
+    test("a relative colour interior carrying a structural break-out is rejected", () => {
+      // The free interior of `rgb(from ...)` is not grammar-checked by the
+      // DSL, but the runtime structural scan still guards the declaration:
+      // a `}` inside the function body would open a block in the stylesheet.
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "div",
+            innerHTML: "x",
+            css: { color: "rgb(from } .evil { color: red) r g b)" },
+          }),
+        /CSS Error: 'color' value contains a '\}' inside a function/,
+      );
+    });
+
     test("a quoted string containing a brace", () => {
       assert.doesNotThrow(() =>
         createComponent({

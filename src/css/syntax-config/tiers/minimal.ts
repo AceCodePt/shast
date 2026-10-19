@@ -28,8 +28,12 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   "<var>": ["`var(${string})`"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+  // Relative colour syntax (`rgb(from var(--base) r g b / 50%)`) is a
+  // free-interior arm: the interior (source colour, channels, arithmetic) is
+  // not expressible in the scalar-only DSL, so it is accepted as `${string}`
+  // and checked at runtime only — the same caveat as the gradient arms.
   "<color>":
-    ["`#${string}`", "`rgb(${number} ${number} ${number})`", "`rgb(${number}, ${number}, ${number})`", "'transparent'", "'currentColor'", "'inherit'", "'black'", "'white'", "<var>"],
+    ["`#${string}`", "`rgb(${number} ${number} ${number})`", "`rgb(${number}, ${number}, ${number})`", "`rgb(from ${string})`", "'transparent'", "'currentColor'", "'inherit'", "'black'", "'white'", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/string
   "<string>": ["string"],

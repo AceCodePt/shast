@@ -71,8 +71,20 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
 
   // ── Color types ────────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+  // Relative colour syntax (`rgb(from var(--base) r g b / 50%)`) is a
+  // free-interior arm, same family as the gradients: the interior (source
+  // colour, channels, arithmetic) is not expressible in the scalar-only DSL,
+  // so each function gets a `from ${string}` arm checked at runtime only.
+  //
+  // The `full` tier declares every colour function, which would push the
+  // `<color>` union past the type-checking budget (17 attributes reference
+  // `<color>` in the full attribute config), so the free-interior arms live
+  // in their own `<color-from>` token, referenced by `<color>`. The arms are
+  // part of `<color>` at both walls either way.
+  "<color-from>":
+    ["`rgb(from ${string})`", "`rgba(from ${string})`", "`hsl(from ${string})`", "`hsla(from ${string})`", "`hwb(from ${string})`", "`lab(from ${string})`", "`lch(from ${string})`", "`oklch(from ${string})`", "`oklab(from ${string})`", "`color(from ${string})`"],
   "<color>":
-    ["`#${string}`", "`rgb(${number} ${number} ${number})`", "`rgb(${number} ${number} ${number} / ${number})`", "`rgb(${number}, ${number}, ${number})`", "`rgba(${number}, ${number}, ${number}, ${number})`", "`hsl(${number} ${number}% ${number}%)`", "`hsl(${number} ${number}% ${number}% / ${number})`", "`hsl(${number}, ${number}%, ${number}%)`", "`hsla(${number}, ${number}%, ${number}%, ${number})`", "`hwb(${number} ${number}% ${number}%)`", "`hwb(${number} ${number}% ${number}% / ${number})`", "`lab(${number} ${number} ${number})`", "`lab(${number} ${number} ${number} / ${number})`", "`lch(${number} ${number} ${number})`", "`lch(${number} ${number} ${number} / ${number})`", "`oklch(${number} ${number} ${number})`", "`oklch(${number} ${number} ${number} / ${number})`", "`oklab(${number} ${number} ${number})`", "`oklab(${number} ${number} ${number} / ${number})`", "`color(display-p3 ${number} ${number} ${number})`", "`color(srgb ${number} ${number} ${number})`", "`color(a98-rgb ${number} ${number} ${number})`", "`color(prophoto-rgb ${number} ${number} ${number})`", "`color(rec2020 ${number} ${number} ${number})`", "'transparent'", "'currentColor'", "'inherit'", "'initial'", "'unset'", "'black'", "'white'", "'red'", "'blue'", "'gray'", "'green'", "'yellow'", "'orange'", "'purple'", "'silver'", "'navy'", "'teal'", "'coral'", "'lime'", "'pink'", "'gold'", "'maroon'", "<var>"],
+    ["`#${string}`", "`rgb(${number} ${number} ${number})`", "`rgb(${number} ${number} ${number} / ${number})`", "`rgb(${number}, ${number}, ${number})`", "`rgba(${number}, ${number}, ${number}, ${number})`", "`hsl(${number} ${number}% ${number}%)`", "`hsl(${number} ${number}% ${number}% / ${number})`", "`hsl(${number}, ${number}%, ${number}%)`", "`hsla(${number}, ${number}%, ${number}%, ${number})`", "`hwb(${number} ${number}% ${number}%)`", "`hwb(${number} ${number}% ${number}% / ${number})`", "`lab(${number} ${number} ${number})`", "`lab(${number} ${number} ${number} / ${number})`", "`lch(${number} ${number} ${number})`", "`lch(${number} ${number} ${number} / ${number})`", "`oklch(${number} ${number} ${number})`", "`oklch(${number} ${number} ${number} / ${number})`", "`oklab(${number} ${number} ${number})`", "`oklab(${number} ${number} ${number} / ${number})`", "`color(display-p3 ${number} ${number} ${number})`", "`color(srgb ${number} ${number} ${number})`", "`color(a98-rgb ${number} ${number} ${number})`", "`color(prophoto-rgb ${number} ${number} ${number})`", "`color(rec2020 ${number} ${number} ${number})`", "<color-from>", "'transparent'", "'currentColor'", "'inherit'", "'initial'", "'unset'", "'black'", "'white'", "'red'", "'blue'", "'gray'", "'green'", "'yellow'", "'orange'", "'purple'", "'silver'", "'navy'", "'teal'", "'coral'", "'lime'", "'pink'", "'gold'", "'maroon'", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/alpha-value
   "<alpha-value>": ["`${number}`", "`${number}%`", "<calc>", "<var>"],
