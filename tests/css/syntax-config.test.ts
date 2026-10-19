@@ -638,4 +638,153 @@ describe("cssSyntaxConfig", () => {
       assert.ok(config["<color>"]);
     });
   });
+
+  // -------------------------------------------------------------------------
+  // Relative colour syntax.
+  //
+  // Free-interior arms, the same family as the gradients: `rgb(from ${string})`
+  // and friends accept any interior (source colour, channels, arithmetic) and
+  // rely on the runtime walls - the structural scan and var() resolution -
+  // instead of a DSL grammar the type wall cannot express.
+  // -------------------------------------------------------------------------
+  describe("Relative colour syntax (free-interior arms)", () => {
+    type ColorOf<Tier extends CSSSyntaxKeywords> = InferCSSSyntax<
+      SupportedKeywords,
+      Tier,
+      "<color>"
+    >;
+    type AcceptsColor<Tier extends CSSSyntaxKeywords, V extends string> =
+      V extends ColorOf<Tier> ? true : false;
+
+    // The runtime wall the engine runs: the merged keyword map is the config
+    // under test, and the value is matched against that token's DSL string.
+    const RUNTIME_MINIMAL = { ...SUPPORTED_KEYWORDS, ...MINIMAL_SYNTAX };
+    const RUNTIME_COMMON = { ...SUPPORTED_KEYWORDS, ...COMMON_SYNTAX };
+    const RUNTIME_FULL = { ...SUPPORTED_KEYWORDS, ...FULL_SYNTAX };
+
+    describe("Type level", () => {
+      test("minimal accepts rgb(from ...) and rejects undeclared functions", () => {
+        assertType<
+          Equal<
+            AcceptsColor<
+              typeof MINIMAL_SYNTAX,
+              "rgb(from var(--base) r g b / 50%)"
+            >,
+            true
+          >
+        >();
+        // hsl is not declared in minimal, in any form.
+        assertType<
+          Equal<AcceptsColor<typeof MINIMAL_SYNTAX, "hsl(from 0 100% 50%)">, false>
+        >();
+      });
+
+      test("common accepts its declared functions and rejects undeclared ones", () => {
+        for (const form of [
+          "rgb(from var(--base) r g b / 50%)",
+          "hsl(from 0 100% 50%)",
+          "oklch(from 0 0 0)",
+          "color(from display-p3 1 0 0)",
+        ] as const) {
+          assertType<Equal<AcceptsColor<typeof COMMON_SYNTAX, typeof form>, true>>();
+        }
+        // hwb and lab are not declared in common.
+        assertType<
+          Equal<AcceptsColor<typeof COMMON_SYNTAX, "hwb(from 0 0 0)">, false>
+        >();
+        assertType<
+          Equal<AcceptsColor<typeof COMMON_SYNTAX, "lab(from 0 0 0)">, false>
+        >();
+      });
+
+      test("full accepts every declared colour function", () => {
+        for (const form of [
+          "rgb(from var(--base) r g b / 50%)",
+          "rgba(from var(--base) r g b / 50%)",
+          "hsl(from 0 100% 50%)",
+          "hsla(from 0 100% 50% / 0.5)",
+          "hwb(from 0 0% 0%)",
+          "lab(from 0 0 0)",
+          "lch(from 0 0 0)",
+          "oklch(from 0 0 0)",
+          "oklab(from 0 0 0)",
+          "color(from display-p3 1 0 0)",
+        ] as const) {
+          assertType<Equal<AcceptsColor<typeof FULL_SYNTAX, typeof form>, true>>();
+        }
+      });
+    });
+
+    describe("Runtime", () => {
+      test("minimal accepts rgb(from ...) and rejects hsl(from ...)", () => {
+        assert.doesNotThrow(() =>
+          parseValueAgainstDSL(
+            RUNTIME_MINIMAL,
+            MINIMAL_SYNTAX["<color>"],
+            "rgb(from var(--base) r g b / 50%)" as never,
+          ),
+        );
+        assert.throws(
+          () =>
+            parseValueAgainstDSL(
+              RUNTIME_MINIMAL,
+              MINIMAL_SYNTAX["<color>"],
+              "hsl(from 0 100% 50%)" as never,
+            ),
+          /does not match DSL/,
+        );
+      });
+
+      test("common accepts its declared from forms and rejects undeclared ones", () => {
+        for (const form of [
+          "rgb(from var(--base) r g b / 50%)",
+          "hsl(from 0 100% 50%)",
+          "oklch(from 0 0 0)",
+          "color(from display-p3 1 0 0)",
+        ]) {
+          assert.doesNotThrow(() =>
+            parseValueAgainstDSL(
+              RUNTIME_COMMON,
+              COMMON_SYNTAX["<color>"],
+              form as never,
+            ),
+            `${form} should be accepted`,
+          );
+        }
+        assert.throws(
+          () =>
+            parseValueAgainstDSL(
+              RUNTIME_COMMON,
+              COMMON_SYNTAX["<color>"],
+              "hwb(from 0 0 0)" as never,
+            ),
+          /does not match DSL/,
+        );
+      });
+
+      test("full accepts every declared from form", () => {
+        for (const form of [
+          "rgb(from var(--base) r g b / 50%)",
+          "rgba(from var(--base) r g b / 50%)",
+          "hsl(from 0 100% 50%)",
+          "hsla(from 0 100% 50% / 0.5)",
+          "hwb(from 0 0% 0%)",
+          "lab(from 0 0 0)",
+          "lch(from 0 0 0)",
+          "oklch(from 0 0 0)",
+          "oklab(from 0 0 0)",
+          "color(from display-p3 1 0 0)",
+        ]) {
+          assert.doesNotThrow(() =>
+            parseValueAgainstDSL(
+              RUNTIME_FULL,
+              FULL_SYNTAX["<color>"],
+              form as never,
+            ),
+            `${form} should be accepted`,
+          );
+        }
+      });
+    });
+  });
 });
