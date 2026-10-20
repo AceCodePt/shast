@@ -92,6 +92,12 @@ so every node produces a new cache key and the cache never hits. The type-object
 count shows it: `named` creates ~500 more distinct types per scenario (one per
 member per node), not fewer. There is no cache win to trade against the +0.38%.
 
+Completion is unaffected too: at the end of `css: {` on `mixed-big` both trees
+return the same 299 entries, take ~0.73-0.82s on the first request and 16-18ms
+warm (see [`../../README.md`](../../README.md#lsp-completion-not-what-the-harness-measures)).
+The one-off cold cost is the editor's loading flash, and naming does not move
+it.
+
 The gain is at the source level: the members are nameable, navigable, and
 individually documented. The diagnostic trade is small: an unknown-property dump
 prints the alias name instead of the expanded literal, and is ~35 bytes shorter

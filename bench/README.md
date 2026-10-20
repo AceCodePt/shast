@@ -71,6 +71,34 @@ Every run is `tsc --pretty false --extendedDiagnostics -p <scenario tsconfig>`.
 - **deltaVsBaseline** - instantiations minus the recorded baseline's for the
   same (variant, tier, scenario), or null when the baseline has no such row.
 
+## LSP completion (not what the harness measures)
+
+The harness measures whole-program `tsc`; it does not model the editor's
+completion path, which resolves one contextual type and enumerates its
+properties. [`lsp-probe.mjs`](lsp-probe.mjs) drives the API the language server
+exposes (`typescript/unstable/sync`) against an already-generated tree:
+
+```sh
+node bench/lsp-probe.mjs --scenario mixed-big --at "css: {"
+node bench/lsp-probe.mjs --variant named --scenario mixed-big --at "css: {"
+```
+
+On the `full` / `mixed-big` tree, completion at the end of `css: {`:
+
+| tree | entries | cold | warm median |
+| --- | ---: | ---: | ---: |
+| `src` | 299 | 0.73s | 16ms |
+| `named` | 299 | 0.73-0.82s | 16-18ms |
+
+Inside `attributes: {` it is 82 entries, ~0.75s cold and ~15ms warm. The entry
+lists are identical between the two trees.
+
+The cold request is the editor's loading flash: the first completion after the
+program loads resolves the `css` contextual type and enumerates the 15-member
+intersection. Warm requests reuse the resolved type and return in ~15ms. Naming
+the intersection members moves neither number, so the flash is not something the
+names can fix - it is the one-off cost of resolving the type.
+
 ## One schema for the result and the baseline
 
 `bench/out/results.json` and `bench/baseline.json` are the same document shape
