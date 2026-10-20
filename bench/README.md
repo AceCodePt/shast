@@ -35,7 +35,7 @@ loading a tree with no components checked, and every other scenario carries a
 
 ```sh
 pnpm bench                              # every variant x tier x scenario
-pnpm bench -- --variants src,piped      # add a variant from bench/variants/
+pnpm bench -- --variants src,piped,named  # add variants from bench/variants/
 pnpm bench -- --tiers common            # one tier
 pnpm bench -- --scenarios null          # one scenario
 pnpm bench -- --json -                  # emit the result document to stdout

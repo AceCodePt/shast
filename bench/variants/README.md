@@ -20,5 +20,15 @@ of single arms (`["'ltr'", "'rtl'"]`) to one piped DSL string
 pnpm bench -- --variants src,piped
 ```
 
+## `named`
+
+[`named/`](named/README.md) extracts every anonymous member of the two big
+intersections in `engine/types.ts` into a named alias, so the naming's effect on
+instantiations is measured by the harness rather than by editing `src`:
+
+```sh
+pnpm bench -- --variants src,named
+```
+
 Every variant shares the scenario corpus and their generated tsconfigs; the
 variant's `src/` is the only per-variant difference.
