@@ -446,14 +446,6 @@ Two trade-offs and known gaps: wildcard `form`/`dialog` admit child nesting the
 HTML parser repairs, and integer-like `innerHTML` keys silently reorder
 children. See [docs/limitations.md](docs/limitations.md).
 
-- **Relative colour syntax.** `rgb(from var(--base) r g b / 50%)` and the
-  `from` form of every colour function a tier declares are expressible through
-  free-interior arms on `<color>`. The interior is not grammar-checked by
-  either wall: it is accepted as `${string}` and validated only at runtime, by
-  the structural scan and `var()` resolution — the same caveat as the gradient
-  arms. A `var()` naming an unregistered custom property, or an interior that
-  breaks out of the declaration, is rejected at runtime.
-
 ## Repository history
 
 `.orchestration/` and `archive/` are deliberately version-controlled, not

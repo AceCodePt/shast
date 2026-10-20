@@ -116,29 +116,6 @@ value. calc is now free to import var's name resolution in one direction,
 without a cycle, when its arithmetic needs to know whether a `var()` operand is
 dimensional and which dimension it carries.
 
-## Relative colour syntax (`from`)
-
-Relative colour syntax — `rgb(from var(--base) r g b / 50%)` and the same
-`from` form for every colour function a tier declares — is expressible through
-free-interior arms on `<color>`: `rgb(from ${string})` and friends, one per
-declared colour function per tier (`minimal`: `rgb`; `common`: `rgb`, `hsl`,
-`oklch`, `color`; `full`: every declared colour function).
-
-The interior (source colour, channel keywords, arithmetic) is not expressible
-in shast's scalar-only DSL, so each arm accepts `${string}` and is checked at
-runtime only — by the structural scan (`assertNoStructuralBreakout`) and by
-`var()` resolution (`validateVars` at runtime, `VarConstraint` at the type
-level), the same caveat as the gradient arms:
-
-```ts
-color: "rgb(from var(--brand) r g b / 50%)",   // needs --brand registered
-```
-
-A `var()` naming an unregistered custom property is rejected at both walls,
-and an interior that breaks out of the declaration (a top-level `;`, `{` or
-`}` inside the function) is rejected by the runtime structural scan. The
-written value is printed verbatim by `renderComponent`.
-
 ## Registered properties reject unions in `syntax`
 
 A registered property's `syntax` may **not contain a `|`** by default. This is

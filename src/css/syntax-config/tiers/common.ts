@@ -72,10 +72,7 @@ export default cssSyntaxConfig(SUPPORTED_KEYWORDS, {
   // ── MDN color types ────────────────────────────────────────────────────────
   // https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
   "<color>":
-    ["`#${string}`", "`rgb(${number} ${number} ${number})`", "`rgb(${number} ${number} ${number} / ${number})`", "`rgb(${number}, ${number}, ${number})`", "`rgba(${number}, ${number}, ${number}, ${number})`", "`hsl(${number} ${number}% ${number}%)`", "`hsl(${number} ${number}% ${number}% / ${number})`", "`hsl(${number}, ${number}%, ${number}%)`", "`hsla(${number}, ${number}%, ${number}%, ${number})`", "`oklch(${number} ${number} ${number})`", "`oklch(${number} ${number} ${number} / ${number})`", "`color(display-p3 ${number} ${number} ${number})`",
-    // Relative colour syntax — free interior, runtime-checked only (same caveat as the gradients). One arm per function this tier declares: rgb, hsl, oklch and color.
-    "`rgb(from ${string})`", "`hsl(from ${string})`", "`oklch(from ${string})`", "`color(from ${string})`",
-    "'black'", "'white'", "'red'", "'blue'", "'green'", "'gray'", "'transparent'", "'currentColor'", "'inherit'", "<var>"],
+    ["`#${string}`", "`rgb(${number} ${number} ${number})`", "`rgb(${number} ${number} ${number} / ${number})`", "`rgb(${number}, ${number}, ${number})`", "`rgba(${number}, ${number}, ${number}, ${number})`", "`hsl(${number} ${number}% ${number}%)`", "`hsl(${number} ${number}% ${number}% / ${number})`", "`hsl(${number}, ${number}%, ${number}%)`", "`hsla(${number}, ${number}%, ${number}%, ${number})`", "`oklch(${number} ${number} ${number})`", "`oklch(${number} ${number} ${number} / ${number})`", "`color(display-p3 ${number} ${number} ${number})`", "'black'", "'white'", "'red'", "'blue'", "'green'", "'gray'", "'transparent'", "'currentColor'", "'inherit'", "<var>"],
 
   // https://developer.mozilla.org/en-US/docs/Web/CSS/alpha-value
   "<alpha-value>": ["`${number}`", "`${number}%`", "<calc>", "<var>"],

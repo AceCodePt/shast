@@ -24,7 +24,6 @@ const PROPS = cssPropertiesConfig(SUPPORTED_KEYWORDS, COMMON_SYNTAX, {
   "--spacing": { syntax: "<length>", inherits: false, "initial-value": "1rem" },
   "--gap": { syntax: "<length-percentage>", inherits: false, "initial-value": "1rem" },
   "--brand": { syntax: "<color>", inherits: false, "initial-value": "#000000" },
-  "--base": { syntax: "<color>", inherits: false, "initial-value": "#000000" },
   "--scale": { syntax: "<number>", inherits: false, "initial-value": "2" },
   "--count": { syntax: "<integer>", inherits: false, "initial-value": "1" },
   "--a": { syntax: "<length>", inherits: false, "initial-value": "1rem" },
@@ -190,32 +189,6 @@ describe("var", () => {
           "var(--brand)"
         >
       >();
-    });
-
-    test("accepts rgb(from var(--base) ...) on a <color> slot when --base is registered", () => {
-      const comp = createComponent({
-        tag: "box",
-        innerHTML: "x",
-        css: { color: "rgb(from var(--base) r g b / 50%)" },
-      });
-      assertType<
-        Equal<typeof comp.css.color, "rgb(from var(--base) r g b / 50%)">
-      >();
-    });
-
-    test("rejects rgb(from var(--nope) ...) at the type wall", () => {
-      assert.throws(
-        () =>
-          createComponent({
-            tag: "box",
-            innerHTML: "x",
-            css: {
-              // @ts-expect-error --nope is not a registered custom property
-              color: "rgb(from var(--nope) r g b / 50%)",
-            },
-          }),
-        /unknown custom property '--nope'/,
-      );
     });
   });
 
@@ -424,31 +397,6 @@ describe("var", () => {
         () => validateVars("var(--spacing, 2px)", ctx),
         /takes no fallback/,
       );
-    });
-
-    test("rejects rgb(from var(--nope) ...) at the runtime wall", () => {
-      assert.throws(
-        () =>
-          createComponent({
-            tag: "box",
-            innerHTML: "x",
-            css: {
-              // @ts-expect-error --nope is not a registered custom property
-              color: "rgb(from var(--nope) r g b / 50%)",
-            },
-          }),
-        /unknown custom property '--nope'/,
-      );
-    });
-
-    test("accepts rgb(from var(--base) ...) when --base is registered and renders verbatim", () => {
-      const comp = createComponent({
-        tag: "box",
-        innerHTML: "x",
-        css: { color: "rgb(from var(--base) r g b / 50%)" },
-      });
-      const { css } = renderComponent(comp);
-      assert.ok(css.includes("color: rgb(from var(--base) r g b / 50%);"));
     });
   });
 
