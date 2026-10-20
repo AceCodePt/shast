@@ -16,14 +16,18 @@
 //   --variant   src (default) or a variant under bench/variants/
 //   --tier      minimal | common | full (default: full)
 //   --scenario  a name from bench/scenarios/ (default: mixed-big)
+//   --config    a tsconfig to load instead of the generated one
+//   --file      the file to complete in (default: bench/scenarios/<scenario>.ts)
 //   --at        text whose end marks the completion position (default: "css: {")
 //   --runs      warm samples to take (default: 15)
 //
 // The generated tsconfig for a scenario must exist; run
 // `pnpm bench -- --variants <variant> --tiers <tier> --scenarios <scenario>`
-// first. The output is one JSON object: the entry count, cold and warm
-// latencies, the server-side median, and the entry names joined into a hash so
-// two runs (or two variants) can be compared.
+// first. `--config`/`--file` target a variant's own project instead, for
+// example `--config bench/variants/named/tsconfig.json --file
+// bench/variants/named/src/index.ts`. The output is one JSON object: the entry
+// count, cold and warm latencies, the server-side median, and the entry names
+// joined into a hash so two runs (or two variants) can be compared.
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
@@ -41,15 +45,14 @@ const marker = option("at", "css: {");
 const runs = Number(option("runs", "15"));
 
 const repoRoot = path.resolve(import.meta.dirname, "..");
-const config = path.join(
-  repoRoot,
-  "bench",
-  ".generated",
-  variant,
-  tier,
-  `tsconfig.${scenario}.json`,
-);
-const scenarioFile = path.join(repoRoot, "bench", "scenarios", `${scenario}.ts`);
+const configOption = option("config", null);
+const fileOption = option("file", null);
+const config = configOption
+  ? path.resolve(repoRoot, configOption)
+  : path.join(repoRoot, "bench", ".generated", variant, tier, `tsconfig.${scenario}.json`);
+const scenarioFile = fileOption
+  ? path.resolve(repoRoot, fileOption)
+  : path.join(repoRoot, "bench", "scenarios", `${scenario}.ts`);
 
 if (!existsSync(config)) {
   throw new Error(
@@ -68,7 +71,10 @@ const position = at + marker.length;
 
 const api = new API({ collectTiming: true, cwd: repoRoot });
 api.parseConfigFile(config);
-const snapshot = api.updateSnapshot({ openProjects: [config] });
+const snapshot = api.updateSnapshot({
+  openProjects: [config],
+  openFiles: [scenarioFile],
+});
 const project = snapshot.getProject(config);
 if (!project) throw new Error(`Project ${config} was not loaded`);
 const checker = project.checker;

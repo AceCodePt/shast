@@ -83,21 +83,29 @@ node bench/lsp-probe.mjs --scenario mixed-big --at "css: {"
 node bench/lsp-probe.mjs --variant named --scenario mixed-big --at "css: {"
 ```
 
-On the `full` / `mixed-big` tree, completion at the end of `css: {`:
+The cold request is the editor's loading flash, and it is **not** the CSS type:
+on `full`, a completion at `innerHTML: {` - which returns **zero** entries -
+costs the same ~840ms as `css: {`. It is the program's one-time completion
+warm-up, and it scales with the tier:
 
-| tree | entries | cold | warm median |
+| tier | entries at `css: {` | cold | warm median |
 | --- | ---: | ---: | ---: |
-| `src` | 299 | 0.73s | 16ms |
-| `named` | 299 | 0.73-0.82s | 16-18ms |
+| `minimal` | 35 | 0.11s | 7ms |
+| `common` | 170 | 0.24s | 11ms |
+| `full` | 299 | 0.87s | 17ms |
 
-Inside `attributes: {` it is 82 entries, ~0.75s cold and ~15ms warm. The entry
-lists are identical between the two trees.
+All three load the same 137 files, so the difference is the tier data, not the
+file count. `src` and `named` return identical entry lists and identical
+timings, so naming the intersection members moves neither number.
 
-The cold request is the editor's loading flash: the first completion after the
-program loads resolves the `css` contextual type and enumerates the 15-member
-intersection. Warm requests reuse the resolved type and return in ~15ms. Naming
-the intersection members moves neither number, so the flash is not something the
-names can fix - it is the one-off cost of resolving the type.
+The warm number is the steady state for the list call alone. An editor's felt
+latency is higher: it also resolves entry details, offers auto-imports, and pays
+transport, none of which this API exposes; and a project loaded from a variant's
+own `tsconfig.json` is heavier than a generated scenario tree (276 files versus
+137). Measured against `bench/variants/named` with a demo file in its `src`,
+the first completion is ~0.5-0.7s and later ones ~20-30ms; an edit followed by a
+completion costs ~0.4-0.5s once, then ~20ms. Treat the warm number as the
+server's steady state, not as the editor's felt latency.
 
 ## One schema for the result and the baseline
 
