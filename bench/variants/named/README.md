@@ -72,10 +72,28 @@ in relative terms on `minimal` (+0.90%), where the fixed registry cost is
 smallest. The `null` floor moves by the same +656 at every tier: that is the
 alias declarations themselves.
 
-Check time is within noise at this sample size (sum of the 27 means: 12.92s for
-`src`, 12.21s for `named`), so this is a counter experiment, not a wall-clock
-win.
+Check time is within noise. The first 3-repeat run hinted at a ~5% win for
+`named`; that was measurement order, not the code: the same `named`/`null`
+measurement reported 0.81s when `src` ran first and 0.68s when `named` ran
+first. An order-controlled run (5 full-tier scenarios, 9 repeats, both variant
+orders) gives a per-scenario mean of **0.861s for `src` and 0.856s for
+`named`**.
 
-The diagnostic trade is small but real: an unknown-property dump prints the
-alias name instead of the expanded literal, and is ~35 bytes shorter (750 -> 715
-on a `colr` typo probe), but reads as `CSSChildBlocks<...>` rather than a shape.
+### Caching
+
+TypeScript memoises an alias instantiation by the alias and its type arguments.
+The members that take only registry arguments - `CSSFlatProps`,
+`CSSCustomPropertyProps`, and the zero-arg slots - are instantiated once per
+program and are effectively free.
+
+The per-node members (`CSSChildBlocks`, `CSSLockedProps`,
+`CSSPseudoClassBlocks`, ...) take the node type `T` and the node's `CSSValue`,
+so every node produces a new cache key and the cache never hits. The type-object
+count shows it: `named` creates ~500 more distinct types per scenario (one per
+member per node), not fewer. There is no cache win to trade against the +0.38%.
+
+The gain is at the source level: the members are nameable, navigable, and
+individually documented. The diagnostic trade is small: an unknown-property dump
+prints the alias name instead of the expanded literal, and is ~35 bytes shorter
+(750 -> 715 on a `colr` typo probe), but reads as `CSSChildBlocks<...>` rather
+than a shape.
