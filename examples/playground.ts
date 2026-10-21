@@ -78,12 +78,13 @@ const { createComponent, renderComponent, cssProperties: propertyRules } =
 // 2. One component, validated against everything
 // ---------------------------------------------------------------------------
 
-const planCard = (featured: boolean) =>
-  createComponent({
+const planCard = (featured: boolean) => {
+  const featureClass = featured ? "featured" : "";
+  return createComponent({
     tag: "article",
     // A conditional class. The type system sees both possible values, so
     // `&.featured` below is legal and `&.actve` would not be.
-    attributes: { class: featured ? "plan featured" : "plan" },
+    attributes: { class: `plan ${featureClass}` },
     innerHTML: {
       heading: { tag: "h2", innerHTML: "Studio" },
       price: { tag: "p", innerHTML: "$18 / mo" },
@@ -126,6 +127,7 @@ const planCard = (featured: boolean) =>
       },
     },
   });
+}
 
 const { html, css } = renderComponent(planCard(true));
 
