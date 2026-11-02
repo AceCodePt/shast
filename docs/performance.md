@@ -23,9 +23,9 @@ Loading a tree, before any component is checked (the `null` scenario, default
 
 | Tier | Instantiations | Types | Check |
 | --- | ---: | ---: | ---: |
-| `minimal` | 147,762 | 42,221 | 0.12s |
-| `common` | 292,811 | 64,060 | 0.23s |
-| `full` | 595,714 | 131,282 | 0.71s |
+| `minimal` | 149,004 | 42,336 | 0.12s |
+| `common` | 294,053 | 64,175 | 0.29s |
+| `full` | 596,956 | 131,397 | 0.73s |
 
 Instantiation counts are machine-stable; check times vary by machine. The cost
 grows with tier breadth: keep files to a handful of components each and the
@@ -41,43 +41,49 @@ default (`src`) variant, per tier. All values are read from
 
 | Scenario | Instantiations | Types |
 | --- | ---: | ---: |
-| classes-big | 193,088 | 51,474 |
-| classes-small | 190,757 | 51,201 |
-| complex-big | 195,684 | 52,619 |
-| complex-small | 193,278 | 51,980 |
-| mixed-big | 199,250 | 52,114 |
-| mixed-small | 195,371 | 51,863 |
-| null | 147,762 | 42,221 |
-| simple-big | 181,837 | 49,856 |
-| simple-small | 179,424 | 49,703 |
+| calc-big | 224,316 | 53,128 |
+| calc-small | 195,170 | 51,840 |
+| classes-big | 194,240 | 51,586 |
+| classes-small | 191,921 | 51,313 |
+| complex-big | 196,740 | 52,731 |
+| complex-small | 194,370 | 52,092 |
+| mixed-big | 200,354 | 52,226 |
+| mixed-small | 196,499 | 51,975 |
+| null | 149,004 | 42,336 |
+| simple-big | 183,037 | 49,968 |
+| simple-small | 180,624 | 49,815 |
 
 ### `common` tier
 
 | Scenario | Instantiations | Types |
 | --- | ---: | ---: |
-| classes-big | 401,797 | 85,307 |
-| classes-small | 399,180 | 85,016 |
-| complex-big | 405,976 | 86,635 |
-| complex-small | 403,012 | 85,949 |
-| mixed-big | 409,818 | 86,346 |
-| mixed-small | 405,839 | 86,033 |
-| null | 292,811 | 64,060 |
-| simple-big | 372,679 | 79,921 |
-| simple-small | 371,067 | 79,938 |
+| calc-big | 428,631 | 86,692 |
+| calc-small | 399,467 | 85,329 |
+| classes-big | 402,949 | 85,419 |
+| classes-small | 400,344 | 85,128 |
+| complex-big | 407,032 | 86,747 |
+| complex-small | 404,104 | 86,061 |
+| mixed-big | 410,922 | 86,458 |
+| mixed-small | 406,967 | 86,145 |
+| null | 294,053 | 64,175 |
+| simple-big | 373,879 | 80,033 |
+| simple-small | 372,267 | 80,050 |
 
 ### `full` tier
 
 | Scenario | Instantiations | Types |
 | --- | ---: | ---: |
-| classes-big | 937,604 | 201,023 |
-| classes-small | 934,335 | 200,749 |
-| complex-big | 911,857 | 201,630 |
-| complex-small | 907,559 | 200,862 |
-| mixed-big | 942,483 | 201,714 |
-| mixed-small | 938,444 | 201,324 |
-| null | 595,714 | 131,282 |
-| simple-big | 866,025 | 193,357 |
-| simple-small | 864,408 | 193,370 |
+| calc-big | 930,644 | 200,707 |
+| calc-small | 901,424 | 199,981 |
+| classes-big | 938,756 | 201,135 |
+| classes-small | 935,499 | 200,861 |
+| complex-big | 912,913 | 201,742 |
+| complex-small | 908,651 | 200,974 |
+| mixed-big | 943,587 | 201,826 |
+| mixed-small | 939,572 | 201,436 |
+| null | 596,956 | 131,397 |
+| simple-big | 867,225 | 193,469 |
+| simple-small | 865,608 | 193,482 |
 
 ## Attribute arms: arrays vs piping
 
@@ -90,11 +96,11 @@ scenarios, piping costs more at every tier:
 
 | Tier | Scenario | arrays (`src`) | piped |
 | --- | --- | ---: | ---: |
-| `minimal` | `null` | 147,762 | 153,871 |
-| `common` | `null` | 292,811 | 336,625 |
-| `full` | `null` | 595,714 | 676,351 |
-| `full` | `classes-big` | 937,604 | 1,050,733 |
-| `full` | `mixed-big` | 942,483 | 1,055,612 |
+| `minimal` | `null` | 149,004 | 153,871 |
+| `common` | `null` | 294,053 | 336,625 |
+| `full` | `null` | 596,956 | 676,351 |
+| `full` | `classes-big` | 938,756 | 1,050,733 |
+| `full` | `mixed-big` | 943,587 | 1,055,612 |
 
 The difference is a fixed per-tier registry cost - it moves the `null` floor by
 the whole amount, plus a small constant per scenario - and it tracks the arm

@@ -125,11 +125,15 @@ tier of the default variant:
 
 | Tier | Instantiations | Types | Check |
 | --- | ---: | ---: | ---: |
-| `minimal` | 147,762 | 42,221 | 0.12s |
-| `common` | 292,811 | 64,060 | 0.23s |
-| `full` | 595,714 | 131,282 | 0.71s |
+| `minimal` | 149,004 | 42,336 | 0.12s |
+| `common` | 294,053 | 64,175 | 0.29s |
+| `full` | 596,956 | 131,397 | 0.73s |
 
-Every scenario of the default variant compiles at every tier.
+Every scenario of the default variant compiles at every tier. The `calc-small`
+and `calc-big` scenarios cover the deep calc path: a whole-value call, an
+embedded composite (`margin: calc(...) calc(...)`), a nested call, and the
+per-value marginal cost (`calc-big` repeats one component's calc properties ten
+times).
 
 ## Known results and caveats
 
