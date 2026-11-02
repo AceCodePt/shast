@@ -10,7 +10,11 @@ import {
 } from "@/engine/gate-resolution.ts";
 import { CSS_IDENTIFIER_REGEX as CSS_CLASS_NAME } from "@/css/ident.ts";
 import { isCSSWideKeyword } from "@/css/wide-keyword.ts";
-import { isCalcString, parseCalc, slotDimensionsOf } from "@/css/calc.ts";
+import {
+  containsCalc,
+  slotDimensionsOf,
+  validateCalcs,
+} from "@/css/calc.ts";
 import { containsVar, validateVars } from "@/css/var.ts";
 import {
   animationReferenceError,
@@ -213,8 +217,8 @@ export const assertNoStructuralBreakout = (
   }
 };
 
-// The deep half of CSS value validation: calc-shaped values go to calc's
-// parser, values containing `var(` to var's resolver. The two are not
+// The deep half of CSS value validation: values containing `calc(` go to
+// calc's scanner, values containing `var(` to var's resolver. The two are not
 // exclusive -- `calc(var(--x) * 2)` runs both -- and other values are
 // untouched. Kept separate from the shallow DSL check so a gate value, whose
 // shallow check already ran during gate resolution, still reaches the deep
@@ -222,7 +226,9 @@ export const assertNoStructuralBreakout = (
 //
 // `dsl` is the syntax the value matched: a named numeric token lets calc's slot
 // check confirm the result dimension (`calc(2Hz * 2)` on `<length-percentage>`
-// fails). An unrecognised DSL leaves the check off.
+// fails). The scanner applies it only when one calc call spans the whole value;
+// an embedded call is grammar-checked alone. An unrecognised DSL (including
+// `<string>`) leaves the check off.
 const deepValidateCSSValue = (
   key: string,
   value: unknown,
@@ -233,21 +239,11 @@ const deepValidateCSSValue = (
   dsl?: string,
 ): void => {
   if (typeof value === "string") assertNoStructuralBreakout(key, value);
-  if (isCalcString(value)) {
-    const expected = dsl === undefined ? undefined : slotDimensionsOf(dsl);
-    if (varContext === undefined) {
-      parseCalc(
-        value,
-        expected === undefined ? undefined : { properties: {}, expected },
-      );
-    } else {
-      parseCalc(
-        value,
-        expected === undefined
-          ? { properties: varContext.properties }
-          : { properties: varContext.properties, expected },
-      );
-    }
+  if (containsCalc(value)) {
+    validateCalcs(value, {
+      properties: varContext?.properties ?? {},
+      expected: dsl === undefined ? undefined : slotDimensionsOf(dsl),
+    });
   }
   if (varContext !== undefined && containsVar(value)) {
     validateVars(value, {

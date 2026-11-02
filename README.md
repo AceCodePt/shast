@@ -198,7 +198,7 @@ is checked against them **twice**:
 | `&.class` references a class declared on the context element - including classes computed via template literals (`` class: `${active} card` ``) | ✓            | ✓                               |
 | Class name is a legal CSS identifier (`1bad`, `b!c` rejected)              | ✓            | ✓                               |
 | Custom property (`--x`) registered and value matches its `syntax`          | ✓            | ✓                               |
-| `calc()` dimensions are legal and match the property's slot                | ✓            | ✓                               |
+| `calc()` grammar is checked per call; a whole-value calc matches the slot  | ✓            | ✓                               |
 | `var()` names a registered property and no cycle exists                    | ✓            | ✓ (cycles too)                  |
 | Registered `@media`/`@container` query key (exact string)                  | ✓            | ✓                               |
 | `animation` references a registered `@keyframes`                           | ✓            | ✓                               |

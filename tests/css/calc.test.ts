@@ -12,8 +12,13 @@ import { SUPPORTED_KEYWORDS, type SupportedKeywords } from "tsyntax";
 import {
   parseCalc,
   isCalcString,
+  containsCalc,
+  validateCalcs,
   type CalcDimension,
+  type ContainsCalc,
+  type IsCalcString,
   type ValidateCalc,
+  type ValidateCalcs,
 } from "@/css/calc.ts";
 import { assertType, type Equal } from "../type-utils.ts";
 
@@ -52,6 +57,26 @@ type ValidSlot<S extends string, E extends CalcDimension> = Equal<
 >;
 type InvalidSlot<S extends string, E extends CalcDimension> = Equal<
   ValidateCalc<
+    S,
+    Props,
+    SupportedKeywords,
+    typeof COMMON_SYNTAX,
+    E
+  > extends string
+    ? true
+    : false,
+  false
+>;
+
+// The scanning entry point: every calc() call in the value is grammar-checked,
+// and the slot applies only when one call spans the whole value.
+type Expected = CalcDimension | "unknown";
+type ValidCalcs<S extends string, E extends Expected = "unknown"> = Equal<
+  ValidateCalcs<S, Props, SupportedKeywords, typeof COMMON_SYNTAX, E>,
+  S
+>;
+type InvalidCalcs<S extends string, E extends Expected = "unknown"> = Equal<
+  ValidateCalcs<
     S,
     Props,
     SupportedKeywords,
@@ -284,6 +309,48 @@ describe("calc", () => {
       assertType<Invalid<"calc(var(--spacing)">>();
     });
 
+    test("scans every calc() in a value, not only a leading prefix", () => {
+      assertType<Equal<ContainsCalc<"translate(calc(1px))">, true>>();
+      assertType<Equal<ContainsCalc<"1px">, false>>();
+      assertType<Equal<ContainsCalc<"calc(1px) 2px">, true>>();
+      assertType<Equal<IsCalcString<"calc(calc(100% - 20px) * 2)">, true>>();
+      assertType<
+        Equal<IsCalcString<"calc(4px + 2px) calc(4px + 2px) 0 red">, false>
+      >();
+      assertType<Equal<IsCalcString<"calc(1px))">, false>>();
+      // A composite is legal again: the two shapes that used to regress.
+      assertType<ValidCalcs<"calc(4px + 2px) calc(4px + 2px) 0 red">>();
+      assertType<
+        ValidCalcs<"calc(4px + 2px) calc(4px + 2px) 0 oklch(0 0 0)">
+      >();
+      // An embedded call is validated wherever it sits, in a <string> slot.
+      assertType<ValidCalcs<"translate(calc(100% - 20px), 0)">>();
+      assertType<ValidCalcs<"translate(calc(100% - 20px), 0)", "length">>();
+      assertType<
+        ValidCalcs<"translate(calc(calc(100% - 20px) * 2), 0)">
+      >();
+      // A whole call keeps its slot check; an embedded one gets grammar only.
+      assertType<ValidCalcs<"calc(1px)", "length">>();
+      assertType<InvalidCalcs<"calc(2Hz * 2)", "length" | "percentage">>();
+      assertType<ValidCalcs<"translate(calc(2Hz * 2), 0)", "length">>();
+      // Malformed calls fail even when more tokens follow.
+      assertType<InvalidCalcs<"calc(1px +) 2px">>();
+      assertType<InvalidCalcs<"calc(2s + 3px) calc(4px + 2px)">>();
+      assertType<InvalidCalcs<"calc(4px + 2px) calc(2s + 3px)">>();
+      assertType<InvalidCalcs<"translate(calc(1px +))">>();
+      assertType<InvalidCalcs<"width calc(2s + 3px)">>();
+      // The boundary rule: a leading call may only continue after whitespace.
+      assertType<InvalidCalcs<"calc(1px))">>();
+      assertType<InvalidCalcs<"calc(1px)junk">>();
+      assertType<InvalidCalcs<"calc(1px">>();
+    });
+
+    test("validates a nested calc once at both entry points", () => {
+      assertType<Valid<"calc(calc(100% - 20px) * 2)">>();
+      assertType<ValidCalcs<"calc(calc(100% - 20px) * 2)">>();
+      assertType<InvalidCalcs<"translate(calc(calc(1px +) * 2), 0)">>();
+    });
+
     test("createComponent enforces the deep type wall on a css block", () => {
       createComponent({
         tag: "box",
@@ -349,6 +416,94 @@ describe("calc", () => {
       );
     });
 
+    test("createComponent dispatches on calc() anywhere in a value", () => {
+      const composite = createComponent({
+        tag: "box",
+        innerHTML: "x",
+        css: {
+          "box-shadow": "calc(4px + 2px) calc(4px + 2px) 0 red",
+        },
+      });
+      const { css } = renderComponent(composite);
+      assert.ok(
+        css.includes(
+          "box-shadow: calc(4px + 2px) calc(4px + 2px) 0 red;",
+        ),
+      );
+
+      const compositeColor = createComponent({
+        tag: "box",
+        innerHTML: "x",
+        css: {
+          "box-shadow":
+            "calc(4px + 2px) calc(4px + 2px) 0 oklch(0 0 0)",
+        },
+      });
+      assert.ok(
+        renderComponent(compositeColor).css.includes(
+          "box-shadow: calc(4px + 2px) calc(4px + 2px) 0 oklch(0 0 0);",
+        ),
+      );
+
+      // An embedded call in a <string> slot passes both walls.
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "box",
+          innerHTML: "x",
+          css: { transform: "translate(calc(100% - 20px), 0)" },
+        }),
+      );
+
+      // A whole call in a <string> slot gets grammar but no slot check.
+      assert.doesNotThrow(() =>
+        createComponent({
+          tag: "box",
+          innerHTML: "x",
+          css: { "box-shadow": "calc(1px)" },
+        }),
+      );
+
+      // A leading call followed by a non-whitespace token is malformed.
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error a leading calc() cannot be followed by ')'
+              "box-shadow": "calc(1px))",
+            },
+          }),
+        /leading calc\(\) call must be followed by whitespace/,
+      );
+
+      // Embedded malformed calls are rejected by both walls.
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error malformed embedded calc()
+              transform: "translate(calc(1px +))",
+            },
+          }),
+        /calc/,
+      );
+      assert.throws(
+        () =>
+          createComponent({
+            tag: "box",
+            innerHTML: "x",
+            css: {
+              // @ts-expect-error embedded calc() with incompatible dimensions
+              transition: "width calc(2s + 3px)",
+            },
+          }),
+        /addition operands '2s' and '3px'/,
+      );
+    });
+
     test("a calc() syntax token in an attribute config typechecks", () => {
       CALC_ENGINE.createComponent({
         tag: "pane",
@@ -409,10 +564,21 @@ describe("calc", () => {
       assert.throws(() => parseCalc("calc(100% -)"), /space|trailing operator|no right operand/);
       assert.throws(() => parseCalc("calc(100% /)"), /trailing operator/);
       assert.throws(() => parseCalc("calc(100% *)"), /trailing operator/);
-      assert.throws(() => parseCalc("calc(100% - 40px"), /not a calc/);
-      assert.throws(() => parseCalc("calc(100% - 40px))"), /unexpected '\)'/);
+      assert.throws(() => parseCalc("calc(100% - 40px"), /unclosed calc/);
+      assert.throws(
+        () => parseCalc("calc(100% - 40px))"),
+        /leading calc\(\) call must be followed by whitespace/,
+      );
       assert.throws(() => parseCalc("calc(* 2px)"), /no left operand/);
-      assert.throws(() => parseCalc("calc(100% + 2px"), /not a calc|unbalanced/);
+      assert.throws(() => parseCalc("calc(100% + 2px"), /unclosed calc/);
+      assert.throws(
+        () => parseCalc("calc(1px) 2px"),
+        /not a single calc\(\) expression/,
+      );
+      assert.throws(
+        () => parseCalc("calc(1px)junk"),
+        /leading calc\(\) call must be followed by whitespace/,
+      );
       assert.throws(() => parseCalc("calc(100% ^ 2px)"), /invalid operand/);
       assert.throws(() => parseCalc("calc(100% / 2px)"), /must be a number/);
       assert.throws(
@@ -432,10 +598,90 @@ describe("calc", () => {
       assert.throws(() => parseCalc("calc(10px / 2s)"), /must be a number/);
     });
 
-    test("isCalcString only flags calc() values", () => {
+    test("isCalcString only flags one whole calc() call", () => {
       assert.strictEqual(isCalcString("calc(1px)"), true);
+      assert.strictEqual(isCalcString("calc(calc(100% - 20px) * 2)"), true);
       assert.strictEqual(isCalcString("1px"), false);
       assert.strictEqual(isCalcString(42), false);
+      // The old prefix test claimed these were one expression. They are not.
+      assert.strictEqual(
+        isCalcString("calc(4px + 2px) calc(4px + 2px) 0 red"),
+        false,
+      );
+      assert.strictEqual(isCalcString("calc(1px))"), false);
+      assert.strictEqual(isCalcString("calc(1px"), false);
+      assert.strictEqual(isCalcString("calc(1px)junk"), false);
+      assert.strictEqual(
+        containsCalc("calc(4px + 2px) calc(4px + 2px) 0 red"),
+        true,
+      );
+      assert.strictEqual(containsCalc("1px"), false);
+      assert.strictEqual(containsCalc(42), false);
+    });
+
+    test("validateCalcs scans every call, including embedded ones", () => {
+      const ctx = { properties: {} };
+      assert.doesNotThrow(() =>
+        validateCalcs("calc(4px + 2px) calc(4px + 2px) 0 red", ctx),
+      );
+      assert.doesNotThrow(() =>
+        validateCalcs(
+          "calc(4px + 2px) calc(4px + 2px) 0 oklch(0 0 0)",
+          ctx,
+        ),
+      );
+      assert.doesNotThrow(() =>
+        validateCalcs("translate(calc(100% - 20px), 0)", ctx),
+      );
+      assert.doesNotThrow(() =>
+        validateCalcs("calc(calc(100% - 20px) * 2)", ctx),
+      );
+      assert.doesNotThrow(() =>
+        validateCalcs("translate(calc(calc(100% - 20px) * 2), 0)", ctx),
+      );
+      assert.throws(
+        () => validateCalcs("calc(1px +) 2px", ctx),
+        /space|trailing operator/,
+      );
+      assert.throws(
+        () => validateCalcs("calc(2s + 3px) calc(4px + 2px)", ctx),
+        /addition operands '2s' and '3px'/,
+      );
+      assert.throws(
+        () => validateCalcs("calc(4px + 2px) calc(2s + 3px)", ctx),
+        /addition operands '2s' and '3px'/,
+      );
+      assert.throws(
+        () => validateCalcs("translate(calc(1px +))", ctx),
+        /space|trailing operator/,
+      );
+      assert.throws(
+        () => validateCalcs("width calc(2s + 3px)", ctx),
+        /addition operands '2s' and '3px'/,
+      );
+      assert.throws(
+        () => validateCalcs("calc(1px))", ctx),
+        /leading calc\(\) call must be followed by whitespace/,
+      );
+      assert.throws(
+        () => validateCalcs("translate(calc(1px", ctx),
+        /unclosed calc/,
+      );
+      // The slot applies to a whole call only; an embedded call is grammar-only.
+      assert.throws(
+        () =>
+          validateCalcs("calc(2Hz * 2)", {
+            properties: {},
+            expected: ["length", "percentage"],
+          }),
+        /result type 'frequency'/,
+      );
+      assert.doesNotThrow(() =>
+        validateCalcs("translate(calc(2Hz * 2), 0)", {
+          properties: {},
+          expected: ["length", "percentage"],
+        }),
+      );
     });
 
     test("classifies var() operands when given a registry", () => {

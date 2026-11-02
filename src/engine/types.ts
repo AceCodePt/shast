@@ -19,7 +19,11 @@ import type {
   ContainsIllegalCharacter,
 } from "@/css/ident.ts";
 import type { DSLInfer, SupportedKeywordsConfig } from "tsyntax";
-import type { CalcSlotAtoms, IsCalcString, ValidateCalc } from "@/css/calc.ts";
+import type {
+  CalcSlotAtoms,
+  ContainsCalc,
+  ValidateCalcs,
+} from "@/css/calc.ts";
 import type { ContainsVar, ValidateVar } from "@/css/var.ts";
 import type {
   BaseHTMLAttributesConfig,
@@ -1112,16 +1116,18 @@ type AnimationKeyframeConstraints<
 //
 // The syntax config admits calc() shallowly (`<calc>` resolves to
 // `calc(${string})`), which keeps inferred property types a plain union but
-// would accept malformed expressions. This member narrows a written calc()
-// value to the real grammar via `ValidateCalc`.
+// would accept malformed expressions. This member narrows a written value to
+// the real grammar via `ValidateCalcs`.
 //
 // It maps over `keyof CSSValue` (the keys the author actually wrote) and keeps
 // a key only when, in the `as` clause, it is a string, it is in the registry
-// (`CalcValueKeys`), and its written value is calc-shaped (`IsCalcString`). The
-// value side is then an unconditional `ValidateCalc`. The registry-membership
-// test preserves the excess-property guarantee: a written key outside
-// `CalcValueKeys` remaps to `never`, so a typo still fails TS2353. Every key
-// that survives is already declared by the other members, so this adds none.
+// (`CalcValueKeys`), and its written value contains `calc(` (`ContainsCalc`).
+// The value side is then an unconditional `ValidateCalcs`: a whole-value call
+// gets both grammar and the slot check, while an embedded call gets the grammar
+// only. The registry-membership test preserves the excess-property guarantee: a
+// written key outside `CalcValueKeys` remaps to `never`, so a typo still fails
+// TS2353. Every key that survives is already declared by the other members, so
+// this adds none.
 //
 // Prior art -- do not re-tread:
 //   (a) Folding the nine registry members of the component structure into seven
@@ -1211,12 +1217,12 @@ type CalcConstraint<
   [K in keyof CSSValue as K extends string
     ? K extends CalcValueKeys<CSSAttributesConfig, CSSPropertiesConfig>
       ? CSSValue[K] extends string
-        ? IsCalcString<CSSValue[K]> extends true
+        ? ContainsCalc<CSSValue[K]> extends true
           ? K
           : never
         : never
       : never
-    : never]?: ValidateCalc<
+    : never]?: ValidateCalcs<
     CSSValue[K] & string,
     CSSPropertiesConfig,
     Keywords,

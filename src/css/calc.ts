@@ -189,6 +189,17 @@ export interface CalcError<Message extends string> {
   readonly [CALC_ERROR]: Message;
 }
 
+// The one wording for each shape rule, shared by both walls so they cannot
+// drift.
+//
+// Boundary rule: a value that begins with `calc(` is a composite only when the
+// leading call is followed by whitespace (the remaining calls are then
+// scanned). A leading call followed by any other character -- `calc(1px))`,
+// `calc(1px)x` -- is malformed, not a composite.
+const CALC_BOUNDARY_MESSAGE =
+  "a leading calc() call must be followed by whitespace before any further tokens";
+const CALC_UNCLOSED_MESSAGE = "unclosed calc() call";
+
 // ---------------------------------------------------------------------------
 // Type wall.
 // ---------------------------------------------------------------------------
@@ -196,10 +207,22 @@ export interface CalcError<Message extends string> {
 type CalcOk = true;
 
 // Whitespace-trim is re-implemented here (rather than imported) so this module
-// has no dependency on `@/types.ts`; the two are identical.
-type TrimCalc<S extends string> = S extends ` ${infer R}`
+// has no dependency on `@/types.ts`. It trims the CSS whitespace set (space,
+// tab, newline, carriage return, form feed), which is what the runtime
+// `.trim()` sees in a real CSS value.
+type TrimCalc<S extends string> = S extends
+  | ` ${infer R}`
+  | `\t${infer R}`
+  | `\n${infer R}`
+  | `\r${infer R}`
+  | `\f${infer R}`
   ? TrimCalc<R>
-  : S extends `${infer L} `
+  : S extends
+        | `${infer L} `
+        | `${infer L}\t`
+        | `${infer L}\n`
+        | `${infer L}\r`
+        | `${infer L}\f`
     ? TrimCalc<L>
     : S;
 
@@ -697,10 +720,140 @@ export type ValidateCalc<
     : Result
   : never;
 
-// Whether a written value is a `calc()` expression at all. Used to decide when
-// the deep parser should run.
+// Whether a written value contains at least one `calc(` call. Like `var()`,
+// calc can appear anywhere in a value, so the deep wall is triggered on a
+// substring rather than a prefix.
+export type ContainsCalc<S extends string> =
+  S extends `${string}calc(${string}` ? true : false;
+
+// Find the first `calc(` in `S`. Yields `[unknown, Rest]` where `Rest` is
+// everything after the literal `calc(`; `null` when `S` has no `calc(`.
+type SplitOnCalc<S extends string> =
+  S extends `${string}calc(${infer Rest}` ? [unknown, Rest] : null;
+
+// Given the text just after `calc(`, consume characters until the matching
+// close parenthesis, threading depth. Returns `[Arguments, Remainder]` where
+// `Remainder` starts just after the close paren, or a `CalcError` when the call
+// is unclosed. Mirrors `ExtractVarCall`.
+type ExtractCalcCall<
+  Rest extends string,
+  Depth extends readonly unknown[] = [],
+  Acc extends string = "",
+> = Rest extends `${infer C}${infer R}`
+  ? C extends "("
+    ? ExtractCalcCall<R, [...Depth, unknown], `${Acc}(`>
+    : C extends ")"
+      ? Depth extends readonly [unknown, ...infer Deeper]
+        ? ExtractCalcCall<R, Deeper, `${Acc})`>
+        : [Acc, R]
+      : ExtractCalcCall<R, Depth, `${Acc}${C}`>
+  : CalcError<typeof CALC_UNCLOSED_MESSAGE>;
+
+// Whether a remainder begins with CSS whitespace. Used by the boundary rule.
+type StartsWithWhitespace<S extends string> =
+  S extends `${" " | "\t" | "\n" | "\r" | "\f"}${string}` ? true : false;
+
+// The boundary rule, stated once: a value that begins with `calc(` is a
+// composite only when the leading call is followed by whitespace. A whole-value
+// call (nothing after the close) is fine too. Any other character means the
+// value is malformed.
+type CheckCalcBoundary<S extends string> =
+  TrimCalc<S> extends `calc(${infer Rest}`
+    ? ExtractCalcCall<Rest> extends infer Call
+      ? Call extends readonly [
+          infer _Args extends string,
+          infer After extends string,
+        ]
+        ? TrimCalc<After> extends ""
+          ? CalcOk
+          : StartsWithWhitespace<After> extends true
+            ? CalcOk
+            : CalcError<typeof CALC_BOUNDARY_MESSAGE>
+        : Call
+      : never
+    : CalcOk;
+
+// Validate every call in `S`, left to right. A call is validated once and the
+// scan resumes after its close, so a nested call is not validated twice (the
+// deep parser already checks nested operands). Mirrors `ScanVars`.
+type ScanCalcs<
+  S extends string,
+  Props extends BaseCSSPropertiesConfig,
+  Keywords extends SupportedKeywordsConfig,
+  Syntax extends Record<string, string>,
+> = SplitOnCalc<S> extends infer Split
+  ? Split extends readonly [unknown, infer Rest extends string]
+    ? ExtractCalcCall<Rest> extends infer Call
+      ? Call extends readonly [
+          infer Args extends string,
+          infer After extends string,
+        ]
+        ? ValidateCalcOuter<
+            `calc(${Args})`,
+            Props,
+            Keywords,
+            Syntax,
+            "unknown"
+          > extends infer Result
+          ? [Result] extends [CalcOk]
+            ? ScanCalcs<After, Props, Keywords, Syntax>
+            : Result
+          : never
+        : Call
+      : never
+    : CalcOk
+  : never;
+
+// The deep entry point for an arbitrary written value. The slot check
+// (`Expected`) applies only when one balanced call spans the whole trimmed
+// value -- the only case with a dimension to check. An embedded call is
+// grammar-checked with `Expected = "unknown"`.
+export type ValidateCalcs<
+  S extends string,
+  Props extends BaseCSSPropertiesConfig = {},
+  Keywords extends SupportedKeywordsConfig = {},
+  Syntax extends Record<string, string> = {},
+  Expected extends AtomSet = "unknown",
+> = ContainsCalc<S> extends true
+  ? IsCalcString<S> extends true
+    ? ValidateCalcOuter<
+        S,
+        Props,
+        Keywords,
+        Syntax,
+        Expected
+      > extends infer Result
+      ? [Result] extends [CalcOk]
+        ? S
+        : Result
+      : never
+    : CheckCalcBoundary<S> extends infer Boundary
+      ? [Boundary] extends [CalcOk]
+        ? ScanCalcs<TrimCalc<S>, Props, Keywords, Syntax> extends infer Result
+          ? [Result] extends [CalcOk]
+            ? S
+            : Result
+          : never
+        : Boundary
+      : never
+  : S;
+
+// Whether a written value is exactly one balanced `calc()` call -- the only
+// shape that has a slot to check. A prefix test is not enough: the call's
+// matching close must be the end of the trimmed value.
 export type IsCalcString<S extends string> =
-  TrimCalc<S> extends `calc(${string})` ? true : false;
+  TrimCalc<S> extends `calc(${infer Rest}`
+    ? ExtractCalcCall<Rest> extends infer Call
+      ? Call extends readonly [
+          infer _Args extends string,
+          infer After extends string,
+        ]
+        ? TrimCalc<After> extends ""
+          ? true
+          : false
+        : false
+      : never
+    : false;
 
 // ---------------------------------------------------------------------------
 // Runtime wall.
@@ -864,7 +1017,7 @@ function tokenizeCalc(inner: string): string[] {
 // wall's `CalcSlotAtoms`; `undefined` turns the slot check off.
 export interface CalcVarContext {
   properties: Record<string, { syntax: string }>;
-  expected?: readonly CalcDimension[];
+  expected?: readonly CalcDimension[] | undefined;
 }
 
 // The dimensions a slot's syntax token accepts, or `undefined` when the DSL is
@@ -1067,16 +1220,59 @@ function evaluateCalcTokens(
   return sum === null ? term : addDims(sum, term, sumRep, termRep);
 }
 
-// Parse and validate a `calc()` value. Returns the value unchanged on success
-// so it can be threaded straight into the render pipeline. `ctx` supplies the
-// registry used to classify `var()` operands and the dimension(s) the slot
-// accepts.
+// The index of the matching close parenthesis for the `calc(` whose opening
+// paren is at `start`, or a throw when the call never closes. Mirrors the
+// type-level `ExtractCalcCall`.
+function findCalcCallEnd(value: string, start: number): number {
+  let depth = 1;
+  for (let i = start + "calc(".length; i < value.length; i++) {
+    const char = value[i]!;
+    if (char === "(") {
+      depth += 1;
+    } else if (char === ")") {
+      depth -= 1;
+      if (depth === 0) return i;
+    }
+  }
+  throw new CalcSyntaxError(CALC_UNCLOSED_MESSAGE);
+}
+
+// Whether the trimmed text is exactly one balanced `calc()` call. Mirrors the
+// type-level `IsCalcString`; never throws (an unclosed call is simply not a
+// whole-value call, and the scanner reports it).
+function isWholeCalcString(trimmed: string): boolean {
+  if (!trimmed.startsWith("calc(")) return false;
+  try {
+    const end = findCalcCallEnd(trimmed, 0);
+    return trimmed.slice(end + 1) === "";
+  } catch {
+    return false;
+  }
+}
+
+// Parse and validate one whole `calc()` value. Returns the value unchanged on
+// success so it can be threaded straight into the render pipeline. `ctx`
+// supplies the registry used to classify `var()` operands and the dimension(s)
+// the slot accepts.
+//
+// The leading call's matching close is found by depth, not by slicing to the
+// last character. A value whose first call does not span the whole text is
+// rejected here: a non-whitespace remainder is the boundary error, and a
+// whitespace remainder is a composite (which `validateCalcs` handles).
 export function parseCalc(value: string, ctx?: CalcVarContext): string {
   const trimmed = value.trim();
-  if (!trimmed.startsWith("calc(") || !trimmed.endsWith(")")) {
+  if (!trimmed.startsWith("calc(")) {
     throw new CalcSyntaxError(`'${value}' is not a calc() expression`);
   }
-  const inner = trimmed.slice("calc(".length, -1);
+  const end = findCalcCallEnd(trimmed, 0);
+  const after = trimmed.slice(end + 1);
+  if (after !== "") {
+    if (!/^\s/.test(after)) {
+      throw new CalcSyntaxError(CALC_BOUNDARY_MESSAGE);
+    }
+    throw new CalcSyntaxError(`'${value}' is not a single calc() expression`);
+  }
+  const inner = trimmed.slice("calc(".length, end);
   const result = evaluateCalcTokens(tokenizeCalc(inner), ctx);
   if (ctx?.expected !== undefined && !result.unknown) {
     for (const dimension of result.dims) {
@@ -1090,8 +1286,46 @@ export function parseCalc(value: string, ctx?: CalcVarContext): string {
   return value;
 }
 
-// True when the value looks like a `calc()` call and therefore must clear the
-// deep parser. Mirrors the type-level `IsCalcString`.
+// True when the value is a whole, balanced `calc()` call and therefore must
+// clear the deep parser with its slot check. Mirrors the type-level
+// `IsCalcString`. A composite that merely begins with `calc(` is not one.
 export function isCalcString(value: unknown): value is string {
-  return typeof value === "string" && value.trim().startsWith("calc(");
+  return typeof value === "string" && isWholeCalcString(value.trim());
+}
+
+// Whether the value contains at least one `calc(` call anywhere. Mirrors the
+// type-level `ContainsCalc` (and `containsVar`).
+export function containsCalc(value: unknown): value is string {
+  return typeof value === "string" && value.includes("calc(");
+}
+
+// Scan a value for every `calc()` call and validate it. The slot check applies
+// only when one call spans the whole value; an embedded call is grammar-checked
+// alone. A call is validated once and the scan resumes after its close, so a
+// nested call is not validated twice. Mirrors `ScanVars` / `validateVars`.
+export function validateCalcs(value: unknown, ctx: CalcVarContext): void {
+  if (!containsCalc(value)) return;
+
+  const trimmed = value.trim();
+  const whole = isWholeCalcString(trimmed);
+
+  // The boundary rule: a value beginning with `calc(` may continue only after
+  // whitespace. A whole-value call has nothing after its close.
+  if (trimmed.startsWith("calc(")) {
+    const end = findCalcCallEnd(trimmed, 0);
+    const after = trimmed.slice(end + 1);
+    if (after !== "" && !/^\s/.test(after)) {
+      throw new CalcSyntaxError(CALC_BOUNDARY_MESSAGE);
+    }
+  }
+
+  let index = 0;
+  while (index < trimmed.length) {
+    const start = trimmed.indexOf("calc(", index);
+    if (start === -1) return;
+    const end = findCalcCallEnd(trimmed, start);
+    const call = trimmed.slice(start, end + 1);
+    parseCalc(call, whole ? ctx : { properties: ctx.properties });
+    index = end + 1;
+  }
 }

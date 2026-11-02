@@ -104,11 +104,12 @@ The deep grammar is applied on top by:
   values) it is `unknown`, which turns the resolved-type match off and leaves it
   to runtime — the spec's "one-level resolution + runtime for the rest".
 - `parseCSSValueAgainstDSL` in `src/engine/validate/css.ts` — the **single dispatch
-  point** for the deep grammars. A written value is inspected once: calc-shaped
-  values go to calc's `parseCalc`, and any value containing `var(` goes to
-  `validateVars`, threading the custom properties defined in scope (and
-  inherited through nested blocks) so cycles are detected. The two are not
-  exclusive, because a `calc()` may contain `var()` operands.
+  point** for the deep grammars. A written value is inspected once: a value
+  containing `calc(` anywhere goes to calc's scanner (`validateCalcs`), and any
+  value containing `var(` goes to `validateVars`, threading the custom
+  properties defined in scope (and inherited through nested blocks) so cycles
+  are detected. The two are not exclusive, because a `calc()` may contain
+  `var()` operands.
 
 Neither module calls the other: `var.ts` has no import of `calc.ts` (the
 verifiable outcome of this slice), and the engine decides which wall sees the
@@ -214,10 +215,11 @@ Two cases of the same shape are seen, weighed, and left alone:
   `initial-value: "2em"`. That value is not computationally independent, so the
   browser rejects the whole `@property` rule and the property silently stays
   unregistered — a quiet runtime failure rather than a loud one at the wall.
-- Because `<length>` and `<number>` include `<calc>` shallowly, a calc-shaped
-  `initial-value` (including a non-computationally-independent
-  `calc(100% + 12px)`) can clear the DSL check. shast does not deepen the check
-  for `initial-value`; the browser rejects the rule, exactly as above.
+- Because `<length>` and `<number>` include `<calc>` shallowly, an
+  `initial-value` containing `calc()` (including a
+  non-computationally-independent `calc(100% + 12px)`) can clear the DSL check.
+  shast does not deepen the check for `initial-value`; the browser rejects the
+  rule, exactly as above.
 
 Relative units and calc are not expected in this position, and both are
 avoidable by writing the constant. Recorded so the next reader knows they were

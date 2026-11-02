@@ -1,9 +1,11 @@
 # `calc()` support: design and typecheck benchmark
 
 This slice makes `calc()` a validated CSS value: parsed at the type level, then
-parsed again at runtime, and rendered verbatim. Operands are `<number><unit>?`
-(length, angle, time, frequency), `<percentage>`, nested `calc()`, and `var()`
-references resolved through the CSS Properties registry.
+parsed again at runtime, and rendered verbatim. Every `calc(` in a written value
+is grammar-checked, mirroring `var()`; a value that is exactly one balanced call
+also gets the property's slot check. Operands are `<number><unit>?` (length,
+angle, time, frequency), `<percentage>`, nested `calc()`, and `var()` references
+resolved through the CSS Properties registry.
 
 ## Grammar
 
@@ -40,22 +42,38 @@ op              := `+` | `-` | `*` | `/`
   and `calc(var(--num) * var(--len))` pass; `calc(var(--len-a) * var(--len-b))`
   (both `<length>`) fails. An unregistered name is left to var's own wall, which
   rejects it.
-- The result must match the slot: the dimension(s) the property's syntax accepts
-  are checked, so `calc(2Hz * 2)` on `width` (`<length-percentage>`) fails and
-  `calc(45deg * 2)` on `rotate` (`<angle>`) passes. The check is off when the
-  slot is not a single named numeric token (an inline union such as
+- The result must match the slot **when one balanced call spans the whole
+  value**: the dimension(s) the property's syntax accepts are checked, so
+  `calc(2Hz * 2)` on `width` (`<length-percentage>`) fails and `calc(45deg * 2)`
+  on `rotate` (`<angle>`) passes. The check is off when the slot is not a single
+  named numeric token (an inline union such as
   `line-height: <number> | <length-percentage>`) or the result is unknown.
+- Dispatch is on `calc(` **anywhere** in the value, mirroring `var()`: every
+  calc call is grammar-checked. Only a whole-value call gets the slot check,
+  because an embedded call has no dimension the property's slot describes
+  (`"transform": "translate(calc(100% - 20px), 0)"` is grammar-only).
+  `box-shadow: "calc(4px + 2px) calc(4px + 2px) 0 red"` is therefore a legal
+  composite, not one malformed expression.
+- Boundary rule for a value that begins with `calc(`: if the leading call is
+  followed by whitespace, the value is a composite and the remaining calls are
+  scanned; if it is followed by any other character (`calc(1px))`,
+  `calc(1px)x`), the value is malformed and rejected. The wording lives once in
+  `src/css/calc.ts` and both walls emit it.
 - Nesting is just call nesting: `calc(calc(100% - 20px) * 2)`. A nested
   `calc()` result is not recomputed by this flat parser, so it is treated as an
-  unknown dimension and passes every rule and the slot check.
+  unknown dimension and passes every rule and the slot check. The scanner
+  validates the outer call once and resumes after its close, so a nested call is
+  not validated twice.
 
 ### Which syntaxes admit `calc()`
 
 `calc()` is admitted on every dotted-arithmetic numeric type the shipped syntax
 configs define: `<number>`, `<percentage>`, `<length>`, `<angle>`, `<time>`,
 `<frequency>`, and `<alpha-value>` (the opacity slot). `<calc>` is a shallow
-token (`calc(${string})`); the deep parser then accepts the same dimension
-units those types declare, so the two walls never disagree on a unit.
+token (`calc(${string})`) that admits a value at the DSL level; the deep wall
+then scans every `calc(` in the written value, tightens it to the real grammar,
+and applies the slot check only to a whole-value call. The two walls never
+disagree on a unit.
 
 Deliberately **without** `calc()`: `<integer>` (the spec rounds a calc result to
 an integer, which this parser does not model), `<resolution>` and `<flex>`
@@ -90,19 +108,39 @@ registry-as-source-of-truth ruling applied consistently.
 
 `src/css/calc.ts` holds both walls so they cannot drift:
 
-- **Type wall** (`ValidateCalc<S, Props, Keywords, Syntax, Expected>`): a
-  recursive template-literal parser. A depth counter (a tuple, `[...Depth,
-  unknown]` is one deeper) finds the matching close parenthesis and splits the
-  sequence at its top-level operators. Two further passes run over the flat
-  tuple: operand/operator validation, then the dimension algebra (`+`/`-`, `/`
-  and `*`) reading `var()` units from `Props`, with the slot check against
-  `Expected` last. The entry point returns the written value on success or a
-  branded `CalcError` the author cannot produce on failure.
-- **Runtime wall** (`parseCalc(value, ctx?)`): a small tokenizer/parser with the
-  same depth tracking, plus the same algebra. `ctx.properties` supplies the
-  registry so a `var()` operand classifies with a lookup, and `ctx.expected`
-  supplies the dimensions the slot accepts. No regex soup; balanced parens are
-  enforced by the scanner.
+- **Type wall, grammar** (`ValidateCalc<S, Props, Keywords, Syntax, Expected>`
+  and the scanning entry point `ValidateCalcs<...>`): a recursive
+  template-literal parser. A depth counter (a tuple, `[...Depth, unknown]` is one
+  deeper) finds the matching close parenthesis and splits the sequence at its
+  top-level operators. Two further passes run over the flat tuple:
+  operand/operator validation, then the dimension algebra (`+`/`-`, `/` and `*`)
+  reading `var()` units from `Props`, with the slot check against `Expected`
+  last. On success the written value is returned; on failure it is a branded
+  `CalcError` the author cannot produce.
+- **Type wall, dispatch**: `ContainsCalc<S>` is the substring test (mirroring
+  `ContainsVar`), `ExtractCalcCall` finds a call's matching close, and
+  `ValidateCalcs` scans left to right, validating each call once and resuming
+  after its close. `IsCalcString<S>` is true only when one balanced call spans
+  the whole trimmed value; only then does `ValidateCalcs` pass the slot's
+  `Expected`. An embedded call is validated with `Expected = "unknown"`.
+  `ValidateCalc` remains the whole-value, slot-checking entry point.
+- **Runtime wall** (`parseCalc(value, ctx?)` and `validateCalcs(value, ctx)`): a
+  small tokenizer/parser with the same depth tracking, plus the same algebra.
+  `parseCalc` finds the leading call's matching close by depth (not by slicing
+  to the last character) and rejects a value whose first call does not span the
+  whole text. `validateCalcs` scans every call like `validateVars`; `containsCalc`
+  triggers it and `isCalcString` is true only for a whole balanced call.
+  `ctx.properties` supplies the registry so a `var()` operand classifies with a
+  lookup, and `ctx.expected` supplies the dimensions the slot accepts (applied
+  to the whole-value case only).
+
+**Dispatch follows `var()`.** Any `calc(` anywhere in a value triggers a
+grammar scan. Only a value that is exactly one balanced call gets the slot
+check; every other calc is grammar-only, because an embedded call inside a
+`<string>` composite has no dimension the property's slot describes. A value
+that begins with `calc(` may continue only after whitespace: the leading call
+is a composite prefix only when followed by whitespace, and `calc(1px))` /
+`calc(1px)x` are malformed. The same wording is emitted by both walls.
 
 The syntax config defines `<calc>` **shallowly** as `` `calc(${string})` ``.
 That keeps every inferred property type a plain union and keeps the registry
@@ -112,24 +150,26 @@ deep grammar is applied on top by:
 - `CalcConstraint` in `src/engine/types.ts` — a mapped type over
   `keyof CSSValue` (the keys the author actually wrote) whose `as` clause keeps
   only a key that is in the registry (top-level string attributes, every
-  gate-unlockable key, registered custom properties) and whose written value is
-  calc-shaped. The value side is then an unconditional `ValidateCalc`, passing
-  the registry so `var()` operands classify and the key's slot dimensions so the
-  result is checked. The slot dimensions come from `CalcSlotAtomsForKey`: a
-  custom property reads its `syntax`, a top-level attribute reads its DSL, a
-  gate value reads its token-shaped value keys (`<alpha-value>` for `opacity`),
-  and a gate-unlocked key reads the union of the DSLs its gates declare. The
-  registry-membership test in the `as` clause is what keeps a written key that
-  is *not* in the registry (a typo, an undeclared pseudo-class) from being
-  declared: it remaps to `never`, so the registry's excess-property rejection
-  still fires.
-- `parseCSSValueAgainstDSL` in `src/engine/validate/css.ts` — runs `parseCalc(value,
-  { properties, expected })` after the shallow DSL check whenever the written
-  value is calc-shaped, where `expected` is `slotDimensionsOf(dsl)`. Gate values
-  (`opacity`, `display`, ...) resolve through a shallow pattern match first; the
-  engine then runs the deep half on the written value too, using the matched
-  pattern (`<alpha-value>`) as the slot, so a gate cannot bypass the calc or var
-  walls while the type wall applies them.
+  gate-unlockable key, registered custom properties) and whose written value
+  contains `calc(` (`ContainsCalc`). The value side is then an unconditional
+  `ValidateCalcs`, passing the registry so `var()` operands classify and the
+  key's slot dimensions so a whole-value result is checked. The slot dimensions
+  come from `CalcSlotAtomsForKey`: a custom property reads its `syntax`, a
+  top-level attribute reads its DSL, a gate value reads its token-shaped value
+  keys (`<alpha-value>` for `opacity`), and a gate-unlocked key reads the union
+  of the DSLs its gates declare. The registry-membership test in the `as` clause
+  is what keeps a written key that is *not* in the registry (a typo, an
+  undeclared pseudo-class) from being declared: it remaps to `never`, so the
+  registry's excess-property rejection still fires.
+- `parseCSSValueAgainstDSL` in `src/engine/validate/css.ts` — runs
+  `validateCalcs(value, { properties, expected: slotDimensionsOf(dsl) })` after
+  the shallow DSL check whenever the written value contains `calc(`. The
+  expected dimensions are passed unconditionally; the scanner applies them only
+  when one call spans the whole value (`<string>` yields `undefined`, which
+  turns the check off). Gate values (`opacity`, `display`, ...) resolve through
+  a shallow pattern match first; the engine then runs the deep half on the
+  written value too, using the matched pattern (`<alpha-value>`) as the slot, so
+  a gate cannot bypass the calc or var walls while the type wall applies them.
 
 `var()` resolution lives in `src/css/var.ts` (`VarUnitKind` / `VarDimensions` at
 the type level, `varUnitKind` / `varDimensions` at runtime). The unit-bearing
@@ -205,7 +245,7 @@ The algebra itself (`+`/`-` same-dimension, `/` same-dimension, `*` carried
 through a division result) costs about +3,000 instantiation, the `CalcSlotAtoms`
 slot check the rest. The slot map is defined over the registry, so it is a
 bounded, one-per-(attributes, properties) cost, not per node; only a written
-calc value reaches `ValidateCalc` with a concrete slot. It is a single-digit
+calc value reaches `CalcConstraint` with a concrete slot. It is a single-digit
 percentage over the deep parser, well inside the "roughly 2×" threshold the
 fallback note sets.
 
@@ -241,10 +281,35 @@ Validation where it is used is not slower: a `calc()` component costs 1,995
 against 1,380 for flat, and a `var()` component 1,391. `docs/css-var.md` shares
 this measurement for `VarConstraint`.
 
+### Embedded calc scanning (this slice)
+
+Same method and tree (vendored `common` tier, TypeScript 7.0.2,
+`(I(100) − I(50)) / 50`, each component's text and calc literal distinct so
+nothing is cached). The component shape is fixed except for the written
+`transform`, so the rows isolate the per-value wall:
+
+| Component value                                  | Marginal instantiations |
+| ------------------------------------------------ | ----------------------: |
+| none (bare flat component)                       |                     304 |
+| `transform: "none"`                              |                   1,447 |
+| `transform: "calc(100% - Npx)"` (whole value)    |                   2,454 |
+| `transform: "translate(calc(100% - Npx), 0)"`    |                   2,543 |
+
+The embedded-call component costs **2,543** marginal instantiations. That is
++89 (+3.6 %) over the whole-value form, which does the same single parse; the
+scan adds the extraction walk and nothing more. Against the same component
+writing a plain value it is +1,096 (+76 %): the per-value `ValidateCalcs`
+dispatch, grammar parse and registry lookups, not an explosion. The 8.4× figure
+against a completely bare component attributes the whole per-value path to
+calc and is not the scan's incremental cost. The cost is recorded rather than
+silently accepted; it stays below the roughly-2× fallback threshold when
+compared with a component that writes any value, and it is linear in the number
+of written calc values.
+
 ## Fallback (not taken)
 
 The explicit fallback, had the benchmark exploded, was to drop the
-`CalcConstraint` type member and the `ValidateCalc` call and accept
+`CalcConstraint` type member and the `ValidateCalcs` call and accept
 `calc(${string})` shallowly at the type wall, keeping `parseCalc` as the runtime
 wall — with the cost documented here and the loss of compile-time structural
 rejection called out in `docs/structural-coupling.md`. The measurements above

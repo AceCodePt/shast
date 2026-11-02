@@ -107,6 +107,27 @@ width: "calc(2Hz * 2)"                     a legal calc whose result misses the 
           'CalcError<"calc() result type 'frequency' is not valid for this property">'.
   server  Invalid calc() value: calc() result type 'frequency' is not valid for this property
 
+box-shadow: "calc(4px + 2px) calc(4px + 2px) 0 red"
+                                           a legal composite, not one calc expression
+  tsc     (accepted: both calls are grammar-checked; no slot applies)
+  server  (accepted: rendered verbatim)
+
+transform: "translate(calc(1px +))"        an embedded call is still grammar-checked
+  tsc     Type '"translate(calc(1px +))"' is not assignable to type
+          'CalcError<"operator '+' must be followed by a space">'.
+  server  Invalid calc() value: operator '+' must be followed by a space
+
+box-shadow: "calc(1px))"                    trailing junk after the leading call
+  tsc     Type '"calc(1px))"' is not assignable to type
+          'CalcError<"a leading calc() call must be followed by whitespace before any further tokens">'.
+  server  Invalid calc() value: a leading calc() call must be followed by whitespace
+          before any further tokens
+
+box-shadow: "calc(1px"                      a call that never closes
+  tsc     Type '"calc(1px"' is not assignable to type
+          'CalcError<"unclosed calc() call">'.
+  server  Invalid calc() value: unclosed calc() call
+
 color: "var(--spacng)"                     an unregistered custom property
   tsc     Type '"var(--spacng)"' is not assignable to type
           '("currentColor" | "transparent" | `#${string}` | `rgb(${number} ${number}
