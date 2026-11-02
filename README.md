@@ -385,9 +385,9 @@ components checked - before any component is checked:
 
 | Tier | Instantiations | Types | Check |
 | --- | ---: | ---: | ---: |
-| `minimal` | 149,004 | 42,336 | 0.12s |
-| `common` | 294,053 | 64,175 | 0.29s |
-| `full` | 596,956 | 131,397 | 0.73s |
+| `minimal` | 146,688 | 41,740 | 0.13s |
+| `common` | 291,737 | 63,585 | 0.25s |
+| `full` | 594,640 | 130,809 | 0.76s |
 
 Instantiation counts are machine-stable; check times vary by machine. The
 per-scenario instantiations and types are listed per tier below; the recorded
@@ -400,49 +400,49 @@ results and the `piped` variant are described in
 
 | Scenario | Instantiations | Types |
 | --- | ---: | ---: |
-| calc-big | 224,316 | 53,128 |
-| calc-small | 195,170 | 51,840 |
-| classes-big | 194,240 | 51,586 |
-| classes-small | 191,921 | 51,313 |
-| complex-big | 196,740 | 52,731 |
-| complex-small | 194,370 | 52,092 |
-| mixed-big | 200,354 | 52,226 |
-| mixed-small | 196,499 | 51,975 |
-| null | 149,004 | 42,336 |
-| simple-big | 183,037 | 49,968 |
-| simple-small | 180,624 | 49,815 |
+| calc-big | 222,014 | 52,532 |
+| calc-small | 192,868 | 51,244 |
+| classes-big | 191,924 | 50,993 |
+| classes-small | 189,605 | 50,720 |
+| complex-big | 194,424 | 52,138 |
+| complex-small | 192,054 | 51,499 |
+| mixed-big | 198,038 | 51,633 |
+| mixed-small | 194,183 | 51,382 |
+| null | 146,688 | 41,740 |
+| simple-big | 180,721 | 49,375 |
+| simple-small | 178,308 | 49,222 |
 
 #### `common` tier
 
 | Scenario | Instantiations | Types |
 | --- | ---: | ---: |
-| calc-big | 428,631 | 86,692 |
-| calc-small | 399,467 | 85,329 |
-| classes-big | 402,949 | 85,419 |
-| classes-small | 400,344 | 85,128 |
-| complex-big | 407,032 | 86,747 |
-| complex-small | 404,104 | 86,061 |
-| mixed-big | 410,922 | 86,458 |
-| mixed-small | 406,967 | 86,145 |
-| null | 294,053 | 64,175 |
-| simple-big | 373,879 | 80,033 |
-| simple-small | 372,267 | 80,050 |
+| calc-big | 426,295 | 86,099 |
+| calc-small | 397,131 | 84,736 |
+| classes-big | 400,633 | 84,833 |
+| classes-small | 398,028 | 84,542 |
+| complex-big | 404,716 | 86,161 |
+| complex-small | 401,788 | 85,475 |
+| mixed-big | 408,606 | 85,872 |
+| mixed-small | 404,651 | 85,559 |
+| null | 291,737 | 63,585 |
+| simple-big | 371,563 | 79,447 |
+| simple-small | 369,951 | 79,464 |
 
 #### `full` tier
 
 | Scenario | Instantiations | Types |
 | --- | ---: | ---: |
-| calc-big | 930,644 | 200,707 |
-| calc-small | 901,424 | 199,981 |
-| classes-big | 938,756 | 201,135 |
-| classes-small | 935,499 | 200,861 |
-| complex-big | 912,913 | 201,742 |
-| complex-small | 908,651 | 200,974 |
-| mixed-big | 943,587 | 201,826 |
-| mixed-small | 939,572 | 201,436 |
-| null | 596,956 | 131,397 |
-| simple-big | 867,225 | 193,469 |
-| simple-small | 865,608 | 193,482 |
+| calc-big | 928,284 | 200,117 |
+| calc-small | 899,064 | 199,391 |
+| classes-big | 936,440 | 200,551 |
+| classes-small | 933,183 | 200,277 |
+| complex-big | 910,597 | 201,158 |
+| complex-small | 906,335 | 200,390 |
+| mixed-big | 941,271 | 201,242 |
+| mixed-small | 937,256 | 200,852 |
+| null | 594,640 | 130,809 |
+| simple-big | 864,909 | 192,885 |
+| simple-small | 863,292 | 192,898 |
 
 Every scenario compiles at every tier.
 
