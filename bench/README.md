@@ -125,9 +125,9 @@ tier of the default variant:
 
 | Tier | Instantiations | Types | Check |
 | --- | ---: | ---: | ---: |
-| `minimal` | 146,688 | 41,740 | 0.13s |
-| `common` | 291,737 | 63,585 | 0.25s |
-| `full` | 594,640 | 130,809 | 0.76s |
+| `minimal` | 145,341 | 41,477 | 0.13s |
+| `common` | 290,390 | 63,326 | 0.23s |
+| `full` | 593,293 | 130,551 | 0.69s |
 
 Every scenario of the default variant compiles at every tier. The `calc-small`
 and `calc-big` scenarios cover the deep calc path: a whole-value call, an

@@ -570,11 +570,11 @@ type SlotAtom<T extends string> =
       : "unknown"
     : "unknown";
 
-// Distributive so a union of DSLs (every gate that unlocks a key) becomes the
-// union of what they accept, and any unrecognised member makes it `unknown`.
-export type CalcSlotAtoms<DSL extends string> = DSL extends string
-  ? SlotAtom<DSL>
-  : never;
+// `SlotAtom` distributes over a union of DSLs (every gate that unlocks a key),
+// and any unrecognised member makes it `unknown`. No extra distributive
+// wrapper: `SlotAtom` already distributes, and the wrapper cost about 1,350
+// instantiations per program on the bench corpus for no behavioural change.
+export type CalcSlotAtoms<DSL extends string> = SlotAtom<DSL>;
 
 // Split the inside of a `calc(...)` at its top-level operators, threading the
 // parenthesis depth as a tuple (`[...Depth, unknown]` is one deeper). Returns a
